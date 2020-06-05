@@ -1,4 +1,5 @@
 import app from "./app";
+import grapqhQLServer from './graphql';
 
 const server = app.listen(app.get("port"), () => {
     console.log(
@@ -8,5 +9,7 @@ const server = app.listen(app.get("port"), () => {
     );
     console.log("  Press CTRL-C to stop\n");
 });
+
+grapqhQLServer(app, server);
 
 export default server;
