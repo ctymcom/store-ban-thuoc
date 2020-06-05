@@ -110,7 +110,6 @@ export default (app: Express, httpServer: Server) => {
   server.installSubscriptionHandlers(httpServer);
 
   console.log(
-    "Running Apollo Server on Path",
-    `${configs.domain}${server.graphqlPath}`
+    `\n Running Apollo Server on Path: ${configs.domain}${server.graphqlPath}`
   );
 };
