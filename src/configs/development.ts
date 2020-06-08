@@ -5,5 +5,5 @@ export default {
   ...base,
   env: "development",
   db: db.development,
-  debug: false,
+  debug: true,
 };

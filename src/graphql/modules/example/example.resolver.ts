@@ -1,22 +1,16 @@
-import _ from 'lodash';
+import _ from "lodash";
 
-import { Context } from '../../context';
+import { Context } from "../../context";
 
 const Query = {
-  getAllSetting: async (root: any, args: any, context: Context) => {
-  },
-  getSetting: async (root: any, args: any, context: Context) => {
+  getAllSetting:  (root: any, args: any, context: Context) => {
+    return [{ id: "1", code: "String" }];
   },
 };
 
-const Mutation = {
-  createSetting: async (root: any, args: any, context: Context) => {
-  },
- 
-};
+const Mutation = {};
 
-const Setting = {
-};
+const Setting = {};
 
 export default {
   Query,
