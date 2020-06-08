@@ -30,10 +30,7 @@ const Mutation = {
   },
   deleteManyExample: async (root: any, args: any, context: Context) => {
     const { ids } = args;
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
-    console.log(ids);
     let result =  await exampleController.deleteMany(ids);
-    console.log(result);
     return result;
   },
 };
