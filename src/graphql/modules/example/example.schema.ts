@@ -2,16 +2,37 @@ import { gql } from 'apollo-server-express';
 
 const schema = gql`
   extend type Query {
-    getAllSetting: [Setting]
+    getAllExample: [Example]
+    getOneExample(id: ID!): Example
   }
 
-  type Setting {
+  extend type Mutation {
+    createExample(data: CreateExampleInput!): Example,
+    updateExample(id: ID!, data: UpdateExampleInput!): Example,
+    deleteOneExample(id: ID!): Example,
+    deleteManyExample(ids: [ID]): Int,
+  }
+
+  input CreateExampleInput {
+    name: String
+    exampleId: String
+  }
+
+  input UpdateExampleInput {
+    name: String
+    exampleId: String    
+  }
+
+  type Example {
     id: String,
-    code: String
+    name: String,
+    exampleId: String
+    createdAt: DateTime
+    updatedAt: DateTime
   }
 
-  type SettingPageData {
-    data: [Setting]
+  type ExamplePageData {
+    data: [Example]
   }
 `;
 

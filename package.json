@@ -36,6 +36,8 @@
     "graphql-type-datetime": "^0.2.4",
     "lodash": "^4.17.15",
     "minify-graphql-loader": "^1.0.0",
+    "pg": "^8.2.1",
+    "sequelize": "^5.21.12",
     "winston": "^3.2.1"
   },
   "devDependencies": {
@@ -52,6 +54,7 @@
     "@types/lodash": "^4.14.141",
     "@types/node": "^12.7.8",
     "@types/node-sass": "^4.11.0",
+    "@types/sequelize": "^4.28.9",
     "@types/shelljs": "^0.8.5",
     "@types/supertest": "^2.0.8",
     "@types/winston": "^2.4.4",

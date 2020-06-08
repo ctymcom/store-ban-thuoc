@@ -1,19 +1,47 @@
 import _ from "lodash";
 
 import { Context } from "../../context";
+import { ExampleModel } from "./example.model";
+import { BaseErrorHelper } from "../../../base/error";
+import { exampleController } from "./example.controller";
 
 const Query = {
-  getAllSetting:  (root: any, args: any, context: Context) => {
-    return [{ id: "1", code: "String" }];
+  getAllExample: async (root: any, args: any, context: Context) => {
+    return await exampleController.findAll({ where: {} });
+  },
+  getOneExample: async (root: any, args: any, context: Context) => {
+    const { id } = args;
+    return await exampleController.findOne({ where: { id } });
   },
 };
 
-const Mutation = {};
+const Mutation = {
+  createExample: async (root: any, args: any, context: Context) => {
+    const { data } = args;
+    return await exampleController.create(data);
+  },
+  updateExample: async (root: any, args: any, context: Context) => {
+    const { id, data } = args;
+    return await exampleController.updateOne(id, data);
+  },
+  deleteOneExample: async (root: any, args: any, context: Context) => {
+    const { id } = args;
+    return await exampleController.deleteOne(id);
+  },
+  deleteManyExample: async (root: any, args: any, context: Context) => {
+    const { ids } = args;
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@2");
+    console.log(ids);
+    let result =  await exampleController.deleteMany(ids);
+    console.log(result);
+    return result;
+  },
+};
 
-const Setting = {};
+const Example = {};
 
 export default {
   Query,
   Mutation,
-  Setting,
+  Example,
 };
