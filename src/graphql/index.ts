@@ -34,9 +34,9 @@ export default (app: Express, httpServer: Server) => {
         search: String
       }
       type Pagination {
-        next: Int
-        prev: Int
-        total: Int
+        limit: Int
+        offset: Int
+        page: Int
       }
 
       input JoinInput {

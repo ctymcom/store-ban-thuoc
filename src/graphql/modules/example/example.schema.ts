@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const schema = gql`
   extend type Query {
-    getAllExample(q: QueryInput): [Example]
+    getAllExample(q: QueryInput): ExamplePageData
     getOneExample(id: ID!): Example
   }
 
@@ -33,7 +33,9 @@ const schema = gql`
   }
 
   type ExamplePageData {
-    data: [Example]
+    data: [Example],
+    total: Int
+    pagination: Pagination
   }
 `;
 

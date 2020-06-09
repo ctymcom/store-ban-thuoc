@@ -19,6 +19,7 @@ export class ParseQueryHelper {
     let paging = this.parsePagination(query);
     options.limit = paging.limit;
     options.offset = paging.offset;
+    (options as any).pagination = paging;
 
     options.order = this.parseSort(query);
 
