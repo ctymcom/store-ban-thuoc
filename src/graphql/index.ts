@@ -81,6 +81,7 @@ export default (app: Express, httpServer: Server) => {
           stack: err.stack,
           name: err.name,
           message: err.message,
+          extensions: err.extensions
         },
       });
       if (err.extensions && !err.extensions.exception.info) {
