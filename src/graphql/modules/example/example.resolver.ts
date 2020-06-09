@@ -8,11 +8,14 @@ import { ParseQueryHelper } from "../../../helpers";
 
 const Query = {
   getAllExample: async (root: any, args: any, context: Context) => {
-    let queryOptions = ParseQueryHelper.parseGetList(args.q);
+    let queryOptions = ParseQueryHelper.parseGetList(
+      args.q,
+      exampleController.model.tableName
+    );
 
     let [records, total] = await Promise.all([
       exampleController.findAll(queryOptions),
-      exampleController.count({ where: queryOptions.where }),
+      exampleController.count(queryOptions),
     ]);
 
     return {

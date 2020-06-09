@@ -1,6 +1,7 @@
 import { FindOptions, IncludeOptions } from "sequelize/types";
 import { configs } from "../configs";
-import * as _ from 'lodash';
+import * as _ from "lodash";
+import { Sequelize } from "../base/baseModel";
 
 interface IParseQuery {
   page?: string;
@@ -13,7 +14,7 @@ interface IParseQuery {
 }
 
 export class ParseQueryHelper {
-  static parseGetList(query: any) {
+  static parseGetList(query: any, tableName: string) {
     let options: FindOptions = {};
 
     let paging = this.parsePagination(query);
@@ -29,7 +30,48 @@ export class ParseQueryHelper {
     // Join Table
     options.include = this.parseJoin(query);
 
+    options = this.parseSearch(options, query, tableName);
+
+
     console.log(options);
+
+    return options;
+  }
+
+  static parseSearch(
+    options: FindOptions,
+    query: IParseQuery,
+    tableName: string
+  ) {
+    if (query.search) {
+      query.search = query.search.trim() + " ";
+      options.where = {
+        ...options.where,
+        [Sequelize.Op.and]: [
+          Sequelize.literal(
+            `${tableName}._search @@ plainto_tsquery('usimple', :search)`
+          ),
+        ],
+      };
+
+      options.replacements = {
+        search: query.search,
+      };
+
+      delete options.order;
+      options.order = Sequelize.literal(`rank DESC`);
+
+      options.attributes = {
+        include: [
+          [
+            Sequelize.literal(
+              `ts_rank_cd(${tableName}._search, plainto_tsquery('usimple', :search))`
+            ),
+            "rank",
+          ],
+        ],
+      };
+    }
 
     return options;
   }
@@ -82,5 +124,4 @@ export class ParseQueryHelper {
   static isString(x: string) {
     return _.isString(x) && x !== undefined;
   }
-
 }

@@ -33,7 +33,8 @@ export class CrudController<M extends IBaseStatic> extends BaseController {
   }
 
   async count(options?: FindOptions) {
-    return await this.model.count({ where: options.where });
+    delete options.include;
+    return await this.model.count(options);
   }
 
   async create(data: any) {
