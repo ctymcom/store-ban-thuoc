@@ -4,10 +4,12 @@ import { Context } from "../../context";
 import { ExampleModel } from "./example.model";
 import { BaseErrorHelper } from "../../../base/error";
 import { exampleController } from "./example.controller";
+import { ParseQueryHelper } from "../../../helpers";
 
 const Query = {
   getAllExample: async (root: any, args: any, context: Context) => {
-    return await exampleController.findAll({ where: {} });
+    let queryOptions = ParseQueryHelper.parseGetList(args.q);
+    return await exampleController.findAll(queryOptions);
   },
   getOneExample: async (root: any, args: any, context: Context) => {
     const { id } = args;

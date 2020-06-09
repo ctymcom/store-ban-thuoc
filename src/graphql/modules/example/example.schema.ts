@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const schema = gql`
   extend type Query {
-    getAllExample: [Example]
+    getAllExample(q: QueryInput): [Example]
     getOneExample(id: ID!): Example
   }
 
@@ -27,6 +27,7 @@ const schema = gql`
     id: String,
     name: String,
     exampleId: String
+    example: Example
     createdAt: DateTime
     updatedAt: DateTime
   }

@@ -26,8 +26,10 @@ export default (app: Express, httpServer: Server) => {
       }
       input QueryInput {
         limit: Int
-        skip: Int
-        sort: Mixed
+        offset: Int
+        page: Int
+        order: [[String]]
+        join: [Mixed]
         filter: Mixed
         search: Mixed
         summary: Boolean
