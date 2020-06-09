@@ -29,15 +29,19 @@ export default (app: Express, httpServer: Server) => {
         offset: Int
         page: Int
         order: [[String]]
-        join: [Mixed]
+        join: [JoinInput]
         filter: Mixed
-        search: Mixed
-        summary: Boolean
+        search: String
       }
       type Pagination {
         next: Int
         prev: Int
         total: Int
+      }
+
+      input JoinInput {
+        association: String
+        include: [JoinInput]
       }
     `,
   ];
