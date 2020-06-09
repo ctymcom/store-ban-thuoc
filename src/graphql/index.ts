@@ -9,6 +9,7 @@ import minifyGql from "minify-graphql-loader";
 import { configs } from "../configs";
 import { onContext } from "./context";
 import { UtilsHelper, ErrorHelper } from "../helpers";
+import { Logger } from "../loaders/logger";
 export default (app: Express, httpServer: Server) => {
   const typeDefs = [
     gql`
@@ -51,7 +52,9 @@ export default (app: Express, httpServer: Server) => {
   };
   let defaultFragment: any = {};
 
-  const ModuleFiles = UtilsHelper.walkSyncFiles(path.join(__dirname, "modules"));
+  const ModuleFiles = UtilsHelper.walkSyncFiles(
+    path.join(__dirname, "modules")
+  );
   ModuleFiles.filter((f: any) => /(.*).schema.js$/.test(f)).map((f: any) => {
     const { default: schema } = require(f);
     typeDefs.push(schema);
@@ -72,6 +75,14 @@ export default (app: Express, httpServer: Server) => {
     context: onContext,
     debug: configs.debug,
     formatError(err) {
+      // Logger.error()
+      Logger.error(err.message, {
+        metadata: {
+          stack: err.stack,
+          name: err.name,
+          message: err.message,
+        },
+      });
       if (err.extensions && !err.extensions.exception.info) {
         ErrorHelper.logUnknowError(err);
       }
