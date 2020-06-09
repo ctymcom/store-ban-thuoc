@@ -84,16 +84,16 @@ export default (app: Express, httpServer: Server) => {
 
   const defaultFragmentFields = Object.keys(defaultFragment);
   app.use("/graphql", (req, res, next) => {
-    // if (req.body && req.body.query) {
-    //   let minify = minifyGql(req.body.query);
-    //   for (const field of defaultFragmentFields) {
-    //     minify = minify.replace(
-    //       new RegExp(field + "( |})", "g"),
-    //       field + defaultFragment[field] + "$1"
-    //     );
-    //   }
-    //   req.body.query = minify;
-    // }
+    if (req.body && req.body.query) {
+      let minify = minifyGql(req.body.query);
+      for (const field of defaultFragmentFields) {
+        minify = minify.replace(
+          new RegExp(field + "( |})", "g"),
+          field + defaultFragment[field] + "$1"
+        );
+      }
+      req.body.query = minify;
+    }
     next();
   });
 
