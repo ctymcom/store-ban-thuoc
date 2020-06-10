@@ -5,8 +5,8 @@ import { gql } from 'apollo-server-express';
 
 const schema = gql`
   extend type Query {
-    getAll<%= h.inflection.camelize(name) %>(q: QueryInput): <%= h.inflection.camelize(name) %>PageData
-    getOne<%= h.inflection.camelize(name) %>(id: ID!): <%= h.inflection.camelize(name) %>
+    getAll<%= h.inflection.camelize(name) %>(q: QueryGetListInput): <%= h.inflection.camelize(name) %>PageData
+    getOne<%= h.inflection.camelize(name) %>(id: ID!, q: QueryGetOneInput): <%= h.inflection.camelize(name) %>
   }
 
   extend type Mutation {

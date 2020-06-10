@@ -23,8 +23,10 @@ const Query = {
     };
   },
   getOneExample: async (root: any, args: any, context: Context) => {
+    let queryOptions = ParseQueryHelper.parseGetOne(args.q);
     const { id } = args;
-    return await exampleController.findOne({ where: { id } });
+    queryOptions.where = { id };
+    return await exampleController.findOne(queryOptions);
   },
 };
 

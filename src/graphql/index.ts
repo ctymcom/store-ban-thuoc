@@ -25,14 +25,17 @@ export default (app: Express, httpServer: Server) => {
       type Subscription {
         _empty: String
       }
-      input QueryInput {
+      input QueryGetListInput {
         limit: Int
         offset: Int
         page: Int
         order: [[String]]
-        join: [JoinInput]
+        include: [IncludeInput]
         filter: Mixed
         search: String
+      }
+      input QueryGetOneInput {
+        include: [IncludeInput]
       }
       type Pagination {
         limit: Int
@@ -40,9 +43,9 @@ export default (app: Express, httpServer: Server) => {
         page: Int
       }
 
-      input JoinInput {
+      input IncludeInput {
         association: String
-        include: [JoinInput]
+        include: [IncludeInput]
       }
     `,
   ];

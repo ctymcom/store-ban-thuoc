@@ -7,7 +7,7 @@ interface IParseQuery {
   page?: string;
   limit?: string;
   offset?: string;
-  join?: string | any;
+  include?: string | any;
   order?: string;
   filter?: any;
   search: string;
@@ -28,10 +28,9 @@ export class ParseQueryHelper {
     options.where = this.parseFilter(query);
 
     // Join Table
-    options.include = this.parseJoin(query);
+    options.include = this.parseInclude(query);
 
     options = this.parseSearch(options, query, tableName);
-
 
     console.log(options);
 
@@ -76,19 +75,19 @@ export class ParseQueryHelper {
     return options;
   }
 
-  static parseJoin(query: IParseQuery) {
-    let join: string[] = [];
-    query.join = query.join || [];
+  static parseInclude(query: IParseQuery) {
+    let include: string[] = [];
+    query.include = query.include || [];
 
-    if (this.isString(query.join)) {
-      join = JSON.parse(query.join || `[]`);
+    if (this.isString(query.include)) {
+      include = JSON.parse(query.include || `[]`);
     } else {
-      join = [...query.join];
+      include = [...query.include];
     }
 
-    let include = [...join];
+    let includeResult = [...include];
 
-    return include;
+    return includeResult;
   }
 
   static parseSort(query: IParseQuery) {
@@ -119,7 +118,24 @@ export class ParseQueryHelper {
     };
   }
 
-  static parseGetOne(query: any) {}
+  static parseGetOne(query: any = {}) {
+    let options: FindOptions = {};
+
+    // let paging = this.parsePagination(query);
+    // options.limit = paging.limit;
+    // options.offset = paging.offset;
+    // (options as any).pagination = paging;
+
+    // options.order = this.parseSort(query);
+
+    // Filter
+    // options.where = this.parseFilter(query);
+
+    // Join Table
+    options.include = this.parseInclude(query);
+
+    return options;
+  }
 
   static isString(x: string) {
     return _.isString(x) && x !== undefined;
