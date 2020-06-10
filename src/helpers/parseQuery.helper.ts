@@ -14,7 +14,7 @@ interface IParseQuery {
 }
 
 export class ParseQueryHelper {
-  static parseGetList(query: any, tableName: string) {
+  static parseGetList(query: any = {}, tableName: string) {
     let options: FindOptions = {};
 
     let paging = this.parsePagination(query);
