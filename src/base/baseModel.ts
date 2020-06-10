@@ -3,9 +3,9 @@ import { Model, BuildOptions } from "sequelize/types";
 
 export interface BaseModel extends Model {
   readonly id: string | number | any;
-  createdAt?: string;
-  updatedAt?: string;
-  deletedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 }
 
 export type IBaseStatic = typeof Model & {
