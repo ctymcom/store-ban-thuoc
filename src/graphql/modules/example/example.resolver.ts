@@ -1,8 +1,6 @@
 import _ from "lodash";
 
 import { Context } from "../../context";
-import { ExampleModel } from "./example.model";
-import { BaseErrorHelper } from "../../../base/error";
 import { exampleController } from "./example.controller";
 import { ParseQueryHelper } from "../../../helpers";
 
