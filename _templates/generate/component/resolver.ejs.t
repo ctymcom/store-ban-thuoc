@@ -14,6 +14,7 @@ const Query = {
       <%= h.inflection.camelize(name, true) %>Controller.model.tableName
     );
 
+    queryOptions.raw = true;
     let [records, total] = await Promise.all([
       <%= h.inflection.camelize(name, true) %>Controller.findAll(queryOptions),
       <%= h.inflection.camelize(name, true) %>Controller.count(queryOptions),

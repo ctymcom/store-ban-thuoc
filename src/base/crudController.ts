@@ -53,7 +53,7 @@ export class CrudController<M extends IBaseStatic> extends BaseController {
     let record = await this.model.findOne({ where: { id } });
     // if (!record) throw baseError.error("empty_data");
     await record.destroy({});
-    return record.toJSON();
+    return record;
   }
 
   async deleteMany(ids: string[]) {
