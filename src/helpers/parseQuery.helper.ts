@@ -103,7 +103,7 @@ export class ParseQueryHelper {
 
   static parseFilter(query: IParseQuery) {
     // const filter = JSON.parse(query.filter || "{}");
-    return query.filter;
+    return query.filter || {};
   }
 
   static parsePagination(query: IParseQuery) {
