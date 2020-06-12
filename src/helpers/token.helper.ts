@@ -1,4 +1,3 @@
-import moment from "moment";
 import { configs } from "../configs";
 import jwt from "jsonwebtoken";
 
