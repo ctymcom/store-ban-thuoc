@@ -26,6 +26,7 @@
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "dependencies": {
+    "ajv-errors": "^1.0.1",
     "apollo-server-express": "^2.14.1",
     "async": "^3.1.0",
     "bluebird": "^3.5.5",
@@ -35,6 +36,7 @@
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "graphql-type-datetime": "^0.2.4",
+    "json2csv": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "minify-graphql-loader": "^1.0.0",
@@ -55,6 +57,7 @@
     "@types/faker": "^4.1.12",
     "@types/jest": "^24.0.23",
     "@types/jquery": "^3.3.31",
+    "@types/json2csv": "^5.0.1",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/lodash": "^4.14.141",
     "@types/node": "^12.7.8",

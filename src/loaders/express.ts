@@ -10,6 +10,7 @@ import path from "path";
 import fs from "fs";
 import { configs } from "../configs";
 import compression from "compression"; // compresses requests
+import router from "../routers";
 
 export default ({ app }: { app: express.Application }) => {
   app.use(cors());
@@ -19,7 +20,7 @@ export default ({ app }: { app: express.Application }) => {
   app.use(bodyParser.json({ limit: "10mb" }));
   app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 
-  app.set("view engine", "hbs");
+  app.set("view engine", "ejs");
   app.set("views", path.join(__dirname, "/../../public/views"));
   app.use("/public", express.static(path.join(__dirname, "../../public")));
 
@@ -27,4 +28,5 @@ export default ({ app }: { app: express.Application }) => {
     res.send("Hello World");
   });
 
+  app.use("/", router);
 };

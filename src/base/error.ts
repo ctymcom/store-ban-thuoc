@@ -143,4 +143,7 @@ export class ErrorHelper extends BaseErrorHelper {
   static invalidPin() {
     return new BaseError(403, '-116', "Mã pin phải là 6 số");
   }
+  static validateJSONError(message: string = "") {
+    return new BaseError(500, '-117', message);
+  }
 }
