@@ -11,12 +11,18 @@ class ViewRoute extends BaseRoute {
   }
 
   customRouting() {
-    this.router.get("/login", this.route(this.index));
+    this.router.get("/login", this.route(this.login));
+    this.router.get("/loginEmail", this.route(this.loginEmail));
   }
 
-  async index(req: Request, res: Response) {
-    res.send("hello");
+  async login(req: Request, res: Response) {
+    res.render('login');
   }
+
+  async loginEmail(req: Request, res: Response){
+    res.render('loginEmail');
+  }
+
 }
 
 export default new ViewRoute().router;
