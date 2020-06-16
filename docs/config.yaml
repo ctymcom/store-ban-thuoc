@@ -15,8 +15,10 @@ components:
       properties:
         data:
           type: object
-        type:
+        status:
           type: string
+        status:
+          type: integer
         message:
           type: string
         total:
