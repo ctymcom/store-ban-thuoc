@@ -24,7 +24,7 @@
     "debug": "npm run build && npm run watch-debug",
     "serve-debug": "nodemon --inspect dist/server.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\"",
-    "prettier": "prettier --write '**/*.{ts,css}'"
+    "prettier": "prettier --write '**/*.{ts,css,js}'"
   },
   "dependencies": {
     "ajv-errors": "^1.0.1",
