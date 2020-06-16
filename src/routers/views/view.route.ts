@@ -16,13 +16,12 @@ class ViewRoute extends BaseRoute {
   }
 
   async login(req: Request, res: Response) {
-    res.render('login');
+    res.render("login");
   }
 
-  async loginEmail(req: Request, res: Response){
-    res.render('loginEmail');
+  async loginEmail(req: Request, res: Response) {
+    res.render("loginEmail");
   }
-
 }
 
 export default new ViewRoute().router;

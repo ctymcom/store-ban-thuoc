@@ -30,7 +30,6 @@ export async function onContext(params: any) {
       context.isAuth = true;
       context.tokenData = decodedToken;
     }
-
   } catch (err) {
     if (err instanceof TokenExpiredError) {
       context.isTokenExpired = true;

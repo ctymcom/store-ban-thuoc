@@ -18,7 +18,7 @@ async function run() {
 
   for (let i = 0; i < n; i++) {
     arr.push({
-      name: faker.company.companyName()
+      name: faker.company.companyName(),
     });
   }
 

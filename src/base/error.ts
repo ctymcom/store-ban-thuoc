@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-import express from 'express';
+import dotenv from "dotenv";
+import express from "express";
 // import Raven from 'raven';
 
 // import { config } from '..';
@@ -27,7 +27,9 @@ export class BaseError extends Error {
   info: IErrorInfo;
 }
 export class BaseErrorHelper {
-  static handleError(func: (req: express.Request, rep: express.Response) => Promise<any>) {
+  static handleError(
+    func: (req: express.Request, rep: express.Response) => Promise<any>
+  ) {
     return (req: express.Request, res: express.Response) =>
       func
         .bind(this)(req, res)
@@ -42,9 +44,9 @@ export class BaseErrorHelper {
         });
   }
   static logUnknowError(error: Error) {
-    console.log('*** UNKNOW ERROR ***');
+    console.log("*** UNKNOW ERROR ***");
     console.log(error);
-    console.log('********************');
+    console.log("********************");
     // if (sentry) {
     //   try {
     //     sentry.captureException(error);
@@ -57,93 +59,101 @@ export class BaseErrorHelper {
   }
   static logError(prefix: string, logOption = true) {
     return (error: any) => {
-      console.log(prefix, error.message || error, logOption ? error.options : '');
+      console.log(
+        prefix,
+        error.message || error,
+        logOption ? error.options : ""
+      );
     };
   }
   // Unknow
   static somethingWentWrong(message?: string) {
-    return new BaseError(500, '500', message || 'Có lỗi xảy ra');
+    return new BaseError(500, "500", message || "Có lỗi xảy ra");
   }
   // Auth
   static unauthorized() {
-    return new BaseError(401, '401', 'Chưa xác thực');
+    return new BaseError(401, "401", "Chưa xác thực");
   }
   static badToken() {
-    return new BaseError(401, '-1', 'Không có quyền truy cập');
+    return new BaseError(401, "-1", "Không có quyền truy cập");
   }
   static tokenExpired() {
-    return new BaseError(401, '-2', 'Mã truy cập đã hết hạn');
+    return new BaseError(401, "-2", "Mã truy cập đã hết hạn");
   }
   static permissionDeny() {
-    return new BaseError(405, '-3', 'Không đủ quyền để truy cập');
+    return new BaseError(405, "-3", "Không đủ quyền để truy cập");
   }
   // Request
   static requestDataInvalid(message: string) {
-    return new BaseError(403, '-4', 'Dữ liệu gửi lên không hợp lệ', message);
+    return new BaseError(403, "-4", "Dữ liệu gửi lên không hợp lệ", message);
   }
   // External Request
   static externalRequestFailed(message: string) {
-    return new BaseError(500, '-5', message);
+    return new BaseError(500, "-5", message);
   }
   // Mongo
-  static mgRecoredNotFound(objectName: string = 'dữ liệu yêu cầu') {
-    return new BaseError(404, '-7', 'Không tìm thấy ' + objectName);
+  static mgRecoredNotFound(objectName: string = "dữ liệu yêu cầu") {
+    return new BaseError(404, "-7", "Không tìm thấy " + objectName);
   }
   static mgQueryFailed(message: string) {
-    return new BaseError(403, '-8', message || 'Truy vấn không thành công');
+    return new BaseError(403, "-8", message || "Truy vấn không thành công");
   }
   static branchNotWorking() {
-    return new BaseError(403, '-9', 'Chi nhánh không làm việc vào ngày này');
+    return new BaseError(403, "-9", "Chi nhánh không làm việc vào ngày này");
   }
   static recoredNotFound(message: string) {
-    return new BaseError(404, '-10', `Không tìm thấy dữ liệu yêu cầu: ${message}`);
+    return new BaseError(
+      404,
+      "-10",
+      `Không tìm thấy dữ liệu yêu cầu: ${message}`
+    );
   }
 }
 
 export class ErrorHelper extends BaseErrorHelper {
   static userNotExist() {
-    return new BaseError(403, '-103', 'Người dùng không tồn tại');
+    return new BaseError(403, "-103", "Người dùng không tồn tại");
   }
   static userExisted() {
-    return new BaseError(403, '-104', 'Người dùng đã tồn tại');
+    return new BaseError(403, "-104", "Người dùng đã tồn tại");
   }
   static userRoleNotSupported() {
-    return new BaseError(401, '-105', 'Người dùng không được cấp quyền');
+    return new BaseError(401, "-105", "Người dùng không được cấp quyền");
   }
   static userError(message: string) {
-    return new BaseError(403, '-106', 'Lỗi người dùng: ' + message);
+    return new BaseError(403, "-106", "Lỗi người dùng: " + message);
   }
   static duplicateError(key: string) {
-    return new BaseError(403, '-107', `${key} đã bị trùng.`);
+    return new BaseError(403, "-107", `${key} đã bị trùng.`);
   }
   static readOnlyError(key: string) {
-    return new BaseError(403, '-108', `${key} chỉ được phép xem.`);
+    return new BaseError(403, "-108", `${key} chỉ được phép xem.`);
   }
   static createUserError(message: string) {
-    return new BaseError(401, '-109', `Lỗi tạo người dùng: ${message}`);
+    return new BaseError(401, "-109", `Lỗi tạo người dùng: ${message}`);
   }
   static updateUserError(message: string) {
-    return new BaseError(401, '-110', `Lỗi cập nhật người dùng: ${message}`);
+    return new BaseError(401, "-110", `Lỗi cập nhật người dùng: ${message}`);
   }
   static userPasswordNotCorrect() {
-    return new BaseError(403, '-111', `Mật khẩu không đúng.`);
+    return new BaseError(403, "-111", `Mật khẩu không đúng.`);
   }
   static farmerPinNotCorrect() {
-    return new BaseError(403, '-112', `Mã pin không đúng`);
+    return new BaseError(403, "-112", `Mã pin không đúng`);
   }
   static deliveryStatusWrong() {
-    return new BaseError(403, '-113', `Trạng thái đơn hàng không đúng`);
+    return new BaseError(403, "-113", `Trạng thái đơn hàng không đúng`);
   }
   static notEnoughtPoint() {
-    return new BaseError(403, '-114', "Tài khoản không đủ điểm");
+    return new BaseError(403, "-114", "Tài khoản không đủ điểm");
   }
   static spinError(message: string) {
-    return new BaseError(403, '-115', message);
+    return new BaseError(403, "-115", message);
   }
   static invalidPin() {
-    return new BaseError(403, '-116', "Mã pin phải là 6 số");
+    return new BaseError(403, "-116", "Mã pin phải là 6 số");
   }
   static validateJSONError(message: string = "") {
-    return new BaseError(500, '-117', message);
+    return new BaseError(500, "-117", message);
   }
 }

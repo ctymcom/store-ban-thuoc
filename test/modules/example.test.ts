@@ -156,12 +156,12 @@ describe("# Test deleteManyExample", () => {
       },
     ]);
 
-    let ids = records.map(r => r.get("id"));
+    let ids = records.map((r) => r.get("id"));
 
     let result: any = await exampleResolver.Mutation.deleteManyExample(
       {},
       {
-        ids: ids
+        ids: ids,
       },
       context
     );

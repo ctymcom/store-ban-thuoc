@@ -8,8 +8,8 @@ export interface IValidateSchema extends JSONSchema7 {
 
 /**
  * Kiểm tra dữ liệu JSON, không trả về lỗi.
- * @param data 
- * @param schema 
+ * @param data
+ * @param schema
  */
 export function validateSchema(data: any, schema: JSONSchema7) {
   const ajv = new Ajv({ allErrors: true, jsonPointers: true });

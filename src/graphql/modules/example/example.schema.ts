@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-express';
+import { gql } from "apollo-server-express";
 
 const schema = gql`
   extend type Query {
@@ -7,10 +7,10 @@ const schema = gql`
   }
 
   extend type Mutation {
-    createExample(data: CreateExampleInput!): Example,
-    updateExample(id: ID!, data: UpdateExampleInput!): Example,
-    deleteOneExample(id: ID!): Example,
-    deleteManyExample(ids: [ID]): Int,
+    createExample(data: CreateExampleInput!): Example
+    updateExample(id: ID!, data: UpdateExampleInput!): Example
+    deleteOneExample(id: ID!): Example
+    deleteManyExample(ids: [ID]): Int
   }
 
   input CreateExampleInput {
@@ -20,12 +20,12 @@ const schema = gql`
 
   input UpdateExampleInput {
     name: String
-    exampleId: String    
+    exampleId: String
   }
 
   type Example {
-    id: String,
-    name: String,
+    id: String
+    name: String
     exampleId: String
     example: Example
     createdAt: DateTime
@@ -33,7 +33,7 @@ const schema = gql`
   }
 
   type ExamplePageData {
-    data: [Example],
+    data: [Example]
     total: Int
     pagination: Pagination
   }

@@ -45,7 +45,7 @@ export class CrudController<M extends IBaseStatic> extends BaseController {
     await this.model.update(data, { where: { id } });
     let record = await this.model.findOne({ where: { id } });
     // if (!record) throw baseError.error("empty_data");
-    if (! record) throw ErrorHelper.duplicateError('');
+    if (!record) throw ErrorHelper.duplicateError("");
     return record;
   }
 

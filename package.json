@@ -23,7 +23,8 @@
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
     "debug": "npm run build && npm run watch-debug",
     "serve-debug": "nodemon --inspect dist/server.js",
-    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\"",
+    "prettier": "prettier --write '**/*.{ts,css}'"
   },
   "dependencies": {
     "ajv-errors": "^1.0.1",
@@ -75,6 +76,7 @@
     "jest": "^24.9.0",
     "node-sass": "^4.13.0",
     "nodemon": "^1.19.2",
+    "prettier": "^2.0.5",
     "shelljs": "^0.8.3",
     "supertest": "^4.0.2",
     "ts-jest": "^26.1.0",
