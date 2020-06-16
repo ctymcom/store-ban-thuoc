@@ -29,6 +29,10 @@ class ExampleRoute extends BaseRoute {
         id: 3,
         data: "data",
       },
+      {
+        id: 4,
+        data: "data",
+      },
     ]);
   }
 }
