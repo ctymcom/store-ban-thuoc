@@ -4,6 +4,7 @@ import {
   Response,
   NextFunction,
 } from "../../base/baseRoute";
+import { ErrorHelper } from "../../base/error";
 
 class ExampleRoute extends BaseRoute {
   constructor() {
@@ -15,7 +16,20 @@ class ExampleRoute extends BaseRoute {
   }
 
   async index(req: Request, res: Response) {
-    res.send("hello");
+    this.response(res, [
+      {
+        id: 1,
+        data: "data",
+      },
+      {
+        id: 2,
+        data: "data",
+      },
+      {
+        id: 3,
+        data: "data",
+      },
+    ]);
   }
 }
 
