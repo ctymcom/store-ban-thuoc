@@ -29,6 +29,7 @@ const schema = gql`
 
   type SettingGroup {
     id: String,
+    settings: [Setting]
     slug: String!
     name: String!
     desc: String

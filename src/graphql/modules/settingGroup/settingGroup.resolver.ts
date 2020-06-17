@@ -11,7 +11,6 @@ const Query = {
       settingGroupController.model.tableName
     );
 
-    queryOptions.raw = true;
     let [records, total] = await Promise.all([
       settingGroupController.findAll(queryOptions),
       settingGroupController.count(queryOptions),

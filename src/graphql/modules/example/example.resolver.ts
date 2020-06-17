@@ -13,7 +13,6 @@ const Query = {
       exampleController.model.tableName
     );
 
-    queryOptions.raw = true;
     let [records, total] = await Promise.all([
       exampleController.findAll(queryOptions),
       exampleController.count(queryOptions),

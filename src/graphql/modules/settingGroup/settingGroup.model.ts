@@ -33,7 +33,7 @@ function init() {
         type: Sequelize.TEXT,
       },
       readOnly: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.BOOLEAN,  
         defaultValue: false,
       },
       createdAt: {
