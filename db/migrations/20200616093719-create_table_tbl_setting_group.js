@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.transaction(t => {
+    return queryInterface.sequelize.transaction((t) => {
       return Promise.all([
         queryInterface.createTable(
           "tbl_setting_group",
@@ -8,46 +8,44 @@ module.exports = {
             id: {
               type: Sequelize.UUID,
               defaultValue: Sequelize.UUIDV1,
-              primaryKey: true
+              primaryKey: true,
             },
             slug: {
               type: Sequelize.TEXT,
-              allowNull: false
+              allowNull: false,
             },
             name: {
               type: Sequelize.TEXT,
-              allowNull: false
+              allowNull: false,
             },
             desc: {
-              type: Sequelize.TEXT
+              type: Sequelize.TEXT,
             },
             readOnly: {
               type: Sequelize.BOOLEAN,
-              defaultValue: false
+              defaultValue: false,
             },
             createdAt: {
               type: Sequelize.DATE,
               defaultValue: Sequelize.NOW,
-              allowNull: false
             },
             updatedAt: {
               type: Sequelize.DATE,
               defaultValue: Sequelize.NOW,
-              allowNull: false
             },
-            deletedAt: { type: Sequelize.DATE }
+            deletedAt: { type: Sequelize.DATE },
           },
           { transaction: t }
-        )
+        ),
       ]);
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.sequelize.transaction(t => {
+    return queryInterface.sequelize.transaction((t) => {
       return Promise.all([
-        queryInterface.dropTable("tbl_setting_group", { transaction: t })
+        queryInterface.dropTable("tbl_setting_group", { transaction: t }),
       ]);
     });
-  }
+  },
 };

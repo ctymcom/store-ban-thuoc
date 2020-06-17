@@ -17,9 +17,9 @@ const schema = gql`
   input CreateSettingInput {
     settingGroupId: String
     """${Object.keys(SettingType).join('|')}"""
-    type: String
-    name: String
-    key: String
+    type: String!
+    name: String!
+    key: String!
     value: Mixed
     isActive: Boolean
     isPrivate: Boolean
@@ -29,9 +29,9 @@ const schema = gql`
   input UpdateSettingInput {
     settingGroupId: String
     """${Object.keys(SettingType).join('|')}"""
-    type: String
-    name: String
-    key: String
+    type: String!
+    name: String!
+    key: String!
     value: Mixed
     isActive: Boolean
     isPrivate: Boolean
@@ -43,9 +43,9 @@ const schema = gql`
     settingGroupId: String
     settingGroup: SettingGroup
     """${Object.keys(SettingType).join('|')}"""
-    type: String
-    name: String
-    key: String
+    type: String!
+    name: String!
+    key: String!
     value: Mixed
     isActive: Boolean
     isPrivate: Boolean
