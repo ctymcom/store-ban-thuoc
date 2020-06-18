@@ -3,9 +3,14 @@ export const ROLES = {
   EDITOR: "EDITOR",
 };
 
-export enum SettingType {
-  string = 'string',
-  number = 'number',
-  array = 'array',
-  object = 'object',
+export enum SettingTypeEnum {
+  string = "string",
+  number = "number",
+  array = "array",
+  object = "object",
+}
+
+export enum EventErrorStatusEnum {
+  error = "error",
+  resolved = "resolved",
 }

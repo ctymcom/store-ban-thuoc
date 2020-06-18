@@ -1,4 +1,4 @@
-import { SettingType } from "../constants";
+import { SettingTypeEnum } from "../constants";
 
 export enum SettingGroupSlug {
   EXAMPLE_SLUG = "EXAMPLE_SLUG"
@@ -14,7 +14,7 @@ export const SETTING_DATA = [
     readOnly: true,
     settings: [
       {
-        type: SettingType.string,
+        type: SettingTypeEnum.string,
         name: "Config string",
         key: SettingKey.EXAMPLE,
         value: `Sample string`,

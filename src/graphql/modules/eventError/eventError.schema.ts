@@ -1,0 +1,27 @@
+import { gql } from 'apollo-server-express';
+import { EventErrorStatusEnum } from '../../../constants';
+
+const schema = gql`
+  extend type Query {
+    getAllEventError(q: QueryGetListInput): EventErrorPageData
+    getOneEventError(id: ID!, q: QueryGetOneInput): EventError
+  }
+
+  type EventError {
+    id: String,
+    type: String!,
+    data: Mixed,
+    """${Object.keys(EventErrorStatusEnum).join('|')}"""
+    status: String,
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  type EventErrorPageData {
+    data: [EventError],
+    total: Int
+    pagination: Pagination
+  }
+`;
+
+export default schema;

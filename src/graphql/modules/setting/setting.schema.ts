@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express';
-import { SettingType } from '../../../constants';
+import { SettingTypeEnum } from '../../../constants';
 
 const schema = gql`
   extend type Query {
@@ -16,7 +16,7 @@ const schema = gql`
 
   input CreateSettingInput {
     settingGroupId: String
-    """${Object.keys(SettingType).join('|')}"""
+    """${Object.keys(SettingTypeEnum).join('|')}"""
     type: String!
     name: String!
     key: String!
@@ -28,7 +28,7 @@ const schema = gql`
 
   input UpdateSettingInput {
     settingGroupId: String
-    """${Object.keys(SettingType).join('|')}"""
+    """${Object.keys(SettingTypeEnum).join('|')}"""
     type: String!
     name: String!
     key: String!
@@ -42,7 +42,7 @@ const schema = gql`
     id: String,
     settingGroupId: String
     settingGroup: SettingGroup
-    """${Object.keys(SettingType).join('|')}"""
+    """${Object.keys(SettingTypeEnum).join('|')}"""
     type: String!
     name: String!
     key: String!

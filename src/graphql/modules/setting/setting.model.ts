@@ -1,6 +1,6 @@
 import { sequelize, Sequelize, BaseModel } from "../../../base/baseModel";
 import { BuildOptions, Model, Association } from "sequelize/types";
-import { SettingType } from "../../../constants";
+import { SettingTypeEnum } from "../../../constants";
 import {
   ISettingGroup,
   SettingGroupModel,
@@ -8,7 +8,7 @@ import {
 
 export interface ISetting extends BaseModel {
   settingGroupId?: string;
-  type: SettingType;
+  type: SettingTypeEnum;
   key: string;
   name?: string;
   value?: any;
@@ -43,9 +43,9 @@ function init() {
       type: {
         type: Sequelize.STRING,
         validate: {
-          isIn: [Object.keys(SettingType)],
+          isIn: [Object.keys(SettingTypeEnum)],
         },
-        defaultValue: SettingType.string,
+        defaultValue: SettingTypeEnum.string,
         allowNull: false,
       },
       name: {
@@ -63,13 +63,13 @@ function init() {
           let value = this.getDataValue("value");
 
           switch (type) {
-            case SettingType.array:
+            case SettingTypeEnum.array:
               return JSON.parse(value);
-            case SettingType.object:
+            case SettingTypeEnum.object:
               return JSON.parse(value);
-            case SettingType.string:
+            case SettingTypeEnum.string:
               return value;
-            case SettingType.number:
+            case SettingTypeEnum.number:
               return parseFloat(value);
             default:
               return value;
@@ -79,12 +79,12 @@ function init() {
           let type = this.getDataValue("type");
 
           switch (type) {
-            case SettingType.array:
+            case SettingTypeEnum.array:
               return this.setDataValue("value", JSON.stringify(value));
-            case SettingType.object:
+            case SettingTypeEnum.object:
               return this.setDataValue("value", JSON.stringify(value));
-            case SettingType.string:
-            case SettingType.number:
+            case SettingTypeEnum.string:
+            case SettingTypeEnum.number:
             default:
               return;
           }
