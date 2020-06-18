@@ -14,3 +14,7 @@ export enum EventErrorStatusEnum {
   error = "error",
   resolved = "resolved",
 }
+
+export enum EventErrorTypeEnum {
+  example = "example",
+}
