@@ -7,6 +7,10 @@ const schema = gql`
     getOneEventError(id: ID!, q: QueryGetOneInput): EventError
   }
 
+  extend type Mutation {
+    resolveEventError(id: ID!): EventError
+  }
+
   type EventError {
     id: String,
     type: String!,

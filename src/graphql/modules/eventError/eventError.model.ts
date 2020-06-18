@@ -1,9 +1,9 @@
 import { sequelize, Sequelize, BaseModel } from "../../../base/baseModel";
 import { BuildOptions, Model, Association } from "sequelize/types";
-import { EventErrorStatusEnum } from "../../../constants";
+import { EventErrorStatusEnum, EventErrorTypeEnum } from "../../../constants";
 
 export interface IEventError extends BaseModel {
-  type?: string;
+  type?: EventErrorTypeEnum;
   data?: any;
   status: EventErrorStatusEnum;
 }

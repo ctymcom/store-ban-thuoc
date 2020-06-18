@@ -29,6 +29,9 @@ const Query = {
 };
 
 const Mutation = {
+  resolveEventError: async (root: any, args: any, context: Context) => {
+    return await eventErrorController.resolveEventError(args);
+  },
   // createEventError: async (root: any, args: any, context: Context) => {
   //   const { data } = args;
   //   return await eventErrorController.create(data);

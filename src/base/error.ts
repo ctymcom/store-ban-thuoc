@@ -111,6 +111,7 @@ export class BaseErrorHelper {
 }
 
 export class ErrorHelper extends BaseErrorHelper {
+ 
   static userNotExist() {
     return new BaseError(403, "-103", "Người dùng không tồn tại");
   }
@@ -155,5 +156,8 @@ export class ErrorHelper extends BaseErrorHelper {
   }
   static validateJSONError(message: string = "") {
     return new BaseError(500, "-117", message);
+  }
+  static error(message: string) {
+    return new BaseError(403, "-118", message);
   }
 }
