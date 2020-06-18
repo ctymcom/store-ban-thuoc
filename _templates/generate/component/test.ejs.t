@@ -1,5 +1,5 @@
 ---
-to: test/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflection.camelize(name, true) %>.test.ts
+to: test/modules/<%= h.inflection.camelize(name, true) %>.test.ts
 ---
 import <%= h.inflection.camelize(name, true) %>Resolver from "../../src/graphql/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflection.camelize(name, true) %>.resolver";
 import { expect } from "chai";
