@@ -22,8 +22,8 @@ class EventErrorController extends CrudController<typeof EventErrorModel> {
     if (eventError.status !== EventErrorStatusEnum.error)
       throw ErrorHelper.error(`Trạng thái của event này không hợp lệ.`);
 
-    let objectMap = {
-      [EventErrorTypeEnum.example]: exampleSubject,
+    let objectMap: any = {
+      // [EventErrorTypeEnum.example]: exampleSubject,
     };
 
     let subject = objectMap[eventError.get("type")];

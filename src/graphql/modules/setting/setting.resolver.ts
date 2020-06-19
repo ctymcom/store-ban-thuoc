@@ -3,6 +3,8 @@ import _ from "lodash";
 import { Context } from "../../context";
 import { settingController } from "./setting.controller";
 import { ParseQueryHelper } from "../../../helpers";
+import { SettingModel } from "./setting.model";
+import { exampleSubject } from "../../../events";
 
 const Query = {
   getAllSetting: async (root: any, args: any, context: Context) => {
@@ -15,6 +17,8 @@ const Query = {
       settingController.findAll(queryOptions),
       settingController.count(queryOptions),
     ]);
+
+    exampleSubject.next({settings: records as any});
 
     return {
       data: records,

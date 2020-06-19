@@ -5,8 +5,6 @@ import {
   NextFunction,
 } from "../../base/baseRoute";
 import { ErrorHelper } from "../../base/error";
-import { exampleSubject } from "../../events";
-
 class ExampleRoute extends BaseRoute {
   constructor() {
     super();
@@ -17,9 +15,6 @@ class ExampleRoute extends BaseRoute {
   }
 
   async index(req: Request, res: Response) {
-
-    exampleSubject.next({message: "test"});
-
     this.response(res, [
       {
         id: 1,

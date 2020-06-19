@@ -3,30 +3,47 @@ import { Logger } from "../loaders/logger";
 import { ErrorHelper } from "../base/error";
 import { EventErrorModel } from "../graphql/modules/eventError/eventError.model";
 import { EventErrorTypeEnum } from "../constants";
+import { BaseEvent } from "../base/baseEvent";
+import { AsyncFunction } from "async";
+import { ISetting } from "../graphql/modules/setting/setting.model";
 
 interface Example {
-  message?: string;
+  settings: ISetting;
 }
-const exampleSubject = new Subject<Example>();
+class ExampleEvent extends BaseEvent<Example> {
+  constructor() {
+    super();
+  }
 
-exampleSubject.subscribe((data) => {
-  try {
-    console.log("Subscribe 2");
-    console.log(data);
-    throw ErrorHelper.createUserError("Có lỗi xảy ra");
-  } catch (error) {
-    Logger.error(error.toString(), {
-      metadata: {
-        stack: error.stack,
-        name: error.name,
-        message: error.message,
-      },
-    });
-    EventErrorModel.create({
-      type: EventErrorTypeEnum.example,
-      data: data
+  register() {
+    this.mapObject = {
+      [EventErrorTypeEnum.example_1]: this.funcExample1,
+      [EventErrorTypeEnum.example_2]: this.funcExample2,
+    };
+
+    Object.keys(this.mapObject).forEach((key: EventErrorTypeEnum) => {
+      this.subject.subscribe((data) => {
+        this.exec(this.mapObject[key], data, key);
+      });
     });
   }
-});
+
+  async funcExample1(data: Example) {
+    console.log("funcExample1");
+  }
+
+  async funcExample2(data: Example) {
+    console.log("ERROR NE`");
+    throw ErrorHelper.createUserError("Có lỗi xảy ra");
+  }
+
+  async parseData(data: any) {}
+
+  async toJSON(data: any) {
+    return data;
+  }
+}
+
+const exampleSubject = new ExampleEvent().subject;
 
 export { exampleSubject };

@@ -16,5 +16,6 @@ export enum EventErrorStatusEnum {
 }
 
 export enum EventErrorTypeEnum {
-  example = "example",
+  example_1 = "example_1",
+  example_2 = "example_2",
 }

@@ -4,6 +4,9 @@ import { EventErrorStatusEnum, EventErrorTypeEnum } from "../../../constants";
 
 export interface IEventError extends BaseModel {
   type?: EventErrorTypeEnum;
+  errorName?: string;
+  errorStack?: any;
+  errorMessage?: string;
   data?: any;
   status: EventErrorStatusEnum;
 }
@@ -24,6 +27,16 @@ function init() {
       type: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      errorName: {
+        type: Sequelize.STRING(1024),
+      },
+      errorStack: {
+        type: Sequelize.JSONB,
+        defaultValue: {}
+      },
+      errorMessage: {
+        type: Sequelize.TEXT,
       },
       data: {
         type: Sequelize.JSONB,

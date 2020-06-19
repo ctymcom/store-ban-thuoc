@@ -18,6 +18,16 @@ module.exports = {
               type: Sequelize.JSONB,
               defaultValue: {},
             },
+            errorName: {
+              type: Sequelize.STRING(1024)
+            },
+            errorStack: {
+              type: Sequelize.JSONB,
+              defaultValue: {}
+            },
+            errorMessage: {
+              type: Sequelize.TEXT
+            },
             status: {
               type: Sequelize.STRING
               // error | resolved

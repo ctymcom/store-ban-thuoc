@@ -16,6 +16,9 @@ const schema = gql`
     type: String!,
     data: Mixed,
     """${Object.keys(EventErrorStatusEnum).join('|')}"""
+    errorName: String
+    errorStack: Mixed
+    errorMessage: String
     status: String,
     createdAt: DateTime
     updatedAt: DateTime
