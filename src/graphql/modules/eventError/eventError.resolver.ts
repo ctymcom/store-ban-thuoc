@@ -32,6 +32,9 @@ const Mutation = {
   resolveEventError: async (root: any, args: any, context: Context) => {
     return await eventErrorController.resolveEventError(args);
   },
+  resolveMultiEventError: async(root: any, args: any, context: Context) => {
+    return await eventErrorController.resolveMultiEventError(args);
+  }
   // createEventError: async (root: any, args: any, context: Context) => {
   //   const { data } = args;
   //   return await eventErrorController.create(data);

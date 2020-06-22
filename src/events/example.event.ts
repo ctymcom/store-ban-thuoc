@@ -15,28 +15,6 @@ class ExampleEvent extends BaseEvent<Example> {
     super();
   }
 
-  register() {
-    this.mapObject = {
-      [EventErrorTypeEnum.example_1]: this.funcExample1,
-      [EventErrorTypeEnum.example_2]: this.funcExample2,
-    };
-
-    Object.keys(this.mapObject).forEach((key: EventErrorTypeEnum) => {
-      this.subject.subscribe((data) => {
-        this.exec(this.mapObject[key], data, key);
-      });
-    });
-  }
-
-  async funcExample1(data: Example) {
-    console.log("funcExample1");
-  }
-
-  async funcExample2(data: Example) {
-    console.log("ERROR NE`");
-    throw ErrorHelper.createUserError("Có lỗi xảy ra");
-  }
-
   async parseData(data: any) {}
 
   async toJSON(data: any) {
@@ -44,6 +22,15 @@ class ExampleEvent extends BaseEvent<Example> {
   }
 }
 
-const exampleSubject = new ExampleEvent().subject;
+const exampleEvent = new ExampleEvent();
 
-export { exampleSubject };
+exampleEvent.regisRule(EventErrorTypeEnum.example_1, async (data: Example) => {
+  console.log("funcExample1");
+});
+
+exampleEvent.regisRule(EventErrorTypeEnum.example_2, async (data: Example) => {
+  console.log("ERROR NE`");
+  throw ErrorHelper.createUserError("Có lỗi xảy ra");
+});
+
+export { exampleEvent };

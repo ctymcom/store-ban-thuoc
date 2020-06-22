@@ -4,7 +4,7 @@ import { Context } from "../../context";
 import { settingController } from "./setting.controller";
 import { ParseQueryHelper } from "../../../helpers";
 import { SettingModel } from "./setting.model";
-import { exampleSubject } from "../../../events";
+import { exampleEvent } from "../../../events";
 
 const Query = {
   getAllSetting: async (root: any, args: any, context: Context) => {
@@ -18,7 +18,7 @@ const Query = {
       settingController.count(queryOptions),
     ]);
 
-    exampleSubject.next({settings: records as any});
+    exampleEvent.next({settings: records as any});
 
     return {
       data: records,

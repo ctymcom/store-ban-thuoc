@@ -9,6 +9,7 @@ const schema = gql`
 
   extend type Mutation {
     resolveEventError(id: ID!): EventError
+    resolveMultiEventError(ids: [ID]): Int
   }
 
   type EventError {

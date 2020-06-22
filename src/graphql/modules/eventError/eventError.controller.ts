@@ -2,7 +2,8 @@ import { CrudController } from "../../../base/crudController";
 import { EventErrorModel } from "./eventError.model";
 import { ErrorHelper } from "../../../base/error";
 import { EventErrorTypeEnum, EventErrorStatusEnum } from "../../../constants";
-import { exampleSubject } from "../../../events";
+import { exampleEvent } from "../../../events";
+import { BaseEvent } from "../../../base/baseEvent";
 class EventErrorController extends CrudController<typeof EventErrorModel> {
   constructor() {
     super(EventErrorModel);
@@ -22,17 +23,35 @@ class EventErrorController extends CrudController<typeof EventErrorModel> {
     if (eventError.status !== EventErrorStatusEnum.error)
       throw ErrorHelper.error(`Trạng thái của event này không hợp lệ.`);
 
-    let objectMap: any = {
-      // [EventErrorTypeEnum.example]: exampleSubject,
-    };
-
-    let subject = objectMap[eventError.get("type")];
-    if (!subject)
-      throw ErrorHelper.error(`Chưa hỗ trợ resolve type: ${eventError.type}`);
-
-    subject.next(eventError.data);
+    BaseEvent.resolve(eventError.type, eventError.data);
     eventError.set("status", EventErrorStatusEnum.resolved);
     return eventError.save();
+  }
+
+  async resolveMultiEventError(params: any) {
+    let { ids } = params;
+
+    console.log(params);
+    let eventErrors = await this.model.findAll({
+      where: {
+        id: {
+          $in: ids,
+        },
+        status: EventErrorStatusEnum.error,
+      },
+    });
+
+    for (let eventError of eventErrors) {
+      // if (!eventError)
+      //   throw ErrorHelper.recoredNotFound("Không tìm thấy event này");
+      // if (eventError.status !== EventErrorStatusEnum.error)
+      //   throw ErrorHelper.error(`Trạng thái của event này không hợp lệ.`);
+      BaseEvent.resolve(eventError.type, eventError.data);
+      eventError.set("status", EventErrorStatusEnum.resolved);
+      eventError.save();
+    }
+
+    return eventErrors.length;
   }
 }
 
