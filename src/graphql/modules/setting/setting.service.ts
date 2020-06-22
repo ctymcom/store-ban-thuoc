@@ -13,33 +13,39 @@ class SettingService extends CrudService<typeof SettingModel> {
     const transaction = await sequelize.transaction();
 
     try {
-      let settings: Array<any> = [];
-      let groups = SETTING_DATA.map((value: any) => {
-        value.id = v1();
+      let slugs = SETTING_DATA.map((data) => data.slug);
+      let groups = await SettingGroupModel.findAll({
+        where: {
+          slug: {
+            $in: slugs,
+          },
+        },
+      });
 
-        value.settings = value.settings.map((v: any) => {
-          v.settingGroupId = value.id;
-          v.id = v1();
+      for (let group of SETTING_DATA) {
+        let settingGroup = groups.find((rec) => rec.slug === group.slug);
+        if (!settingGroup) {
+          settingGroup = await SettingGroupModel.create(group, { transaction });
+        }
+
+        group.settings = group.settings.map((v: any) => {
+          v.settingGroupId = settingGroup.id;
           return v;
         });
 
-        settings = [...settings, ...value.settings];
-
-        delete value.settings;
-        return value;
-      });
-
-      await SettingGroupModel.bulkCreate(groups, {
-        transaction,
-        ignoreDuplicates: true,
-      });
-      await SettingModel.bulkCreate(settings, {
-        transaction,
-        ignoreDuplicates: true,
-      });
+        await SettingModel.bulkCreate(group.settings, {
+          transaction,
+          ignoreDuplicates: true,
+        });
+      }
 
       transaction.commit();
+
+      console.log("SEED DATA SETTING SUCCESSFULLY!");
+
+      return;
     } catch (err) {
+      console.log("SEED DATA SETTING ERROR!");
       transaction.rollback();
       throw err;
     }
@@ -48,6 +54,6 @@ class SettingService extends CrudService<typeof SettingModel> {
 
 const settingService = new SettingService();
 
-export { settingService };
-
 SettingService.seedingData();
+
+export { settingService };
