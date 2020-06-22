@@ -1,7 +1,7 @@
 import settingResolver from "../../src/graphql/modules/setting/setting.resolver";
 import { expect } from "chai";
 import { Context } from "../../src/graphql/context";
-import { ROLES } from "../../src/constants";
+import { ROLES } from "../../src/constants/role.const";
 import faker from "faker";
 import { SettingModel } from "../../src/graphql/modules/setting/setting.model";
 

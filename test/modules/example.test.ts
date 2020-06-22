@@ -1,7 +1,7 @@
 import exampleResolver from "../../src/graphql/modules/example/example.resolver";
 import { expect } from "chai";
 import { Context } from "../../src/graphql/context";
-import { ROLES } from "../../src/constants";
+import { ROLES } from "../../src/constants/role.const";
 import faker from "faker";
 import { ExampleModel } from "../../src/graphql/modules/example/example.model";
 

@@ -1,6 +1,6 @@
 import { sequelize, Sequelize, BaseModel } from "../../../base/baseModel";
 import { BuildOptions, Model, Association } from "sequelize/types";
-import { SettingTypeEnum } from "../../../constants";
+import { SettingTypeEnum } from "../../../constants/setting.const";
 import {
   ISettingGroup,
   SettingGroupModel,

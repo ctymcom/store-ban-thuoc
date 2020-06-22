@@ -3,7 +3,7 @@ import _ from "lodash";
 import { Context } from "../../context";
 import { exampleService } from "./example.service";
 import { ParseQueryHelper, AuthHelper } from "../../../helpers";
-import { ROLES } from "../../../constants";
+import { ROLES } from "../../../constants/role.const";
 
 const Query = {
   getAllExample: async (root: any, args: any, context: Context) => {

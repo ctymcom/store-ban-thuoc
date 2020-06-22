@@ -1,6 +1,6 @@
 import express from "express";
 import * as json2csv from "json2csv";
-import { ROLES } from "../constants";
+import { ROLES } from "../constants/role.const";
 import { validateJSON } from "../helpers";
 import { IValidateSchema } from "../helpers";
 import { resError } from "../helpers/resError";

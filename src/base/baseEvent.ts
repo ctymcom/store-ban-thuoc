@@ -1,7 +1,7 @@
 import { AsyncFunction } from "async";
 import { Subject } from "rxjs";
 import { Logger } from "../loaders/logger";
-import { EventErrorTypeEnum } from "../constants";
+import { EventErrorTypeEnum } from "../constants/event.const";
 import { EventErrorModel } from "../graphql/modules/eventError/eventError.model";
 
 interface MapEvent<T> {
@@ -64,6 +64,7 @@ export class BaseEvent<T> {
   }
   static async resolve(type: EventErrorTypeEnum, data: any) {
     const event = BaseEvent.mapEvent[type];
+
     try {
       await event.func(data);
     } catch (error) {

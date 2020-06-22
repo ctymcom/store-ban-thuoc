@@ -2,7 +2,7 @@ import { Subject } from "rxjs";
 import { Logger } from "../loaders/logger";
 import { ErrorHelper } from "../base/error";
 import { EventErrorModel } from "../graphql/modules/eventError/eventError.model";
-import { EventErrorTypeEnum } from "../constants";
+import { EventErrorTypeEnum } from "../constants/event.const";
 import { BaseEvent } from "../base/baseEvent";
 import { AsyncFunction } from "async";
 import { ISetting } from "../graphql/modules/setting/setting.model";

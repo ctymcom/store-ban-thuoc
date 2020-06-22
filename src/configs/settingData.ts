@@ -1,4 +1,4 @@
-import { SettingTypeEnum } from "../constants";
+import { SettingTypeEnum } from "../constants/setting.const";
 
 export enum SettingGroupSlug {
   EXAMPLE_SLUG = "EXAMPLE_SLUG"

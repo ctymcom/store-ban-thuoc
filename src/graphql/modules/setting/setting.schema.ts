@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express';
-import { SettingTypeEnum } from '../../../constants';
+import { SettingTypeEnum } from '../../../constants/setting.const';
 
 const schema = gql`
   extend type Query {

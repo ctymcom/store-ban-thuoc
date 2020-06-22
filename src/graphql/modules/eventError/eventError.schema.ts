@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express';
-import { EventErrorStatusEnum } from '../../../constants';
+import { EventErrorStatusEnum } from '../../../constants/event.const';
 
 const schema = gql`
   extend type Query {
@@ -9,7 +9,6 @@ const schema = gql`
 
   extend type Mutation {
     resolveEventError(id: ID!): EventError
-    resolveMultiEventError(ids: [ID]): Int
   }
 
   type EventError {
