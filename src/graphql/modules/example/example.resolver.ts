@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import { Context } from "../../context";
-import { exampleController } from "./example.controller";
+import { exampleService } from "./example.service";
 import { ParseQueryHelper, AuthHelper } from "../../../helpers";
 import { ROLES } from "../../../constants";
 
@@ -10,12 +10,12 @@ const Query = {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
     let queryOptions = ParseQueryHelper.parseGetList(
       args.q,
-      exampleController.model.tableName
+      exampleService.model.tableName
     );
 
     let [records, total] = await Promise.all([
-      exampleController.findAll(queryOptions),
-      exampleController.count(queryOptions),
+      exampleService.findAll(queryOptions),
+      exampleService.count(queryOptions),
     ]);
 
     return {
@@ -29,7 +29,7 @@ const Query = {
     let queryOptions = ParseQueryHelper.parseGetOne(args.q);
     const { id } = args;
     queryOptions.where = { id };
-    return await exampleController.findOne(queryOptions);
+    return await exampleService.findOne(queryOptions);
   },
 };
 
@@ -37,22 +37,22 @@ const Mutation = {
   createExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { data } = args;
-    return await exampleController.create(data);
+    return await exampleService.create(data);
   },
   updateExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { id, data } = args;
-    return await exampleController.updateOne(id, data);
+    return await exampleService.updateOne(id, data);
   },
   deleteOneExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { id } = args;
-    return await exampleController.deleteOne(id);
+    return await exampleService.deleteOne(id);
   },
   deleteManyExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { ids } = args;
-    let result = await exampleController.deleteMany(ids);
+    let result = await exampleService.deleteMany(ids);
     return result;
   },
 };

@@ -1,4 +1,4 @@
-import { BaseController } from "./baseController";
+import { BaseService } from "./baseService";
 import { IBaseStatic } from "./baseModel";
 import { FindOptions } from "sequelize";
 import { ErrorHelper } from "../helpers";
@@ -6,7 +6,7 @@ import { ErrorHelper } from "../helpers";
 
 export interface IQueryOptions {}
 
-export class CrudController<M extends IBaseStatic> extends BaseController {
+export class CrudService<M extends IBaseStatic> extends BaseService {
   model: M;
 
   constructor(model: M) {

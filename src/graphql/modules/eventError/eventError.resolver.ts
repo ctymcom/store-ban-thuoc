@@ -1,19 +1,19 @@
 import _ from "lodash";
 
 import { Context } from "../../context";
-import { eventErrorController } from "./eventError.controller";
+import { eventErrorService } from "./eventError.service";
 import { ParseQueryHelper } from "../../../helpers";
 
 const Query = {
   getAllEventError: async (root: any, args: any, context: Context) => {
     let queryOptions = ParseQueryHelper.parseGetList(
       args.q,
-      eventErrorController.model.tableName
+      eventErrorService.model.tableName
     );
 
     let [records, total] = await Promise.all([
-      eventErrorController.findAll(queryOptions),
-      eventErrorController.count(queryOptions),
+      eventErrorService.findAll(queryOptions),
+      eventErrorService.count(queryOptions),
     ]);
 
     return {
@@ -24,32 +24,32 @@ const Query = {
   },
   getOneEventError: async (root: any, args: any, context: Context) => {
     const { id } = args;
-    return await eventErrorController.findOne({ where: { id } });
+    return await eventErrorService.findOne({ where: { id } });
   },
 };
 
 const Mutation = {
   resolveEventError: async (root: any, args: any, context: Context) => {
-    return await eventErrorController.resolveEventError(args);
+    return await eventErrorService.resolveEventError(args);
   },
   resolveMultiEventError: async(root: any, args: any, context: Context) => {
-    return await eventErrorController.resolveMultiEventError(args);
+    return await eventErrorService.resolveMultiEventError(args);
   }
   // createEventError: async (root: any, args: any, context: Context) => {
   //   const { data } = args;
-  //   return await eventErrorController.create(data);
+  //   return await eventErrorService.create(data);
   // },
   // updateEventError: async (root: any, args: any, context: Context) => {
   //   const { id, data } = args;
-  //   return await eventErrorController.updateOne(id, data);
+  //   return await eventErrorService.updateOne(id, data);
   // },
   // deleteOneEventError: async (root: any, args: any, context: Context) => {
   //   const { id } = args;
-  //   return await eventErrorController.deleteOne(id);
+  //   return await eventErrorService.deleteOne(id);
   // },
   // deleteManyEventError: async (root: any, args: any, context: Context) => {
   //   const { ids } = args;
-  //   let result = await eventErrorController.deleteMany(ids);
+  //   let result = await eventErrorService.deleteMany(ids);
   //   return result;
   // },
 };

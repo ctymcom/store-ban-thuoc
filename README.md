@@ -12,9 +12,9 @@ install hygen
 
 `hygen generate route <name>`
 
-## GENERATE CONTROLLER
+## GENERATE SERVICE
 
-`hygen generate controller <name>`
+`hygen generate service <name>`
 
 ## GENERATE MIGRATION
 

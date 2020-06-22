@@ -1,10 +1,10 @@
-import { CrudController } from "../../../base/crudController";
+import { CrudService } from "../../../base/crudService";
 import { EventErrorModel } from "./eventError.model";
 import { ErrorHelper } from "../../../base/error";
 import { EventErrorTypeEnum, EventErrorStatusEnum } from "../../../constants";
 import { exampleEvent } from "../../../events";
 import { BaseEvent } from "../../../base/baseEvent";
-class EventErrorController extends CrudController<typeof EventErrorModel> {
+class EventErrorService extends CrudService<typeof EventErrorModel> {
   constructor() {
     super(EventErrorModel);
   }
@@ -55,6 +55,6 @@ class EventErrorController extends CrudController<typeof EventErrorModel> {
   }
 }
 
-const eventErrorController = new EventErrorController();
+const eventErrorService = new EventErrorService();
 
-export { eventErrorController };
+export { eventErrorService };

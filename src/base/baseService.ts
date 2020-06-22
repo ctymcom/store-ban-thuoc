@@ -1,6 +1,6 @@
 import { sequelize, Sequelize } from "./baseModel";
 
-export class BaseController {
+export class BaseService {
   constructor() {}
 
   async transaction(options?: Sequelize.TransactionOptions) {

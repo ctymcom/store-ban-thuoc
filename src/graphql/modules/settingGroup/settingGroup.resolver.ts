@@ -1,19 +1,19 @@
 import _ from "lodash";
 
 import { Context } from "../../context";
-import { settingGroupController } from "./settingGroup.controller";
+import { settingGroupService } from "./settingGroup.service";
 import { ParseQueryHelper } from "../../../helpers";
 
 const Query = {
   getAllSettingGroup: async (root: any, args: any, context: Context) => {
     let queryOptions = ParseQueryHelper.parseGetList(
       args.q,
-      settingGroupController.model.tableName
+      settingGroupService.model.tableName
     );
 
     let [records, total] = await Promise.all([
-      settingGroupController.findAll(queryOptions),
-      settingGroupController.count(queryOptions),
+      settingGroupService.findAll(queryOptions),
+      settingGroupService.count(queryOptions),
     ]);
 
     return {
@@ -24,26 +24,26 @@ const Query = {
   },
   getOneSettingGroup: async (root: any, args: any, context: Context) => {
     const { id } = args;
-    return await settingGroupController.findOne({ where: { id } });
+    return await settingGroupService.findOne({ where: { id } });
   },
 };
 
 const Mutation = {
   createSettingGroup: async (root: any, args: any, context: Context) => {
     const { data } = args;
-    return await settingGroupController.create(data);
+    return await settingGroupService.create(data);
   },
   updateSettingGroup: async (root: any, args: any, context: Context) => {
     const { id, data } = args;
-    return await settingGroupController.updateOne(id, data);
+    return await settingGroupService.updateOne(id, data);
   },
   deleteOneSettingGroup: async (root: any, args: any, context: Context) => {
     const { id } = args;
-    return await settingGroupController.deleteOne(id);
+    return await settingGroupService.deleteOne(id);
   },
   deleteManySettingGroup: async (root: any, args: any, context: Context) => {
     const { ids } = args;
-    let result = await settingGroupController.deleteMany(ids);
+    let result = await settingGroupService.deleteMany(ids);
     return result;
   },
 };
