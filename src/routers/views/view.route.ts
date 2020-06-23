@@ -4,6 +4,7 @@ import {
   Response,
   NextFunction,
 } from "../../base/baseRoute";
+import { configs } from "../../configs";
 
 class ViewRoute extends BaseRoute {
   constructor() {
@@ -16,11 +17,15 @@ class ViewRoute extends BaseRoute {
   }
 
   async login(req: Request, res: Response) {
-    res.render("login");
+    res.render("login", {
+      config: configs.firebaseView,
+    });
   }
 
   async loginEmail(req: Request, res: Response) {
-    res.render("loginEmail");
+    res.render("loginEmail", {
+      config: configs.firebaseView,
+    });
   }
 }
 
