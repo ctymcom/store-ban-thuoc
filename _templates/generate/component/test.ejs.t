@@ -4,7 +4,7 @@ to: test/modules/<%= h.inflection.camelize(name, true) %>.test.ts
 import <%= h.inflection.camelize(name, true) %>Resolver from "../../src/graphql/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflection.camelize(name, true) %>.resolver";
 import { expect } from "chai";
 import { Context } from "../../src/graphql/context";
-import { ROLES } from "../../src/constants";
+import { ROLES } from "../../src/constants/role.const";
 import faker from "faker";
 import { <%= h.inflection.camelize(name) %>Model } from "../../src/graphql/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflection.camelize(name, true) %>.model";
 
