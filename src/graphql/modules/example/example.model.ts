@@ -1,12 +1,20 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose from "mongoose";
 import { MainConnection } from "../../../loaders/database";
-export interface IUser extends Document {
-  name: string;
-}
+import { BaseDocument } from "../../../base/baseModel";
+const Schema = mongoose.Schema;
 
-const UserSchema: Schema = new Schema({
-  name: { type: String },
-});
+export type IExample = BaseDocument & {
+  name: String;
+};
 
-// Export the model and return your IUser interface
-export const ExampleModel = MainConnection.model<IUser>("User", UserSchema);
+const examplesSchema = new Schema(
+  {
+    name: { type: String },
+  },
+  { timestamps: true }
+);
+
+export const ExampleModel: mongoose.Model<IExample> = MainConnection.model(
+  "Example",
+  examplesSchema
+);
