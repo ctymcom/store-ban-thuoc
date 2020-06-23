@@ -2,8 +2,8 @@
 // dotenv.config();
 import "./database";
 
-// if (!process.env.FIREBASE) throw new Error("Chưa config firebase");
-// if (!process.env.FIREBASE_VIEW) throw new Error("Chưa config firebase views");
+if (!process.env.FIREBASE) throw new Error("Chưa config firebase");
+if (!process.env.FIREBASE_VIEW) throw new Error("Chưa config firebase views");
 
 export default {
   port: process.env.PORT || 3000,
@@ -20,4 +20,6 @@ export default {
   secretKey: process.env.SECRET || "HkQlTCrDfYWezqEp494TjDUqBhSzQSnn",
   timezone: "+07:00",
   domain: "http://localhost:" + process.env.PORT || 3000,
+  firebase: JSON.parse(process.env.FIREBASE),
+  firebaseView: process.env.FIREBASE_VIEW,
 };
