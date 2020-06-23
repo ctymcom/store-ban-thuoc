@@ -1,25 +1,18 @@
 import exampleResolver from "../../src/graphql/modules/example/example.resolver";
 import { expect } from "chai";
-import { Context } from "../../src/graphql/context";
 import { ROLES } from "../../src/constants/role.const";
 import faker from "faker";
 import { ExampleModel } from "../../src/graphql/modules/example/example.model";
+import { getAdminContext } from "../utils/context";
 
 let example: any = {};
 let data = {
   name: faker.name.jobTitle(),
 };
+let context = getAdminContext();
 
 describe("# Test getAllExample", () => {
   it("shold return an array", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let result = await exampleResolver.Query.getAllExample({}, {}, context);
 
     expect(result).to.be.an("object");
@@ -35,14 +28,6 @@ describe("# Test getAllExample", () => {
 
 describe("# Test createExample", () => {
   it("shold return an array", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let result: any = await exampleResolver.Mutation.createExample(
       {},
       { data },
@@ -59,14 +44,6 @@ describe("# Test createExample", () => {
 
 describe("# Test getOneExample", () => {
   it("shold return an object", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let result: any = await exampleResolver.Query.getOneExample(
       {},
       { id: example.id },
@@ -82,14 +59,6 @@ describe("# Test getOneExample", () => {
 
 describe("# Test updateExample", () => {
   it("shold return an object", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     data.name = faker.name.title();
     let result: any = await exampleResolver.Mutation.updateExample(
       {},
@@ -110,14 +79,6 @@ describe("# Test updateExample", () => {
 
 describe("# Test deleteOneExample", () => {
   it("shold return an object", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     data.name = faker.name.title();
     let result: any = await exampleResolver.Mutation.deleteOneExample(
       {},
@@ -136,14 +97,6 @@ describe("# Test deleteOneExample", () => {
 
 describe("# Test deleteManyExample", () => {
   it("shold return an object", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let records = await ExampleModel.bulkCreate([
       {
         name: faker.name.title(),

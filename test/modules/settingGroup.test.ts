@@ -1,25 +1,18 @@
 import settingGroupResolver from "../../src/graphql/modules/settingGroup/settingGroup.resolver";
 import { expect } from "chai";
-import { Context } from "../../src/graphql/context";
 import { ROLES } from "../../src/constants/role.const";
 import faker from "faker";
 import { SettingGroupModel } from "../../src/graphql/modules/settingGroup/settingGroup.model";
+import { getAdminContext } from "../utils/context";
 
 let settingGroup: any = {};
 let data = {
   name: faker.name.jobTitle(),
 };
+let context = getAdminContext();
 
 describe("# Test getAllSettingGroup", () => {
   it("shold return an array", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let result = await settingGroupResolver.Query.getAllSettingGroup({}, {}, context);
 
     expect(result).to.be.an("object");

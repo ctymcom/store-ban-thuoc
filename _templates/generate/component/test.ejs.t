@@ -3,26 +3,19 @@ to: test/modules/<%= h.inflection.camelize(name, true) %>.test.ts
 ---
 import <%= h.inflection.camelize(name, true) %>Resolver from "../../src/graphql/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflection.camelize(name, true) %>.resolver";
 import { expect } from "chai";
-import { Context } from "../../src/graphql/context";
 import { ROLES } from "../../src/constants/role.const";
 import faker from "faker";
 import { <%= h.inflection.camelize(name) %>Model } from "../../src/graphql/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflection.camelize(name, true) %>.model";
+import { getAdminContext } from "../utils/context";
 
 let <%= h.inflection.camelize(name, true) %>: any = {};
 let data = {
   name: faker.name.jobTitle(),
 };
+let context = getAdminContext();
 
 describe("# Test getAll<%= h.inflection.camelize(name) %>", () => {
   it("shold return an array", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let result = await <%= h.inflection.camelize(name, true) %>Resolver.Query.getAll<%= h.inflection.camelize(name) %>({}, {}, context);
 
     expect(result).to.be.an("object");
@@ -38,14 +31,6 @@ describe("# Test getAll<%= h.inflection.camelize(name) %>", () => {
 
 describe("# Test create<%= h.inflection.camelize(name) %>", () => {
   it("shold return an array", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let result: any = await <%= h.inflection.camelize(name, true) %>Resolver.Mutation.create<%= h.inflection.camelize(name) %>(
       {},
       { data },
@@ -62,14 +47,6 @@ describe("# Test create<%= h.inflection.camelize(name) %>", () => {
 
 describe("# Test getOne<%= h.inflection.camelize(name) %>", () => {
   it("shold return an object", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let result: any = await <%= h.inflection.camelize(name, true) %>Resolver.Query.getOne<%= h.inflection.camelize(name) %>(
       {},
       { id: <%= h.inflection.camelize(name, true) %>.id },
@@ -85,14 +62,6 @@ describe("# Test getOne<%= h.inflection.camelize(name) %>", () => {
 
 describe("# Test update<%= h.inflection.camelize(name) %>", () => {
   it("shold return an object", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     data.name = faker.name.title();
     let result: any = await <%= h.inflection.camelize(name, true) %>Resolver.Mutation.update<%= h.inflection.camelize(name) %>(
       {},
@@ -113,14 +82,6 @@ describe("# Test update<%= h.inflection.camelize(name) %>", () => {
 
 describe("# Test deleteOne<%= h.inflection.camelize(name) %>", () => {
   it("shold return an object", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     data.name = faker.name.title();
     let result: any = await <%= h.inflection.camelize(name, true) %>Resolver.Mutation.deleteOne<%= h.inflection.camelize(name) %>(
       {},
@@ -139,14 +100,6 @@ describe("# Test deleteOne<%= h.inflection.camelize(name) %>", () => {
 
 describe("# Test deleteMany<%= h.inflection.camelize(name) %>", () => {
   it("shold return an object", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let records = await <%= h.inflection.camelize(name) %>Model.bulkCreate([
       {
         name: faker.name.title(),

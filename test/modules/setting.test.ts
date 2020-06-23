@@ -1,25 +1,18 @@
 import settingResolver from "../../src/graphql/modules/setting/setting.resolver";
 import { expect } from "chai";
-import { Context } from "../../src/graphql/context";
 import { ROLES } from "../../src/constants/role.const";
 import faker from "faker";
 import { SettingModel } from "../../src/graphql/modules/setting/setting.model";
+import { getAdminContext } from "../utils/context";
 
 let setting: any = {};
 let data = {
   name: faker.name.jobTitle(),
 };
+let context = getAdminContext();
 
 describe("# Test getAllSetting", () => {
   it("shold return an array", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let result = await settingResolver.Query.getAllSetting({}, {}, context);
 
     expect(result).to.be.an("object");
@@ -38,15 +31,6 @@ describe("# Test getOneSetting", () => {
     let data = {
       key: "EXAMPLE"
     }
-
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
-
     let result = await settingResolver.Query.getOneSetting({}, {key: data.key}, context);
 
     expect(result).to.be.an("object");
@@ -54,8 +38,6 @@ describe("# Test getOneSetting", () => {
     done();
   });
 });
-
-
 
 // describe("# Test createSetting", () => {
 //   it("shold return an array", async (done) => {

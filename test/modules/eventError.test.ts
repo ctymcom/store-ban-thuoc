@@ -1,9 +1,9 @@
 import eventErrorResolver from "../../src/graphql/modules/eventError/eventError.resolver";
 import { expect } from "chai";
-import { Context } from "../../src/graphql/context";
 import { ROLES } from "../../src/constants/role.const";
 import faker from "faker";
 import { EventErrorModel } from "../../src/graphql/modules/eventError/eventError.model";
+import { getAdminContext } from "../utils/context";
 
 let eventError: any = {};
 let data = {
@@ -12,13 +12,7 @@ let data = {
 
 describe("# Test getAllEventError", () => {
   it("shold return an array", async (done) => {
-    let context: Context = {
-      isAuth: true,
-      isTokenExpired: false,
-      tokenData: {
-        role_: ROLES.ADMIN,
-      },
-    };
+    let context = getAdminContext();
 
     let result = await eventErrorResolver.Query.getAllEventError({}, {}, context);
 
