@@ -4,7 +4,7 @@ import { SettingTypeEnum } from '../../../constants/setting.const';
 const schema = gql`
   extend type Query {
     getAllSetting(q: QueryGetListInput): SettingPageData
-    getOneSetting(id: ID!, q: QueryGetOneInput): Setting
+    getOneSetting(key: ID!): Setting
   }
 
   extend type Mutation {

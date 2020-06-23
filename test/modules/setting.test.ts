@@ -33,6 +33,30 @@ describe("# Test getAllSetting", () => {
   });
 });
 
+describe("# Test getOneSetting", () => {
+  it("shold return an object", async (done) => {
+    let data = {
+      key: "EXAMPLE"
+    }
+
+    let context: Context = {
+      isAuth: true,
+      isTokenExpired: false,
+      tokenData: {
+        role_: ROLES.ADMIN,
+      },
+    };
+
+    let result = await settingResolver.Query.getOneSetting({}, {key: data.key}, context);
+
+    expect(result).to.be.an("object");
+    expect(result.key).to.equal(data.key);
+    done();
+  });
+});
+
+
+
 // describe("# Test createSetting", () => {
 //   it("shold return an array", async (done) => {
 //     let context: Context = {
