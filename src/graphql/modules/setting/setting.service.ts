@@ -5,10 +5,18 @@ import { SETTING_DATA } from "../../../configs/settingData";
 import { SettingGroupModel } from "../settingGroup/settingGroup.model";
 import { v1 } from "uuid";
 class SettingService extends CrudService<typeof SettingModel> {
-  constructor() {
+    constructor() {
     super(SettingModel);
   }
 
+  async findByKey(key: string) {
+    return await this.model.findOne({
+      where: {
+        key,
+      },
+    });
+  }
+ 
   static async seedingData() {
     const transaction = await sequelize.transaction();
 

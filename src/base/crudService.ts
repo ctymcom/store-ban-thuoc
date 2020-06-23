@@ -14,7 +14,7 @@ export class CrudService<M extends IBaseStatic> extends BaseService {
     this.model = model;
   }
 
-  async findAll(options?: FindOptions) {
+  async findAll(options: FindOptions = { where: {} }) {
     return await this.model.findAll(options);
 
     // const [records, total] = await Promise.all([

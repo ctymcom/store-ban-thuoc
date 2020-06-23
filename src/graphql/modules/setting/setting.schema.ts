@@ -10,8 +10,6 @@ const schema = gql`
   extend type Mutation {
     createSetting(data: CreateSettingInput!): Setting,
     updateSetting(id: ID!, data: UpdateSettingInput!): Setting,
-    deleteOneSetting(id: ID!): Setting,
-    deleteManySetting(ids: [ID]): Int,
   }
 
   input CreateSettingInput {

@@ -27,8 +27,8 @@ const Query = {
     };
   },
   getOneSetting: async (root: any, args: any, context: Context) => {
-    const { id } = args;
-    return await settingService.findOne({ where: { id } });
+    const { key } = args;
+    return await settingService.findByKey(key);
   },
 };
 
@@ -40,15 +40,6 @@ const Mutation = {
   updateSetting: async (root: any, args: any, context: Context) => {
     const { id, data } = args;
     return await settingService.updateOne(id, data);
-  },
-  deleteOneSetting: async (root: any, args: any, context: Context) => {
-    const { id } = args;
-    return await settingService.deleteOne(id);
-  },
-  deleteManySetting: async (root: any, args: any, context: Context) => {
-    const { ids } = args;
-    let result = await settingService.deleteMany(ids);
-    return result;
   },
 };
 
