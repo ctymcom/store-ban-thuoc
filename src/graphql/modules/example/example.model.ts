@@ -1,67 +1,12 @@
-import { sequelize, Sequelize, BaseModel } from "../../../base/baseModel";
-import { BuildOptions, Model, Association } from "sequelize/types";
-
-export interface IExample extends BaseModel {
-  name?: string;
-
-  exampleId: string;
-
-  example?: IExample;
-
-  associations: {
-    example: Association<IExample, IExample>;
-  };
+import mongoose, { Schema, Document, Model } from "mongoose";
+import { MainConnection } from "../../../loaders/database";
+export interface IUser extends Document {
+  name: string;
 }
 
-export type IExampleStatic = typeof Model & {
-  new (values?: object, options?: BuildOptions): IExample;
-};
+const UserSchema: Schema = new Schema({
+  name: { type: String },
+});
 
-function init() {
-  const Example = <IExampleStatic>sequelize.define(
-    "tbl_example",
-    {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV1,
-        primaryKey: true,
-      },
-      name: {
-        type: Sequelize.TEXT,
-      },
-      exampleId: {
-        type: Sequelize.UUID,
-      },
-      createdAt: {
-        type: "TIMESTAMP",
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-        allowNull: false,
-      },
-      updatedAt: {
-        type: "TIMESTAMP",
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-        allowNull: false,
-      },
-      deletedAt: { type: "TIMESTAMP" },
-    },
-    {
-      underscored: false,
-      freezeTableName: true,
-      paranoid: false,
-      defaultScope: {
-        attributes: { exclude: ["deletedAt"] },
-      },
-    }
-  );
-
-  Example.belongsTo(Example, {
-    foreignKey: "exampleId",
-    as: "example",
-  });
-
-  return Example;
-}
-
-const ExampleModel = init();
-
-export { ExampleModel };
+// Export the model and return your IUser interface
+export const ExampleModel = MainConnection.model<IUser>("User", UserSchema);

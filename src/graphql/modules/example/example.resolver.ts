@@ -8,14 +8,15 @@ import { ROLES } from "../../../constants/role.const";
 const Query = {
   getAllExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
-    let queryOptions = ParseQueryHelper.parseGetList(
-      args.q,
-      exampleService.model.tableName
-    );
+    let queryOptions = {};
+    // ParseQueryHelper.parseGetList(
+    //   args.q,
+    //   exampleService.model.tableName
+    // );
 
     let [records, total] = await Promise.all([
-      exampleService.findAll(queryOptions),
-      exampleService.count(queryOptions),
+      exampleService.findAll({}),
+      exampleService.count({}),
     ]);
 
     return {
@@ -26,10 +27,10 @@ const Query = {
   },
   getOneExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
-    let queryOptions = ParseQueryHelper.parseGetOne(args.q);
+    let queryOptions = {}
+    // ParseQueryHelper.parseGetOne(args.q);
     const { id } = args;
-    queryOptions.where = { id };
-    return await exampleService.findOne(queryOptions);
+    return await exampleService.findOne({});
   },
 };
 

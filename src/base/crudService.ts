@@ -1,12 +1,13 @@
 import { BaseService } from "./baseService";
-import { IBaseStatic } from "./baseModel";
-import { FindOptions } from "sequelize";
+// import { IBaseStatic } from "./baseModel";
 import { ErrorHelper } from "../helpers";
 // import { baseError } from "./baseError";
+import mongoose, { Schema, Document, Model } from 'mongoose';
+
 
 export interface IQueryOptions {}
 
-export class CrudService<M extends IBaseStatic> extends BaseService {
+export class CrudService<M extends Model<Document, {}>> extends BaseService {
   model: M;
 
   constructor(model: M) {
@@ -14,25 +15,15 @@ export class CrudService<M extends IBaseStatic> extends BaseService {
     this.model = model;
   }
 
-  async findAll(options: FindOptions = { where: {} }) {
-    return await this.model.findAll(options);
-
-    // const [records, total] = await Promise.all([
-    //   this.model.findAll(options),
-    //   this.model.count(options),
-    // ]);
-
-    // return {
-    //   records,
-    //   total,
-    // };
+  async findAll(options: any) {
+    return await this.model.find(options);
   }
 
-  async findOne(options?: FindOptions) {
+  async findOne(options: any) {
     return await this.model.findOne(options);
   }
 
-  async count(options?: FindOptions) {
+  async count(options: any) {
     delete options.include;
     return await this.model.count(options);
   }
@@ -52,11 +43,11 @@ export class CrudService<M extends IBaseStatic> extends BaseService {
   async deleteOne(id: string) {
     let record = await this.model.findOne({ where: { id } });
     // if (!record) throw baseError.error("empty_data");
-    await record.destroy({});
+    await record.remove();
     return record;
   }
 
   async deleteMany(ids: string[]) {
-    return await this.model.destroy({ where: { id: { $in: ids } } });
+    return await this.model.remove({ where: { id: { $in: ids } } });
   }
 }

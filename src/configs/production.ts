@@ -1,9 +1,8 @@
 import base from "./base";
-const db = require("./database");
 
 export default {
   ...base,
   env: "production",
-  db: db.development,
+  maindb: process.env["MONGODB_URI"],
   debug: false,
 };
