@@ -10,7 +10,7 @@ export function resError(res: Response, error: any) {
   } else {
     res.status(error.info.status).json(error.info);
   }
-}
+} 
 
 function logUnknowError(error: Error) {
   console.log("*** UNKNOW ERROR ***");
