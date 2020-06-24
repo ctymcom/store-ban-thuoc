@@ -5,38 +5,34 @@ import { gql } from "apollo-server-express";
 
 const schema = gql`
   extend type Query {
-    getAllh.inflection.camelize(name) %>(q: QueryGetListInput): h.inflection.camelize(name) %>PageData
-    getOneh.inflection.camelize(name) %>(id: ID!): h.inflection.camelize(name) %>
+    getAll<%= h.inflection.camelize(name) %>(q: QueryGetListInput): <%= h.inflection.camelize(name) %>PageData
+    getOne<%= h.inflection.camelize(name) %>(id: ID!): <%= h.inflection.camelize(name) %>
   }
 
   extend type Mutation {
-    createh.inflection.camelize(name) %>(data: Createh.inflection.camelize(name) %>Input!): h.inflection.camelize(name) %>
-    updateh.inflection.camelize(name) %>(id: ID!, data: Updateh.inflection.camelize(name) %>Input!): h.inflection.camelize(name) %>
-    deleteOneh.inflection.camelize(name) %>(id: ID!): h.inflection.camelize(name) %>
-    deleteManyh.inflection.camelize(name) %>(ids: [ID]): Int
+    create<%= h.inflection.camelize(name) %>(data: Create<%= h.inflection.camelize(name) %>Input!): <%= h.inflection.camelize(name) %>
+    update<%= h.inflection.camelize(name) %>(id: ID!, data: Update<%= h.inflection.camelize(name) %>Input!): <%= h.inflection.camelize(name) %>
+    deleteOne<%= h.inflection.camelize(name) %>(id: ID!): <%= h.inflection.camelize(name) %>
+    deleteMany<%= h.inflection.camelize(name) %>(ids: [ID]): Int
   }
 
-  input Createh.inflection.camelize(name) %>Input {
+  input Create<%= h.inflection.camelize(name) %>Input {
     name: String
-    h.inflection.camelize(name, true) %>Id: String
   }
 
-  input Updateh.inflection.camelize(name) %>Input {
+  input Update<%= h.inflection.camelize(name) %>Input {
     name: String
-    h.inflection.camelize(name, true) %>Id: String
   }
 
-  type h.inflection.camelize(name) %> {
+  type <%= h.inflection.camelize(name) %> {
     id: String
     name: String
-    h.inflection.camelize(name, true) %>Id: String
-    h.inflection.camelize(name, true) %>: h.inflection.camelize(name) %>
     createdAt: DateTime
     updatedAt: DateTime
   }
 
-  type h.inflection.camelize(name) %>PageData {
-    data: [h.inflection.camelize(name) %>]
+  type <%= h.inflection.camelize(name) %>PageData {
+    data: [<%= h.inflection.camelize(name) %>]
     total: Int
     pagination: Pagination
   }
