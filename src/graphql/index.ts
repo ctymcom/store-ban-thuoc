@@ -39,7 +39,6 @@ export default (app: Express, httpServer: Server) => {
         offset: Int
         page: Int
       }
-
     `,
   ];
 

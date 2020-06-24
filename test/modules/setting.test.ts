@@ -29,9 +29,13 @@ describe("# Test getAllSetting", () => {
 describe("# Test getOneSetting", () => {
   it("shold return an object", async (done) => {
     let data = {
-      key: "EXAMPLE"
-    }
-    let result = await settingResolver.Query.getOneSetting({}, {key: data.key}, context);
+      key: "EXAMPLE",
+    };
+    let result = await settingResolver.Query.getOneSetting(
+      {},
+      { key: data.key },
+      context
+    );
 
     expect(result).to.be.an("object");
     expect(result.key).to.equal(data.key);

@@ -1,6 +1,6 @@
-import path from 'path';
-import fs from 'fs';
-import dotenv from 'dotenv';
+import path from "path";
+import fs from "fs";
+import dotenv from "dotenv";
 
 if (fs.existsSync(path.join(__dirname, "../../.env"))) {
   console.log(".env exists");

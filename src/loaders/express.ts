@@ -31,7 +31,7 @@ export default ({ app }: { app: express.Application }) => {
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpec, { customCss: swaggerTheme })
   );
-  
+
   app.get("/swagger.json", function (req, res) {
     res.setHeader("Content-Type", "application/json");
     res.send(swaggerSpec);

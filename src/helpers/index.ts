@@ -4,4 +4,4 @@ export * from "./parseQuery.helper";
 export * from "./auth.helper";
 export * from "./validateSchema.helper";
 export * from "./validateJSON.helper";
-export * from './firebase.helper';
+export * from "./firebase.helper";

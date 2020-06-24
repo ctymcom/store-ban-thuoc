@@ -14,7 +14,11 @@ describe("# Test getAllEventError", () => {
   it("shold return an array", async (done) => {
     let context = getAdminContext();
 
-    let result = await eventErrorResolver.Query.getAllEventError({}, {}, context);
+    let result = await eventErrorResolver.Query.getAllEventError(
+      {},
+      {},
+      context
+    );
 
     expect(result).to.be.an("object");
     expect(result.data).to.be.an("array");

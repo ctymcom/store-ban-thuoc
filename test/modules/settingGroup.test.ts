@@ -13,7 +13,11 @@ let context = getAdminContext();
 
 describe("# Test getAllSettingGroup", () => {
   it("shold return an array", async (done) => {
-    let result = await settingGroupResolver.Query.getAllSettingGroup({}, {}, context);
+    let result = await settingGroupResolver.Query.getAllSettingGroup(
+      {},
+      {},
+      context
+    );
 
     expect(result).to.be.an("object");
     expect(result.data).to.be.an("array");

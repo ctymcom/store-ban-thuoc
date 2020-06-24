@@ -25,7 +25,7 @@ const Query = {
   getOneExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
     const { id } = args;
-    return await exampleService.findOne({_id: id});
+    return await exampleService.findOne({ _id: id });
   },
 };
 

@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-express';
+import { gql } from "apollo-server-express";
 
 const schema = gql`
   extend type Mutation {
@@ -8,7 +8,6 @@ const schema = gql`
   type LoginData {
     token: String
   }
-
 `;
 
 export default schema;

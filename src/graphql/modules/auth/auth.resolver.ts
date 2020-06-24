@@ -15,9 +15,8 @@ const Mutation = {
       user: decode,
       token: TokenHelper.getAdministratorToken(),
     };
-  }
+  },
 };
-
 
 export default {
   Mutation,

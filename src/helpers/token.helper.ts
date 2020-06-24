@@ -20,7 +20,7 @@ export class TokenHelper {
 
   static getAdministratorToken() {
     return this.generateToken({
-      role_: ROLES.ADMIN
+      role_: ROLES.ADMIN,
     });
   }
 }

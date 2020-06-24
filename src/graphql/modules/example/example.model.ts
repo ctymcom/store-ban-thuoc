@@ -5,19 +5,19 @@ const Schema = mongoose.Schema;
 
 export type IExample = BaseDocument & {
   name?: string;
-  exampleId?: string
+  exampleId?: string;
 };
 
 const exampleSchema = new Schema(
   {
     name: { type: String },
-    exampleId: { type: Schema.Types.ObjectId, ref: 'Example' },
+    exampleId: { type: Schema.Types.ObjectId, ref: "Example" },
   },
   { timestamps: true }
 );
 
 // exampleSchema.indexes.createIndex( { name: "text", description: "text" } )
-exampleSchema.index({ name: 'text' }, { weights: { name: 2 } });
+exampleSchema.index({ name: "text" }, { weights: { name: 2 } });
 
 export const ExampleModel: mongoose.Model<IExample> = MainConnection.model(
   "Example",

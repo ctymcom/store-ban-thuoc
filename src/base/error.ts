@@ -111,7 +111,6 @@ export class BaseErrorHelper {
 }
 
 export class ErrorHelper extends BaseErrorHelper {
- 
   static userNotExist() {
     return new BaseError(403, "-103", "Người dùng không tồn tại");
   }

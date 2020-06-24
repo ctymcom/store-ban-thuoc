@@ -1,10 +1,10 @@
 import { SettingTypeEnum } from "../constants/setting.const";
 
 export enum SettingGroupSlug {
-  EXAMPLE_SLUG = "EXAMPLE_SLUG"
+  EXAMPLE_SLUG = "EXAMPLE_SLUG",
 }
 export enum SettingKey {
-  EXAMPLE = "EXAMPLE"
+  EXAMPLE = "EXAMPLE",
 }
 export const SETTING_DATA = [
   {
@@ -21,7 +21,7 @@ export const SETTING_DATA = [
         isActive: true,
         isPrivate: true,
         readOnly: false,
-      }
+      },
     ],
   },
 ];
