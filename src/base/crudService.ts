@@ -36,20 +36,27 @@ export class CrudService<M extends Model<Document, {}>> extends BaseService {
   }
 
   async updateOne(id: string, data: any) {
-    await this.model.update(data, { where: { id } });
-    let record = await this.model.findOne({ where: { id } });
-    // if (!record) throw baseError.error("empty_data");
-    if (!record) throw ErrorHelper.duplicateError("");
+    await this.model.updateOne({ _id: id }, data);
+    let record = await this.model.findOne({ _id: id });
+    if (!record) throw ErrorHelper.recoredNotFound("Không tìm thấy dữ liệu");
     return record;
   }
 
   async deleteOne(id: string) {
-    let record = await this.model.findOne({ where: { id } });
+    let record = await this.model.findOne({
+      _id: id,
+    });
     await record.remove();
     return record;
   }
 
   async deleteMany(ids: string[]) {
-    return await this.model.remove({ where: { id: { $in: ids } } });
+    let result = await this.model.deleteMany({
+      _id: {
+        $in: ids,
+      },
+    });
+
+    return result.deletedCount;
   }
 }
