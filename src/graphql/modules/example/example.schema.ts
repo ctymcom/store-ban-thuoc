@@ -3,7 +3,7 @@ import { gql } from "apollo-server-express";
 const schema = gql`
   extend type Query {
     getAllExample(q: QueryGetListInput): ExamplePageData
-    getOneExample(id: ID!, q: QueryGetOneInput): Example
+    getOneExample(id: ID!): Example
   }
 
   extend type Mutation {

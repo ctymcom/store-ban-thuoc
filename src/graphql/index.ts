@@ -29,24 +29,17 @@ export default (app: Express, httpServer: Server) => {
         limit: Int
         offset: Int
         page: Int
-        order: [[String]]
-        include: [IncludeInput]
+        order: Mixed
         filter: Mixed
         search: String
       }
-      input QueryGetOneInput {
-        include: [IncludeInput]
-      }
+
       type Pagination {
         limit: Int
         offset: Int
         page: Int
       }
 
-      input IncludeInput {
-        association: String
-        include: [IncludeInput]
-      }
     `,
   ];
 

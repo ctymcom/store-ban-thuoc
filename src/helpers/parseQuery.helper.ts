@@ -1,41 +1,36 @@
-import { FindOptions, IncludeOptions } from "sequelize/types";
 import { configs } from "../configs";
 import * as _ from "lodash";
 // import { Sequelize } from "../base/baseModel";
 
-interface IParseQuery {
-  page?: string;
-  limit?: string;
-  offset?: string;
-  include?: string | any;
-  order?: string;
+export interface IParseQuery {
+  page?: number;
+  limit?: number;
+  offset?: number;
+  order?: any;
   filter?: any;
-  search: string;
+  search?: string;
 }
 
 export class ParseQueryHelper {
-  // static parseGetList(query: any = {}, tableName: string) {
-  //   let options: FindOptions = {};
+  static parseGetList(query: any = {}) {
+    let options: IParseQuery = {};
 
-  //   let paging = this.parsePagination(query);
-  //   options.limit = paging.limit;
-  //   options.offset = paging.offset;
-  //   (options as any).pagination = paging;
+    let paging = this.parsePagination(query);
+    options.limit = paging.limit;
+    options.offset = paging.offset;
+    (options as any).pagination = paging;
 
-  //   options.order = this.parseSort(query);
+    options.order = this.parseSort(query);
 
-  //   // Filter
-  //   options.where = this.parseFilter(query);
+    // Filter
+    options.filter = this.parseFilter(query);
 
-  //   // Join Table
-  //   options.include = this.parseInclude(query);
+    // options = this.parseSearch(options, query);
 
-  //   options = this.parseSearch(options, query, tableName);
+    console.log(options);
 
-  //   console.log(options);
-
-  //   return options;
-  // }
+    return options;
+  }
 
   // static parseSearch(
   //   options: FindOptions,
@@ -90,33 +85,26 @@ export class ParseQueryHelper {
   //   return includeResult;
   // }
 
-  // static parseSort(query: IParseQuery) {
-  //   if (Array.isArray(query.order)) {
-  //     return query.order;
-  //   }
+  static parseSort(query: IParseQuery) {
+    return query.order || {};
+  }
 
-  //   const order = JSON.parse(query.order || `[["createdAt", "DESC"]]`) || [
-  //     ["createdAt", "DESC"],
-  //   ];
-  //   return order;
-  // }
+  static parseFilter(query: IParseQuery) {
+    // const filter = JSON.parse(query.filter || "{}");
+    return query.filter || {};
+  }
 
-  // static parseFilter(query: IParseQuery) {
-  //   // const filter = JSON.parse(query.filter || "{}");
-  //   return query.filter || {};
-  // }
+  static parsePagination(query: IParseQuery) {
+    const page = query.page || 1;
+    const limit = query.limit || configs.query.limit;
+    const offset = query.offset || (page - 1) * limit;
 
-  // static parsePagination(query: IParseQuery) {
-  //   const page = parseInt(query.page) || 1;
-  //   const limit = parseInt(query.limit) || configs.query.limit;
-  //   const offset = parseInt(query.offset) || (page - 1) * limit;
-
-  //   return {
-  //     limit,
-  //     offset,
-  //     page,
-  //   };
-  // }
+    return {
+      limit,
+      offset,
+      page,
+    };
+  }
 
   // // static parseGetOne(query: any = {}) {
   // //   let options: FindOptions = {};

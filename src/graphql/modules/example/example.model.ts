@@ -4,12 +4,14 @@ import { BaseDocument } from "../../../base/baseModel";
 const Schema = mongoose.Schema;
 
 export type IExample = BaseDocument & {
-  name: String;
+  name?: string;
+  exampleId?: string
 };
 
 const examplesSchema = new Schema(
   {
     name: { type: String },
+    exampleId: { type: Schema.Types.ObjectId, ref: 'Example' },
   },
   { timestamps: true }
 );

@@ -1,9 +1,8 @@
 import { BaseService } from "./baseService";
 // import { IBaseStatic } from "./baseModel";
-import { ErrorHelper } from "../helpers";
+import { ErrorHelper, IParseQuery } from "../helpers";
 // import { baseError } from "./baseError";
-import mongoose, { Schema, Document, Model } from 'mongoose';
-
+import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface IQueryOptions {}
 
@@ -15,17 +14,20 @@ export class CrudService<M extends Model<Document, {}>> extends BaseService {
     this.model = model;
   }
 
-  async findAll(options: any) {
-    return await this.model.find(options);
-  }
+    async findAll(options: IParseQuery) {
+      return await this.model
+        .find(options.filter)
+        .sort(options.order)
+        .limit(options.limit)
+        .skip(options.offset).exec();
+    }
 
-  async findOne(options: any) {
+  async findOne(options: IParseQuery) {
     return await this.model.findOne(options);
   }
 
-  async count(options: any) {
-    delete options.include;
-    return await this.model.count(options);
+  async count(options: IParseQuery) {
+    return await this.model.countDocuments(options.filter);
   }
 
   async create(data: any) {
@@ -42,7 +44,6 @@ export class CrudService<M extends Model<Document, {}>> extends BaseService {
 
   async deleteOne(id: string) {
     let record = await this.model.findOne({ where: { id } });
-    // if (!record) throw baseError.error("empty_data");
     await record.remove();
     return record;
   }

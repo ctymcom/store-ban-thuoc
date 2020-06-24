@@ -4,19 +4,16 @@ import { Context } from "../../context";
 import { exampleService } from "./example.service";
 import { ParseQueryHelper, AuthHelper } from "../../../helpers";
 import { ROLES } from "../../../constants/role.const";
+import { ExampleModel } from "./example.model";
 
 const Query = {
   getAllExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
-    let queryOptions = {};
-    // ParseQueryHelper.parseGetList(
-    //   args.q,
-    //   exampleService.model.tableName
-    // );
+    let queryOptions = ParseQueryHelper.parseGetList(args.q);
 
     let [records, total] = await Promise.all([
-      exampleService.findAll({}),
-      exampleService.count({}),
+      exampleService.findAll(queryOptions),
+      exampleService.count(queryOptions),
     ]);
 
     return {
@@ -27,7 +24,7 @@ const Query = {
   },
   getOneExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
-    let queryOptions = {}
+    let queryOptions = {};
     // ParseQueryHelper.parseGetOne(args.q);
     const { id } = args;
     return await exampleService.findOne({});
@@ -58,7 +55,11 @@ const Mutation = {
   },
 };
 
-const Example = {};
+const Example = {
+  example: async (root: any, args: any, context: Context) => {
+    return await ExampleModel.findOne({ _id: root["exampleId"] });
+  },
+};
 
 export default {
   Query,
