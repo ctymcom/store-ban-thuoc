@@ -23,8 +23,8 @@ export class CrudService<M extends Model<Document, {}>> extends BaseService {
       .exec();
   }
 
-  async findOne(options: IParseQuery) {
-    return await this.model.findOne(options);
+  async findOne(filter: any) {
+    return await this.model.findOne(filter);
   }
 
   async count(options: IParseQuery) {
