@@ -22,4 +22,11 @@ describe("Functional TokenHelper", () => {
     expect(payload.test).to.equal(data.test);
     done();
   });
+
+  it("generate a admin token", (done) => {
+    token = TokenHelper.getAdministratorToken();
+    expect(token).to.be.a("string");
+    done();
+  });
+
 });

@@ -9,6 +9,5 @@ export function validateJSON(data: any, schema: IValidateSchema) {
   } else {
     let message = result.errors.map((err) => err.message).toString();
     throw ErrorHelper.validateJSONError(message);
-    // throw baseError.validationError(message);
   }
 }
