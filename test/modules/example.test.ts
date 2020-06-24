@@ -46,9 +46,13 @@ describe("# Test getOneExample", () => {
   it("shold return an object", async (done) => {
     let result: any = await exampleResolver.Query.getOneExample(
       {},
-      { id: example.id },
+      { id: example._id },
       context
     );
+
+    console.log(example);
+    console.log(result);
+
     result = result.toJSON();
 
     expect(result).to.be.an("object");
@@ -63,7 +67,7 @@ describe("# Test updateExample", () => {
     let result: any = await exampleResolver.Mutation.updateExample(
       {},
       {
-        id: example.id,
+        id: example._id,
         data: data,
       },
       context
@@ -83,7 +87,7 @@ describe("# Test deleteOneExample", () => {
     let result: any = await exampleResolver.Mutation.deleteOneExample(
       {},
       {
-        id: example.id,
+        id: example._id,
       },
       context
     );
@@ -97,7 +101,7 @@ describe("# Test deleteOneExample", () => {
 
 describe("# Test deleteManyExample", () => {
   it("shold return an object", async (done) => {
-    let records = await ExampleModel.bulkCreate([
+    let records = await ExampleModel.create([
       {
         name: faker.name.title(),
       },

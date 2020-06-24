@@ -4,19 +4,19 @@ to: src/graphql/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflectio
 import _ from "lodash";
 
 import { Context } from "../../context";
-import { <%= h.inflection.camelize(name, true) %>Service } from "./<%= h.inflection.camelize(name, true) %>.service";
-import { ParseQueryHelper } from "../../../helpers";
+import { h.inflection.camelize(name, true) %>Service } from "./h.inflection.camelize(name, true) %>.service";
+import { ParseQueryHelper, AuthHelper } from "../../../helpers";
+import { ROLES } from "../../../constants/role.const";
+import { h.inflection.camelize(name) %>Model } from "./h.inflection.camelize(name, true) %>.model";
 
 const Query = {
-  getAll<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
-    let queryOptions = ParseQueryHelper.parseGetList(
-      args.q,
-      <%= h.inflection.camelize(name, true) %>Service.model.tableName
-    );
+  getAllh.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+    AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
+    let queryOptions = ParseQueryHelper.parseGetList(args.q);
 
     let [records, total] = await Promise.all([
-      <%= h.inflection.camelize(name, true) %>Service.findAll(queryOptions),
-      <%= h.inflection.camelize(name, true) %>Service.count(queryOptions),
+      h.inflection.camelize(name, true) %>Service.findAll(queryOptions),
+      h.inflection.camelize(name, true) %>Service.count(queryOptions),
     ]);
 
     return {
@@ -25,36 +25,45 @@ const Query = {
       pagination: (queryOptions as any).pagination,
     };
   },
-  getOne<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+  getOneh.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+    AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
     const { id } = args;
-    return await <%= h.inflection.camelize(name, true) %>Service.findOne({ where: { id } });
+    return await h.inflection.camelize(name, true) %>Service.findOne({ _id: id });
   },
 };
 
 const Mutation = {
-  create<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+  createh.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { data } = args;
-    return await <%= h.inflection.camelize(name, true) %>Service.create(data);
+    return await h.inflection.camelize(name, true) %>Service.create(data);
   },
-  update<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+  updateh.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { id, data } = args;
-    return await <%= h.inflection.camelize(name, true) %>Service.updateOne(id, data);
+    return await h.inflection.camelize(name, true) %>Service.updateOne(id, data);
   },
-  deleteOne<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+  deleteOneh.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { id } = args;
-    return await <%= h.inflection.camelize(name, true) %>Service.deleteOne(id);
+    return await h.inflection.camelize(name, true) %>Service.deleteOne(id);
   },
-  deleteMany<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+  deleteManyh.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
+    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { ids } = args;
-    let result = await <%= h.inflection.camelize(name, true) %>Service.deleteMany(ids);
+    let result = await h.inflection.camelize(name, true) %>Service.deleteMany(ids);
     return result;
   },
 };
 
-const <%= h.inflection.camelize(name) %> = {};
+const h.inflection.camelize(name) %> = {
+  h.inflection.camelize(name, true) %>: async (root: any, args: any, context: Context) => {
+    return await h.inflection.camelize(name) %>Model.findOne({ _id: root["h.inflection.camelize(name, true) %>Id"] });
+  },
+};
 
 export default {
   Query,
   Mutation,
-  <%= h.inflection.camelize(name) %>,
+  h.inflection.camelize(name) %>,
 };
