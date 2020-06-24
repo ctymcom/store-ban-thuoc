@@ -8,6 +8,7 @@ export interface IParseQuery {
   offset?: number;
   order?: any;
   filter?: any;
+  select?: any;
   search?: string;
 }
 
@@ -25,50 +26,23 @@ export class ParseQueryHelper {
     // Filter
     options.filter = this.parseFilter(query);
 
-    // options = this.parseSearch(options, query);
+    options = this.parseSearch(options, query);
 
     console.log(options);
 
     return options;
   }
 
-  // static parseSearch(
-  //   options: FindOptions,
-  //   query: IParseQuery,
-  //   tableName: string
-  // ) {
-  //   if (query.search) {
-  //     query.search = query.search.trim() + " ";
-  //     options.where = {
-  //       ...options.where,
-  //       [Sequelize.Op.and]: [
-  //         Sequelize.literal(
-  //           `${tableName}._search @@ plainto_tsquery('usimple', :search)`
-  //         ),
-  //       ],
-  //     };
+  static parseSearch(options: IParseQuery, query: IParseQuery) {
+    if (query.search) {
+      query.search = query.search.trim() + " ";
+      _.set(options, "filter.$text.$search", query.search);
+      options.select = { score: { $meta: "textScore" } };
+      options.order = { score: { $meta: "textScore" } };
+    }
 
-  //     options.replacements = {
-  //       search: query.search,
-  //     };
-
-  //     delete options.order;
-  //     options.order = Sequelize.literal(`rank DESC`);
-
-  //     options.attributes = {
-  //       include: [
-  //         [
-  //           Sequelize.literal(
-  //             `ts_rank_cd(${tableName}._search, plainto_tsquery('usimple', :search))`
-  //           ),
-  //           "rank",
-  //         ],
-  //       ],
-  //     };
-  //   }
-
-  //   return options;
-  // }
+    return options;
+  }
 
   // static parseInclude(query: IParseQuery) {
   //   let include: string[] = [];

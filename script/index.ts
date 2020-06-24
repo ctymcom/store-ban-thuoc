@@ -11,9 +11,7 @@ let n = 1000;
 faker.locale = "vi";
 
 async function run() {
-  await ExampleModel.destroy({
-    where: {},
-  });
+  await ExampleModel.deleteMany({});
   let arr = [];
 
   for (let i = 0; i < n; i++) {
@@ -23,7 +21,7 @@ async function run() {
   }
 
   console.log(arr);
-  await ExampleModel.bulkCreate(arr);
+  await ExampleModel.create(arr);
 }
 
 run();

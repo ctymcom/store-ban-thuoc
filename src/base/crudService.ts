@@ -14,13 +14,14 @@ export class CrudService<M extends Model<Document, {}>> extends BaseService {
     this.model = model;
   }
 
-    async findAll(options: IParseQuery) {
-      return await this.model
-        .find(options.filter)
-        .sort(options.order)
-        .limit(options.limit)
-        .skip(options.offset).exec();
-    }
+  async findAll(options: IParseQuery) {
+    return await this.model
+      .find(options.filter, options.select)
+      .sort(options.order)
+      .limit(options.limit)
+      .skip(options.offset)
+      .exec();
+  }
 
   async findOne(options: IParseQuery) {
     return await this.model.findOne(options);

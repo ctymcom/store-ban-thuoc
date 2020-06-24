@@ -8,7 +8,7 @@ export type IExample = BaseDocument & {
   exampleId?: string
 };
 
-const examplesSchema = new Schema(
+const exampleSchema = new Schema(
   {
     name: { type: String },
     exampleId: { type: Schema.Types.ObjectId, ref: 'Example' },
@@ -16,7 +16,10 @@ const examplesSchema = new Schema(
   { timestamps: true }
 );
 
+// exampleSchema.indexes.createIndex( { name: "text", description: "text" } )
+exampleSchema.index({ name: 'text' }, { weights: { name: 2 } });
+
 export const ExampleModel: mongoose.Model<IExample> = MainConnection.model(
   "Example",
-  examplesSchema
+  exampleSchema
 );
