@@ -2,7 +2,6 @@ import _ from "lodash";
 
 import { Context } from "../../context";
 import { ParseQueryHelper, firebaseHelper } from "../../../helpers";
-// import { exampleEvent } from "../../../events";
 import { TokenHelper } from "../../../helpers/token.helper";
 
 const Mutation = {
