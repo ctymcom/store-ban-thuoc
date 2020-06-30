@@ -5,6 +5,7 @@ import { exampleService } from "./example.service";
 import { ParseQueryHelper, AuthHelper } from "../../../helpers";
 import { ROLES } from "../../../constants/role.const";
 import { ExampleModel } from "./example.model";
+import { exampleEvent } from "../../../events/example.event";
 
 const Query = {
   getAllExample: async (root: any, args: any, context: Context) => {
