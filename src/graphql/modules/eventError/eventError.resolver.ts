@@ -9,18 +9,7 @@ import { EventErrorModel } from "./eventError.model";
 const Query = {
   getAllEventError: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
-    let queryOptions = ParseQueryHelper.parseGetList(args.q);
-
-    let [records, total] = await Promise.all([
-      eventErrorService.findAll(queryOptions),
-      eventErrorService.count(queryOptions),
-    ]);
-
-    return {
-      data: records,
-      total: total,
-      pagination: (queryOptions as any).pagination,
-    };
+    return await eventErrorService.fetch(args.q);
   },
   getOneEventError: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);

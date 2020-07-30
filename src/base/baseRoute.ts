@@ -14,18 +14,16 @@ export interface Request extends express.Request {
 export interface Response extends express.Response {}
 export interface NextFunction extends express.NextFunction {}
 
-export class BaseRoute {
+export abstract class BaseRoute {
   router: express.Router;
   constructor() {
     this.router = express.Router();
     this.customRouting();
   }
 
-  customRouting() {}
+  abstract customRouting(): void;
 
-  route(
-    func: (req: Request, res: Response, next: NextFunction) => Promise<any>
-  ) {
+  route(func: (req: Request, res: Response, next: NextFunction) => Promise<any>) {
     return (req: Request, res: Response, next: NextFunction) =>
       func
         .bind(this)(req, res, next)
@@ -35,9 +33,7 @@ export class BaseRoute {
   }
   response(res: Response, data: any, moreData: any = {}) {
     res.status(200).json({
-      ...{
-        data: data,
-      },
+      data,
       ...moreData,
     });
   }

@@ -38,6 +38,7 @@ export default (app: Express, httpServer: Server) => {
         limit: Int
         offset: Int
         page: Int
+        total: Int
       }
     `,
   ];
@@ -47,9 +48,7 @@ export default (app: Express, httpServer: Server) => {
   };
   let defaultFragment: any = {};
 
-  const ModuleFiles = UtilsHelper.walkSyncFiles(
-    path.join(__dirname, "modules")
-  );
+  const ModuleFiles = UtilsHelper.walkSyncFiles(path.join(__dirname, "modules"));
   ModuleFiles.filter((f: any) => /(.*).schema.js$/.test(f)).map((f: any) => {
     const { default: schema } = require(f);
     typeDefs.push(schema);
@@ -122,7 +121,5 @@ export default (app: Express, httpServer: Server) => {
   });
   server.installSubscriptionHandlers(httpServer);
 
-  console.log(
-    `\n Running Apollo Server on Path: ${configs.domain}${server.graphqlPath}`
-  );
+  console.log(`\n Running Apollo Server on Path: ${configs.domain}${server.graphqlPath}`);
 };

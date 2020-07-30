@@ -12,18 +12,7 @@ import { <%= h.inflection.camelize(name) %>Model } from "./<%= h.inflection.came
 const Query = {
   getAll<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
-    let queryOptions = ParseQueryHelper.parseGetList(args.q);
-
-    let [records, total] = await Promise.all([
-      <%= h.inflection.camelize(name, true) %>Service.findAll(queryOptions),
-      <%= h.inflection.camelize(name, true) %>Service.count(queryOptions),
-    ]);
-
-    return {
-      data: records,
-      total: total,
-      pagination: (queryOptions as any).pagination,
-    };
+    return <%= h.inflection.camelize(name, true) %>Service.fetch(args.q);
   },
   getOne<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);

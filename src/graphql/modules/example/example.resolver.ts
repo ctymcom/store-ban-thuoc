@@ -10,18 +10,7 @@ import { exampleEvent } from "../../../events/example.event";
 const Query = {
   getAllExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
-    let queryOptions = ParseQueryHelper.parseGetList(args.q);
-
-    let [records, total] = await Promise.all([
-      exampleService.findAll(queryOptions),
-      exampleService.count(queryOptions),
-    ]);
-
-    return {
-      data: records,
-      total: total,
-      pagination: (queryOptions as any).pagination,
-    };
+    return exampleService.fetch(args.q);
   },
   getOneExample: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);

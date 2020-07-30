@@ -11,7 +11,7 @@ interface MapEvent<T> {
   };
 }
 
-export class BaseEvent<T> {
+export abstract class BaseEvent<T> {
   static mapEvent: MapEvent<any> = {};
 
   constructor() {}
