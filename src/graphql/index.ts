@@ -3,6 +3,7 @@ import { Express } from "express";
 import _ from "lodash";
 import path from "path";
 import GraphQLDateTime from "graphql-type-datetime";
+import morgan from "morgan";
 
 import { Server } from "http";
 import minifyGql from "minify-graphql-loader";
@@ -10,6 +11,7 @@ import { configs } from "../configs";
 import { onContext } from "./context";
 import { UtilsHelper, ErrorHelper } from "../helpers";
 import { Logger } from "../loaders/logger";
+import { Request } from "../base/baseRoute";
 export default (app: Express, httpServer: Server) => {
   const typeDefs = [
     gql`
@@ -89,19 +91,26 @@ export default (app: Express, httpServer: Server) => {
   });
 
   const defaultFragmentFields = Object.keys(defaultFragment);
-  app.use("/graphql", (req, res, next) => {
-    if (req.body && req.body.query) {
-      let minify = minifyGql(req.body.query);
-      for (const field of defaultFragmentFields) {
-        minify = minify.replace(
-          new RegExp(field + "( |})", "g"),
-          field + defaultFragment[field] + "$1"
-        );
+  morgan.token("gql-query", (req: Request) => req.body.query);
+  app.use(
+    "/graphql",
+    (req, res, next) => {
+      if (req.body && req.body.query) {
+        let minify = minifyGql(req.body.query);
+        for (const field of defaultFragmentFields) {
+          minify = minify.replace(
+            new RegExp(field + "( |})", "g"),
+            field + defaultFragment[field] + "$1"
+          );
+        }
+        req.body.query = minify;
       }
-      req.body.query = minify;
-    }
-    next();
-  });
+      next();
+    },
+    morgan(
+      ":remote-addr :remote-user :method :url :gql-query HTTP/:http-version :status :res[content-length] - :response-time ms"
+    )
+  );
 
   server.applyMiddleware({
     app,

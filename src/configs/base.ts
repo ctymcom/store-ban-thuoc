@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
+const pjson = require("../../package.json");
 
 if (fs.existsSync(path.join(__dirname, "../../.env"))) {
   console.log(".env exists");
@@ -17,6 +18,9 @@ if (!process.env.FIREBASE_VIEW) throw new Error("Chưa config firebase views");
 if (!process.env.MONGODB_URI) throw new Error("Missing Config MONGODB_URI");
 
 export default {
+  name: pjson.name,
+  version: pjson.version,
+  description: pjson.description,
   port: process.env.PORT || 3000,
   basicAuth: {
     users: { mcom: "mcom@123" },
