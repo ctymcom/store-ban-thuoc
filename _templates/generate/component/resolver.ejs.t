@@ -1,13 +1,10 @@
 ---
 to: src/graphql/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflection.camelize(name, true) %>.resolver.ts
 ---
-import _ from "lodash";
-
+import { ROLES } from "../../../constants/role.const";
+import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
 import { <%= h.inflection.camelize(name, true) %>Service } from "./<%= h.inflection.camelize(name, true) %>.service";
-import { ParseQueryHelper, AuthHelper } from "../../../helpers";
-import { ROLES } from "../../../constants/role.const";
-import { <%= h.inflection.camelize(name) %>Model } from "./<%= h.inflection.camelize(name, true) %>.model";
 
 const Query = {
   getAll<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {

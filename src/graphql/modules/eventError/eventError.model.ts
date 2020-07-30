@@ -1,10 +1,7 @@
 import mongoose from "mongoose";
 import { MainConnection } from "../../../loaders/database";
-import { BaseDocument } from "../../../base/baseModel";
-import {
-  EventErrorTypeEnum,
-  EventErrorStatusEnum,
-} from "../../../constants/event.const";
+import { BaseDocument, ModelLoader } from "../../../base/baseModel";
+import { EventErrorTypeEnum, EventErrorStatusEnum } from "../../../constants/event.const";
 const Schema = mongoose.Schema;
 
 export type IEventError = BaseDocument & {
@@ -13,7 +10,7 @@ export type IEventError = BaseDocument & {
   errorName?: string;
   errorMessage?: string;
   data?: any;
-  status?: EventErrorStatusEnum
+  status?: EventErrorStatusEnum;
 };
 
 const eventErrorSchema = new Schema(
@@ -36,7 +33,7 @@ const eventErrorSchema = new Schema(
     status: {
       type: String,
       enum: Object.keys(EventErrorStatusEnum),
-      default: EventErrorStatusEnum.error
+      default: EventErrorStatusEnum.error,
     },
   },
   { timestamps: true }
@@ -48,3 +45,5 @@ export const EventErrorModel: mongoose.Model<IEventError> = MainConnection.model
   "EventError",
   eventErrorSchema
 );
+
+export const EventErrorLoader = ModelLoader<IEventError>(EventErrorModel);

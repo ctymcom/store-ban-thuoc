@@ -3,7 +3,7 @@ to: src/graphql/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflectio
 ---
 import mongoose from "mongoose";
 import { MainConnection } from "../../../loaders/database";
-import { BaseDocument } from "../../../base/baseModel";
+import { BaseDocument, ModelLoader } from "../../../base/baseModel";
 const Schema = mongoose.Schema;
 
 export type I<%= h.inflection.camelize(name) %> = BaseDocument & {
@@ -23,3 +23,5 @@ export const <%= h.inflection.camelize(name) %>Model: mongoose.Model<I<%= h.infl
   "<%= h.inflection.camelize(name) %>",
   <%= h.inflection.camelize(name, true) %>Schema
 );
+
+export const <%= h.inflection.camelize(name) %>Loader = ModelLoader<I<%= h.inflection.camelize(name) %>>(<%= h.inflection.camelize(name) %>Model);

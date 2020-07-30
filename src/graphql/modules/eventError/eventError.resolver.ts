@@ -1,10 +1,7 @@
-import _ from "lodash";
-
+import { ROLES } from "../../../constants/role.const";
+import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
 import { eventErrorService } from "./eventError.service";
-import { ParseQueryHelper, AuthHelper } from "../../../helpers";
-import { ROLES } from "../../../constants/role.const";
-import { EventErrorModel } from "./eventError.model";
 
 const Query = {
   getAllEventError: async (root: any, args: any, context: Context) => {

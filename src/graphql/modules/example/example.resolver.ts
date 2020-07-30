@@ -1,11 +1,7 @@
-import _ from "lodash";
-
+import { ROLES } from "../../../constants/role.const";
+import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
 import { exampleService } from "./example.service";
-import { ParseQueryHelper, AuthHelper } from "../../../helpers";
-import { ROLES } from "../../../constants/role.const";
-import { ExampleModel } from "./example.model";
-import { exampleEvent } from "../../../events/example.event";
 
 const Query = {
   getAllExample: async (root: any, args: any, context: Context) => {
@@ -45,7 +41,7 @@ const Mutation = {
 
 const Example = {
   example: async (root: any, args: any, context: Context) => {
-    return await ExampleModel.findOne({ _id: root["exampleId"] });
+    return await exampleService.model.findOne({ _id: root["exampleId"] });
   },
 };
 
