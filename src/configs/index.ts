@@ -1,6 +1,7 @@
 import development from "./development";
 import production from "./production";
 import testing from "./testing";
+import moment from "moment-timezone";
 
 function getConfig(environment: string) {
   if (environment === "development") {
@@ -15,5 +16,6 @@ function getConfig(environment: string) {
 }
 
 const configs = getConfig(process.env.NODE_ENV);
+moment.tz.setDefault(configs.timezone);
 
 export { configs };

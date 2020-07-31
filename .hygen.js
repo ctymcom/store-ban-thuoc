@@ -1,9 +1,9 @@
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 module.exports = {
   helpers: {
     migrationDate: () => {
-      return moment().utc().format("YYYYMMDDHHmmss");
+      return moment().format("YYYYMMDDHHmmss");
     },
   },
 };
