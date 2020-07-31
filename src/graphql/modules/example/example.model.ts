@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
+
+import { BaseDocument, ModelHook, ModelLoader } from "../../../base/baseModel";
 import { MainConnection } from "../../../loaders/database";
-import { BaseDocument } from "../../../base/baseModel";
+
 const Schema = mongoose.Schema;
 
 export type IExample = BaseDocument & {
@@ -18,8 +20,9 @@ const exampleSchema = new Schema(
 
 // exampleSchema.indexes.createIndex( { name: "text", description: "text" } )
 exampleSchema.index({ name: "text" }, { weights: { name: 2 } });
-
+export const ExampleModelHook = new ModelHook<IExample>(exampleSchema);
 export const ExampleModel: mongoose.Model<IExample> = MainConnection.model(
   "Example",
   exampleSchema
 );
+export const ExampleLoader = ModelLoader<IExample>(ExampleModel, ExampleModelHook);

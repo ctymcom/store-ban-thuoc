@@ -3,7 +3,7 @@ to: src/graphql/modules/<%= h.inflection.camelize(name, true) %>/<%= h.inflectio
 ---
 import mongoose from "mongoose";
 import { MainConnection } from "../../../loaders/database";
-import { BaseDocument, ModelLoader } from "../../../base/baseModel";
+import { BaseDocument, ModelLoader, ModelHook } from "../../../base/baseModel";
 const Schema = mongoose.Schema;
 
 export type I<%= h.inflection.camelize(name) %> = BaseDocument & {
@@ -19,9 +19,10 @@ const <%= h.inflection.camelize(name, true) %>Schema = new Schema(
 
 // <%= h.inflection.camelize(name, true) %>Schema.index({ name: "text" }, { weights: { name: 2 } });
 
+export const <%= h.inflection.camelize(name) %>Hook = new ModelHook<I<%= h.inflection.camelize(name) %>>(<%= h.inflection.camelize(name, true) %>Schema);
 export const <%= h.inflection.camelize(name) %>Model: mongoose.Model<I<%= h.inflection.camelize(name) %>> = MainConnection.model(
   "<%= h.inflection.camelize(name) %>",
   <%= h.inflection.camelize(name, true) %>Schema
 );
 
-export const <%= h.inflection.camelize(name) %>Loader = ModelLoader<I<%= h.inflection.camelize(name) %>>(<%= h.inflection.camelize(name) %>Model);
+export const <%= h.inflection.camelize(name) %>Loader = ModelLoader<I<%= h.inflection.camelize(name) %>>(<%= h.inflection.camelize(name) %>Model, <%= h.inflection.camelize(name) %>Hook);

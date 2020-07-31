@@ -37,4 +37,10 @@ export default {
   domain: "http://localhost:" + process.env.PORT || 3000,
   firebase: JSON.parse(process.env.FIREBASE),
   firebaseView: process.env.FIREBASE_VIEW,
+  redis: {
+    enable: true,
+    host: process.env.REDIS_HOST || "redis",
+    port: Number(process.env.REDIS_PORT || 6379),
+    password: process.env.REDIS_PASS,
+  },
 };

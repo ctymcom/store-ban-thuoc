@@ -22,7 +22,7 @@ export abstract class CrudService<M extends Model<Document, {}>> extends BaseSer
     const skip = queryInput.offset || (queryInput.page - 1) * limit || 0;
     const order = queryInput.order;
     const search = queryInput.search;
-    const query = this.model.find().lean(true);
+    const query = this.model.find();
 
     if (search) {
       if (search.includes(" ")) {
@@ -105,6 +105,7 @@ export abstract class CrudService<M extends Model<Document, {}>> extends BaseSer
 
   async deleteOne(id: string) {
     let record = await this.model.findOne({ _id: id });
+    if (!record) throw ErrorHelper.recoredNotFound("Không tìm thấy dữ liệu");
     await record.remove();
     return record;
   }

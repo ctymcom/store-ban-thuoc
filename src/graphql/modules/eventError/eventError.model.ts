@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { MainConnection } from "../../../loaders/database";
-import { BaseDocument, ModelLoader } from "../../../base/baseModel";
+import { BaseDocument, ModelLoader, ModelHook } from "../../../base/baseModel";
 import { EventErrorTypeEnum, EventErrorStatusEnum } from "../../../constants/event.const";
 const Schema = mongoose.Schema;
 
@@ -40,10 +40,9 @@ const eventErrorSchema = new Schema(
 );
 
 // eventErrorSchema.index({ name: "text" }, { weights: { name: 2 } });
-
+export const EventErrorHook = new ModelHook<IEventError>(eventErrorSchema);
 export const EventErrorModel: mongoose.Model<IEventError> = MainConnection.model(
   "EventError",
   eventErrorSchema
 );
-
-export const EventErrorLoader = ModelLoader<IEventError>(EventErrorModel);
+export const EventErrorLoader = ModelLoader<IEventError>(EventErrorModel, EventErrorHook);
