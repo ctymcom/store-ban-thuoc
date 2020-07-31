@@ -1,9 +1,4 @@
-import {
-  BaseRoute,
-  Request,
-  Response,
-  NextFunction,
-} from "../../base/baseRoute";
+import { BaseRoute, Request, Response, NextFunction } from "../../base/baseRoute";
 import { ErrorHelper } from "../../base/error";
 class ExampleRoute extends BaseRoute {
   constructor() {

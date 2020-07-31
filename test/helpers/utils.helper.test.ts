@@ -14,5 +14,4 @@ describe("Functional validateJSON", () => {
 
     done();
   });
-
 });

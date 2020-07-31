@@ -13,10 +13,10 @@ export function getAdminContext() {
   return context;
 }
 
-export function getSampleContext(){
+export function getSampleContext() {
   let context: Context = {
     isAuth: false,
-    isTokenExpired: false
+    isTokenExpired: false,
   };
 
   return context;

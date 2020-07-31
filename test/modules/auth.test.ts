@@ -28,7 +28,7 @@ describe("# Test login", () => {
     const result = await authResolver.Mutation.login(
       {},
       {
-        idToken: "TestToken"
+        idToken: "TestToken",
       },
       context
     );

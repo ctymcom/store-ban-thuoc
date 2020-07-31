@@ -25,19 +25,16 @@ describe("Functional resError", () => {
   });
 
   it("test positive resError with unknown error", (done) => {
-    const error = {
-      
-    };
+    const error = {};
     const res = mockResponse();
     resError(res, error);
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({
-        status: 500,
-        code: "500",
-        message: "Có lỗi xảy ra"
+      status: 500,
+      code: "500",
+      message: "Có lỗi xảy ra",
     });
     done();
   });
-
 });

@@ -28,11 +28,7 @@ describe("# Test getAllExample", () => {
 
 describe("# Test createExample", () => {
   it("shold return an array", async (done) => {
-    let result: any = await exampleResolver.Mutation.createExample(
-      {},
-      { data },
-      context
-    );
+    let result: any = await exampleResolver.Mutation.createExample({}, { data }, context);
     result = result.toJSON();
     example = result;
 
@@ -44,11 +40,7 @@ describe("# Test createExample", () => {
 
 describe("# Test getOneExample", () => {
   it("shold return an object", async (done) => {
-    let result: any = await exampleResolver.Query.getOneExample(
-      {},
-      { id: example._id },
-      context
-    );
+    let result: any = await exampleResolver.Query.getOneExample({}, { id: example._id }, context);
 
     console.log(example);
     console.log(result);

@@ -27,9 +27,7 @@ export class BaseError extends Error {
   info: IErrorInfo;
 }
 export class BaseErrorHelper {
-  static handleError(
-    func: (req: express.Request, rep: express.Response) => Promise<any>
-  ) {
+  static handleError(func: (req: express.Request, rep: express.Response) => Promise<any>) {
     return (req: express.Request, res: express.Response) =>
       func
         .bind(this)(req, res)
@@ -59,11 +57,7 @@ export class BaseErrorHelper {
   }
   static logError(prefix: string, logOption = true) {
     return (error: any) => {
-      console.log(
-        prefix,
-        error.message || error,
-        logOption ? error.options : ""
-      );
+      console.log(prefix, error.message || error, logOption ? error.options : "");
     };
   }
   // Unknow
@@ -102,11 +96,7 @@ export class BaseErrorHelper {
     return new BaseError(403, "-9", "Chi nhánh không làm việc vào ngày này");
   }
   static recoredNotFound(message: string) {
-    return new BaseError(
-      404,
-      "-10",
-      `Không tìm thấy dữ liệu yêu cầu: ${message}`
-    );
+    return new BaseError(404, "-10", `Không tìm thấy dữ liệu yêu cầu: ${message}`);
   }
 }
 

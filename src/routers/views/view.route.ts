@@ -1,9 +1,4 @@
-import {
-  BaseRoute,
-  Request,
-  Response,
-  NextFunction,
-} from "../../base/baseRoute";
+import { BaseRoute, Request, Response, NextFunction } from "../../base/baseRoute";
 import { configs } from "../../configs";
 
 class ViewRoute extends BaseRoute {

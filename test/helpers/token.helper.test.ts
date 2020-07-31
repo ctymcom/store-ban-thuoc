@@ -28,5 +28,4 @@ describe("Functional TokenHelper", () => {
     expect(token).to.be.a("string");
     done();
   });
-
 });

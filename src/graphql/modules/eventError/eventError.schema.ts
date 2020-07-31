@@ -1,5 +1,5 @@
-import { gql } from 'apollo-server-express';
-import { EventErrorStatusEnum } from '../../../constants/event.const';
+import { gql } from "apollo-server-express";
+import { EventErrorStatusEnum } from "../../../constants/event.const";
 
 const schema = gql`
   extend type Query {
@@ -15,7 +15,7 @@ const schema = gql`
     id: String,
     type: String!,
     data: Mixed,
-    """${Object.keys(EventErrorStatusEnum).join('|')}"""
+    """${Object.keys(EventErrorStatusEnum).join("|")}"""
     errorName: String
     errorStack: Mixed
     errorMessage: String

@@ -20,10 +20,7 @@ if (process.env.NODE_ENV !== "development") {
   );
   transports.push(
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.cli(),
-        winston.format.splat()
-      ),
+      format: winston.format.combine(winston.format.cli(), winston.format.splat()),
     })
   );
 }
