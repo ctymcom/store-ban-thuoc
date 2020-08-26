@@ -31,6 +31,7 @@ COPY --from=BUILD_IMAGE /usr/src/app/dist ./dist
 COPY --from=BUILD_IMAGE /usr/src/app/node_modules ./node_modules
 COPY --from=BUILD_IMAGE /usr/src/app/docs ./docs
 COPY --from=BUILD_IMAGE /usr/src/app/public ./public
+COPY --from=BUILD_IMAGE /usr/src/app/package.json ./package.json
 
 EXPOSE 5555
 
