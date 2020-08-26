@@ -32,6 +32,6 @@ COPY --from=BUILD_IMAGE /usr/src/app/node_modules ./node_modules
 COPY --from=BUILD_IMAGE /usr/src/app/docs ./docs
 COPY --from=BUILD_IMAGE /usr/src/app/public ./public
 
-EXPOSE 3333
+EXPOSE 5555
 
 CMD [ "node", "dist/server.js"]
