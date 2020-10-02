@@ -29,6 +29,27 @@ export class FirebaseHelper {
       throw err;
     }
   }
+  async updateUser(uid: string, data: admin.auth.UpdateRequest) {
+    try {
+      return await admin.auth().updateUser(uid, data);
+    } catch (err) {
+      throw err;
+    }
+  }
+  async deleteUser(uid: string) {
+    try {
+      return await admin.auth().deleteUser(uid);
+    } catch (err) {
+      throw err;
+    }
+  }
+  async deleteUsers(uids: string[]) {
+    try {
+      return await admin.auth().deleteUsers(uids);
+    } catch (err) {
+      throw err;
+    }
+  }
 
   async uploadBuffer(buffer: any, filename: string) {
     const bucket = this.app.storage().bucket();
