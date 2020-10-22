@@ -46,6 +46,7 @@
     "lodash": "^4.17.19",
     "lru_map": "0.3.3",
     "minify-graphql-loader": "^1.0.0",
+    "moment-timezone": "^0.5.31",
     "mongoose": "^5.9.20",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.10.0",

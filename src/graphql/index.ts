@@ -108,7 +108,8 @@ export default (app: Express, httpServer: Server) => {
       next();
     },
     morgan(
-      ":remote-addr :remote-user :method :url :gql-query HTTP/:http-version :status :res[content-length] - :response-time ms"
+      ":remote-addr :remote-user :method :url :gql-query HTTP/:http-version :status :res[content-length] - :response-time ms",
+      { skip: (req: Request) => (_.get(req, "body.query") || "").includes("IntrospectionQuery") }
     )
   );
 

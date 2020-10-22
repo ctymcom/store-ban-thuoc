@@ -50,7 +50,7 @@ export function ModelLoader<T>(model: any, modelHook?: ModelHook<T>): DataLoader
     );
   }
   if (modelHook) {
-    modelHook.onFindOne.subscribe((doc: any) => loader.prime(doc._id.toString(), doc));
+    // modelHook.onFindOne.subscribe((doc: any) => loader.prime(doc._id.toString(), doc));
     modelHook.onDeleted.subscribe((doc: any) => loader.clear(doc._id.toString()));
   }
 

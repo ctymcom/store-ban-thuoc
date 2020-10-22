@@ -1,11 +1,12 @@
-import { BaseService } from "./baseService";
-// import { IBaseStatic } from "./baseModel";
-import { ErrorHelper, IParseQuery } from "../helpers";
-// import { baseError } from "./baseError";
-import mongoose, { Schema, Document, Model } from "mongoose";
 import _ from "lodash";
-import { configs } from "../configs";
+import { Document, Model } from "mongoose";
 
+import { configs } from "../configs";
+import { ErrorHelper, IParseQuery } from "../helpers";
+import { BaseService } from "./baseService";
+
+// import { IBaseStatic } from "./baseModel";
+// import { baseError } from "./baseError";
 export interface IQueryOptions {}
 
 export abstract class CrudService<M extends Model<Document, {}>> extends BaseService {
@@ -56,7 +57,7 @@ export abstract class CrudService<M extends Model<Document, {}>> extends BaseSer
     query.limit(limit);
     query.skip(skip);
 
-    return await Promise.all([query.exec(), countQuery.countDocuments()]).then((res) => {
+    return await Promise.all([query.exec(), countQuery.count()]).then((res) => {
       return {
         data: res[0],
         total: res[1],
