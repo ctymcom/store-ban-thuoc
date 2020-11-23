@@ -5,7 +5,7 @@ describe("Functional TokenHelper", () => {
   let token: any;
   let data: any = {
     test: "test",
-    role_: "ADMIN",
+    role: "ADMIN",
   };
   it("should return a string", (done) => {
     token = TokenHelper.generateToken(data);
@@ -18,7 +18,7 @@ describe("Functional TokenHelper", () => {
     let payload: any = TokenHelper.decodeToken(token);
 
     expect(payload).to.be.an("object");
-    expect(payload.role_).to.equal(data.role_);
+    expect(payload.role).to.equal(data.role);
     expect(payload.test).to.equal(data.test);
     done();
   });

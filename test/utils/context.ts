@@ -6,7 +6,7 @@ export function getAdminContext() {
     isAuth: true,
     isTokenExpired: false,
     tokenData: {
-      role_: ROLES.ADMIN,
+      role: ROLES.ADMIN,
     },
   };
 

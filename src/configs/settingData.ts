@@ -1,23 +1,23 @@
-import { SettingTypeEnum } from "../constants/setting.const";
+import { SettingType } from "../graphql/modules/setting/setting.model";
 
 export enum SettingGroupSlug {
-  EXAMPLE_SLUG = "EXAMPLE_SLUG",
+  CAU_HINH_CHUNG = "CAU_HINH_CHUNG",
 }
 export enum SettingKey {
-  EXAMPLE = "EXAMPLE",
+  TITLE = "TITLE",
 }
 export const SETTING_DATA = [
   {
-    slug: SettingGroupSlug.EXAMPLE_SLUG,
-    name: "Mẫu config Group",
-    desc: "Nội dung mẫu config",
+    slug: SettingGroupSlug.CAU_HINH_CHUNG,
+    name: "Cấu hình chung",
+    desc: "Các cấu hình chung",
     readOnly: true,
     settings: [
       {
-        type: SettingTypeEnum.string,
-        name: "Config string",
-        key: SettingKey.EXAMPLE,
-        value: `Sample string`,
+        type: SettingType.string,
+        name: "Tiêu đề ứng dụng",
+        key: SettingKey.TITLE,
+        value: `Genie`,
         isActive: true,
         isPrivate: true,
         readOnly: false,

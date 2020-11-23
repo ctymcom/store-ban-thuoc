@@ -7,7 +7,7 @@ export type Context = {
   isAuth: boolean;
   isTokenExpired: boolean;
   tokenData?: {
-    role_: string;
+    role: string;
     [name: string]: string;
   };
 };

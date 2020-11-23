@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { ROLES } from "../constants/role.const";
 
 export interface IPayloadToken {
-  role_: string;
+  role: string;
   [name: string]: any;
 }
 
@@ -20,7 +20,7 @@ export class TokenHelper {
 
   static getAdministratorToken() {
     return this.generateToken({
-      role_: ROLES.ADMIN,
+      role: ROLES.ADMIN,
     });
   }
 }
