@@ -43,4 +43,7 @@ export default {
     port: Number(process.env.REDIS_PORT || 6379),
     password: process.env.REDIS_PASS,
   },
+  chatbot: {
+    host: process.env.CHATBOT_HOST || "https://bot-server.mcom.app",
+  },
 };

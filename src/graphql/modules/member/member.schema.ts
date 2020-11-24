@@ -14,6 +14,7 @@ const schema = gql`
     deleteManyMember(ids: [ID]): Int
     loginMember(idToken: String!): MemberLoginData
     updateMemberPassword(memberId: ID!, password: String!): Member
+    connectChatbot(apiKey: String!): Member
   }
 
   type MemberLoginData {
