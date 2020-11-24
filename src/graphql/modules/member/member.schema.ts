@@ -13,6 +13,7 @@ const schema = gql`
     deleteOneMember(id: ID!): Member
     deleteManyMember(ids: [ID]): Int
     loginMember(idToken: String!): MemberLoginData
+    updateMemberPassword(memberId: ID!, password: String!): Member
   }
 
   type MemberLoginData {
