@@ -15,10 +15,10 @@ export enum MemberType {
 }
 export type IMember = BaseDocument & {
   username?: string; // Mã chủ shop
+  uid?: string; // UID Firebase
   name?: string; // Họ tên
   avatar?: string; // Avatar
   phone?: string; // Điện thoại
-  password?: string; // Mất khẩu
   fanpageId?: string; // Mã Fanpage
   fanpageName?: string; // Tên Fanpage
   fanpageImage?: string; // Hình Fanpage
@@ -46,10 +46,10 @@ export type IMember = BaseDocument & {
 const memberSchema = new Schema(
   {
     username: { type: String, required: true },
+    uid: { type: String, required: true },
     name: { type: String, required: true },
     avatar: { type: String },
     phone: { type: String, required: true },
-    password: { type: String },
     fanpageId: { type: String },
     fanpageName: { type: String },
     fanpageImage: { type: String },
@@ -88,6 +88,7 @@ memberSchema.index(
   { weights: { name: 2, phone: 2, fanpageName: 2, fanpageId: 2, shopName: 2, username: 4 } }
 );
 memberSchema.index({ username: 1 }, { unique: true });
+memberSchema.index({ uid: 1 }, { unique: true });
 
 export const MemberHook = new ModelHook<IMember>(memberSchema);
 export const MemberModel: mongoose.Model<IMember> = MainConnection.model("Member", memberSchema);

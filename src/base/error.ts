@@ -79,7 +79,7 @@ export class BaseErrorHelper {
   }
   // Request
   static requestDataInvalid(message: string) {
-    return new BaseError(403, "-4", "Dữ liệu gửi lên không hợp lệ", message);
+    return new BaseError(403, "-4", "Dữ liệu gửi lên không hợp lệ " + message);
   }
   // External Request
   static externalRequestFailed(message: string) {

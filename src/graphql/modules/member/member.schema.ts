@@ -12,6 +12,12 @@ const schema = gql`
     updateMember(id: ID!, data: UpdateMemberInput!): Member
     deleteOneMember(id: ID!): Member
     deleteManyMember(ids: [ID]): Int
+    loginMember(idToken: String!): MemberLoginData
+  }
+
+  type MemberLoginData {
+    member: Member
+    token: String
   }
 
   input CreateMemberInput {
@@ -59,6 +65,8 @@ const schema = gql`
 
     "Mã chủ shop"
     username: String
+    "UID Firebase"
+    uid: String
     "Họ tên"
     name: String
     "Avatar"

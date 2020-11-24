@@ -1,24 +1,22 @@
 import { IMember } from "./member.model";
-import bcrypt from "bcrypt";
+import { TokenHelper } from "../../../helpers/token.helper";
+import { ROLES } from "../../../constants/role.const";
 
 export class MemberHelper {
   constructor(public member: IMember) {}
 
-  async setPassword(password: string) {
-    return new Promise<MemberHelper>((resolve, reject) => {
-      bcrypt.hash(password, 10, (err, hash) => {
-        this.member.password = hash;
-        resolve(this);
-      });
-    });
-  }
-  async verifyPassword(password: string) {
-    return bcrypt.compare(password, this.member.password);
-  }
   setActivedAt() {
     if (this.member.activated && !this.member.activedAt) {
       this.member.activedAt = new Date();
     }
     return this;
+  }
+
+  getToken() {
+    return TokenHelper.generateToken({
+      role: ROLES.MEMBER,
+      _id: this.member._id,
+      username: this.member.name || this.member.username,
+    });
   }
 }
