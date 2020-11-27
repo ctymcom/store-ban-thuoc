@@ -7,6 +7,15 @@ const schema = gql`
     getOneCustomer(id: ID!): Customer
   }
 
+  extend type Mutation {
+    loginCustomerByToken(idToken: String!, psid: String!, pageId: String!): CustomerLoginData
+  }
+
+  type CustomerLoginData {
+    customer: Customer
+    token: String
+  }
+
   type Customer {
     id: String
     createdAt: DateTime
