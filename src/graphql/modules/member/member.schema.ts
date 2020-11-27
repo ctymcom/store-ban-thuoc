@@ -5,6 +5,7 @@ const schema = gql`
   extend type Query {
     getAllMember(q: QueryGetListInput): MemberPageData
     getOneMember(id: ID!): Member
+    memberGetMe: Member
   }
 
   extend type Mutation {
@@ -15,6 +16,7 @@ const schema = gql`
     loginMember(idToken: String!): MemberLoginData
     updateMemberPassword(memberId: ID!, password: String!): Member
     connectChatbot(apiKey: String!): Member
+    memberUpdateMe(data: UpdateMemberInput!): Member
   }
 
   type MemberLoginData {
