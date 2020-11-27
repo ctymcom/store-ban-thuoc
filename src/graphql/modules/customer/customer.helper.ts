@@ -1,6 +1,8 @@
 import { ErrorHelper } from "../../../base/error";
 import { ROLES } from "../../../constants/role.const";
+import { TokenHelper } from "../../../helpers/token.helper";
 import { Context } from "../../context";
+import { counterService } from "../counter/counter.service";
 import { CustomerModel, ICustomer } from "./customer.model";
 
 export class CustomerHelper {
@@ -11,5 +13,15 @@ export class CustomerHelper {
     const member = await CustomerModel.findById(context.tokenData._id);
     if (!member) throw ErrorHelper.permissionDeny();
     return new CustomerHelper(member);
+  }
+  static async generateCode() {
+    return counterService.trigger("customer").then((c) => c.toString());
+  }
+  getToken() {
+    return TokenHelper.generateToken({
+      role: ROLES.CUSTOMER,
+      _id: this.customer._id,
+      username: this.customer.name || this.customer.facebookName || this.customer.phone,
+    });
   }
 }

@@ -53,7 +53,7 @@ const customerSchema = new Schema(
     districtId: { type: String },
     wardId: { type: String },
     cumulativePoint: { type: Number, default: 0 },
-    pageAccounts: { type: customerPageAccountSchema },
+    pageAccounts: { type: [customerPageAccountSchema], default: [] },
   },
   { timestamps: true }
 );
