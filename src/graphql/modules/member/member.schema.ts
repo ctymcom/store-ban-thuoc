@@ -119,6 +119,7 @@ const schema = gql`
     branchId: ID
 
     branch: Branch
+    parents: [Member]
   }
 
   type MemberPageData {

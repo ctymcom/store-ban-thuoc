@@ -5,7 +5,7 @@ import { Context } from "../../context";
 import { AddressHelper } from "../address/address.helper";
 import { BranchLoader } from "../branch/branch.model";
 import { MemberHelper } from "./member.helper";
-import { MemberModel } from "./member.model";
+import { MemberLoader, MemberModel } from "./member.model";
 import { memberService } from "./member.service";
 
 const Query = {
@@ -74,6 +74,7 @@ const Mutation = {
 
 const Member = {
   branch: GraphQLHelper.loadById(BranchLoader, "branchId"),
+  parents: GraphQLHelper.loadManyById(MemberLoader, "parentIds"),
 };
 
 export default {
