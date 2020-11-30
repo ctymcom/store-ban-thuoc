@@ -27,9 +27,10 @@ const Mutation = {
   createProduct: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR_MEMBER);
     const { data } = args;
+    data.code = data.code || (await ProductHelper.generateCode());
     if (context.tokenData.role == ROLES.MEMBER) {
       const product = new ProductModel({
-        code: data.code || (await ProductHelper.generateCode()),
+        code: data.code,
         name: data.name,
         basePrice: data.basePrice,
         subtitle: data.subtitle,
@@ -43,7 +44,7 @@ const Mutation = {
     }
     const product = new ProductModel(data);
     product.isPrimary = true;
-    return await product;
+    return await product.save();
   },
   updateProduct: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR_MEMBER);

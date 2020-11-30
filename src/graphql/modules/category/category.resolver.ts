@@ -2,6 +2,7 @@ import { ErrorHelper } from "../../../base/error";
 import { ROLES } from "../../../constants/role.const";
 import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
+import { CategoryHelper } from "./category.helper";
 import { CategoryModel } from "./category.model";
 import { categoryService } from "./category.service";
 
@@ -26,6 +27,7 @@ const Mutation = {
     } else {
       data.isPrimary = true;
     }
+    data.code = data.code || (await CategoryHelper.generateCode());
     return await categoryService.create(data);
   },
   updateCategory: async (root: any, args: any, context: Context) => {

@@ -37,7 +37,7 @@ const productSchema = new Schema(
     code: { type: String, required: true },
     name: { type: String, required: true },
     isPrimary: { type: Boolean, default: false },
-    isCrossSale: { type: String, default: false },
+    isCrossSale: { type: Boolean, default: false },
     crossScaleInventory: { type: Number, default: 0 },
     type: { type: String, enum: Object.values(ProductType), default: ProductType.RETAIL },
     basePrice: { type: Number, default: 0 },

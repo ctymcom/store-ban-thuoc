@@ -6,7 +6,6 @@ const schema = gql`
     getAllMember(q: QueryGetListInput): MemberPageData
     getOneMember(id: ID!): Member
     memberGetMe: Member
-    getMemberShopReport(memberId: ID!): Report
   }
 
   extend type Mutation {
