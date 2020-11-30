@@ -1,3 +1,4 @@
+import { set } from "lodash";
 import { ROLES } from "../../../constants/role.const";
 import { AuthHelper, ErrorHelper, firebaseHelper, UtilsHelper } from "../../../helpers";
 import { GraphQLHelper } from "../../../helpers/graphql.helper";
@@ -10,7 +11,10 @@ import { memberService } from "./member.service";
 
 const Query = {
   getAllMember: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR_MEMBER);
+    if (context.tokenData.role == ROLES.MEMBER) {
+      set(args, "q.filter.parentIds", context.tokenData._id);
+    }
     return memberService.fetch(args.q);
   },
   getOneMember: async (root: any, args: any, context: Context) => {
