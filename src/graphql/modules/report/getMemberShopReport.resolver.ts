@@ -2,7 +2,7 @@ import { ErrorHelper } from "../../../base/error";
 import { ROLES } from "../../../constants/role.const";
 import { AuthHelper } from "../../../helpers/auth.helper";
 import { Context } from "../../context";
-import { ReportHelper } from "../report/report.helper";
+import { ReportHelper } from "./report.helper";
 
 const Query = {
   getMemberShopReport: async (root: any, args: any, context: Context) => {

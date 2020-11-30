@@ -4,6 +4,8 @@ const schema = gql`
   extend type Query {
     getAllReportCode: Mixed
     getReportData(option: Mixed, code: String!): Mixed
+    getMemberShopReport(memberId: ID!): Report
+    getOverviewReport: Report
   }
 
   type Report {

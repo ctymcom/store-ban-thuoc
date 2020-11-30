@@ -21,7 +21,6 @@ export class ReportHelper {
   }
 
   static getReport(code: string) {
-    console.log("ListReports", ListReports);
     return ListReports.find((r) => r.code == code);
   }
 }
