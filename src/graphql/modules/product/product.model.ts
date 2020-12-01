@@ -12,7 +12,7 @@ export type IProduct = BaseDocument & {
   name?: string; // Tên sản phẩm
   isPrimary?: boolean; // Sản phẩm chính
   isCrossSale?: boolean; // Sản phẩm bán chéo
-  crossScaleInventory?: number; // Tồn kho bán chéo
+  crossSaleInventory?: number; // Tồn kho bán chéo
   type?: ProductType; // Loại sản phẩm
   basePrice?: number; // Gía bán
   subtitle?: string; // Mô tả ngắn
@@ -38,7 +38,7 @@ const productSchema = new Schema(
     name: { type: String, required: true },
     isPrimary: { type: Boolean, default: false },
     isCrossSale: { type: Boolean, default: false },
-    crossScaleInventory: { type: Number, default: 0 },
+    crossSaleInventory: { type: Number, default: 0 },
     type: { type: String, enum: Object.values(ProductType), default: ProductType.RETAIL },
     basePrice: { type: Number, default: 0 },
     subtitle: { type: String },
