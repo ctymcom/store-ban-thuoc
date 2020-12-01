@@ -1,3 +1,4 @@
+import { set } from "lodash";
 import { ROLES } from "../../../constants/role.const";
 import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
@@ -6,7 +7,10 @@ import { cumulativePointLogService } from "./cumulativePointLog.service";
 
 const Query = {
   getAllCumulativePointLog: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR_MEMBER);
+    if (context.tokenData.role == ROLES.MEMBER) {
+      set(args, "q.filter.memberId", context.tokenData._id);
+    }
     return cumulativePointLogService.fetch(args.q);
   },
 };
