@@ -56,7 +56,7 @@ const schema = gql`
     "Sản phẩm bán chéo"
     isCrossSale: Boolean
     "Tồn kho bán chéo"
-    crossScaleInventory: Int
+    crossSaleInventory: Int
     "Loại sản phẩm ${Object.values(ProductType)}"
     type: String
     "Gía bán"
