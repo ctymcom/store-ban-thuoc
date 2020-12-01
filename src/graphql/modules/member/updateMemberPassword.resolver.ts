@@ -7,8 +7,8 @@ import { MemberModel } from "./member.model";
 const Mutation = {
   updateMemberPassword: async (root: any, args: any, context: Context) => {
     const { memberId, password } = args;
-    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
-    if (context.tokenData.role != ROLES.ADMIN) AuthHelper.isOwner(context, memberId);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR_MEMBER);
+    if (context.tokenData.role == ROLES.MEMBER) AuthHelper.isOwner(context, memberId);
     if (password.length < 6) {
       throw ErrorHelper.updateUserError("mật khẩu phải có ít nhất 6 ký tự");
     }
