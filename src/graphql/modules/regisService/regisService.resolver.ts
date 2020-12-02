@@ -3,15 +3,16 @@ import { ROLES } from "../../../constants/role.const";
 import { AuthHelper } from "../../../helpers";
 import { GraphQLHelper } from "../../../helpers/graphql.helper";
 import { Context } from "../../context";
+import { AddressHelper } from "../address/address.helper";
 import { CustomerLoader } from "../customer/customer.model";
 import { MemberLoader } from "../member/member.model";
 import { ProductLoader } from "../product/product.model";
-import { RegisSMSHelper } from "./regisSMS.helper";
-import { RegisSMSModel, RegisSMSStatus } from "./regisSMS.model";
-import { regisSMSService } from "./regisSMS.service";
+import { RegisServiceHelper } from "./regisService.helper";
+import { RegisServiceModel, RegisServiceStatus } from "./regisService.model";
+import { regisServiceService } from "./regisService.service";
 
 const Query = {
-  getAllRegisSMS: async (root: any, args: any, context: Context) => {
+  getAllRegisService: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     if (context.isMember()) {
       set(args, "q.filter.sellerId", context.id);
@@ -19,32 +20,37 @@ const Query = {
     if (context.isCustomer()) {
       set(args, "q.filter.registerId", context.id);
     }
-    return regisSMSService.fetch(args.q);
+    return regisServiceService.fetch(args.q);
   },
-  getOneRegisSMS: async (root: any, args: any, context: Context) => {
+  getOneRegisService: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     const { id } = args;
-    return await regisSMSService.findOne({ _id: id });
+    return await regisServiceService.findOne({ _id: id });
   },
 };
 
 const Mutation = {
-  createRegisSMS: async (root: any, args: any, context: Context) => {
+  createRegisService: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, [ROLES.CUSTOMER]);
     const { data } = args;
-    const regis = new RegisSMSModel(data);
+    const regis = new RegisServiceModel(data);
     // Xoá các đơn đăng ký cũ
-    await RegisSMSModel.remove({
+    await RegisServiceModel.remove({
       registerId: context.id,
-      status: RegisSMSStatus.PENDING,
+      status: RegisServiceStatus.PENDING,
       productId: regis.productId,
     }).exec();
-    regis.code = await RegisSMSHelper.generateCode();
+    regis.code = await RegisServiceHelper.generateCode();
+    await Promise.all([
+      AddressHelper.setProvinceName(regis),
+      AddressHelper.setDistrictName(regis),
+      AddressHelper.setWardName(regis),
+    ]);
     return await regis.save();
   },
 };
 
-const RegisSMS = {
+const RegisService = {
   seller: GraphQLHelper.loadById(MemberLoader, "sellerId"),
   product: GraphQLHelper.loadById(ProductLoader, "productId"),
   register: GraphQLHelper.loadById(CustomerLoader, "registerId"),
@@ -53,5 +59,5 @@ const RegisSMS = {
 export default {
   Query,
   Mutation,
-  RegisSMS,
+  RegisService,
 };

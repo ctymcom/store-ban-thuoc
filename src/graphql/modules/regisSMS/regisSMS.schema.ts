@@ -51,7 +51,7 @@ const schema = gql`
 
     seller: Member
     product: Product
-    regiser: Customer
+    register: Customer
   }
 
   type RegisSMSPageData {
