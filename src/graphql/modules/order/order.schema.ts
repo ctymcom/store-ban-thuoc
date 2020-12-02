@@ -72,7 +72,7 @@ const schema = gql`
     items: [OrderItem]
     seller: Member
     updatedByUser: User
-    buyer: Buyer
+    buyer: Customer
   }
 
   type OrderPageData {
