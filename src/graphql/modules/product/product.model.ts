@@ -61,7 +61,7 @@ const productSchema = new Schema(
 );
 
 productSchema.index({ memberId: 1 });
-// productSchema.index({ name: "text" }, { weights: { name: 2 } });
+productSchema.index({ name: "text", code: "text" }, { weights: { name: 2, code: 2 } });
 
 export const ProductHook = new ModelHook<IProduct>(productSchema);
 export const ProductModel: mongoose.Model<IProduct> = MainConnection.model(
