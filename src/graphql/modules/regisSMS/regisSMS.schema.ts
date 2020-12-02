@@ -1,4 +1,5 @@
 import { gql } from "apollo-server-express";
+import { RegisSMSStatus } from "./regisSMS.model";
 
 const schema = gql`
   extend type Query {
@@ -35,8 +36,8 @@ const schema = gql`
     registerName: String 
     "Điện thoại đăng ký"
     registerPhone: String 
-    "Trạng thái"
-    status: RegisSMSStatus; // 
+    "Trạng thái ${Object.values(RegisSMSStatus)}"
+    status: String
     "Hoa hồng Mobifone"
     commission0: Float
     "Hoa hồng điểm bán"
