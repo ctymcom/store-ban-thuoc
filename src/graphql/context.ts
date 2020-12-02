@@ -1,19 +1,33 @@
-import _ from "lodash";
+import _, { get } from "lodash";
 import { AuthHelper } from "../helpers";
 import { TokenHelper } from "../helpers/token.helper";
 import { TokenExpiredError } from "jsonwebtoken";
-
-export type Context = {
-  isAuth: boolean;
-  isTokenExpired: boolean;
-  tokenData?: {
-    role: string;
-    [name: string]: string;
-  };
+import { ROLES } from "../constants/role.const";
+export type TokenData = {
+  role: string;
+  _id: string;
+  [name: string]: string;
 };
+export class Context {
+  constructor(
+    public isAuth: boolean = false,
+    public isTokenExpired: boolean = false,
+    public tokenData?: TokenData
+  ) {}
+
+  isMember() {
+    return get(this.tokenData, "role") == ROLES.MEMBER;
+  }
+  isCustomer() {
+    return get(this.tokenData, "role") == ROLES.CUSTOMER;
+  }
+  get id() {
+    return get(this.tokenData, "_id");
+  }
+}
 
 export async function onContext(params: any) {
-  const context: Context = { isAuth: false, isTokenExpired: false };
+  const context: Context = new Context();
   try {
     const { req, connection } = params;
     let token;
