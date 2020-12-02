@@ -1,31 +1,39 @@
 import { gql } from "apollo-server-express";
 
 const schema = gql`
-  extend type Query {
-    getAllOrderItem(q: QueryGetListInput): OrderItemPageData
-    getOneOrderItem(id: ID!): OrderItem
-  }
-
-  extend type Mutation {
-    createOrderItem(data: CreateOrderItemInput!): OrderItem
-    updateOrderItem(id: ID!, data: UpdateOrderItemInput!): OrderItem
-    deleteOneOrderItem(id: ID!): OrderItem
-    deleteManyOrderItem(ids: [ID]): Int
-  }
-
-  input CreateOrderItemInput {
-    name: String
-  }
-
-  input UpdateOrderItemInput {
-    name: String
-  }
-
   type OrderItem {
     id: String
-    name: String
     createdAt: DateTime
     updatedAt: DateTime
+
+    "Mã đơn hàng"
+    orderId: ID
+    "Mã người bán"
+    sellerId: ID
+    "Mã người mua"
+    buyerId: ID
+    "Sản phẩm chính của Mobifone"
+    isPirmary: Boolean
+    "Sản phẩm"
+    productId: ID
+    "Tên sản phẩm"
+    productName: String
+    "Giá bán"
+    basePrice: Float
+    "Số lượng"
+    qty: Int
+    "Hoa hồng Mobifone"
+    commission0: Float
+    "Hoa hồng điểm bán"
+    commission1: Float
+    "Hoa hồng giới thiệu"
+    commission2: Float
+    "Điểm thường người bán"
+    sellerBonusPoint: Float
+    "Điểm thưởng người mua"
+    buyerBonusPoint: Float
+
+    product: Product
   }
 
   type OrderItemPageData {
