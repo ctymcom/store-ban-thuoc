@@ -53,7 +53,7 @@ const Mutation = {
 const RegisService = {
   seller: GraphQLHelper.loadById(MemberLoader, "sellerId"),
   product: GraphQLHelper.loadById(ProductLoader, "productId"),
-  regiser: GraphQLHelper.loadById(CustomerLoader, "registerId"),
+  register: GraphQLHelper.loadById(CustomerLoader, "registerId"),
 };
 
 export default {
