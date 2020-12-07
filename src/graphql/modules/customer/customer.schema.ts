@@ -8,7 +8,7 @@ const schema = gql`
   }
 
   extend type Mutation {
-    loginCustomerByToken(idToken: String!, psid: String!, pageId: String!): CustomerLoginData
+    loginCustomerByToken(idToken: String!, psid: String, pageId: String): CustomerLoginData
   }
 
   type CustomerLoginData {

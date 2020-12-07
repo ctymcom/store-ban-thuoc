@@ -1,19 +1,23 @@
 import Axios from "axios";
 import { get } from "lodash";
+import NodeCache from "node-cache";
 
 import { ErrorHelper } from "../base/error";
 import { configs } from "../configs";
 import { Gender } from "../graphql/modules/member/member.model";
 
 const host = `${configs.chatbot.host}/api/v1`;
+const cacheTTL: number = 60 * 60 * 24; // 1 Ngày
+const cache = new NodeCache({ stdTTL: cacheTTL });
 export class ChatBotHelper {
   public token: string;
+
   constructor(public apiKey: string) {
     const [type, id, token] = apiKey.split("|");
     this.token = token;
-    console.log("type", [type, id]);
   }
   static async decodeSignedRequest(signedRequest: string) {
+    if (cache.get(signedRequest)) return cache.get<MessengerTokenDecoded>(signedRequest);
     return Axios.post(
       `${host}/app/messengerSignDecode`,
       { signedRequest },
@@ -22,11 +26,13 @@ export class ChatBotHelper {
       .then((res) => {
         const tokenData = get(res.data, "results.object");
         if (!tokenData) throw ErrorHelper.badToken();
-        return {
+        const decoded = {
           pageId: tokenData.page_id,
           psid: tokenData.psid,
           threadId: tokenData.tid,
         } as MessengerTokenDecoded;
+        cache.set<MessengerTokenDecoded>(signedRequest, decoded);
+        return decoded;
       })
       .catch((err) => {
         throw ErrorHelper.badToken();

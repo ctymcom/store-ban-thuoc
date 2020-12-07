@@ -8,7 +8,13 @@ import { CustomerModel } from "./customer.model";
 
 const Mutation = {
   loginCustomerByToken: async (root: any, args: any, context: Context) => {
-    const { idToken, psid, pageId } = args;
+    let { idToken, psid, pageId } = args;
+    if (!context.isMessenger()) {
+      if (!psid || !pageId) throw ErrorHelper.permissionDeny();
+    } else {
+      psid = context.id;
+      pageId = context.messengerSignPayload.pageId;
+    }
     let decode = await firebaseHelper.verifyIdToken(idToken);
     let phone = decode.phone_number;
     if (!phone) throw ErrorHelper.badToken();
