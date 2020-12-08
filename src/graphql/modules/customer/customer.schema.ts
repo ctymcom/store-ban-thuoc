@@ -5,11 +5,11 @@ const schema = gql`
   extend type Query {
     getAllCustomer(q: QueryGetListInput): CustomerPageData
     getOneCustomer(id: ID!): Customer
+    customerGetMe: Customer
   }
 
   extend type Mutation {
     loginCustomerByToken(idToken: String!, psid: String, pageId: String): CustomerLoginData
-    customerGetMe: Customer
   }
 
   type CustomerLoginData {
