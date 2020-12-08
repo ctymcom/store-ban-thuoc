@@ -92,11 +92,15 @@ export class Context {
       return this;
     }
   }
+
+  auth(roles: string[]) {
+    AuthHelper.acceptRoles(this, roles);
+  }
 }
 
 export async function onContext(params: any) {
   let context: Context = new Context();
-  context.parseToken(params);
   context.parseSig(params);
+  context.parseToken(params);
   return context;
 }
