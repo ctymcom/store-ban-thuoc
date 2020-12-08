@@ -69,18 +69,22 @@ export class Context {
     try {
       const { req, connection } = params;
       let sig;
-
+      let psid;
       if (req) {
         sig = _.get(req, "headers.x-sig") || _.get(req, "query.x-sig");
+        psid = _.get(req, "headers.x-psid") || _.get(req, "query.x-psid");
       }
       if (connection && connection.context) {
         sig = connection.context["x-sig"];
+        psid = connection.context["x-psid"];
       }
 
       if (sig) {
         const signPayload = await ChatBotHelper.decodeSignedRequest(sig);
+        signPayload.psid = !signPayload.psid || signPayload.psid == "" ? psid : signPayload.psid;
         this.messengerSignPayload = signPayload;
         this.isAuth = true;
+
         this.tokenData = { _id: this.messengerSignPayload.psid, role: ROLES.MESSENGER };
       }
     } catch (err) {
