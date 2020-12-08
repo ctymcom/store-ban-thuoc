@@ -4,10 +4,14 @@ import { Context } from "../../context";
 import { settingService } from "./setting.service";
 import { GraphQLHelper } from "../../../helpers/graphql.helper";
 import { SettingGroupLoader } from "../settingGroup/settingGroup.model";
+import { set } from "lodash";
 
 const Query = {
   getAllSetting: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
+    if (context.isCustomer() || context.isMember() || context.isMessenger()) {
+      set(args, "q.filter.isPrivate", false);
+    }
     return settingService.fetch(args.q);
   },
   getOneSetting: async (root: any, args: any, context: Context) => {
