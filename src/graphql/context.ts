@@ -100,7 +100,7 @@ export class Context {
 
 export async function onContext(params: any) {
   let context: Context = new Context();
-  context.parseSig(params);
+  await context.parseSig(params);
   context.parseToken(params);
   return context;
 }
