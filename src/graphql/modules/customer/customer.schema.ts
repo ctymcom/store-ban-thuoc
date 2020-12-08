@@ -9,6 +9,7 @@ const schema = gql`
 
   extend type Mutation {
     loginCustomerByToken(idToken: String!, psid: String, pageId: String): CustomerLoginData
+    customerGetMe: Customer
   }
 
   type CustomerLoginData {
