@@ -16,7 +16,7 @@ const schema = gql`
     name: String!
     code: String
     title: String!
-    fields: [FormField]!
+    fields: [FormFieldInput]!
     redirectLink: String!
   }
 
@@ -24,7 +24,7 @@ const schema = gql`
     name: String
     code: String
     title: String
-    fields: [FormField]
+    fields: [FormFieldInput]
     redirectLink: String
   }
 
