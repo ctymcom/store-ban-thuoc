@@ -13,7 +13,6 @@ const schema = gql`
     create<%= h.inflection.camelize(name) %>(data: Create<%= h.inflection.camelize(name) %>Input!): <%= h.inflection.camelize(name) %>
     update<%= h.inflection.camelize(name) %>(id: ID!, data: Update<%= h.inflection.camelize(name) %>Input!): <%= h.inflection.camelize(name) %>
     deleteOne<%= h.inflection.camelize(name) %>(id: ID!): <%= h.inflection.camelize(name) %>
-    deleteMany<%= h.inflection.camelize(name) %>(ids: [ID]): Int
   }
 
   input Create<%= h.inflection.camelize(name) %>Input {

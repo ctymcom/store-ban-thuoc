@@ -33,13 +33,7 @@ const Mutation = {
     AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { id } = args;
     return await <%= h.inflection.camelize(name, true) %>Service.deleteOne(id);
-  },
-  deleteMany<%= h.inflection.camelize(name) %>: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
-    const { ids } = args;
-    let result = await <%= h.inflection.camelize(name, true) %>Service.deleteMany(ids);
-    return result;
-  },
+  }
 };
 
 const <%= h.inflection.camelize(name) %> = {
