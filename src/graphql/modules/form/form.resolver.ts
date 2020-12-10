@@ -1,6 +1,7 @@
 import { ROLES } from "../../../constants/role.const";
 import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
+import { FormModel } from "./form.model";
 import { formService } from "./form.service";
 
 const Query = {
@@ -19,7 +20,9 @@ const Mutation = {
   createForm: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { data } = args;
-    return await formService.create(data);
+    const form = new FormModel(data);
+    if (!form.code) form.code = await formService.generateCode();
+    return await form.save();
   },
   updateForm: async (root: any, args: any, context: Context) => {
     AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);

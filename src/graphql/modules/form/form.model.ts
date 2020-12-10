@@ -3,7 +3,6 @@ import { MainConnection } from "../../../loaders/database";
 import { BaseDocument, ModelLoader, ModelHook } from "../../../base/baseModel";
 import { FormField, FormFieldSchema } from "./types/formField.type";
 const Schema = mongoose.Schema;
-
 export type IForm = BaseDocument & {
   name?: string; // Tên biểu mẫu
   code?: string; // Mã biểu mẫu

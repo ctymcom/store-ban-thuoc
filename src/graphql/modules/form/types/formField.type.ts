@@ -21,6 +21,7 @@ export type FormField = {
   type?: FormFieldType; // Loại field
   required?: boolean; // bắt buộc nhập
   default?: any; // Giá trị mặc định
+  options?: string[]; // Giá trị tuỳ chọn dành chi select
 };
 
 export const FormFieldSchema = new Schema({
@@ -30,4 +31,5 @@ export const FormFieldSchema = new Schema({
   type: { type: String, enum: Object.values(FormFieldType), default: FormFieldType.text },
   required: { type: Boolean, default: false },
   default: { type: Schema.Types.Mixed },
+  options: { type: [String] },
 });

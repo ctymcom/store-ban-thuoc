@@ -46,4 +46,5 @@ export default {
   chatbot: {
     host: process.env.CHATBOT_HOST || "https://bot-server.mcom.app",
   },
+  domainName: process.env.DOMAIN_NAME || "http://localhost:5555",
 };

@@ -15,6 +15,8 @@ export default gql`
         required: Boolean
         "Giá trị mặc định"
         default: Mixed
+        "Giá trị tuỳ chọn dành chi select"
+        options: [String]
     }
 
     input FormFieldInput {
@@ -30,5 +32,7 @@ export default gql`
         required: Boolean
         "Giá trị mặc định"
         default: Mixed
+        "Giá trị tuỳ chọn dành chi select"
+        options: [String]
     }
 `;
