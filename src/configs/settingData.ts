@@ -5,7 +5,6 @@ export enum SettingGroupSlug {
 }
 export enum SettingKey {
   TITLE = "TITLE",
-  LOGO = "LOGO",
 }
 export const SETTING_DATA = [
   {
@@ -18,16 +17,7 @@ export const SETTING_DATA = [
         type: SettingType.string,
         name: "Tiêu đề ứng dụng",
         key: SettingKey.TITLE,
-        value: `Mobifone - AShop`,
-        isActive: true,
-        isPrivate: true,
-        readOnly: false,
-      },
-      {
-        type: SettingType.string,
-        name: "Logo ứng dụng",
-        key: SettingKey.LOGO,
-        value: `https://mb-ashop.web.app/assets/img/logo.png`,
+        value: `Submit QR`,
         isActive: true,
         isPrivate: true,
         readOnly: false,

@@ -4,7 +4,6 @@ import NodeCache from "node-cache";
 
 import { ErrorHelper } from "../base/error";
 import { configs } from "../configs";
-import { Gender } from "../graphql/modules/member/member.model";
 
 const host = `${configs.chatbot.host}/api/v1`;
 const cacheTTL: number = 60 * 60 * 24; // 1 Ngày
@@ -126,3 +125,9 @@ export type SubscriberInfo = {
   locale: string;
   profilePic: string;
 };
+
+export enum Gender {
+  MALE = "male",
+  FEMALE = "female",
+  OTHER = "other",
+}

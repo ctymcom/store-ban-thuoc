@@ -1,35 +1,11 @@
-import { IUser, UserModel } from "./user.model";
-import { AddressModel } from "../address/address.model";
 import { ErrorHelper } from "../../../base/error";
-import { UtilsHelper } from "../../../helpers/utils.helper";
+import { AddressModel } from "../address/address.model";
 import { DeviceInfoModel } from "../deviceInfo/deviceInfo.model";
-import DataLoader from "dataloader";
-import { NotificationModel } from "../notification/notification.model";
-import { Types } from "mongoose";
-import { get, keyBy } from "lodash";
+import { IUser } from "./user.model";
 
 export class UserHelper {
   constructor(public user: IUser) {}
 
-  static unseenNotifyLoader = new DataLoader<string, number>(
-    (ids: string[]) => {
-      return NotificationModel.aggregate([
-        {
-          $match: {
-            userId: { $in: ids.map(Types.ObjectId) },
-            seen: false,
-          },
-        },
-        { $group: { _id: "$userId", count: { $sum: 1 } } },
-      ])
-        .exec()
-        .then((list: any[]) => {
-          const listByKey = keyBy(list, "_id");
-          return ids.map((id) => get(listByKey, `${id}.count`, 0));
-        });
-    },
-    { cache: false } // Bỏ cache
-  );
   value() {
     return this.user;
   }
@@ -61,9 +37,5 @@ export class UserHelper {
       deviceId,
       deviceToken,
     });
-  }
-
-  async getUnseenNotify() {
-    return await UserHelper.unseenNotifyLoader.load(this.user._id.toString());
   }
 }

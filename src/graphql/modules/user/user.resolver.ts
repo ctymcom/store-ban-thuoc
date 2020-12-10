@@ -96,11 +96,7 @@ const Mutation = {
   },
 };
 
-const User = {
-  unseenNotify: async (root: IUser, args: any, context: Context) => {
-    return await new UserHelper(root).getUnseenNotify();
-  },
-};
+const User = {};
 
 export default {
   Query,

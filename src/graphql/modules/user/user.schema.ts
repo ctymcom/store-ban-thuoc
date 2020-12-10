@@ -72,7 +72,6 @@ type User {
   wardId: String
   """${Object.values(UserRole).join("|")}"""
   role: String
-  unseenNotify: Int
   createdAt: DateTime
   updatedAt: DateTime
 }
