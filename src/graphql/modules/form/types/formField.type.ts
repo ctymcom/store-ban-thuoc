@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { BaseDocument } from "../../../../base/baseModel";
 
 export enum FormFieldType {
   text = "text", // Kiểm chuỗi
@@ -7,14 +8,12 @@ export enum FormFieldType {
   number = "number", // Kiểu số
   boolean = "boolean", // Kiểu boolean
   select = "select", // Kiểu lựa chọn
-  province = "province", // Kiểu tỉnh / thành
-  district = "district", // Kiểu quận / huyện
-  ward = "ward", // Kiểu phường /xã
-  datetime = "datetime", // Kiểu ngày giờ
+  address = "address", // Địa chỉ
+  datetime = "datetime-local", // Kiểu ngày giờ
   date = "date", // Kiểu chọn ngày
   time = "time", // Kiểu chọn giờ
 }
-export type FormField = {
+export type FormField = BaseDocument & {
   key?: string; // Từ khoá
   label?: string; // Nhãn hiển thị
   placeholder?: string; // Gợi ý
@@ -22,6 +21,12 @@ export type FormField = {
   required?: boolean; // bắt buộc nhập
   default?: any; // Giá trị mặc định
   options?: string[]; // Giá trị tuỳ chọn dành chi select
+  districtKey?: string; // Từ khoá quận / huyện
+  wardKey?: string; // Từ khoá phường / xã
+  requiredDistrict?: boolean; // Bắt buộc nhập quận / huyện
+  requiredWard?: boolean; // Bắt buộc nhập phường / xã
+  districtLabel?: string; // Nhãn quận / huyện
+  wardLabel?: string; // Nhãn phường / xã
 };
 
 export const FormFieldSchema = new Schema({
@@ -32,4 +37,10 @@ export const FormFieldSchema = new Schema({
   required: { type: Boolean, default: false },
   default: { type: Schema.Types.Mixed },
   options: { type: [String] },
+  districtKey: { type: String },
+  wardKey: { type: String },
+  requiredDistrict: { type: Boolean, default: false },
+  requiredWard: { type: Boolean, default: false },
+  districtLabel: { type: String },
+  wardLabel: { type: String },
 });

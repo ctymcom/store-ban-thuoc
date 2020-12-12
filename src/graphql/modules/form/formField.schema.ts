@@ -17,6 +17,18 @@ export default gql`
         default: Mixed
         "Giá trị tuỳ chọn dành chi select"
         options: [String]
+        "Từ khoá quận / huyện"
+        districtKey: String
+        "Từ khoá phường / xã"
+        wardKey: String
+        "Bắt buộc nhập quận / huyện"
+        requiredDistrict: Boolean
+        "Bắt buộc nhập phường / xã"
+        requiredWard: Boolean
+        "Nhãn quận / huyện"
+        districtLabel: String
+        "Nhãn phường / xã"
+        wardLabel: String
     }
 
     input FormFieldInput {
@@ -34,5 +46,17 @@ export default gql`
         default: Mixed
         "Giá trị tuỳ chọn dành chi select"
         options: [String]
+        "Từ khoá quận / huyện"
+        districtKey: String
+        "Từ khoá phường / xã"
+        wardKey: String
+        "Bắt buộc nhập quận / huyện"
+        requiredDistrict: Boolean
+        "Bắt buộc nhập phường / xã"
+        requiredWard: Boolean
+        "Nhãn quận / huyện"
+        districtLabel: String
+        "Nhãn phường / xã"
+        wardLabel: String
     }
 `;

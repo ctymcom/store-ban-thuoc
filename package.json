@@ -28,8 +28,11 @@
     "next:build": "next build"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.6",
     "ajv": "^6.12.3",
     "ajv-errors": "^1.0.1",
+    "apollo-link-context": "^1.0.20",
+    "apollo-link-error": "^1.1.13",
     "apollo-server-express": "^2.14.1",
     "async": "^3.1.0",
     "autoprefixer": "^10.1.0",
