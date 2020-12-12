@@ -5,5 +5,4 @@ export default {
   env: "production",
   maindb: process.env["MONGODB_URI"],
   debug: false,
-  production: true,
 };

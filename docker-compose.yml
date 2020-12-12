@@ -12,3 +12,9 @@ services:
     image: redislabs/redisinsight:latest
     ports:
       - 8001:8001
+  app:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - 5555:5555

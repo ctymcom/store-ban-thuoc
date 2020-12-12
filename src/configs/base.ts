@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
+import { UtilsHelper } from "../helpers/utils.helper";
 const pjson = require("../../package.json");
 
 if (fs.existsSync(path.join(__dirname, "../../.env"))) {
@@ -47,5 +48,5 @@ export default {
     host: process.env.CHATBOT_HOST || "https://bot-server.mcom.app",
   },
   domainName: process.env.DOMAIN_NAME || "http://localhost:5555",
-  production: false,
+  nextDev: UtilsHelper.toBoolean(process.env.NEXT_DEV || "FALSE"),
 };

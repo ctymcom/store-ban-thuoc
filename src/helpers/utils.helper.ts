@@ -4,7 +4,9 @@ import _ from "lodash";
 
 export class UtilsHelper {
   constructor() {}
-
+  static toBoolean(value: string) {
+    return _.upperCase(value) == "TRUE";
+  }
   static walkSyncFiles(dir: string, filelist: string[] = []) {
     const files = fs.readdirSync(dir);
     files.forEach(function (file: any) {

@@ -1,7 +1,8 @@
+import moment from "moment-timezone";
+
 import development from "./development";
 import production from "./production";
 import testing from "./testing";
-import moment from "moment-timezone";
 
 function getConfig(environment: string) {
   if (environment === "development") {
