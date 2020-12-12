@@ -38,7 +38,7 @@ export default ({ app }: { app: express.Application }) => {
   });
 
   app.use("/", router);
-  const nextApp = next({ dev: true });
+  const nextApp = next({ dev: !configs.production });
   const handle = nextApp.getRequestHandler();
   nextApp.prepare().then(() => {
     app.get("*", (req, res) => handle(req, res));
