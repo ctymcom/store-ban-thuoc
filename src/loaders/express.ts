@@ -5,6 +5,7 @@ import express, { Request, Response } from "express";
 import path from "path";
 import swaggerUi from "swagger-ui-express";
 import morgan from "morgan";
+import next from "next";
 
 import { configs } from "../configs";
 import { swaggerSpec, swaggerTheme } from "../configs/swagger";
@@ -18,7 +19,7 @@ export default ({ app }: { app: express.Application }) => {
   app.use(bodyParser.json({ limit: "10mb" }));
   app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
   app.use(
-    morgan("short", { skip: (req: Request) => /(_ah\/health)|graphql/.test(req.originalUrl) })
+    morgan("short", { skip: (req: Request) => /(_ah\/health)|graphql|_next/.test(req.originalUrl) })
   );
 
   app.set("view engine", "hbs");
@@ -37,4 +38,9 @@ export default ({ app }: { app: express.Application }) => {
   });
 
   app.use("/", router);
+  const nextApp = next({ dev: true });
+  const handle = nextApp.getRequestHandler();
+  nextApp.prepare().then(() => {
+    app.get("*", (req, res) => handle(req, res));
+  });
 };
