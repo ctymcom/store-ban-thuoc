@@ -18,6 +18,7 @@ export type SignedRequestPayload = {
   page_id: number;
 };
 export class Context {
+  req: Request;
   constructor(
     public isAuth: boolean = false,
     public isTokenExpired: boolean = false,
@@ -37,13 +38,19 @@ export class Context {
   get id() {
     return get(this.tokenData, "_id");
   }
-
+  get ua() {
+    return get(this, "req.headers.user-agent");
+  }
+  get ip() {
+    return get(this, "req.headers.x-forwarded-for") || get(this, "req.headers.remoteAddress");
+  }
   parseToken(params: any) {
     try {
       const { req, connection } = params;
       let token;
 
       if (req) {
+        this.req = req;
         token = _.get(req, "headers.x-token") || _.get(req, "query.x-token");
       }
       if (connection && connection.context) {
@@ -71,6 +78,7 @@ export class Context {
       let sig;
       let psid;
       if (req) {
+        this.req = req;
         sig = _.get(req, "headers.x-sig") || _.get(req, "query.x-sig");
         psid = _.get(req, "headers.x-psid") || _.get(req, "query.x-psid");
       }
@@ -92,7 +100,6 @@ export class Context {
       return this;
     }
   }
-
   auth(roles: string[]) {
     AuthHelper.acceptRoles(this, roles);
   }

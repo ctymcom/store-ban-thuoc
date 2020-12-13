@@ -53,7 +53,7 @@ export function initializeApollo(initialState = null) {
   return _apolloClient;
 }
 
-export function useApollo(initialState) {
-  const store = useMemo(() => initializeApollo(initialState), [initialState]);
+export function useApollo() {
+  const store = useMemo(() => initializeApollo(), []);
   return store;
 }

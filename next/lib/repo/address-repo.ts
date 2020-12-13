@@ -1,5 +1,5 @@
-import { GraphRepository } from "../graph-repository";
-import { IAddress } from "../../../../src/graphql/modules/address/address.model";
+import { GraphRepository } from "../graphql/graph-repository";
+import { IAddress } from "../../../src/graphql/modules/address/address.model";
 import { gql } from "@apollo/client";
 export class AddressRepository extends GraphRepository<IAddress> {
   shortFragment: string = "id province district ward";

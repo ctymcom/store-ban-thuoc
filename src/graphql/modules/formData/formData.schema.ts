@@ -5,6 +5,17 @@ const schema = gql`
     getAllFormData(q: QueryGetListInput): FormDataPageData
   }
 
+  extend type Mutation {
+    createFormData(data: CreateFormDataInput!): FormData
+  }
+
+  input CreateFormDataInput {
+    "Mã form"
+    formId: String!
+    "Dữ liệu"
+    data: Mixed!
+  }
+
   type FormData {
     id: String
     createdAt: DateTime

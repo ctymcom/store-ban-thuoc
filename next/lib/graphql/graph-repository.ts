@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { Pagination } from "./pagination";
 import { GetListData } from "./get-list-data";
 import { QueryInput } from "./query-input";
-import { initializeApollo } from "./apolloClient";
+import { initializeApollo, useApollo } from "./apolloClient";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 export abstract class GraphRepository<T> {
   abstract shortFragment: string;
@@ -16,7 +16,6 @@ export abstract class GraphRepository<T> {
     if (!this.$apollo) {
       this.$apollo = initializeApollo();
     }
-    console.log("this.$apollo", this.$apollo);
     return this.$apollo;
   }
 
@@ -75,6 +74,7 @@ export abstract class GraphRepository<T> {
       fetchPolicy: "no-cache",
       variables: { d: data },
     } as MutationOptions;
+    console.log("mutation", options);
     const result = await this.apollo.mutate(options);
     this.handleFetchError(result);
     return result.data[api] as T;
