@@ -114,6 +114,7 @@
     "concurrently": "^5.0.0",
     "eslint": "^6.4.0",
     "jest": "^24.9.0",
+    "next-seo": "^4.17.0",
     "node-sass": "^4.13.0",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",

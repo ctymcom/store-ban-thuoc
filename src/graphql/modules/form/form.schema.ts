@@ -18,6 +18,8 @@ const schema = gql`
     title: String!
     fields: [FormFieldInput]!
     redirectLink: String!
+    description: String
+    image: String
   }
 
   input UpdateFormInput {
@@ -26,6 +28,8 @@ const schema = gql`
     title: String
     fields: [FormFieldInput]
     redirectLink: String
+    description: String
+    image: String
   }
 
   type Form {
@@ -43,6 +47,10 @@ const schema = gql`
     fields: [FormField]
     "Địa chỉ điều hướng"
     redirectLink: String
+    "Mô tả"
+    description: String
+    "Hình ảnh"
+    image: String
   }
 
   type FormPageData {

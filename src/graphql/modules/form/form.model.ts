@@ -9,6 +9,8 @@ export type IForm = BaseDocument & {
   title?: string; // Tiêu đề hiển thị
   fields?: FormField[]; // Danh sách các trường dữ liệu
   redirectLink?: string; // Địa chỉ điều hướng
+  description?: string; // Mô tả
+  image?: string; // Hình ảnh
 };
 
 const formSchema = new Schema(
@@ -18,6 +20,8 @@ const formSchema = new Schema(
     title: { type: String, required: true },
     fields: { type: [FormFieldSchema], minlength: 1, required: true },
     redirectLink: { type: String, required: true },
+    description: { type: String },
+    image: { type: String },
   },
   { timestamps: true }
 );

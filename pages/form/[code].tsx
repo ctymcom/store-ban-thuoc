@@ -1,12 +1,15 @@
-import { IForm, FormModel } from '../../src/graphql/modules/form/form.model';
-import { Input } from '../../next/components/input';
-import {Checkbox} from '../../next/components/checkbox';
-import {SelectBox} from '../../next/components/select-box';
-import {Button} from '../../next/components/button';
-import { FormField, FormFieldType } from '../../src/graphql/modules/form/types/formField.type';
+import { NextSeo } from 'next-seo';
+
 import { AddressInput } from '../../next/components/address-input';
-import { FormDataRepository } from '../../next/lib/repo/form-data.repo';
+import { Button } from '../../next/components/button';
+import { Checkbox } from '../../next/components/checkbox';
+import { Input } from '../../next/components/input';
+import { SelectBox } from '../../next/components/select-box';
 import { GetMyIP } from '../../next/lib/get-my-ip';
+import { FormDataRepository } from '../../next/lib/repo/form-data.repo';
+import { FormModel, IForm } from '../../src/graphql/modules/form/form.model';
+import { FormField, FormFieldType } from '../../src/graphql/modules/form/types/formField.type';
+
 function Form({ form }: { form: IForm }) {
     const formDataRepo = new FormDataRepository();
     let myIP = "";
@@ -22,7 +25,22 @@ function Form({ form }: { form: IForm }) {
         })
         
     }
-    return <div className = "p-2">
+    return <>
+    <NextSeo 
+        title={form.title}
+        description={form.description || ""}
+        openGraph={{
+            url: `/form/${form.code}`,
+            title: form.title,
+            description: form.description || "",
+            ... form.image && {
+                images: [{ url: form.image }]
+            },
+            site_name: 'Submit QR',
+            locale: 'vi'
+          }}
+    />
+    <div className = "p-2">
         <div className="bg-gray-200 p-3 text-center text-lg font-bold rounded-lg shadow-md">
             <span>{form.title}</span>
         </div>
@@ -45,7 +63,9 @@ function Form({ form }: { form: IForm }) {
                 <Button type="submit" text="Gửi"></Button>
             </form>
         </div>
-    </div>;  
+    </div>
+    </>
+    ;  
 }
 
 export async function getServerSideProps(context) {
