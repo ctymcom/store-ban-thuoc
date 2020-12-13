@@ -13,7 +13,8 @@ services:
     ports:
       - 8001:8001
   app:
-    build: .
+    build:
+      context: .
     env_file:
       - .env
     ports:

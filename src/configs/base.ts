@@ -14,9 +14,9 @@ if (fs.existsSync(path.join(__dirname, "../../.env"))) {
   console.log(".env.example not exists");
 }
 
-if (!process.env.FIREBASE) throw new Error("Chưa config firebase");
-if (!process.env.FIREBASE_VIEW) throw new Error("Chưa config firebase views");
-if (!process.env.MONGODB_URI) throw new Error("Missing Config MONGODB_URI");
+// if (!process.env.FIREBASE) throw new Error("Chưa config firebase");
+// if (!process.env.FIREBASE_VIEW) throw new Error("Chưa config firebase views");
+// if (!process.env.MONGODB_URI) throw new Error("Missing Config MONGODB_URI");
 
 export default {
   name: pjson.name,
@@ -36,7 +36,7 @@ export default {
   secretKey: process.env.SECRET || "HkQlTCrDfYWezqEp494TjDUqBhSzQSnn",
   timezone: "Asia/Ho_Chi_Minh",
   domain: "http://localhost:" + process.env.PORT || 3000,
-  firebase: JSON.parse(process.env.FIREBASE),
+  firebase: JSON.parse(process.env.FIREBASE || "{}"),
   firebaseView: process.env.FIREBASE_VIEW,
   redis: {
     enable: false,

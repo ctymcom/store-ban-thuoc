@@ -10,7 +10,9 @@ RUN npm install
 
 COPY . .
 
+ARG MONGODB_URI
 RUN npm run build-ts
+RUN MONGODB_URI=$MONGODB_URI npm run next:build
 
 RUN npm prune --production
 
