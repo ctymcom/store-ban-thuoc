@@ -1,9 +1,23 @@
 import fs from "fs";
 import path from "path";
 import _ from "lodash";
+import { Workbook } from "exceljs";
+import { Response } from "express";
 
 export class UtilsHelper {
   constructor() {}
+  static responseExcel(res: Response, workBook: Workbook, filename = "baocao") {
+    res.status(200);
+    res.setHeader(
+      "Content-type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+      "Content-disposition",
+      `attachment; filename=${filename.replace(/\ /g, "-")}.xlsx`
+    );
+    workBook.xlsx.write(res).then(res.end);
+  }
   static toBoolean(value: string) {
     return _.upperCase(value) == "TRUE";
   }
