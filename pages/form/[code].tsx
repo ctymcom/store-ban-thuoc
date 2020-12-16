@@ -1,10 +1,10 @@
 import { NextSeo } from 'next-seo';
 
-import { AddressInput } from '../../next/components/address-input';
-import { Button } from '../../next/components/button';
-import { Checkbox } from '../../next/components/checkbox';
-import { Input } from '../../next/components/input';
-import { SelectBox } from '../../next/components/select-box';
+import { AddressInput } from '../../next/components/shared/address-input';
+import { Button } from '../../next/components/shared/button';
+import { Checkbox } from '../../next/components/shared/checkbox';
+import { Input } from '../../next/components/shared/input';
+import { SelectBox } from '../../next/components/shared/select-box';
 import { GetMyIP } from '../../next/lib/get-my-ip';
 import { FormDataRepository } from '../../next/lib/repo/form-data.repo';
 import { FormModel, IForm } from '../../src/graphql/modules/form/form.model';

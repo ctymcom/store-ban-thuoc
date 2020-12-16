@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { IAddress } from '../../src/graphql/modules/address/address.model';
-import { FormField } from '../../src/graphql/modules/form/types/formField.type';
-import { AddressRepository } from '../lib/repo/address-repo';
+import { IAddress } from '../../../src/graphql/modules/address/address.model';
+import { FormField } from '../../../src/graphql/modules/form/types/formField.type';
+import { AddressRepository } from '../../lib/repo/address-repo';
 
 export function AddressInput({ field } : { field: FormField }) {
     const { label, placeholder, key, districtKey, districtLabel, wardKey, wardLabel, required, requiredDistrict, requiredWard } = field;

@@ -1,4 +1,4 @@
-import { FormField } from '../../src/graphql/modules/form/types/formField.type';
+import { FormField } from '../../../src/graphql/modules/form/types/formField.type';
 import { useState } from 'react';
 
 export function SelectBox({ field } : { field: FormField }) {

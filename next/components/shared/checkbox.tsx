@@ -1,4 +1,4 @@
-import { FormField } from "../../src/graphql/modules/form/types/formField.type";
+import { FormField } from "../../../src/graphql/modules/form/types/formField.type";
 
 export function Checkbox({ field }: { field: FormField } ) {
     const { label, key, required } = field;

@@ -1,4 +1,4 @@
-import { FormField, FormFieldType } from "../../src/graphql/modules/form/types/formField.type";
+import { FormField, FormFieldType } from "../../../src/graphql/modules/form/types/formField.type";
 
 export function Input({ field} : { field: FormField }) {
     const { label, type = FormFieldType.text, placeholder, key, required } = field;

@@ -33,9 +33,9 @@ export default ({ app }: { app: express.Application }) => {
     res.send(swaggerSpec);
   });
 
-  app.get("/", function (req: Request, res: Response) {
-    res.send(`${configs.name} - ${configs.version} - ${configs.description}`);
-  });
+  // app.get("/", function (req: Request, res: Response) {
+  //   res.send(`${configs.name} - ${configs.version} - ${configs.description}`);
+  // });
 
   app.use("/", router);
   const nextApp = next({ dev: configs.nextDev });
