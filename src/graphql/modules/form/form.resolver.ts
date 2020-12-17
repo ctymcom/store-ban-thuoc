@@ -6,7 +6,7 @@ import { formService } from "./form.service";
 
 const Query = {
   getAllForm: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
+    // AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     return formService.fetch(args.q);
   },
   getOneForm: async (root: any, args: any, context: Context) => {
