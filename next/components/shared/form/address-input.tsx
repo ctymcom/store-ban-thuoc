@@ -17,10 +17,10 @@ type AddressInputProps = FormFieldProps & {
     wLabel?: string,
     dRequired?: boolean,
     wRequired?: boolean,
-    onChanged?: (value: AddressValue) => void;
-    validate?: (value: AddressValue) => string;
+    onChangedAddress?: (value: AddressValue) => void;
+    validateAddress?: (value: AddressValue) => string;
 }
-export function AddressInput({ label, name, dName, dLabel, dRequired, wName, wLabel, wRequired, required, onChanged, addressValue } : AddressInputProps) {
+export function AddressInput({ label, name, dName, dLabel, dRequired, wName, wLabel, wRequired, required, addressValue, onChangedAddress } : AddressInputProps) {
     const [provinces, setProvinces]: [SelectBoxOption[], any] = useState([]);
     const [districts, setDistricts]: [SelectBoxOption[], any] = useState([]);
     const [wards, setWards]: [SelectBoxOption[], any] = useState([]);
@@ -41,6 +41,7 @@ export function AddressInput({ label, name, dName, dLabel, dRequired, wName, wLa
         } else if (!address.ward && wName) {
             addressRepo.getWards(address.district).then(res => setWards(res.map(r => ({ value: r.id, display: r.ward }))));
         }
+        if (onChangedAddress) onChangedAddress(address);
     }, [address]);
 
 

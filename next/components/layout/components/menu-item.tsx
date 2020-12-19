@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 
 export function MenuItem({ item, ...props }) {
-    const { asPath } = useRouter();
-    const isActivated = asPath === item.href;
+    const { pathname } = useRouter();
+    const isActivated = pathname == item.href;
     return <li className="relative px-6 py-3">
      { isActivated && <span
       className="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"

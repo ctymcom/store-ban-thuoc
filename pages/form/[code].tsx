@@ -6,6 +6,7 @@ import { Checkbox } from '../../next/components/shared/form/checkbox';
 import { Input } from '../../next/components/shared/form/input';
 import { SelectBox } from '../../next/components/shared/form/select-box';
 import { GetMyIP } from '../../next/lib/get-my-ip';
+import { parseFormData } from '../../next/lib/parse-form-data';
 import { FormDataRepository } from '../../next/lib/repo/form-data.repo';
 import { FormModel, IForm } from '../../src/graphql/modules/form/form.model';
 import { FormFieldType } from '../../src/graphql/modules/form/types/formField.type';
@@ -99,13 +100,4 @@ export async function getServerSideProps(context) {
         props: { form: JSON.parse(JSON.stringify(form)) }
     }
 }
-
-function parseFormData(form: FormData) {
-    var object = {};
-    form.forEach(function(value, key){
-        object[key] = value;
-    });
-    return object;
-}
-
 export default FormPage;

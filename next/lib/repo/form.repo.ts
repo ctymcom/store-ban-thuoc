@@ -18,6 +18,6 @@ export class FormRepository extends GraphRepository<IForm> {
     districtLabel
     wardLabel
   }`;
-  fullFragment: string = "id name code title fields redirectLink";
+  fullFragment: string = this.shortFragment;
   apiName: string = "Form";
 }
