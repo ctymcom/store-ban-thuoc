@@ -6,7 +6,7 @@ import { SectionHeader } from '../next/components/shared/card/section-header';
 import { Table, TableDataItem, TableDataItemType } from '../next/components/shared/table/table';
 import { Pagination } from '../next/lib/graphql/pagination';
 import { FormRepository } from '../next/lib/repo/form.repo';
-
+import { AuthMiddleware } from '../next/providers/auth-provider';
 
 export default function IndexPage() {
     const { query } = useRouter();
@@ -16,6 +16,7 @@ export default function IndexPage() {
     const formRepo = new FormRepository();
     function loadForms(pagination: Pagination) {
         return formRepo.getAll({ query: { limit: pagination.limit, page: pagination.page }}).then(res => {
+            console.log('load done');
             setPagination(res.pagination);
             setItems(res.data.map(d => ({  
                 cells: [
@@ -39,3 +40,5 @@ export default function IndexPage() {
         <Table headers={headers} data={items} pagination={pagination} onPageChanged={(page) => loadForms({ ...pagination, page }) }></Table>
     </DashboardLayout>
 }
+
+export const getServerSideProps = AuthMiddleware();

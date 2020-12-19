@@ -6,7 +6,9 @@ export class FirebaseHelper {
   constructor() {
     let config = configs.firebase;
     config.credential = admin.credential.cert(config.credential);
-    this.app = admin.initializeApp(config);
+    if (admin.apps.length == 0) {
+      this.app = admin.initializeApp(config);
+    }
   }
 
   get messaging() {
