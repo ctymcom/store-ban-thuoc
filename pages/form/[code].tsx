@@ -1,16 +1,16 @@
 import { NextSeo } from 'next-seo';
 
-import { AddressInput } from '../../next/components/shared/address-input';
-import { Button } from '../../next/components/shared/button';
-import { Checkbox } from '../../next/components/shared/checkbox';
-import { Input } from '../../next/components/shared/input';
-import { SelectBox } from '../../next/components/shared/select-box';
+import { AddressInput } from '../../next/components/shared/form/address-input';
+import { Button } from '../../next/components/shared/form/button';
+import { Checkbox } from '../../next/components/shared/form/checkbox';
+import { Input } from '../../next/components/shared/form/input';
+import { SelectBox } from '../../next/components/shared/form/select-box';
 import { GetMyIP } from '../../next/lib/get-my-ip';
 import { FormDataRepository } from '../../next/lib/repo/form-data.repo';
 import { FormModel, IForm } from '../../src/graphql/modules/form/form.model';
-import { FormField, FormFieldType } from '../../src/graphql/modules/form/types/formField.type';
+import { FormFieldType } from '../../src/graphql/modules/form/types/formField.type';
 
-function Form({ form }: { form: IForm }) {
+function FormPage({ form }: { form: IForm }) {
     const formDataRepo = new FormDataRepository();
     let myIP = "";
     GetMyIP((error, ip) => myIP = ip);
@@ -49,15 +49,38 @@ function Form({ form }: { form: IForm }) {
                 {form.fields.map(f => {
                     switch(f.type) {
                         case FormFieldType.boolean:
-                            return <Checkbox key={f._id} field={f} />
+                            return <Checkbox key={f._id} 
+                                label={f.label} 
+                                placeholder={f.placeholder} 
+                                name={f.key} 
+                                checked={f.default}/>
                         case FormFieldType.select:
-                            return <SelectBox key={f._id} field={f} />
+                            return <SelectBox key={f._id} 
+                                label={f.label} 
+                                placeholder={f.placeholder} 
+                                name={f.key} 
+                                value={f.default} 
+                                options={f.options}
+                                noneOption={{ value: "", display: "Chưa chọn"}} />
                         case FormFieldType.address:
-                            return <AddressInput key={f._id} field={f} />
+                            return <AddressInput key={f._id} label={f.label} 
+                                placeholder={f.placeholder} 
+                                name={f.key} 
+                                addressValue={{province: f.default}} />
                         case FormFieldType.datetime:
-                            return <Input key={f._id} field={{ ...f, type: FormFieldType.datetime } as FormField} />
+                            return <Input key={f._id} 
+                                label={f.label} 
+                                inputType="datetime-local"
+                                placeholder={f.placeholder} 
+                                name={f.key} 
+                                value={f.default} />
                         default:
-                            return <Input key={f._id} field={f} />
+                            return <Input key={f._id} 
+                                label={f.label} 
+                                inputType={f.type}
+                                placeholder={f.placeholder} 
+                                name={f.key} 
+                                value={f.default}/>
                     }
                 })}
                 <Button type="submit" text="Gửi"></Button>
@@ -85,4 +108,4 @@ function parseFormData(form: FormData) {
     return object;
 }
 
-export default Form;
+export default FormPage;

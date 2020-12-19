@@ -11,6 +11,8 @@ export type IForm = BaseDocument & {
   redirectLink?: string; // Địa chỉ điều hướng
   description?: string; // Mô tả
   image?: string; // Hình ảnh
+
+  submitLink?: string; // Link submit
 };
 
 const formSchema = new Schema(

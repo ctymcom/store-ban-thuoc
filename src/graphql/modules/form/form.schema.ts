@@ -51,6 +51,8 @@ const schema = gql`
     description: String
     "Hình ảnh"
     image: String
+
+    submitLink: String
   }
 
   type FormPageData {

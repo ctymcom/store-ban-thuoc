@@ -1,15 +1,14 @@
-import { DashboardLayout } from "../next/components/layout/dashboard-layout";
-import { Table, TableDataItem, TableDateItemType } from '../next/components/shared/table';
-import { FormModel, IForm } from '../src/graphql/modules/form/form.model';
-import { formService} from '../src/graphql/modules/form/form.service';
-import { QueryInput } from '../next/lib/graphql/query-input';
-import { Pagination } from '../next/lib/graphql/pagination';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+import { DashboardLayout } from '../next/components/layout/dashboard-layout';
+import { SectionHeader } from '../next/components/shared/card/section-header';
+import { Table, TableDataItem, TableDataItemType } from '../next/components/shared/table/table';
+import { Pagination } from '../next/lib/graphql/pagination';
 import { FormRepository } from '../next/lib/repo/form.repo';
 
 
-export default function Index() {
+export default function IndexPage() {
     const { query } = useRouter();
     const { page = 1, limit = 20 } = query;
     const [items, setItems] = useState<any[]>([]);
@@ -20,11 +19,12 @@ export default function Index() {
             setPagination(res.pagination);
             setItems(res.data.map(d => ({  
                 cells: [
-                    { type: TableDateItemType.text, value: d.name, key: d._id },
-                    { type: TableDateItemType.text, value: d.code, key: d._id },
-                    { type: TableDateItemType.text, value: 100, key: d._id },
-                    { type: TableDateItemType.text, value: d.redirectLink, key: d._id },
-                ],
+                    { type: TableDataItemType.text, value: d.name },
+                    { type: TableDataItemType.text, value: d.code },
+                    { type: TableDataItemType.text, value: 100 },
+                    { type: TableDataItemType.link, value: d.redirectLink },
+                    { type: TableDataItemType.link, value: d.submitLink }
+                ] as TableDataItem[],
                 item: d,
                 key: d._id,
             })));
@@ -33,8 +33,9 @@ export default function Index() {
     useEffect(() => {
         loadForms(pagination);
     }, []);
-    const headers = ["Tên Form", "Mã", "Số lương", "Link"];
+    const headers = ["Tên Form", "Mã", "Số lương", "Link", "QRLink"];
     return <DashboardLayout>
+        <SectionHeader text="Danh sách Form QR" />
         <Table headers={headers} data={items} pagination={pagination} onPageChanged={(page) => loadForms({ ...pagination, page }) }></Table>
     </DashboardLayout>
 }

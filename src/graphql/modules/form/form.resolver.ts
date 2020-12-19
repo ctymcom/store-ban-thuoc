@@ -1,8 +1,9 @@
 import { ROLES } from "../../../constants/role.const";
 import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
-import { FormModel } from "./form.model";
+import { FormModel, IForm } from "./form.model";
 import { formService } from "./form.service";
+import { FormHelper } from "./form.helper";
 
 const Query = {
   getAllForm: async (root: any, args: any, context: Context) => {
@@ -36,7 +37,11 @@ const Mutation = {
   },
 };
 
-const Form = {};
+const Form = {
+  submitLink: async (root: IForm, args: any, context: Context) => {
+    return new FormHelper(root).getSubmitLink();
+  },
+};
 
 export default {
   Query,

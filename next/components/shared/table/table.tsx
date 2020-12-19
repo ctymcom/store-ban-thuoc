@@ -1,22 +1,25 @@
-import { data } from "jquery"
-import { TableStatusItem } from "./table/table-status-item";
-import { TableTileItem } from './table/table-tile-item';
-import { Pagination } from '../../lib/graphql/pagination';
-import { TablePagination } from "./table/table-pagination";
-export enum TableDateItemType {
+import { TableStatusItem } from "./table-status-item";
+import { TableTileItem } from './table-tile-item';
+import { Pagination } from '../../../lib/graphql/pagination';
+import { TablePagination } from "./table-pagination";
+import { TableLinkItem } from "./table-link-item";
+export enum TableDataItemType {
     text = "text",
     tile = 'tile',
     number = 'number',
     status = 'status',
-    date = 'date'
+    date = 'date',
+    link = 'link',
+    custom = 'custom'
 
 }
 export type TableDataItem = {
-    type: TableDateItemType,
+    type: TableDataItemType,
     value?: any,
     value2?: any,
     image?: any,
-    color?: string
+    color?: string,
+    builder?: (item: TableDataItem) => JSX.Element
 }
 export type TableProps = {
     headers: string[],
@@ -45,14 +48,19 @@ export function Table({ headers, data, pagination, onPageChanged }: TableProps) 
         >
           {data.map((r, index) => <tr key={"" + r.key + index} className="text-gray-700 dark:text-gray-400">
               {r.cells.map((i, index) => {
+                const key = "" + r.key + index;
                   switch(i.type) {
-                      case TableDateItemType.tile:
-                          return <TableTileItem key={"" + r.key + index} title={i.value} description={i.value2} image={i.image} />;
-                      case TableDateItemType.status:
-                          return <TableStatusItem key={"" + r.key + index} value={i.value} color={i.color} />
-                      case TableDateItemType.number:
-                      case TableDateItemType.text:
-                      case TableDateItemType.date:
+                      case TableDataItemType.tile:
+                          return <TableTileItem key={key} title={i.value} description={i.value2} image={i.image} />;
+                      case TableDataItemType.status:
+                          return <TableStatusItem key={key} value={i.value} color={i.color} />
+                      case TableDataItemType.link:
+                          return <TableLinkItem key={key} value={i.value} display={i.value2} />
+                      case TableDataItemType.custom:
+                          return <td key={"" + r.key + index} className="px-4 py-3 text-sm"> {i.builder(i)} </td>
+                      case TableDataItemType.number:
+                      case TableDataItemType.text:
+                      case TableDataItemType.date:
                       default:
                          return <td key={"" + r.key + index} className="px-4 py-3 text-sm"> {i.value} </td>
                   }
