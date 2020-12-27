@@ -16,7 +16,7 @@ export function TablePagination({ pagination, onPageChanged, numOfPage = 5  }: T
   const activeClass = "text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600";
   const showPageCount = pageCount < numOfPage ? pageCount : numOfPage;
   let pageStartIndex = pagination.page - (showPageCount - 1) > 0 ? pagination.page - showPageCount : 0;
-  pageStartIndex = (pageStartIndex + numOfPage) == pageCount ? pageStartIndex - 1 : pageStartIndex;
+  pageStartIndex = (pageStartIndex + showPageCount) == pageCount && pageStartIndex > 0 && pagination.page < pageCount ? pageStartIndex - 1 : pageStartIndex;
     return <div
     className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
   >
@@ -27,14 +27,14 @@ export function TablePagination({ pagination, onPageChanged, numOfPage = 5  }: T
     <span className="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
       <nav aria-label="Table navigation">
         <ul className="inline-flex items-center">
-          {pagination.page > 1 && <PaginationPrevButton onClick={() => onPageChanged(pagination.page - 1)}/>}
-          {times(showPageCount + (showPageCount == numOfPage && 1), _ => pageStartIndex + _).map((index) => <li key={'page'+ index}>
+          {pagination.page > 1 && pageCount > numOfPage && <PaginationPrevButton onClick={() => onPageChanged(pagination.page - 1)}/>}
+          {times(showPageCount, _ => pageStartIndex + _).map((index) => <li key={'page'+ index}>
             <button 
               onClick={() => (index != pagination.page - 1) && onPageChanged(index + 1)}
               className={(index == pagination.page - 1 && activeClass)+ " px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"}
             >{index + 1}</button>
           </li>)}
-          { pagination.page < pageCount && <PaginationNextButton onClick={() => onPageChanged(pagination.page + 1)}/>}
+          { pagination.page <= pageCount - 1 && pageCount > numOfPage && <PaginationNextButton onClick={() => onPageChanged(pagination.page + 1)}/>}
         </ul>
       </nav>
     </span>

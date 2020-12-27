@@ -27,14 +27,14 @@ export default function CreateFormPage() {
                 <SectionHeader text="Tạo Form" />
                 <Card>
                     <CreateFormContext.Consumer>
-                        {({ formState, saveForm }) => {
-                            return <form>
+                        {({ formState, saveForm }) => <>
                                 <Input
                                     name="name"
                                     label="Tên biểu mẫu"
                                     required={true}
                                     value={formState.name}
                                     onChanged={value => formState.name = value}
+                                    validate={value => "Thằng này bị lỗi"}
                                 />
                                 <Input
                                     name="title"
@@ -53,8 +53,7 @@ export default function CreateFormPage() {
                                 <div className="flex flex-row-reverse">
                                     <Button text="Lưu" onClick={saveForm}/>
                                 </div>
-                            </form>
-                        }}
+                            </>}
                     </CreateFormContext.Consumer> 
                 </Card>
             </div>

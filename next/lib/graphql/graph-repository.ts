@@ -37,7 +37,7 @@ export abstract class GraphRepository<T> {
       }
       `,
       variables: { q: query || {} },
-      fetchPolicy: cache ? null : "no-cache",
+      fetchPolicy: cache ? "network-only" : "no-cache",
     } as QueryOptions;
     const result = await this.apollo.query<any>(options);
     this.handleError(result);
@@ -56,7 +56,7 @@ export abstract class GraphRepository<T> {
         ${api}(id: '${id}') {  ${fragment};  }
       }
       `,
-      fetchPolicy: cache ? null : "no-cache",
+      fetchPolicy: cache ? "network-only" : "no-cache",
     } as QueryOptions;
     const result = await this.apollo.query(options);
     this.handleError(result);
@@ -86,7 +86,7 @@ export abstract class GraphRepository<T> {
     const options = {
       mutation: gql`
       mutation Update(\$d: Update${this.apiName}Input!) {
-        ${api}(id: '${id}', data:  \$d) {  ${fragment}  }
+        ${api}(id: "${id}", data:  \$d) {  ${fragment}  }
       }
       `,
       fetchPolicy: "no-cache",
@@ -97,19 +97,20 @@ export abstract class GraphRepository<T> {
     return result.data[api] as T;
   }
 
-  async delete({ id, data, fragment }: { id: string; data: any; fragment?: string }) {
+  async delete({ id, fragment }: { id: string; fragment?: string }) {
     fragment = fragment || this.shortFragment;
     const api = `deleteOne${this.apiName}`;
     const options = {
       mutation: gql`
       mutation Delete {
-        ${api}(id: '${id}') { ${fragment}  }
+        ${api}(id: "${id}") { ${fragment}  }
       }
       `,
       fetchPolicy: "no-cache",
     } as MutationOptions;
 
     const result = await this.apollo.mutate(options);
+    this.apollo.cache.removeOptimistic;
     this.handleFetchError(result);
     return result.data[api] as T;
   }

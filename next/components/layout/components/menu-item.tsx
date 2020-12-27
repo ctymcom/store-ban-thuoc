@@ -13,18 +13,8 @@ export function MenuItem({ item, ...props }) {
       href={item.type != "action" ? item.href : "#"} onClick={() => {
         if (item.type == "action" && item.action) item.action(router);
       }}
-        ><svg
-        className="w-5 h-5"
-        aria-hidden="true"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-    >
-        <path d={item.icon}></path>
-    </svg>
+        >
+          {item.icon}
       <span className="ml-4">{item.label}</span>
     </a>
   </li>

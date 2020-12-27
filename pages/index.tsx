@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { DashboardLayout } from '../next/components/layout/dashboard-layout';
 import { SectionHeader } from '../next/components/shared/card/section-header';
@@ -10,13 +10,13 @@ import { AuthMiddleware } from '../next/providers/auth-provider';
 
 export default function IndexPage() {
     const { query } = useRouter();
-    const { page = 1, limit = 20 } = query;
+    const { page = 1, limit = 10 } = query;
     const [items, setItems] = useState<any[]>([]);
     const [pagination, setPagination] = useState<Pagination>({ limit: parseInt(limit.toString()), page: parseInt(page.toString()), offset: 0, total: 0 });
+    const pageRef = useRef<Pagination>();
     const formRepo = new FormRepository();
-    function loadForms(pagination: Pagination) {
-        return formRepo.getAll({ query: { limit: pagination.limit, page: pagination.page }}).then(res => {
-            console.log('load done');
+    function loadForms(pagination: Pagination, cache: boolean = true) {
+        return formRepo.getAll({ query: { limit: pagination.limit, page: pagination.page }, cache }).then(res => {
             setPagination(res.pagination);
             setItems(res.data.map(d => ({  
                 cells: [
@@ -24,16 +24,22 @@ export default function IndexPage() {
                     { type: TableDataItemType.text, value: d.code },
                     { type: TableDataItemType.text, value: 100 },
                     { type: TableDataItemType.link, value: d.redirectLink },
-                    { type: TableDataItemType.link, value: d.submitLink }
+                    { type: TableDataItemType.link, value: d.submitLink },
+                    { type: TableDataItemType.custom, builder: (item) => <div className="flex space-x-2">
+                        <button className="text-primary-500">Cập nhật</button>
+                        <button className="text-red-500" onClick={() => removeForm(d.id)}>Xoá</button>
+                    </div>}
                 ] as TableDataItem[],
                 item: d,
                 key: d._id,
             })));
         });
     }
-    useEffect(() => {
-        loadForms(pagination);
-    }, []);
+    const removeForm = (formId: string) => {
+        formRepo.delete({ id: formId }).then(res => loadForms(pageRef.current));
+    }
+    useEffect(() => { loadForms(pagination); }, []);
+    useEffect(() => { pageRef.current = pagination; }, [pagination]);
     const headers = ["Tên Form", "Mã", "Số lương", "Link", "QRLink"];
     return <DashboardLayout>
         <SectionHeader text="Danh sách Form QR" />
