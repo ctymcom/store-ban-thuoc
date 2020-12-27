@@ -15,6 +15,7 @@ export default function IndexPage() {
     const [pagination, setPagination] = useState<Pagination>({ limit: parseInt(limit.toString()), page: parseInt(page.toString()), offset: 0, total: 0 });
     const pageRef = useRef<Pagination>();
     const formRepo = new FormRepository();
+    const router = useRouter();
     function loadForms(pagination: Pagination, cache: boolean = true) {
         return formRepo.getAll({ query: { limit: pagination.limit, page: pagination.page }, cache }).then(res => {
             setPagination(res.pagination);
@@ -26,7 +27,7 @@ export default function IndexPage() {
                     { type: TableDataItemType.link, value: d.redirectLink },
                     { type: TableDataItemType.link, value: d.submitLink },
                     { type: TableDataItemType.custom, builder: (item) => <div className="flex space-x-2">
-                        <button className="text-primary-500">Cập nhật</button>
+                        <button className="text-primary-500" onClick={() => editForm(d.code)}>Cập nhật</button>
                         <button className="text-red-500" onClick={() => removeForm(d.id)}>Xoá</button>
                     </div>}
                 ] as TableDataItem[],
@@ -37,6 +38,9 @@ export default function IndexPage() {
     }
     const removeForm = (formId: string) => {
         formRepo.delete({ id: formId }).then(res => loadForms(pageRef.current));
+    }
+    const editForm = (formCode: string) => {
+        router.push(`form/edit/${formCode}`, undefined, { shallow: true });
     }
     useEffect(() => { loadForms(pagination); }, []);
     useEffect(() => { pageRef.current = pagination; }, [pagination]);

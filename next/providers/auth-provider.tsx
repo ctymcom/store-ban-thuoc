@@ -33,7 +33,7 @@ export function AuthProvider({ children }: any) {
 
 export const useAtuh = () => useContext(AuthContext);
 
-export function AuthMiddleware(fn?: (context: GetServerSidePropsContext) => { props: any }) {
+export function AuthMiddleware(fn?: (context: GetServerSidePropsContext) => { props: any } | Promise<{ props: any }>) {
     return (context: GetServerSidePropsContext) => { 
         const cookies = nookies.get(context);
         if (!cookies["x-token"]) {

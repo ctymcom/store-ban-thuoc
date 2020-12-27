@@ -6,7 +6,7 @@ import { PlusCircleIcon } from "../../icons/plus-circle";
 import { LogoutIcon } from "../../icons/logout";
 export const Routes = [
   { label: "Form", icon: TableIcon(), href: "/" },
-  { label: "Tạo Form", icon: PlusCircleIcon(), href: "/create-form" },
+  { label: "Tạo Form", icon: PlusCircleIcon(), href: "/form/create" },
   {
     label: "Đăng xuất",
     icon: LogoutIcon(),

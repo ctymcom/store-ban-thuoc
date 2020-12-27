@@ -6,9 +6,11 @@ import { Card } from '../../next/components/shared/card/card';
 import { SectionHeader } from '../../next/components/shared/card/section-header';
 import { Button } from '../../next/components/shared/form/button';
 import { Input } from '../../next/components/shared/form/input';
+import { AuthMiddleware } from '../../next/providers/auth-provider';
 import { CreateFormContext, CreateFormProvider } from '../../next/providers/create-form-provider';
 import { FormField, FormFieldType } from '../../src/graphql/modules/form/types/formField.type';
 
+export const getServerSideProps = AuthMiddleware();
 export default function CreateFormPage() {
     const initForm = {
         name: "Biểu mẫu",
@@ -27,7 +29,7 @@ export default function CreateFormPage() {
                 <SectionHeader text="Tạo Form" />
                 <Card>
                     <CreateFormContext.Consumer>
-                        {({ formState, saveForm }) => <>
+                        {({ formState, createForm }) => <>
                                 <Input
                                     name="name"
                                     label="Tên biểu mẫu"
@@ -51,7 +53,7 @@ export default function CreateFormPage() {
                                     onChanged={value => formState.redirectLink = value}
                                 />
                                 <div className="flex flex-row-reverse">
-                                    <Button text="Lưu" onClick={saveForm}/>
+                                    <Button text="Lưu" onClick={createForm}/>
                                 </div>
                             </>}
                     </CreateFormContext.Consumer> 

@@ -41,7 +41,7 @@ function FormPage({ form }: { form: IForm }) {
             locale: 'vi'
           }}
     />
-    <div className = "p-2">
+    <div className = "p-2 max-w-lg m-auto">
         <div className="bg-gray-200 p-3 text-center text-lg font-bold rounded-lg shadow-md">
             <span>{form.title}</span>
         </div>
@@ -67,6 +67,10 @@ function FormPage({ form }: { form: IForm }) {
                             return <AddressInput key={f._id} label={f.label} 
                                 placeholder={f.placeholder} 
                                 name={f.key} 
+                                dName={f.districtKey}
+                                dLabel={f.districtLabel}
+                                wName={f.wardKey}
+                                wLabel={f.wardLabel}
                                 addressValue={{province: f.default}} />
                         case FormFieldType.datetime:
                             return <Input key={f._id} 
