@@ -6,7 +6,6 @@ import { Checkbox } from '../../next/components/shared/form/checkbox';
 import { Input } from '../../next/components/shared/form/input';
 import { SelectBox } from '../../next/components/shared/form/select-box';
 import { GetMyIP } from '../../next/lib/get-my-ip';
-import { parseFormData } from '../../next/lib/parse-form-data';
 import { FormDataRepository } from '../../next/lib/repo/form-data.repo';
 import { FormModel, IForm } from '../../src/graphql/modules/form/form.model';
 import { FormFieldType } from '../../src/graphql/modules/form/types/formField.type';
@@ -14,10 +13,16 @@ import { FormFieldType } from '../../src/graphql/modules/form/types/formField.ty
 function FormPage({ form }: { form: IForm }) {
     const formDataRepo = new FormDataRepository();
     let myIP = "";
+    let data = form.fields.reduce((prev, value, index) => {
+        switch (value.type) {
+            default:
+                prev[value.key] = value
+        }
+        return prev;
+    }, {} as any);
     GetMyIP((error, ip) => myIP = ip);
     const onSubmit = (e) => {
         e.preventDefault();
-        const data = parseFormData(new FormData(e.target));
         formDataRepo.create({ data: { data: data, formId: form._id } }).then(res => {
             location.href = form.redirectLink;
         }).catch(err => {
@@ -46,7 +51,7 @@ function FormPage({ form }: { form: IForm }) {
             <span>{form.title}</span>
         </div>
         <div className="bg-white shadow-md p-3 mt-2">
-            <form onSubmit={onSubmit}>
+            <form>
                 {form.fields.map(f => {
                     switch(f.type) {
                         case FormFieldType.boolean:
@@ -54,7 +59,8 @@ function FormPage({ form }: { form: IForm }) {
                                 label={f.label} 
                                 placeholder={f.placeholder} 
                                 name={f.key} 
-                                checked={f.default}/>
+                                checked={f.default}
+                                onChanged={value => data[f.key] = value}/>
                         case FormFieldType.select:
                             return <SelectBox key={f._id} 
                                 label={f.label} 
@@ -62,7 +68,8 @@ function FormPage({ form }: { form: IForm }) {
                                 name={f.key} 
                                 value={f.default} 
                                 options={f.options}
-                                noneOption={{ value: "", display: "Chưa chọn"}} />
+                                noneOption={{ value: "", display: "Chưa chọn"}} 
+                                onChanged={value => data[f.key] = value}/>
                         case FormFieldType.address:
                             return <AddressInput key={f._id} label={f.label} 
                                 placeholder={f.placeholder} 
@@ -71,24 +78,31 @@ function FormPage({ form }: { form: IForm }) {
                                 dLabel={f.districtLabel}
                                 wName={f.wardKey}
                                 wLabel={f.wardLabel}
-                                addressValue={{province: f.default}} />
+                                addressValue={{province: f.default}} 
+                                onChangedAddressDisplay={value => {
+                                    data[f.key] = value.province;
+                                    if (f.districtKey) data[f.districtKey] = value.district;
+                                    if (f.wardKey) data[f.wardKey] = value.ward;
+                                }}/>
                         case FormFieldType.datetime:
                             return <Input key={f._id} 
                                 label={f.label} 
                                 inputType="datetime-local"
                                 placeholder={f.placeholder} 
                                 name={f.key} 
-                                value={f.default} />
+                                value={f.default} 
+                                onChanged={value => data[f.key] = value}/>
                         default:
                             return <Input key={f._id} 
                                 label={f.label} 
                                 inputType={f.type}
                                 placeholder={f.placeholder} 
                                 name={f.key} 
-                                value={f.default}/>
+                                value={f.default}
+                                onChanged={value => data[f.key] = value}/>
                     }
                 })}
-                <Button type="submit" text="Gửi"></Button>
+                <Button onClick={onSubmit} text="Gửi"></Button>
             </form>
         </div>
     </div>

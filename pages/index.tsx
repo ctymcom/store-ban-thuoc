@@ -16,6 +16,7 @@ export default function IndexPage() {
     const pageRef = useRef<Pagination>();
     const formRepo = new FormRepository();
     const router = useRouter();
+    const headers = ["Tên Form", "Mã", "Số lương", "Link", "QRLink"];
     function loadForms(pagination: Pagination, cache: boolean = true) {
         return formRepo.getAll({ query: { limit: pagination.limit, page: pagination.page }, cache }).then(res => {
             setPagination(res.pagination);
@@ -27,6 +28,7 @@ export default function IndexPage() {
                     { type: TableDataItemType.link, value: d.redirectLink },
                     { type: TableDataItemType.link, value: d.submitLink },
                     { type: TableDataItemType.custom, builder: (item) => <div className="flex space-x-2">
+                        <button className="text-primary-500" onClick={() => viewFormData(d.code)}>Dữ liệu</button>
                         <button className="text-primary-500" onClick={() => editForm(d.code)}>Cập nhật</button>
                         <button className="text-red-500" onClick={() => removeForm(d.id)}>Xoá</button>
                     </div>}
@@ -42,9 +44,12 @@ export default function IndexPage() {
     const editForm = (formCode: string) => {
         router.push(`form/edit/${formCode}`, undefined, { shallow: true });
     }
+    const viewFormData = (formCode: string) => {
+        router.push(`form/data/${formCode}`, undefined, { shallow: true });
+    }
     useEffect(() => { loadForms(pagination); }, []);
     useEffect(() => { pageRef.current = pagination; }, [pagination]);
-    const headers = ["Tên Form", "Mã", "Số lương", "Link", "QRLink"];
+    
     return <DashboardLayout>
         <SectionHeader text="Danh sách Form QR" />
         <Table headers={headers} data={items} pagination={pagination} onPageChanged={(page) => loadForms({ ...pagination, page }) }></Table>

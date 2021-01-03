@@ -17,7 +17,7 @@ export class FormRepository extends GraphRepository<IForm> {
     requiredWard
     districtLabel
     wardLabel
-  }`;
+  }`; // getAll
   fullFragment: string = this.shortFragment;
   apiName: string = "Form";
 }

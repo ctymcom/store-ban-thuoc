@@ -1,3 +1,4 @@
+import { add } from 'lodash';
 import { useEffect, useState } from 'react';
 
 import { AddressRepository } from '../../../lib/repo/address-repo';
@@ -18,9 +19,10 @@ type AddressInputProps = FormFieldProps & {
     dRequired?: boolean,
     wRequired?: boolean,
     onChangedAddress?: (value: AddressValue) => void;
+    onChangedAddressDisplay?: (value: AddressValue) => void;
     validateAddress?: (value: AddressValue) => string;
 }
-export function AddressInput({ label, name, dName, dLabel, dRequired, wName, wLabel, wRequired, required, addressValue, onChangedAddress } : AddressInputProps) {
+export function AddressInput({ label, name, dName, dLabel, dRequired, wName, wLabel, wRequired, required, addressValue, onChangedAddress, onChangedAddressDisplay } : AddressInputProps) {
     const [provinces, setProvinces]: [SelectBoxOption[], any] = useState([]);
     const [districts, setDistricts]: [SelectBoxOption[], any] = useState([]);
     const [wards, setWards]: [SelectBoxOption[], any] = useState([]);
@@ -42,6 +44,11 @@ export function AddressInput({ label, name, dName, dLabel, dRequired, wName, wLa
             addressRepo.getWards(address.district).then(res => setWards(res.map(r => ({ value: r.id, display: r.ward }))));
         }
         if (onChangedAddress) onChangedAddress(address);
+        if (onChangedAddressDisplay) onChangedAddressDisplay({
+            province: address.province && provinces.find(p => p.value == address.province)?.display,
+            district: address.district && districts.find(p => p.value == address.district)?.display,
+            ward: address.ward && wards.find(p => p.value == address.ward)?.display
+        });
     }, [address]);
 
 

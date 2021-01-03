@@ -19,6 +19,7 @@ export default function CreateFormPage() {
         fields: [{
             type: FormFieldType.email,
             label: "Email",
+            key: "Email",
             placeholder: "Nhập Email"
         }] as FormField[]
     };

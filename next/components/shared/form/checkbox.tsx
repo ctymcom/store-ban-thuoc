@@ -10,7 +10,7 @@ export function Checkbox({ label, name, required, onChanged, checked, value = "t
         if (onChanged) onChanged(e.target.value);
     }
     return <div className="mb-3">
-    <span className="mr-3"><input defaultValue={value} onChange={onChange} name={name} required={required} type="checkbox" checked={checked}/></span>
+    <span className="mr-3"><input defaultValue={value} onChange={onChange} name={name} required={required} type="checkbox" defaultChecked={checked}/></span>
     <label className="font-bold" htmlFor={name}>{label}</label>
 </div>
 }

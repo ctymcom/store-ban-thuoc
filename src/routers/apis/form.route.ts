@@ -32,14 +32,15 @@ class FormRoute extends BaseRoute {
     if (formData.length == 0) throw ErrorHelper.requestDataInvalid("Chưa có dữ liệu");
     const workbook = new Excel.Workbook();
     const sheet = workbook.addWorksheet("Lịch sử ví kết nối");
-    sheet.addRow(["Thời gian", "IP", ...Object.keys(formData[0].data)]);
+    sheet.addRow(["Thời gian", "IP", ...form.fields.map((f) => f.label)]);
     formData.forEach((item) => {
       sheet.addRow([
         moment(item.createdAt).format("YYYY/MM/DD HH:mm:ss"),
         item.ip,
-        ...Object.values(item.data),
+        ...form.fields.map((f) => item.data && item.data[f.key]),
       ]);
     });
+
     return UtilsHelper.responseExcel(res, workbook, `data ${moment().format("YYYY-MM-DD")}`);
   }
   async getFormQRCode(req: Request, res: Response) {

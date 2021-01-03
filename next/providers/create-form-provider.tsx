@@ -8,7 +8,7 @@ export function CreateFormProvider(props) {
     const [formState, setFormState] = useState(props.initForm);
     const router = useRouter();
     const addField = () => {
-        formState.fields.push({ type: FormFieldType.text, label: "Value " + formState.fields.length, placeholder: "" } as FormField);
+        formState.fields.push({ type: FormFieldType.text, label: "Value " + formState.fields.length, placeholder: "", key: "Value " + formState.fields.length } as FormField);
         setFormState({ ...formState });
     }
     const removeField = (index: number) => {
