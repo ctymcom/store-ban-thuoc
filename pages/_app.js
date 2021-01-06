@@ -1,4 +1,3 @@
-import "../next/styles/checkbox.css";
 import "tailwindcss/tailwind.css";
 
 import { AuthProvider } from "../next/providers/auth-provider";
