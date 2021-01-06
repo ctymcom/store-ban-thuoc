@@ -6,7 +6,7 @@ import { QueryOptions } from "@apollo/client/core";
 export class UserRepository extends GraphRepository<IUser> {
   shortFragment: string = "id";
   fullFragment: string = "id";
-  apiName: string = "FormData";
+  apiName: string = "User";
 
   async login(idToken: string) {
     const api = "login";
