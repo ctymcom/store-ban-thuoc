@@ -1,6 +1,9 @@
+import react, { useState } from 'react'
 import Link from 'next/link'
 
 export default function Appbar() {
+    const [openProfile, setopenProfile] = useState(false);
+    const [openNotic, setopenNotic] = useState(false);
     return (
         <>
             <div className="header-bar top-0 left-0 fixed w-full h-14 min-h-48 max-h-14 bg-white z-50 shadow flex items-center font-sans">
@@ -12,7 +15,7 @@ export default function Appbar() {
                         Dashboard
                     </Link>
                 </div>
-                <div className="relative h-full flex items-center w-72 h-50 line-white">
+                <div className="relative h-full flex items-center w-72 h-50 line-white" onMouseOver={() => setopenProfile(true)} onMouseLeave={() => setopenProfile(false)}>
                     <div className="inline-block">
                         <div className="relative">
                             <div className="account-info h-10 flex items-center w-full p-1 rounded-full hover:bg-gray-100 duration-100  cursor-pointer">
@@ -21,7 +24,14 @@ export default function Appbar() {
                             </div>
                         </div>
                     </div>
+                    {openProfile ?
+                        <div className='max-w-3xl absolute	z-50 left-3.5 top-3.5 origin-center origin-top'>
+                            asdasd
+                        </div>
+                        : null}
+
                 </div>
+
                 <div className="action-header px-7 flex  space-x-3">
                     <div className="h-full">
                         <div className="dropdown inline-block w-10 h-10 flex items-center justify-center hover:bg-gray-100 duration-100 rounded-full cursor-pointer">

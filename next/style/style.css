@@ -8,6 +8,12 @@
   background-color: #e8e8e8;
 }
 
+.arrow:hover {
+  fill: red;
+  transform: rotate(0);
+  transition: 0.1s;
+}
+
 body {
   background: #f6f6f6;
   color: #333;
