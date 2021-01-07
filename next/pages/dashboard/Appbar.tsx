@@ -17,7 +17,7 @@ export default function Appbar() {
                         <div className="relative">
                             <div className="account-info h-10 flex items-center w-full p-1 rounded-full hover:bg-gray-100 duration-100  cursor-pointer">
                                 <img src="https://i.pinimg.com/564x/2a/d1/b2/2ad1b27925c0db7a8dafe63186824bc0.jpg" alt="" className='w-8 h-8 items-center mr-2  rounded-full' />
-                                <span className=' inline p-1 pr-2 tracking-normal text-gray-500'>LamQuangVinh</span>
+                                <span className=' inline p-1 pr-2 tracking-normal text-gray-700'>LamQuangVinh</span>
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@ export default function Appbar() {
                         </div>
                     </div>
                     <div className="link-out block flex items-center justify-center cursor-pointer">
-                        <div className=" px-3 rounded-full border-solid border border-gray-500 text-sm">
+                        <div className=" px-3 py-1 rounded-full border-solid border border-gray-300 text-sm hover:bg-gray-100">
                             <Link href='/'>
                                 LINKOUT
                             </Link>
