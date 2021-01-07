@@ -1,0 +1,14 @@
+.line-white::after {
+  content: "";
+  top: 12px;
+  right: 0;
+  position: absolute;
+  width: 1px;
+  height: 32px;
+  background-color: #e8e8e8;
+}
+
+body {
+  background: #f6f6f6;
+  color: #333;
+}
