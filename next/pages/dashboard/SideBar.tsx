@@ -1,4 +1,5 @@
 import SubMenu from '../../components/shared/menu/SubMenu'
+import { useState, useRef } from 'react'
 
 export const SidebarData = [
     {
@@ -192,8 +193,8 @@ export const SidebarData = [
 export default function SideBar() {
     return (
         <>
-            <div className="app-sidebar ">
-                <div className="sidebar-container mt-12 h-screen top-0 w-56 bg-white shadow">
+            <div className="app-sidebar h-full">
+                <div className="sidebar-container mt-12 min-h-screen top-0 w-56 bg-white shadow z-0">
                     <div className="p-4 relative ">
                         <ul className='text-gray-400 text-base'>
                             {SidebarData.map((items, index) => {

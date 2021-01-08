@@ -26,7 +26,7 @@ export default function Appbar() {
                     </div>
                     {openProfile ?
                         <div className='max-w-3xl absolute	z-50 left-3.5 top-3.5 origin-center origin-top'>
-                            asdasd
+
                         </div>
                         : null}
 

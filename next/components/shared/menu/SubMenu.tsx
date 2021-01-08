@@ -4,7 +4,6 @@ export default function SubMenu(props) {
     var { item } = props
     const [Open, setOpen] = useState(false);
     const open = () => {
-        console.log(open)
         setOpen(!Open);
     }
     return (
@@ -24,7 +23,7 @@ export default function SubMenu(props) {
                 {Open ?
                     <ul className='text-sm align-baseline pl-6 pt-2'>
                         {item.subNav.map((item, index) => {
-                            return <Link href={item.path}><li key={index} className='flex duration-200 space-y-6 pt-1 pb-1 text-gray-600 hover:text-red-300'>{item.title}</li></Link>
+                            return <Link href={item.path} key={index}><li className='flex duration-200 space-y-6 pt-1 pb-1 text-gray-600 hover:text-red-300'>{item.title}</li></Link>
                         })}
                     </ul> :
                     null
