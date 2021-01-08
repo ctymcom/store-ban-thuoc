@@ -11,12 +11,15 @@ export const SidebarData = [
             {
                 title: 'Quản Lý Vận Chuyển',
                 path: '/',
+                new: true
             }, {
                 title: 'Giao Hàng Loạt',
                 path: '/',
+                new: false
             }, {
                 title: 'Cài Đặt Vận Chuyển',
                 path: '/',
+                new: false
             },
         ]
 
@@ -30,12 +33,15 @@ export const SidebarData = [
             {
                 title: 'Tất cả',
                 path: '/',
+                new: true
             }, {
                 title: 'Đơn hủy',
                 path: '/',
+                new: false
             }, {
                 title: 'Trả Hàng/ Hoàn Tiền',
                 path: '/',
+                new: false
             },
         ]
 
@@ -49,12 +55,15 @@ export const SidebarData = [
             {
                 title: 'Quản Lý Vận Chuyển',
                 path: '/',
+                new: false
             }, {
                 title: 'Giao Hàng Loạt',
                 path: '/',
+                new: true
             }, {
                 title: 'Cài Đặt Vận Chuyển',
                 path: '/',
+                new: false
             },
         ]
 
@@ -68,12 +77,15 @@ export const SidebarData = [
             {
                 title: 'Quản Lý Vận Chuyển',
                 path: '/',
+                new: false
             }, {
                 title: 'Giao Hàng Loạt',
                 path: '/',
+                new: false
             }, {
                 title: 'Cài Đặt Vận Chuyển',
                 path: '/',
+                new: false
             },
         ]
 
@@ -87,12 +99,15 @@ export const SidebarData = [
             {
                 title: 'Quản Lý Vận Chuyển',
                 path: '/',
+                new: false
             }, {
                 title: 'Giao Hàng Loạt',
                 path: '/',
+                new: false
             }, {
                 title: 'Cài Đặt Vận Chuyển',
                 path: '/',
+                new: false
             },
         ]
 
@@ -106,12 +121,15 @@ export const SidebarData = [
             {
                 title: 'Quản Lý Vận Chuyển',
                 path: '/',
+                new: false
             }, {
                 title: 'Giao Hàng Loạt',
                 path: '/',
+                new: false
             }, {
                 title: 'Cài Đặt Vận Chuyển',
                 path: '/',
+                new: false
             },
         ]
 
@@ -125,12 +143,15 @@ export const SidebarData = [
             {
                 title: 'Quản Lý Vận Chuyển',
                 path: '/',
+                new: false
             }, {
                 title: 'Giao Hàng Loạt',
                 path: '/',
+                new: false
             }, {
                 title: 'Cài Đặt Vận Chuyển',
                 path: '/',
+                new: false
             },
         ]
 
@@ -144,12 +165,15 @@ export const SidebarData = [
             {
                 title: 'Quản Lý Vận Chuyển',
                 path: '/',
+                new: false
             }, {
                 title: 'Giao Hàng Loạt',
                 path: '/',
+                new: false
             }, {
                 title: 'Cài Đặt Vận Chuyển',
                 path: '/',
+                new: false
             },
         ]
 
@@ -163,9 +187,11 @@ export const SidebarData = [
             {
                 title: 'Kênh Marketing',
                 path: '/',
+                new: false
             }, {
                 title: 'Quảng Cáo Shopee',
                 path: '/',
+                new: false
             },
         ]
 
@@ -179,12 +205,15 @@ export const SidebarData = [
             {
                 title: 'Quản Lý Vận Chuyển',
                 path: '/',
+                new: false
             }, {
                 title: 'Giao Hàng Loạt',
                 path: '/',
+                new: false
             }, {
                 title: 'Cài Đặt Vận Chuyển',
                 path: '/',
+                new: false
             },
         ]
 

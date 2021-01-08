@@ -25,8 +25,15 @@ export default function Appbar() {
                         </div>
                     </div>
                     {openProfile ?
-                        <div className='max-w-3xl absolute	z-50 left-3.5 top-3.5 origin-center origin-top'>
+                        <div className='absolute bg-white left-10 top-14 shadow rounded-sm max-w-6xl'>
+                            <div className="container">
+                                <ul onMouseOver={() => setopenProfile(true)} onMouseLeave={() => setopenProfile(false)}>
+                                    <li className='flex px-5 py-5 h-8 z-50 items-center'>
 
+                                        <span className="text">Hồ Sơ Shop</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         : null}
 
