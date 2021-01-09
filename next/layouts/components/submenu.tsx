@@ -1,6 +1,6 @@
 import react, { useState } from 'react'
 import Link from 'next/link'
-export default function SubMenu(props) {
+export function SubMenu(props) {
     var { item } = props
     const [Open, setOpen] = useState(false);
     const open = () => {

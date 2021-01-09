@@ -1,9 +1,8 @@
-import Appbar from '../next/pages/dashboard/Appbar'
-import SideBar from '../next/pages/dashboard/sidebar'
+import { DashboardLayout } from '../next/layouts/dashboard-layout'
+import { AdminPage } from '../next/pages/admin/admin-page';
 
 export default () => {
     return <>
-        <Appbar />
-        <SideBar />
+        <AdminPage />
     </>
 }
