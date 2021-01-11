@@ -1,6 +1,6 @@
 import LoginPage from '../../next/pages/login/login-page';
 
-export default () => {
+export default function Login() {
     return <>
       <LoginPage />
     </>
