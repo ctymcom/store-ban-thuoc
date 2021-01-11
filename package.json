@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
+    "@headlessui/react": "^0.2.0",
     "ajv": "^6.12.3",
     "ajv-errors": "^1.0.1",
     "apollo-link-context": "^1.0.20",

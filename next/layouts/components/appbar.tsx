@@ -55,7 +55,7 @@ export function Appbar() {
                 <div className="action-header px-7 flex  space-x-3 max-w-5xl ">
                     <div className="h-full relative duration-300 " onMouseOver={() => setopenNotic(true)} onMouseLeave={() => setopenNotic(false)}>
                         <div className='w-10 h-10'>
-                            <div className="dropdown inline-block w-10 h-10 flex items-center justify-center hover:bg-gray-100 duration-100 rounded-full cursor-pointer">
+                            <div className="dropdown w-10 h-10 flex items-center justify-center hover:bg-gray-100 duration-100 rounded-full cursor-pointer">
                                 <div className="dropdown-button w-4 h-4">
                                     <i className="">
                                         <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" className='fill-current'>
@@ -67,7 +67,7 @@ export function Appbar() {
                             </div>
                         </div>
                         <div onMouseOver={() => setopenNotic(true)} onMouseLeave={() => setopenNotic(false)}
-                            className={`${openNotic ? 'block' : 'hidden'} hover:block w-80 text-center max-w-5xl z-50 absolute bg-white -left-32 top-10 shadow-md rounded-sm  origin-center origin-top  with-arrow `}>
+                            className={`${openNotic ? 'block' : 'hidden'} hover:block w-80 text-center max-w-5xl z-50 absolute bg-white -left-32 top-10 shadow-md rounded-sm origin-top  with-arrow `}>
                             <div className="container p-4">
                                 <div className="items flex flex-wrap">
                                     {AppbarItems.map((item, index) => {
@@ -88,7 +88,7 @@ export function Appbar() {
                         </div>
                     </div>
                     <div className="h-full">
-                        <div className="dropdown inline-block w-10 h-10 flex items-center justify-center hover:bg-gray-100 duration-100 rounded-full cursor-pointer">
+                        <div className="dropdown w-10 h-10 flex items-center justify-center hover:bg-gray-100 duration-100 rounded-full cursor-pointer">
                             <div className="dropdown-button w-4 h-4">
                                 <i className="">
                                     <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" className='fill-current'>
@@ -98,7 +98,7 @@ export function Appbar() {
                             </div>
                         </div>
                     </div>
-                    <div className="link-out block flex items-center justify-center cursor-pointer">
+                    <div className="link-out flex items-center justify-center cursor-pointer">
                         <div className=" px-3 py-1 rounded-full border-solid border border-gray-300 text-sm hover:bg-gray-100">
                             <Link href='/'>
                                 LINKOUT

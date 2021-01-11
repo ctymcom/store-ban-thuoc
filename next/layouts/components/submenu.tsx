@@ -1,5 +1,6 @@
 import react, { useState } from 'react'
 import Link from 'next/link'
+import { Transition } from '@headlessui/react'; 
 export function SubMenu(props) {
     var { item } = props
     const [Open, setOpen] = useState(false);
@@ -20,23 +21,24 @@ export function SubMenu(props) {
                         </svg>
                     </i>
                 </div>
-                {Open ?
-                    <ul className='text-sm align-baseline pl-6 pt-2'>
+                <Transition
+                    className="transition-opacity duration-200"
+                    show={Open}
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                >
+                    <ul className="text-sm align-baseline pl-6 pt-2">
                         {item.subNav.map((item, index) => {
                             return <Link href={item.path} key={index}>
                                 <li className='flex w-full '>
                                     <span className='flex space-y-6 pt-1 pb-0 text-gray-600 hover:text-red-400'> {item.title} </span>
-                                    {item.new ?
-                                        <span className='text-center text-xs pl-0.5 pr-0.5 ml-3 text-white rounded-br-lg rounded-bl-lg rounded-tl-lg bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 flex justify-end items-center'>New</span> :
-                                        null
-                                    }
                                 </li>
                             </Link>
                         })}
-                    </ul> :
-                    null
-                }
-
+                    </ul>
+                </Transition>
             </li>
         </>
     )
