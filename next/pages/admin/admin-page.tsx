@@ -6,5 +6,7 @@ export function AdminPage() {
         <Card>
             <BasicStatistics></BasicStatistics>
         </Card>
+
+
     </DashboardLayout>
 }
