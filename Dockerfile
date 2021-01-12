@@ -13,7 +13,7 @@ COPY . .
 ARG MONGODB_URI
 ARG FIREBASE_VIEW
 RUN npm run build-ts
-RUN MONGODB_URI='$MONGODB_URI' FIREBASE_VIEW='$FIREBASE_VIEW' npm run next:build
+RUN MONGODB_URI=$MONGODB_URI FIREBASE_VIEW=$FIREBASE_VIEW npm run next:build
 
 RUN npm prune --production
 
