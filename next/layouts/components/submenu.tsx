@@ -1,6 +1,7 @@
-import react, { useState } from 'react'
-import Link from 'next/link'
-import { Transition } from '@headlessui/react'; 
+import { Transition } from '@headlessui/react';
+import Link from 'next/link';
+import { useState } from 'react';
+
 export function SubMenu(props) {
     var { item } = props
     const [Open, setOpen] = useState(false);

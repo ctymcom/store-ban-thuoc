@@ -1,9 +1,8 @@
-import * as Icon from '../../lib/svg'
 export const SidebarData = [
   {
     title: "Vận chuyển",
     path: "/",
-    icon: '',
+    icon: "",
     isOpen: false,
     subNav: [
       {

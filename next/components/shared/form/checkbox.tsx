@@ -1,4 +1,3 @@
-import { FormField } from "../../../../src/graphql/modules/form/types/formField.type";
 import { FormFieldProps } from "./form-field.type";
 type CheckBoxProps = FormFieldProps & {
     onChanged?: (value: boolean) => void,

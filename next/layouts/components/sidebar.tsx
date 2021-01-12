@@ -1,7 +1,5 @@
 import { SubMenu } from './submenu';
 import { SidebarData } from './sidebar-data';
-
-
 export default function Sidebar() {
     return (
         <>

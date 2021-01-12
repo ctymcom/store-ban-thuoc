@@ -1,4 +1,3 @@
-import { FormField, FormFieldType } from "../../../../src/graphql/modules/form/types/formField.type";
 import { FormFieldProps } from "./form-field.type";
 
 export function Input({ label, name, required, placeholder, inputType = "text",value, ...props } : FormFieldProps) {
