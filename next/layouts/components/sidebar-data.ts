@@ -1,8 +1,9 @@
+import * as Icon from '../../lib/svg'
 export const SidebarData = [
   {
     title: "Vận chuyển",
     path: "/",
-    icon: "https://cf.shopee.vn/file/c15905d5a6284687c4a6ad00d0feb511",
+    icon: '',
     isOpen: false,
     subNav: [
       {
