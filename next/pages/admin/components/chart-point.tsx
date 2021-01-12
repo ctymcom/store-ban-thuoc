@@ -1,5 +1,5 @@
-import { Line } from 'react-chartjs-2'
-export function ChartMember() {
+import { Bar } from 'react-chartjs-2'
+export function ChartPoint() {
     return (
         <>
             <div className="wrapper">
@@ -26,7 +26,7 @@ export function ChartMember() {
                     </div>
                     <div className="chart">
                         <div className="container-chart">
-                            <Line
+                            <Bar
                                 height={150}
                                 width={300}
                                 data={{
@@ -34,10 +34,10 @@ export function ChartMember() {
                                     position: 'bottom',
                                     align: 'left',
                                     datasets: [{
-                                        label: 'Số lượng Hội viên năm nay',
+                                        label: 'Số lượng điểm thưởng tích lũy năm nay',
                                         data: [750, 555, 250, 450, 250, 480, 555, 762, 360, 688],
                                         backgroundColor: [
-                                            'rgba(255, 99, 132, 0.0)'
+                                            'rgb(231, 77, 61,1)'
                                         ],
                                         borderColor: [
                                             'rgb(231, 77, 61,1)',
@@ -45,10 +45,10 @@ export function ChartMember() {
                                         borderWidth: 2
                                     },
                                     {
-                                        label: 'Số lượng Hội viên cùng kì năm trước',
+                                        label: 'Số lượng điểm thưởng tích lũy cùng kỳ năm trước',
                                         data: [582, 145, 258, 753, 457, 124, 578, 457, 378, 123],
                                         backgroundColor: [
-                                            'rgba(0, 0, 0, 0.0)',
+                                            'rgb(251, 209, 9,1)',
                                         ],
                                         borderColor: [
                                             'rgb(251, 209, 9,1)',
@@ -61,6 +61,14 @@ export function ChartMember() {
                                     legend: {
                                         position: 'bottom',
                                         align: 'left'
+                                    },
+                                    scales: {
+                                        xAxes: [{
+                                            stacked: true,
+                                        }],
+                                        yAxes: [{
+                                            stacked: true
+                                        }]
                                     }
                                 }}
                             />
