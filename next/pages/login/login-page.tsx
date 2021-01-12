@@ -1,10 +1,9 @@
 import { useRouter } from 'next/router';
-// import React from 'react';
 
 import { Button } from '../../components/shared/form/button';
 import { Input } from '../../components/shared/form/input';
-// import { firebase } from '../../lib/firebase-client';
-// import { SetAuthToken } from '../../lib/graphql/auth.link';
+import { firebase } from '../../lib/firebase-client';
+import { SetAuthToken } from '../../lib/graphql/auth.link';
 import { UserRepository } from '../../lib/repo/user.repo';
 
 export default function LoginPage() {
@@ -14,12 +13,12 @@ export default function LoginPage() {
   const router = useRouter();
   const login = () => {
     const { email, password } = userLogin;
-    // firebase.auth().signInWithEmailAndPassword(email, password).then(async state => {
-    //   const token = await state.user.getIdToken();
-    //   const loginData = await userRepo.login(token);
-    //   SetAuthToken(loginData.token);
-    //   router.push('/');
-    // })
+    firebase.auth().signInWithEmailAndPassword(email, password).then(async state => {
+      const token = await state.user.getIdToken();
+      const loginData = await userRepo.login(token);
+      SetAuthToken(loginData.token);
+      router.push('/');
+    })
   }
     return <>
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">

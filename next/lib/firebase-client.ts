@@ -1,13 +1,16 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import getConfig, { setConfig } from "next/config";
+// import firebase from "firebase/app";
+// import "firebase/auth";
+import getConfig from "next/config";
 
 const { publicRuntimeConfig } = getConfig();
-setConfig({ publicRuntimeConfig });
-if (typeof window !== "undefined" && firebase.apps.length == 0) {
-  console.log("publicRuntimeConfig", publicRuntimeConfig);
+let firebase;
+
+const initFirebase = async () => {
+  firebase = await import("firebase/app").then((mod) => mod.default);
+  await Promise.all([import("firebase/auth")]);
   firebase.initializeApp(JSON.parse(publicRuntimeConfig.firebaseView));
-  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-}
+};
+
+initFirebase();
 
 export { firebase };
