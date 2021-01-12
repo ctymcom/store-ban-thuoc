@@ -1,7 +1,9 @@
 import { Appbar } from './components/appbar';
+import { HeadSEO } from './components/head-seo';
 import Sidebar from './components/sidebar';
 export function DashboardLayout(props) {
-    return <>   
+    return <>
+        <HeadSEO title={'Smart Loyalty Dashboard'}></HeadSEO>
         <Appbar />
         <div className="flex pt-14 w-full">
             <Sidebar />
