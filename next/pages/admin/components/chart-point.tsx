@@ -5,7 +5,7 @@ export function ChartPoint() {
             <div className="wrapper">
                 <div className="container ">
                     <div className="title">
-                        <h3 className='inline text-xl'>Phân tích số liệu hội viên</h3>
+                        <h3 className='inline text-xl'>Tổng số điểm thưởng tích lũy</h3>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" className='inline'>
                             <g id="Group_38506" data-name="Group 38506" transform="translate(-338.163 267.641)">
                                 <g id="Group_38500" data-name="Group 38500" transform="translate(340.471 -265.332)">
@@ -22,7 +22,7 @@ export function ChartPoint() {
 
                     </div>
                     <div className="note">
-                        <p className='inline text-sm text-gray-400'>Biểu đồ tăng trưởng hội viên theo từng tháng tính tới hiện tại</p>
+                        <p className='inline text-sm text-gray-400'>Biểu đồ tăng trưởng số điểm tích lũy theo từng tháng</p>
                     </div>
                     <div className="chart">
                         <div className="container-chart">
@@ -36,24 +36,19 @@ export function ChartPoint() {
                                     datasets: [{
                                         label: 'Số lượng điểm thưởng tích lũy năm nay',
                                         data: [750, 555, 250, 450, 250, 480, 555, 762, 360, 688],
-                                        backgroundColor: [
-                                            'rgb(231, 77, 61,1)'
-                                        ],
-                                        borderColor: [
-                                            'rgb(231, 77, 61,1)',
-                                        ],
-                                        borderWidth: 2
+                                        backgroundColor: 'rgb(231, 77, 61,1)',
+                                        borderColor: 'rgb(231, 77, 61,1)',
+                                        borderWidth: 1,
+                                        barThickness: 5,
+                                        radius: 5,
                                     },
                                     {
                                         label: 'Số lượng điểm thưởng tích lũy cùng kỳ năm trước',
                                         data: [582, 145, 258, 753, 457, 124, 578, 457, 378, 123],
-                                        backgroundColor: [
-                                            'rgb(251, 209, 9,1)',
-                                        ],
-                                        borderColor: [
-                                            'rgb(251, 209, 9,1)',
-                                        ],
-                                        borderWidth: 2
+                                        backgroundColor: 'rgb(251, 209, 9,1)',
+                                        borderColor: 'rgb(251, 209, 9,1)',
+                                        borderWidth: 1,
+                                        barThickness: 5
                                     }]
                                 }}
                                 options={{
