@@ -25,11 +25,15 @@
     "serve-debug": "nodemon --inspect dist/server.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\"",
     "prettier": "prettier --write '**/*.{ts,css,js}'",
-    "next:build": "next build"
+    "next:build": "next build",
+    "analyze": "cross-env ANALYZE=true next build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
     "@headlessui/react": "^0.2.0",
+    "@next/bundle-analyzer": "^10.0.5",
     "ajv": "^6.12.3",
     "ajv-errors": "^1.0.1",
     "apollo-link-context": "^1.0.20",
@@ -43,6 +47,7 @@
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.4",
     "compression": "^1.7.4",
+    "cross-env": "^7.0.3",
     "dataloader": "^2.0.0",
     "dotenv": "^8.2.0",
     "exceljs": "^4.2.0",

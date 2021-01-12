@@ -1,28 +1,28 @@
 import { createContext, useEffect, useState } from 'react';
-import { firebase } from '../lib/firebase-client';
+// import { firebase } from '../lib/firebase-client';
 import nookies from 'nookies';
 import { useContext } from 'react';
 import { UserRepository } from '../lib/repo/user.repo';
 import { GetServerSidePropsContext } from 'next';
 
-const AuthContext = createContext<{ user: firebase.User | null }>({
+const AuthContext = createContext<{ user: any | null }>({
   user: null,
 });
 
 export function AuthProvider({ children }: any) {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<any | null>(null);
   useEffect(() => {
-    return firebase.auth().onAuthStateChanged(async (user) => {
-      if (!user) {
-        setUser(null);
-        nookies.set(undefined, 'x-token', '', { path: '/'});
-      } else {
-        const token = await user.getIdToken();
-        new UserRepository().login(token).then(({ user, token }) => {
-            nookies.set(undefined, 'x-token', token, { path: '/'});;
-        })
-      }
-    });
+    // return firebase.auth().onAuthStateChanged(async (user) => {
+    //   if (!user) {
+    //     setUser(null);
+    //     nookies.set(undefined, 'x-token', '', { path: '/'});
+    //   } else {
+    //     const token = await user.getIdToken();
+    //     new UserRepository().login(token).then(({ user, token }) => {
+    //         nookies.set(undefined, 'x-token', token, { path: '/'});;
+    //     })
+    //   }
+    // });
   }, []);
   return (
     <AuthContext.Provider value={{ user }}>

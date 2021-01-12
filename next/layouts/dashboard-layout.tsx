@@ -1,6 +1,8 @@
 import { Appbar } from './components/appbar';
 import { HeadSEO } from './components/head-seo';
-import Sidebar from './components/sidebar';
+// import Sidebar from './components/sidebar';
+import dynamic from 'next/dynamic';
+const Sidebar = dynamic<any>(() => import('./components/sidebar'))
 export function DashboardLayout(props) {
     return <>
         <HeadSEO title={'Smart Loyalty Dashboard'}></HeadSEO>

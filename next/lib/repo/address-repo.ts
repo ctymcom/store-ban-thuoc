@@ -1,7 +1,7 @@
 import { GraphRepository } from "../graphql/graph-repository";
-import { IAddress } from "../../../src/graphql/modules/address/address.model";
+// import { any } from "../../../src/graphql/modules/address/address.model";
 import { gql } from "@apollo/client";
-export class AddressRepository extends GraphRepository<IAddress> {
+export class AddressRepository extends GraphRepository<any> {
   shortFragment: string = "id province district ward";
   fullFragment: string = "id province district ward";
   apiName: string = "Address";
@@ -19,7 +19,7 @@ export class AddressRepository extends GraphRepository<IAddress> {
       `,
     });
     this.handleError(result);
-    return result.data[api] as IAddress[];
+    return result.data[api] as any[];
   }
   async getDistricts(provinceId: string) {
     const api = "getDistrict";
@@ -34,7 +34,7 @@ export class AddressRepository extends GraphRepository<IAddress> {
       `,
     });
     this.handleError(result);
-    return result.data[api] as IAddress[];
+    return result.data[api] as any[];
   }
   async getWards(districtId: string) {
     const api = "getWard";
@@ -49,6 +49,6 @@ export class AddressRepository extends GraphRepository<IAddress> {
       `,
     });
     this.handleError(result);
-    return result.data[api] as IAddress[];
+    return result.data[api] as any[];
   }
 }
