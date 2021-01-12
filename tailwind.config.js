@@ -8,6 +8,11 @@ module.exports = {
     extend: {
       colors: {
         primary: colors.indigo
+      },
+      textColor: {
+        'primary': '#3490dc',
+        'secondary': '#ffed4a',
+        'danger': '#e3342f',
       }
     },
     

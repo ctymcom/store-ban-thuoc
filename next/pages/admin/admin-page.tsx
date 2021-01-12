@@ -1,9 +1,12 @@
 import { DashboardLayout } from "../../layouts/dashboard-layout";
 import { Card } from '../../components/shared/card/card';
+import { BasicStatistics } from '../../layouts/components/basic-statistics'
 export function AdminPage() {
     return <DashboardLayout>
         <Card>
-            Hello world hi
+            <BasicStatistics></BasicStatistics>
         </Card>
+
+
     </DashboardLayout>
 }
