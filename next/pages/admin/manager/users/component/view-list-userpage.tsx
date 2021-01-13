@@ -1,3 +1,4 @@
+import { TablePagination } from "../../../../../components/shared/table/table-pagination";
 import { IconBlock, IconUser, IconEdit } from "../../../../../lib/svg";
 
 export function ViewListUserpage(props) {
@@ -10,12 +11,12 @@ export function ViewListUserpage(props) {
                         ListUserData.map((item, index) => {
                             return (
                                 <>
-                                    <div className="user w-full border-2 border-gray-200 p-3 rounded-md" >
+                                    <div className="user w-full border-2 border-gray-200 p-3 rounded-md hover:shadow" >
                                         <div className="profile-container flex items-center pb-3 border-b-2">
                                             <div className="w-80 flex items-center line-white-user">
                                                 <div className="avt flex justify-center items-center">
                                                     <div className="container w-16 h-16 flex justify-center items-center bg-yellow-100 rounded-xl">
-                                                        <i className="w-12 h-12 z-10">
+                                                        <i className="w-12 h-12 z-10  text-yellow-400">
                                                             <IconUser />
                                                         </i >
                                                     </div>
@@ -32,7 +33,7 @@ export function ViewListUserpage(props) {
                                             <div className="btn-edit pl-3 flex justify-center">
                                                 <div className="btn-block pl-4">
                                                     <div className="btn-block bg-red-100 hover:bg-red-200 cursor-pointer w-24 h-10 flex justify-center items-center text-red-500 rounded-md">
-                                                        <i className="icon w-10 h-5">
+                                                        <i className="icon w-10 h-5 ">
                                                             <IconBlock />
                                                         </i>
                                                         <p>Khóa</p>
@@ -61,8 +62,8 @@ export function ViewListUserpage(props) {
                                                 </div>
                                                 <div className="status text-sm">
                                                     {item.status ?
-                                                        <p className={'text-green-700'}>Đang hoạt động</p> :
-                                                        <p className={'text-gray-700'}>Dừng hoạt động</p>
+                                                        <p className={'text-green-400'}>Đang hoạt động</p> :
+                                                        <p className={'text-gray-400'}>Dừng hoạt động</p>
                                                     }
 
                                                 </div>
@@ -74,6 +75,15 @@ export function ViewListUserpage(props) {
                         })
                     }
                 </div>
+                <TablePagination
+                    pagination={{
+                        limit: 8,
+                        page: 1,
+                        total: 8,
+                        offset: 1
+                    }}
+                    onPageChanged={(e) => { console.log(e) }}
+                />
             </div>
         </div>
     </>
