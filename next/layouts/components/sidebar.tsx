@@ -5,8 +5,8 @@ export default function Sidebar() {
         <>
             <div className="w-60"></div>
             <div className="fixed inset-0 top-14 overflow-auto bg-white shadow z-0 w-60">
-                <div className="p-4">
-                    <ul className='text-gray-400 text-base'>
+                <div className="p-4 ">
+                    <ul className='text-gray-500 text-base ml-3'>
                         {SidebarData.map((items, index) => {
                             return <SubMenu item={items} key={index}></SubMenu>
                         })}

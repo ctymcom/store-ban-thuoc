@@ -14,18 +14,18 @@ const ChartPoint = dynamic<any>(() =>
   import('./components/chart-point').then((mod) => mod.ChartPoint)
 )
 export function AdminPage() {
-    
-    return <DashboardLayout>
-        <Card width={'max-w-4xl'}>
-            <BasicStatistics />
-        </Card>
-        <Card width={'max-w-md w-1/2 mr-1 inline-block'}>
-            <ChartMember></ChartMember>
-        </Card>
-        <Card width={'max-w-md w-1/2 ml-1 inline-block'}>
-            <ChartPoint></ChartPoint>
-        </Card>
+
+  return <DashboardLayout>
+    <Card width={'max-w-4xl w-full'}>
+      <BasicStatistics />
+    </Card>
+    <Card width={'max-w-md w-6/12 mr-0.5 inline-block '}>
+      <ChartMember></ChartMember>
+    </Card>
+    <Card width={'max-w-md w-6/12 ml-0.5 inline-block '}>
+      <ChartPoint></ChartPoint>
+    </Card>
 
 
-    </DashboardLayout>
+  </DashboardLayout>
 }
