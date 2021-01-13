@@ -1,4 +1,5 @@
 import { Appbar } from './components/appbar';
+import { Footer } from './components/footer';
 import { HeadSEO } from './components/head-seo';
 // import Sidebar from './components/sidebar';
 import dynamic from 'next/dynamic';
@@ -13,6 +14,6 @@ export function DashboardLayout(props) {
                 {props.children}
             </div>
         </div>
-
+        <Footer />
     </>
 }

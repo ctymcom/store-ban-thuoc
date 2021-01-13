@@ -10,12 +10,12 @@ export function ViewGridUserpage(props) {
                         ListUserData.map((item, index) => {
                             return (
                                 <>
-                                    <div className="user w-64 border-2 border-gray-200 p-3 rounded-md" >
+                                    <div className="user w-64 border-2 border-gray-200 p-3 rounded-md hover:shadow" >
                                         <div className="profile-container pb-3 border-b-2">
                                             <div className="w-80">
                                                 <div className="avt">
                                                     <div className="container w-16 h-16 flex justify-center items-center bg-yellow-100 rounded-xl">
-                                                        <i className="w-12 h-12 z-10">
+                                                        <i className="w-12 h-12 z-10 text-yellow-400">
                                                             <IconUser />
                                                         </i >
                                                     </div>
