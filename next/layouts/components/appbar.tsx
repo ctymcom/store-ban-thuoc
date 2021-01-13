@@ -13,8 +13,9 @@ export function Appbar() {
     const { pathname } = useRouter();
     useEffect(() => {
         SidebarData.forEach((item, index) => {
-            if (item.path.search(pathname) > -1) {
-                arr = [...linkAdress]
+            if (pathname.search(item.path) > -1) {
+                //arr = [...linkAdress]
+                console.log(item.path)
                 var link = {
                     title: item.title,
                     path: item.path
@@ -23,7 +24,7 @@ export function Appbar() {
                 setlinkAdress([...arr])
                 item.subNav.forEach((item, index) => {
                     if (item.path == pathname) {
-                        arr = [...linkAdress]
+                        //arr = [...linkAdress]
                         var link = {
                             title: item.title,
                             path: item.path
@@ -35,7 +36,7 @@ export function Appbar() {
             }
         })
     }, []);
-    console.log(linkAdress);
+    console.log(pathname)
     return (
         <>
             <div className="top-0 left-0 fixed w-full h-14 min-h-48 max-h-14 bg-white z-50 shadow flex items-center font-sans">
@@ -70,11 +71,14 @@ export function Appbar() {
                 <div className="title text-xl w-full h-full flex items-center">
                     {
                         linkAdress.map((item, index) => {
+                            const actived = index == 1;
                             return (
                                 <>
-                                    <Link href={item.path} key={index}>
-                                        {item.title}
-                                    </Link>
+                                    <div className={actived && 'text-yellow-500'} key={index}>
+                                        <Link href={item.path} >
+                                            {item.title + (index == 0 ? '>' : '')}
+                                        </Link>
+                                    </div>
                                 </>
                             )
                         })
