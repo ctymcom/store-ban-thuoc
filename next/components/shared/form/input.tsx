@@ -10,7 +10,7 @@ export function Input({ label, name, required, placeholder, inputType = "text", 
             defaultValue={value}
             required={required}
             name={name}
-            className="border-solid pl-10 w-full h-full bg-white border-gray-300 border p-2 text-sm text-gray-500 rounded-md focus:outline-none focus:ring-yellow-500 focus:border-yellow-400"
+            className="border-solid pl-10 w-full h-full bg-white border-gray-300 border p-2 text-sm text-gray-500 rounded-md focus:outline-none focus:ring-secondary-500 focus:border-secondary-400"
             type={inputType}
             placeholder={placeholder} />
 

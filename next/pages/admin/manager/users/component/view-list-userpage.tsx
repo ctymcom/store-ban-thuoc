@@ -13,41 +13,47 @@ export function ViewListUserpage(props) {
                                 <>
                                     <div className="user w-full border-2 border-gray-200 p-3 rounded-md hover:shadow" >
                                         <div className="profile-container flex items-center pb-3 border-b-2">
-                                            <div className="w-80 flex items-center line-white-user">
-                                                <div className="avt flex justify-center items-center">
-                                                    <div className="container w-16 h-16 flex justify-center items-center bg-yellow-100 rounded-xl">
-                                                        <i className="w-12 h-12 z-10  text-yellow-400">
-                                                            <IconUser />
-                                                        </i >
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <div className="flex items-center line-white-user">
+                                                        <div className="avt flex justify-center items-center">
+                                                            <div className="container w-16 h-16 flex justify-center items-center bg-secondary-100 rounded-xl">
+                                                                <i className="w-12 h-12 z-10  text-secondary-400">
+                                                                    <IconUser />
+                                                                </i >
+                                                            </div>
+                                                        </div>
+                                                        <div className="name pl-3 ">
+                                                            <div className="nickname text-sm text-gray-400">
+                                                                <p>{item.nickname}</p>
+                                                            </div>
+                                                            <div className="fullname text-sm text-gray-700">
+                                                                <p>{item.name}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="btn-edit pl-3 flex justify-center">
+                                                        <div className="btn-block pl-4">
+                                                            <div className="btn-block bg-primary-100 hover:bg-primary-200 cursor-pointer w-24 h-10 flex justify-center items-center text-primary-500 rounded-md">
+                                                                <i className="icon w-10 h-5 ">
+                                                                    <IconBlock />
+                                                                </i>
+                                                                <p>Khóa</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="btn-edit pl-4">
+                                                            <div className="btn-block bg-green-100 hover:bg-green-200 cursor-pointer w-24 h-10 flex justify-center items-center text-green-500 rounded-md">
+                                                                <i className="icon w-10 h-5">
+                                                                    <IconEdit />
+                                                                </i>
+                                                                <p>Sửa</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="name pl-3 ">
-                                                    <div className="nickname text-sm text-gray-400">
-                                                        <p>{item.nickname}</p>
-                                                    </div>
-                                                    <div className="fullname text-sm text-gray-700">
-                                                        <p>{item.name}</p>
-                                                    </div>
-                                                </div>
+                                                <button className="text-secondary-500">Xoá</button>
                                             </div>
-                                            <div className="btn-edit pl-3 flex justify-center">
-                                                <div className="btn-block pl-4">
-                                                    <div className="btn-block bg-red-100 hover:bg-red-200 cursor-pointer w-24 h-10 flex justify-center items-center text-red-500 rounded-md">
-                                                        <i className="icon w-10 h-5 ">
-                                                            <IconBlock />
-                                                        </i>
-                                                        <p>Khóa</p>
-                                                    </div>
-                                                </div>
-                                                <div className="btn-edit pl-4">
-                                                    <div className="btn-block bg-green-100 hover:bg-green-200 cursor-pointer w-24 h-10 flex justify-center items-center text-green-500 rounded-md">
-                                                        <i className="icon w-10 h-5">
-                                                            <IconEdit />
-                                                        </i>
-                                                        <p>Sửa</p>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <div className="infor-user">
                                             <div className="infor flex flex-1 justify-center space-x-28 pt-2">

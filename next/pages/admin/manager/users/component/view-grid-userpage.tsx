@@ -5,20 +5,21 @@ export function ViewGridUserpage(props) {
     return <>
         <div className="w-full py-3">
             <div className="w-full">
-                <div className="w-full grid grid-cols-4  gap-6">
+                <div className="w-full grid grid-cols-3 xl:grid-cols-4  gap-6">
                     {
                         ListUserData.map((item, index) => {
                             return (
                                 <>
-                                    <div className="user w-64 border-2 border-gray-200 p-3 rounded-md hover:shadow" >
+                                    <div className="user border-2 border-gray-200 p-3 rounded-md hover:shadow" >
                                         <div className="profile-container pb-3 border-b-2">
-                                            <div className="w-80">
-                                                <div className="avt">
-                                                    <div className="container w-16 h-16 flex justify-center items-center bg-yellow-100 rounded-xl">
-                                                        <i className="w-12 h-12 z-10 text-yellow-400">
+                                            <div className="">
+                                                <div className="avt flex justify-between items-start">
+                                                    <div className="container w-16 h-16 flex justify-center items-center bg-secondary-100 rounded-xl">
+                                                        <i className="w-12 h-12 z-10 text-secondary-400">
                                                             <IconUser />
                                                         </i >
                                                     </div>
+                                                    <button className="text-secondary-500">Xoá</button>
                                                 </div>
                                                 <div className="name pt-2">
                                                     <div className="nickname text-sm text-gray-400">
@@ -52,7 +53,7 @@ export function ViewGridUserpage(props) {
                                         </div>
                                         <div className="btn-edit grid grid-cols-2 gap-2 py-2">
                                             <div className="btn-block ">
-                                                <div className="btn-block bg-red-100 hover:bg-red-200 cursor-pointer w-24 h-10 flex justify-center items-center text-red-500 rounded-md">
+                                                <div className="btn-block bg-primary-100 hover:bg-primary-200 cursor-pointer py-2 px-4 flex justify-center items-center text-primary-500 rounded-md">
                                                     <i className="icon w-10 h-5">
                                                         <IconBlock />
                                                     </i>
@@ -60,7 +61,7 @@ export function ViewGridUserpage(props) {
                                                 </div>
                                             </div>
                                             <div className="btn-edit">
-                                                <div className="btn-block bg-green-100 hover:bg-green-200 cursor-pointer w-24 h-10 flex justify-center items-center text-green-500 rounded-md">
+                                                <div className="btn-block bg-green-100 hover:bg-green-200 cursor-pointer py-2 px-4 flex justify-center items-center text-green-500 rounded-md">
                                                     <i className="icon w-10 h-5">
                                                         <IconEdit />
                                                     </i>

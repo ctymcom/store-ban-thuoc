@@ -13,7 +13,7 @@ export function SubMenu(props) {
     return (
         <>
             <li className=' py-2 items-center cursor-pointer' onClick={open}>
-                <div className="px-4 py-2 flex items-center hover:text-red-600">
+                <div className="px-4 py-2 flex items-center hover:text-primary-600">
                     <div className="icon w-5 h-5 mr-3 ">
                         {item.icon}
                     </div>
@@ -38,8 +38,8 @@ export function SubMenu(props) {
                         {item.subNav.map((item, index) => {
                             const activated = item.path == pathname;
                             return <Link href={item.path} key={index}>
-                                <li className={'flex w-full ' + (activated && 'bg-yellow-400')}>
-                                    <span className={'pl-14 flex space-y-6 py-2 text-gray-600 hover:text-red-400 '}> {item.title} </span>
+                                <li className={'flex w-full ' + (activated && 'bg-secondary-400')}>
+                                    <span className={'pl-14 flex space-y-6 py-2 text-gray-600 hover:text-primary-400 '}> {item.title} </span>
                                 </li>
                             </Link>
                         })}

@@ -7,12 +7,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: colors.indigo
+        primary: colors.red,
+        secondary: colors.yellow,
       },
       textColor: {
-        'primary': '#3490dc',
-        'secondary': '#ffed4a',
-        'danger': '#e3342f',
+        primary: colors.red,
+        secondary: colors.yellow,
       }
     },
     

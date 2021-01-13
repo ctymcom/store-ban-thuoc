@@ -70,7 +70,7 @@ export function Appbar() {
                             const actived = index == 1;
                             return (
                                 <>
-                                    <div className={actived && 'text-yellow-500'} key={index}>
+                                    <div className={actived && 'text-secondary-500'} key={index}>
                                         <Link href={item.path} >
                                             {item.title + (index == 0 ? '>' : '')}
                                         </Link>
