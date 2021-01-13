@@ -2,7 +2,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -10,7 +10,7 @@ export const UserpageData = [
     {
         name: 'Lâm Quang Vinh',
         nickname: 'Quang Vinh Bee',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: false
@@ -18,7 +18,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -26,7 +26,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -34,7 +34,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -42,7 +42,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -50,7 +50,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -58,7 +58,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -66,7 +66,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -74,7 +74,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -82,7 +82,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
@@ -90,7 +90,7 @@ export const UserpageData = [
     {
         name: 'Nguyễn Văn Trường An',
         nickname: 'Andy Nguyen',
-        email: 'nguyenvantruongan@gmail.com',
+        email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',
         date_create: '12/01/2020',
         status: true
