@@ -3,18 +3,18 @@ import { IconAdmin, IconMember, IconBox, IconPoint, IconChart, IconTradeMoney, I
 export const SidebarData = [
   {
     title: "Quản trị",
-    path: "/",
+    path: "/admin/manager",
     icon: <IconAdmin />,
     isOpen: false,
     subNav: [
       {
         title: "Bảng điều khiển",
-        path: "/",
+        path: "/admin/manager",
         new: false,
       },
       {
         title: "Tài khoản",
-        path: "/",
+        path: "/admin/manager/users",
         new: false,
       },
       {
@@ -43,7 +43,7 @@ export const SidebarData = [
   },
   {
     title: "Hội viên",
-    path: "/",
+    path: "/admin/member",
     icon: <IconMember />,
     isOpen: false,
     subNav: [
@@ -78,7 +78,7 @@ export const SidebarData = [
   },
   {
     title: "Sản phẩm",
-    path: "/",
+    path: "/admin/product",
     icon: <IconBox />,
     isOpen: false,
     subNav: [
@@ -97,7 +97,7 @@ export const SidebarData = [
   },
   {
     title: "Nguyên tắc tích điểm",
-    path: "/",
+    path: "/admin/rule",
     icon: <IconPoint />,
     isOpen: false,
     subNav: [
@@ -120,7 +120,7 @@ export const SidebarData = [
   },
   {
     title: "Chiến dịch",
-    path: "/",
+    path: "/admin/campaign",
     icon: <IconChart />,
     isOpen: false,
     subNav: [
@@ -143,7 +143,7 @@ export const SidebarData = [
   },
   {
     title: "Giao dịch",
-    path: "/",
+    path: "/admin/transaction",
     icon: <IconTradeMoney />,
     isOpen: false,
     subNav: [
@@ -166,7 +166,7 @@ export const SidebarData = [
   },
   {
     title: "Truyền thông",
-    path: "/",
+    path: "/admin/network",
     icon: <IconSpeaker />,
     isOpen: false,
     subNav: [

@@ -11,7 +11,7 @@ export default function LoginPage() {
   const imageLink = "https://guvaedu.com/public/images-thumbnail/san-pham/khoa-hoc-avatarlhmsize-300-300-0.jpg";
   const userRepo = new UserRepository();
   const router = useRouter();
-  const login = () => {
+  const login = async () => {
     const { email, password } = userLogin;
     firebase.auth().signInWithEmailAndPassword(email, password).then(async state => {
       const token = await state.user.getIdToken();
