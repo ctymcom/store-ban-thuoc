@@ -1,6 +1,5 @@
-import react, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { AppbarItems } from './appbar-items';
 import { useRouter } from 'next/router';
 import { SidebarData } from '../../../next/layouts/components/sidebar-data'
 import { IconUser, IconRing, IconLogout } from '../../lib/svg';
@@ -14,8 +13,6 @@ export function Appbar() {
     useEffect(() => {
         SidebarData.forEach((item, index) => {
             if (pathname.search(item.path) > -1) {
-                //arr = [...linkAdress]
-                console.log(item.path)
                 var link = {
                     title: item.title,
                     path: item.path
@@ -24,7 +21,6 @@ export function Appbar() {
                 setlinkAdress([...arr])
                 item.subNav.forEach((item, index) => {
                     if (item.path == pathname) {
-                        //arr = [...linkAdress]
                         var link = {
                             title: item.title,
                             path: item.path
