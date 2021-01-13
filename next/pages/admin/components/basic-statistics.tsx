@@ -15,11 +15,11 @@ export function BasicStatistics() {
                             <p className='inline text-xs text-gray-400'>Dữ liệu tổng quan</p>
                         </div>
                     </div>
-                    <div className="container-statistics p-4 mt-1 flex">
+                    <div className="container-statistics p-4 grid grid-cols-4 gap-4">
                         {statistic_data.map((item, index) => {
                             return (
                                 <>
-                                    <div key={index} className="item-statistic w-48 max-w-xl p-2 m-2 hover:shadow">
+                                    <div key={index} className="item-statistic p-2 hover:shadow col">
                                         <div className="infor text-center">
                                             <div className="title">
                                                 <p className=''>{item.title}</p>
@@ -30,7 +30,7 @@ export function BasicStatistics() {
                                             </div>
                                         </div>
                                         <div className={item.growth < 0 ? "growth bg-gray-100 rounded-lg h-16 mt-5" : "growth bg-red-100 rounded-lg h-16 mt-5"}>
-                                            <div className="growth-infor p-2">
+                                            <div className="growth-infor p-2 flex flex-col justify-center">
                                                 <p className="text-yellow-600 text-sm">{item.growth < 0 ? `Giảm ${item.growth}%` : `Tăng ${item.growth}%`}</p>
                                                 <p className='text-xs text-gray-500 '>so với cùng kì năm trước</p>
                                             </div>
