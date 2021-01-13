@@ -12,8 +12,8 @@ export function SubMenu(props) {
     }
     return (
         <>
-            <li className='mb-3 pt-2 pb-2 items-center cursor-pointer   ' onClick={open}>
-                <div className="flex items-center hover:text-red-600">
+            <li className=' py-2 items-center cursor-pointer' onClick={open}>
+                <div className="px-4 py-2 flex items-center hover:text-primary-600">
                     <div className="icon w-5 h-5 mr-3 ">
                         {item.icon}
                     </div>
@@ -34,12 +34,12 @@ export function SubMenu(props) {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <ul className="text-sm align-baseline pl-6 pt-2">
+                    <ul className="text-sm ">
                         {item.subNav.map((item, index) => {
                             const activated = item.path == pathname;
                             return <Link href={item.path} key={index}>
-                                <li className={'flex w-full ' + (activated && 'bg-yellow-400')}>
-                                    <span className={'flex space-y-6 py-2 text-gray-600 hover:text-red-400 '}> {item.title} </span>
+                                <li className={'flex w-full ' + (activated && 'bg-secondary-400')}>
+                                    <span className={'pl-14 flex space-y-6 py-2 text-gray-600 hover:text-primary-400 '}> {item.title} </span>
                                 </li>
                             </Link>
                         })}

@@ -45,7 +45,7 @@ export function HeaderUserPage(props) {
                     </div>
                     <div className="style-view inline">
                         <div className="icon-view flex flex-row space-x-4 justify-end">
-                            <div className={"icon-grid-view w-5 h-5 hover:text-red-600  cursor-pointer " + (View == 0 && "text-red-600")} onClick={() => { handleView(0) }}>
+                            <div className={"icon-grid-view w-5 h-5 hover:text-primary-600  cursor-pointer " + (View == 0 && "text-primary-600")} onClick={() => { handleView(0) }}>
                                 <i className={"duration-100 w-4 h-4 "}>
                                     <svg id="Group_38744" data-name="Group 38744" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 20.006 20" className="fill-current">
                                         <path id="Path_10927" data-name="Path 10927" d="M1551.2,571c-.724,0-1.449.009-2.173,0a2.148,2.148,0,0,1-2.131-2.141q-.018-2.192,0-4.384a2.083,2.083,0,0,1,1.959-2.1c1.573-.053,3.151-.05,4.724,0a2.031,2.031,0,0,1,1.942,1.95c.049,1.561.052,3.126,0,4.686a2.094,2.094,0,0,1-2.113,1.99C1552.676,571.008,1551.939,571,1551.2,571Z" transform="translate(-1546.889 -551.003)" />
@@ -55,7 +55,7 @@ export function HeaderUserPage(props) {
                                     </svg>
                                 </i >
                             </div>
-                            <div className={"icon-grid-view w-5 h-5 hover:text-red-600  cursor-pointer " + (View == 1 && "text-red-600")} onClick={() => { handleView(1) }}>
+                            <div className={"icon-grid-view w-5 h-5 hover:text-primary-600  cursor-pointer " + (View == 1 && "text-primary-600")} onClick={() => { handleView(1) }}>
                                 <i className={"duration-100 sidebar-menu-item-collapse w-4 h-4 "}>
                                     <svg id="Group_38743" data-name="Group 38743" xmlns="http://www.w3.org/2000/svg" width="110%" height="110%" viewBox="0 0 26.391 20" className="fill-current">
                                         <path id="Path_10921" data-name="Path 10921" d="M2045.856,623.9c-2.387,0-4.774.007-7.162,0a1.816,1.816,0,0,1-1.786-2.439,1.792,1.792,0,0,1,1.66-1.183q7.327-.011,14.653,0a1.81,1.81,0,1,1-.062,3.619C2050.725,623.906,2048.291,623.9,2045.856,623.9Z" transform="translate(-2028.612 -604.802)" />

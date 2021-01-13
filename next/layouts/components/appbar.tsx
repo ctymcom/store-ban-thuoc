@@ -1,8 +1,8 @@
-import react, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { AppbarItems } from './appbar-items';
 import { useRouter } from 'next/router';
 import { SidebarData } from '../../../next/layouts/components/sidebar-data'
+import { IconUser, IconRing, IconLogout } from '../../lib/svg';
 
 export function Appbar() {
     const [openProfile, setopenProfile] = useState(false);
@@ -12,8 +12,7 @@ export function Appbar() {
     const { pathname } = useRouter();
     useEffect(() => {
         SidebarData.forEach((item, index) => {
-            if (item.path.search(pathname) > -1) {
-                arr = [...linkAdress]
+            if (pathname.search(item.path) > -1) {
                 var link = {
                     title: item.title,
                     path: item.path
@@ -22,7 +21,6 @@ export function Appbar() {
                 setlinkAdress([...arr])
                 item.subNav.forEach((item, index) => {
                     if (item.path == pathname) {
-                        arr = [...linkAdress]
                         var link = {
                             title: item.title,
                             path: item.path
@@ -34,7 +32,7 @@ export function Appbar() {
             }
         })
     }, []);
-    console.log(linkAdress);
+    console.log(pathname)
     return (
         <>
             <div className="top-0 left-0 fixed w-full h-14 min-h-48 max-h-14 bg-white z-50 shadow flex items-center font-sans">
@@ -69,15 +67,39 @@ export function Appbar() {
                 <div className="title text-xl w-full h-full flex items-center">
                     {
                         linkAdress.map((item, index) => {
+                            const actived = index == 1;
                             return (
                                 <>
-                                    <Link href={item.path} key={index}>
-                                        {item.title}
-                                    </Link>
+                                    <div className={actived && 'text-secondary-500'} key={index}>
+                                        <Link href={item.path} >
+                                            {item.title + (index == 0 ? '>' : '')}
+                                        </Link>
+                                    </div>
                                 </>
                             )
                         })
                     }
+                </div>
+                <div className="action-header px-7 flex  space-x-3 max-w-5xl ">
+                    <div className="h-full relative duration-300 " onMouseOver={() => setopenNotic(true)} onMouseLeave={() => setopenNotic(false)}>
+                        <div className="h-full">
+                            <div className="dropdown w-10 h-10 flex items-center justify-center hover:bg-gray-100 duration-100 rounded-full cursor-pointer">
+                                <div className="dropdown-button w-6 h-6">
+                                    <i className="text-gray-400">
+                                        <IconRing />
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                        <div onMouseOver={() => setopenNotic(true)} onMouseLeave={() => setopenNotic(false)}
+                            className={`${openNotic ? 'block' : 'hidden'} hover:block w-80 text-center max-w-5xl z-50 absolute bg-white -left-52 top-10 shadow-md rounded-sm origin-top  with-arrow `}>
+                            <div className="container p-4">
+                                <div className="items flex flex-wrap">
+                                    Thong bao
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="relative flex items-center w-72 h-50 line-white " onMouseOver={() => setopenProfile(true)} onMouseLeave={() => setopenProfile(false)}>
                     <div className="inline-block hover:bg-gray-100 rounded-full ">
@@ -89,83 +111,26 @@ export function Appbar() {
                         </div>
                     </div>
                     <div onMouseOver={() => setopenProfile(true)} onMouseLeave={() => setopenProfile(false)}
-                        className={`${openProfile ? 'block' : 'hidden'} z-50 absolute bg-white left-8 top-10 shadow-md rounded-sm max-w-6xl origin-top  with-arrow `}>
+                        className={`${openProfile ? 'block' : 'hidden'} z-50 absolute bg-white left-8 top-10 shadow-md rounded-sm max-w-6xl origin-top with-arrow`}>
                         <div className="container">
                             <ul >
                                 <li className='hover:bg-gray-200 px-5 py-5 h-8 z-50 flex items-center cursor-pointer'>
-                                    <span data-v-57a7eade="" className="w-4 h-4 mr-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                            <path d="M23.9 12.9l-1.6-1.6 6.2-6.2 1.6 1.6-6.2 6.2zM32 4.8l-1.6-1.6-1 1L31 5.8l1-1zM19.7 15.6l2.6-1.4-1.3-1.3-1.3 2.7zm8.6-4v16.3c0 .9-.7 1.6-1.6 1.6H1.6c-.9 0-1.6-.7-1.6-1.6V6.2c0-.9.7-1.6 1.6-1.6h24.2l-2 2H2v11.9l5.6-3.8 7.2 6.1 6.7-3 4.7 4.1v-8.4l2.1-1.9zm-2 15.9v-2.9l-5.1-4.4-6.7 3-7-6L2 21v6.5h24.3z">
-                                            </path>
-                                        </svg>
-                                    </span>
-                                    <span className="text-sm">Hồ Sơ Shop</span>
+                                    <div className="w-5 h-5 mr-3">
+                                        <i className='text-gray-400'>
+                                            <IconUser />
+                                        </i>
+                                    </div>
+                                    <span className="text-sm">Hồ sơ</span>
                                 </li>
                                 <li className='hover:bg-gray-200 px-5 py-5 h-8 z-50 flex items-center cursor-pointer'>
-                                    <span data-v-57a7eade="" className="w-4 h-4 mr-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                                            <path d="M23.9 12.9l-1.6-1.6 6.2-6.2 1.6 1.6-6.2 6.2zM32 4.8l-1.6-1.6-1 1L31 5.8l1-1zM19.7 15.6l2.6-1.4-1.3-1.3-1.3 2.7zm8.6-4v16.3c0 .9-.7 1.6-1.6 1.6H1.6c-.9 0-1.6-.7-1.6-1.6V6.2c0-.9.7-1.6 1.6-1.6h24.2l-2 2H2v11.9l5.6-3.8 7.2 6.1 6.7-3 4.7 4.1v-8.4l2.1-1.9zm-2 15.9v-2.9l-5.1-4.4-6.7 3-7-6L2 21v6.5h24.3z">
-                                            </path>
-                                        </svg>
-                                    </span>
-                                    <span className="text-sm">Hồ Sơ Shop</span>
+                                    <div className="w-5 h-5 mr-3">
+                                        <i className='text-gray-400'>
+                                            <IconLogout />
+                                        </i>
+                                    </div>
+                                    <span className="text-sm">Đăng xuất</span>
                                 </li>
                             </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="action-header px-7 flex  space-x-3 max-w-5xl ">
-                    <div className="h-full relative duration-300 " onMouseOver={() => setopenNotic(true)} onMouseLeave={() => setopenNotic(false)}>
-                        <div className='w-10 h-10'>
-                            <div className="dropdown w-10 h-10 flex items-center justify-center hover:bg-gray-100 duration-100 rounded-full cursor-pointer">
-                                <div className="dropdown-button w-4 h-4 flex items-center justify-center">
-                                    <i className="">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="14" viewBox="0 0 33.846 23.433">
-                                            <g id="Group_38495" data-name="Group 38495" transform="translate(685.214 465.986)">
-                                                <rect id="Rectangle_1708" data-name="Rectangle 1708" width="4.142" height="4.142" rx="0.397" transform="translate(-685.214 -465.986)" fill="#e74d3d" />
-                                                <rect id="Rectangle_1709" data-name="Rectangle 1709" width="4.142" height="4.142" rx="0.397" transform="translate(-685.214 -456.34)" fill="#e74d3d" />
-                                                <rect id="Rectangle_1710" data-name="Rectangle 1710" width="4.142" height="4.142" rx="0.397" transform="translate(-685.214 -446.694)" fill="#e74d3d" />
-                                                <rect id="Rectangle_1711" data-name="Rectangle 1711" width="25.536" height="4.142" rx="0.397" transform="translate(-676.904 -465.986)" fill="#e74d3d" />
-                                                <rect id="Rectangle_1712" data-name="Rectangle 1712" width="25.536" height="4.142" rx="0.397" transform="translate(-676.904 -456.34)" fill="#e74d3d" />
-                                                <rect id="Rectangle_1713" data-name="Rectangle 1713" width="25.536" height="4.142" rx="0.397" transform="translate(-676.904 -446.694)" fill="#e74d3d" />
-                                            </g>
-                                        </svg>
-
-                                    </i>
-                                </div>
-                            </div>
-                        </div>
-                        <div onMouseOver={() => setopenNotic(true)} onMouseLeave={() => setopenNotic(false)}
-                            className={`${openNotic ? 'block' : 'hidden'} hover:block w-80 text-center max-w-5xl z-50 absolute bg-white -left-52 top-10 shadow-md rounded-sm origin-top  with-arrow `}>
-                            <div className="container p-4">
-                                <div className="items flex flex-wrap">
-                                    {AppbarItems.map((item, index) => {
-                                        return <div className="item p-4 max-w-xs h-36   cursor-pointer" key={index}>
-                                            <div className="w-16 h-16  ">
-                                                <div className="w-16 h-16 bg-gradient-to-r hover:from-yellow-500 from-yellow-400 via-red-500 to-pink-500 flex justify-center items-center rounded-full">
-                                                    <div className="w-8 h-8 ">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d={item.icon}></path>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                                <span className="block">{item.title}</span>
-                                            </div>
-                                        </div>
-                                    })}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="h-full">
-                        <div className="dropdown w-10 h-10 flex items-center justify-center hover:bg-gray-100 duration-100 rounded-full cursor-pointer">
-                            <div className="dropdown-button w-4 h-4">
-                                <i className="">
-                                    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" className='fill-current'>
-                                        <path d="M10 15a1 1 0 01-1 1H7a1 1 0 01-1-1h4zM8.5 0a.5.5 0 01.5.5v.593a5.4 5.4 0 014.383 4.892l.54 7.015h.577a.5.5 0 110 1h-13a.5.5 0 110-1h.577l.54-7.015A5.4 5.4 0 017 1.093V.5a.5.5 0 01.5-.5h1zM8 2a4.4 4.4 0 00-4.386 4.062L3.08 13h9.84l-.534-6.938A4.4 4.4 0 008 2z" fillRule="evenodd"></path>
-                                    </svg>
-                                </i>
-                            </div>
                         </div>
                     </div>
                 </div>
