@@ -18,27 +18,20 @@ export function ManagerPage() {
   return <DashboardLayout>
     <div className="grid grid-cols-2 gap-4 max-w-6xl">
       <div className="col-span-2">
-      <Card>
-      <BasicStatistics />
-      </Card>
-        
+        <Card>
+          <BasicStatistics />
+        </Card>
       </div>
       <div className="col">
-      <Card>
+        <Card>
           <ChartMember></ChartMember>
         </Card>
       </div>
       <div className="col">
-      <Card >
-      <ChartPoint></ChartPoint>
-    </Card>
+        <Card >
+          <ChartPoint></ChartPoint>
+        </Card>
       </div>
-      
     </div>
-    
-    
-    
-
-
   </DashboardLayout>
 }

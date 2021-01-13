@@ -1,5 +1,5 @@
 import { statistic_data } from '../components/basic-statistics-data'
-export function BasicStatistics() {
+export function BasicStatistics(props) {
     return (
         <>
             <div className="wrapper">

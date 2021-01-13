@@ -1,10 +1,40 @@
-import react, { useState } from 'react'
+import react, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { AppbarItems } from './appbar-items';
+import { useRouter } from 'next/router';
+import { SidebarData } from '../../../next/layouts/components/sidebar-data'
 
 export function Appbar() {
     const [openProfile, setopenProfile] = useState(false);
     const [openNotic, setopenNotic] = useState(false);
+    const [linkAdress, setlinkAdress] = useState([]);
+    var arr = [];
+    const { pathname } = useRouter();
+    useEffect(() => {
+        SidebarData.forEach((item, index) => {
+            if (item.path.search(pathname) > -1) {
+                arr = [...linkAdress]
+                var link = {
+                    title: item.title,
+                    path: item.path
+                }
+                arr.push(link)
+                setlinkAdress([...arr])
+                item.subNav.forEach((item, index) => {
+                    if (item.path == pathname) {
+                        arr = [...linkAdress]
+                        var link = {
+                            title: item.title,
+                            path: item.path
+                        }
+                        arr.push(link)
+                        setlinkAdress([...arr])
+                    }
+                })
+            }
+        })
+    }, []);
+    console.log(linkAdress);
     return (
         <>
             <div className="top-0 left-0 fixed w-full h-14 min-h-48 max-h-14 bg-white z-50 shadow flex items-center font-sans">
@@ -37,9 +67,17 @@ export function Appbar() {
                     </div>
                 </Link>
                 <div className="title text-xl w-full h-full flex items-center">
-                    <Link href='/'>
-                        Kênh người bán
-                    </Link>
+                    {
+                        linkAdress.map((item, index) => {
+                            return (
+                                <>
+                                    <Link href={item.path} key={index}>
+                                        {item.title}
+                                    </Link>
+                                </>
+                            )
+                        })
+                    }
                 </div>
                 <div className="relative flex items-center w-72 h-50 line-white " onMouseOver={() => setopenProfile(true)} onMouseLeave={() => setopenProfile(false)}>
                     <div className="inline-block hover:bg-gray-100 rounded-full ">
@@ -103,7 +141,7 @@ export function Appbar() {
                             <div className="container p-4">
                                 <div className="items flex flex-wrap">
                                     {AppbarItems.map((item, index) => {
-                                        return <div className="item p-4 max-w-xs h-36   cursor-pointer" key='index'>
+                                        return <div className="item p-4 max-w-xs h-36   cursor-pointer" key={index}>
                                             <div className="w-16 h-16  ">
                                                 <div className="w-16 h-16 bg-gradient-to-r hover:from-yellow-500 from-yellow-400 via-red-500 to-pink-500 flex justify-center items-center rounded-full">
                                                     <div className="w-8 h-8 ">
