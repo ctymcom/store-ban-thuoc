@@ -16,7 +16,7 @@ export function HeaderUserPage(props) {
                         <h3 className='inline text-xl'>Truy cập danh sách</h3>
                         <p className='text-xs text-gray-400'>Danh sách người dùng hiện tại</p>
                     </div>
-                    <div className="btn-create-user inline-block float-right flex justify-center">
+                    <div className="btn-create-user float-right flex justify-center">
                         <Button
                             text='Tạo tài khoản'
                         />
@@ -32,10 +32,11 @@ export function HeaderUserPage(props) {
                         <Input
                             inputType='text'
                             placeholder='Tìm kiếm'
+                            icon='icons'
                         />
                     </div>
                 </div>
-                <div className="filter">
+                <div className="filter flex justify-between items-start">
                     <div className="select-filter inline-block">
                         <p className='text-xs inline'>Bộ lọc</p>
                         <select name='select-filter' defaultValue='Mới nhất' className='text-gray-800 font-bold text-sm bg-white'>

@@ -21,8 +21,8 @@ export function ChartMember() {
                         </svg>
 
                     </div>
-                    <div className="note">
-                        <p className='inline text-sm text-gray-400'>Biểu đồ tăng trưởng hội viên theo từng tháng tính tới hiện tại</p>
+                    <div className="note pb-2">
+                        <p className='inline text-sm text-gray-400 '>Biểu đồ tăng trưởng hội viên theo từng tháng tính tới hiện tại</p>
                     </div>
                     <div className="chart">
                         <div className="container-chart">

@@ -72,7 +72,7 @@ export function Appbar() {
                                 <>
                                     <div className={actived && 'text-secondary-500'} key={index}>
                                         <Link href={item.path} >
-                                            {item.title + (index == 0 ? '>' : '')}
+                                            {item.title + (index == 0 ? '  >  ' : '')}
                                         </Link>
                                     </div>
                                 </>
@@ -105,7 +105,7 @@ export function Appbar() {
                     <div className="inline-block hover:bg-gray-100 rounded-full ">
                         <div className="relative">
                             <div className="account-info h-10 flex items-center w-full p-1  duration-100  cursor-pointer">
-                                <img src="https://i.pinimg.com/564x/2a/d1/b2/2ad1b27925c0db7a8dafe63186824bc0.jpg" alt="" className='w-8 h-8 items-center mr-2  rounded-full' />
+                                <img src="https://ss-images.catscdn.vn/2019/05/02/5086417/58673861_2082849575345662_5550445563004059648_n.jpg" alt="" className='w-8 h-8 items-center mr-2  rounded-full' />
                                 <span className=' inline p-1 pr-2 tracking-normal text-gray-700'>LamQuangVinh</span>
                             </div>
                         </div>

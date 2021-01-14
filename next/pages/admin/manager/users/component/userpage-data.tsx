@@ -88,7 +88,7 @@ export const UserpageData = [
         status: true
     },
     {
-        name: 'Nguyễn Văn Trường An',
+        name: 'Nguyễn Văn Trường AnTrường An',
         nickname: 'Andy Nguyen',
         email: 'truongannguyen@gmail.com',
         phone: '0919 659 978',

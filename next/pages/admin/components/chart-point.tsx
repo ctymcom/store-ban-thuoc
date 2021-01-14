@@ -21,7 +21,7 @@ export function ChartPoint() {
                         </svg>
 
                     </div>
-                    <div className="note">
+                    <div className="note pb-2">
                         <p className='inline text-sm text-gray-400'>Biểu đồ tăng trưởng số điểm tích lũy theo từng tháng</p>
                     </div>
                     <div className="chart">
