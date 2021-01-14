@@ -10,7 +10,6 @@ export type SelectBoxOption = {
 type SelectBoxProps = FormFieldProps & {
     options?: SelectBoxOption[] | string[],
     noneOption?: SelectBoxOption,
-    style?: SelectBoxOption
 }
 export function SelectBox({ label, name, placeholder, required, value, style, options = [], noneOption, onChanged }: SelectBoxProps) {
     const onSelectChanged = (e) => {
@@ -20,8 +19,8 @@ export function SelectBox({ label, name, placeholder, required, value, style, op
         options = (options as string[]).map(o => ({ value: o }));
     }
     return <div className="flex flex-col mb-3">
-        {label && <label className="font-bold mb-1" htmlFor={name} >{label}</label>}
-        <select onChange={onSelectChanged} defaultValue={value} required={required} name={name} className={"p-3bg-white rounded-md " + style}>
+        {label && <label className="font-bold" htmlFor={name} >{label}</label>}
+        <select onChange={onSelectChanged} defaultValue={value} required={required} name={name} className={"  border-solid  w-full h-full bg-white border-gray-300 border p-2 text-sm text-gray-500 rounded-md focus:outline-none focus:ring-secondary-500 focus:border-secondary-400 " + style}>
             {noneOption && <option value={noneOption.value}>-- {noneOption.display || placeholder} --</option>}
             {(options as SelectBoxOption[]).map((o, index) => <option key={o.value + index} value={o.value}>{o.display || o.value}</option>)}
         </select>
