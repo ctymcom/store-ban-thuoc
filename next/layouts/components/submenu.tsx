@@ -2,11 +2,14 @@ import { Transition } from '@headlessui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-
-export function SubMenu(props) {
-    var { item } = props
+type SubMenuProps = {
+    [x: string]: any,
+    opened?: boolean,
+    activeSubmenu?: string
+}
+export function SubMenu({ opened, activeSubmenu, item, ...props }: SubMenuProps) {
     const { pathname } = useRouter();
-    const [Open, setOpen] = useState(pathname.includes(item.path));
+    const [Open, setOpen] = useState(opened || pathname.includes(item.path));
     const open = () => {
         setOpen(!Open);
     }
@@ -36,7 +39,7 @@ export function SubMenu(props) {
                 >
                     <ul className="text-sm ">
                         {item.subNav.map((item, index) => {
-                            const activated = item.path == pathname;
+                            const activated = activeSubmenu == item.title ||  item.path == pathname;
                             return <Link href={item.path} key={index}>
                                 <li className={'flex w-full ' + (activated && 'bg-secondary-400')}>
                                     <span className={'pl-14 flex space-y-6 py-2 text-gray-600 hover:text-primary-400 '}> {item.title} </span>

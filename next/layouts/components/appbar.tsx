@@ -3,8 +3,12 @@ import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { SidebarData } from '../../../next/layouts/components/sidebar-data'
 import { IconUser, IconRing, IconLogout, IconArrowRight } from '../../lib/svg';
-
-export function Appbar() {
+import { BreadcrumbItem } from '../dashboard-layout';
+type AppBarProps = {
+    breadcrumbs?: BreadcrumbItem[],
+    [x: string]: any
+}
+export function Appbar({ breadcrumbs }: AppBarProps) {
     const [openProfile, setopenProfile] = useState(false);
     const [openNotic, setopenNotic] = useState(false);
     const [linkAdress, setlinkAdress] = useState([]);
@@ -66,13 +70,13 @@ export function Appbar() {
                 </Link>
                 <div className="title w-full h-full flex items-center space-x-4">
                     {
-                        linkAdress.map((item, index) => {
-                            const actived = index == 1;
+                        (breadcrumbs || linkAdress).map((item, index, array) => {
+                            const actived = index == array.length - 1;
                             return <div className={(actived ? 'text-black font-semibold' : 'text-gray-400') + ' hover:text-black'} key={index}>
                             <Link href={item.path} >{item.title}</Link>
                         </div>
-                        }).reduce((accu, elem): any => {
-                            return accu === null ? [elem] : [accu, <IconArrowRight className="w-4 h-4 text-gray-400"/>, elem]
+                        }).reduce((accu, elem, index): any => {
+                            return accu === null ? [elem] : [accu, <IconArrowRight key={(index * 2) + 1} className="w-4 h-4 text-gray-400"/>, elem]
                         }, null)
                     }
                 </div>

@@ -14,7 +14,14 @@ export function EditUserPage(props) {
     }
     return (
         <>
-            <DashboardLayout>
+            <DashboardLayout 
+            breadcrumbs={[
+                { title: "Quản trị", path: '/admin/manager' },
+                { title: "Tài khoản", path: '/admin/manager/users' },
+                { title: "Chỉnh sửa tài khoản", path: '/admin/manager/users/edit'}
+            ]}
+            activeMenu="Quản trị"
+            activeSubmenu="Tài khoản">
                 <Card>
                 <HeaderEditUserPage onclick={handleClick} />
                     {
