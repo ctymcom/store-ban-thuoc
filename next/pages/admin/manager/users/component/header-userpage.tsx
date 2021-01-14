@@ -32,6 +32,7 @@ export function HeaderUserPage(props) {
                         <Input
                             inputType='text'
                             placeholder='Tìm kiếm'
+                            icon='icons'
                         />
                     </div>
                 </div>

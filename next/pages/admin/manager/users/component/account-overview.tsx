@@ -1,9 +1,12 @@
+import { Input } from "../../../../../components/shared/form/input"
+import { SelectBox } from "../../../../../components/shared/form/select-box"
+
 export function AccountOverview(props) {
     const { User } = props
 
     return (
         <>
-            <div className="w-full pt-3">
+            <div className="w-full py-3">
                 <div className="container">
                     <div className="information-account">
                         <div className="header-avt-name flex items-start space-x-4">
@@ -32,9 +35,197 @@ export function AccountOverview(props) {
                             </div>
                         </div>
                     </div>
+                    <div className="w-full pt-8">
+                        <div className="pb-8 border-b border-gray-300">
+                            <div className="container">
+                                <div className="py-2">
+                                    <p className='text-sm text-gray-400'>Thông tin cơ bản</p>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="input-id">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Mã Nhân viên</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                value='D6SAF2A6SC2Z3'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-username">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Tên đăng nhập</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                placeholder='Tên đăng nhập'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-firstname">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Họ</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                value='Nguyễn'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-lastname">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Tên</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                value='An'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-middlename">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Tên đệm</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                value='Trường'
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="w-full pt-8">
+                        <div className="pb-8 border-b border-gray-300">
+                            <div className="container">
+                                <div className="py-2">
+                                    <p className='text-sm text-gray-400'>Thông tin tài khoản</p>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="input-id">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Chức vụ</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                value='D6SAF2A6SC2Z3'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-username">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Vai trò</p>
+                                        </div>
+                                        <div className="input">
+                                            <SelectBox
+                                                options={['Admin', 'Manager']}
+                                                style=''
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-firstname">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Trạng thái</p>
+                                        </div>
+                                        <div className="input">
+                                            <SelectBox
+                                                options={['Admin', 'Manager']}
+                                                style=' text-green-600'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-lastname">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Tài khoản quản lí</p>
+                                        </div>
+                                        <div className="input">
+                                            <SelectBox
+                                                options={['Tài khoản quản lí', '']}
+                                                style=' '
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="w-full pt-8">
+                        <div className="pb-8 border-b border-gray-300">
+                            <div className="container">
+                                <div className="py-2">
+                                    <p className='text-sm text-gray-400'>Chi tiết tài khoản</p>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="input-id">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Mã Nhân viên</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                value='D6SAF2A6SC2Z3'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-username">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Tên đăng nhập</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                placeholder='Tên đăng nhập'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-firstname">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Họ</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                value='Nguyễn'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-lastname">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Tên</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                value='An'
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="input-middlename">
+                                        <div className="py-1">
+                                            <p className='uppercase font-bold text-sm'>Tên đệm</p>
+                                        </div>
+                                        <div className="input">
+                                            <Input
+                                                inputType='text'
+                                                value='Trường'
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            Tổng quan tài khoản
         </>
     )
 }
