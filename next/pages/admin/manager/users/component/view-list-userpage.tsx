@@ -1,21 +1,28 @@
-import { TablePagination } from "../../../../../components/shared/table/table-pagination";
+import { useState } from 'react'
+import { TablePaginationCustom } from "../../../../../components/shared/table/table-pagination-custom";
 import { IconBlock, IconUser, IconEdit } from "../../../../../lib/svg";
 
 export function ViewListUserpage(props) {
     const { ListUserData } = props
+    const [pagination, setpagination] = useState({
+        limit: 4,
+        total: 9,
+        page: 1,
+        offset: 2
+    })
     return <>
         <div className="w-full py-3">
             <div className="w-full">
                 <div className="w-full flex-col space-y-4">
                     {
-                        ListUserData.map((item, index) => {
+                        ListUserData.slice(pagination.page * pagination.limit - pagination.limit, pagination.page * pagination.limit).map((item, index) => {
                             return (
                                 <>
                                     <div className="user w-full border-2 border-gray-200 p-3 rounded-md hover:shadow" >
                                         <div className="profile-container flex items-center pb-3 border-b-2">
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <div className="flex items-center line-white-user">
+                                            <div className="w-full flex justify-between items-start ">
+                                                <div className='w-1/2 flex items-center justify-between'>
+                                                    <div className="flex items-center">
                                                         <div className="avt flex justify-center items-center">
                                                             <div className="container w-16 h-16 flex justify-center items-center bg-secondary-100 rounded-xl">
                                                                 <i className="w-12 h-12 z-10  text-secondary-400">
@@ -23,7 +30,7 @@ export function ViewListUserpage(props) {
                                                                 </i >
                                                             </div>
                                                         </div>
-                                                        <div className="name pl-3 ">
+                                                        <div className="name px-3 w-full">
                                                             <div className="nickname text-sm text-gray-400">
                                                                 <p>{item.nickname}</p>
                                                             </div>
@@ -32,7 +39,7 @@ export function ViewListUserpage(props) {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="btn-edit pl-3 flex justify-center">
+                                                    <div className="btn-edit pl-4 flex justify-center border-l-2">
                                                         <div className="btn-block pl-4">
                                                             <div className="btn-block bg-primary-100 hover:bg-primary-200 cursor-pointer w-24 h-10 flex justify-center items-center text-primary-500 rounded-md">
                                                                 <i className="icon w-10 h-5 ">
@@ -53,10 +60,9 @@ export function ViewListUserpage(props) {
                                                 </div>
                                                 <button className="text-secondary-500">Xoá</button>
                                             </div>
-
                                         </div>
                                         <div className="infor-user">
-                                            <div className="infor flex flex-1 justify-center space-x-28 pt-2">
+                                            <div className="infor flex justify-around pt-2">
                                                 <div className="email text-sm">
                                                     <p>Email: {item.email}</p>
                                                 </div>
@@ -81,14 +87,13 @@ export function ViewListUserpage(props) {
                         })
                     }
                 </div>
-                <TablePagination
-                    pagination={{
-                        limit: 8,
-                        page: 1,
-                        total: 8,
-                        offset: 1
+                <TablePaginationCustom
+                    pagination={pagination}
+                    onPageChanged={(e) => {
+                        var temp = { ...pagination }
+                        temp.page = e
+                        setpagination(temp)
                     }}
-                    onPageChanged={(e) => { console.log(e) }}
                 />
             </div>
         </div>

@@ -72,7 +72,7 @@ export function Appbar() {
                                 <>
                                     <div className={actived && 'text-secondary-500'} key={index}>
                                         <Link href={item.path} >
-                                            {item.title + (index == 0 ? '>' : '')}
+                                            {item.title + (index == 0 ? '  >  ' : '')}
                                         </Link>
                                     </div>
                                 </>

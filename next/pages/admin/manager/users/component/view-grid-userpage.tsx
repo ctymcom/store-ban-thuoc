@@ -1,13 +1,21 @@
+import { useState } from 'react'
+import { TablePaginationCustom } from "../../../../../components/shared/table/table-pagination-custom";
 import { IconBlock, IconUser, IconEdit } from "../../../../../lib/svg";
 
 export function ViewGridUserpage(props) {
     const { ListUserData } = props
+    const [pagination, setpagination] = useState({
+        limit: 8,
+        total: 9,
+        page: 1,
+        offset: 2
+    })
     return <>
         <div className="w-full py-3">
             <div className="w-full">
                 <div className="w-full grid grid-cols-3 xl:grid-cols-4  gap-6">
                     {
-                        ListUserData.map((item, index) => {
+                        ListUserData.slice(pagination.page * pagination.limit - pagination.limit, pagination.page * pagination.limit).map((item, index) => {
                             return (
                                 <>
                                     <div className="user border-2 border-gray-200 p-3 rounded-md hover:shadow" >
@@ -75,6 +83,14 @@ export function ViewGridUserpage(props) {
                         })
                     }
                 </div>
+                <TablePaginationCustom
+                    pagination={pagination}
+                    onPageChanged={(e) => {
+                        var temp = { ...pagination }
+                        temp.page = e
+                        setpagination(temp)
+                    }}
+                />
             </div>
         </div>
     </>

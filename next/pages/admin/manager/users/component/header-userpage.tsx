@@ -35,7 +35,7 @@ export function HeaderUserPage(props) {
                         />
                     </div>
                 </div>
-                <div className="filter">
+                <div className="filter flex justify-between items-start">
                     <div className="select-filter inline-block">
                         <p className='text-xs inline'>Bộ lọc</p>
                         <select name='select-filter' defaultValue='Mới nhất' className='text-gray-800 font-bold text-sm bg-white'>
