@@ -16,7 +16,7 @@ export function HeaderUserPage(props) {
                         <h3 className='inline text-xl'>Truy cập danh sách</h3>
                         <p className='text-xs text-gray-400'>Danh sách người dùng hiện tại</p>
                     </div>
-                    <div className="btn-create-user inline-block float-right flex justify-center">
+                    <div className="btn-create-user float-right flex justify-center">
                         <Button
                             text='Tạo tài khoản'
                         />
