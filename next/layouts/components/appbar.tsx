@@ -92,7 +92,7 @@ export function Appbar() {
                             </div>
                         </div>
                         <div onMouseOver={() => setopenNotic(true)} onMouseLeave={() => setopenNotic(false)}
-                            className={`${openNotic ? 'block' : 'hidden'} hover:block w-80 text-center max-w-5xl z-50 absolute bg-white -left-52 top-10 shadow-md rounded-sm origin-top  with-arrow `}>
+                            className={`${openNotic ? 'block' : 'hidden'} hover:block w-80 text-center max-w-5xl z-50 absolute bg-white -left-52 top-10 shadow-md rounded-sm origin-top  with-arrow transition `}>
                             <div className="container p-4">
                                 <div className="items flex flex-wrap">
                                     Thong bao
@@ -111,7 +111,7 @@ export function Appbar() {
                         </div>
                     </div>
                     <div onMouseOver={() => setopenProfile(true)} onMouseLeave={() => setopenProfile(false)}
-                        className={`${openProfile ? 'block' : 'hidden'} z-50 absolute bg-white left-8 top-10 shadow-md rounded-sm max-w-6xl origin-top with-arrow`}>
+                        className={`${openProfile ? 'block' : 'hidden'} z-50 absolute bg-white left-8 top-10 shadow-md rounded-sm max-w-6xl origin-top with-arrow transition-all `}>
                         <div className="container">
                             <ul >
                                 <li className='hover:bg-gray-200 px-5 py-5 h-8 z-50 flex items-center cursor-pointer'>
