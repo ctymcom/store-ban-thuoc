@@ -76,8 +76,8 @@ export function Appbar({ breadcrumbs }: AppBarProps) {
                             <Link href={item.path} >{item.title}</Link>
                         </div>
                         }).reduce((accu, elem, index): any => {
-                            return accu === null ? [elem] : [accu, <IconArrowRight key={(index * 2) + 1} className="w-4 h-4 text-gray-400"/>, elem]
-                        }, null)
+                            return accu === null ? [elem] : [...accu, <IconArrowRight key={(index * 2) + 1} className="w-4 h-4 text-gray-400"/>, elem]
+                        }, null as any)
                     }
                 </div>
                 <div className="action-header px-7 flex  space-x-3 max-w-5xl ">
