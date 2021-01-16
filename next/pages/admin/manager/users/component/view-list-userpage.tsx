@@ -13,7 +13,7 @@ export function ViewListUserpage(props) {
         offset: 2
     })
     const editUser = (item) => {
-        router.push('/admin/manager/users/edit', null, { shallow: true});
+        router.push('/admin/manager/users/edit', null, { shallow: true });
     }
     return <>
         <div className="w-full py-3">
@@ -22,69 +22,69 @@ export function ViewListUserpage(props) {
                     {
                         ListUserData.slice(pagination.page * pagination.limit - pagination.limit, pagination.page * pagination.limit).map((item, index) => {
                             return <div key={index} className="user w-full border-2 border-gray-200 p-3 rounded-md hover:shadow" >
-                            <div className="profile-container flex items-center pb-3 border-b-2">
-                                <div className="w-full flex justify-between items-start ">
-                                    <div className='w-1/2 flex items-center justify-between'>
-                                        <div className="flex items-center">
-                                            <div className="avt flex justify-center items-center">
-                                                <div className="container w-16 h-16 flex justify-center items-center bg-secondary-100 rounded-xl">
-                                                    <i className="w-12 h-12 z-10  text-secondary-400">
-                                                        <IconUser />
-                                                    </i >
+                                <div className="profile-container flex items-center pb-3 border-b-2">
+                                    <div className="w-full flex justify-between items-start ">
+                                        <div className='w-1/2 flex items-center justify-between'>
+                                            <div className="flex items-center">
+                                                <div className="avt flex justify-center items-center">
+                                                    <div className="container w-16 h-16 flex justify-center items-center bg-secondary-100 rounded-xl">
+                                                        <i className="w-12 h-12 z-10  text-secondary-400">
+                                                            <IconUser />
+                                                        </i >
+                                                    </div>
+                                                </div>
+                                                <div className="name px-3 w-full">
+                                                    <div className="nickname text-sm text-gray-400">
+                                                        <p>{item.nickname}</p>
+                                                    </div>
+                                                    <div className="fullname text-sm text-gray-700">
+                                                        <p>{item.name}</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="name px-3 w-full">
-                                                <div className="nickname text-sm text-gray-400">
-                                                    <p>{item.nickname}</p>
+                                            <div className="btn-edit pl-4 flex justify-center border-l-2">
+                                                <div className="btn-block pl-4">
+                                                    <div className="btn-block bg-primary-100 hover:bg-primary-200 cursor-pointer w-24 h-10 flex justify-center items-center text-primary-500 rounded-md">
+                                                        <i className="icon w-10 h-5 ">
+                                                            <IconBlock />
+                                                        </i>
+                                                        <p>Khóa</p>
+                                                    </div>
                                                 </div>
-                                                <div className="fullname text-sm text-gray-700">
-                                                    <p>{item.name}</p>
+                                                <div className="btn-edit pl-4" onClick={() => editUser(item)}>
+                                                    <div className="btn-block bg-green-100 hover:bg-green-200 cursor-pointer w-24 h-10 flex justify-center items-center text-green-500 rounded-md">
+                                                        <i className="icon w-10 h-5">
+                                                            <IconEdit />
+                                                        </i>
+                                                        <p>Sửa</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="btn-edit pl-4 flex justify-center border-l-2">
-                                            <div className="btn-block pl-4">
-                                                <div className="btn-block bg-primary-100 hover:bg-primary-200 cursor-pointer w-24 h-10 flex justify-center items-center text-primary-500 rounded-md">
-                                                    <i className="icon w-10 h-5 ">
-                                                        <IconBlock />
-                                                    </i>
-                                                    <p>Khóa</p>
-                                                </div>
-                                            </div>
-                                            <div className="btn-edit pl-4" onClick={() => editUser(item)}>
-                                                <div className="btn-block bg-green-100 hover:bg-green-200 cursor-pointer w-24 h-10 flex justify-center items-center text-green-500 rounded-md">
-                                                    <i className="icon w-10 h-5">
-                                                        <IconEdit />
-                                                    </i>
-                                                    <p>Sửa</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <button className="text-secondary-500">Xoá</button>
                                     </div>
-                                    <button className="text-secondary-500">Xoá</button>
                                 </div>
-                            </div>
-                            <div className="infor-user">
-                                <div className="infor flex justify-around pt-2">
-                                    <div className="email text-sm">
-                                        <p>Email: {item.email}</p>
-                                    </div>
-                                    <div className="phone text-sm">
-                                        <p>Điện thoại: {item.phone}</p>
-                                    </div>
-                                    <div className="date-create text-sm">
-                                        <p>Ngày tạo: {item.date_create}</p>
-                                    </div>
-                                    <div className="status text-sm">
-                                        {item.status ?
-                                            <p className={'text-green-400'}>Đang hoạt động</p> :
-                                            <p className={'text-gray-400'}>Dừng hoạt động</p>
-                                        }
+                                <div className="infor-user">
+                                    <div className="infor flex justify-around pt-2">
+                                        <div className="email text-sm">
+                                            <p>Email: {item.email}</p>
+                                        </div>
+                                        <div className="phone text-sm">
+                                            <p>Điện thoại: {item.phone}</p>
+                                        </div>
+                                        <div className="date-create text-sm">
+                                            <p>Ngày tạo: {item.date_create}</p>
+                                        </div>
+                                        <div className="status text-sm">
+                                            {item.status ?
+                                                <p className={'text-green-400'}>Đang hoạt động</p> :
+                                                <p className={'text-gray-400'}>Dừng hoạt động</p>
+                                            }
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         })
                     }
                 </div>

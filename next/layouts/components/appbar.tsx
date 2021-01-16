@@ -68,15 +68,15 @@ export function Appbar({ breadcrumbs }: AppBarProps) {
                         </svg>
                     </div>
                 </Link>
-                <div className="title w-full h-full flex items-center space-x-4">
+                <div className=" w-full h-full flex items-center space-x-4">
                     {
                         (breadcrumbs || linkAdress).map((item, index, array) => {
                             const actived = index == array.length - 1;
                             return <div className={(actived ? 'text-black font-semibold' : 'text-gray-400') + ' hover:text-black'} key={index}>
-                            <Link href={item.path} >{item.title}</Link>
-                        </div>
+                                <Link href={item.path} >{item.title}</Link>
+                            </div>
                         }).reduce((accu, elem, index): any => {
-                            return accu === null ? [elem] : [accu, <IconArrowRight key={(index * 2) + 1} className="w-4 h-4 text-gray-400"/>, elem]
+                            return accu === null ? [elem] : [accu, <IconArrowRight key={(index * 2) + 1} className="w-4 h-4 text-gray-400" />, elem]
                         }, null)
                     }
                 </div>

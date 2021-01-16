@@ -126,7 +126,7 @@ export function AccountOverview(props) {
                                         </div>
                                         <div className="input">
                                             <SelectBox
-                                                options={['Admin', 'Manager']}
+                                                options={['Admin', 'User']}
                                                 style=''
                                             />
                                         </div>
@@ -258,11 +258,11 @@ export function AccountOverview(props) {
                         </div>
                         <div className="w-full">
                             <div className="flex justify-end items-center">
-                                <div className="text-sm delete-account text-secondary-500  py-2 px-3">
-                                    <Link href='/'>Xóa tài khoản</Link>
+                                <div className="cursor-pointer text-sm delete-account text-secondary-500  py-2 px-3">
+                                    Xóa tài khoản
                                 </div>
-                                <div className="transition text-sm uppercase py-3 px-4 border-2 rounded-md text-gray-600 hover:bg-primary-600 hover:text-white ">
-                                    <Link href='/'>Lưu thay đổi</Link>
+                                <div className="cursor-pointer transition text-sm uppercase py-3 px-4 border-2 rounded-md text-gray-600 hover:bg-primary-600 hover:text-white ">
+                                    Lưu thay đổi
                                 </div>
                             </div>
                         </div>
