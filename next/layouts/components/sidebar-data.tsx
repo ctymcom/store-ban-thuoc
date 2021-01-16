@@ -27,10 +27,6 @@ export const SidebarData = [
         path: "/",
         new: false,
       }, {
-        title: "Tài khoản",
-        path: "/",
-        new: false,
-      }, {
         title: "Báo cáo",
         path: "/",
         new: false,

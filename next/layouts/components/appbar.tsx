@@ -2,9 +2,13 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { SidebarData } from '../../../next/layouts/components/sidebar-data'
-import { IconUser, IconRing, IconLogout } from '../../lib/svg';
-
-export function Appbar() {
+import { IconUser, IconRing, IconLogout, IconArrowRight } from '../../lib/svg';
+import { BreadcrumbItem } from '../dashboard-layout';
+type AppBarProps = {
+    breadcrumbs?: BreadcrumbItem[],
+    [x: string]: any
+}
+export function Appbar({ breadcrumbs }: AppBarProps) {
     const [openProfile, setopenProfile] = useState(false);
     const [openNotic, setopenNotic] = useState(false);
     const [linkAdress, setlinkAdress] = useState([]);
@@ -37,7 +41,7 @@ export function Appbar() {
         <>
             <div className="top-0 left-0 fixed w-full h-14 min-h-48 max-h-14 bg-white z-50 shadow flex items-center font-sans">
                 <Link href='/'>
-                    <div className='block m-3'>
+                    <div className='block py-3 px-6'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 142 60">
                             <g id="Group_38420" data-name="Group 38420" transform="translate(1755.908 359.729)">
                                 <g id="Group_38419" data-name="Group 38419" transform="translate(-1755.908 -359.729)">
@@ -64,20 +68,16 @@ export function Appbar() {
                         </svg>
                     </div>
                 </Link>
-                <div className="title text-xl w-full h-full flex items-center">
+                <div className="title w-full h-full flex items-center space-x-4">
                     {
-                        linkAdress.map((item, index) => {
-                            const actived = index == 1;
-                            return (
-                                <>
-                                    <div className={actived && 'text-secondary-500'} key={index}>
-                                        <Link href={item.path} >
-                                            {item.title + (index == 0 ? '  >  ' : '')}
-                                        </Link>
-                                    </div>
-                                </>
-                            )
-                        })
+                        (breadcrumbs || linkAdress).map((item, index, array) => {
+                            const actived = index == array.length - 1;
+                            return <div className={(actived ? 'text-black font-semibold' : 'text-gray-400') + ' hover:text-black'} key={index}>
+                            <Link href={item.path} >{item.title}</Link>
+                        </div>
+                        }).reduce((accu, elem, index): any => {
+                            return accu === null ? [elem] : [accu, <IconArrowRight key={(index * 2) + 1} className="w-4 h-4 text-gray-400"/>, elem]
+                        }, null)
                     }
                 </div>
                 <div className="action-header px-7 flex  space-x-3 max-w-5xl ">
