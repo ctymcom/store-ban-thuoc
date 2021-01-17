@@ -2,6 +2,7 @@ export const AccountDecentralizationData = [
     {
         title: 'Quản trị',
         status: false,
+        isChange: false,
         data: [
             {
                 title: 'Bảng điều khiển',
