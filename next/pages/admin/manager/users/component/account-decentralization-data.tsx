@@ -7,6 +7,7 @@ export const AccountDecentralizationData = [
             {
                 title: 'Bảng điều khiển',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Bảng điều khiển',
@@ -17,6 +18,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Tài khoản',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Tài khoản',
@@ -47,6 +49,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Cấu hình hệ thống',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập cấu hình chung',
@@ -69,6 +72,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Phân quyền',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Phân quyền',
@@ -87,6 +91,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Báo cáo',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Báo cáo',
@@ -97,6 +102,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Lịch sử thao tác',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Lịch sử thao tác',
@@ -114,6 +120,7 @@ export const AccountDecentralizationData = [
             {
                 title: 'Phân khúc',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Phân khúc',
@@ -136,6 +143,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Hạng hội viên',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Hạng hội viên',
@@ -154,6 +162,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Kỳ xét hạng',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Kỳ xét hạng',
@@ -168,6 +177,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Nhóm hội viên',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Nhóm hội viên',
@@ -182,6 +192,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Xử lí nghi vấn',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Xử lí nghi vấn',
@@ -214,6 +225,7 @@ export const AccountDecentralizationData = [
             {
                 title: 'Danh sách',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Danh sách',
@@ -232,6 +244,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Nhóm sản phẩm',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Nhóm sản phẩm',
@@ -268,6 +281,7 @@ export const AccountDecentralizationData = [
             {
                 title: 'Giao dịch',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Giao dịch',
@@ -286,6 +300,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Sự kiện',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Sự kiện',
@@ -304,6 +319,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Hoạt động',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Hoạt động',
@@ -329,6 +345,7 @@ export const AccountDecentralizationData = [
             {
                 title: 'Danh sách',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Danh sách',
@@ -351,6 +368,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Voucher',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Voucher',
@@ -369,6 +387,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Đổi quà',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Đổi quà',
@@ -394,6 +413,7 @@ export const AccountDecentralizationData = [
             {
                 title: 'Lịch sử giao dịch',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Lịch sử giao dịch',
@@ -416,6 +436,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Nhập giao dịch',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Tải file nhập giao dịch',
@@ -426,6 +447,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Hoàn giao dịch',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Tải file hoàn giao dịch',
@@ -443,6 +465,7 @@ export const AccountDecentralizationData = [
             {
                 title: 'Biểu mẫu',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Biểu mẫu',
@@ -461,6 +484,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Sự kiện',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Sự kiện',
@@ -479,6 +503,7 @@ export const AccountDecentralizationData = [
             }, {
                 title: 'Tin tức',
                 status: false,
+                dropdownOpen: true,
                 data: [
                     {
                         title: 'Truy cập Tin tức',
