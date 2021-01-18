@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { Checkbox } from "../../../../../components/shared/form/checkbox";
 import { SelectBox } from "../../../../../components/shared/form/select-box";
 import { IconPlus, IconInfor, IconArrowDown } from "../../../../../lib/svg";
-import { AccountDecentralizationData } from './account-decentralization-data'
-import { ModalAddAccountDecentralization } from './modal-add-account-decentralization';
+import { AccountDecentralizationData } from '../../users/component/account-decentralization-data'
+import { ModalAddAccountDecentralization } from '../../users/component/modal-add-account-decentralization';
 
-export function AccountDecentralization(props) {
+export function Decentralization(props) {
     const [AccData, setAccData] = useState(AccountDecentralizationData);
     const [openModal, setopenModal] = useState(false);
     console.log(openModal)
