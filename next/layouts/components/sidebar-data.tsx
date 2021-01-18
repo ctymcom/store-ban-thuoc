@@ -19,12 +19,12 @@ export const SidebarData = [
       },
       {
         title: "Cấu hình hệ thống",
-        path: "/",
+        path: "/admin/manager/configsystem",
         new: false,
       },
       {
         title: "Phân quyền",
-        path: "/",
+        path: "/admin/manager/decentralization",
         new: false,
       }, {
         title: "Báo cáo",
