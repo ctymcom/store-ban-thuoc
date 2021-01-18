@@ -17,9 +17,9 @@ export function HeaderUserPage(props) {
                         <p className='text-xs text-gray-400'>Danh sách người dùng hiện tại</p>
                     </div>
                     <div className="btn-create-user float-right flex justify-center">
-                        <Button
-                            text='Tạo tài khoản'
-                        />
+                        <div className="py-3 px-4 bg-primary-600 text-xs text-white rounded-md">
+                            Tạo tài khoản
+                        </div>
                     </div>
                 </div>
                 <div className="search">

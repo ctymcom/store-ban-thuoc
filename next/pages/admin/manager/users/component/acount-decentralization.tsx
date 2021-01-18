@@ -104,10 +104,15 @@ export function AccountDecentralization(props) {
                                                                                         }
                                                                                         setAccData([...AccData]);
                                                                                     }} />
-                                                                                <div className="pt-1 ml-2 w-5">
+                                                                                <div className="group pt-1 ml-2 w-5 tooltip" >
                                                                                     <i className='text-gray-400'>
                                                                                         <IconInfor />
                                                                                     </i>
+                                                                                    <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
+                                                                                        {
+                                                                                            item.title
+                                                                                        }
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div className='w-5' onClick={() => {
