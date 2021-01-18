@@ -22,12 +22,12 @@ export function AccountOverview(props) {
                                 </div>
                                 <div className="flex justify-statrt space-x-3 py-1">
                                     <div className="btn-change-avt">
-                                        <div className="py-2 px-3 text-sm bg-primary-500 text-white rounded-md cursor-pointer hover:bg-primary-600">
+                                        <div className="transition py-2 px-3 text-sm bg-primary-500 text-white rounded-md cursor-pointer hover:bg-primary-600">
                                             Đổi avatar
                                         </div>
                                     </div>
-                                    <div className="btn-change-password">
-                                        <div className="py-2 px-3 text-sm bg-secondary-500 text-gray-800 rounded-md cursor-pointer hover:bg-secondary-600">
+                                    <div className="btn-change-password ">
+                                        <div className="transition py-2 px-3 text-sm bg-secondary-400 cursor-pointer text-gray-800 rounded-md hover:bg-secondary-500">
                                             Đổi mật khẩu
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@ export function AccountOverview(props) {
                                         </div>
                                         <div className="input">
                                             <SelectBox
-                                                options={['Admin', 'Manager']}
+                                                options={['Admin', 'User']}
                                                 style=''
                                             />
                                         </div>
@@ -258,11 +258,11 @@ export function AccountOverview(props) {
                         </div>
                         <div className="w-full">
                             <div className="flex justify-end items-center">
-                                <div className="delete-account text-secondary-500  py-2 px-3">
-                                    <Link href='/'>Xóa tài khoản</Link>
+                                <div className="cursor-pointer text-sm delete-account text-secondary-500  py-2 px-3">
+                                    Xóa tài khoản
                                 </div>
-                                <div className="uppercase py-2 px-3 border-2 rounded-sm text-gray-600">
-                                    <Link href='/'>Lưu thay đổi</Link>
+                                <div className="cursor-pointer transition text-sm uppercase py-3 px-4 border-2 rounded-md text-gray-600 hover:bg-primary-600 hover:text-white ">
+                                    Lưu thay đổi
                                 </div>
                             </div>
                         </div>

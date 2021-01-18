@@ -41,8 +41,8 @@ export function SubMenu({ opened, activeSubmenu, item, ...props }: SubMenuProps)
                         {item.subNav.map((item, index) => {
                             const activated = activeSubmenu == item.title ||  item.path == pathname;
                             return <Link href={item.path} key={index}>
-                                <li className={'flex w-full ' + (activated && 'bg-secondary-400')}>
-                                    <span className={'pl-14 flex space-y-6 py-2 text-gray-600 hover:text-primary-400 '}> {item.title} </span>
+                                <li className={'flex w-full ' + (activated && 'bg-secondary-400 text-white')}>
+                                    <span className={'pl-14 flex space-y-6 py-2 hover:text-primary-400 text-gray-400' + (activated && 'bg-secondary-400 text-white')}> {item.title} </span>
                                 </li>
                             </Link>
                         })}
