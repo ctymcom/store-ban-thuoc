@@ -52,34 +52,31 @@ export function AccountDecentralization(props) {
                                         {
                                             AccData.map((item1, index) => {
                                                 return <>
-                                                    <div className="w-full border-b-4 border-secondary-400">
-                                                        <div className="inline-block pr-20 bg-secondary-400 rounded-tr-full">
-                                                            <div className="flex justify-between px-2">
-                                                                <Checkbox checked={item1.status} key={index} label={item1.title} name={item1.title}
-                                                                    style='py-2 uppercase inline'
-                                                                    onChanged={() => {
-                                                                        item1.status = !item1.status;
-                                                                        item1.isChange = !item1.isChange;
-                                                                        if (item1.status) {
-                                                                            item1.data.forEach((item1) => {
-                                                                                item1.status = true;
-                                                                                item1.data.forEach((item1) => {
-                                                                                    item1.status = true;
-                                                                                })
-                                                                            })
-                                                                        } else {
-                                                                            item1.data.forEach((item1) => {
-                                                                                item1.status = false;
-                                                                                item1.data.forEach((item1) => {
-                                                                                    item1.status = false;
-                                                                                })
-                                                                            })
-                                                                        }
-                                                                        setAccData([...AccData]);
-                                                                    }} />
-                                                            </div>
-                                                        </div>
+                                                    <div className="inline-block pr-20 bg-secondary-400 rounded-tr-full px-2">
+                                                        <Checkbox checked={item1.status} key={index} label={item1.title} name={item1.title}
+                                                            style='py-2 uppercase inline'
+                                                            onChanged={() => {
+                                                                item1.status = !item1.status;
+                                                                item1.isChange = !item1.isChange;
+                                                                if (item1.status) {
+                                                                    item1.data.forEach((item1) => {
+                                                                        item1.status = true;
+                                                                        item1.data.forEach((item1) => {
+                                                                            item1.status = true;
+                                                                        })
+                                                                    })
+                                                                } else {
+                                                                    item1.data.forEach((item1) => {
+                                                                        item1.status = false;
+                                                                        item1.data.forEach((item1) => {
+                                                                            item1.status = false;
+                                                                        })
+                                                                    })
+                                                                }
+                                                                setAccData([...AccData]);
+                                                            }} />
                                                     </div>
+                                                    <div className="bg-secondary-400 h-1 w-full"></div>
                                                     <div className="py-3">
                                                         {
                                                             item1.data.map((item, index, array) => {
