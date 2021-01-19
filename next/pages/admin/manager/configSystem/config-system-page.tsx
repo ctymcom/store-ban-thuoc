@@ -10,30 +10,42 @@ import { UserpageData } from '../users/component/userpage-data';
 
 export function ConfigSystemPage(props) {
     const [Session, setSession] = useState(1);
-    var breadcrumbs = {}
+    var breadcrumbs = []
     var Session_view
     if (Session == 1) {
         Session_view = <InformationCompany />
-        breadcrumbs = {
-            [
-                { title: "Quản trị", path: '/admin/manager' },
-                { title: "Cấu hình hệ thống", path: '/admin/manager/configsystem' }
-            ]
-        }
+        breadcrumbs = [
+            { title: "Quản trị", path: '/admin/manager' },
+            { title: "Cấu hình hệ thống", path: '/admin/manager/config-system/config-system' },
+            { title: "Thông tin doanh nghiệp", path: '/admin/manager/config-system/config-system' }
+        ]
+
     } else if (Session == 2) {
         Session_view = <InformationApp />
+        breadcrumbs = [
+            { title: "Quản trị", path: '/admin/manager' },
+            { title: "Cấu hình hệ thống", path: '/admin/manager/config-system/config-system' },
+            { title: "Thông tin chương trình", path: '/admin/manager/config-system/config-system' }
+        ]
     } else if (Session == 3) {
         Session_view = <ConfigAccount />
+        breadcrumbs = [
+            { title: "Quản trị", path: '/admin/manager' },
+            { title: "Cấu hình hệ thống", path: '/admin/manager/config-system/config-system' },
+            { title: "Tài khoản", path: '/admin/manager/config-system/config-system' }
+        ]
     } else if (Session == 4) {
         Session_view = <AntiFraud ListUserData={UserpageData} />
+        breadcrumbs = [
+            { title: "Quản trị", path: '/admin/manager' },
+            { title: "Cấu hình hệ thống", path: '/admin/manager/config-system/config-system' },
+            { title: "Chống gian lận", path: '/admin/manager/config-system/config-system' }
+        ]
     }
     return <>
         <DashboardLayout
             breadcrumbs={
-                [
-                    { title: "Quản trị", path: '/admin/manager' },
-                    { title: "Cấu hình hệ thống", path: '/admin/manager/configsystem' }
-                ]
+                breadcrumbs
             }
             activeMenu="Quản trị"
             activeSubmenu="Cấu hình hệ thống">

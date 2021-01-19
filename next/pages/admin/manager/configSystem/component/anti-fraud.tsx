@@ -22,26 +22,8 @@ export function AntiFraud(props) {
                 <div className="w-full grid grid-cols-3 xl:grid-cols-4  gap-6">
                     {
                         ListUserData.slice(pagination.page * pagination.limit - pagination.limit, pagination.page * pagination.limit).map((item, index) => {
-                            return <div key={index} className="user border-2 border-gray-200 p-3 rounded-md hover:shadow" >
-                                <div className="profile-container pb-3 border-b-2">
-                                    <div className="">
-                                        <div className="avt flex justify-between items-start">
-                                            <div className="container w-16 h-16 flex justify-center items-center bg-secondary-100 rounded-xl">
-                                                <i className="w-12 h-12 z-10 text-secondary-400">
-                                                    <IconUser />
-                                                </i >
-                                            </div>
-                                        </div>
-                                        <div className="name pt-2">
-                                            <div className="nickname text-sm text-gray-400">
-                                                <p>{item.nickname}</p>
-                                            </div>
-                                            <div className="fullname text-sm text-gray-700">
-                                                <p>{item.name}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            return <div key={index} className="user border-2 border-gray-200 p-2 rounded-md hover:shadow" >
+
                                 <div className="infor-user">
                                     <div className="infor py-2 text-sm">
                                         <div className="date-create text-sm py-1">

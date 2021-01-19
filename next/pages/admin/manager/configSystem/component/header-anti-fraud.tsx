@@ -1,14 +1,9 @@
-import { useState } from 'react'
-import { Button } from "../../../../../components/shared/form/button";
+import { useRouter } from 'next/router'
 import { Input } from "../../../../../components/shared/form/input";
 import { IconInfor } from '../../../../../lib/svg';
 
 export function HeaderAntiFraud(props) {
-    const [View, setView] = useState(0);
-    const handleView = (e) => {
-        setView(e)
-        props.handleView(e)
-    }
+    const router = useRouter();
     return <>
         <div className="py-4">
             <div className="flex justify-between items-center ">
@@ -48,7 +43,9 @@ export function HeaderAntiFraud(props) {
                     </div>
                 </div>
                 <div className="btn-create-user flex justify-center max-h-12">
-                    <div className="py-4 px-5 bg-primary-600 text-xs text-white rounded-md cursor-pointer">
+                    <div className="py-4 px-5 bg-primary-600 text-xs text-white rounded-md cursor-pointer" onClick={() => {
+                        router.push('/admin/manager/config-system/create-rule')
+                    }}>
                         Tạo nguyên tắc
                         </div>
                 </div>
