@@ -1,7 +1,12 @@
+import { useState } from 'react'
 import { Input } from "../../../../../components/shared/form/input";
 import { SelectBox } from "../../../../../components/shared/form/select-box";
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { IconPickerDate } from '../../../../../lib/svg';
 
 export function InformationCompany() {
+    const [fetch, setfetch] = useState(new Date(2018, 6, 22));
     return <>
         <div className="w-full pt-8">
             <div className="pb-8 border-b border-gray-300">
@@ -82,10 +87,16 @@ export function InformationCompany() {
                                 <p className='uppercase font-bold text-sm'>Ngày thành lập</p>
                             </div>
                             <div className="input">
-                                <Input
+                                <div className="flex justify-between border-solid  w-full h-full bg-white border-gray-300 border p-4 text-sm text-gray-500 rounded-md focus:outline-none focus:ring-secondary-500 focus:border-secondary-400">
+                                    <DatePicker selected={fetch} onChange={(e) => { setfetch(e) }} />
+                                    <div className="w-4">
+                                        <IconPickerDate />
+                                    </div>
+                                </div>
+                                {/* <Input
                                     inputType='text'
                                     value='mcom.app'
-                                />
+                                /> */}
                             </div>
                         </div>
                         <div className="input-lastname">
