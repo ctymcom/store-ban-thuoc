@@ -1,8 +1,10 @@
+import { set } from 'mongoose';
 import react, { useState } from 'react';
 import { Input } from '../../../../../components/shared/form/input';
 import { SelectBox } from '../../../../../components/shared/form/select-box';
 import { IconClose, IconInfor } from '../../../../../lib/svg';
 export function ModalAddAccountDecentralization(props) {
+    const [Change, setChange] = useState(false);
     return <>
         <div className={"fixed top-0 left-0 z-50 w-full h-full bg-gray-200 bg-opacity-80 "}>
             <div className="w-2/4">
@@ -23,6 +25,7 @@ export function ModalAddAccountDecentralization(props) {
                                     inputType='text'
                                     placeholder='Nhập tên phân quyền'
                                     style={' py-3 '}
+                                    onChanged={() => { setChange(true) }}
                                 />
                             </div>
                         </div>
@@ -41,12 +44,13 @@ export function ModalAddAccountDecentralization(props) {
                                 <SelectBox
                                     options={['Giám đốc CEO', 'Giám đốc CTO']}
                                     style=''
+                                    onChanged={() => { setChange(true) }}
                                 />
                             </div>
                         </div>
                     </div>
                     <div className="pb-3 w-full">
-                        <div className="text-xs text-center uppercase cursor-pointer py-3 bg-gray-200">
+                        <div className={"text-xs text-center uppercase cursor-pointer py-3 bg-gray-200 " + (Change && "bg-primary-500 text-white")}>
                             Xác nhận
                         </div>
                     </div>
