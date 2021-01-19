@@ -5,7 +5,7 @@ type SidebarProps = {
     activeMenu?: string,
     activeSubmenu?: string
 }
-export default function Sidebar({ activeMenu, activeSubmenu, ...props}: SidebarProps) {
+export default function Sidebar({ activeMenu, activeSubmenu, ...props }: SidebarProps) {
     return (
         <>
             <div className="w-60"></div>

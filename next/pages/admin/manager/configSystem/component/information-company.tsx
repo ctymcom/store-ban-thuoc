@@ -105,7 +105,7 @@ export function InformationCompany() {
                             </div>
                             <div className="input">
                                 <SelectBox
-                                    options={['TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ']}
+                                    options={['TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ', 'TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ', 'TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ', 'TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ', 'TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ','TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ',]}
                                     style=' '
                                 />
                             </div>
