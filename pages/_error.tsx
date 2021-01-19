@@ -3,7 +3,7 @@ import { Error500 } from "../next/pages/errors/component/error500"
 export function Error({ statusCode }) {
     return (<>
         {statusCode ?
-            <Error500 /> : ""}
+            <Error500 /> : <Error500 />}
     </>
     )
 }

@@ -19,7 +19,7 @@ export const SidebarData = [
       },
       {
         title: "Cấu hình hệ thống",
-        path: "/admin/manager/configsystem",
+        path: "/admin/manager/config-system/config-system",
         new: false,
       },
       {
