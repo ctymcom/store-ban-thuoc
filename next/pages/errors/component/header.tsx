@@ -1,45 +1,9 @@
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router';
-import { SidebarData } from '../../../next/layouts/components/sidebar-data'
-import { IconUser, IconRing, IconLogout, IconArrowRight } from '../../lib/svg';
-import { BreadcrumbItem } from '../dashboard-layout';
-type AppBarProps = {
-    breadcrumbs?: BreadcrumbItem[],
-    [x: string]: any
-}
-export function Appbar({ breadcrumbs }: AppBarProps) {
-    const [openProfile, setopenProfile] = useState(false);
-    const [openNotic, setopenNotic] = useState(false);
-    const [linkAdress, setlinkAdress] = useState([]);
-    var arr = [];
-    const { pathname } = useRouter();
-    useEffect(() => {
-        SidebarData.forEach((item, index) => {
-            if (pathname.search(item.path) > -1) {
-                var link = {
-                    title: item.title,
-                    path: item.path
-                }
-                arr.push(link)
-                setlinkAdress([...arr])
-                item.subNav.forEach((item, index) => {
-                    if (item.path == pathname) {
-                        var link = {
-                            title: item.title,
-                            path: item.path
-                        }
-                        arr.push(link)
-                        setlinkAdress([...arr])
-                    }
-                })
-            }
-        })
-    }, []);
-    console.log(pathname)
-    return (
-        <>
-            <div className="top-0 left-0 fixed w-full h-14 min-h-48 max-h-14 bg-white z-50 shadow flex items-center font-sans">
+import Link from "next/link";
+
+export function HeaderErrorPage() {
+    return <>
+        <div className="top-0 left-0 fixed w-full h-14 min-h-48 max-h-14 bg-white z-50 shadow flex items-center justify-between font-sans">
+            <div className="flex items-center">
                 <Link href='/'>
                     <div className='block py-3 px-6'>
                         <svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 142 60">
@@ -68,73 +32,15 @@ export function Appbar({ breadcrumbs }: AppBarProps) {
                         </svg>
                     </div>
                 </Link>
-                <div className=" w-full h-full flex items-center space-x-4">
-                    {
-                        (breadcrumbs || linkAdress).map((item, index, array) => {
-                            const actived = index == array.length - 1;
-                            return <div className={(actived ? 'text-black font-semibold' : 'text-gray-400') + ' hover:text-black'} key={index}>
-                                <Link href={item.path} >{item.title}</Link>
-                            </div>
-                        }).reduce((accu, elem, index): any => {
-                            return accu === null ? [elem] : [...accu, <IconArrowRight key={(index * 2) + 1} className="w-4 h-4 text-gray-400"/>, elem]
-                        }, null as any)
-                    }
-                </div>
-                <div className="action-header px-7 flex  space-x-3 max-w-5xl ">
-                    <div className="h-full relative duration-300 " onMouseOver={() => setopenNotic(true)} onMouseLeave={() => setopenNotic(false)}>
-                        <div className="h-full">
-                            <div className="dropdown w-10 h-10 flex items-center justify-center hover:bg-gray-100 duration-100 rounded-full cursor-pointer">
-                                <div className="dropdown-button w-6 h-6">
-                                    <i className="text-gray-400">
-                                        <IconRing />
-                                    </i>
-                                </div>
-                            </div>
-                        </div>
-                        <div onMouseOver={() => setopenNotic(true)} onMouseLeave={() => setopenNotic(false)}
-                            className={`${openNotic ? 'block' : 'hidden'} hover:block w-80 text-center max-w-5xl z-50 absolute bg-white -left-52 top-10 shadow-md rounded-sm origin-top  with-arrow transition `}>
-                            <div className="container p-4">
-                                <div className="items flex flex-wrap">
-                                    Thong bao
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="relative flex items-center w-72 h-50 line-white " onMouseOver={() => setopenProfile(true)} onMouseLeave={() => setopenProfile(false)}>
-                    <div className="inline-block hover:bg-gray-100 rounded-full ">
-                        <div className="relative">
-                            <div className="account-info h-10 flex items-center w-full p-1  duration-100  cursor-pointer">
-                                <img src="https://ss-images.catscdn.vn/2019/05/02/5086417/58673861_2082849575345662_5550445563004059648_n.jpg" alt="" className='w-8 h-8 items-center mr-2  rounded-full' />
-                                <span className=' inline p-1 pr-2 tracking-normal text-gray-700'>LamQuangVinh</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div onMouseOver={() => setopenProfile(true)} onMouseLeave={() => setopenProfile(false)}
-                        className={`${openProfile ? 'block' : 'hidden'} z-50 absolute bg-white left-8 top-10 shadow-md rounded-sm max-w-6xl origin-top with-arrow transition-all `}>
-                        <div className="container">
-                            <ul >
-                                <li className='hover:bg-gray-200 px-5 py-5 h-8 z-50 flex items-center cursor-pointer'>
-                                    <div className="w-5 h-5 mr-3">
-                                        <i className='text-gray-400'>
-                                            <IconUser />
-                                        </i>
-                                    </div>
-                                    <span className="text-sm">Hồ sơ</span>
-                                </li>
-                                <li className='hover:bg-gray-200 px-5 py-5 h-8 z-50 flex items-center cursor-pointer'>
-                                    <div className="w-5 h-5 mr-3">
-                                        <i className='text-gray-400'>
-                                            <IconLogout />
-                                        </i>
-                                    </div>
-                                    <span className="text-sm">Đăng xuất</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div >
-        </>
-    )
+                <Link href='/'>
+                    Đăng nhập
+                </Link>
+            </div>
+            <div className="text-primary-500 px-8">
+                <Link href='/'>
+                    Cần giúp đỡ
+                </Link>
+            </div>
+        </div >
+    </>
 }

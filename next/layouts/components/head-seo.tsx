@@ -1,10 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
-export function HeadSEO(props) {
+export function HeadSEO({ title }) {
     return (
         <>
             <Head>
-                <title>{props.title}</title>
+                <title>{title}</title>
                 <meta name="theme-color" content="#000000" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 {/* Favicon */}

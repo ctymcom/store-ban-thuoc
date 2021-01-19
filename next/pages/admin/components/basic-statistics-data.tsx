@@ -13,7 +13,7 @@ export const statistic_data = [
         growth: 100
     },
     {
-        title: 'Tổng giá trị giao',
+        title: 'Tổng giá trị giao dịch',
         data: '79.948.100',
         unit: 'đồng',
         growth: 50
