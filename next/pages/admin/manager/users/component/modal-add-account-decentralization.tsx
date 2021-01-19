@@ -1,8 +1,9 @@
-import { set } from 'mongoose';
 import react, { useState } from 'react';
+
 import { Input } from '../../../../../components/shared/form/input';
 import { SelectBox } from '../../../../../components/shared/form/select-box';
-import { IconClose, IconInfor } from '../../../../../lib/svg';
+import { IconClose } from '../../../../../lib/svg';
+
 export function ModalAddAccountDecentralization(props) {
     const [Change, setChange] = useState(false);
     return <>
@@ -16,38 +17,18 @@ export function ModalAddAccountDecentralization(props) {
                         </i>
                     </div>
                     <div className="py-3">
-                        <div className="input-username">
-                            <div className="py-1">
-                                <p className='uppercase font-bold text-xs'>Tên phân quyền</p>
-                            </div>
-                            <div className="input">
-                                <Input
-                                    inputType='text'
-                                    placeholder='Nhập tên phân quyền'
-                                    style={' py-3 '}
-                                    onChanged={() => { setChange(true) }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="pb-2">
-                        <div className="input-username">
-                            <div className="py-1 flex">
-                                <p className='uppercase font-bold text-xs'>Phân quyền thuộc</p>
-                                <div className="ml-2 w-5">
-                                    <i className='text-gray-400'>
-                                        <IconInfor />
-                                    </i>
-                                </div>
-                            </div>
-                            <div className="input">
-                                <SelectBox
-                                    options={['Giám đốc CEO', 'Giám đốc CTO']}
-                                    style=''
-                                    onChanged={() => { setChange(true) }}
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            inputType='text'
+                            placeholder='Nhập tên phân quyền'
+                            label="Tên phân quyền"
+                            onChanged={() => { setChange(true) }}
+                        />
+                        <SelectBox
+                            label="Phân quyền thuộc"
+                            options={['Giám đốc CEO', 'Giám đốc CTO']}
+                            onChanged={() => { setChange(true) }}
+                            tooltip="Nhập tên phân quyền"
+                        />
                     </div>
                     <div className="pb-3 w-full">
                         <div className={"text-xs text-center uppercase cursor-pointer py-3 bg-gray-200 " + (Change && "bg-primary-500 text-white")}>

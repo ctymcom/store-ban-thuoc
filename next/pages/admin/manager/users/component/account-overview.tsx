@@ -42,28 +42,16 @@ export function AccountOverview(props) {
                                     <p className='text-sm text-gray-400'>Thông tin cơ bản</p>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="input-id">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Mã Nhân viên</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='text'
-                                                value='D6SAF2A6SC2Z3'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-username">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Tên đăng nhập</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='text'
-                                                placeholder='Tên đăng nhập'
-                                            />
-                                        </div>
-                                    </div>
+                                    <Input
+                                        inputType='text'
+                                        value='D6SAF2A6SC2Z3'
+                                        label="Mã nhân viên"
+                                    />
+                                    <Input
+                                        inputType='text'
+                                        placeholder='Tên đăng nhập'
+                                        label="Tên đăng nhập"
+                                    />
                                     <div className="input-firstname">
                                         <div className="py-1">
                                             <p className='uppercase font-bold text-sm'>Họ</p>

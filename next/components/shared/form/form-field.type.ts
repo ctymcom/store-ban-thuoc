@@ -1,4 +1,5 @@
 export type FormFieldProps = {
+  [x: string]: any;
   name?: string;
   value?: string;
   label?: string;
@@ -10,4 +11,5 @@ export type FormFieldProps = {
   validate?: (value: string) => string;
   required?: boolean;
   inputType?: string;
+  tooltip?: string;
 };

@@ -1,8 +1,9 @@
-import { useState } from 'react'
-import { Checkbox } from "../../../../../components/shared/form/checkbox";
-import { SelectBox } from "../../../../../components/shared/form/select-box";
-import { IconPlus, IconInfor, IconArrowDown } from "../../../../../lib/svg";
-import { AccountDecentralizationData } from './account-decentralization-data'
+import { useState } from 'react';
+
+import { Checkbox } from '../../../../../components/shared/form/checkbox';
+import { SelectBox } from '../../../../../components/shared/form/select-box';
+import { IconInfo, IconPlus } from '../../../../../lib/svg';
+import { AccountDecentralizationData } from './account-decentralization-data';
 import { ModalAddAccountDecentralization } from './modal-add-account-decentralization';
 
 export function AccountDecentralization(props) {
@@ -52,34 +53,31 @@ export function AccountDecentralization(props) {
                                         {
                                             AccData.map((item1, index) => {
                                                 return <>
-                                                    <div className="w-full border-b-4 border-secondary-400">
-                                                        <div className="inline-block pr-20 bg-secondary-400 rounded-tr-full">
-                                                            <div className="flex justify-between px-2">
-                                                                <Checkbox checked={item1.status} key={index} label={item1.title} name={item1.title}
-                                                                    style='py-2 uppercase inline'
-                                                                    onChanged={() => {
-                                                                        item1.status = !item1.status;
-                                                                        item1.isChange = !item1.isChange;
-                                                                        if (item1.status) {
-                                                                            item1.data.forEach((item1) => {
-                                                                                item1.status = true;
-                                                                                item1.data.forEach((item1) => {
-                                                                                    item1.status = true;
-                                                                                })
-                                                                            })
-                                                                        } else {
-                                                                            item1.data.forEach((item1) => {
-                                                                                item1.status = false;
-                                                                                item1.data.forEach((item1) => {
-                                                                                    item1.status = false;
-                                                                                })
-                                                                            })
-                                                                        }
-                                                                        setAccData([...AccData]);
-                                                                    }} />
-                                                            </div>
-                                                        </div>
+                                                    <div className="inline-block pr-20 bg-secondary-400 rounded-tr-full px-2">
+                                                        <Checkbox checked={item1.status} key={index} label={item1.title} name={item1.title}
+                                                            style='py-2 uppercase inline'
+                                                            onChanged={() => {
+                                                                item1.status = !item1.status;
+                                                                item1.isChange = !item1.isChange;
+                                                                if (item1.status) {
+                                                                    item1.data.forEach((item1) => {
+                                                                        item1.status = true;
+                                                                        item1.data.forEach((item1) => {
+                                                                            item1.status = true;
+                                                                        })
+                                                                    })
+                                                                } else {
+                                                                    item1.data.forEach((item1) => {
+                                                                        item1.status = false;
+                                                                        item1.data.forEach((item1) => {
+                                                                            item1.status = false;
+                                                                        })
+                                                                    })
+                                                                }
+                                                                setAccData([...AccData]);
+                                                            }} />
                                                     </div>
+                                                    <div className="bg-secondary-400 h-1 w-full"></div>
                                                     <div className="py-3">
                                                         {
                                                             item1.data.map((item, index, array) => {
@@ -106,7 +104,7 @@ export function AccountDecentralization(props) {
                                                                                     }} />
                                                                                 <div className="group pt-1 ml-2 w-5 tooltip" >
                                                                                     <i className='text-gray-400'>
-                                                                                        <IconInfor />
+                                                                                        <IconInfo />
                                                                                     </i>
                                                                                     <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
                                                                                         {
