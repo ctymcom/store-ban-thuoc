@@ -30,7 +30,7 @@ export function SelectBox({ label, name, placeholder, required, value, style, op
                 </div>
             </div>}
         </div>}
-        <select onChange={onSelectChanged} defaultValue={value} required={required} name={name} className={style + ` w-full bg-white ring-gray-300 ring-1 p-4 text-sm text-gray-500 rounded-md focus:outline-none focus:ring-secondary-500`}>
+        <select onChange={onSelectChanged} defaultValue={value} required={required} name={name} className={style + `form-select mt-1 block w-full bg-white ring-gray-300 ring-1 p-4 text-sm text-gray-500 rounded-md focus:outline-none focus:ring-primary-500`}>
             {noneOption && <option value={noneOption.value}>-- {noneOption.display || placeholder} --</option>}
             {(options as SelectBoxOption[]).map((o, index) => <option key={o.value + index} value={o.value}>{o.display || o.value}</option>)}
         </select>

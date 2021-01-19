@@ -11,61 +11,31 @@ export function InformationApp() {
                         <p className='text-sm text-gray-400'>Thông tin cơ bản</p>
                     </div>
                     <div className="grid grid-cols-2 gap-5">
-                        <div className="input-id">
-                            <div className="py-1">
-                                <p className='uppercase font-bold text-sm'>Tên chương trình</p>
-                            </div>
-                            <div className="input">
-                                <Input
-                                    inputType='text'
-                                    placeholder='Công ty cổ phần giải pháp phần mềm MCOM'
-                                />
-                            </div>
-                        </div>
-                        <div className="input-username">
-                            <div className="py-1">
-                                <p className='uppercase font-bold text-sm'>Tên rút gọn</p>
-                            </div>
-                            <div className="input">
-                                <Input
-                                    inputType='text'
-                                    placeholder='Công ty MCOM'
-                                />
-                            </div>
-                        </div>
-                        <div className="input-username">
-                            <div className="py-1">
-                                <p className='uppercase font-bold text-sm'>Tên tiếng anh</p>
-                            </div>
-                            <div className="input">
-                                <Input
-                                    inputType='text'
-                                    placeholder='Công ty MCOM'
-                                />
-                            </div>
-                        </div>
-                        <div className="input-username">
-                            <div className="py-1">
-                                <p className='uppercase font-bold text-sm'>Tên hiển thị</p>
-                            </div>
-                            <div className="input">
-                                <Input
-                                    inputType='text'
-                                    placeholder='Công ty MCOM'
-                                />
-                            </div>
-                        </div>
-                        <div className="input-firstname">
-                            <div className="py-1">
-                                <p className='uppercase font-bold text-sm'>Tiền tệ</p>
-                            </div>
-                            <div className="input">
-                                <SelectBox
-                                    options={['Vnđ', 'Usd', 'Eur']}
-                                    style=' uppercase '
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            inputType='text'
+                            placeholder='Công ty cổ phần giải pháp phần mềm MCOM'
+                            label='Tên chương trình'
+                        />
+                        <Input
+                            inputType='text'
+                            placeholder='Công ty MCOM'
+                            label='Tên rút gọn'
+                        />
+                        <Input
+                            inputType='text'
+                            placeholder='MCOM Company'
+                            label='Tên tiếng anh'
+                        />
+                        <Input
+                            inputType='text'
+                            placeholder='MCOM Company'
+                            label='Tên hiển thị'
+                        />
+                        <SelectBox
+                            options={['Vnđ', 'Usd', 'Eur']}
+                            style=' uppercase '
+                            label='Tiền tệ'
+                        />
                     </div>
                 </div>
             </div>

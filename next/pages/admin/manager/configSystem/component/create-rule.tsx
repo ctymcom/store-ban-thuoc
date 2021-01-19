@@ -16,25 +16,12 @@ export function CreateRule() {
                             <p className=" text-gray-400">Thông tin bắt buộc</p>
                         </div>
                         <div className="grid grid-cols-2">
-                            <div className="input-name py-2">
-                                <div className="py-1 flex">
-                                    <p className='uppercase font-bold text-sm'>Tên quy tắc</p>
-                                    <div className="group pt-1 ml-2 w-5 tooltip" >
-                                        <i className='text-gray-400'>
-                                            <IconInfor />
-                                        </i>
-                                        <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
-                                            Tên quy tắc
-                                    </div>
-                                    </div>
-                                </div>
-                                <div className="input">
-                                    <Input
-                                        inputType='text'
-                                        placeholder='Vui lòng Đặt tên cho quy tắc'
-                                    />
-                                </div>
-                            </div>
+                            <Input
+                                inputType='text'
+                                placeholder='Vui lòng Đặt tên cho quy tắc'
+                                label='Tên quy tắc'
+                                tooltip='Tên quy tắc'
+                            />
                         </div>
                         <div className="grid">
                             <div className="input-name py-2">

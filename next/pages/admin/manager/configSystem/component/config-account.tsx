@@ -27,25 +27,12 @@ export function ConfigAccount() {
                         <p className='text-base text-gray-400'>Tài khoản trẻ em</p>
                     </div>
                     <div className="grid grid-cols-2 gap-5">
-                        <div className="input-id">
-                            <div className="py-1 flex">
-                                <p className='uppercase font-bold text-sm'>Nhập số tuổi trẻ em</p>
-                                <div className="group pt-1 ml-2 w-5 tooltip" >
-                                    <i className='text-gray-400'>
-                                        <IconInfor />
-                                    </i>
-                                    <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
-                                        Nhập số tuổi trẻ em
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="input">
-                                <Input
-                                    inputType='text'
-                                    placeholder='Nhập số tuổi'
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            inputType='text'
+                            placeholder='Nhập số tuổi'
+                            label='Nhập số tuổi'
+                            tooltip='Nhập số tuổi'
+                        />
                     </div>
                 </div>
             </div>

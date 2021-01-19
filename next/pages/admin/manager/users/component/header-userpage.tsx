@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button } from "../../../../../components/shared/form/button";
 import { Input } from "../../../../../components/shared/form/input";
+import { IconSearch } from '../../../../../lib/svg';
 
 export function HeaderUserPage(props) {
     const [View, setView] = useState(0);
@@ -23,11 +24,9 @@ export function HeaderUserPage(props) {
                     </div>
                 </div>
                 <div className="search">
-                    <div className="input-search max-w-md py-2 h-full">
-                        <div className="absolute h-10 w-10 block pt-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto" viewBox="0 0 20.042 20">
-                                <path id="Path_10931" data-name="Path 10931" d="M1609.89,662.325c.893.87,1.772,1.727,2.65,2.585.621.607,1.238,1.218,1.859,1.824.55.536,1.169.6,1.6.16.455-.457.395-1.038-.171-1.593-1.5-1.469-3-2.936-4.515-4.425a8.454,8.454,0,0,0,1.438-7.51,8.374,8.374,0,0,0-14.468-3.188,8.485,8.485,0,0,0,.26,11.291A8.246,8.246,0,0,0,1609.89,662.325Zm-5.347-.156a6.491,6.491,0,1,1,6.5-6.425A6.473,6.473,0,0,1,1604.543,662.169Z" transform="translate(-1596.261 -647.183)" fill="#9b9b9b" />
-                            </svg>
+                    <div className="input-search max-w-md py-2 h-full relative">
+                        <div className="absolute left-2 w-6 block pt-3 text-gray-400">
+                            <IconSearch />
                         </div>
                         <Input
                             inputType='text'
