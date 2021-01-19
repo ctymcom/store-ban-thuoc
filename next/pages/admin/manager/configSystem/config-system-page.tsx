@@ -4,8 +4,17 @@ import { Card } from '../../../../components/shared/card/card'
 import { HeaderConfigSystemPage } from './component/header-configSystem-page'
 import { InformationCompany } from './component/information-company';
 import { InformationApp } from './component/information-app';
+import { ConfigAccount } from './component/config-account';
 export function ConfigSystemPage(props) {
     const [Session, setSession] = useState(1);
+    var Session_view
+    if (Session == 1) {
+        Session_view = <InformationCompany />
+    } else if (Session == 2) {
+        Session_view = <InformationApp />
+    } else if (Session == 3) {
+        Session_view = <ConfigAccount />
+    }
     return <>
         <DashboardLayout
             breadcrumbs={
@@ -19,9 +28,7 @@ export function ConfigSystemPage(props) {
             <Card>
                 <HeaderConfigSystemPage onclick={(e) => { setSession(e) }} />
                 {
-                    Session == 1 ?
-                        <InformationCompany /> :
-                        <InformationApp />
+                    Session_view
                 }
             </Card>
         </DashboardLayout>

@@ -42,21 +42,21 @@ export function ViewListUserpage(props) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="btn-edit pl-4 flex justify-center border-l-2">
-                                                <div className="btn-block pl-4">
-                                                    <div className="btn-block bg-primary-100 hover:bg-primary-200 cursor-pointer w-24 h-10 flex justify-center items-center text-primary-500 rounded-md">
-                                                        <i className="icon w-10 h-5 ">
+                                            <div className="btn-edit grid grid-cols-2 gap-2 py-2">
+                                                <div className="btn-block ">
+                                                    <div className="btn-block text-white border border-primary-500 bg-primary-500 hover:bg-primary-400 cursor-pointer py-2 px-4 flex justify-center items-center rounded-md">
+                                                        <i className="icon w-10 h-5">
                                                             <IconBlock />
                                                         </i>
                                                         <p>Khóa</p>
                                                     </div>
                                                 </div>
-                                                <div className="btn-edit pl-4" onClick={() => editUser(item)}>
-                                                    <div className="btn-block bg-green-100 hover:bg-green-200 cursor-pointer w-24 h-10 flex justify-center items-center text-green-500 rounded-md">
-                                                        <i className="icon w-10 h-5">
+                                                <div className="btn-edit" onClick={() => editUser(item)}>
+                                                    <div className="btn-block bg-white border border-primary-500 cursor-pointer py-2 px-4 flex justify-center items-center rounded-md">
+                                                        <i className="icon w-10 h-5 text-primary-500">
                                                             <IconEdit />
                                                         </i>
-                                                        <p>Sửa</p>
+                                                        <p className=" text-primary-500">Sửa</p>
                                                     </div>
                                                 </div>
                                             </div>
