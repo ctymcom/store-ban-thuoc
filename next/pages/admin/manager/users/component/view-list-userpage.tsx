@@ -44,7 +44,7 @@ export function ViewListUserpage(props) {
                                             </div>
                                             <div className="btn-edit grid grid-cols-2 gap-2 py-2">
                                                 <div className="btn-block ">
-                                                    <div className="btn-block text-white border border-primary-500 bg-primary-500 hover:bg-primary-400 cursor-pointer py-2 px-4 flex justify-center items-center rounded-md">
+                                                    <div className={(item.status ? " border-primary-500 bg-primary-500  text-white " : " bg-gray-200 text-gray-400") + " btn-block  border  cursor-pointer py-2 px-4 flex justify-center items-center rounded-md"}>
                                                         <i className="icon w-10 h-5">
                                                             <IconBlock />
                                                         </i>
@@ -52,11 +52,11 @@ export function ViewListUserpage(props) {
                                                     </div>
                                                 </div>
                                                 <div className="btn-edit" onClick={() => editUser(item)}>
-                                                    <div className="btn-block bg-white border border-primary-500 cursor-pointer py-2 px-4 flex justify-center items-center rounded-md">
-                                                        <i className="icon w-10 h-5 text-primary-500">
+                                                    <div className={(item.status ? " border-primary-500 bg-white text-primary-500 " : " bg-gray-200 text-gray-400") + " btn-block  border  cursor-pointer py-2 px-4 flex justify-center items-center rounded-md"}>
+                                                        <i className={(item.status ? " border-primary-500 bg-white text-primary-500 " : " bg-gray-200 text-gray-400 ") + " icon w-10 h-5 "}>
                                                             <IconEdit />
                                                         </i>
-                                                        <p className=" text-primary-500">Sửa</p>
+                                                        <p className={(item.status ? " border-primary-500 bg-white text-primary-500 " : " bg-gray-200 text-gray-400 ")}>Sửa</p>
                                                     </div>
                                                 </div>
                                             </div>

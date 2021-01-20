@@ -52,39 +52,23 @@ export function AccountOverview(props) {
                                         placeholder='Tên đăng nhập'
                                         label="Tên đăng nhập"
                                     />
-                                    <div className="input-firstname">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Họ</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='text'
-                                                value='Nguyễn'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-lastname">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Tên</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='text'
-                                                value='An'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-middlename">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Tên đệm</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='text'
-                                                value='Trường'
-                                            />
-                                        </div>
-                                    </div>
+                                    <Input
+                                        inputType='text'
+                                        placeholder='Nguyễn'
+                                        label="Họ"
+                                    />
+
+                                    <Input
+                                        inputType='text'
+                                        value='An'
+                                        label='Tên'
+                                    />
+
+                                    <Input
+                                        inputType='text'
+                                        value='Trường'
+                                        label='Tên đệm'
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -97,50 +81,26 @@ export function AccountOverview(props) {
                                     <p className='text-sm text-gray-400'>Thông tin tài khoản</p>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="input-id">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Chức vụ</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='text'
-                                                value='D6SAF2A6SC2Z3'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-username">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Vai trò</p>
-                                        </div>
-                                        <div className="input">
-                                            <SelectBox
-                                                options={['Admin', 'User']}
-                                                style=''
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-firstname">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Trạng thái</p>
-                                        </div>
-                                        <div className="input">
-                                            <SelectBox
-                                                options={['Đang hoạt động', 'Dừng hoạt động']}
-                                                style=' text-green-600'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-lastname">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Tài khoản quản lí</p>
-                                        </div>
-                                        <div className="input">
-                                            <SelectBox
-                                                options={['Tài khoản quản lí', '']}
-                                                style=' '
-                                            />
-                                        </div>
-                                    </div>
+                                    <Input
+                                        inputType='text'
+                                        value='D6SAF2A6SC2Z3'
+                                        label='Chức vụ'
+                                    />
+                                    <SelectBox
+                                        options={['Admin', 'User']}
+                                        style=''
+                                        label='Vai trò'
+                                    />
+                                    <SelectBox
+                                        options={['Đang hoạt động', 'Dừng hoạt động']}
+                                        style=' text-green-600'
+                                        label='Trạng thái'
+                                    />
+                                    <SelectBox
+                                        options={['Tài khoản quản lí', '']}
+                                        style=' '
+                                        label='Tài khoản quản lí'
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -153,94 +113,46 @@ export function AccountOverview(props) {
                                     <p className='text-sm text-gray-400'>Chi tiết tài khoản</p>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="input-id">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Email</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='email'
-                                                placeholder='abc@gmail.com'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-username">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Số điện thoại</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='number'
-                                                placeholder='Số điện thoại'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-firstname">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Ngày sinh</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='text'
-                                                value='12/02/2012'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-lastname">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Giới tính</p>
-                                        </div>
-                                        <div className="input">
-                                            <SelectBox
-                                                options={['Nam', 'Nữ', 'Khác']}
-                                                style=' '
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-middlename">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Địa chỉ</p>
-                                        </div>
-                                        <div className="input">
-                                            <Input
-                                                inputType='text'
-                                                value='294 Nguyễn Thị Thập'
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-lastname">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Tỉnh/Thành</p>
-                                        </div>
-                                        <div className="input">
-                                            <SelectBox
-                                                options={['TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ']}
-                                                style=' '
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-lastname">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Quận/Huyện</p>
-                                        </div>
-                                        <div className="input">
-                                            <SelectBox
-                                                options={['Quận Tân Bình', 'Quận Bình Tân', 'Huyện Củ Chi']}
-                                                style=' '
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-lastname">
-                                        <div className="py-1">
-                                            <p className='uppercase font-bold text-sm'>Phường/Xã</p>
-                                        </div>
-                                        <div className="input">
-                                            <SelectBox
-                                                options={['Phường 1', 'Phường 7', 'Phường 10']}
-                                                style=' '
-                                            />
-                                        </div>
-                                    </div>
+                                    <Input
+                                        inputType='email'
+                                        placeholder='abc@gmail.com'
+                                        label='Email'
+                                    />
+                                    <Input
+                                        inputType='number'
+                                        placeholder='Số điện thoại'
+                                        label='Số điện thoại'
+                                    />
+                                    <Input
+                                        inputType='text'
+                                        value='12/02/2012'
+                                        label='Ngày sinh'
+                                    />
+                                    <SelectBox
+                                        options={['Nam', 'Nữ', 'Khác']}
+                                        style=' '
+                                        label='Giới tính'
+                                    />
+                                    <Input
+                                        inputType='text'
+                                        value='294 Nguyễn Thị Thập'
+                                        label='Địa chỉ'
+                                    />
+                                    <SelectBox
+                                        options={['TP Hồ Chí Minh', 'Hà Nội', 'Cần Thơ']}
+                                        style=' '
+                                        label='Tỉnh/Thành'
+                                    />
+                                    <SelectBox
+                                        options={['Quận Tân Bình', 'Quận Bình Tân', 'Huyện Củ Chi']}
+                                        style=' '
+                                        label='Quận/Huyện'
+                                    />
+                                    <SelectBox
+                                        options={['Phường 1', 'Phường 7', 'Phường 10']}
+                                        style=' '
+                                        label='Phường/Xã'
+                                    />
                                 </div>
                             </div>
                         </div>

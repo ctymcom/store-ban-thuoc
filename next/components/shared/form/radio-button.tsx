@@ -8,10 +8,10 @@ type RaidoButtonProps = FormFieldProps & {
 }
 export function RadioButton({ label, onClick, id, name }: RaidoButtonProps) {
     return <>
-        <div className="radio">
-            <input type='radio' id={id} name={name} className='bg-primary-500 w-6 mr-2' />
+        <div className="radio flex items-center">
+            <input type='radio' id={id} name={name} className='w-4 h-4 text-primary-500 mr-2 form-radio border-gray-400 border-2 focus:outline-none' />
             <label htmlFor={id} className='text-sm'>
-                <i className="w-3 h-3 bg-primary-500 "></i>
+                <i className="bg-primary-500 "></i>
                 {label}
             </label>
         </div>

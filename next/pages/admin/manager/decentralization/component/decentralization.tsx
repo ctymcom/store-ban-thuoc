@@ -20,12 +20,10 @@ export function Decentralization(props) {
                                     <p className='uppercase font-bold text-sm'>Chọn phân quyền</p>
                                 </div>
                                 <div className="grid grid-cols-2 gap-5">
-                                    <div className="input">
-                                        <SelectBox
-                                            options={['Giám đốc CEO', 'Giám đốc CTO']}
-                                            style='py-3'
-                                        />
-                                    </div>
+                                    <SelectBox
+                                        options={['Giám đốc CEO', 'Giám đốc CTO']}
+                                        style='py-3'
+                                    />
                                     <div className='flex'>
                                         <div className="flex  space-x-2 text-sm rounded py-3 px-4 bg-primary-500 mb-3 cursor-pointer text-white hover:bg-primary-400"
                                             onClick={() => { setopenModal(true) }}

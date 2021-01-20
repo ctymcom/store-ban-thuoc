@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Checkbox } from '../../../../../components/shared/form/checkbox';
 import { SelectBox } from '../../../../../components/shared/form/select-box';
-import { IconInfo, IconPlus } from '../../../../../lib/svg';
+import { IconInfor, IconPlus } from '../../../../../lib/svg';
 import { AccountDecentralizationData } from './account-decentralization-data';
 import { ModalAddAccountDecentralization } from './modal-add-account-decentralization';
 
@@ -104,7 +104,7 @@ export function AccountDecentralization(props) {
                                                                                     }} />
                                                                                 <div className="group pt-1 ml-2 w-5 tooltip" >
                                                                                     <i className='text-gray-400'>
-                                                                                        <IconInfo />
+                                                                                        <IconInfor />
                                                                                     </i>
                                                                                     <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
                                                                                         {
