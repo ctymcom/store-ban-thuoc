@@ -28,11 +28,11 @@ export const SidebarData = [
         new: false,
       }, {
         title: "Báo cáo",
-        path: "/",
+        path: "/admin/manager/report",
         new: false,
       }, {
         title: "Lịch sử thao tác",
-        path: "/",
+        path: "/admin/manager/history",
         new: false,
       },
     ],
@@ -66,7 +66,7 @@ export const SidebarData = [
         path: "/",
         new: false,
       }, {
-        title: "Xử lí nghi vấn",
+        title: "Xử lý nghi vấn",
         path: "/",
         new: false,
       },

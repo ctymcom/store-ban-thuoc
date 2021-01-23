@@ -6,7 +6,7 @@ export function Input({ label, name, required, placeholder, inputType = "text", 
     const onChange = (e) => {
         if (props.onChanged) props.onChanged(e.target.value);
     }
-    return <div className="flex flex-col mb-3 space-y-1">
+    return <div className="flex flex-col space-y-1">
         {label && <div className="flex items-center">
             <Label text={label} htmlFor={name} />
             {tooltip && <div className="group pt-1 ml-2 w-5 tooltip" >

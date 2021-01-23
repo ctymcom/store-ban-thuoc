@@ -109,6 +109,21 @@ export function SelectBox({
                 {Show ? (
                     <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
                         <ul>
+                            <li className="">
+                                <Input
+                                    placeholder="Nhập cái cần search"
+                                    onChanged={(value) => {
+                                        console.log("onChanged", value);
+                                        if (props.onSearch) {
+                                            const regex = new RegExp(value, "i");
+                                            props
+                                                .onSearch(value)
+                                                .then((res: any[]) => res.map((r) => r.replace(regex, "<b>$&</b>")))
+                                                .then((res) => setOptions(res));
+                                        }
+                                    }}
+                                />
+                            </li>
                             {(Options as any[]).map((item, index) => {
                                 return (
                                     <li
@@ -116,7 +131,7 @@ export function SelectBox({
                                         className={"p-4 hover:bg-gray-200 " + (SelectIndex == index && "bg-gray-200")}
                                         onClick={() => selectItem(item)}
                                     >
-                                        {item}
+                                        <span dangerouslySetInnerHTML={{ __html: item }}></span>
                                     </li>
                                 );
                             })}

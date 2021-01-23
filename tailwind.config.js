@@ -7,11 +7,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: colors.red,
+        primary: colors.green,
         secondary: colors.yellow,
       },
       textColor: {
-        primary: colors.red,
+        primary: colors.green,
         secondary: colors.yellow,
       }
     },

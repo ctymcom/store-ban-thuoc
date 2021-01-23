@@ -1,3 +1,23 @@
+/* width */
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .line-white::after {
   content: "";
   top: 5px;
@@ -65,10 +85,45 @@
   box-shadow: 0 0 70px 5px rgba(1, 1, 1, 0.5);
 }
 
+h6 {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+h6:before,
+h6:after {
+  content: "";
+  border-top: 2px solid #d6d6d6;
+  margin: 0 20px 0 0;
+  flex: 1 0 20px;
+}
+
+h6:after {
+  margin: 0 0 0 20px;
+}
+
+.container-1 {
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
 .arrow:hover {
   fill: red;
   transform: rotate(0);
   transition: 0.1s;
+}
+
+.img-item .btn-readmore {
+  display: none;
+  transition: 2s;
+}
+
+.img-item:hover .btn-readmore {
+  display: block;
 }
 
 body {
