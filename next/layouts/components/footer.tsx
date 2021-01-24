@@ -1,28 +1,41 @@
 import { useState } from "react";
-import { IconFacebook, IconYoutube } from "../../lib/svg";
+import { IconFacebook } from "../../lib/svg/icon-facebook";
+import { IconYoutube } from "../../lib/svg/icon-youtube";
 
 export function Footer() {
-  const [ShowMore, setShowMore] = useState(false)
+  const [ShowMore, setShowMore] = useState(false);
   return (
     <>
       <footer className=" mt-20 text-white transition">
         <div className=" w-full py-8 bg-gray-700  grid grid-cols-3 container-1">
           <div className="flex flex-col justify-start text-sm w-3/6 ">
             <div className="uppercase text-green-500 py-2">Về khoThuocsi.vn</div>
-            <p className="py-4">Thuocsi.vn được thành lập từ năm 2018, là một trong những startup thành công trong lĩnh vực công nghệ về y tế</p>
-            {
-              ShowMore ? <>
-                <p className="py-4">Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên khắp Việt Nam.</p>
-                <p className="py-4">Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng công nghệ 4.0 vào nền Y Tế</p></>
-                : ''
-            }
-            <p className="text-yellow-400 cursor-pointer" onClick={() => { setShowMore(!ShowMore) }}>
-              {
-                ShowMore ? 'Thu gọn' : 'Tìm hiểu thêm'
-              }
+            <p className="py-4">
+              Thuocsi.vn được thành lập từ năm 2018, là một trong những startup thành công trong
+              lĩnh vực công nghệ về y tế
             </p>
-
-
+            {ShowMore ? (
+              <>
+                <p className="py-4">
+                  Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên
+                  khắp Việt Nam.
+                </p>
+                <p className="py-4">
+                  Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng công
+                  nghệ 4.0 vào nền Y Tế
+                </p>
+              </>
+            ) : (
+              ""
+            )}
+            <p
+              className="text-yellow-400 cursor-pointer"
+              onClick={() => {
+                setShowMore(!ShowMore);
+              }}
+            >
+              {ShowMore ? "Thu gọn" : "Tìm hiểu thêm"}
+            </p>
           </div>
           <div className="flex flex-col justify-start text-sm w-3/6 ">
             <div className="uppercase text-green-500 py-2">Liên kết hữu ích</div>
@@ -41,12 +54,16 @@ export function Footer() {
           <div className="flex flex-col justify-start text-sm">
             <div className="">
               <div className="uppercase text-green-500 py-2">Đăng kí nhận tin mới</div>
-              <div className="text-sm py-2">
-                Hãy đăng kí email để nhận được khuyến mãi
-              </div>
+              <div className="text-sm py-2">Hãy đăng kí email để nhận được khuyến mãi</div>
               <div className="py-4 flex ">
-                <input type="text" className='px-4 py-3 focus:outline-none rounded-l-full' placeholder='Nhập email của bạn' />
-                <div className="uppercase bg-green-500 px-4 flex items-center cursor-pointer rounded-r-full">Đăng kí</div>
+                <input
+                  type="text"
+                  className="px-4 py-3 focus:outline-none rounded-l-full"
+                  placeholder="Nhập email của bạn"
+                />
+                <div className="uppercase bg-green-500 px-4 flex items-center cursor-pointer rounded-r-full">
+                  Đăng kí
+                </div>
               </div>
             </div>
             <div className="">
