@@ -1,4 +1,4 @@
-import "tailwindcss/tailwind.css";
+// import "tailwindcss/tailwind.css";
 import '../next/style/style.scss'
 
 import { AuthProvider } from "../next/providers/auth-provider";

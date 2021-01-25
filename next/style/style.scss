@@ -1,143 +1,146 @@
+@tailwind base;
+@tailwind components;
+
+// @import "../pages/home/styles/home.scss";
+
+@tailwind utilities;
+
 /* width */
 ::-webkit-scrollbar {
-    width: 1px;
+  width: 1px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 
 .line-white::after {
-    content: "";
-    top: 5px;
-    right: 0;
-    position: absolute;
-    width: 1px;
-    height: 32px;
-    background-color: #e8e8e8;
+  content: "";
+  top: 5px;
+  right: 0;
+  position: absolute;
+  width: 1px;
+  height: 32px;
+  background-color: #e8e8e8;
 }
 
 .line-white-user::after {
-    content: "";
-    position: absolute;
-    left: 40%;
-    width: 2px;
-    height: 32px;
-    background-color: #e8e8e8;
+  content: "";
+  position: absolute;
+  left: 40%;
+  width: 2px;
+  height: 32px;
+  background-color: #e8e8e8;
 }
 
 .tooltip {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .tooltip .tooltiptext {
-    visibility: hidden;
+  visibility: hidden;
 
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    top: -5px;
-    left: 105%;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
 }
 
 .tooltip:hover .tooltiptext {
-    visibility: visible;
+  visibility: visible;
 }
 
 .tooltip .tooltiptext::after {
-    content: " ";
-    position: absolute;
-    top: 50%;
-    right: 100%;
-    /* To the left of the tooltip */
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent rgba(243, 244, 246, var(--tw-bg-opacity)) transparent transparent;
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent rgba(243, 244, 246, var(--tw-bg-opacity)) transparent transparent;
 }
 
-
-
 .with-arrow::before {
-    top: -6px;
-    left: 70%;
-    position: absolute;
-    z-index: -1;
-    width: 10px;
-    height: 10px;
-    background-color: inherit;
-    border-color: inherit;
-    border-style: solid;
-    border-width: 0;
-    content: "";
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-    -webkit-box-shadow: inherit;
-    box-shadow: 0 0 70px 5px rgba(1, 1, 1, 0.5);
+  top: -6px;
+  left: 70%;
+  position: absolute;
+  z-index: -1;
+  width: 10px;
+  height: 10px;
+  background-color: inherit;
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+  content: "";
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-box-shadow: inherit;
+  box-shadow: 0 0 70px 5px rgba(1, 1, 1, 0.5);
 }
 
 h6 {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 h6:before,
 h6:after {
-    content: '';
-    border-top: 2px solid rgb(214, 214, 214);
-    margin: 0 20px 0 0;
-    flex: 1 0 20px;
+  content: "";
+  border-top: 2px solid rgb(214, 214, 214);
+  margin: 0 20px 0 0;
+  flex: 1 0 20px;
 }
 
 h6:after {
-    margin: 0 0 0 20px;
+  margin: 0 0 0 20px;
 }
-
 
 .container-1 {
-    width: 100%;
-    padding-left: 10%;
-    padding-right: 10%;
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
-
 .arrow {
-    &:hover {
-        fill: red;
-        transform: rotate(0);
-        transition: 0.1s;
-    }
+  &:hover {
+    fill: red;
+    transform: rotate(0);
+    transition: 0.1s;
+  }
 }
 
 .img-item {
-    .btn-readmore {
-        display: none;
-        transition: 2s;
-    }
+  .btn-readmore {
+    display: none;
+    transition: 2s;
+  }
 }
 
 .img-item:hover {
-    .btn-readmore {
-        display: block;
-    }
+  .btn-readmore {
+    display: block;
+  }
 }
 
 body {
-    background: #f6f6f6;
-    color: #333;
+  background: #f6f6f6;
+  color: #333;
 }
