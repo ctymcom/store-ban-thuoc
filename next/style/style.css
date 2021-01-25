@@ -105,25 +105,38 @@ h6:after {
   margin: 0 0 0 20px;
 }
 
-.container-1 {
-  width: 100%;
-  padding-left: 10%;
-  padding-right: 10%;
+@media (min-width: 1024px) {
+  .container-1 {
+    width: 100%;
+    padding: 0;
+  }
 }
-
+@media (min-width: 640px) {
+  .container-1 {
+    width: 100%;
+    padding: 0;
+  }
+}
 .arrow:hover {
   fill: red;
   transform: rotate(0);
   transition: 0.1s;
 }
 
+.img-item {
+  transition: 2s;
+}
 .img-item .btn-readmore {
   display: none;
   transition: 2s;
 }
 
+.img-item:hover {
+  transition: 2s;
+}
 .img-item:hover .btn-readmore {
   display: block;
+  transition: 2s;
 }
 
 body {
