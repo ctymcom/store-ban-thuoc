@@ -1,11 +1,13 @@
 
 import { useState } from "react";
+import { TablePaginationCustom } from "../../components/shared/table/table-pagination-custom";
 import { DashboardLayout } from "../../layouts/dashboard-layout";
 import { Category } from "./component/category";
 import { ProductListPage } from "./component/product-list";
 
 export function ProductsPage() {
     const [filter, setfilter] = useState([])
+   
     const breadcrumbs = [
         { title: 'Trang chủ', path: '' },
         { title: 'Sản phẩm', path: '' },
@@ -15,6 +17,7 @@ export function ProductsPage() {
             <div className="container-1 flex">
                 <Category onFilter={(e) => { setfilter(e.filter((item) => { return item.status })) }} />
                 <ProductListPage Filter={filter} />
+                
             </div>
         </DashboardLayout>
     </>
