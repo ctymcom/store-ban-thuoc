@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
+    "@brainhubeu/react-carousel": "^1.19.26",
     "@headlessui/react": "^0.2.0",
     "@next/bundle-analyzer": "^10.0.5",
     "ajv": "^6.12.3",
