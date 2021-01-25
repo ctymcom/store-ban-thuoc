@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { IconCart } from "../../lib/svg/icon-cart";
-
+import Link from 'next/link'
 import { IconSearch } from "../../lib/svg/icon-search";
 import { Logo } from "../../lib/svg/logo";
+import { BreadcrumbItem } from "../dashboard-layout";
+import { IconArrowRight } from "../../lib/svg/icon-arrow-right";
 type HeaderProps = {
   [x: string]: any;
+  breadcrumbs?: BreadcrumbItem[];
   activeMenu?: number;
 };
-export function Header({ activeMenu = 0, ...props }: HeaderProps) {
+export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
   const topMenu = ["Tin tức", "Tuyển dụng", "Trở thành nhà bán thuốc"];
   const mainMenu = ["Sản phẩm", "Hoạt chất", "Khuyến mãi", "Tin tức sức khỏe"];
   const [ActiveMenu, setActiveMenu] = useState(activeMenu);
@@ -66,6 +69,21 @@ export function Header({ activeMenu = 0, ...props }: HeaderProps) {
             <b className="text-yellow-200"> 1900 6067 </b> (miễn phí)
           </div>
         </div>
+        {
+          breadcrumbs.length != 0 && <div className="container-1 flex items-center mt-3 py-2">
+            {
+              breadcrumbs.map((item, index, array) => {
+                const actived = index == array.length - 1;
+                return <div className={(actived ? 'text-green-500 font-semibold' : 'text-gray-400') + ' '} key={index}>
+                  <Link href={item.path} >{item.title}</Link>
+                </div>
+              }).reduce((accu, elem, index): any => {
+                return accu === null ? [elem] : [...accu, <IconArrowRight key={(index * 2) + 1} className="w-4 h-4 text-gray-400" />, elem]
+              }, null as any)
+            }
+          </div>
+        }
+
       </div>
     </>
   );

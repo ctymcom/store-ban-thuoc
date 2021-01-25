@@ -1,4 +1,4 @@
-import { Appbar } from "./components/appbar";
+
 import { Footer } from "./components/footer";
 import { HeadSEO } from "./components/head-seo";
 import { Header } from "./components/header";
@@ -21,10 +21,11 @@ export function DashboardLayout({
   activeSubmenu,
   ...props
 }: DashboardProps) {
+  console.log(breadcrumbs)
   return (
     <>
       <HeadSEO title={title}></HeadSEO>
-      <Header />
+      <Header breadcrumbs={breadcrumbs} />
       <div className="w-full min-h-screen">
         {props.children}
       </div>
