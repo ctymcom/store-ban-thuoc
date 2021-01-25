@@ -97,6 +97,7 @@ export function Home() {
                 />
             </div>
             <div className="container-1 py-8">
+
                 <SectionHeader text="Tin mới nhất" />
                 <NewsList />
             </div>

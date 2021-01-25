@@ -110,24 +110,11 @@ h6:after {
 
 
 .container-1 {
-    // width: 100%;
-    // padding-left: 10%;
-    // padding-right: 10%;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
-@media(min-width:1024px) {
-    .container-1 {
-        width: 100%;
-        padding: 0;
-    }
-}
-
-@media(min-width:640px) {
-    .container-1 {
-        width: 100%;
-        padding: 0;
-    }
-}
 
 .arrow {
     &:hover {
@@ -138,8 +125,6 @@ h6:after {
 }
 
 .img-item {
-    transition: 2s;
-
     .btn-readmore {
         display: none;
         transition: 2s;
@@ -147,11 +132,8 @@ h6:after {
 }
 
 .img-item:hover {
-    transition: 2s;
-
     .btn-readmore {
         display: block;
-        transition: 2s;
     }
 }
 
