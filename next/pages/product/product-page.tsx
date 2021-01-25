@@ -1,9 +1,11 @@
 
+import { useState } from "react";
 import { DashboardLayout } from "../../layouts/dashboard-layout";
 import { Category } from "./component/category";
-import { ProductList } from "./component/product-list";
+import { ProductListPage } from "./component/product-list";
 
 export function ProductsPage() {
+    const [filter, setfilter] = useState([])
     const breadcrumbs = [
         { title: 'Trang chủ', path: '' },
         { title: 'Sản phẩm', path: '' },
@@ -11,8 +13,8 @@ export function ProductsPage() {
     return <>
         <DashboardLayout breadcrumbs={breadcrumbs}>
             <div className="container-1 flex">
-                <Category />
-                <ProductList />
+                <Category onFilter={(e) => { setfilter(e.filter((item) => { return item.status })) }} />
+                <ProductListPage Filter={filter} />
             </div>
         </DashboardLayout>
     </>

@@ -4,7 +4,8 @@ import { CategoryData } from "./category-data";
 import { ManufacturerData } from "./manufacturer-data";
 import { HeaderCategory } from "./session-header-category";
 
-export function Category() {
+export function Category(props) {
+    const [filter, setfilter] = useState([]);
     const [CategoryDT, setCategoryDT] = useState(CategoryData);
     const [ManufacturerDT, setManufacturerDT] = useState(ManufacturerData);
     return <>
@@ -17,6 +18,7 @@ export function Category() {
                             onChanged={() => {
                                 item.status = !item.status;
                                 setCategoryDT([...CategoryDT])
+                                props.onFilter(CategoryDT)
                             }} />
                     </div>
                 })
