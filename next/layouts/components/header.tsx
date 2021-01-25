@@ -14,14 +14,14 @@ export function Header({ activeMenu = 0, ...props }: HeaderProps) {
   return (
     <>
       <div className="w-full">
-        <div className="container-1 flex items-center py-2 bg-gray-200 justify-end text-xs">
+        <div className="container-1 flex items-center py-2 bg-gray-200 justify-center text-xs">
           {topMenu.map((m, index) => (
             <p key={index} className="text text-gray-400 cursor-pointer ml-5">
               {m}
             </p>
           ))}
         </div>
-        <div className="container-1 py-6 grid grid-cols-4">
+        <div className="container-1 py-6 grid grid-cols-3">
           <div className="w-16 ">
             <Logo />
           </div>
@@ -37,7 +37,7 @@ export function Header({ activeMenu = 0, ...props }: HeaderProps) {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-end text-gray-500">
+          <div className="col-span-2 py-2 flex items-center justify-start text-gray-500">
             <div className=" px-3 cursor-pointer">Đăng nhập</div>
             <div className="border-l border-gray-300 px-3 flex items-center cursor-pointer">
               <div className="pr-2">Giỏ hàng</div>
@@ -48,7 +48,7 @@ export function Header({ activeMenu = 0, ...props }: HeaderProps) {
           </div>
         </div>
         <div className="container-1 bg-primary-400 text-white flex items-center justify-between">
-          <ul className="flex text-sm">
+          <ul className="flex text-sm md:text-xs">
             {mainMenu.map((m, index) => (
               <li
                 key={index}
