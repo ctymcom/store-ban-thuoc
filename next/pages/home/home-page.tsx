@@ -4,7 +4,7 @@ import { Home } from "./component/home";
 
 export function HomePage() {
     return <>
-        <DashboardLayout>
+        <DashboardLayout breadcrumbs={[]}>
             <Home />
         </DashboardLayout>
     </>

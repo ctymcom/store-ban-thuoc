@@ -98,12 +98,12 @@ export function SelectBox({
           className={
             (Show ? " border-primary-500 " : "  border-gray-300 ") +
             style +
-            " transition min-w-max w-full rounded-lg border p-4 text-sm text-gray-400 relative flex items-center justify-between"
+            " transition min-w-max w-full rounded-lg border p-4 text-sm text-gray-400 relative flex items-center justify-between min-w-min"
           }
           onClick={() => setShow(!Show)}
         >
           {ValueInput != "" ? ValueInput : placeholder != null ? placeholder : options[0]}
-          <div className={"w-5 h-5 transition " + (Show && " transform rotate-180 ")}>
+          <div className={"w-3 h-3 transition " + (Show && " transform rotate-180 ")}>
             <IconArrowDown />
           </div>
         </div>
@@ -124,8 +124,8 @@ export function SelectBox({
             </ul>
           </div>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     </>
   );

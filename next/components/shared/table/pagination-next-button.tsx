@@ -1,7 +1,7 @@
 export function PaginationNextButton({ onClick }) {
   return <li>
     <button
-      className="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
+      className="flex items-center justify-center w-10 h-10 rounded-full border-2 focus:outline-none focus:shadow-outline-purple"
       aria-label="Next"
       onClick={onClick}
     >

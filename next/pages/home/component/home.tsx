@@ -2,8 +2,6 @@ import { IconHandHeart } from "../../../lib/svg/icon-hand-heart";
 import { IconMap } from "../../../lib/svg/icon-map";
 import { IconShip } from "../../../lib/svg/icon-ship";
 import { IconShoppingOnline } from "../../../lib/svg/icon-shopping-online";
-import { NewsData } from "../../../components/shared/news/data/news-data";
-import { ProductData } from "../../../components/shared/product/data/product-data";
 import { HomeData } from "../data/home-data";
 import { Carousel } from "../../../components/shared/carousel";
 import { ProductList } from "../../../components/shared/product/product-list";
@@ -24,19 +22,19 @@ export function Home() {
             </div>
             <div className="container-1 py-8">
                 <SectionHeader text="Sản phẩm bán chạy" />
-                <ProductList />
+                <ProductList limit={5} />
             </div>
             <div className="container-1 py-8">
                 <SectionHeader text="Sản phẩm mới" />
-                <ProductList />
+                <ProductList limit={5} />
             </div>
             <div className="container-1 py-8">
                 <SectionHeader text="Chỉ có tại khothuocsi.vn" />
-                <ProductList />
+                <ProductList limit={5} />
             </div>
             <div className="container-1 py-8">
                 <SectionHeader text="Lựa chọn của bạn" />
-                <ProductList />
+                <ProductList limit={5} />
             </div>
             <div className="container-1 flex py-8">
                 <div className="p-4 flex items-center flex-col">
@@ -97,7 +95,6 @@ export function Home() {
                 />
             </div>
             <div className="container-1 py-8">
-
                 <SectionHeader text="Tin mới nhất" />
                 <NewsList />
             </div>
