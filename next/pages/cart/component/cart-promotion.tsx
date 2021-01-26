@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { ListCartItems } from './list-cart-items';
+import { ListCartItems } from './../component/list-cart-items';
 import { cartItemData, listMoneyCart } from "./cart-item-data";
 import { CartTotalMoney } from '../../../layouts/components/pay-money';
 import { CartPayHeader } from './../../../layouts/components/cart-pay-header';
