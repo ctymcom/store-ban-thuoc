@@ -15,7 +15,7 @@ export function Home() {
                     <img key={index} src={image} alt="" />
                 ))}
             </Carousel>
-            <div className="container-1 grid grid-cols-3 gap-3 py-12">
+            <div className="container-1 flex relative overflow-auto md:grid md:grid-cols-3 gap-3 py-12">
                 {HomeData.bannerImages.map((image, index) => (
                     <img key={index} src={image} alt="" />
                 ))}
@@ -36,21 +36,21 @@ export function Home() {
                 <SectionHeader text="Lựa chọn của bạn" />
                 <ProductList limit={5} />
             </div>
-            <div className="container-1 flex py-8">
-                <div className="p-4 flex items-center flex-col">
-                    <div className="w-16">
+            <div className="container-1 py-8 grid grid-cols-2 lg:grid-cols-4 lg:divide-x-2">
+                <div className="p-4 flex items-center flex-col ">
+                    <div className="w-16 h-16">
                         <IconShip />
                     </div>
                     <div className="uppercase py-4 text-green-400">Miễn phí giao vận</div>
                     <div className="descrip">
                         <p className="text-center">
                             Miễn phí vận chuyển cho các đơn hàng trên 300,000VNĐ và nhận hàng nhanh chóng.
-            </p>
+                         </p>
                     </div>
                 </div>
-                <div className="border-l"></div>
-                <div className="p-4 flex items-center flex-col">
-                    <div className="w-16">
+
+                <div className="p-4 flex items-center flex-col border-l-2">
+                    <div className="w-16 h-16">
                         <IconHandHeart />
                     </div>
                     <div className="uppercase py-4 text-green-400">TẬN TÂM PHỤC VỤ</div>
@@ -58,12 +58,12 @@ export function Home() {
                         <p className="text-center">
                             Dịch vụ chăm sóc khách hàng chuyên nghiệp luôn sẵn sàng giải đáp mọi thắc mắc của bạn.
                             Hotline miễn phí: 1800 6821
-            </p>
+                         </p>
                     </div>
                 </div>
-                <div className="border-l"></div>
-                <div className="p-4 flex items-center flex-col">
-                    <div className="w-16">
+
+                <div className="p-4 flex items-center flex-col ">
+                    <div className="w-16 h-16">
                         <IconMap />
                     </div>
                     <div className="uppercase py-4 text-green-400">CỬA HÀNG GẦN BẠN</div>
@@ -71,20 +71,20 @@ export function Home() {
                         <p className="text-center">
                             Pharmacity đang mở rộng hệ thống cửa hàng gần bạn để chăm sóc bạn tốt hơn. Hãy ghé
                             thăm và trải nghiệm nhé!
-            </p>
+                        </p>
                     </div>
                 </div>
-                <div className="border-l"></div>
-                <div className="p-4 flex items-center flex-col">
-                    <div className="w-20">
+
+                <div className="p-4 flex items-center flex-col border-l-2">
+                    <div className="w-16 h-16">
                         <IconShoppingOnline />
                     </div>
-                    <div className="uppercase py-4 text-green-400">MUA HÀNG TRỰC TUYẾN</div>
+                    <div className="uppercase py-4  text-green-400">MUA HÀNG TRỰC TUYẾN</div>
                     <div className="descrip">
                         <p className="text-center">
                             Giá bán trên trang chỉ áp dụng khi mua sắm trên trang thương mại điện tử của
                             Pharmacity.
-            </p>
+                        </p>
                     </div>
                 </div>
             </div>

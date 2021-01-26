@@ -13,33 +13,69 @@ type HeaderProductListProps = {
 }
 
 export function HeaderProductList({ Filter, ...props }: HeaderProductListProps) {
-    const [filter, setfilter] = useState([])
-    useEffect(() => {
-        setfilter(Filter)
-    });
+    const [filter, setfilter] = useState([{
+        title: 'Tất cả sản phẩm',
+        count: 423,
+        status: true,
+    },
+    {
+        title: 'Cơ xương khớp',
+        count: 85,
+        status: true,
+    },
+    {
+        title: 'Da liễu',
+        count: 486,
+        status: true,
+    },])
+    // useEffect(() => {
+    //     setfilter(Filter)
+    // });
     console.log(filter)
-    return <div className="flex justify-between">
-        <div className="flex items-center space-x-2">
-            <p className="text-xl">Bộ lọc: </p>
-            <div className="flex space-x-3">
-                {
-                    Filter.map((item, index) => {
-                        return <div className="flex items-center space-x-2 bg-primary-100 px-2 rounded-sm" key={index}>
-                            <p className="">{item.title}</p>
-                            <div className="w-3 cursor-pointer"
-                                onClick={() => {
-                                    filter.splice(index, 1)
-                                    setfilter([...filter])
-                                }}>
-                                <IconClose /></div>
-                        </div>
-                    })
-                }
+    return <>
+        <div className="flex justify-between border-t-2 border-b-2 py-2 lg:border-t-0 lg:border-b-0">
+            <div className="">
+                <div className="flex items-center space-x-2">
+                    <p className="text-xl">Danh mục: </p>
+                    <div className="flex space-x-3">
+                        {
+                            filter.map((item, index) => {
+                                return <div className="flex items-center space-x-2 bg-primary-100 px-2 rounded-sm" key={index}>
+                                    <p className="">{item.title}</p>
+                                    <div className="w-3 cursor-pointer"
+                                        onClick={() => {
+                                            filter.splice(index, 1)
+                                            setfilter([...filter])
+                                        }}>
+                                        <IconClose /></div>
+                                </div>
+                            })
+                        }
+                    </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                    <p className="text-xl">Nhà sản xuất: </p>
+                    <div className="flex space-x-3">
+                        {
+                            filter.map((item, index) => {
+                                return <div className="flex items-center space-x-2 bg-primary-100 px-2 rounded-sm" key={index}>
+                                    <p className="">{item.title}</p>
+                                    <div className="w-3 cursor-pointer"
+                                        onClick={() => {
+                                            filter.splice(index, 1)
+                                            setfilter([...filter])
+                                        }}>
+                                        <IconClose /></div>
+                                </div>
+                            })
+                        }
+                    </div>
+                </div>
+            </div>
+            <div className="hidden  lg:flex justify-between space-x-2">
+                <p className="text-xl">Sắp xếp:</p>
+                <SelectBox style=' py-2 w-16 ' options={['Mới nhất', 'Rẻ nhất']} />
             </div>
         </div>
-        <div className="flex justify-between space-x-2">
-            <p className="text-xl">Sắp xếp:</p>
-            <SelectBox style=' py-2 w-16 ' options={['Mới nhất', 'Rẻ nhất']} />
-        </div>
-    </div>
+    </>
 }

@@ -2,17 +2,17 @@ export const CategoryData = [
     {
         title: 'Tất cả sản phẩm',
         count: 423,
-        status: false,
+        status: true,
     },
     {
         title: 'Cơ xương khớp',
         count: 85,
-        status: false,
+        status: true,
     },
     {
         title: 'Da liễu',
         count: 486,
-        status: false,
+        status: true,
     },
     {
         title: 'Dầu xoa, cao xoa',

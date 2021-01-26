@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ProductList } from "../../../components/shared/product/product-list";
+import { ProductList } from "./product-list-page";
 import { TablePaginationCustom } from "../../../components/shared/table/table-pagination-custom";
 import { HeaderProductList } from "./session-header-product-list";
 
