@@ -1,29 +1,18 @@
-import { useState } from "react";
-import { ProductList } from "./product-list-page";
-import { TablePaginationCustom } from "../../../components/shared/table/table-pagination-custom";
-import { HeaderProductList } from "./session-header-product-list";
+import { ProductData } from "../../../components/shared/product/data/product-data";
+import { ProductCard } from "../../../components/shared/product/product-card";
 
+type ProductListProps = {
+  [x: string]: any;
+  limit?: number;
 
-export function ProductListPage(props) {
-    const { Filter } = props
-    const [filter, setfilter] = useState(Filter)
-    const [pagination, setpagination] = useState({
-        limit: 15,
-        total: 100,
-        page: 1,
-        offset: 2
-    })
-    console.log(filter)
-    return <div className=" w-full px-5 py-5">
-        < HeaderProductList Filter={Filter} />
-        <ProductList limit={pagination.limit} />
-        <TablePaginationCustom
-            pagination={pagination}
-            onPageChanged={(e) => {
-                var temp = { ...pagination }
-                temp.page = e
-                setpagination(temp)
-            }}
-        />
-    </div >
+}
+export function ProductList({ limit, ...props }) {
+  console.log(limit)
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  gap-5 py-8">
+      {ProductData.map((item, index) => {
+        if (index < limit) return <ProductCard key={index} {...item} />
+      })}
+    </div>
+  );
 }

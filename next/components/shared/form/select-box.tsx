@@ -98,7 +98,7 @@ export function SelectBox({
           className={
             (Show ? " border-primary-500 " : "  border-gray-300 ") +
             style +
-            " transition min-w-max w-full rounded-lg border p-4 text-sm text-gray-400 relative flex items-center justify-between min-w-min"
+            " transition w-full rounded-lg border p-4 text-sm text-gray-400 relative flex items-center justify-between min-w-min"
           }
           onClick={() => setShow(!Show)}
         >

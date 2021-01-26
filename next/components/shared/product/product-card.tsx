@@ -35,10 +35,10 @@ export function ProductCard({ img: image, type, name, price, sale, ...props }: P
           </div>
           <div className="w-full">
             <div className="flex flex-col lg:flex-row lg:space-x-2 lg:space-y-0 space-y-2 items-center py-2">
-              <div className="w-full cursor-pointer text-center text-sm px-3 py-1 border border-green-400 rounded text-green-400">
+              <div className="w-full cursor-pointer text-center text-sm px-3 py-2 border border-green-400 rounded text-green-400">
                 Thêm vào giỏ
               </div>
-              <div className="w-full cursor-pointer text-center text-sm px-3 py-1 border border-green-400  rounded text-white bg-green-400">
+              <div className="w-full cursor-pointer text-center text-sm px-3 py-2 border border-green-400  rounded text-white bg-green-400">
                 Mua ngay
               </div>
             </div>
