@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { IconCart } from "../../lib/svg/icon-cart";
-import Link from 'next/link'
+import Link from "next/link";
 import { IconSearch } from "../../lib/svg/icon-search";
 import { Logo } from "../../lib/svg/logo";
 import { BreadcrumbItem } from "../dashboard-layout";
 import { IconArrowRight } from "../../lib/svg/icon-arrow-right";
 import { IconMenu } from "../../lib/svg/icon-menu";
 import { IconClose } from "../../lib/svg/icon-close";
+import { Transition } from "@headlessui/react";
 type HeaderProps = {
   [x: string]: any;
   breadcrumbs?: BreadcrumbItem[];
@@ -15,7 +16,14 @@ type HeaderProps = {
 export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
   const topMenu = ["Tin tức", "Tuyển dụng", "Trở thành nhà bán thuốc"];
   const mainMenu = ["Sản phẩm", "Hoạt chất", "Khuyến mãi", "Tin tức sức khỏe"];
-  const NavMenu = ["Sản phẩm", "Hoạt chất", "Khuyến mãi", "Tin tức sức khỏe", 'Tuyển dụng', 'Tài khoản'];
+  const NavMenu = [
+    "Sản phẩm",
+    "Hoạt chất",
+    "Khuyến mãi",
+    "Tin tức sức khỏe",
+    "Tuyển dụng",
+    "Tài khoản",
+  ];
   const [ActiveMenu, setActiveMenu] = useState(activeMenu);
   const [showNavMenu, setshowNavMenu] = useState(false);
   return (
@@ -74,28 +82,45 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
             <b className="text-yellow-200"> 1900 6067 </b> (miễn phí)
           </div>
         </div>
-        {
-          breadcrumbs.length != 0 && <div className="container-1 flex items-center mt-3 py-2">
-            {
-              breadcrumbs.map((item, index, array) => {
+        {breadcrumbs.length != 0 && (
+          <div className="container-1 flex items-center mt-3 py-2">
+            {breadcrumbs
+              .map((item, index, array) => {
                 const actived = index == array.length - 1;
-                return <div className={(actived ? 'text-green-500 font-semibold' : 'text-gray-400') + ' '} key={index}>
-                  <Link href={item.path} >{item.title}</Link>
-                </div>
-              }).reduce((accu, elem, index): any => {
-                return accu === null ? [elem] : [...accu, <IconArrowRight key={(index * 2) + 1} className="w-4 h-4 text-gray-400" />, elem]
-              }, null as any)
-            }
+                return (
+                  <div
+                    className={(actived ? "text-green-500 font-semibold" : "text-gray-400") + " "}
+                    key={index}
+                  >
+                    <Link href={item.path}>{item.title}</Link>
+                  </div>
+                );
+              })
+              .reduce((accu, elem, index): any => {
+                return accu === null
+                  ? [elem]
+                  : [
+                      ...accu,
+                      <IconArrowRight key={index * 2 + 1} className="w-4 h-4 text-gray-400" />,
+                      elem,
+                    ];
+              }, null as any)}
           </div>
-        }
+        )}
       </div>
       {/* do header có nhiều thay đổi so với desktop nên em tạo thêm 1 cái mới luôn ạ */}
 
-      <div className="md:hidden w-full flex justify-between  items-center px-4 py-4" >
+      <div className="md:hidden w-full flex justify-between  items-center px-4 py-4">
         <div className="text-primary-500">
-          <div className="w-6 " onClick={() => { setshowNavMenu(true) }}>
+          <div
+            className="w-6 "
+            onClick={() => {
+              setshowNavMenu(true);
+            }}
+          >
             <IconMenu />
-          </div></div>
+          </div>
+        </div>
         <div className="">
           <div className="w-16 ">
             <Logo />
@@ -110,11 +135,34 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
           </div>
         </div>
       </div>
-      <div className={"transition duration-700 min-h-screen h-full w-full fixed top-0 z-50  " + (showNavMenu ? " flex translate-x-4" : "hidden")}>
-        <div className=" w-4/6 bg-white">
+      {/* <Transition
+        className="transition-all duration-700"
+        show={showNavMenu}
+        enterFrom="translate-x-4"
+        enterTo="opacity-100"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+                > */}
+      <div
+        className={
+          "transition-opacity duration-1000 min-h-screen h-full w-full fixed top-0 z-50 bg-black bg-opacity-25 flex " +
+          (showNavMenu ? "opacity-100" : "invisible opacity-0")
+        }
+      >
+        <div
+          className={
+            "w-4/6 bg-white transition-all duration-1000 transform " +
+            (showNavMenu ? "translate-x-0" : "-translate-x-full")
+          }
+        >
           <div className="py-5 px-5 h-32 bg-primary-500 text-white flex items-center relative">
             <p className="text-lg">Đăng nhập</p>
-            <div className="w-4 absolute top-5 right-5" onClick={() => { setshowNavMenu(false) }}>
+            <div
+              className="w-4 absolute top-5 right-5"
+              onClick={() => {
+                setshowNavMenu(false);
+              }}
+            >
               <IconClose />
             </div>
           </div>
@@ -129,12 +177,16 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
                     }
                   >
                     <p className="">{item}</p>
-                    <div className="w-5 text-gray-200"><IconArrowRight /></div>
+                    <div className="w-5 text-gray-200">
+                      <IconArrowRight />
+                    </div>
                   </li>
                 ))}
               </ul>
               <div className="p-5">
-                <div className="px-4 py-3 text-center rounded-full text-sm text-white bg-primary-500">Trở thành nhà cung cấp</div>
+                <div className="px-4 py-3 text-center rounded-full text-sm text-white bg-primary-500">
+                  Trở thành nhà cung cấp
+                </div>
               </div>
             </div>
             <div className="p-5">
@@ -144,9 +196,9 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
             </div>
           </div>
         </div>
-        <div className="w-2/6 bg-black opacity-25"></div>
+        <div className="w-2/6 "></div>
       </div>
-
+      {/* </Transition> */}
     </>
   );
 }
