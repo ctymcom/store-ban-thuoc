@@ -28,8 +28,8 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
   const [showNavMenu, setshowNavMenu] = useState(false);
   return (
     <>
-      <div className="w-full hidden md:block">
-        <div className="hidden container-1 md:flex items-center py-2 bg-gray-200 justify-end text-xs">
+      <div className="w-full hidden lg:block">
+        <div className="hidden container-1 lg:flex items-center py-2 bg-gray-200 justify-end text-xs">
           {topMenu.map((m, index) => (
             <p key={index} className="text text-gray-400 cursor-pointer ml-5">
               {m}
@@ -41,7 +41,7 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
           <div className="w-16 ">
             <Logo />
           </div>
-          <div className="hidden search col-span-2 md:flex items-center w-full">
+          <div className="hidden search col-span-2 lg:flex items-center w-full">
             <div className="relative flex items-center w-full">
               <input
                 type="text"
@@ -53,7 +53,7 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
               </div>
             </div>
           </div>
-          <div className="hidden md:flex items-center justify-end text-gray-500">
+          <div className="hidden lg:flex items-center justify-end text-gray-500">
             <div className=" px-3 cursor-pointer">Đăng nhập</div>
             <div className="border-l border-gray-300 px-3 flex items-center cursor-pointer">
               <div className="pr-2">Giỏ hàng</div>
@@ -82,42 +82,11 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
             <b className="text-yellow-200"> 1900 6067 </b> (miễn phí)
           </div>
         </div>
-        {breadcrumbs.length != 0 && (
-          <div className="container-1 flex items-center mt-3 py-2">
-            {breadcrumbs
-              .map((item, index, array) => {
-                const actived = index == array.length - 1;
-                return (
-                  <div
-                    className={(actived ? "text-green-500 font-semibold" : "text-gray-400") + " "}
-                    key={index}
-                  >
-                    <Link href={item.path}>{item.title}</Link>
-                  </div>
-                );
-              })
-              .reduce((accu, elem, index): any => {
-                return accu === null
-                  ? [elem]
-                  : [
-<<<<<<< Updated upstream
-                      ...accu,
-                      <IconArrowRight key={index * 2 + 1} className="w-4 h-4 text-gray-400" />,
-                      elem,
-                    ];
-=======
-                    ...accu,
-                    <IconArrowRight key={index * 2 + 1} className="w-4 h-4 text-gray-400" />,
-                    elem,
-                  ];
->>>>>>> Stashed changes
-              }, null as any)}
-          </div>
-        )}
       </div>
+
       {/* do header có nhiều thay đổi so với desktop nên em tạo thêm 1 cái mới luôn ạ */}
 
-      <div className="md:hidden w-full flex justify-between  items-center px-4 py-4">
+      <div className="lg:hidden w-full flex justify-between  items-center px-4 py-4">
         <div className="text-primary-500">
           <div
             className="w-6 "
@@ -153,11 +122,7 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
       <div
         className={
           "transition-opacity duration-1000 min-h-screen h-full w-full fixed top-0 z-50 bg-black bg-opacity-25 flex " +
-<<<<<<< Updated upstream
-          (showNavMenu ? "opacity-100" : "invisible opacity-0")
-=======
           (showNavMenu ? "opacity-100" : "invisible")
->>>>>>> Stashed changes
         }
       >
         <div
@@ -207,15 +172,36 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
             </div>
           </div>
         </div>
-<<<<<<< Updated upstream
-        <div className="w-2/6 "></div>
-=======
         <div className="w-2/6 " onClick={() => {
           setshowNavMenu(false);
         }}></div>
->>>>>>> Stashed changes
       </div>
       {/* </Transition> */}
+      {breadcrumbs.length != 0 && (
+        <div className="container-1 flex items-center mt-3 py-2">
+          {breadcrumbs
+            .map((item, index, array) => {
+              const actived = index == array.length - 1;
+              return (
+                <div
+                  className={(actived ? "text-green-500 font-semibold" : "text-gray-400") + " "}
+                  key={index}
+                >
+                  <Link href={item.path}>{item.title}</Link>
+                </div>
+              );
+            })
+            .reduce((accu, elem, index): any => {
+              return accu === null
+                ? [elem]
+                : [
+                  ...accu,
+                  <IconArrowRight key={index * 2 + 1} className="w-4 h-4 text-gray-400" />,
+                  elem,
+                ];
+            }, null as any)}
+        </div>
+      )}
     </>
   );
 }

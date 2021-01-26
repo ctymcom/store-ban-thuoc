@@ -6,7 +6,7 @@ type NewsCardProps = {
     onClick?: () => void;
 }
 export function NewsCard({ img, title, description, ...props }: NewsCardProps) {
-    return <div className="flex items-center flex-col cursor-pointer hover:shadow">
+    return <div className="Product flex items-center flex-col cursor-pointer hover:shadow">
         <div className="img">
             <img src={img} alt="" className="w-full h-auto" />
         </div>

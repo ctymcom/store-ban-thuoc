@@ -9,7 +9,7 @@ export function Category(props) {
     const [CategoryDT, setCategoryDT] = useState(CategoryData);
     const [ManufacturerDT, setManufacturerDT] = useState(ManufacturerData);
     return <>
-        <div className="inset-0 top-14 overflow-auto z-40 w-72 px-2 py-5">
+        <div className="hidden inset-0 top-14 overflow-auto z-40 w-72 px-2 py-5">
             <HeaderCategory title='Danh mục' />
             {
                 CategoryDT.map((item, index) => {
