@@ -100,10 +100,17 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
                 return accu === null
                   ? [elem]
                   : [
+<<<<<<< Updated upstream
                       ...accu,
                       <IconArrowRight key={index * 2 + 1} className="w-4 h-4 text-gray-400" />,
                       elem,
                     ];
+=======
+                    ...accu,
+                    <IconArrowRight key={index * 2 + 1} className="w-4 h-4 text-gray-400" />,
+                    elem,
+                  ];
+>>>>>>> Stashed changes
               }, null as any)}
           </div>
         )}
@@ -146,7 +153,11 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
       <div
         className={
           "transition-opacity duration-1000 min-h-screen h-full w-full fixed top-0 z-50 bg-black bg-opacity-25 flex " +
+<<<<<<< Updated upstream
           (showNavMenu ? "opacity-100" : "invisible opacity-0")
+=======
+          (showNavMenu ? "opacity-100" : "invisible")
+>>>>>>> Stashed changes
         }
       >
         <div
@@ -196,7 +207,13 @@ export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
             </div>
           </div>
         </div>
+<<<<<<< Updated upstream
         <div className="w-2/6 "></div>
+=======
+        <div className="w-2/6 " onClick={() => {
+          setshowNavMenu(false);
+        }}></div>
+>>>>>>> Stashed changes
       </div>
       {/* </Transition> */}
     </>

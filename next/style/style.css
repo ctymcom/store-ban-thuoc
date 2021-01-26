@@ -126,6 +126,11 @@ h6:after {
   display: block;
 }
 
+@media (max-width: 768px) {
+  .Product {
+    min-width: 300px;
+  }
+}
 body {
   background: #f6f6f6;
   color: #333;
