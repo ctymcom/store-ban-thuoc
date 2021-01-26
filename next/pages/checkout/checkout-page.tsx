@@ -3,6 +3,8 @@ import { CheckOut } from './component/checkout';
 
 export default function CheckOutPage() {
     return <>
-        <CheckOut />
+        <DashboardLayout>
+            <CheckOut />
+        </DashboardLayout>
     </>
 }
