@@ -2,8 +2,6 @@ import { FormCheck } from './form-check';
 import { listFormCheckTrans, listFormCheckOUT, listFormCheckPayment, listMoneyCheckout } from './form-check-data';
 import { CartTotalMoney } from '../../../layouts/components/pay-money';
 import { CartPayHeader } from './../../../layouts/components/cart-pay-header';
-import { forEach } from 'lodash';
-
 
 export function CheckOut() {
     const totalMonney = (listMoney) => {
