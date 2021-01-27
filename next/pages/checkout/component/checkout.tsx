@@ -2,6 +2,8 @@ import { FormCheck } from './form-check';
 import { listFormCheckTrans, listFormCheckOUT, listFormCheckPayment, listMoneyCheckout } from './form-check-data';
 import { CartTotalMoney } from '../../../layouts/components/pay-money';
 import { CartPayHeader } from './../../../layouts/components/cart-pay-header';
+import { FormatMoney } from '../../../components/shared/currency/money';
+import { useRouter } from 'next/router';
 
 export function CheckOut() {
     const totalMonney = (listMoney) => {
@@ -11,6 +13,7 @@ export function CheckOut() {
         });
         return total;
     }
+    const router = useRouter()
     return <>
         <CartPayHeader title="pay" />
         <div className="w-10/12 m-auto flex justify-between">
@@ -39,15 +42,14 @@ export function CheckOut() {
                 </div>
                 <div className="flex justify-between pt-2">
                     <p>Thành tiền</p>
-                    <p className="font-bold text-primary-500">{totalMonney(listMoneyCheckout)} VND</p>
+                    <p className="font-bold text-primary-500"><FormatMoney money={totalMonney(listMoneyCheckout)} tS='.' /> VND</p>
                 </div>
             </div>
         </div>
         <div className="w-10/12 m-auto flex justify-between">
             <div></div>
-            <button className="w-1/4 ml-10 border border-gray-300 rounded p-2 mt-2 bg-primary-500 text-white">
-                <a href="/complete">Đặt mua</a>
-            </button>
+            <button onClick={() => router.push('/complete')}
+                className="w-1/4 ml-10 border border-gray-300 rounded p-2 mt-2 bg-primary-500 text-white">Xác nhận đặt hàng</button>
         </div>
         <div className="w-10/12 m-auto flex justify-between">
             <div></div>

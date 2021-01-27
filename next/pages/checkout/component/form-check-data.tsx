@@ -9,15 +9,15 @@ const listTrans = [
     }
 ]
 export const listFormCheckTrans = {
-    tit:"Phương thức vận chuyển",
+    tit: "Phương thức vận chuyển",
     listTrans
 }
 export const listFormCheckOUT = {
-    tit:"Chọn Nhà vận chuyển",
+    tit: "Chọn Nhà vận chuyển",
     listTrans
 }
 export const listFormCheckPayment = {
-    tit:"Phương thức thanh toán",
+    tit: "Phương thức thanh toán",
     listTrans
 }
 export const listMoneyCheckout = [
@@ -30,12 +30,12 @@ export const listMoneyCheckout = [
         money: 100000
     },
     {
-        title: "Voucher giảm gía",
+        title: "Voucher giảm giá",
         money: -200000
     },
     {
         title: "Voucher vận chuyển",
         money: -50000
     },
-    
+
 ]
