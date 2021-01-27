@@ -3,10 +3,12 @@ import { ListCartItems } from './../component/list-cart-items';
 import { cartItemData, listMoneyCart } from "./cart-item-data";
 import { CartTotalMoney } from '../../../layouts/components/pay-money';
 import { CartPayHeader } from './../../../layouts/components/cart-pay-header';
+import { useRouter } from 'next/router';
 
 export function CartPayPromotion(props) {
     const [listCart, setListCart] = useState(cartItemData);
     const [Tit, setTit] = useState('cart');
+    const router = useRouter();
     return <div className="w-10/12 mx-auto">
         <div>
             <CartPayHeader title={Tit} />
@@ -37,7 +39,8 @@ export function CartPayPromotion(props) {
                 </div>
                 <div id="cart__Pay__TotalMoney" className="mt-10">
                     <CartTotalMoney listMoney={listMoneyCart} />
-                    <button className="border border-gray-300 rounded w-full p-2 mt-2 bg-primary-500 text-white" ><a href="/checkout">Tiến hành thanh toán</a></button>
+                    <button className="border border-gray-300 rounded w-full p-2 mt-2 bg-primary-500 text-white"
+                        onClick={() => router.push('/checkout')}>Tiến hành thanh toán</button>
                 </div>
             </div>
         </div>
@@ -47,5 +50,5 @@ export function CartPayPromotion(props) {
             </svg>
             <p>Tiếp tục xem sản phẩm</p>
         </div>
-    </div>
+    </div >
 } 
