@@ -1,8 +1,7 @@
-import { OderHistoryDetail } from "./oder-history-detail";
-import { ProfileUser } from "./profile-user";
+import { ProfileUser } from '../../oder-history/component/profile-user';
 
-export function OderHistory () {
-    return  <>
+export function WaitConfirmOrder () {
+    return <>
         <div className="container-1 h-auto">
             <div className="grid grid-rows-1">
                 <div className="oder-account w-full flex justify-between my-28">
@@ -10,16 +9,10 @@ export function OderHistory () {
                         <ProfileUser/>
                     </div>
                     <div className="oder-history w-3/5">
-                        <OderHistoryDetail/>
+                        <p className="waiting-confrim-order">Không có đơn hàng nào</p>
                     </div>
-                </div>
-                
-                
+                </div> 
             </div>
         </div>
-            
-
-
-
     </>;
 }

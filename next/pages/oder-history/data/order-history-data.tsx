@@ -1,9 +1,9 @@
 import moment from 'moment-timezone';
 
-export const OderHistoryData = [
+export const OrderHistoryData = [
     {
         id_oder: 'SDF13Z5A65',
-        delivery_time: Date(),
+        delivery_time: moment().tz("Asia/Ho_Chi_Minh").subtract(5, 'days').format("DD-MM"),
         intend_time: moment().tz("Asia/Ho_Chi_Minh").format("DD-MM-YYYY"),
         total_product: 3,
         total_price: '1.203.000',
