@@ -3,7 +3,6 @@ import { listFormCheckTrans, listFormCheckOUT, listFormCheckPayment, listMoneyCh
 import { CartTotalMoney } from '../../../layouts/components/pay-money';
 import { CartPayHeader } from './../../../layouts/components/cart-pay-header';
 
-
 export function CheckOut() {
     const totalMonney = (listMoney) => {
         let total = 0;
