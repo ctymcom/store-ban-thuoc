@@ -1,10 +1,9 @@
 import { DashboardLayout } from "../../layouts/dashboard-layout";
-import { OderHistory } from './component/oder-history';
-
-export function OderHistoryPage() {
+import { OrderHistory } from './component/order-history';
+export function OrderHistoryPage() {
     return <>
         <DashboardLayout>
-            <OderHistory/>
+            <OrderHistory/>
         </DashboardLayout>
     </>   
 }
