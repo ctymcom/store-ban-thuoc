@@ -15,12 +15,13 @@ export function ProductInfo(props) {
                 {props.product.description_2}
             </p>
             <p className="product__name w-32 h-10 flex justify-between items-center border px-2 border-success mb-6 rounded-sm">
-                <img className="object-cover" src="../../../../../assets/images/-.png" alt=""/>
+                <button className="minus text-xl">-</button>
                     01
-                <img className="object-cover" src="../../../../../assets/images/+.png" alt=""/>
+                <button className="plus text-xl">+</button>
+
             </p>
             <div className="btn-group">
-                <button className="bg-btn-yellow text-white px-4 py-2 mr-6">Thêm vào giỏ</button>
+                <button className="bg-btn-warning text-white px-4 py-2 mr-6">Thêm vào giỏ</button>
                 <button className="bg-btn-green text-white px-4 py-2">Thêm vào giỏ</button>
             </div>
     </>;

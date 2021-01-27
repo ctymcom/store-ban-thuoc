@@ -14,12 +14,12 @@ export function CheckOut() {
     return <>
         <CartPayHeader title="pay" />
         <div className="w-10/12 m-auto flex justify-between">
-            <div>
+            <div className="w-3/4">
                 <FormCheck title={listFormCheckTrans.tit} checkList={listFormCheckTrans.listTrans} />
                 <FormCheck title={listFormCheckOUT.tit} checkList={listFormCheckOUT.listTrans} />
                 <FormCheck title={listFormCheckPayment.tit} checkList={listFormCheckPayment.listTrans} />
             </div>
-            <div>
+            <div className="w-1/4 ml-10">
                 <div className="mb-12">
                     <div className="flex justify-between items-center border-b-2 mt-4 pb-2">
                         <div className="flex items-center">
@@ -41,6 +41,18 @@ export function CheckOut() {
                     <p>Thành tiền</p>
                     <p className="font-bold text-primary-500">{totalMonney(listMoneyCheckout)} VND</p>
                 </div>
+            </div>
+        </div>
+        <div className="w-10/12 m-auto flex justify-between">
+            <div></div>
+            <button className="w-1/4 ml-10 border border-gray-300 rounded p-2 mt-2 bg-primary-500 text-white">
+                <a href="/complete">Đặt mua</a>
+            </button>
+        </div>
+        <div className="w-10/12 m-auto flex justify-between">
+            <div></div>
+            <div>
+                <p className="text-xs p-2">(Xin vui lòng kiểm tra lại đơn hàng trước khi mua)</p>
             </div>
         </div>
     </>
