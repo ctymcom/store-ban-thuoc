@@ -37,7 +37,7 @@ export function CartPayPromotion(props) {
                 </div>
                 <div id="cart__Pay__TotalMoney" className="mt-10">
                     <CartTotalMoney listMoney={listMoneyCart} />
-                    <button className="border border-gray-300 rounded w-full p-2 mt-2 bg-primary-500 text-white" >Tiến hành thanh toán</button>
+                    <button className="border border-gray-300 rounded w-full p-2 mt-2 bg-primary-500 text-white" ><a href="/checkout">Tiến hành thanh toán</a></button>
                 </div>
             </div>
         </div>
