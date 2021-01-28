@@ -1,6 +1,7 @@
-import { ProfileUser } from '../../oder-history/component/profile-user';
+import { ProfileUser } from '../../../order-history/component/profile-user';
+import { DeliveredOrderDetail } from './delivered-order-detail';
 
-export function WaitConfirmOrder () {
+export function DeliveredOrder () {
     return <>
         <div className="container-1 h-auto">
             <div className="grid grid-rows-1">
@@ -9,7 +10,7 @@ export function WaitConfirmOrder () {
                         <ProfileUser/>
                     </div>
                     <div className="oder-history w-3/5">
-                        <p className="waiting-confrim-order">Không có đơn hàng nào</p>
+                        <DeliveredOrderDetail/>
                     </div>
                 </div> 
             </div>

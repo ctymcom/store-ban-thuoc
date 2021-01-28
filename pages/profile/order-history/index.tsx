@@ -1,4 +1,4 @@
-import { OrderHistoryPage } from "../../next/pages/oder-history/order-history";
+import { OrderHistoryPage } from "../../../next/pages/order-history/order-history";
 
 export default function OrderHistory() {
     return <>

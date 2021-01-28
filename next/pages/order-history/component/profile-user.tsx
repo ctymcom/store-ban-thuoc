@@ -1,4 +1,4 @@
-
+import Link from 'next/link';
 
 export function ProfileUser() {
     return (
@@ -21,9 +21,12 @@ export function ProfileUser() {
                         alt=""
                         className="user__info-icon w-5 h-5 mr-3"
                     />
-                    <a href="./profile-user" className="user__info-link uppercase font-semibold text-sm">
-                        Tài khoản của tôi
-                    </a>
+                    <Link href="/profile/profile-user">
+                        <a className="user__info-link uppercase font-semibold text-sm">
+                            Tài khoản của tôi
+                        </a>
+                    </Link>
+                    
                 </li>
                 <li className="user__info-item flex my-4">
                     <img
@@ -31,9 +34,12 @@ export function ProfileUser() {
                         alt=""
                         className="user__info-icon w-5 h-5 mr-3"
                     />
-                    <a href="./oder-history" className="user__info-link uppercase font-semibold text-sm text-success">
-                        Đơn mua
-                    </a>
+                    <Link href="/profile/order-history">
+                        <a className="user__info-link uppercase font-semibold text-sm text-success">
+                            Đơn mua
+                        </a>
+                    </Link>
+                   
                 </li>
                 <li className="user__info-item flex my-4">
                     <img
@@ -41,9 +47,11 @@ export function ProfileUser() {
                         alt=""
                         className="user__info-icon w-5 h-5 mr-3"
                     />
-                    <a href="./notification" className="user__info-link uppercase font-semibold text-sm">
-                        Thông báo
-                    </a>
+                    <Link href="/profile/notification">
+                        <a className="user__info-link uppercase font-semibold text-sm">
+                            Thông báo
+                        </a>
+                    </Link>
                 </li>
             </ul>
         </>

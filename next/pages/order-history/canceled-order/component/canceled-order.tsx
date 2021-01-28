@@ -1,6 +1,6 @@
-import { ProfileUser } from '../../order-history/component/profile-user';
-
-export function ProfileAccount() {
+import { ProfileUser } from '../../../order-history/component/profile-user';
+import { CanceledOrderList } from '../component/canceled-order-list';
+export function CanceledOrder () {
     return <>
         <div className="container-1 h-auto">
             <div className="grid grid-rows-1">
@@ -9,7 +9,7 @@ export function ProfileAccount() {
                         <ProfileUser/>
                     </div>
                     <div className="oder-history w-3/5">
-                        Profile Account
+                        <CanceledOrderList/>
                     </div>
                 </div> 
             </div>

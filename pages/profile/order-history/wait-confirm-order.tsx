@@ -1,5 +1,4 @@
-import { WaitConfirmOrderPage } from "../../../next/pages/wait-confirm-order/wait-confirm-order";
-
+import { WaitConfirmOrderPage } from "../../../next/pages/order-history/wait-confirm-order/wait-confirm-order";
 
 export default function WaitConfirmOrder() {
     return <>
