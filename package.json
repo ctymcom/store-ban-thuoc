@@ -28,7 +28,8 @@
     "next:build": "next build",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
-    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
+    "commit": "cz"
   },
   "dependencies": {
     "@apollo/client": "^3.3.6",
@@ -76,8 +77,10 @@
     "nookies": "^2.5.0",
     "postcss": "^8.2.2",
     "qrcode": "^1.4.4",
+    "query-string": "^6.13.8",
     "react": "^17.0.1",
     "react-chartjs-2": "^2.11.1",
+    "react-currency-format": "^1.0.0",
     "react-datepicker": "^3.4.1",
     "react-dom": "^17.0.1",
     "redis": "^3.0.2",
@@ -128,7 +131,9 @@
     "@typescript-eslint/eslint-plugin": "^2.3.1",
     "@typescript-eslint/parser": "^2.3.1",
     "chai": "^4.2.0",
+    "commitizen": "^4.2.3",
     "concurrently": "^5.0.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^6.4.0",
     "jest": "^24.9.0",
     "node-sass": "^4.13.0",
@@ -143,5 +148,10 @@
   "prettier": {
     "singleQuote": false,
     "printWidth": 100
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

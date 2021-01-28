@@ -13,7 +13,7 @@ type HeaderProps = {
   breadcrumbs?: BreadcrumbItem[];
   activeMenu?: number;
 };
-export function Header({ activeMenu = 0, breadcrumbs, ...props }: HeaderProps) {
+export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderProps) {
   const topMenu = ["Tin tức", "Tuyển dụng", "Trở thành nhà bán thuốc"];
   const mainMenu = ["Sản phẩm", "Hoạt chất", "Khuyến mãi", "Tin tức sức khỏe"];
   const NavMenu = [
