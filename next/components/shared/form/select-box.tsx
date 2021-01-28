@@ -103,7 +103,7 @@ export function SelectBox({
           onClick={() => setShow(!Show)}
         >
           {ValueInput != "" ? ValueInput : placeholder != null ? placeholder : options[0]}
-          <div className={"w-3 h-3 transition " + (Show && " transform rotate-180 ")}>
+          <div className={"w-3 h-3 transition ml-4 " + (Show && " transform rotate-180 ")}>
             <IconArrowDown />
           </div>
         </div>

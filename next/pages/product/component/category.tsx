@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { InputRange } from "../../../components/shared/form/input-range";
 import { IconClose } from "../../../lib/svg/icon-close";
 import { CategoryData } from "./category-data";
 import { ManufacturerData } from "./manufacturer-data";
@@ -17,6 +18,10 @@ export function Category(props) {
         <div className="hidden lg:block inset-0 top-14 overflow-auto z-40 w-72 px-2 py-5">
             <CategoryList title='Danh mục' list={CategoryDT} onFilter={(e) => { props.onFilter(e); console.log(e) }} />
             <CategoryList title='Nhà sản xuất' list={ManufacturerDT} onFilter={(e) => { props.onFilter(e) }} />
+            <InputRange max='2000000' min='1000' step='5000' />
+            <div className="py-5 inline-block">
+                <div className="py-2 px-6 rounded bg-primary-500 text-white text-center cursor-pointer">Lọc</div>
+            </div>
         </div>
         <div className={"lg:hidden  z-50 w-full fixed top-0 right-0 overflow-auto min-h-screen h-screen flex bg-black bg-opacity-25 " +
             (ShowCatelogy_responesive ? " opacity-100 " : " invisible ")
@@ -44,6 +49,7 @@ export function Category(props) {
                         <div className="">
                             <CategoryList title='Danh mục' list={CategoryDT} onFilter={(e) => { props.onFilter(e); console.log(e) }} />
                             <CategoryList title='Nhà sản xuất' list={ManufacturerDT} onFilter={(e) => { props.onFilter(e) }} />
+                            <InputRange max='2000000' min='1000' step='5000' />
                         </div>
                     </div>
                     <div className="py-5 px-5 bg-white  flex items-center justify-end w-full sticky bottom-0 " >
