@@ -12,16 +12,19 @@ type PaginationOrderHistory = {
     numOfPage?: number;
 }
 
-export function PaginationOderHistory({ pagination, onPageChanged = () => {}, numOfPage = 5 }: PaginationOrderHistory) {
+export function PaginationOderHistory({ pagination, onPageChanged = () => { }, numOfPage = 5 }: PaginationOrderHistory) {
 
     let from = (pagination.limit * (pagination.page - 1) + 1);
     let to = from + pagination.limit - 1;
     to = to > pagination.total ? pagination.total : to;
-    const pageCount = Math.ceil(pagination.total / pagination.limit);
+    const pageCount = Math.ceil(pagination.total / pagination.limit); // pagecount 26=128/5
     const activeClass = "text-white transition-colors duration-150 bg-btn-success border-success";
-    const showPageCount = pageCount < numOfPage ? pageCount : numOfPage;
+    const showPageCount = pageCount < numOfPage ? pageCount : numOfPage; // 5
+
     let pageStartIndex = pagination.page - (showPageCount - 1) > 0 ? pagination.page - showPageCount : 0;
-    pageStartIndex = (pageStartIndex + showPageCount) == pageCount && pageStartIndex > 0 && pagination.page < pageCount ? pageStartIndex -1 : pageStartIndex;
+    pageStartIndex = (pageStartIndex + showPageCount) == pageCount && pageStartIndex > 0 && pagination.page < pageCount ? pageStartIndex - 1 : pageStartIndex;
+    let haflPage = Math.ceil(numOfPage / 2);
+    let pageEndIndex = (pagination.page <= haflPage) ? 0 : (pagination.page == haflPage + 1 ? 1 : ((pagination.page >= pageCount) ? 0 : (pagination.page + haflPage - 1 > pageCount ? 1 : Math.floor(numOfPage / 2))))
 
     return <>
         <div className="pagination__page flex mt-4 justify-between w-full">
@@ -31,23 +34,24 @@ export function PaginationOderHistory({ pagination, onPageChanged = () => {}, nu
             <span className="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                 <nav aria-label="Table navigation">
                     <ul className="inline-flex items-center">
-                        {pagination.page > 1 && pageCount > numOfPage && <PaginationFirstPageBtnCustom onClick={() => onPageChanged(pagination.page = 1)}/>}
+                        {pagination.page > 1 && pageCount > numOfPage && <PaginationFirstPageBtnCustom onClick={() => onPageChanged(pagination.page = 1)} />}
                         {pagination.page > 1 && pageCount > numOfPage && <PaginationPrevBtnCustom onClick={() => onPageChanged(pagination.page - 1)} />}
-                        {times(showPageCount, _ => pageStartIndex + _ + ((pagination.page <= (Math.ceil(numOfPage / 2)) || pagination.page > pageCount - (Math.ceil(numOfPage / 2)) ) ? + ''  : + (Math.floor(numOfPage / 2)))).map((index) => 
-                            <li key={'page' + index} className="mx-1.5">
+                        {times(showPageCount, _ => pageStartIndex + _ + pageEndIndex).map((index) =>
+                            <li key={'page' + (index)} className="mx-1.5">
                                 <button
                                     onClick={() => (index != pagination.page - 1) && onPageChanged(index + 1)}
-                                    className={ " px-2.5 py-0.5 border-2 border-gray-600 hover:border-success " + (index == pagination.page - 1 && activeClass) + " rounded-full focus:outline-none focus:shadow-outline-purple hover:text-success "}>
-                                        <span className="text-xl">{index + 1}</span>
-                                    
+                                    className={" px-2.5 py-0.5 border-2 border-gray-600 hover:border-success " +
+                                        (index == pagination.page - 1 && activeClass) + " rounded-full focus:outline-none focus:shadow-outline-purple hover:text-success "}>
+                                    <span className="text-xl ">{index + 1}</span>
+
                                 </button>
-                            </li>)}
+                            </li>
+                        )}
                         {pagination.page <= pageCount - 1 && pageCount > numOfPage && <PaginationNextBtnCusTom onClick={() => onPageChanged(pagination.page + 1)} />}
                         {pagination.page <= pageCount - 1 && pageCount > numOfPage && <PaginationLastPageBtnCustom onClick={() => onPageChanged(pagination.page = pageCount)} />}
                     </ul>
                 </nav>
             </span>
         </div>
-        
     </>;
 }
