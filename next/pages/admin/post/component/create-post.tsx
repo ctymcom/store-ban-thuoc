@@ -1,9 +1,64 @@
 import { Input } from "../../../../components/shared/form/input";
-import { SelectBox } from "../../../../components/shared/form/select-box";
+import { SelectMulti } from "../../../../components/shared/form/select-multi";
 import { TextArea } from "../../../../components/shared/form/text-area";
 import { IconUpload } from "../../../../lib/svg/icon-upload";
 import { Card } from "../../../../components/shared/card/card";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
+import React, { createRef, forwardRef, useEffect, useState } from "react";
+// import ImageResize from "quill-image-resize-module";
+// import ReactQuill from "react-quill";
+
+const ReactQuill = dynamic(import("react-quill"), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
+
 export function CreatePost() {
+  const [Content, setContent] = useState(``);
+  const [EditorModules, setEditorModules] = useState<any>();
+  const editor = createRef();
+  useEffect(() => {
+    Promise.all([
+      import("react-quill"),
+      import("quill-image-resize-module-react"),
+      // import("quill-html-edit-button"),
+    ]).then(([{ Quill }, { default: ImageResize }]) => {
+      Quill.register("modules/imageResize", ImageResize);
+      // Quill.register("modules/htmlEditButton", htmlEditButton);
+      setEditorModules({
+        imageResize: {
+          parchment: Quill.import("parchment"),
+        },
+
+        toolbar: {
+          container: [
+            ["bold", "italic", "underline", "strike"], // toggled buttons
+            ["blockquote", "code-block"],
+            ["link", "image"],
+
+            [{ header: 1 }, { header: 2 }], // custom button values
+            [{ list: "ordered" }, { list: "bullet" }],
+            [{ script: "sub" }, { script: "super" }], // superscript/subscript
+            [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+            [{ direction: "rtl" }], // text direction
+
+            [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+            [{ font: [] }],
+            [{ align: [] }],
+
+            ["clean"],
+          ],
+          handlers: {
+            image: imageHandler,
+          },
+        },
+      });
+    });
+  }, []);
   return (
     <div className="flex flex-col">
       <div className="flex justify-between items-center">
@@ -17,7 +72,15 @@ export function CreatePost() {
           </div>
           <div className="px-2 py-4">
             <h3 className="text-sm font-semibold py-1">Nội dung</h3>
-            <TextArea placeholder="Nhập nội dung" />
+            {!!EditorModules && (
+              <ReactQuill
+                theme="snow"
+                value={Content}
+                onChange={setContent}
+                modules={EditorModules}
+                placeholder="Nhập nội dung"
+              />
+            )}
           </div>
         </Card>
 
@@ -45,7 +108,7 @@ export function CreatePost() {
           <div className="px-2 py-4">
             <h3 className="text-sm font-semibold py-1">Tag trong bài đăng</h3>
             <div className="text-gray-400 rounded shadow  grid grid-cols-1 gap-5">
-              <SelectBox options={["Marketing", "Coder"]} style="bg-white" />
+              <SelectMulti options={["Marketing", "Coder"]} style="bg-white" />
             </div>
           </div>
           <div className="px-2 py-4">
@@ -56,4 +119,47 @@ export function CreatePost() {
       </div>
     </div>
   );
+}
+function uploadImage(image) {
+  return new Promise((resolve, reject) => {
+    var data = new FormData();
+    data.append("image", image);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.imgur.com/3/image", true);
+    xhr.setRequestHeader("Authorization", "Client-ID " + "dd32dd3c6aaa9a0");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        var response = JSON.parse(xhr.responseText);
+        if (response.status === 200 && response.success) {
+          resolve(response.data.link);
+        } else {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            resolve(e.target.result);
+          };
+          reader.readAsDataURL(image);
+        }
+      }
+    };
+    xhr.send(data);
+  });
+}
+
+async function imageHandler() {
+  const input = document.createElement("input");
+  input.setAttribute("type", "file");
+  input.setAttribute("accept", "image/*");
+  input.click();
+  input.onchange = async function () {
+    const file = input.files[0];
+    console.log("User trying to uplaod this:", file);
+
+    const id = await uploadImage(file); // I'm using react, so whatever upload function
+    const range = this.quill.getSelection();
+    const link = id;
+
+    // this part the image is inserted
+    // by 'image' option below, you just have to put src(link) of img here.
+    this.quill.insertEmbed(range.index, "image", link);
+  }.bind(this); // react thing
 }
