@@ -12,15 +12,14 @@ type PaginationOrderHistory = {
     numOfPage?: number;
 }
 
-export function PaginationOderHistory({ pagination, onPageChanged = () => { }, numOfPage = 5 }: PaginationOrderHistory) {
+export function PaginationOderHistory({ pagination, onPageChanged = () => {}, numOfPage = 5 }: PaginationOrderHistory) {
 
     let from = (pagination.limit * (pagination.page - 1) + 1);
     let to = from + pagination.limit - 1;
     to = to > pagination.total ? pagination.total : to;
-    const pageCount = Math.ceil(pagination.total / pagination.limit); // pagecount 26=128/5
+    const pageCount = Math.ceil(pagination.total / pagination.limit);
     const activeClass = "text-white transition-colors duration-150 bg-btn-success border-success";
-    const showPageCount = pageCount < numOfPage ? pageCount : numOfPage; // 5
-
+    const showPageCount = pageCount < numOfPage ? pageCount : numOfPage;
     let pageStartIndex = pagination.page - (showPageCount - 1) > 0 ? pagination.page - showPageCount : 0;
     pageStartIndex = (pageStartIndex + showPageCount) == pageCount && pageStartIndex > 0 && pagination.page < pageCount ? pageStartIndex - 1 : pageStartIndex;
     let haflPage = Math.ceil(numOfPage / 2);
