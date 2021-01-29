@@ -122,7 +122,7 @@ export function SearchBox({
               }}
             />
             <div
-              className={"w-5 h-5 transition absolute right-5 " + (Show && " text-secondary-400")}
+              className={"w-5 h-5 transition absolute right-5 ml-4" + (Show && " text-secondary-400")}
             >
               <IconSearch />
             </div>
@@ -149,8 +149,8 @@ export function SearchBox({
               </ul>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </div>
       </div>
     </>

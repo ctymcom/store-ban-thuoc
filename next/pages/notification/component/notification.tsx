@@ -1,4 +1,4 @@
-import { ProfileUser } from '../../oder-history/component/profile-user';
+import { ProfileUser } from '../../order-history/component/profile-user';
 
 export function Notification() {
     return  <>
@@ -6,7 +6,7 @@ export function Notification() {
                 <div className="grid grid-rows-1">
                     <div className="oder-account w-full flex justify-between my-28">
                         <div className="account__user w-1/4">
-                            <ProfileUser/>
+                            <ProfileUser activeIndex={2}/>
                         </div>
                         <div className="oder-history w-3/5">
                             Notification
