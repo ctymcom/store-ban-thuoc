@@ -6,10 +6,10 @@ export function WaitConfirmOrder () {
         <div className="container-1 h-auto">
             <div className="grid grid-rows-1">
                 <div className="oder-account w-full flex justify-between my-28">
-                    <div className="account__user w-1/4">
+                    <div className="account__user w-1/5">
                         <ProfileUser/>
                     </div>
-                    <div className="oder-history w-3/5">
+                    <div className="oder-history w-3/4">
                         <OrderConfirmList/>
                     </div>
                 </div> 

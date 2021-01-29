@@ -30,8 +30,8 @@ export function OrderDeliveryList () {
             </li>
         </ul>
         <ul className="order-confirm-list">
-            <li className="order-confirm-item">
-                <span className="oder-code">Không có đơn hàng đang giao</span>
+            <li className="order-confirm-item text-center mt-32">
+                <span className="oder-not text-gray-400">Không có đơn hàng đang giao</span>
             </li>
         </ul>
     </>;

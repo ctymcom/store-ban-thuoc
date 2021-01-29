@@ -30,8 +30,8 @@ export function CanceledOrderList () {
             </li>
         </ul>
         <ul className="order-confirm-list">
-            <li className="order-confirm-item">
-                <span className="oder-code">Không có đơn hàng đã huỷ</span>
+            <li className="order-confirm-item mt-32 text-center">
+                <span className="order-cancel text-gray-400">Không có đơn hàng đã huỷ</span>
             </li>
         </ul>
     </>;

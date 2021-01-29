@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { isNumber, times } from "lodash";
-import { PaginationNextButton } from "../../../../next/components/shared/table/pagination-next-button";
-import { PaginationPrevButton } from "../../../../next/components/shared/table/pagination-prev-button";
+import { times } from "lodash";
 import { Pagination } from '../../../lib/graphql/pagination';
+import { PaginationPrevBtnCustom } from '../../pagination-pages/pagination-prev-btn-custom';
+import { PaginationNextBtnCusTom } from '../../pagination-pages/pagination-next-btn-custom';
+import { PaginationFirstPageBtnCustom } from '../../pagination-pages/pagination-firstpage-btn-custom';
+import { PaginationLastPageBtnCustom } from "../../pagination-pages/pagination-lastpage-btn-custom";
 
 type PaginationOrderHistory = {
     [x: string]: any,
@@ -23,22 +24,26 @@ export function PaginationOderHistory({ pagination, onPageChanged = () => {}, nu
     pageStartIndex = (pageStartIndex + showPageCount) == pageCount && pageStartIndex > 0 && pagination.page < pageCount ? pageStartIndex -1 : pageStartIndex;
 
     return <>
-        <div className="pagination__page flex mt-4">
+        <div className="pagination__page flex mt-4 justify-between w-full">
             <span className="flex items-center col-span-3 mr-8">
-                Showing {from} - {to} of {pagination.total}
+                Hiển thị {from} - {to} của {pagination.total} sẩn phẩm
             </span>
             <span className="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                 <nav aria-label="Table navigation">
                     <ul className="inline-flex items-center">
-                    {pagination.page > 1 && pageCount > numOfPage && <PaginationPrevButton onClick={() => onPageChanged(pagination.page - 1)} />}
-                    {times(showPageCount, _ => pageStartIndex + _).map((index) => 
-                        <li key={'page' + index} className="mr-3">
-                            <button
-                            onClick={() => (index != pagination.page - 1) && onPageChanged(index + 1)}
-                            className={(index == pagination.page - 1 && activeClass) + " px-4 py-2 rounded-full focus:outline-none focus:shadow-outline-purple hover:bg-btn-success hover:text-white"}
-                            >{index + 1}</button>
-                        </li>)}
-                    {pagination.page <= pageCount - 1 && pageCount > numOfPage && <PaginationNextButton onClick={() => onPageChanged(pagination.page + 1)} />}
+                        {pagination.page > 1 && pageCount > numOfPage && <PaginationFirstPageBtnCustom onClick={() => onPageChanged(pagination.page = 1)}/>}
+                        {pagination.page > 1 && pageCount > numOfPage && <PaginationPrevBtnCustom onClick={() => onPageChanged(pagination.page - 1)} />}
+                        {times(showPageCount, _ => pageStartIndex + _ + ((pagination.page <= (Math.ceil(numOfPage / 2)) || pagination.page > pageCount - (Math.ceil(numOfPage / 2)) ) ? + ''  : + (Math.floor(numOfPage / 2)))).map((index) => 
+                            <li key={'page' + index} className="mx-1.5">
+                                <button
+                                    onClick={() => (index != pagination.page - 1) && onPageChanged(index + 1)}
+                                    className={ " px-2.5 py-0.5 border-2 border-gray-600 hover:border-success " + (index == pagination.page - 1 && activeClass) + " rounded-full focus:outline-none focus:shadow-outline-purple hover:bg-btn-success hover:text-white "}>
+                                        <span className="text-xl">{index + 1}</span>
+                                    
+                                </button>
+                            </li>)}
+                        {pagination.page <= pageCount - 1 && pageCount > numOfPage && <PaginationNextBtnCusTom onClick={() => onPageChanged(pagination.page + 1)} />}
+                        {pagination.page <= pageCount - 1 && pageCount > numOfPage && <PaginationLastPageBtnCustom onClick={() => onPageChanged(pagination.page = pageCount)} />}
                     </ul>
                 </nav>
             </span>
