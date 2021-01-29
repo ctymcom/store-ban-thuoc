@@ -1,15 +1,15 @@
 import "react-quill/dist/quill.snow.css";
 
 import dynamic from "next/dynamic";
-import { createRef, useContext, useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 
 import { Card } from "../../../../components/shared/card/card";
 import { Input } from "../../../../components/shared/form/input";
 import { SelectMulti } from "../../../../components/shared/form/select-multi";
 import { TextArea } from "../../../../components/shared/form/text-area";
 import { Imgur } from "../../../../lib/imgur";
-import { IconUpload } from "../../../../lib/svg/icon-upload";
 import { EditPostContext, EditPostProvider } from "../providers/edit-post-provider";
+import { ImageUploader } from "../../../../components/shared/form/image-uploader";
 
 const ReactQuill = dynamic(import("react-quill"), {
   ssr: false,
@@ -93,12 +93,10 @@ export function CreatePost() {
                   <Card className="bg-gray-200 ">
                     <div className="">
                       <h3 className="text-sm font-semibold py-4 px-2">Thiết lập</h3>
-                      <div className="text-gray-400 bg-white rounded shadow m-2 flex flex-col items-center justify-center px-20 py-10">
-                        <div className="w-10">
-                          <IconUpload />
-                        </div>
-                        <p className="text-xs">Upload hình ảnh</p>
-                      </div>
+                      <ImageUploader
+                        value={Post.featureImage}
+                        onChanged={(value) => (Post.featureImage = value)}
+                      />
                     </div>
                     <div className="px-2 py-4">
                       <h3 className="text-sm font-semibold py-1">Link đăng bài</h3>

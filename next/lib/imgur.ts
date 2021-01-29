@@ -1,6 +1,6 @@
 export class Imgur {
   static uploadImage(image) {
-    return new Promise((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       var data = new FormData();
       data.append("image", image);
       var xhr = new XMLHttpRequest();
@@ -14,7 +14,7 @@ export class Imgur {
           } else {
             var reader = new FileReader();
             reader.onload = function (e) {
-              resolve(e.target.result);
+              resolve(e.target.result as string);
             };
             reader.readAsDataURL(image);
           }

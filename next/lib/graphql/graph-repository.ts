@@ -8,7 +8,7 @@ import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 export abstract class GraphRepository<T> {
   abstract shortFragment: string;
   abstract fullFragment: string;
-  abstract apiName: string;
+  abstract apiName: string; // "Post"
 
   private $apollo: ApolloClient<NormalizedCacheObject>;
 
