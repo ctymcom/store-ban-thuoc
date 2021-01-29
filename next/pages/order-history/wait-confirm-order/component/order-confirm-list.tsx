@@ -30,8 +30,9 @@ export function OrderConfirmList () {
             </li>
         </ul>
         <ul className="order-confirm-list">
-            <li className="order-confirm-item">
-                <span className="oder-code">Không có đơn hàng chờ xác nhận</span>
+            {/* Trường hợp ko có đơn hàng */}
+            <li className="order-confirm-item text-center mt-32">
+                <span className="oder-not text-gray-400">Không có đơn hàng chờ xác nhận</span>
             </li>
         </ul>
     </>;

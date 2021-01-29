@@ -19,11 +19,10 @@ export function OrderHistoryDetail() {
         setData(data) ;
     }, [Pagination])
     const onPageChanged = (page) => { 
-        let orderHistoryListElement = document.querySelector('.order-history__list');
+        let orderHistoryListElement = document.querySelector('ul.order-history__list.flex.justify-between') as HTMLElement;        
         setPagination({ ...Pagination, page}); 
         window.scroll({
-            top: orderHistoryListElement.clientHeight,
-            left: 0,
+            top: orderHistoryListElement.offsetHeight,
             behavior: 'smooth'
         });
     };
