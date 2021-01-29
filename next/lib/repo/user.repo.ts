@@ -1,7 +1,8 @@
 import { GraphRepository } from "../graphql/graph-repository";
 // import { any } from "../../../src/graphql/modules/user/user.model";
-import { gql } from "@apollo/client";
+
 import { QueryOptions } from "@apollo/client/core";
+import gql from "graphql-tag";
 
 export class UserRepository extends GraphRepository<any> {
   shortFragment: string = "id";

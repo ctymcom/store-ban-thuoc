@@ -53,7 +53,7 @@ export abstract class GraphRepository<T> {
     const options = {
       query: gql`
       query GetOne {
-        ${api}(id: '${id}') {  ${fragment};  }
+        ${api}(id: "${id}") {  ${fragment}  }
       }
       `,
       fetchPolicy: cache ? "network-only" : "no-cache",
