@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FormatMoney } from '../../../components/shared/currency/money';
 type CardItemProps = {
     [x: string]: any,
     onChangeQty?: (value) => void,
@@ -20,7 +21,7 @@ export function CartItem(props: CardItemProps) {
                 <img className="w-20 h-20 object-scale-down col-span-2" src={item.img} alt="" />
                 <p className="col-span-3">{item.name}</p>
             </td>
-            <td><span>{item.sale}</span> VND</td>
+            <td><FormatMoney money={item.sale} tS=',' /> VND</td>
             <td>
                 <div className="flex items-center justify-between border border-gray-300 rounded mr-10">
                     <button className="px-2 py-1" onClick={() => { if (Qty > 1) setQty(Qty - 1) }}>-</button>
@@ -28,7 +29,7 @@ export function CartItem(props: CardItemProps) {
                     <button className="px-2 py-1" onClick={() => setQty(Qty + 1)}>+</button>
                 </div>
             </td>
-            <td className="font-bold">{item.sale * Qty}</td>
+            <td className="font-bold"><FormatMoney money={item.sale * Qty} tS=',' /> VND</td>
         </tr>
     )
 }

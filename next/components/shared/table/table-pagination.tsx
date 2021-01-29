@@ -10,6 +10,7 @@ export type TablePaginationProps = {
 }
 export function TablePagination({ pagination, onPageChanged, numOfPage = 5 }: TablePaginationProps) {
   const form = (pagination.limit * (pagination.page - 1)) + 1; // 1
+  
   let to = form + pagination.limit - 1; // 5 
   to = to > pagination.total ? pagination.total : to;
   const pageCount = Math.ceil(pagination.total / pagination.limit);

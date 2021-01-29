@@ -1,8 +1,8 @@
-import { OderHistoryDetail } from "./oder-history-detail";
-import { ProfileUser } from "./profile-user";
+import { ProfileUser } from '../../../order-history/component/profile-user';
+import { DeliveredOrderDetail } from './delivered-order-detail';
 
-export function OderHistory () {
-    return  <>
+export function DeliveredOrder () {
+    return <>
         <div className="container-1 h-auto">
             <div className="grid grid-rows-1">
                 <div className="oder-account w-full flex justify-between my-28">
@@ -10,16 +10,10 @@ export function OderHistory () {
                         <ProfileUser/>
                     </div>
                     <div className="oder-history w-3/5">
-                        <OderHistoryDetail/>
+                        <DeliveredOrderDetail/>
                     </div>
-                </div>
-                
-                
+                </div> 
             </div>
         </div>
-            
-
-
-
     </>;
 }

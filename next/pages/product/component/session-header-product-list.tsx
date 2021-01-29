@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { SelectBox } from "../../../components/shared/form/select-box"
 import { IconClose } from "../../../lib/svg/icon-close"
+import { IconFilter } from "../../../lib/svg/icon-filter"
 
 type FilterProps = {
     title?: string;
@@ -31,8 +32,17 @@ export function HeaderProductList({ Filter, ...props }: HeaderProductListProps) 
     // useEffect(() => {
     //     setfilter(Filter)
     // });
-    console.log(filter)
     return <>
+        <div className="flex justify-between py-4 lg:hidden">
+            <div className="flex lg:hidden space-x-2">
+                <p className="text-xl">Sắp xếp:</p>
+                <SelectBox style=' py-1 ' options={['Mới nhất', 'Rẻ nhất']} />
+            </div>
+            <div className="flex lg:hidden space-x-2">
+                <p className="text-xl">Bộ lọc:</p>
+                <div className="w-8" onClick={() => { props.onShowCatelogy(true) }}><IconFilter /></div>
+            </div>
+        </div>
         <div className="flex justify-between border-t-2 border-b-2 py-2 lg:border-t-0 lg:border-b-0">
             <div className="">
                 <div className="flex items-center space-x-2">
@@ -72,7 +82,7 @@ export function HeaderProductList({ Filter, ...props }: HeaderProductListProps) 
                     </div>
                 </div>
             </div>
-            <div className="hidden  lg:flex justify-between space-x-2">
+            <div className="hidden lg:flex justify-between space-x-2">
                 <p className="text-xl">Sắp xếp:</p>
                 <SelectBox style=' py-2 w-16 ' options={['Mới nhất', 'Rẻ nhất']} />
             </div>

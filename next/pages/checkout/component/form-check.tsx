@@ -1,5 +1,6 @@
 import { Checkbox } from '../../../components/shared/form/checkbox';
 import { useState } from 'react';
+import e from 'express';
 export function FormCheck(props) {
     const { title, checkList } = props;
     const UOT = "Chọn Nhà vận chuyển"
@@ -13,22 +14,19 @@ export function FormCheck(props) {
     }
     const [Checked, setChecked] = useState(false);
     const [IDC, setIDC] = useState(null);
-    const setIDChecked = (checked, id) => {
-        if (checked) {
-            setChecked(checked);
+    const setIDChecked = (id) => {
+        if (id !== IDC) {
             setIDC(id);
+            setChecked(true);
         } else {
-            setChecked(checked);
             setIDC(null);
+            setChecked(false);
         }
     }
-    const setCheckBox = (id, status) => {
-        if (IDC === null) {
-            return status;
-        }
+    const setCheckBox = (id) => {
         if (id !== IDC)
-            return !status;
-        return status;
+            return false;
+        return true;
     }
     const setStyleCheck = (id, type) => {
         switch (type) {
@@ -51,10 +49,9 @@ export function FormCheck(props) {
         <div className="flex">
             {
                 checkList.map((item, index) => {
-                    return <div className={setStyleCheck(index, "bo")} key={index}>
+                    return <div className={setStyleCheck(index, "bo")} key={index} onClick={() => { setIDChecked(index) }}>
                         <div className="flex items-center">
-                            <Checkbox onChanged={(value) => setIDChecked(value, index)}
-                                checked={setCheckBox(index, Checked)} />
+                            <Checkbox checked={setCheckBox(index)} />
                             <div>
                                 <h4 className={setStyleCheck(index, "he")}>{item.title}</h4>
                                 <p>{item.content}</p>

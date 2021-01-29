@@ -1,4 +1,4 @@
-import { ProfileUser } from '../../oder-history/component/profile-user';
+import { ProfileUser } from '../../order-history/component/profile-user';
 
 export function Notification() {
     return  <>
