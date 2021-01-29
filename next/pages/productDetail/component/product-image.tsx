@@ -9,12 +9,17 @@ export function ProductImage(props) {
     }
     return <>
         <div className="product__image">
-            <img className="object-fill w-full h-80 rounded-md" src={image} alt="" key={props.index}/>
+            <img className="object-contain w-auto h-auto rounded-md m-auto" src={image} alt="" key={props.index}/>
             <div className="list-slider-image w-full flex mt-4 overflow-y-scroll">
                 {
                     props.product.slide_img.map((item, index) => {
                         return  <>
-                                <img key={index} style={image == item.img?style:{}} className={`object-cover w-28 h-28 mr-4 mb-2 rounded-sm p-1 box-content ${image == item.img ? 'active:border-green-500 active:border-2' : ''}`} src={item.img} alt="" onClick={() => setImage(item.img)}/>
+                            <img key={index} 
+                                 style={image == item.img?style:{}} 
+                                 className={`object-cover w-28 h-28 mr-4 mb-2 rounded-sm p-1 box-content 
+                                 ${image == item.img ? 'active:border-green-500 active:border-2 opacity-60 transition-opacity' : ''}`} 
+                                 src={item.img} alt="" 
+                                 onClick={() => setImage(item.img)}/>
                         </>;
                     })
                 }

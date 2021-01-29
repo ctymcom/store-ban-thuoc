@@ -1,10 +1,12 @@
-import { ProductDetail } from './component/product-detail';
+import { ProductDetail } from "./component/product-detail";
 import { DashboardLayout } from "../../layouts/dashboard-layout";
 
 export function ProductDetailPage() {
-    return <>
-        <DashboardLayout>
-            <ProductDetail/>
-        </DashboardLayout>
-    </>   
+  return (
+    <>
+      <DashboardLayout>
+        <ProductDetail />
+      </DashboardLayout>
+    </>
+  );
 }

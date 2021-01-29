@@ -8,7 +8,7 @@ import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 export abstract class GraphRepository<T> {
   abstract shortFragment: string;
   abstract fullFragment: string;
-  abstract apiName: string;
+  abstract apiName: string; // "Post"
 
   private $apollo: ApolloClient<NormalizedCacheObject>;
 
@@ -53,7 +53,7 @@ export abstract class GraphRepository<T> {
     const options = {
       query: gql`
       query GetOne {
-        ${api}(id: '${id}') {  ${fragment};  }
+        ${api}(id: "${id}") {  ${fragment}  }
       }
       `,
       fetchPolicy: cache ? "network-only" : "no-cache",

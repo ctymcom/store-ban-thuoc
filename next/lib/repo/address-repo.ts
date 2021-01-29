@@ -1,6 +1,6 @@
 import { GraphRepository } from "../graphql/graph-repository";
 // import { any } from "../../../src/graphql/modules/address/address.model";
-import { gql } from "@apollo/client";
+import gql from "graphql-tag";
 export class AddressRepository extends GraphRepository<any> {
   shortFragment: string = "id province district ward";
   fullFragment: string = "id province district ward";
