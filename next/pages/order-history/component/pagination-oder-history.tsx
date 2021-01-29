@@ -37,7 +37,7 @@ export function PaginationOderHistory({ pagination, onPageChanged = () => {}, nu
                             <li key={'page' + index} className="mx-1.5">
                                 <button
                                     onClick={() => (index != pagination.page - 1) && onPageChanged(index + 1)}
-                                    className={ " px-2.5 py-0.5 border-2 border-gray-600 hover:border-success " + (index == pagination.page - 1 && activeClass) + " rounded-full focus:outline-none focus:shadow-outline-purple hover:bg-btn-success hover:text-white "}>
+                                    className={ " px-2.5 py-0.5 border-2 border-gray-600 hover:border-success " + (index == pagination.page - 1 && activeClass) + " rounded-full focus:outline-none focus:shadow-outline-purple hover:text-success "}>
                                         <span className="text-xl">{index + 1}</span>
                                     
                                 </button>

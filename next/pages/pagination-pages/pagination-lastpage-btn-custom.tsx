@@ -1,7 +1,7 @@
 export function PaginationLastPageBtnCustom({ onClick }) {
     return <li>
         <button
-            className="flex ml-3 items-center justify-center px-2.5 py-2.5 rounded-full border-2 focus:outline-none focus:shadow-outline-purple border-gray-600 hover:bg-btn-success hover:text-white hover:border-success"
+            className="flex ml-3 items-center justify-center px-2.5 py-2.5 rounded-full border-2 focus:outline-none focus:shadow-outline-purple border-gray-600 hover:text-success hover:border-success"
             aria-label="Previous"
             onClick={onClick}
         >
