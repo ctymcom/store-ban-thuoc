@@ -16,11 +16,11 @@ export function OrderHistory () {
                         </Link>
                     </ul>
                 </div>
-                <div className="oder-account w-full flex justify-between mt-10 mb-28">
+                <div className="oder-account w-full flex justify-between mt-10 mb-28 gap-7">
                     <div className="account__user w-1/5">
                         <ProfileUser activeIndex={0}/>
                     </div>
-                    <div className="oder-history w-3/4">
+                    <div className="oder-history w-4/5">
                         <OrderHistoryDetail/>
                     </div>
                 </div>  

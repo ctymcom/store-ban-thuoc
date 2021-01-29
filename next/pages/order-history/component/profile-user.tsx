@@ -8,14 +8,13 @@ type ProfileUserProps = {
 export function ProfileUser(props: ProfileUserProps) {
 
     const [Active, setActive] = useState(props.activeIndex);
-    console.log(Active);
-    
+    // console.log(Active);
     
     return (
         <>
             <div className="user flex items-center">
                 <img src="../../../../public/assets/images/avatar.png" alt="" className="user__avatar" />
-                <div className="profile__user ml-4">
+                <div className="profile__user ml-4 sm:w-3/6">
                     <a href="#" className="profile__user-link block font-semibold text-text-color mb-2">
                         minhuy2996543
                     </a>
