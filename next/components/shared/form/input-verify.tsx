@@ -14,7 +14,7 @@ export function InputVerify({ label, name, required, placeholder, inputType = "t
             }
             setinput([...input])
             setstatus([...status])
-            if (parseInt(e.target.name) < 5) refs.current[parseInt(e.target.name) + 1].current.focus();
+            if (parseInt(e.target.name) < 5) (refs.current[parseInt(e.target.name) + 1].current as any).focus();
             if (props.onChanged) props.onChanged(input.join(''));
         }
 
@@ -34,7 +34,7 @@ export function InputVerify({ label, name, required, placeholder, inputType = "t
                         className={" w-full h-full  bg-white p-1 text-6xl text-center text-primary-500 focus:outline-none border-b " + (status[index] && "border-secondary-500")}
                         type={inputType}
                         value={input[index]}
-                        ref={refs.current[index]} />
+                        ref={refs.current[index] as any} />
                 </>
             })
         }

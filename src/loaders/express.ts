@@ -38,9 +38,10 @@ export default ({ app }: { app: express.Application }) => {
   // });
 
   app.use("/", router);
-  const nextApp = next({ dev: configs.nextDev });
+  const nextApp = next({ dev: configs.nextDev, dir: "./next" });
   const handle = nextApp.getRequestHandler();
   nextApp.prepare().then(() => {
+    console.log("Next App Initialized!");
     app.get("*", (req, res) => handle(req, res));
   });
 };

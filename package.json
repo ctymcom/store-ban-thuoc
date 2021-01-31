@@ -25,10 +25,10 @@
     "serve-debug": "nodemon --inspect dist/server.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\"",
     "prettier": "prettier --write '**/*.{ts,css,js}'",
-    "next:build": "next build",
-    "analyze": "cross-env ANALYZE=true next build",
-    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
-    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
+    "next:build": "next build ./next",
+    "analyze": "cross-env ANALYZE=true next build ./next",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build ./next",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build ./next",
     "commit": "cz"
   },
   "dependencies": {
