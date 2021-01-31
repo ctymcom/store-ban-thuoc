@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { SelectBox } from "../../../../components/shared/form/select-box";
 import { TablePaginationCustom } from "../../../../components/shared/table/table-pagination-custom";
@@ -5,6 +6,7 @@ import { PostProvider, PostContext } from "../providers/post-provider";
 import { PostCard } from "./post-card";
 
 export function ListPost() {
+  const router = useRouter();
   return (
     <PostProvider>
       <div className="flex justify-between items-center">
@@ -19,7 +21,8 @@ export function ListPost() {
             />
           </div>
           <div className="ml-4">
-            <div className="px-3 py-2 text-sm bg-primary-500 cursor-pointer text-white rounded">
+            <div className="px-3 py-2 text-sm bg-primary-500 cursor-pointer text-white rounded"
+              onClick={() => { router.push('/admin/post/create-post') }}>
               Tạo bài viết
             </div>
           </div>
