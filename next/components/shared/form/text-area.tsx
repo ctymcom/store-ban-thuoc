@@ -7,7 +7,6 @@ export function TextArea({
     name,
     required,
     placeholder,
-    inputType = "text",
     icon = "",
     style,
     value,
@@ -35,7 +34,7 @@ export function TextArea({
                 </div>
             )}
 
-            <textarea rows="4" cols="50"
+            <textarea rows={4} cols={50}
                 onChange={onChange}
                 defaultValue={value}
                 required={required}
@@ -45,7 +44,6 @@ export function TextArea({
                     style +
                     " w-full h-full bg-white ring-gray-300 ring-1 p-4 text-sm text-gray-500 rounded-md focus:outline-none focus:ring-primary-500"
                 }
-                type={inputType}
                 placeholder={placeholder}
             ></textarea>
         </div>

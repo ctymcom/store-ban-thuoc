@@ -3,6 +3,7 @@ type ButtonProps = {
     text: string,
     type?: "button" | "submit" | "reset",
     onClick?: (e) => void
+    children?: any
 }
 export function Button({ text, onClick, style = ' bg-primary-500 ', ...props }: ButtonProps) {
     return <button onClick={(e) => {

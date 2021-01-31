@@ -31,7 +31,7 @@ export function AuthProvider({ children }: any) {
   );
 }
 
-export const useAtuh = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);
 
 export function AuthMiddleware(fn?: (context: GetServerSidePropsContext) => { props: any } | Promise<{ props: any }>) {
     return (context: GetServerSidePropsContext) => { 

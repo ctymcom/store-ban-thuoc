@@ -85,7 +85,7 @@ export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderPro
       </div>
 
       {/* do header có nhiều thay đổi so với desktop nên em tạo thêm 1 cái mới luôn ạ */}
-
+              
       <div className="lg:hidden w-full flex justify-between  items-center px-4 py-4">
         <div className="text-primary-500">
           <div
