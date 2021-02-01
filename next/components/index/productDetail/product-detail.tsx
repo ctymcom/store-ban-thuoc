@@ -1,12 +1,12 @@
 import { ProductDetail } from "./component/product-detail";
-import { DashboardLayout } from "../../../layouts/dashboard-layout";
+import { DefaultLayout } from "../../../layouts/default-layout";
 
 export function ProductDetailPage() {
   return (
     <>
-      <DashboardLayout>
+      <DefaultLayout>
         <ProductDetail />
-      </DashboardLayout>
+      </DefaultLayout>
     </>
   );
 }

@@ -1,10 +1,10 @@
-import { DashboardLayout } from '../../../../layouts/dashboard-layout';
+import { DefaultLayout } from '../../../../layouts/default-layout';
 import { CanceledOrder } from './component/canceled-order';
 
 export function CanceledOrderPage () {
     return  <>
-            <DashboardLayout>
+            <DefaultLayout>
                 <CanceledOrder/>
-            </DashboardLayout>
+            </DefaultLayout>
     </>;
 }

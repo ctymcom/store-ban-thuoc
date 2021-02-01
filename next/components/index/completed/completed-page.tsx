@@ -1,8 +1,8 @@
-import { DashboardLayout } from "../../../layouts/dashboard-layout";
+import { DefaultLayout } from "../../../layouts/default-layout";
 import { Completed } from './component/completed';
 
 export default function CompletedPage() {
-    return <DashboardLayout>
+    return <DefaultLayout>
         <Completed title="compl" />
-    </DashboardLayout>
+    </DefaultLayout>
 }

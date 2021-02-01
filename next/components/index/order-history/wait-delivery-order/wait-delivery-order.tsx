@@ -1,10 +1,10 @@
-import { DashboardLayout } from '../../../../layouts/dashboard-layout';
+import { DefaultLayout } from '../../../../layouts/default-layout';
 import { WaitDeliveryOrder } from './component/wait-delivery-order';
 
 export function WaitDeliveryOrderPage () {
     return  <>
-            <DashboardLayout>
+            <DefaultLayout>
                 <WaitDeliveryOrder/>
-            </DashboardLayout>
+            </DefaultLayout>
     </>;
 }

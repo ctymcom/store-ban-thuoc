@@ -3,7 +3,7 @@ import { IconCart } from "../../lib/svg/icon-cart";
 import Link from "next/link";
 import { IconSearch } from "../../lib/svg/icon-search";
 import { Logo } from "../../lib/svg/logo";
-import { BreadcrumbItem } from "../dashboard-layout";
+import { BreadcrumbItem } from "../default-layout";
 import { IconArrowRight } from "../../lib/svg/icon-arrow-right";
 import { IconMenu } from "../../lib/svg/icon-menu";
 import { IconClose } from "../../lib/svg/icon-close";

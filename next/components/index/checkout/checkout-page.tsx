@@ -1,10 +1,10 @@
-import { DashboardLayout } from "../../../layouts/dashboard-layout";
+import { DefaultLayout } from "../../../layouts/default-layout";
 import { CheckOut } from './component/checkout';
 
 export default function CheckOutPage() {
     return <>
-        <DashboardLayout>
+        <DefaultLayout>
             <CheckOut />
-        </DashboardLayout>
+        </DefaultLayout>
     </>
 }

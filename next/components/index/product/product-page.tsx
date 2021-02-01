@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { TablePaginationCustom } from "../../shared/table/table-pagination-custom";
-import { DashboardLayout } from "../../../layouts/dashboard-layout";
+import { DefaultLayout } from "../../../layouts/default-layout";
 import { Category } from "./component/category";
 import { ProductListPage } from "./component/product-list-page";
 
@@ -15,7 +15,7 @@ export function ProductsPage() {
     ]
     console.log(ShowCatelogy_responesive)
     return <>
-        <DashboardLayout breadcrumbs={breadcrumbs}>
+        <DefaultLayout breadcrumbs={breadcrumbs}>
             <div className="px-8 container-1 flex">
                 <Category
                     onFilter={(e) => { setfilter(e.filter((item) => { return item.status })) }}
@@ -28,6 +28,6 @@ export function ProductsPage() {
                 />
 
             </div>
-        </DashboardLayout>
+        </DefaultLayout>
     </>
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { SidebarData } from '../../../next/layouts/components/sidebar-data'
-import { BreadcrumbItem } from '../dashboard-layout';
+import { BreadcrumbItem } from '../default-layout';
 import { IconArrowRight } from '../../lib/svg/icon-arrow-right';
 import { IconRing } from '../../lib/svg/icon-ring';
 import { IconUser } from './../../lib/svg/icon-user';

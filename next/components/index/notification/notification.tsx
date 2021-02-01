@@ -1,10 +1,10 @@
-import { DashboardLayout } from "../../../layouts/dashboard-layout";
+import { DefaultLayout } from "../../../layouts/default-layout";
 import { Notification } from './component/notification';
 
 export function NotificationPage () {
     return  <>
-            <DashboardLayout>
+            <DefaultLayout>
                 <Notification/>
-            </DashboardLayout>
+            </DefaultLayout>
     </>;
 }
