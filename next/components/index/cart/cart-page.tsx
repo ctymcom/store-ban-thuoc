@@ -1,11 +1,11 @@
 import { CartPayPromotion } from "./component/cart";
-import { DashboardLayout } from "../../../layouts/dashboard-layout";
+import { DefaultLayout } from "../../../layouts/default-layout";
 
 export default function CartPage() {
 
     return <>
-        <DashboardLayout>
+        <DefaultLayout>
             <CartPayPromotion />
-        </DashboardLayout>
+        </DefaultLayout>
     </>
 }

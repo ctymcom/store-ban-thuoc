@@ -1,10 +1,10 @@
-import { DashboardLayout } from '../../../../layouts/dashboard-layout';
+import { DefaultLayout } from '../../../../layouts/default-layout';
 import { WaitConfirmOrder } from './component/wait-confirm-order';
 
 export function WaitConfirmOrderPage () {
     return  <>
-            <DashboardLayout>
+            <DefaultLayout>
                 <WaitConfirmOrder/>
-            </DashboardLayout>
+            </DefaultLayout>
     </>;
 }

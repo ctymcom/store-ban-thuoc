@@ -1,9 +1,9 @@
-import { DashboardLayoutAdmin } from "../../../layouts/dashboard-layout-admin";
+import { AdminLayout } from "../../../layouts/admin-layout";
 import { ListPost } from "./component/list-post";
 
 export function PostPage() {
 
-    return <DashboardLayoutAdmin>
+    return <AdminLayout>
         <ListPost />
-    </DashboardLayoutAdmin>
+    </AdminLayout>
 }
