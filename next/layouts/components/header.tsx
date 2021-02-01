@@ -63,7 +63,7 @@ export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderPro
             </div>
           </div>
         </div>
-        <div className="container-1 bg-primary-400 text-white flex items-center justify-between">
+        <div className="container-1 bg-primary text-white flex items-center justify-between">
           <ul className="flex text-sm">
             {mainMenu.map((m, index) => (
               <li

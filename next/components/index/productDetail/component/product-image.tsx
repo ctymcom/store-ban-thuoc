@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ProductDetailData } from "../data/product-detail-data";
 
 export function ProductImage(props) {
 
@@ -16,7 +15,7 @@ export function ProductImage(props) {
                         return  <>
                             <img key={index} 
                                  style={image == item.img?style:{}} 
-                                 className={`object-cover w-28 h-28 mr-4 mb-2 rounded-sm p-1 box-content 
+                                 className={`object-contain w-28 h-28 mr-4 mb-2 rounded-sm p-1 box-content 
                                  ${image == item.img ? 'active:border-green-500 active:border-2 opacity-60 transition-opacity' : ''}`} 
                                  src={item.img} alt="" 
                                  onClick={() => setImage(item.img)}/>

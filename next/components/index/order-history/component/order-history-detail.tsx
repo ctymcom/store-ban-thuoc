@@ -1,4 +1,4 @@
-import { PaginationOderHistory } from "./pagination-oder-history";
+import { PaginationPages } from "../../pagination-pages/pagination-pages";
 import { OrderHisttoryList } from "./order-history-list";
 import { OrderHistoryData } from "../data/order-history-data";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ export function OrderHistoryDetail() {
     const [Data, setData] = useState([]);
     const [Pagination, setPagination] = useState<Pagination>({
         page: 1,
-        limit: 5,
+        limit: 10,
         total: OrderHistoryData.length,
         offset: 0
     })
@@ -19,10 +19,10 @@ export function OrderHistoryDetail() {
         setData(data) ;
     }, [Pagination])
     const onPageChanged = (page) => { 
-        let orderHistoryListElement = document.querySelector('ul.order-history__list.flex.justify-between') as HTMLElement;        
+        // let orderHistoryListElement = document.querySelector('ul.order-history__list.flex.justify-between') as HTMLElement;        
         setPagination({ ...Pagination, page}); 
         window.scroll({
-            top: orderHistoryListElement.offsetHeight,
+            top: 200,
             behavior: 'smooth'
         });
     };
@@ -30,29 +30,29 @@ export function OrderHistoryDetail() {
         <ul className="order-history__list flex justify-between  border-b-4 pb-1">
             <li className="order-history__item">
                 <Link href="/order-history">
-                    <a className="order-history__link uppercase font-semibold text-sm px-3 border-b-4 pb-1.5 text-success border-success">Tất cả</a>
+                    <a className="order-history__link uppercase font-semibold text-sm px-3 border-b-4 pb-1.5 text-primary border-primary">Tất cả</a>
                 </Link>
                 
             </li>
-            <li className="order-history__item hover:border-success">
+            <li className="order-history__item">
                 <Link href="/profile/order-history/wait-confirm-order">
-                    <a className="order-history__link uppercase font-semibold text-sm px-3 hover:text-success">Chờ xác nhận</a>
+                    <a className="order-history__link uppercase font-semibold text-sm px-3 hover:text-primary">Chờ xác nhận</a>
                 </Link>
                 
             </li>
             <li className="order-history__item">
                 <Link href="/profile/order-history/wait-delivery-order">
-                    <a className="order-history__link uppercase font-semibold text-sm px-3 hover:text-success">Đang giao</a>
+                    <a className="order-history__link uppercase font-semibold text-sm px-3 hover:text-primary">Đang giao</a>
                 </Link>
             </li>
             <li className="order-history__item">
                 <Link href="/profile/order-history/delivered-order">
-                    <a className="order-history__link uppercase font-semibold text-sm px-3 hover:text-success">Đã giao</a>
+                    <a className="order-history__link uppercase font-semibold text-sm px-3 hover:text-primary">Đã giao</a>
                 </Link>
             </li>
             <li className="order-history__item">
                 <Link href="/profile/order-history/canceled-order">
-                    <a className="order-history__link uppercase font-semibold text-sm px-3 hover:text-success">Đã hủy</a>
+                    <a className="order-history__link uppercase font-semibold text-sm px-3 hover:text-primary">Đã hủy</a>
                 </Link>
             </li>
         </ul>
@@ -60,8 +60,8 @@ export function OrderHistoryDetail() {
             <OrderHisttoryList data={Data}/>
         </div>
         
-        <ul className="navigation-pages flex">
-            <PaginationOderHistory pagination={Pagination} onPageChanged={(page) => onPageChanged(page)}/>
+        <ul className="pavigation-pages flex">
+            <PaginationPages pagination={Pagination} onPageChanged={(page) => onPageChanged(page)}/>
         </ul>
     </>;
 }
