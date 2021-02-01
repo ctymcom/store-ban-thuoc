@@ -27,7 +27,7 @@ export function CartItem(props) {
             </td>
             <td className="pr-5"><FormatMoney money={props.item.sale} tS=',' /> VND</td>
             <td className="pr-5">
-                <div className="flex items-center justify-between border border-primary-400 rounded w-11/12">
+                <div className="flex items-center justify-between border border-primary rounded w-11/12">
                     <button className="px-3 py-1.5" onClick={() => { props.handleChangeItem(props.item.id, "d", 0) }}>-</button>
                     <input className="w-full text-center" type="number"
                         value={props.item.amount < 10 ? '0' + props.item.amount : (props.item.amount).toString()}
