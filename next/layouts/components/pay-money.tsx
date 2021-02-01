@@ -1,4 +1,5 @@
-import { FormatMoney } from '../../components/shared/currency/money';
+
+import { FormatMoney } from './../../components/shared/currency/money';
 export function CartTotalMoney(props) {
     const { listMoney } = props;
     return <>

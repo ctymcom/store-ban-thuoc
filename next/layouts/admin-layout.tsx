@@ -1,5 +1,5 @@
-import { HeadSEO } from "./components/head-seo";
-import Sidebar from "./components/sidebar";
+import { HeadAdmin } from "./admin-layout/head-admin";
+import Sidebar from "./admin-layout/sidebar";
 
 type DashboardProps = {
   [x: string]: any;
@@ -13,7 +13,7 @@ export type BreadcrumbItem = {
   path: string;
 };
 export function AdminLayout({
-  title = " Dashboard Kho thuốc sỉ",
+  title = "Dashboard Kho thuốc sỉ",
   breadcrumbs,
   activeMenu,
   activeSubmenu,
@@ -21,7 +21,7 @@ export function AdminLayout({
 }: DashboardProps) {
   return (
     <>
-      <HeadSEO title={title}></HeadSEO>
+      <HeadAdmin title={title}></HeadAdmin>
       <div className="flex items-start w-full min-h-screen ">
         <Sidebar />
         <div className="flex-1 p-6 pb-20">{props.children}</div>

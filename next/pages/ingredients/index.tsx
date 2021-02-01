@@ -1,7 +1,10 @@
-import { IngridientsPage } from "../../components/index/ingredients/ingredients-page";
+import { IngredientsPage } from "../../components/index/ingredients/ingredients-page";
+import { DefaultLayout } from "../../layouts/default-layout";
 
-export default function CheckOut() {
+export default function Ingredients() {
   return <>
-      <IngridientsPage/>
+      <IngredientsPage/>
   </>
 }
+
+Ingredients.Layout = DefaultLayout

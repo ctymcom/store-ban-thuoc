@@ -5,6 +5,12 @@
 
 @tailwind utilities;
 
+body {
+  font-family: 'Cabin', sans-serif;
+  background: white;
+  @apply text-gray-700;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 1px;
@@ -163,6 +169,12 @@ h6:after {
   padding-right: 10%;
 }
 
+.main-container {
+  width: 86%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media(max-width:1024px) {
   .Product {
     min-width: 300px;
@@ -183,9 +195,4 @@ input:focus{
 }
 button:focus{
   outline: none;
-}
-
-body {
-  background: #f6f6f6;
-  color: #333;
 }
