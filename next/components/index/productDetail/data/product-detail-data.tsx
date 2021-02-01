@@ -1,5 +1,6 @@
 export const ProductDetailData = [
     {
+        id: 1,
         type: 'Thực phẩm chức năng',
         name: 'Homramin Gingseng Dpqt Usa (H/60v)',
         old_price: '99.500 krw',
@@ -26,6 +27,7 @@ export const ProductDetailData = [
                 img: '../../../../../public/assets/images/product-5.png',
             },
         ],
+        amount: 1,
     },
     
 ]
