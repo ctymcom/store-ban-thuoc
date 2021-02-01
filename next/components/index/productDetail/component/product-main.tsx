@@ -10,16 +10,16 @@ export function ProductMain() {
       <div className="breadbcrum-product-detail">
         <ul className="breadbcrum-product-detail__list flex uppercase h-8 items-center mt-12">
           <Link href="/">
-            <a className="breadbcrum-product-detail__link">Trang chủ /</a>
+            <a className="breadbcrum-product-detail__link hover:text-primary">Trang chủ /</a>
           </Link>
           <Link href="/products">
-            <a className="breadbcrum-product-detail__link">Sản phẩm /</a>
+            <a className="breadbcrum-product-detail__link hover:text-primary">Sản phẩm /</a>
           </Link>
           <Link href="/">
-            <a className="breadbcrum-product-detail__link">Thực phẩm chức năng /</a>
+            <a className="breadbcrum-product-detail__link hover:text-primary">Thực phẩm chức năng /</a>
           </Link>
           <Link href="/product-detail">
-            <a className="breadbcrum-product-detail__link text-success">
+            <a className="breadbcrum-product-detail__link text-primary">
               Homramin Gingseng Dpqt Usa (H/60v)
             </a>
           </Link>

@@ -1,6 +1,19 @@
 export class Imgur {
   static uploadImage(image) {
     return new Promise<string>((resolve, reject) => {
+      // var xhttp = new XMLHttpRequest(),
+      //   fd = new FormData();
+
+      // fd.append("image", image);
+      // xhttp.open("POST", "https://api.imgbb.com/1/upload?key=b798bb562f3ff9cf86a373f4fbb90f84");
+      // xhttp.setRequestHeader("Authorization", "Client-ID dd32dd3c6aaa9a0"); //Get yout Client ID here: http://api.imgur.com/
+      // xhttp.onreadystatechange = function () {
+      //   if (xhttp.status === 200 && xhttp.readyState === 4) {
+      //     var res = JSON.parse(xhttp.responseText);
+      //     resolve(res.data.url);
+      //   }
+      // };
+      // xhttp.send(fd);
       var data = new FormData();
       data.append("image", image);
       var xhr = new XMLHttpRequest();
