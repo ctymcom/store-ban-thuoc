@@ -1,17 +1,27 @@
+import { useRouter } from "next/router";
 import { Post } from "../../../../lib/repo/post-repo";
+import { Button } from "../../../shared/form/button";
 
 type PostCardProps = {
   [x: string]: any;
   post: Post;
 };
 export function PostCard({ post, ...props }: PostCardProps) {
+  const router = useRouter();
+  const editPost = (post) => {
+    router.push(`/admin/post/${post.slug}`, null, { shallow: true });
+  };
   return (
     <div {...props} className="p-2 rounded bg-white flex flex-col justify-between">
       <div className="cursor-pointer">
-        <div className=" max-h-40">
-          <img src={post.featureImage} alt="" className=" max-h-40" />
+        <div className="h-40">
+          <img
+            src={post.featureImage || "https://placekitten.com/600/300"}
+            alt=""
+            className="object-cover w-full"
+          />
         </div>
-        <div className="py-2 max-h-80">
+        <div className="py-4 max-h-80">
           <h1 className="py-2 font-semibold">{post.title}</h1>
           <h3 className="py-2 text-sm font-semibold text-gray-400">
             Người viết: <span className="text-blue-500">Tac gia</span>
@@ -19,19 +29,11 @@ export function PostCard({ post, ...props }: PostCardProps) {
           <p className="text-sm text-gray-400"> {post.excerpt} </p>
         </div>
       </div>
-      <div className="flex items-center justify-end py-2">
-        <div className="px-4 py-2 cursor-pointer mr-2 bg-gray-200 text-gray-400 border-2 border-gray-200 text-center rounded font-semibold">
+      <div className="flex items-center justify-end px-2">
+        {post.status == "PUBLIC" ? <Button>Gỡ bài</Button> : <Button>Đăng bài</Button>}
+        <Button primary onClick={() => editPost(post)}>
           Chỉnh sửa
-        </div>
-        {post.status == "PUBLIC" ? (
-          <div className="px-4 py-2 cursor-pointer  border-2 border-primary-500  text-primary-500 text-center rounded font-semibold">
-            Gỡ bài
-          </div>
-        ) : (
-          <div className="px-4 py-2 cursor-pointer bg-primary-500 border-2 border-primary-500 text-white  text-center rounded font-semibold">
-            Đăng bài
-          </div>
-        )}
+        </Button>
       </div>
     </div>
   );

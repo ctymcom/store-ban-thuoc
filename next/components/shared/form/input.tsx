@@ -1,7 +1,7 @@
 import { FormFieldProps } from "./form-field.type";
 import { Label } from "./label";
 import { IconInfor } from "../../../lib/svg/icon-infor";
-
+import format from "date-fns/format";
 export function Input({
   label,
   name,
@@ -16,6 +16,14 @@ export function Input({
 }: FormFieldProps) {
   const onChange = (e) => {
     if (props.onChanged) props.onChanged(e.target.value);
+  };
+  const parseDefaultValue = (value) => {
+    switch (inputType) {
+      case "datetime-local":
+        return format(new Date(value), "yyyy-MM-dd'T'HH:MM");
+      default:
+        return value;
+    }
   };
   return (
     <div className="flex flex-col space-y-1">
@@ -37,7 +45,7 @@ export function Input({
 
       <input
         onChange={onChange}
-        defaultValue={value}
+        defaultValue={parseDefaultValue(value)}
         required={required}
         name={name}
         className={

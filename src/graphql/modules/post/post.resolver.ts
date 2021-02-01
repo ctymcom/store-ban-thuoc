@@ -33,7 +33,7 @@ const Mutation = {
     return await postService.create(data);
   },
   updatePost: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    // AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
     const { id, data } = args;
     return await postService.updateOne(id, data);
   },
