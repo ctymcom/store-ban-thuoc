@@ -27,7 +27,7 @@ export function ProductMain() {
           {
             let index = findIndex(id);
             let productNew = product;
-            if (productNew[index].amount >= 1) {
+            if (productNew[index].amount > 1) {
               productNew[index].amount -= 1;
             }
             setProduct([...productNew]);
@@ -52,7 +52,7 @@ export function ProductMain() {
   return (
     <>
       <div className="breadbcrum-product-detail">
-        <ul className="breadbcrum-product-detail__list flex uppercase h-8 items-center mt-12">
+        <ul className="breadbcrum-product-detail__list flex uppercase h-8 items-center mt-12 text-sm">
           <Link href="/">
             <a className="breadbcrum-product-detail__link hover:text-primary">Trang chủ /</a>
           </Link>
@@ -71,7 +71,7 @@ export function ProductMain() {
       </div>
       {ProductDetailData.map((item, index) => {
         return (
-          <div className="Product grid grid-cols-2 gap-x-7 mt-16">
+          <div className="Product grid grid-cols-2 gap-x-6 mt-16">
             <ProductImage product={item} />
             <div className="product__info">
               <ProductInfo product={item} handleChangeAmount={handleChangeAmount}/>
