@@ -1,7 +1,7 @@
 import { FormCheck } from './form-check';
 import { listFormCheckTrans, listFormCheckOUT, listFormCheckPayment, listMoneyCheckout } from './form-check-data';
-import { CartTotalMoney } from '../../../../layouts/components/pay-money';
-import { CartPayHeader } from '../../../../layouts/components/cart-pay-header';
+import { PayMoney } from '../../cart/component/pay-money';
+import { CartPayHeader } from '../../cart/component/cart-pay-header';
 import { FormatMoney } from '../../../shared/currency/money';
 import { useRouter } from 'next/router';
 
@@ -38,7 +38,7 @@ export function CheckOut() {
                     <p>43 Hoa Huệ, Phường 7, Quận Phú</p>
                 </div>
                 <div className="border-b-2 pb-2">
-                    <CartTotalMoney listMoney={listMoneyCheckout} />
+                    <PayMoney listMoney={listMoneyCheckout} />
                 </div>
                 <div className="flex justify-between pt-2">
                     <p>Thành tiền</p>
