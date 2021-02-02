@@ -17,10 +17,9 @@ export function ProductImage(props) {
         let elementSliderImage = document.querySelector(".list-slider-image");
         console.log(elementImage);
         elementImage.scrollIntoView();
-        // elementImage.scrollIntoView(false); 
-        elementImage.scrollIntoView({block: "center"});
+        elementImage.scrollIntoView({block: "end"});
         elementImage.scrollIntoView({inline: "center"});
-        elementImage.scrollIntoView({behavior: "smooth", block: "center"});
+        elementImage.scrollIntoView({behavior: "smooth", block: "end"});
     }
 
     return <>

@@ -26,7 +26,15 @@ export const ProductDetailData = [
             {
                 img: '../../../../../public/assets/images/product-5.png',
             },
-            
+            {
+                img: '../../../../../public/assets/images/product-6.png',
+            },
+            {
+                img: '../../../../../public/assets/images/product-7.png',
+            },
+            {
+                img: '../../../../../public/assets/images/product-8.png',
+            },
         ],
         amount: 1,
     },
