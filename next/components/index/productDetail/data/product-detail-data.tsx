@@ -26,6 +26,7 @@ export const ProductDetailData = [
             {
                 img: '../../../../../public/assets/images/product-5.png',
             },
+            
         ],
         amount: 1,
     },
