@@ -67,3 +67,18 @@ export const listMoneyCart = [
     }
 
 ]
+export const listPromotionCode = [
+    {
+        code: "KM50",
+        des: 50
+    },
+    {
+        code: "KM30",
+        des: 30
+    },
+    {
+        code: "",
+        title: "",
+        des: 0
+    }
+]
