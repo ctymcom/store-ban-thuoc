@@ -30,13 +30,16 @@ export function MainHeader() {
         </div>
       </div>
       <div className="flex items-center justify-end text-gray-500">
-        <div className=" px-3 cursor-pointer">Đăng nhập</div>
-        <div className="border-l border-gray-300 px-3 flex items-center cursor-pointer">
-          <div className="pr-2">Giỏ hàng</div>
-          <div className="w-8">
-            <IconCart />
-          </div>
-        </div>
+        <Link href="/profile/order-history">
+          <a className=" px-3 cursor-pointer">Đăng nhập</a>
+        </Link>
+        <Link href="/cart">
+          <a className="border-l border-gray-300 px-3 flex items-center cursor-pointer">
+            <div className="w-8">
+              <IconCart />
+            </div>
+          </a>
+        </Link>
       </div>
     </div>
   )
