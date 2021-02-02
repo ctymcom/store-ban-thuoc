@@ -70,13 +70,11 @@ export const listMoneyCart = [
 export const listPromotionCode = [
     {
         code: "KM50",
-        title: "Discount 50% on cart",
-        des: 50 / 100
+        des: 50
     },
     {
         code: "KM30",
-        title: "Discount 30# on cart",
-        des: 30 / 100
+        des: 30
     },
     {
         code: "",

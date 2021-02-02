@@ -1,16 +1,23 @@
 import { useState } from "react";
+type PromotionProps = {
+    [x: string]: any,
+    onChanged?: (promotion: any) => void,
+    PrUsing: { code: '', des: '' }
+}
+export function Promotion({ onChanged = () => { }, PrUsing, ...props }: PromotionProps) {
+    const [UsePromotion, setUsePromotion] = useState(false);
+    const [Promotion, setPromotion] = useState<string>()
 
-export function Promotion(props) {
+    const applyPromotion = () => {
+        if (UsePromotion) {
+            setPromotion(null);
+            onChanged(null);
+            setUsePromotion(false);
+        } else if (!!Promotion) {
+            onChanged(Promotion);
+            setUsePromotion(true);
+        }
 
-    const [code, setCode] = useState('')
-
-    const returnPromotionCode = () => {
-        console.log(props)
-        if (props.PrUsing) props.setPrUsing(null)
-        else
-            props.setPrUsing({
-                code,
-            })
     }
     return (<>
         <div className="flex border-b-4 pb-2 mt-2.5 items-center">
@@ -26,13 +33,13 @@ export function Promotion(props) {
             </svg>
             <p className="uppercase px-2">Mã khuyến mãi</p>
         </div>
-        <div className="py-4 w-full">
+        <div className="py-4 w-full h-24">
             {
-                props.promotion ? (
+                UsePromotion ? (
                     <div>
                         <h4 className="text-xl text-primary font-semibold">
-                            Mã ưu đãi {props.promotion.code}</h4>
-                        <p>Giảm giá: {props.promotion.value}%</p>
+                            Mã ưu đãi {PrUsing.code}</h4>
+                        <p>Giảm giá: {PrUsing.des}%</p>
                     </div>
                 ) : (
                         <div>
@@ -40,15 +47,15 @@ export function Promotion(props) {
                                 className="block w-full border-2 border-gray-300 rounded my-3 px-2 py-1"
                                 type="text"
                                 placeholder="Nhập mã ưu đãi"
-                                value={code}
-                                onChange={(e) => setCode(e.target.value)} />
+                                value={Promotion}
+                                onChange={(e) => setPromotion(e.target.value)} />
                         </div>
                     )
             }
         </div>
-        <button onClick={() => returnPromotionCode()} type="button"
-            className="border-2 border-gray-300 rounded bg-gray-200 w-full text-gray-400 py-1 px-2 text-center">
-            {props.promotion ? "Hủy áp dụng" : "Áp dụng"}
+        <button onClick={applyPromotion} type="button"
+            className={Promotion ? "border-2 border-gray-300 rounded text-white bg-primary w-full py-1 px-2 text-center" : "border-2 border-gray-300 rounded bg-gray-200 w-full text-gray-400 py-1 px-2 text-center disabled"}>
+            {UsePromotion ? "Hủy áp dụng" : "Áp dụng"}
         </button>
     </>)
 }

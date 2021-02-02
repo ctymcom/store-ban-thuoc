@@ -13,7 +13,7 @@ export function CartItem(props) {
         <tr className="border-b-2 col-span-4 h-20" key={props.index}>
             <td className="pr-5" >
                 <div className="grid grid-cols-12 gap-4 items-center h-20">
-                    <div className="w-10 h-10" onClick={() => { props.handleDeleteCart(props.item.id) }}>
+                    <div className="w-10 h-10 py-3" onClick={() => { props.handleDeleteCart(props.item.id) }}>
                         <svg className="w-4 h-4 col-span-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                             <g id="Group_38402" data-name="Group 38402" transform="translate(0 0)">
                                 <path id="Path_10589" data-name="Path 10589" d="M-1063.434-725.236a9.989,9.989,0,0,1,10.012,9.967,9.989,9.989,0,0,1-9.985,10.033,10,10,0,0,1-10.015-9.969A9.989,9.989,0,0,1-1063.434-725.236Zm-.016,18.182a8.2,8.2,0,0,0,8.213-8.036,8.183,8.183,0,0,0-8.115-8.329,8.2,8.2,0,0,0-8.253,8.077A8.181,8.181,0,0,0-1063.45-707.053Z" transform="translate(1073.422 725.236)" fill="#9b9b9b" />

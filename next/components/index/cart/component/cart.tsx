@@ -9,8 +9,6 @@ import { Promotion } from './promotion';
 
 export function CartPayPromotion(props) {
     // const [Tit, setTit] = useState('cart');
-    const [promotion, setPromotion] = useState(null)
-    const [PCod, setPCod] = useState("");
     const [Change, setChange] = useState(false);
     const [listCart, setListCart] = useState(cartItemData);
     const [PrUsing, setPrUsing] = useState(null);
@@ -37,9 +35,13 @@ export function CartPayPromotion(props) {
         return listCart.findIndex((item) => { return item.id === id });
     }
     const setListMoney = (code) => {
+        let des = 0;
+        if (code !== null) {
+            des = code.des;
+        }
         let total = toTalMoney(listCart);
         let listMoneyNew = ListMoneyCart;
-        let discount = -total * code.des
+        let discount = -total * des / 100;
         let final = total + discount;
         listMoneyNew[0].money = total;
         listMoneyNew[1].money = discount;
@@ -86,14 +88,22 @@ export function CartPayPromotion(props) {
     }
     const handleChangeListCart = (list) => {
     }
-    const handleSetPromotion = () => {
-        console.log(PCod);
-        if (PCod === listPromotionCode[0].code) {
-            setPrUsing(listPromotionCode[0]);
-            setListMoney(PrUsing);
-        }
-        else {
-            setPrUsing(listPromotionCode[2])
+    const handleSetPromotion = (Cod) => {
+        switch (Cod) {
+            case listPromotionCode[0].code: {
+                setPrUsing(listPromotionCode[0]);
+                setListMoney(listPromotionCode[0]);
+            } break;
+            case listPromotionCode[1].code: {
+                setPrUsing(listPromotionCode[1]);
+                setListMoney(listPromotionCode[1]);
+            } break
+            case null: {
+                setPrUsing(null);
+                setListMoney(null);
+            } break;
+            default:
+                break;
         }
     }
     return <div className="w-4/5 mx-auto">
@@ -107,7 +117,9 @@ export function CartPayPromotion(props) {
                 </div>
                 <div id="cart" className="col-span-2">
                     <div id="cart__Promotion">
-                        <Promotion PrUsing={PrUsing} setPrUsing={setPrUsing} />
+                        <Promotion onChanged={(promotion) => {
+                            handleSetPromotion(promotion);
+                        }} PrUsing={PrUsing} />
                     </div>
                     <div id="cart__TotalMoney" className="mt-10">
                         <CartTotalMoney listMoney={ListMoneyCart} />
