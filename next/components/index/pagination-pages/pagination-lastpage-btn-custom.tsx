@@ -1,12 +1,12 @@
 export function PaginationLastPageBtnCustom({ onClick }) {
     return <li>
         <button
-            className="flex ml-3 items-center justify-center px-2.5 py-2.5 rounded-full border-2 focus:outline-none focus:shadow-outline-purple border-gray-600 hover:text-success hover:border-success"
+            className="flex ml-3 items-center justify-center px-2.5 py-2.5 rounded-full border-2 focus:outline-none focus:shadow-outline-purple border-gray-600 hover:text-primary hover:border-primary"
             aria-label="Previous"
             onClick={onClick}
         >
             <svg aria-hidden="true"
-                className="w-3 h-3 fill-current"
+                className="w-4 h-4 fill-current"
                 viewBox="0 0 14 14">
                 <g id="Group_2445" data-name="Group 2445" transform="translate(-596 -1398)">
                     <g id="chevron-left" transform="translate(612 1417) rotate(180)">

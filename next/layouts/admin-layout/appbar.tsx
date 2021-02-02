@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router';
-import { SidebarData } from '../../../next/layouts/components/sidebar-data'
+import { SidebarData } from './sidebar-data'
 import { BreadcrumbItem } from '../default-layout';
 import { IconArrowRight } from '../../lib/svg/icon-arrow-right';
 import { IconRing } from '../../lib/svg/icon-ring';
-import { IconUser } from './../../lib/svg/icon-user';
-import { IconLogout } from './../../lib/svg/icon-logout';
+import { IconUser } from '../../lib/svg/icon-user';
+import { IconLogout } from '../../lib/svg/icon-logout';
 type AppBarProps = {
     breadcrumbs?: BreadcrumbItem[],
     [x: string]: any

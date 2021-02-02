@@ -11,7 +11,7 @@ export function ProductDetail() {
         </div>
 
         <div className="grid grid-rows-1">
-          <div className="grid grid-cols-10 mt-12 text-lg uppercase font-bold">
+          <div className="grid grid-cols-10 mt-12 text-lg uppercase font-medium">
             <ProductHeading />
           </div>
           <ProductDescription />

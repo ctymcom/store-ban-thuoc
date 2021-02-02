@@ -15,19 +15,19 @@ export function ProductsPage() {
     ]
     console.log(ShowCatelogy_responesive)
     return <>
-        <DefaultLayout breadcrumbs={breadcrumbs}>
-            <div className="px-8 container-1 flex">
-                <Category
-                    onFilter={(e) => { setfilter(e.filter((item) => { return item.status })) }}
-                    ShowCatelogy_responesive={ShowCatelogy_responesive}
-                    onShowCatelogy_responesive={(e) => { setShowCatelogy_responesive(e) }}
-                />
-                <ProductListPage
-                    Filter={filter}
-                    onShowCatelogy_responesive={(e) => { setShowCatelogy_responesive(e) }}
-                />
+        <div className="px-8 container-1 flex">
+            <Category
+                onFilter={(e) => { setfilter(e.filter((item) => { return item.status })) }}
+                ShowCatelogy_responesive={ShowCatelogy_responesive}
+                onShowCatelogy_responesive={(e) => { setShowCatelogy_responesive(e) }}
+            />
+            <ProductListPage
+                Filter={filter}
+                onShowCatelogy_responesive={(e) => { setShowCatelogy_responesive(e) }}
+            />
 
-            </div>
-        </DefaultLayout>
+        </div>
     </>
 }
+
+ProductsPage.Layout = DefaultLayout

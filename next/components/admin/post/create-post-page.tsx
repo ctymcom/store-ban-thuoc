@@ -1,9 +1,16 @@
 import { AdminLayout } from "../../../layouts/admin-layout";
 import { CreatePost } from "./component/create-post";
-
-export function CreatePostPage() {
-
-    return <AdminLayout>
+import { EditPostProvider } from "./providers/edit-post-provider";
+type CreatePostPageProps = {
+  [x: string]: any;
+  postId?: string;
+};
+export function CreatePostPage({ postId }: CreatePostPageProps) {
+  return (
+    <AdminLayout>
+      <EditPostProvider postId={postId}>
         <CreatePost />
+      </EditPostProvider>
     </AdminLayout>
+  );
 }

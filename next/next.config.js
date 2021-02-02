@@ -9,4 +9,13 @@ module.exports = withBundleAnalyzer({
     publicRuntimeConfig: {
         firebaseView: process.env.FIREBASE_VIEW,
     },
+    // async redirects() {
+    //     return [
+    //       {
+    //         source: '/',
+    //         destination: '/home',
+    //         permanent: true,
+    //       },
+    //     ]
+    //   },
 })

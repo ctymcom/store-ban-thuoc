@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-export function HeadSEO({ title }) {
+export function HeadAdmin({ title }) {
     return (
         <>
             <Head>
@@ -8,9 +8,9 @@ export function HeadSEO({ title }) {
                 <meta name="theme-color" content="#000000" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 {/* Favicon */}
-                <link rel="icon" href="/assets/icons/favicon.ico" />
+                <link rel="icon" href="/assets/img/favicon.ico" />
                 {/* Font Open Sans */}
-
+                
 
                 {/* Bootstrap, Font Awesome 4.7 */}
 

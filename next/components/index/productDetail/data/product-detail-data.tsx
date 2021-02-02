@@ -8,22 +8,22 @@ export const ProductDetailData = [
         description_2: 'Là thuốc bổ và giảm mệt mỏi trong các trường hợp suy giảm thể chất khi đang bị bệnh hoặc trong giai đoạn hồi phục.',
         slide_img: [
             {
-                img: '../../../../../assets/images/product.png'
+                img: '../../../../../public/assets/images/product.png'
             },
             {
-                img: '../../../../../assets/images/product-1.png',
+                img: '../../../../../public/assets/images/product-1.png',
             },
             {
-                img: '../../../../../assets/images/product-2.png',
+                img: '../../../../../public/assets/images/product-2.png',
             },
             {
-                img: '../../../../../assets/images/product-3.png',
+                img: '../../../../../public/assets/images/product-3.png',
             },
             {
-                img: '../../../../../assets/images/product-4.png',
+                img: '../../../../../public/assets/images/product-4.png',
             },
             {
-                img: '../../../../../assets/images/product-5.png',
+                img: '../../../../../public/assets/images/product-5.png',
             },
         ],
     },

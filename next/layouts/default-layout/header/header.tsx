@@ -1,21 +1,14 @@
 import { useState } from "react";
-import { IconCart } from "../../lib/svg/icon-cart";
-import Link from "next/link";
-import { IconSearch } from "../../lib/svg/icon-search";
-import { Logo } from "../../lib/svg/logo";
-import { BreadcrumbItem } from "../default-layout";
-import { IconArrowRight } from "../../lib/svg/icon-arrow-right";
-import { IconMenu } from "../../lib/svg/icon-menu";
-import { IconClose } from "../../lib/svg/icon-close";
-import { Transition } from "@headlessui/react";
+import { BreadcrumbItem } from "../../admin-layout";
+import { MainHeader } from './main-header';
+import { MenuHeader } from './menu-header';
+import { TopHeader } from "./top-header";
 type HeaderProps = {
   [x: string]: any;
   breadcrumbs?: BreadcrumbItem[];
   activeMenu?: number;
 };
 export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderProps) {
-  const topMenu = ["Tin tức", "Tuyển dụng", "Trở thành nhà bán thuốc"];
-  const mainMenu = ["Sản phẩm", "Hoạt chất", "Khuyến mãi", "Tin tức sức khỏe"];
   const NavMenu = [
     "Sản phẩm",
     "Hoạt chất",
@@ -24,69 +17,17 @@ export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderPro
     "Tuyển dụng",
     "Tài khoản",
   ];
-  const [ActiveMenu, setActiveMenu] = useState(activeMenu);
-  const [showNavMenu, setshowNavMenu] = useState(false);
   return (
     <>
-      <div className="w-full hidden lg:block">
-        <div className="hidden container-1 lg:flex items-center py-2 bg-gray-200 justify-end text-xs">
-          {topMenu.map((m, index) => (
-            <p key={index} className="text text-gray-400 cursor-pointer ml-5">
-              {m}
-            </p>
-          ))}
-        </div>
-        <div className="container-1 py-6 grid grid-cols-4">
-          <div className="hidden"></div>
-          <div className="w-16 ">
-            <Logo />
-          </div>
-          <div className="hidden search col-span-2 lg:flex items-center w-full">
-            <div className="relative flex items-center w-full">
-              <input
-                type="text"
-                placeholder="Tìm kiếm"
-                className="py-2 px-12  w-full bg-white ring-gray-300 ring-1 text-sm text-gray-500 rounded-full focus:outline-none focus:ring-gray-400 "
-              />
-              <div className="absolute icon w-4 text-gray-400 z-50 left-5">
-                <IconSearch />
-              </div>
-            </div>
-          </div>
-          <div className="hidden lg:flex items-center justify-end text-gray-500">
-            <div className=" px-3 cursor-pointer">Đăng nhập</div>
-            <div className="border-l border-gray-300 px-3 flex items-center cursor-pointer">
-              <div className="pr-2">Giỏ hàng</div>
-              <div className="w-8">
-                <IconCart />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="container-1 bg-primary-400 text-white flex items-center justify-between">
-          <ul className="flex text-sm">
-            {mainMenu.map((m, index) => (
-              <li
-                key={index}
-                className={
-                  "cursor-pointer py-2 px-6 hover:bg-primary-500 " +
-                  (ActiveMenu == index ? "bg-primary-500" : "")
-                }
-              >
-                {m}
-              </li>
-            ))}
-          </ul>
-          <div className="text-sm flex space-x-1">
-            <p className="">HOTLINE: </p>
-            <b className="text-yellow-200"> 1900 6067 </b> (miễn phí)
-          </div>
-        </div>
+      <div className="w-full">
+        <TopHeader/>
+        <MainHeader/>
+        <MenuHeader/>
       </div>
 
       {/* do header có nhiều thay đổi so với desktop nên em tạo thêm 1 cái mới luôn ạ */}
               
-      <div className="lg:hidden w-full flex justify-between  items-center px-4 py-4">
+      {/* <div className="lg:hidden w-full flex justify-between  items-center px-4 py-4">
         <div className="text-primary-500">
           <div
             className="w-6 "
@@ -111,14 +52,6 @@ export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderPro
           </div>
         </div>
       </div>
-      {/* <Transition
-        className="transition-all duration-700"
-        show={showNavMenu}
-        enterFrom="translate-x-4"
-        enterTo="opacity-100"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-                > */}
       <div
         className={
           "transition-opacity duration-1000 min-h-screen h-full w-full fixed top-0 z-50 bg-black bg-opacity-25 flex " +
@@ -176,7 +109,7 @@ export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderPro
           setshowNavMenu(false);
         }}></div>
       </div>
-      {/* </Transition> */}
+      
       {breadcrumbs.length != 0 && (
         <div className="container-1 flex items-center mt-3 py-2">
           {breadcrumbs
@@ -201,7 +134,7 @@ export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderPro
                 ];
             }, null as any)}
         </div>
-      )}
+      )} */}
     </>
   );
 }
