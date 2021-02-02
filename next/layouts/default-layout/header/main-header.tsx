@@ -7,10 +7,15 @@ export function MainHeader() {
     <div className="main-container py-2 flex justify-between">
       <div className="flex items-start">
         <Link href="/">
-          <a>
+          <a className="logo">
             <Image src="/assets/img/logo.png" width={'auto'} height={72} objectFit="contain"></Image>
           </a>
         </Link>
+        <style jsx>{`
+          .logo {
+            width: 120px;
+          }
+        `}</style>
       </div>
       <div className="search col-span-2 flex items-center w-full max-w-md">
         <div className="relative flex items-center w-full">
