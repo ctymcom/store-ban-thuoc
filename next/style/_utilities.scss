@@ -135,6 +135,10 @@
     object-fit: cover;
   }
 
+  &.aspect-16-9 {
+    padding-top: 56.25%;
+  }
+
   &.contain {
     img {
       object-fit: contain;

@@ -73,9 +73,25 @@ a:focus {
 }
 
 .main-container {
-  width: 86%;
+  @apply container;
   margin-left: auto;
   margin-right: auto;
+  width: 96%;
+  @screen sm {
+    width: 94%;
+  }
+  @screen md {
+    width: 92%;
+  }
+  @screen lg {
+    width: 90%;
+  }
+  @screen xl {
+    width: 88%;
+  }
+  @screen 2xl {
+    width: 86%;
+  }
 }
 
 @media(max-width:1024px) {
