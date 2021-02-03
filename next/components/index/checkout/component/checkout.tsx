@@ -4,6 +4,7 @@ import { PayMoney } from '../../cart/component/pay-money';
 import { CartPayHeader } from '../../cart/component/cart-pay-header';
 import { FormatMoney } from '../../../shared/currency/money';
 import { useRouter } from 'next/router';
+import IconLocation from '../../../../lib/svg/icon-location';
 
 export function CheckOut() {
     const totalMonney = (listMoney) => {
@@ -26,14 +27,12 @@ export function CheckOut() {
                 <div className="mb-12">
                     <div className="flex justify-between items-center border-b-2 mt-4 pb-2">
                         <div className="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="13.885" height="18.964" viewBox="0 0 13.885 18.964">
-                                <path id="Path_10605" data-name="Path 10605" d="M237.554-1313.867c4.427,0,7.536,3.138,7.5,7a6.8,6.8,0,0,1-.624,2.5,28.929,28.929,0,0,1-3.043,5.39c-.851,1.238-1.754,2.44-2.648,3.647-.42.568-.821.566-1.246.016a45.757,45.757,0,0,1-5.258-8.087,10.965,10.965,0,0,1-.956-2.668,6.275,6.275,0,0,1,1.715-5.544A6.492,6.492,0,0,1,237.554-1313.867Zm.561,8.832a2.522,2.522,0,0,0,2.519-2.528,2.541,2.541,0,0,0-2.533-2.522,2.54,2.54,0,0,0-2.518,2.538A2.519,2.519,0,0,0,238.115-1305.035Z" transform="translate(-231.166 1313.867)" fill="#42b54a" />
-                            </svg>
+                            <IconLocation />
                             <h4 className="uppercase pl-2">Địa chỉ giao hàng</h4>
                         </div>
-                        <button className="text-primary-500">Sửa</button>
+                        <button className="text-primary">Sửa</button>
                     </div>
-                    <p className="text-primary-500">Minh Đức Vi</p>
+                    <p className="text-primary">Minh Đức Vi</p>
                     <p>1111111111</p>
                     <p>43 Hoa Huệ, Phường 7, Quận Phú</p>
                 </div>
@@ -42,14 +41,14 @@ export function CheckOut() {
                 </div>
                 <div className="flex justify-between pt-2">
                     <p>Thành tiền</p>
-                    <p className="font-bold text-primary-500"><FormatMoney money={totalMonney(listMoneyCheckout)} tS='.' /> VND</p>
+                    <p className="font-bold text-primary"><FormatMoney money={totalMonney(listMoneyCheckout)} tS='.' /> VND</p>
                 </div>
             </div>
         </div>
         <div className="w-10/12 m-auto flex justify-between">
             <div></div>
             <button onClick={() => router.push('/complete')}
-                className="w-1/4 ml-10 border border-gray-300 rounded p-2 mt-2 bg-primary-500 text-white">Xác nhận đặt hàng</button>
+                className="w-1/4 ml-10 border border-gray-300 rounded p-2 mt-2 bg-primary text-white">Xác nhận đặt hàng</button>
         </div>
         <div className="w-10/12 m-auto flex justify-between">
             <div></div>
