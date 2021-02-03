@@ -57,7 +57,7 @@ export function Footer() {
           <div className="flex flex-col justify-start text-sm sm:px-9 md:px-0 sm:mt-6 md:mt-0">
             <div className="">
               <div className="uppercase text-primary py-1 sm:text-2xl md:text-sm">Đăng kí nhận tin mới</div>
-              <div className="sm:text-lg md:text-sm sm:py-1 md:py-2 sm:mb-5 md:mb-2">Hãy đăng ký email để nhận được khuyến mãi</div>
+              <div className="sm:text-lg md:text-sm sm:py-1 md:py-2 sm:mb-5 md:mb-2 md:mt-2">Hãy đăng ký email để nhận được khuyến mãi</div>
               <div className="py-4 flex ">
                 <input
                   type="text"
@@ -86,8 +86,8 @@ export function Footer() {
             </div>
             <div className="">
               <div className="uppercase text-primary py-2 sm:text-2xl md:text-sm">Hotline miễn phí (7h-22h)</div>
-              <div className="py-2">
-                <p className="sm:text-lg md:text-sm">Gọi điện đặt hàng: 1900 6067</p>
+              <div className="sm:py-1 md:py-2">
+                <p className="sm:text-lg md:text-sm sm:pb-1 md:pb-0">Gọi điện đặt hàng: 1900 6067</p>
                 <p className="sm:text-lg md:text-sm">Gọi điện tư vấn - hỗ trợ: 1900 6067</p>
               </div>
             </div>
