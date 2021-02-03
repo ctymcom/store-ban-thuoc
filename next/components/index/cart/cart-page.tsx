@@ -48,6 +48,8 @@ export default function CartPage(props) {
         setListCart([...listNew]);
         setListMoney(PrUsing);
         setChange(true);
+        console.log(listCart);
+
     }
     const findIndex = (id) => {
         return listCart.findIndex((item) => { return item.id === id });

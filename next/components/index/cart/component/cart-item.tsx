@@ -3,15 +3,13 @@ import { toNumber } from 'lodash';
 import { Checkbox } from '../../../shared/form/checkbox';
 
 export function CartItem(props) {
-    const setChecked = (isCheck) => {
-        return isCheck;
-    }
     return (
-        < tr className="border-b-2 col-span-4 h-auto" key={props.index} >
+        <tr className="border-b-2 col-span-4 h-auto">
             <td className="" >
                 <div className="grid grid-cols-12 gap-4 items-center h-auto">
                     <div className="w-10 h-10 py-3" >
-                        <Checkbox value={props.item.isCheck} onChanged={(e) => {
+                        <Checkbox checked={props.item.isCheck} id={props.item.id} onChanged={(e) => {
+                            console.log(props);
                             props.handleChangeItem(props.item.id, "c", e);
                         }} />
                     </div>

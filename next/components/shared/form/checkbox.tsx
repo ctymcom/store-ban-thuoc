@@ -31,7 +31,7 @@ export function Checkbox({
         name={name}
         required={required}
         type="checkbox"
-        defaultChecked={value}
+        defaultChecked={checked}
       />
       <label className={style + " w-full " + (checked && " text-primary")} htmlFor={name}>
         <i className="bg-primary"></i>
