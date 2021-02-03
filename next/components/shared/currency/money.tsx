@@ -8,5 +8,5 @@ export function FormatMoney(props) {
         }
         return ',';
     }
-    return <CurrencyFormat value={money} displayType={'text'} thousandSeparator={tS} decimalSeparator={DeSe(tS)} renderText={value => <p className="inline">{value}</p>} />
+    return <CurrencyFormat value={money} displayType={'text'} thousandSeparator={tS} decimalSeparator={DeSe(tS)} renderText={value => <span className="inline">{value}</span>} />
 }

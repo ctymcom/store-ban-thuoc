@@ -9,7 +9,7 @@ export function FormCheck(props) {
             return "border-b-2 text-2xl uppercase mt-4";
         }
         else {
-            return "text-primary-500 text-xl mt-2";
+            return "text-primary text-xl mt-2";
         }
     }
     const [Checked, setChecked] = useState(false);
@@ -33,13 +33,13 @@ export function FormCheck(props) {
             case "bo": {
                 let tempStyle = "m-2 p-2 border-2 rounded"
                 if (id === IDC)
-                    tempStyle += " border-primary-500";
+                    tempStyle += " border-primary";
                 return tempStyle;
             }
             case "he": {
                 let tempStyle = "text-xl"
                 if (id === IDC)
-                    tempStyle += " text-primary-500";
+                    tempStyle += " text-primary";
                 return tempStyle;
             }
         }

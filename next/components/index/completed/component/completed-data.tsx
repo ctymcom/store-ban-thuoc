@@ -27,7 +27,7 @@ export const statusSuccessed = {
     header: "Đặt hàng thành công.",
     type: "successed",
     listContent,
-    img: "../../../../../assets/images/completed.png",
+    img: "../../../../../../public/assets/images/completed.png",
     listButton: listButtonSuccessed
 }
 export const statusFailed = {
