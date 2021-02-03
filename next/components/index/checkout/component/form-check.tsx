@@ -1,25 +1,15 @@
 import { Checkbox } from '../../../shared/form/checkbox';
 import { useState } from 'react';
-import e from 'express';
 export function FormCheck(props) {
     const { title, checkList } = props;
-    const UOT = "Chọn Nhà vận chuyển"
-    const styleH = (title) => {
-        if (title !== UOT) {
-            return "border-b-2 text-2xl uppercase mt-4";
-        }
-        else {
-            return "text-primary text-xl mt-2";
-        }
-    }
     const [Checked, setChecked] = useState(false);
-    const [IDC, setIDC] = useState(null);
+    const [IDC, setIDC] = useState(0);
     const setIDChecked = (id) => {
         if (id !== IDC) {
             setIDC(id);
             setChecked(true);
         } else {
-            setIDC(null);
+            setIDC(0);
             setChecked(false);
         }
     }
@@ -31,21 +21,21 @@ export function FormCheck(props) {
     const setStyleCheck = (id, type) => {
         switch (type) {
             case "bo": {
-                let tempStyle = "m-2 p-2 border-2 rounded"
+                let tempStyle = "p-4 mr-4 border rounded w-2/5"
                 if (id === IDC)
-                    tempStyle += " border-primary";
+                    tempStyle += " border-primary bg-green-50";
                 return tempStyle;
             }
             case "he": {
-                let tempStyle = "text-xl"
+                let tempStyle = "text-lg"
                 if (id === IDC)
                     tempStyle += " text-primary";
                 return tempStyle;
             }
         }
     }
-    return <>
-        <h3 className={styleH(title)}>{title}</h3>
+    return <div className="my-6">
+        <h3 className="py-1.5 my-3 uppercase border-b-2 text-xl">{title}</h3>
         <div className="flex">
             {
                 checkList.map((item, index) => {
@@ -54,12 +44,12 @@ export function FormCheck(props) {
                             <Checkbox checked={setCheckBox(index)} />
                             <div>
                                 <h4 className={setStyleCheck(index, "he")}>{item.title}</h4>
-                                <p>{item.content}</p>
+                                <p className="text-gray-400 text-sm">{item.content}</p>
                             </div>
                         </div>
                     </div>
                 })
             }
         </div>
-    </>
+    </div>
 }
