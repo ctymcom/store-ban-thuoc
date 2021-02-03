@@ -30,23 +30,19 @@ module.exports = {
         warning: getSemanticColors(colors.yellow),
         danger: getSemanticColors(colors.red),
       },
-      // textColor: theme => theme('colors'),
-      // textColor: {
-      //  'success': '#42B54A',
-      //  'danger': '#e3342f',
-      //  'text-color': '#282828',
-      // },
-      // backgroundColor: theme => ({
-      //   ...theme('colors'),
-      //   'btn-warning': '#F9B514',
-      //   'btn-green': '#42B54A',
-      //   'btn-success': '#42B54A',
-      //   'btn-danger': '#e3342f',
-      // }),
-      // borderColor: theme => ({
-      //   ...theme('colors'),
-      //   'success': '#42B54A',
-      //  })
+      fontSize: {
+        10: '10px',
+        12: '12px',
+        14: '14px',
+        16: '16px',
+        18: '18px',
+        20: '20px',
+        24: '24px',
+        32: '32px',
+        40: '40px',
+        48: '48px',
+        64: '64px',
+      }
     },
     
   },

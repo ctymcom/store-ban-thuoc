@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useRouter } from "next/router"
-export default function Custom404() {
+import { DefaultLayout } from "../layouts/default-layout";
+export default function Index() {
   const router = useRouter()
 
   useEffect(() => {
@@ -9,3 +10,5 @@ export default function Custom404() {
 
   return null
 }
+
+Index.Layout = DefaultLayout

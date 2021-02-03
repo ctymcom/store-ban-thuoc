@@ -4,7 +4,7 @@ export function ListCartItems(props) {
     return (
         <table>
             <thead>
-                <tr className="uppercase  text-left border-b-4">
+                <tr className="uppercase text-center border-b-4">
                     <th className="w-96 font-normal">Sản Phẩm</th>
                     <th className="font-normal  w-40">Giá</th>
                     <th className="font-normal  w-40">Số Lượng</th>
@@ -15,7 +15,9 @@ export function ListCartItems(props) {
                 {
 
                     props.listCart.map((item, index) => {
-                        return <CartItem item={item} index={index} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem} />
+                        console.log(item);
+
+                        return <CartItem key={index} item={item} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem} />
                     }
                     )}
             </tbody>

@@ -1,9 +1,9 @@
-import { DefaultLayout } from "../../../layouts/default-layout";
 
-export function IngridientsPage() {
+export function IngredientsPage() {
     return <>
-        <DefaultLayout breadcrumbs={[]}>
+    Hello
+        {/* <DefaultLayout breadcrumbs={[]}>
             
-        </DefaultLayout>
+        </DefaultLayout> */}
     </>
 }

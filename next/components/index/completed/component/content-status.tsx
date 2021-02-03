@@ -5,7 +5,7 @@ export function ContentStatus(props) {
         let tempType: string = '';
         tempType += "text-4xl font-bold mx-10 my-4";
         if (type === "successed")
-            tempType += " text-primary-600";
+            tempType += " text-primary";
         if (type === "failed")
             tempType += " text-red-300";
         return tempType;

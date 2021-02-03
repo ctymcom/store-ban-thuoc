@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { Post, PostRepository } from "../../../../lib/repo/post-repo";
 import { useRouter } from "next/router";
 
@@ -16,19 +16,41 @@ export function EditPostProvider({ children, postId, ...props }: EditPostProvide
   const [Post, setPost] = useState<Post>();
   const router = useRouter();
   const updatePost = () => {
-    postRepo.update({ id: postId, data: Post }).then((res) => {
-      setPost(Post);
-    });
+    return postRepo
+      .update({
+        id: postId,
+        data: {
+          title: Post.title,
+          content: Post.content,
+          featureImage: Post.featureImage,
+          slug: Post.slug,
+          publishedAt: Post.publishedAt,
+          tagIds: Post.tagIds,
+          excerpt: Post.excerpt,
+        },
+      })
+      .then((res) => {
+        setPost(Post);
+        alert("Đã đăng.");
+      });
   };
   const createPost = () => {
-    postRepo.create({ data: Post }).then((res) => {
+    return postRepo.create({ data: Post }).then((res) => {
       router.push(`/admin/post/${res.slug}`);
+      alert("Đã đăng.");
     });
+  };
+  const publish = () => {
+    if (isNewPost) {
+      createPost();
+    } else {
+      updatePost();
+    }
   };
   useEffect(() => {
     if (!isNewPost) {
       postRepo.getOne({ id: postId }).then((res) => {
-        setPost(res);
+        setPost({ ...res });
       });
     } else {
       setPost({ title: "", content: "" } as Post);
@@ -36,7 +58,7 @@ export function EditPostProvider({ children, postId, ...props }: EditPostProvide
   }, []);
 
   return (
-    <EditPostContext.Provider value={{ Post, updatePost, createPost }}>
+    <EditPostContext.Provider value={{ post: Post, updatePost, createPost, publish }}>
       {children}
     </EditPostContext.Provider>
   );

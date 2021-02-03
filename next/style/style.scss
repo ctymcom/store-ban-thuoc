@@ -1,49 +1,11 @@
 @tailwind base;
 @tailwind components;
-
-// @import "../pages/home/styles/home.scss";
-
 @tailwind utilities;
 
-/* width */
-::-webkit-scrollbar {
-  width: 1px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.scrollbar {}
-
-.scrollbar::-webkit-scrollbar {
-  width: 1px;
-}
-
-/* Track */
-.scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-.scrollbar::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-/* Handle on hover */
-.scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #555;
+body {
+  font-family: 'Cabin', sans-serif;
+  background: white;
+  @apply text-gray-700;
 }
 
 .line-white::after {
@@ -134,8 +96,6 @@ h6:after {
   margin: 0 0 0 20px;
 }
 
-
-
 .arrow {
   &:hover {
     fill: red;
@@ -163,6 +123,12 @@ h6:after {
   padding-right: 10%;
 }
 
+.main-container {
+  width: 86%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media(max-width:1024px) {
   .Product {
     min-width: 300px;
@@ -183,9 +149,4 @@ input:focus{
 }
 button:focus{
   outline: none;
-}
-
-body {
-  background: #f6f6f6;
-  color: #333;
 }
