@@ -7,16 +7,14 @@ type ProductCardProps = {
   sale: string;
   onAddToCart?: () => void;
 };
-export function ProductCard({ img: image, type, name, price, sale, ...props }: ProductCardProps) {
+export function ProductCard({ img, type, name, price, sale, ...props }: ProductCardProps) {
   return (
-    <div className="Product py-5 ">
+    <>
+    <div className="py-5">
       <div className="flex flex-col justify-between">
         <div className="">
           <div className="img-item flex justify-center items-center max-w-sm h-48 relative">
-            <img src={image} alt="" className="w-36 max-h-48" />
-            <div className="btn-readmore duration-200 absolute bottom-0 w-full bg-green-400 text-center text-white text-sm rounded">
-              <div className="w-full py-1 cursor-pointer duration-150">Xem nhanh</div>
-            </div>
+            <img src={img} alt="" className="w-36 max-h-48" />
           </div>
           <div className="py-1">
             <p className="text-sm text-gray-400">{type}</p>
@@ -46,5 +44,6 @@ export function ProductCard({ img: image, type, name, price, sale, ...props }: P
         </div>
       </div>
     </div>
+    </>
   );
 }

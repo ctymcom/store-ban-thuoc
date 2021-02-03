@@ -49,6 +49,15 @@ export function SubMenu({ opened, activeSubmenu, item, ...props }: SubMenuProps)
                     </ul>
                 </Transition>
             </li>
+            <style jsx>{`           
+                .arrow {
+                    &:hover {
+                    fill: red;
+                    transform: rotate(0);
+                    transition: 0.1s;
+                    }
+                }
+            `}</style>
         </>
     )
 } 
