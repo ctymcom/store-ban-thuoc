@@ -9,14 +9,6 @@ type HeaderProps = {
   activeMenu?: number;
 };
 export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderProps) {
-  const NavMenu = [
-    "Sản phẩm",
-    "Hoạt chất",
-    "Khuyến mãi",
-    "Tin tức sức khỏe",
-    "Tuyển dụng",
-    "Tài khoản",
-  ];
   return (
     <>
       <div className="w-full">
