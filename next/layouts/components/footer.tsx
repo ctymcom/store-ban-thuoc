@@ -65,7 +65,7 @@ export function Footer() {
                   placeholder="Nhập email của bạn"
                 />
                 <div className="uppercase bg-primary sm:px-12 md:px-4 flex items-center cursor-pointer rounded-r-full">
-                  <span className="sm:w-24 sm:text-xl md:text-sm">Đăng kí</span>
+                  <span className="sm:w-24 md:w-16 sm:text-xl md:text-sm">Đăng kí</span>
                 </div>
               </div>
             </div>
