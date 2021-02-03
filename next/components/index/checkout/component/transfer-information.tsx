@@ -2,7 +2,7 @@ import React from 'react';
 
 const TransferInformation = (props) => {
     return (
-        <div className={props.isHide ? "relative p-4 mr-4 border rounded w-4/5 border-primary bg-green-50" : "scale-x-0"}>
+        <div className={props.isHide ? "relative p-3 mr-4 border rounded w-4/5 border-primary bg-green-50" : "scale-x-0"}>
             {
                 !props.isHide ? "" : props.info.map((item, index) => {
                     return <div className="grid grid-cols-5" key={index}>

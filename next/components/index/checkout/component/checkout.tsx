@@ -6,11 +6,12 @@ import { FormatMoney } from '../../../shared/currency/money';
 import { useRouter } from 'next/router';
 import IconLocation from '../../../../lib/svg/icon-location';
 import TransferInformation from './transfer-information';
-import React, { useState } from 'react';
-import { Checkbox } from '../../../shared/form/checkbox';
+import { useState } from 'react';
+import IconCheck from '../../../../lib/svg/icon-check';
 
 export function CheckOut() {
     const [isHide, setIsHide] = useState(false);
+    const [isCheck, setIsCheck] = useState(false);
     const totalMonney = (listMoney) => {
         let total = 0;
         listMoney.forEach(item => {
@@ -33,12 +34,15 @@ export function CheckOut() {
                 <input type="" className="w-full border-2 border-gray-300 rounded-md pl-3 pt-2 pb-14 text-lg my-6" placeholder="Nhập ghi chú của bạn" />
 
                 <div className="flex items-center w-1/3 justify-evenly">
-                    <Checkbox />
+                    <div className="relative w-4 h-4">
+                        <input type="checkbox" checked={isCheck} onChange={(e) => setIsCheck(e.target.checked)} className="absolute top-0 left-0 appearance-none h-4 w-4 border border-gray-300 rounded-md checked:bg-white border-transparent focus:outline-none" />
+                        <div className={isCheck ? "absolute top-0.5 left-0.5" : "hidden"}><IconCheck /></div>
+                    </div>
                     <p>Tôi đồng ý với</p>
                     <button className="text-primary">Điều khoản sử dụng</button>
                 </div>
                 <button onClick={() => router.push('/complete')}
-                    className="w-2/5 ml-10 border border-gray-300 rounded p-2 mt-2 bg-primary text-white">Xác nhận đặt hàng</button>
+                    className="w-2/5 border border-gray-300 rounded p-2 mt-2 bg-primary text-white">Xác nhận đặt hàng</button>
                 <p className="text-xs p-2">(Xin vui lòng kiểm tra lại đơn hàng trước khi mua)</p>
             </div>
             <div className="w-1/4 ml-10">
