@@ -53,6 +53,7 @@ module.exports = {
   variants: {
     extend: {
       // borderColor: ['focus'],
+      fill: ['hover', 'focus'],
     },
   },
   plugins: [
