@@ -5,7 +5,7 @@ import { CartPayHeader } from './component/cart-pay-header';
 import { useRouter } from 'next/router';
 import { toNumber, set } from 'lodash';
 import { Promotion } from './component/promotion';
-import { DefaultLayout } from '../../../layouts/default-layout';
+import { HiArrowNarrowLeft } from 'react-icons/hi'
 import { ListCartItems } from "./component/list-cart-items";
 
 export default function CartPage(props) {
@@ -145,14 +145,13 @@ export default function CartPage(props) {
                     </div>
                 </div>
                 <div className="text-primary flex items-center">
-                    <svg className="w-6 m-4" xmlns="http://www.w3.org/2000/svg" width="31" height="16.917" viewBox="0 0 31 16.917">
-                        <path id="Path_10598" data-name="Path 10598" d="M-1054.088-676.847h7.256q8.406,0,16.812,0a6.335,6.335,0,0,0,.9-.032,1.335,1.335,0,0,0,1.166-1.328,1.344,1.344,0,0,0-1.015-1.392,3.763,3.763,0,0,0-.895-.082q-11.69-.006-23.38,0h-.871c.241-.251.381-.4.528-.55,1.35-1.348,2.707-2.69,4.051-4.045a1.381,1.381,0,0,0,.31-1.654,1.3,1.3,0,0,0-1.433-.761,1.835,1.835,0,0,0-.885.453q-3.471,3.431-6.9,6.9a1.385,1.385,0,0,0-.008,2.132q3.437,3.466,6.9,6.908a1.36,1.36,0,0,0,2.031.078,1.358,1.358,0,0,0-.044-2.073c-1.327-1.344-2.668-2.672-4-4.009C-1053.71-676.439-1053.841-676.586-1054.088-676.847Z" transform="translate(1058.951 686.717)" fill="#42b54a" />
-                    </svg>
-                    <button>Tiếp tục xem sản phẩm</button>
-                    <div className={Change ? "inline" : "hidden"}>
-                        <button className="border border-gray-300 rounded p-2 m-2 bg-primary text-white text-center"
-                            onClick={() => setChange(false)}>Cập nhật đơn hàng</button>
+                    <div className="cursor-pointer flex items-center" onClick={() => router.push('/home')}>
+                        <i className="text-18 px-1"><HiArrowNarrowLeft /></i>
+                        <p>Tiếp tục xem sản phẩm</p>
                     </div>
+                    <button className="border border-gray-300 rounded p-2 m-2 bg-primary text-white text-center btn"
+                        onClick={() => setChange(false)}>Cập nhật đơn hàng</button>
+
                 </div>
             </div>
             <div id="haveNotItem" className="hidden">

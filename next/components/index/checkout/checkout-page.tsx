@@ -4,7 +4,7 @@ import { PayMoney } from '../cart/component/pay-money';
 import { CartPayHeader } from '../cart/component/cart-pay-header';
 import { FormatMoney } from '../../shared/currency/money';
 import { useRouter } from 'next/router';
-import IconLocation from '../../../lib/svg/icon-location';
+import { IoLocationSharp } from 'react-icons/io5'
 import TransferInformation from './component/transfer-information';
 import { useState } from 'react';
 import IconCheck from '../../../lib/svg/icon-check';
@@ -49,10 +49,10 @@ export function CheckOutPage() {
                 <div className="mb-12">
                     <div className="flex justify-between items-center border-b-2 mt-4 pb-2">
                         <div className="flex items-center">
-                            <IconLocation />
+                            <i className="text-primary text-24"><IoLocationSharp /></i>
                             <h4 className="uppercase pl-2">Địa chỉ giao hàng</h4>
                         </div>
-                        <button className="text-primary">Sửa</button>
+                        <button className="text-primary btn">Đổi</button>
                     </div>
                     <p className="text-primary">Minh Đức Vi</p>
                     <p>1111111111</p>

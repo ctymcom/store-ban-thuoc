@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IconPromotion } from '../../../../lib/svg/icon-promotion';
+import { IoTicketOutline } from "react-icons/io5";
 type PromotionProps = {
     [x: string]: any,
     onChanged?: (promotion: any) => void,
@@ -22,8 +22,8 @@ export function Promotion({ onChanged = () => { }, PrUsing, ...props }: Promotio
     }
     return (<>
         <div className="flex border-b-4 pb-2 mt-2.5 items-center">
-            <IconPromotion />
-            <p className="uppercase px-2">Mã khuyến mãi</p>
+            <i className="text-primary text-24 transform -rotate-135"><IoTicketOutline /></i>
+            <p className="uppercase px-2"> Mã khuyến mãi</p>
         </div>
         <div className="py-4 w-full h-28">
             {

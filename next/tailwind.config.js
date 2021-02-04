@@ -46,7 +46,9 @@ module.exports = {
         64: '64px',
       }
     },
-    
+    rotate:{
+      '-135': '-135deg',
+    }
   },
   variants: {
     extend: {

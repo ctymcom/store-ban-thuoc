@@ -1,11 +1,11 @@
 
 import { FormatMoney } from '../../../shared/currency/money';
-import { IconTotalMoney } from '../../../../lib/svg/icon-total-money';
+import { BiMoney } from 'react-icons/bi'
 export function PayMoney(props) {
     const { listMoney } = props;
     return <>
         <div className="flex border-b-4 py-2 items-center">
-            <IconTotalMoney />
+            <i className="text-primary text-24"><BiMoney /></i>
             <p className="uppercase px-2">Thành Tiền</p>
         </div>
         <div className="my-2">
