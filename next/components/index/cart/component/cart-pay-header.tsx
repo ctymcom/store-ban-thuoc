@@ -5,7 +5,7 @@ export function CartPayHeader(props) {
             return <h2 className="text-3xl text-center uppercase m-6 text-gray-300"><span className="text-black"> Giỏ Hàng </span><span>{`>`} Thanh Toán </span> <span>{`>`} Hoàn tất </span></h2>
         case "pay":
             return <h2 className="text-3xl text-center uppercase m-6 text-gray-300"><span> Giỏ Hàng </span><span className="text-black">{`>`} Thanh Toán </span> <span>{`>`} Hoàn tất </span></h2>
-        case "compl":
+        case "comp":
             return <h2 className="text-3xl text-center uppercase m-6 text-gray-300"><span > Giỏ Hàng </span><span>{`>`} Thanh Toán </span> <span className="text-black">{`>`} Hoàn tất </span></h2>
     }
 }

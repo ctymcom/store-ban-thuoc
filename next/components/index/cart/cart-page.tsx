@@ -121,7 +121,7 @@ export default function CartPage(props) {
             } break;
         }
     }
-    return <DefaultLayout>
+    return <>
         <div className="w-4/5 mx-auto">
             <div>
                 <CartPayHeader title={"cart"} />
@@ -159,5 +159,5 @@ export default function CartPage(props) {
                 <h3>You have't any item in cart</h3>
             </div>
         </div >
-    </DefaultLayout>
+    </>
 } 
