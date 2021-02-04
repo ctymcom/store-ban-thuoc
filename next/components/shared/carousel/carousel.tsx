@@ -1,4 +1,4 @@
-import ReactCarousel, * as carousel from "@brainhubeu/react-carousel";
+import ReactCarousel, { Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import { useState } from "react";
 type CarouselProps = {
@@ -6,22 +6,21 @@ type CarouselProps = {
   value?: number;
 };
 export function Carousel({ value, ...props }: CarouselProps) {
-  const [ActiveIndex, setActiveIndex] = useState(value);
+  const [activeIndex, setActiveIndex] = useState(value);
   const onChangeIndex = (value) => {
-    if (value == ActiveIndex) return;
+    if (value == activeIndex) return;
     setActiveIndex(value);
   };
   return (
     <div className="relative">
       <ReactCarousel
         {...props}
-        infinite
-        value={ActiveIndex}
+        value={activeIndex}
         onChange={onChangeIndex}
       ></ReactCarousel>
-      <carousel.Dots
-        className="absolute bottom-0 w-full bg-white bg-opacity-20"
-        value={ActiveIndex}
+      <Dots
+        className="absolute bottom-0 w-full"
+        value={activeIndex}
         onChange={onChangeIndex}
         number={props.children.length}
       />
