@@ -71,13 +71,13 @@ export function MainHeader() {
                   <i className="text-24">
                     <HiOutlineBell />
                   </i>
-                  <div className="badge rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 text-xs p-1">
+                  <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
                     <span>76</span>                
                   </div>
                 </a>
               </Link> 
               <div className="flex items-center px-4 cursor-pointer hover:text-primary" onClick={() => handleSetUser()}>
-                <div className="image-container w-10">
+                <div className="flex-shrink-0 w-10">
                   <div className="image-wrapper round">
                     <img src={user.avatar}/>
                   </div>
@@ -97,16 +97,11 @@ export function MainHeader() {
               <i className="text-24">
                 <HiOutlineShoppingCart />
               </i>
-              <div className="badge rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 text-xs p-1">
+              <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
                 <span>5</span>                
               </div>
             </a>
-          </Link> 
-          <style jsx>{`
-            .badge {
-              min-width: 1.25rem;
-            }
-          `}</style>    
+          </Link>   
         </div>
       </div>
     </>

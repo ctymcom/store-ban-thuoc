@@ -4,6 +4,8 @@ import { SectionHeader } from "./component/section-header";
 import { NewsList } from './../../shared/news/news-list';
 import { HomeFeature } from "./component/home-feature";
 import { HomeBanner } from "./component/home-banner";
+import { HomeFeedback } from './component/home-feedback';
+import { HomeNews } from "./component/home-news";
 export function HomePage() {
 
     const sliderImages =  [
@@ -31,6 +33,9 @@ export function HomePage() {
             <ProductList type='personalized' />
         </div>
         <div className="main-container py-12">
+            <HomeFeedback/>
+        </div>
+        <div className="main-container py-12">
             <HomeFeature/>
         </div>
         <div className="w-full py-8">
@@ -42,8 +47,7 @@ export function HomePage() {
             <HomeBanner/>
         </div>
         <div className="main-container py-8">
-            <SectionHeader text="Tin mới nhất" />
-            <NewsList />
+            <HomeNews/>
         </div>
     </>
 }
