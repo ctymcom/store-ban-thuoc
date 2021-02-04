@@ -138,6 +138,26 @@ export function Appbar({ breadcrumbs }: AppBarProps) {
                     </div>
                 </div>
             </div >
+            <style jsx>{`
+                .line-white::after {
+                content: "";
+                top: 5px;
+                right: 0;
+                position: absolute;
+                width: 1px;
+                height: 32px;
+                background-color: #e8e8e8;
+                }
+
+                .line-white-user::after {
+                content: "";
+                position: absolute;
+                left: 40%;
+                width: 2px;
+                height: 32px;
+                background-color: #e8e8e8;
+                }
+            `}</style>
         </>
     )
 }

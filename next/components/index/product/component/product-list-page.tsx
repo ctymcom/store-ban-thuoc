@@ -15,7 +15,7 @@ export function ProductListPage(props) {
     })
     return <div className=" w-full px-5 py-5">
         <HeaderProductList Filter={Filter} onShowCatelogy={(e) => props.onShowCatelogy_responesive(e)} />
-        <ProductList limit={pagination.limit} />
+        {/* <ProductList limit={pagination.limit} /> */}
         <TablePaginationCustom
             pagination={pagination}
             onPageChanged={(e) => {
