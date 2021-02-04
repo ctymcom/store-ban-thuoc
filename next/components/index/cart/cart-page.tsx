@@ -13,6 +13,7 @@ export default function CartPage(props) {
     const [Change, setChange] = useState(false);
     const [listCart, setListCart] = useState(listItem);
     const [PrUsing, setPrUsing] = useState(null);
+    const [CheckAll, setCheckAll] = useState(true);
     const router = useRouter();
     const toTalMoney = (listCart) => {
         let total = 0;
@@ -54,6 +55,15 @@ export default function CartPage(props) {
     const findIndex = (id) => {
         return listCart.findIndex((item) => { return item.id === id });
     }
+    const checkAndsetCheckAll = () => {
+        let isCheckAll = true;
+        listCart.forEach((item => {
+            if (!item.isCheck) {
+                isCheckAll = item.isCheck;
+            }
+        }))
+        setCheckAll(isCheckAll);
+    }
     const handleChangeItem = (id: number, type: string, value: any) => {
         switch (type) {
             case "u":
@@ -79,7 +89,7 @@ export default function CartPage(props) {
             case "i":
                 {
                     let numIt = toNumber(value);
-                    if (numIt >= 0 && numIt <= 100000) {
+                    if (numIt >= 0 && numIt <= 1000) {
                         let index = findIndex(id);
                         let listNew = listCart;
                         listNew[index].amount = numIt;
@@ -92,6 +102,16 @@ export default function CartPage(props) {
                 let index = findIndex(id);
                 let listNew = listCart;
                 listNew[index].isCheck = value;
+                setListCart([...listNew]);
+                checkAndsetCheckAll()
+                setListMoney(PrUsing);
+            } break;
+            case "ca": {
+                let listNew = listCart;
+                listNew.forEach((item) => {
+                    item.isCheck = value;
+                })
+                setCheckAll(value);
                 setListCart([...listNew]);
                 setListMoney(PrUsing);
             }
@@ -122,40 +142,36 @@ export default function CartPage(props) {
         }
     }
     return <>
-        <div className="w-4/5 mx-auto">
+        <div className="container-1">
             <div>
                 <CartPayHeader title={"cart"} />
             </div>
-            <div id="have__Item">
-                <div className="grid grid-cols-7 gap-20 text-lg">
+            <div className="">
+                <div className="col-span-3 grid grid-cols-7 gap-20">
                     <div className="col-span-5" id="cart__Table">
-                        <ListCartItems listCart={listCart} handleDeleteCart={handleDeleteCart} handleChangeItem={handleChangeItem} />
+                        <ListCartItems listCart={listCart} handleDeleteCart={handleDeleteCart} handleChangeItem={handleChangeItem} CheckAll={CheckAll} />
+                        <div className="text-primary flex items-center">
+                            <div className="cursor-pointer flex items-center" onClick={() => router.push('/home')}>
+                                <i className="text-18 px-1"><HiArrowNarrowLeft /></i>
+                                <p>Tiếp tục mua sắm</p>
+                            </div>
+                            <button className="bt btn-disabled m-2"
+                                onClick={() => setChange(false)}>Cập nhật đơn hàng</button>
+                        </div>
                     </div>
-                    <div id="cart" className="col-span-2">
-                        <div id="cart__Promotion">
+                    <div className="col-span-2">
+                        <div>
                             <Promotion onChanged={(promotion) => {
                                 handleSetPromotion(promotion);
                             }} PrUsing={PrUsing} />
                         </div>
-                        <div id="cart__TotalMoney" className="mt-10">
+                        <div className="mt-10">
                             <PayMoney listMoney={ListMoneyCart} />
-                            <button className="border border-gray-300 rounded w-full p-2 mt-2 bg-primary text-center text-white"
+                            <button className="btn btn-primary w-full py-6 mt-2"
                                 onClick={() => router.push('/checkout')}>Tiến hành thanh toán</button>
                         </div>
                     </div>
                 </div>
-                <div className="text-primary flex items-center">
-                    <div className="cursor-pointer flex items-center" onClick={() => router.push('/home')}>
-                        <i className="text-18 px-1"><HiArrowNarrowLeft /></i>
-                        <p>Tiếp tục xem sản phẩm</p>
-                    </div>
-                    <button className="border border-gray-300 rounded p-2 m-2 bg-primary text-white text-center btn"
-                        onClick={() => setChange(false)}>Cập nhật đơn hàng</button>
-
-                </div>
-            </div>
-            <div id="haveNotItem" className="hidden">
-                <h3>You have't any item in cart</h3>
             </div>
         </div >
     </>

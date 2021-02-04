@@ -2,12 +2,12 @@ import { FormCheck } from './component/form-check';
 import { listFormCheckTrans, listFormCheckPayment, listMoneyCheckout, transferInformation } from './component/form-check-data';
 import { PayMoney } from '../cart/component/pay-money';
 import { CartPayHeader } from '../cart/component/cart-pay-header';
-import { FormatMoney } from '../../shared/currency/money';
 import { useRouter } from 'next/router';
 import { IoLocationSharp } from 'react-icons/io5'
 import TransferInformation from './component/transfer-information';
 import { useState } from 'react';
 import IconCheck from '../../../lib/svg/icon-check';
+import { NumberPipe } from '../../../lib/pipes/number';
 
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
@@ -63,7 +63,7 @@ export function CheckOutPage() {
                 </div>
                 <div className="flex justify-between pt-2">
                     <p>Thành tiền</p>
-                    <p className="font-bold text-primary"><FormatMoney money={totalMonney(listMoneyCheckout)} tS='.' /> VND</p>
+                    <p className="font-bold text-primary">{NumberPipe(totalMonney(listMoneyCheckout), false)} VND</p>
                 </div>
             </div>
         </div>
