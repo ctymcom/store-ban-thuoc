@@ -1,4 +1,4 @@
-import { isSameYear, format } from 'date-fns/esm'
+import { isSameYear, format } from 'date-fns'
 type NewsCardProps = {
     [x: string]: any;
     img: string;

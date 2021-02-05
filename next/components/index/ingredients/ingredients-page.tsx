@@ -29,7 +29,7 @@ export function IngredientsPage() {
                     setInitial(char)
                 }}/>
             </div>
-            <div className="pt-8">
+            <div className="pt-1">
                 <IngredientsColumns initial={initial} searchText={searchText} ingredients={ingredients}/>
             </div>
         </div>

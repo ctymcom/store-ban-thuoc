@@ -22,16 +22,17 @@ export function IngredientsColumns(props: IngredientsColumnsProps) {
   }, [props.ingredients, props.searchText]);
 
     return <>
+      <div className="text-gray-600 text-sm">
+        Hiển thị <span className="text-primary text-base font-semibold">{filterIngredients.length}</span> kết quả
+        { props.searchText?.length > 1 && 
+          <span> cho từ khoá <span className="text-primary text-base font-semibold">"{props.searchText}"</span></span> }
+      </div>
+      <div className="w-12 h-1 mt-3 mb-5 bg-gray-200"></div>
       <div className="flex">
         <div className="flex flex-col max-w-4xs">
           <div className="font-bold text-9xl text-primary transform -translate-y-6">
             {props.initial}
           </div>
-          <div className="text-gray-600 text-sm">
-            Hiển thị <span className="text-primary text-base font-semibold">{filterIngredients.length}</span> kết quả
-            { props.searchText?.length > 1 && 
-              <span> cho từ khoá <span className="text-primary text-base font-semibold">"{props.searchText}"</span></span> }
-            </div>
         </div>
         <div className="pl-8 sm:pl-10 md:pl-12 flex-grow grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-3 text-gray-700">
             {
