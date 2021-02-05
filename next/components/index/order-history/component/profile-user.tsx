@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { AiOutlineBell } from "react-icons/ai";
-import { BiListPlus } from "react-icons/bi";
+import { BiDonateHeart, BiListPlus } from "react-icons/bi";
 import { ImUser } from "react-icons/im";
 type ProfileUserProps = {
     [x: string]: any,
@@ -39,7 +39,7 @@ export function ProfileUser(props: ProfileUserProps) {
                 <li className="user__info-item flex my-4 items-center">
                     <BiListPlus className="text-primary border-2 border-primary rounded text-2xl mr-2"/>
                     <Link href="/profile/order-history" shallow={true}>
-                        <a className={`"user__info-link uppercase font-semibold text-sm hover:text-primary "
+                        <a className={`"order-link uppercase font-semibold text-sm hover:text-primary "
                             ${Active ==  0 ? " text-primary" : ''}`}>
                             Đơn mua
                         </a>
@@ -49,10 +49,20 @@ export function ProfileUser(props: ProfileUserProps) {
                 <li className="user__info-item flex my-4 items-center">
                     <AiOutlineBell className="text-primary text-2xl mr-2"/>
                     <Link href="/profile/notification" shallow={true}>
-                        <a className={`"user__info-link uppercase font-semibold text-sm hover:text-primary "
+                        <a className={`"notification-link uppercase font-semibold text-sm hover:text-primary "
                             ${Active == 2 ? " text-primary" : ""}`}
                             onClick={() => setActive(2)}>
                             Thông báo
+                        </a>
+                    </Link>
+                </li>
+                <li className="user__info-item flex my-4 items-center">
+                    <BiDonateHeart className="text-primary text-2xl mr-2"/>
+                    <Link href="/profile/reward-point" shallow={true}>
+                        <a className={`"reward-point-link uppercase font-semibold text-sm hover:text-primary "
+                            ${Active == 3 ? " text-primary" : ""}`}
+                            onClick={() => setActive(3)}>
+                            Điểm thưởng
                         </a>
                     </Link>
                 </li>

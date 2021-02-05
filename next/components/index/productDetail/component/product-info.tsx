@@ -1,18 +1,14 @@
 import { toNumber } from "lodash";
-import { useState } from "react";
-
+import { NumberPipe } from '../../../../lib/pipes/number';
 
 export function ProductInfo(props) {
-
-    // const [amountProduct, setAmountProduct] = useState(1);
-
     
     return  <>
             <p className="product__type text-gray-400 mb-2 text-sm">{props.product.type}</p>
             <a href="#" className="product__name mb-2 block text-2xl">{props.product.name}</a>
             <div className="product__price mb-6">
-                <span className="product__price-current text-primary mr-4 text-2xl">{props.product.sale_price}/hộp</span>
-                <span  className="product__price-old text-gray-400 line-through text-base">{props.product.old_price}</span>
+                <span className="product__price-current text-primary mr-4 text-2xl">{NumberPipe(props.product.sale_price)} VNĐ/hộp</span>
+                <span  className="product__price-old text-gray-400 line-through text-base">{NumberPipe(props.product.old_price)}</span>
             </div>
             <p className="product__description mb-8 text-lg ">
                 <span>{props.product.description_1}</span>

@@ -5,7 +5,7 @@ let data = [
         delivery_time: now,
         intend_time: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 2),
         total_product: 5,
-        total_price: 1703000
+        total_price: 17030000000
     }
 ]
 data = [...data, ...data]
