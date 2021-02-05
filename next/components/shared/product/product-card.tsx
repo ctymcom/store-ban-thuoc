@@ -75,17 +75,9 @@ export function ProductCard(props: ProductCardProps) {
             )
           }
         </div>
-        <div className="grid grid-cols-2 gap-2 pt-3 mt-2 border-t border-gray-100">
-          <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark">
-            Thêm vào giỏ
-          </button>
-          <button className="btn-primary p-0 h-10 text-13">
-            Mua ngay
-          </button>
-        </div>
         {
           props.tags?.length ?
-          <div className="flex flex-wrap pt-2">
+          <div className="flex flex-wrap py-2 border-t border-gray-100">
             {
               props.tags.map((tag, index) => (
                 <div key={index} className="p-1">
@@ -95,6 +87,14 @@ export function ProductCard(props: ProductCardProps) {
             }
         </div> : <></>
         }
+        <div className="mt-auto grid grid-cols-2 gap-2 pt-3 border-t border-gray-100">
+          <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark">
+            Thêm vào giỏ
+          </button>
+          <button className="btn-primary p-0 h-10 text-13">
+            Mua ngay
+          </button>
+        </div>
       </div>
     </>
   );

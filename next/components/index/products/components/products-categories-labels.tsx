@@ -50,14 +50,17 @@ export function ProductsCategoriesLabels(props: PropsType) {
     props.setCategories([...props.categories])
   }
 
+  const labelClass = "bg-primary-light text-gray-600 text-sm font-semibold " +
+  "px-3 py-1 rounded-md flex-center hover:text-danger hover:bg-danger-light cursor-pointer"
+
   return <>
     {
       !!filteredCategories?.length && (
-        <div className="flex space-x-2 my-2">
-          <span className="text-gray-700">Danh Mục: </span>
+        <div className="flex flex-wrap space-y-1 space-x-2 mb-2">
+          <span className="text-gray-700 pt-1">Danh Mục: </span>
           {            
             filteredCategories.map((cat, index) => 
-              <span key={cat.id} className="bg-primary-light text-gray-600 text-sm font-semibold px-3 py-1 rounded-md flex-center hover:text-danger cursor-pointer"
+              <span key={cat.id} className={labelClass}
               onClick={() => {
                 removeCategories(cat)
               }}>
@@ -70,11 +73,12 @@ export function ProductsCategoriesLabels(props: PropsType) {
     }
     {
       !!filteredManufactures?.length && (
-        <div className="flex space-x-2 my-2">
-          <span className="text-gray-700">Nhà sản xuất: </span>
+        <div className="flex flex-wrap space-y-1 space-x-2 mb-2">
+          <span className="text-gray-700 pt-1">Nhà sản xuất: </span>
           {            
             filteredManufactures.map((man, index) => 
-              <span key={man.id} className="bg-primary-light text-gray-600 text-sm font-semibold px-3 py-1 rounded-md flex-center hover:text-danger cursor-pointer"onClick={() => {
+              <span key={man.id} className={labelClass}
+              onClick={() => {
                 man.checked = false
                 props.setManufactures([...props.manufactures])
               }}>

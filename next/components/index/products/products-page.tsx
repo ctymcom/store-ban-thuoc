@@ -7,6 +7,9 @@ import { CategoriesData } from './data/categories-data';
 import { ProductsCategoriesFilter } from "./components/products-categories-filter";
 import { ManufacturesData } from "./data/manufactures-data";
 import { ProductsCategoriesLabels } from './components/products-categories-labels';
+import { ProductsFilterSort } from './components/products-filter-sort';
+import { ProductsData } from "../../shared/product/data/product-data";
+import { ProductCard } from "../../shared/product/product-card";
 
 export const SORT_TYPES = [
     { value: 'latest', display: 'Sắp xếp mới nhất' },
@@ -26,6 +29,7 @@ interface ProductsFilter {
 export function ProductsPage() {
 
     const [productsFilter, setProductsFilter] = useState<ProductsFilter>(null);
+    const [products, setProducts] = useState([...ProductsData, ...ProductsData, ...ProductsData, ...ProductsData].slice(0, 16));
 
     useEffect(() => {
         let categories = [...CategoriesData]
@@ -69,7 +73,7 @@ export function ProductsPage() {
                             />
                         </div>
                     </div>
-                    <div className="flex-grow">
+                    <div className="flex-grow pl-3">
                         <ProductsTags 
                             tags={productsFilter.tags} 
                             setTags={tags => setProductsFilter({...productsFilter, tags})}
@@ -83,11 +87,16 @@ export function ProductsPage() {
                                     setCategories={categories => setProductsFilter({...productsFilter, categories})}
                                     setManufactures={manufactures => setProductsFilter({...productsFilter, manufactures})}/>
                             </div>
-                            <div className="flex-shrink-0">
-
+                            <div className="flex-shrink-0 pl-4">
+                                <ProductsFilterSort sort={productsFilter.sort} onChange={(sort) => setProductsFilter({...productsFilter, sort})}/>
                             </div>
                         </div>
-                    </div>
+                        <div className="mt-5 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6 xl:gap-7">
+                            {
+                                products.map((product, index) => <ProductCard {...product}/>)
+                            }
+                        </div>
+                    </div>                    
                 </> : null
             }
         </div>
