@@ -62,7 +62,7 @@ export function ProfileUser(props: ProfileUserProps) {
                         <a className={`"reward-point-link uppercase font-semibold text-sm hover:text-primary "
                             ${Active == 3 ? " text-primary" : ""}`}
                             onClick={() => setActive(3)}>
-                            Điểm thưởng
+                            Điểm tích luỹ
                         </a>
                     </Link>
                 </li>

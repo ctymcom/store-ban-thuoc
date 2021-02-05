@@ -3,7 +3,7 @@ import { ProductsData } from "./data/product-data";
 import { ProductCard } from "./product-card";
 type ProductListProps = {
   [x: string]: any;
-  type: 'latest' | 'best_seller' | 'exclusive' | 'personalized' | 'related'
+  type: 'latest' | 'best_seller' | 'exclusive' | 'personalized' | 'related' | 'similar-products'
 }
 export function ProductList({ type, ...props }: ProductListProps) {
 
@@ -14,6 +14,7 @@ export function ProductList({ type, ...props }: ProductListProps) {
     case 'latest': title = 'Sản phẩm mới nhất'; break;
     case 'personalized': title = 'Lựa chọn của bạn'; break;
     case 'related': title = 'Sản phẩm liên quan'; break;
+    case 'similar-products': title = 'Sản phẩm tương tự'; break;
   }
 
   return (

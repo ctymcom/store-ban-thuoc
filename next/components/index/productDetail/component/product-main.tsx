@@ -48,7 +48,6 @@ export function ProductMain() {
           break;
     }
   }
-
   return (
     <>
       <div className="breadbcrum-product-detail">
@@ -69,16 +68,18 @@ export function ProductMain() {
           </Link>
         </ul>
       </div>
-      {ProductDetailData.map((item, index) => {
-        return (
-          <div className="Product grid grid-cols-2 gap-x-6 mt-16">
-            <ProductImage product={item} />
-            <div className="product__info">
-              <ProductInfo product={item} handleChangeAmount={handleChangeAmount}/>
+      {
+        ProductDetailData.map((item, index) => {
+          return (
+            <div className="Product grid grid-cols-2 gap-x-6 mt-16">
+              <ProductImage product={item} />
+              <div className="product__info">
+                <ProductInfo product={item} handleChangeAmount={handleChangeAmount}/>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      }
     </>
   );
 }
