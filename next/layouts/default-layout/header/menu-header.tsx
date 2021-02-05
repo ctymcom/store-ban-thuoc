@@ -8,7 +8,6 @@ export function MenuHeader() {
     { label: 'Hoạt chất', path: '/ingredients' },
     { label: 'Đặt hàng nhanh', path: '/quick-shopping' },
     { label: 'Khuyến mãi', path: '/promotions' },
-    { label: 'Mã giảm giá', path: '/vouchers' },
   ];
 
   return (    

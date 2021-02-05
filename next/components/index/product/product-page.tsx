@@ -5,7 +5,7 @@ import { DefaultLayout } from "../../../layouts/default-layout";
 import { Category } from "./component/category";
 import { ProductListPage } from "./component/product-list-page";
 
-export function ProductsPage() {
+export function ProductPage() {
     const [filter, setfilter] = useState([])
     const [ShowCatelogy_responesive, setShowCatelogy_responesive] = useState(false);
 
@@ -29,5 +29,3 @@ export function ProductsPage() {
         </div>
     </>
 }
-
-ProductsPage.Layout = DefaultLayout
