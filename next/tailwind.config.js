@@ -52,6 +52,7 @@ module.exports = {
   variants: {
     extend: {
       // borderColor: ['focus'],
+      fill: ['hover', 'focus'],
       backgroundColor: ['checked'],
       borderColor: ['checked'],
       textColor:['checked']
