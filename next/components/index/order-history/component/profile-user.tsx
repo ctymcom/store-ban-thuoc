@@ -1,5 +1,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import { AiOutlineBell } from "react-icons/ai";
+import { BiListPlus } from "react-icons/bi";
+import { ImUser } from "react-icons/im";
 type ProfileUserProps = {
     [x: string]: any,
     activeIndex: number
@@ -22,13 +25,9 @@ export function ProfileUser(props: ProfileUserProps) {
                 </div>
             </div>
             <ul className="user__info-list">
-                <li className="user__info-item flex my-4">
-                    <img
-                        src="../../../../public/assets/images/icons/icon-sale.png"
-                        alt=""
-                        className="user__info-icon w-5 h-5 mr-3"
-                    />
-                    <Link href="/profile/profile-user" shallow={true}>
+                <li className="user__info-item flex my-4 items-center">
+                    <ImUser className="text-primary border-2 border-primary rounded-full text-2xl p-0.5 mr-2"/>
+                    <Link href="/profile" shallow={true}>
                         <a className={`"user__info-link uppercase font-semibold text-sm hover:text-primary " 
                             ${Active == 1 ? " text-primary" : ""}`}
                             onClick={() => setActive(1)}>
@@ -37,12 +36,8 @@ export function ProfileUser(props: ProfileUserProps) {
                     </Link>
                     
                 </li>
-                <li className="user__info-item flex my-4">
-                    <img
-                        src="../../../../public/assets/images/icons/icon-oder.png"
-                        alt=""
-                        className="user__info-icon w-5 h-5 mr-3"
-                    />
+                <li className="user__info-item flex my-4 items-center">
+                    <BiListPlus className="text-primary border-2 border-primary rounded text-2xl mr-2"/>
                     <Link href="/profile/order-history" shallow={true}>
                         <a className={`"user__info-link uppercase font-semibold text-sm hover:text-primary "
                             ${Active ==  0 ? " text-primary" : ''}`}>
@@ -51,12 +46,8 @@ export function ProfileUser(props: ProfileUserProps) {
                     </Link>
                    
                 </li>
-                <li className="user__info-item flex my-4">
-                    <img
-                        src="../../../../public/assets/images/icons/icon-bell.png"
-                        alt=""
-                        className="user__info-icon w-5 h-5 mr-3"
-                    />
+                <li className="user__info-item flex my-4 items-center">
+                    <AiOutlineBell className="text-primary text-2xl mr-2"/>
                     <Link href="/profile/notification" shallow={true}>
                         <a className={`"user__info-link uppercase font-semibold text-sm hover:text-primary "
                             ${Active == 2 ? " text-primary" : ""}`}
