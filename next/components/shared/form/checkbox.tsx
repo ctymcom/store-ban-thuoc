@@ -1,5 +1,6 @@
 import { FormFieldProps } from "./form-field.type";
 import { IconInfor } from "../../../lib/svg/icon-infor";
+import { useEffect, useState } from 'react';
 type CheckBoxProps = FormFieldProps & {
   onChanged?: (value: boolean) => void;
   validate?: (value: boolean) => string;
@@ -18,20 +19,25 @@ export function Checkbox({
   value = "true",
   tooltip = "",
 }: CheckBoxProps) {
+  const [Checked, setChecked] = useState(checked);
+  useEffect(() => {
+    setChecked(checked);
+  }, [checked])
   const onChange = (e) => {
     if (onChanged) onChanged(e.target.checked);
+    setChecked(e.target.checked);
   };
   return (
     <div className={"flex items-center space-x-3 py-1"}>
       <input
-        className="w-4 h-4 transition form-checkbox text-primary border-gray-400 border rounded-lg cursor-pointer"
+        className="w-4 h-4 transition form-checkbox text-primary border-gray-100 border rounded-lg cursor-pointer"
         defaultValue={value}
         onChange={onChange}
         id={name}
         name={name}
         required={required}
         type="checkbox"
-        defaultChecked={checked}
+        checked={Checked}
       />
       <label className={style + " w-full " + (checked && " text-primary")} htmlFor={name}>
         <i className="bg-primary"></i>

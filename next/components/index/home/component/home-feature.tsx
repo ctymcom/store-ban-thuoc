@@ -30,8 +30,8 @@ export function HomeFeature() {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-y-0">
       {
-        features.map(feature => 
-          <div className="p-6 flex items-center flex-col">
+        features.map((feature, index) => 
+          <div className="p-6 flex items-center flex-col" key={index}>
             <div className="w-16 h-16">
                 {feature.icon}
             </div>

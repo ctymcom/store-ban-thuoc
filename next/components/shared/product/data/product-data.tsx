@@ -49,9 +49,11 @@ export const ProductsData = [
         }],
         price: 645000,
         sale: 516000,
+        saleValue: 50,
         packagingUnit: 'Hộp 20gr',
         image: 'https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/141962889_244374043814739_723707079281059873_n.png?_nc_cat=109&ccb=2&_nc_sid=ae9488&_nc_ohc=7EU0W7kWKMQAX9i7w7K&_nc_ht=scontent.fsgn5-6.fna&oh=fe55deea5135ba2542c38d0661065fd9&oe=603301A7',
-        tags: ['Sản phẩm mới', 'Độc quyền']
+        tags: ['Sản phẩm mới', 'Bán chạy', 'Độc quyền'],
+        isNew: true
     },
     {
         name: 'Apruxton Almagat 1,5g/15ml Theragen (H/20gói)',
@@ -75,7 +77,8 @@ export const ProductsData = [
         sale: 516000,
         packagingUnit: 'Hộp 20gr',
         image: 'https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.15752-9/141441082_266663471554853_8815194168553596317_n.png?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=p_LFNCtAa4sAX-0Pvdz&_nc_ht=scontent.fsgn5-2.fna&oh=1e5a747b15132b006264d2a1fb8db6b9&oe=6031E863',
-        tags: []
+        tags: [],
+        isNew: true
     },
     {
         name: 'Sulficin Sulpirid 50mg Capsules Nic Pharma (C/200v)',
@@ -99,6 +102,7 @@ export const ProductsData = [
         }],
         price: 645000,
         sale: 516000,
+        saleValue: 50,
         packagingUnit: 'Hộp 20gr',
         image: 'https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.15752-9/141709285_170933281066921_2862164185176936454_n.png?_nc_cat=106&ccb=2&_nc_sid=ae9488&_nc_ohc=rWkx3RKbdx8AX982cTo&_nc_ht=scontent.fsgn5-6.fna&oh=3fc2bacdd9968c57a23551cd138adb0b&oe=6032BA73',
         tags: ['Sản phẩm mới', 'Độc quyền']

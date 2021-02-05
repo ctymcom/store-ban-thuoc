@@ -135,7 +135,7 @@
     object-fit: cover;
   }
 
-  &.aspect-16-9 {
+  &.ratio-16-9 {
     padding-top: 56.25%;
   }
 
@@ -311,4 +311,19 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
+}
+
+@mixin text-ellipsis($line: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+}
+.text-ellipsis-2 {
+  @include text-ellipsis(2)
+}
+.text-ellipsis-3 {
+  @include text-ellipsis(3)
 }

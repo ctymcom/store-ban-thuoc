@@ -148,6 +148,7 @@
     "prettier": "^2.0.5",
     "shelljs": "^0.8.3",
     "styled-jsx-plugin-postcss": "^4.0.1",
+    "styled-jsx-plugin-sass": "^1.0.0",
     "supertest": "^4.0.2",
     "ts-jest": "^26.1.0",
     "ts-node": "^8.4.1",

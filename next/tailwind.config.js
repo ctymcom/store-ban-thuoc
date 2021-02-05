@@ -9,8 +9,6 @@ function getSemanticColors(color) {
 }
 
 module.exports = {
-  // purge: [],
-  purge: ['./pages/**/*.tsx', './next/**/*.tsx'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -40,18 +38,24 @@ module.exports = {
         18: '18px',
         20: '20px',
         24: '24px',
+        28: '28px',
         32: '32px',
         40: '40px',
         48: '48px',
         64: '64px',
       }
     },
-    
+    rotate:{
+      '-135': '-135deg',
+    }
   },
   variants: {
     extend: {
       // borderColor: ['focus'],
       fill: ['hover', 'focus'],
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
+      textColor:['checked']
     },
   },
   plugins: [
