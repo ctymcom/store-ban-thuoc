@@ -2,7 +2,7 @@ import { Checkbox } from '../../../shared/form/checkbox';
 import { HiChevronDown } from 'react-icons/hi';
 export function FormProfile() {
     return <>
-        <h3 className="uppercase border-gray-200 border-b-2">Thông tin tài khoản</h3>
+        <h3 className="uppercase border-gray-200 border-b-2 pb-2">Thông tin tài khoản</h3>
         <div className="grid grid-cols-3 pt-2 ">
             <div className="col-span-2 grid grid-cols-4 gap-2 pr-16 border-r border-gray-200 items-center">
                 <p className="col-span-1">Họ và tên</p>
@@ -36,8 +36,8 @@ export function FormProfile() {
                     <img src="../../../../public/assets/images/avatar.png" alt="" />
                 </div>
                 <button className="btn-outline border-primary-light border-2 px-16 font-normal text-primary">Đổi ảnh</button>
-                <p>Dung lượng file tối đa 1MB</p>
-                <p>Định dạng: .JPEG, .PNG</p>
+                <p className="text-12 text-gray-300">Dung lượng file tối đa 1MB</p>
+                <p className="text-12 text-gray-300">Định dạng: .JPEG, .PNG</p>
             </div>
             <div className="col-span-2 grid grid-cols-4 mt-20 pr-16">
                 <div className="col-span-1"></div>
