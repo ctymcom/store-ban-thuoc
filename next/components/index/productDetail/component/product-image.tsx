@@ -19,9 +19,14 @@ export function ProductImage(props) {
     return <>
         <div className="product__image block w-full h-full">
             <div className="aspect_ratio_169 block relative " style={aspect_ratio_169}>
+                <div className="new-tag absolute left-3 top-3 z-10 text-lg px-6">Mới</div>
                 <img className="object-contain rounded-md m-auto block absolute w-full h-full top-0 left-0 "  src={image} alt="" key={props.index}/>
+                <div className="sale-tag flex-center absolute right-8 top-3 text-white font-semibold">
+                    <img className="w-16" src="/assets/svg/sale.svg"/>
+                    <span className="absolute text-xl">-50%</span>
+                </div>
             </div>
-            <div className="list-slider-image w-full flex mt-4 overflow-y-scroll h-36">
+            <div className="list-slider-image w-full flex mt-4 overflow-y-scroll h-36 ">
                     {
                         props.product.slide_img.map((item, index) => {
                             return  <>

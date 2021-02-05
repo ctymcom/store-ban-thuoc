@@ -14,7 +14,7 @@ export function RewardPointPage () {
                             </Link>
                             <span> / </span>
                             <Link href="/profile/reward-point">
-                                <a className="breadbcrum__reward-point-link text-primary ml-1"> Điểm thưởng</a>
+                                <a className="breadbcrum__reward-point-link text-primary ml-1"> Điểm tích luỹ</a>
                             </Link>
                         </ul>
                     </div>
