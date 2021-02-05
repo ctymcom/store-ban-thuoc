@@ -56,7 +56,7 @@ export function Footer() {
           </div>
           <div className="flex flex-col justify-start lg:w-full text-sm sm:mt-6 md:mt-0">
             <div className="">
-              <div className="uppercase text-primary font-normal md:font-semibold text-lg sm:text-2xl md:text-2xl sm:py-1 md:py-0 mb-0 md:mb-2 mt-4 sm:mt-0 md:mt-0">Đăng kí nhận tin mới</div>
+              <div className="uppercase text-primary font-normal md:font-semibold text-lg sm:text-2xl md:text-2xl sm:py-1 md:py-0 mb-0 md:mb-2 mt-4 sm:-mt-2 md:mt-0">Đăng kí nhận tin mới</div>
               <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-0 mt-2 sm:mt-1 md:mt-0 lg:mt-3">Hãy đăng ký email để nhận được khuyến mãi hoặc</div>
               <div className="py-6 sm:py-10 md:py-10 lg:py-8 flex w-full sm:w-8/12 md:w-11/12 lg:w-full">
                 <input
