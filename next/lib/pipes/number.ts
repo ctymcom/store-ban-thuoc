@@ -9,15 +9,20 @@ export function NumberPipe(value: any, isCurrency = false) {
     return value;
   }
 
-  var formatter = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  });
-  return formatter
-    .format(price)
-    .replace("₫", '')
-    .trim()
+  return price
+    .toLocaleString("en")
+    .replace(",", ".")
+    .replace(/\.(?=[^.]*$)/g, Number.isInteger(price) ? "." : ",")
     .concat(isCurrency ? "đ" : "");
+  // const formatter = new Intl.NumberFormat("vi", {
+  //   style: "currency",
+  //   currency: "VND",
+  //   minimumFractionDigits: 0,
+  //   maximumFractionDigits: 0,
+  // });
+  // return formatter
+  //   .format(price)
+  //   .replace("₫", "")
+  //   .trim()
+  //   .concat(isCurrency ? "đ" : "");
 }

@@ -43,7 +43,26 @@ module.exports = {
         40: '40px',
         48: '48px',
         64: '64px',
+      },
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        },
+        emerge: {
+          from: { opacity: 0 },
+          to: { opacity: 1 }
+        },
+        slideUp: {
+          from: { opacity: 0, transform: 'translateY(4px)' },
+          to: { opacity: 1, transform: 'translateY(0)' }
+        } 
       }
+    },
+    animation: {
+      wiggle: 'wiggle 1s ease-in-out infinite',
+      emerge: 'emerge 0.3s ease-in-out',
+      'slide-up': 'slideUp 0.3s ease-in-out',
     },
     rotate:{
       '-135': '-135deg',

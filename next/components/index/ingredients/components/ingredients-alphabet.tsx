@@ -13,7 +13,6 @@ const genCharArray = (charA, charZ) => {
   for (; i <= j; ++i) {
     a.push(String.fromCharCode(i));
   }
-  console.log('asd')
   return a;
 };
 export function IngredientsAlphabet(props: IngredientsAlphabetProps) {

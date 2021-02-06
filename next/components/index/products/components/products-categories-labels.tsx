@@ -46,6 +46,8 @@ export function ProductsCategoriesLabels(props: PropsType) {
       if (count == category.subcategories.length) category.checked = true
       else if (count == 0) category.checked = false
       else category.checked = undefined
+    } else if (cat.subcategories) {
+      cat.subcategories.forEach(sub => sub.checked = false)
     }
     props.setCategories([...props.categories])
   }

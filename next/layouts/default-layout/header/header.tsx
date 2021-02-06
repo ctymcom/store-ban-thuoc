@@ -12,13 +12,13 @@ export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderPro
   return (
     <>
       <div className="w-full">
-        <TopHeader/>
-        <MainHeader/>
-        <MenuHeader/>
+        <TopHeader />
+        <MainHeader />
+        <MenuHeader />
       </div>
 
       {/* do header có nhiều thay đổi so với desktop nên em tạo thêm 1 cái mới luôn ạ */}
-              
+
       {/* <div className="lg:hidden w-full flex justify-between  items-center px-4 py-4">
         <div className="text-primary-500">
           <div
@@ -103,7 +103,7 @@ export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderPro
       </div>
       
       {breadcrumbs.length != 0 && (
-        <div className="container-1 flex items-center mt-3 py-2">
+        <div className="main-container flex items-center mt-3 py-2">
           {breadcrumbs
             .map((item, index, array) => {
               const actived = index == array.length - 1;

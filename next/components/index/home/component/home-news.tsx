@@ -37,7 +37,7 @@ export function HomeNews() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         {
           newsList.map((news, index) => 
-            <NewsCard {...news}/>
+            <NewsCard key={index} {...news}/>
           )
         }
       </div>
