@@ -1,24 +1,35 @@
 import { CartItem } from './cart-item';
+import { Checkbox } from '../../../shared/form/checkbox';
 
 export function ListCartItems(props) {
     return (
-        <table>
-            <thead>
-                <tr className="uppercase  text-left border-b-4">
-                    <th className="w-96 font-normal">Sản Phẩm</th>
-                    <th className="font-normal  w-40">Giá</th>
-                    <th className="font-normal  w-40">Số Lượng</th>
-                    <th className="font-normal  w-48 pr-4">Tổng Tiền</th>
-                </tr>
-            </thead>
-            <tbody>
+        <>
+            <div>
+                <div className="grid grid-cols-12 uppercase text-center border-b-2 pb-2">
+                    <div className="col-span-5 text-left grid grid-cols-12">
+                        <div className="col-span-1">
+                            <Checkbox checked={props.CheckAll}
+                                onChanged={(e) => {
+                                    props.handleChangeItem(null, "ca", e);
+                                }}
+                            /></div>
+                        <span className="col-span-11">Sản Phẩm</span>
+                    </div>
+                    <div className="col-span-2">Giá</div>
+                    <div className="col-span-2">Số Lượng</div>
+                    <div className="col-span-2">Tổng Tiền</div>
+                    <div className="col-span-1"></div>
+                </div>
+            </div>
+            <div>
                 {
-
                     props.listCart.map((item, index) => {
-                        return <CartItem item={item} index={index} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem} />
-                    }
-                    )}
-            </tbody>
-        </table>
+                        console.log(item);
+
+                        return <CartItem key={index} item={item} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem} />
+                    })
+                }
+            </div>
+        </ >
     );
 }

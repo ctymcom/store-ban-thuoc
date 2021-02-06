@@ -23,6 +23,7 @@ export type IPost = BaseDocument & {
   twitterDescription?: string; // Mô tả twitter
   twitterImage?: string; // Hình ảnh twitter
   twitterTitle?: string; // Tiêu đề twitter
+  priority?: number; // Độ ưu tiên
 };
 
 const postSchema = new Schema(
@@ -43,12 +44,14 @@ const postSchema = new Schema(
     twitterDescription: { type: String },
     twitterImage: { type: String },
     twitterTitle: { type: String },
+    priority: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
 
 postSchema.index({ title: "text", slug: "text" }, { weights: { title: 2, slug: 1 } });
 postSchema.index({ slug: 1 }, { unique: true });
+postSchema.index({ priority: 1 });
 
 export const PostHook = new ModelHook<IPost>(postSchema);
 export const PostModel: mongoose.Model<IPost> = MainConnection.model("Post", postSchema);

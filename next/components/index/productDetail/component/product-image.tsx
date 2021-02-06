@@ -6,22 +6,39 @@ export function ProductImage(props) {
     const style = {
         border: '2px solid #42B54A'
     }
+
+    const handleChangeImage = (img, index) => {
+        setImage(img);
+        let elementImage = document.getElementsByClassName("image-item")[index];
+        elementImage.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
+    }
+    const aspect_ratio_169 = {
+        paddingTop: "56.25%",
+    };
+
     return <>
-        <div className="product__image">
-            <img className="object-contain w-auto h-auto rounded-md m-auto" src={image} alt="" key={props.index}/>
-            <div className="list-slider-image w-full flex mt-4 overflow-y-scroll">
-                {
-                    props.product.slide_img.map((item, index) => {
-                        return  <>
-                            <img key={index} 
-                                 style={image == item.img?style:{}} 
-                                 className={`object-contain w-28 h-28 mr-4 mb-2 rounded-sm p-1 box-content 
-                                 ${image == item.img ? 'active:border-green-500 active:border-2 opacity-60 transition-opacity' : ''}`} 
-                                 src={item.img} alt="" 
-                                 onClick={() => setImage(item.img)}/>
-                        </>;
-                    })
-                }
+        <div className="product__image block w-full h-full">
+            <div className="aspect_ratio_169 block relative " style={aspect_ratio_169}>
+                <div className="new-tag absolute left-3 top-3 z-10 text-lg px-6">Mới</div>
+                <img className="object-contain rounded-md m-auto block absolute w-full h-full top-0 left-0 "  src={image} alt="" key={props.index}/>
+                <div className="sale-tag flex-center absolute right-8 top-3 text-white font-semibold">
+                    <img className="w-16" src="/assets/svg/sale.svg"/>
+                    <span className="absolute text-xl">-50%</span>
+                </div>
+            </div>
+            <div className="list-slider-image w-full flex mt-4 overflow-y-scroll h-36 ">
+                    {
+                        props.product.slide_img.map((item, index) => {
+                            return  <>
+                                    <img key={index} 
+                                        style={image == item.img?style:{}} 
+                                        className={`image-item object-cover mr-4 mb-2 rounded-sm p-1 box-border w-32
+                                        ${image == item.img ? 'active:border-green-500 active:border-2 opacity-60 transition-opacity' : ''}`} 
+                                        src={item.img} alt="" 
+                                        onClick={() => handleChangeImage(item.img, index)}/> 
+                            </>;
+                        })
+                    }
             </div>
         </div>
     </>;

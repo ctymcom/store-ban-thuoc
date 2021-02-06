@@ -1,50 +1,96 @@
-type ProductCardProps = {
+import Link from 'next/link';
+import { useState } from 'react';
+import { HiMinusCircle, HiPlusCircle } from 'react-icons/hi';
+import { NumberPipe } from './../../../lib/pipes/number';
+import { ProductQuantity } from './product-quantity';
+
+type PropsType = {
   [x: string]: any;
-  img: string;
-  type: string;
   name: string;
-  price: string;
-  sale: string;
+  categories: { name: string }[]
+  image: string;
+  packagingUnit: string;
+  tags: string[];
+  price: number;
+  sale?: number;
+  saleValue?: number;
+  isNew?: boolean
   onAddToCart?: () => void;
 };
-export function ProductCard({ img: image, type, name, price, sale, ...props }: ProductCardProps) {
+export function ProductCard(props: PropsType) {
+  const [quantity, setQuantity] = useState(0);
+
+  const handleSetQuantity = (value) => {
+    if (value < 0) setQuantity(0)
+    else setQuantity(value)
+  }
   return (
-    <div className="Product py-5 ">
-      <div className="flex flex-col justify-between">
-        <div className="">
-          <div className="img-item flex justify-center items-center max-w-sm h-48 relative">
-            <img src={image} alt="" className="w-36 max-h-48" />
-            <div className="btn-readmore duration-200 absolute bottom-0 w-full bg-green-400 text-center text-white text-sm rounded">
-              <div className="w-full py-1 cursor-pointer duration-150">Xem nhanh</div>
+    <>
+      <div className="flex flex-col min-w-4xs">
+        <Link href="/product-detail">
+          <a className="group">
+            <div className="relative w-full">
+              <div className="image-wrapper contain">
+                <img src={props.image}/>
+              </div>
+              {
+                props.isNew && 
+                <div className="new-tag">Mới</div>
+              }
+              {
+                props.saleValue && 
+                <div className="sale-tag flex-center absolute right-0 top-3 text-white font-semibold">
+                  <img src="/assets/svg/sale.svg"/>
+                  <span className="absolute text-sm">-{props.saleValue}%</span>
+                </div>
+              }
             </div>
-          </div>
-          <div className="py-1">
-            <p className="text-sm text-gray-400">{type}</p>
-          </div>
-          <div className="h-16">
-            <p className="">{name}</p>
-          </div>
+            <div className="text-sm text-gray-500 pt-3 group-hover:text-primary">{props.categories.map(x => x.name).join(', ')}</div>
+            <div className="text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug h-20 text-ellipsis-3 group-hover:text-primary-dark" title={props.name}>{props.name}</div>
+          </a>
+        </Link>
+        <div className="w-full h-20">
+          {
+            props.price ? (
+              <>
+              <div>
+                <span className="font-semibold text-lg text-primary">{NumberPipe(props.price, true)}</span>
+                <span className="pl-2 line-through text-sm text-gray-600">{NumberPipe(props.sale, true)}</span>
+              </div>
+              <div className="flex justify-between mt-2">
+                <div>
+                  <div className="text-sm text-gray-500">Chọn số lượng</div>
+                  <div className="text-sm text-gray-700">{props.packagingUnit}</div>
+                </div>
+                <ProductQuantity alternateStyle={true} quantity={quantity} setQuantity={setQuantity}/>
+              </div>
+              </>
+            ) : (
+              <div className="w-full h-full flex-center font-semibold text-primary text-lg whitespace-normal text-center">Đăng nhập để xem giá</div>
+            )
+          }
         </div>
-        <div className="">
-          <div className="">
-            <div className="line-through text-green-200 text-sm">{price}</div>
-            <div className="flex space-x-1 items-center">
-              <p className="text-green-500">{sale}</p>
-              <p className="text-sm text-gray-400"> /Hộp</p>
-            </div>
-          </div>
-          <div className="w-full">
-            <div className="flex flex-col lg:flex-row lg:space-x-2 lg:space-y-0 space-y-2 items-center py-2">
-              <div className="w-full cursor-pointer text-center text-sm px-3 py-2 border border-green-400 rounded text-green-400">
-                Thêm vào giỏ
-              </div>
-              <div className="w-full cursor-pointer text-center text-sm px-3 py-2 border border-green-400  rounded text-white bg-green-400">
-                Mua ngay
-              </div>
-            </div>
-          </div>
+        {
+          !!props.tags?.length &&
+          <div className="flex flex-wrap py-2 -mx-1">
+            {
+              props.tags.map((tag, index) => (
+                <div key={index} className="p-1">
+                  <span className="bg-primary-light text-primary-dark text-sm py-1 px-3 rounded-full">{tag}</span>
+                </div>
+              ))
+            }
+        </div>
+        }
+        <div className="mt-auto grid grid-cols-2 gap-2 pt-3 border-t border-gray-100">
+          <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark">
+            Thêm vào giỏ
+          </button>
+          <button className="btn-primary p-0 h-10 text-13">
+            Mua ngay
+          </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }

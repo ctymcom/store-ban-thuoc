@@ -1,7 +1,7 @@
 
-import { Footer } from "./components/footer";
-import { HeadSEO } from "./components/head-seo";
-import { Header } from "./components/header";
+import { Footer } from "./default-layout/footer";
+import { HeadSEO } from "./default-layout/head-seo";
+import { Header } from "./default-layout/header/header";
 // import Sidebar from './components/sidebar';
 type DashboardProps = {
   [x: string]: any;
@@ -21,15 +21,14 @@ export function DefaultLayout({
   activeSubmenu,
   ...props
 }: DashboardProps) {
-  console.log(breadcrumbs)
   return (
     <>
       <HeadSEO title={title}></HeadSEO>
       <Header breadcrumbs={breadcrumbs} />
-      <div className="w-full min-h-screen">
-        {props.children}
-      </div>
-      <Footer />
+        <div className="w-full min-h-screen">
+          {props.children}
+        </div>
+      <Footer/>
     </>
   );
 }

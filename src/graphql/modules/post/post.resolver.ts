@@ -30,6 +30,16 @@ const Mutation = {
         data.slug += "-" + random(1000, 9999);
       }
     }
+    if (!data.priority) {
+      data.priority = await PostModel.find()
+        .sort({ priority: -1 })
+        .limit(1)
+        .exec()
+        .then((res) => {
+          if (res.length == 0) return 0;
+          return res[0].priority + 1;
+        });
+    }
     return await postService.create(data);
   },
   updatePost: async (root: any, args: any, context: Context) => {

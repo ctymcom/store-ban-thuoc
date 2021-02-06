@@ -5,7 +5,7 @@ export function IconYoutube(props) {
       width="100%"
       height="100%"
       viewBox="0 0 34.874 23.976"
-      className="fill-current"
+      className="fill-current text-gray-400 hover:text-red-500"
     >
       <path
         id="Path_67"

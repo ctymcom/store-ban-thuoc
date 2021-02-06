@@ -1,5 +1,5 @@
-import { Footer } from './../../../layouts/components/footer';
-import { HeadSEO } from './../../../layouts/components/head-seo';
+import { Footer } from '../../../layouts/default-layout/footer';
+import { HeadSEO } from '../../../layouts/default-layout/head-seo';
 import { Login } from './component/login';
 
 

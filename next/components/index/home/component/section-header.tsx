@@ -2,10 +2,11 @@ type SectionHeaderProps = {
   [x: string]: any;
   text: string;
 };
-export function SectionHeader({ text, ...props }: SectionHeaderProps) {
+export function SectionHeader(props: SectionHeaderProps) {
   return (
-    <div className="justify-center w-full">
-      <h6 className="uppercase text-center">{text}</h6>
+    <div className="relative flex items-center mb-5">
+      <hr className="border border-gray-200 absolute w-full"/>
+      <h4 className="uppercase px-8 bg-white mx-auto z-10 font-semibold text-xl text-gray-700 text-center">{props.text}</h4>
     </div>
   );
 }
