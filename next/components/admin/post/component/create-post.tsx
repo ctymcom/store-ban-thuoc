@@ -107,12 +107,13 @@ export function CreatePost() {
                     onChanged={(value) => (post.publishedAt = new Date(value))}
                   />
                   <SelectMulti
+                    style="bg-white"
                     label="Tag trong bài đăng"
                     placeholder="Nhập tên tag"
                     addOnEmpty
                     values={post.tags.map((t) => ({ value: t.id, display: t.name }))}
                     options={tags.map(t => ({ value: t.id, display: t.name }))}
-                    style="bg-white"
+                    onValuesChanged={(values) => post.tagIds = values}
                   />
                   <TextArea
                     label="Trích dẫn"

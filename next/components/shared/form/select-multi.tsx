@@ -35,15 +35,16 @@ export function SelectMulti({
   values = parseStringToSelectOption(values);
   options = parseStringToSelectOption(options);
   let [SelectIndex, setSelectIndex] = useState<number>();
-  const [valueState, setValue] = useState(values);
-  const [Show, setShow] = useState(false);
-  const [Options, setOptions] = useState(options);
+  let [valueState, setValue] = useState(values);
+  let [Show, setShow] = useState(false);
+  let [Options, setOptions] = useState(options);
   const inputRef = useRef<any>();
   const optionsRef = useRef<any>();
   let searchDelayTimeout: number;
   const selectItem = (item) => {
     if (!valueState.find((v) => v.value == item.value)) {
-      setValue([...valueState, item]);
+      valueState = [...valueState, item];
+      setValue(valueState);
     }
     inputRef.current.value = "";
     setOptions(options);
@@ -90,7 +91,7 @@ export function SelectMulti({
     if (Show) setSelectIndex(null);
   }, [Show]);
   useEffect(() => {
-    if (onValuesChanged) onValuesChanged(valueState);
+    if (onValuesChanged) onValuesChanged(valueState.map(v => v.value));
   }, [valueState]);
   useEffect(() => {
     setOptions(options);
