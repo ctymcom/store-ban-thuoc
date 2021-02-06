@@ -1,10 +1,13 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import { Post, PostRepository } from "../../../../lib/repo/post-repo";
 import { useRouter } from "next/router";
+import { Tag, TagRepository } from "../../../../lib/repo/tag-repo";
 
 export const EditPostContext = createContext<{
   [x: string]: any;
   post?: Post;
+  tags?: Tag[];
+  loadTags?: (search?: string) => Promise<Tag[]>
 }>({});
 type EditPostProviderProps = {
   [x: string]: any;
@@ -13,8 +16,16 @@ type EditPostProviderProps = {
 export function EditPostProvider({ children, postId, ...props }: EditPostProviderProps) {
   const isNewPost = !postId;
   const postRepo = new PostRepository();
+  const tagRepo = new TagRepository();
   const [Post, setPost] = useState<Post>();
+  const [Tags, setTags] = useState<Tag[]>();
   const router = useRouter();
+  const loadTags = (search?: string) => {
+    return tagRepo.getAll({ query: { limit: 100, search } }).then((res) => {
+      setTags(res.data);
+      return res.data;
+    });
+  };
   const updatePost = () => {
     return postRepo
       .update({
@@ -48,6 +59,7 @@ export function EditPostProvider({ children, postId, ...props }: EditPostProvide
     }
   };
   useEffect(() => {
+    loadTags();
     if (!isNewPost) {
       postRepo.getOne({ id: postId }).then((res) => {
         setPost({ ...res });
@@ -58,7 +70,7 @@ export function EditPostProvider({ children, postId, ...props }: EditPostProvide
   }, []);
 
   return (
-    <EditPostContext.Provider value={{ post: Post, updatePost, createPost, publish }}>
+    <EditPostContext.Provider value={{ post: Post, tags: Tags, updatePost, createPost, publish, loadTags }}>
       {children}
     </EditPostContext.Provider>
   );

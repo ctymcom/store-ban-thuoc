@@ -1,4 +1,5 @@
 import { GraphRepository } from "../graphql/graph-repository";
+import { Tag } from "./tag-repo";
 export type Post = {
   id?: string;
   createdAt: Date;
@@ -20,6 +21,8 @@ export type Post = {
   twitterImage?: string; // Hình ảnh twitter
   twitterTitle?: string; // Tiêu đề twitter
   priority?: number; // Độ ưu tiên
+
+  tags?: Tag[];
 };
 export class PostRepository extends GraphRepository<Post> {
   shortFragment: string = "id title excerpt status featureImage slug";

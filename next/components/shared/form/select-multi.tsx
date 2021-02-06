@@ -1,32 +1,80 @@
-import { FormFieldProps } from "./form-field.type";
-import { useState, useEffect } from "react";
-import { IconInfor } from "../../../lib/svg/icon-infor";
-import { Label } from "./label";
+import { useEffect, useRef, useState } from 'react';
+
+import { IconInfor } from '../../../lib/svg/icon-infor';
+import { FormFieldProps } from './form-field.type';
+import { Label } from './label';
 
 type SelectMutilProps = FormFieldProps & {
-  values?: string[];
+  values?: any[];
+  options?: any[];
+  tooltip?: string;
+  addOnEmpty?: boolean;
+  searchDelay?: number;
   onValuesChanged?: (values: string[]) => void;
   validateValues?: (values: string[]) => string;
-  tooltip?: string;
+  onSearch?: (search: string) => Promise<any[]>;
 };
+function parseStringToSelectOption(values: any[]) {
+  if (values.length > 0 && typeof values[0] == "string") {
+    values = values.map((value) => ({ value, display: value }));
+  }
+  return values;
+}
 export function SelectMulti({
   name,
   label,
   values = [],
   placeholder,
-  onValuesChanged,
   tooltip,
+  options,
+  searchDelay = 250,
+  onValuesChanged,
+  onSearch,
   ...props
 }: SelectMutilProps) {
+  values = parseStringToSelectOption(values);
+  options = parseStringToSelectOption(options);
+  let [SelectIndex, setSelectIndex] = useState<number>();
   const [valueState, setValue] = useState(values);
-  const onKeyDown = (e) => {
-    if (e.key == "Enter" && e.target.value && e.target.value.length > 0) {
-      if (!valueState.includes(e.target.value)) {
-        setValue([...valueState, e.target.value]);
-      }
-      e.target.value = "";
+  const [Show, setShow] = useState(false);
+  const [Options, setOptions] = useState(options);
+  const inputRef = useRef<any>();
+  const optionsRef = useRef<any>();
+  let searchDelayTimeout: number;
+  const selectItem = (item) => {
+    if (!valueState.find((v) => v.value == item.value)) {
+      setValue([...valueState, item]);
     }
-    if (e.keyCode === 8 && e.target.value.length == 0 && valueState.length > 0) {
+    inputRef.current.value = "";
+    setOptions(options);
+    
+  };
+  const onKeyDown = (event) => {
+    switch (event.code) {
+      case "ArrowUp":
+        if (SelectIndex == null) SelectIndex = Options.length - 1;
+        else SelectIndex = SelectIndex == 0 ? 0 : SelectIndex - 1;
+        event.preventDefault();
+        setSelectIndex(SelectIndex);
+        break;
+      case "ArrowDown":
+        if (SelectIndex == null) SelectIndex = 0;
+        else SelectIndex = SelectIndex >= Options.length - 1 ? Options.length - 1 : SelectIndex + 1;
+        event.preventDefault();
+        setSelectIndex(SelectIndex);
+        break;
+      case "Enter":
+        if (SelectIndex != null) {
+          event.preventDefault();
+          selectItem(Options[SelectIndex]);
+        }
+        break;
+    }
+    if (Show && SelectIndex != null && optionsRef.current && optionsRef.current.children[SelectIndex]) {
+      optionsRef.current.children[SelectIndex].scrollIntoView({ block: "nearest" });
+      console.log(optionsRef.current.children[SelectIndex]);
+    }
+    if (event.keyCode === 8 && event.target.value.length == 0 && valueState.length > 0) {
       removeChip(valueState.length - 1);
     }
   };
@@ -34,12 +82,27 @@ export function SelectMulti({
     valueState.splice(index, 1);
     setValue([...valueState]);
   };
+  const replaceBold = (item) => {
+    const regex = new RegExp(`(${inputRef.current.value})`, "gi");
+    if (item) return item.replace(regex, `<b>$1</b>`);
+  };
+  useEffect(() => {
+    if (Show) setSelectIndex(null);
+  }, [Show]);
   useEffect(() => {
     if (onValuesChanged) onValuesChanged(valueState);
   }, [valueState]);
+  useEffect(() => {
+    setOptions(options);
+  }, [options]);
+  useEffect(() => {
+    return () => {
+      if (searchDelayTimeout) clearTimeout(searchDelayTimeout);
+    }
+  }, []);
   return (
     <>
-      <div className="flex flex-col mb-3">
+      <div className="flex flex-col mb-3 relative">
         {label && (
           <div className="flex items-center">
             <Label text={label} htmlFor={name} />
@@ -56,9 +119,10 @@ export function SelectMulti({
           </div>
         )}
         <div
-          className={`p-${
-            valueState.length == 0 ? "2" : "1"
-          } flex border border-gray-300 bg-white rounded-md svelte-1l8159u`}
+          className={
+            (valueState.length == 0 ? "p-2" : "p-1") +
+            ` flex border border-gray-300 bg-white rounded-md svelte-1l8159u`
+          }
         >
           <div className="flex flex-auto flex-wrap">
             {valueState.map((v, index) => (
@@ -66,7 +130,9 @@ export function SelectMulti({
                 key={v + index}
                 className="flex justify-center items-center m-1 font-medium py-1 px-2 bg-white rounded-full text-teal-700 bg-teal-100 border border-teal-300 "
               >
-                <div className="text-xs font-normal leading-none max-w-full flex-initial">{v}</div>
+                <div className="text-xs font-normal leading-none max-w-full flex-initial">
+                  {v.display}
+                </div>
                 <div className="flex flex-auto flex-row-reverse">
                   <div onClick={() => removeChip(index)}>
                     <svg
@@ -90,13 +156,58 @@ export function SelectMulti({
             ))}
             <div className="flex-1">
               <input
+                ref={inputRef}
+                type="text"
+                className={
+                  (valueState.length == 0 ? "p-2" : "p-3") +
+                  " text-sm bg-transparent appearance-none outline-none h-full w-full text-gray-800"
+                }
+                placeholder={placeholder}
+                onFocus={() => setShow(true)}
+                onBlur={() => setTimeout(() => setShow(false), 50)}
+                onKeyDown={onKeyDown}
+                onChange={(e) => {
+                  if (onSearch) {
+                    if (searchDelayTimeout) clearTimeout(searchDelayTimeout);
+                    setTimeout(() => {
+                      onSearch(e.target.value).then((options) => {
+                        setOptions(parseStringToSelectOption(options));
+                      });
+                    }, searchDelay);
+
+                  } else {
+                    const regex = new RegExp(e.target.value, "i");
+                    setOptions(options.filter((o) => regex.test(o.display)));
+                  }
+                }}
+              />
+              {/* <input
                 onKeyDown={onKeyDown}
                 placeholder={placeholder}
                 className="text-sm bg-transparent p-3 appearance-none outline-none h-full w-full text-gray-800"
-              />
+              /> */}
             </div>
           </div>
         </div>
+        {Show && Options.length > 0 ? (
+          <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
+            <ul ref={optionsRef}>
+              {(Options as any[]).map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    className={"p-4 hover:bg-gray-200 " + (SelectIndex == index && "bg-gray-200")}
+                    onClick={() => selectItem(item)}
+                  >
+                    <span dangerouslySetInnerHTML={{ __html: replaceBold(item.display) }}></span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
