@@ -8,6 +8,7 @@ import TransferInformation from './component/transfer-information';
 import { useState } from 'react';
 import IconCheck from '../../../lib/svg/icon-check';
 import { NumberPipe } from '../../../lib/pipes/number';
+import CustomCheckbox from './component/custom-checkbox';
 
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
@@ -37,7 +38,7 @@ export function CheckOutPage() {
                         </div>
                         <div className="col-span-5">
                             <p className="text-sm col-span-2">Giảm 3% cho đơn hàng chuyển khoản trước</p>
-                            <div>
+                            <div className="transform transition-all duration-1000">
                                 {
                                     isHide ? <TransferInformation info={transferInformation} /> : <div></div>
                                 }
@@ -48,11 +49,14 @@ export function CheckOutPage() {
                             <p>Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên dưới. Chúng tôi sẽ</p>
                             <input type="" className="w-full border-2 border-gray-300 rounded-md pl-3 pt-2 pb-14 text-lg my-6" placeholder="Nhập ghi chú của bạn" />
                         </div>
-                        <div className="col-span-5">
-                            <div className="relative w-4 h-4">
+                        <div className="col-span-5 grid grid-col-4">
+                            <div className="flex items-center gap-1" >
+                                <div>
+                                    <CustomCheckbox isCheck={isCheck} setIsCheck={setIsCheck} />
+                                </div>
+                                <p>Tôi đồng ý với</p>
+                                <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
                             </div>
-                            <p>Tôi đồng ý với</p>
-                            <button className="text-primary">Điều khoản sử dụng</button>
                         </div>
                         <button onClick={() => router.push('/complete')}
                             className="col-span-2 btn mt-2 btn-primary">Xác nhận đặt hàng</button>

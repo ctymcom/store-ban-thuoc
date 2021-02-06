@@ -20,3 +20,17 @@
 .BrainhubCarousel__dot--selected::before {
   @apply bg-primary #{!important};
 }
+.custom-checkbox{
+  @apply relative; 
+  @apply border; 
+  @apply border-black;
+  @apply rounded-sm; 
+  @apply w-4; 
+  @apply h-4;
+  @apply cursor-pointer;
+}
+.custom-checkbox-checked{
+  @extend .custom-checkbox;
+  @apply text-primary; 
+  @apply border-primary; 
+}
