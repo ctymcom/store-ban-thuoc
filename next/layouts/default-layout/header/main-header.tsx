@@ -43,14 +43,14 @@ export function MainHeader() {
               placeholder="Tìm kiếm"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              className="py-3 px-12 w-full text-gray-800 border border-gray-400 rounded-full 
+              className="h-12 px-12 w-full text-gray-800 border border-gray-400 rounded-full 
             focus:ring-gray-400"
             />
             <div className="absolute left-5 text-gray-700">
               <HiOutlineSearch />
             </div>
             {searchText && (
-              <button className="btn-default is-danger is-icon absolute right-3" onClick={() => setSearchText('')}>
+              <button className="btn-default is-danger h-12 w-10 absolute right-1" onClick={() => setSearchText('')}>
                 <i>
                   <HiOutlineX />
                 </i>

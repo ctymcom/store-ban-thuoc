@@ -1,6 +1,5 @@
 
 import { useEffect, useState } from "react";
-import { DefaultLayout } from "../../../layouts/default-layout";
 import { ProductsTags } from './components/products-tags';
 import { TagsData } from "./data/tags-data";
 import { CategoriesData } from './data/categories-data';
@@ -91,7 +90,7 @@ export function ProductsPage() {
                                 <ProductsFilterSort sort={productsFilter.sort} onChange={(sort) => setProductsFilter({...productsFilter, sort})}/>
                             </div>
                         </div>
-                        <div className="mt-5 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6 xl:gap-7">
+                        <div className="mt-5 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 lg:gap-x-6 xl:gap-x-7 gap-y-10">
                             {
                                 products.map((product, index) => <ProductCard {...product}/>)
                             }
@@ -102,5 +101,3 @@ export function ProductsPage() {
         </div>
     </>
 }
-
-ProductsPage.Layout = DefaultLayout
