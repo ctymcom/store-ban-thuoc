@@ -46,6 +46,8 @@ const schema = gql`
     twitterImage: String
     "Tiêu đề twitter"
     twitterTitle: String
+    "Độ ưu tiên"
+    priority: Int
   }
 
   input UpdatePostInput {
@@ -81,6 +83,8 @@ const schema = gql`
     twitterImage: String
     "Tiêu đề twitter"
     twitterTitle: String
+    "Độ ưu tiên"
+    priority: Int
   }
 
   type Post {
@@ -120,6 +124,8 @@ const schema = gql`
     twitterImage: String
     "Tiêu đề twitter"
     twitterTitle: String
+    "Độ ưu tiên"
+    priority: Int
 
     tags: [Tag]
   }
