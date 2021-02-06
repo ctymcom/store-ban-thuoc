@@ -28,5 +28,6 @@
   "appService.deploySubpath": "",
   "typescript.preferences.importModuleSpecifier": "relative",
   "css.customData": [".vscode/css-custom-data.json"],
-  "scss.validate": false
+  "scss.validate": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

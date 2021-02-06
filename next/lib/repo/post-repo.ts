@@ -19,6 +19,7 @@ export type Post = {
   twitterDescription?: string; // Mô tả twitter
   twitterImage?: string; // Hình ảnh twitter
   twitterTitle?: string; // Tiêu đề twitter
+  priority?: number; // Độ ưu tiên
 };
 export class PostRepository extends GraphRepository<Post> {
   shortFragment: string = "id title excerpt status featureImage slug";
