@@ -12,6 +12,9 @@ import { NumberPipe } from '../../../lib/pipes/number';
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
     const [isCheck, setIsCheck] = useState(false);
+    const getCheckPayment = (status) => {
+        setIsHide(status)
+    }
     const totalMonney = (listMoney) => {
         let total = 0;
         listMoney.forEach(item => {
@@ -21,7 +24,7 @@ export function CheckOutPage() {
     }
     const router = useRouter()
     return <>
-        <div className="container-1">
+        <div className="main-container">
             <div>
                 <CartPayHeader title="pay" />
             </div>
@@ -29,8 +32,8 @@ export function CheckOutPage() {
                 <div className="col-span-3 grid grid-cols-7 gap-20">
                     <div className="col-span-5 grid grid-cols-5 gap-4">
                         <div className="col-span-5">
-                            <FormCheck title={listFormCheckTrans.tit} checkList={listFormCheckTrans.list} setIsHide={setIsHide} />
-                            <FormCheck title={listFormCheckPayment.tit} checkList={listFormCheckPayment.list} setIsHide={setIsHide} />
+                            <FormCheck title={listFormCheckTrans.tit} checkList={listFormCheckTrans.list} getCheckPayment={getCheckPayment} />
+                            <FormCheck title={listFormCheckPayment.tit} checkList={listFormCheckPayment.list} getCheckPayment={getCheckPayment} />
                         </div>
                         <div className="col-span-5">
                             <p className="text-sm col-span-2">Giảm 3% cho đơn hàng chuyển khoản trước</p>

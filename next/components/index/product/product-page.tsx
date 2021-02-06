@@ -15,7 +15,7 @@ export function ProductsPage() {
     ]
     console.log(ShowCatelogy_responesive)
     return <>
-        <div className="px-8 container-1 flex">
+        <div className="px-8 main-container flex">
             <Category
                 onFilter={(e) => { setfilter(e.filter((item) => { return item.status })) }}
                 ShowCatelogy_responesive={ShowCatelogy_responesive}

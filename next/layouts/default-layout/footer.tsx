@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <>
       <footer className=" mt-20 text-white transition">
-        <div className=" w-full py-8 bg-gray-700  flex flex-col space-y-4  lg:grid lg:grid-cols-3 container-1">
+        <div className=" w-full py-8 bg-gray-700  flex flex-col space-y-4  lg:grid lg:grid-cols-3 main-container">
           <div className="flex flex-col justify-start text-sm lg:w-3/6 ">
             <div className="uppercase text-green-500 py-2">Về khoThuocsi.vn</div>
             <p className="py-4">

@@ -5,7 +5,7 @@ import { ProductMain } from "./product-main";
 export function ProductDetail() {
   return (
     <>
-      <div className="container-1">
+      <div className="main-container">
         <div className="grid grid-rows-1">
           <ProductMain />
         </div>

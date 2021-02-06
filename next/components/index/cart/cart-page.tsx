@@ -142,7 +142,7 @@ export default function CartPage(props) {
         }
     }
     return <>
-        <div className="container-1">
+        <div className="main-container">
             <div>
                 <CartPayHeader title={"cart"} />
             </div>
