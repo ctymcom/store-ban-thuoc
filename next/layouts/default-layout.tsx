@@ -28,7 +28,7 @@ export function DefaultLayout({
         <div className="w-full min-h-screen">
           {props.children}
         </div>
-      <Footer />
+      <Footer/>
     </>
   );
 }

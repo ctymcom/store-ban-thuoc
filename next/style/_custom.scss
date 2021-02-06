@@ -33,4 +33,46 @@
   @extend .custom-checkbox;
   @apply text-primary; 
   @apply border-primary; 
+
+.new-tag {
+  @apply flex;
+  @apply justify-center;
+  @apply items-center;
+  @apply bg-accent text-white pl-4 pr-2 h-10 absolute left-0 top-3;
+  &::before {
+    content: '';
+    width: 0;
+    height: 0;
+    @apply border-accent;
+    border-top-width: 1.25rem;
+    border-right-width: 1.251rem;
+    border-right-color: transparent;
+    position: absolute;
+    right: -1.25rem;
+    top: 0;
+  }
+  &::after {
+    content: '';
+    width: 0;
+    height: 0;
+    @apply border-accent;
+    border-bottom-width: 1.25rem;
+    border-right-width: 1.25rem;
+    border-right-color: transparent;
+    position: absolute;
+    right: -1.25rem;
+    bottom: 0;
+  }
+}
+
+.input-profile{
+  @apply border-gray-200;
+  @apply border-2;
+  @apply col-span-3;
+  @apply px-3; 
+  @apply py-2; 
+  @apply rounded-md; 
+  &:hover{
+      @apply border-primary;
+  }
 }

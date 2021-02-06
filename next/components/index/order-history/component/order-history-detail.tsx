@@ -18,8 +18,7 @@ export function OrderHistoryDetail() {
         const data = take(drop(OrderHistoryData, (Pagination.page - 1) * Pagination.limit), Pagination.limit);
         setData(data) ;
     }, [Pagination])
-    const onPageChanged = (page) => { 
-        // let orderHistoryListElement = document.querySelector('ul.order-history__list.flex.justify-between') as HTMLElement;        
+    const onPageChanged = (page) => {        
         setPagination({ ...Pagination, page}); 
         window.scroll({
             top: 200,

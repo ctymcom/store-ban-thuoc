@@ -11,6 +11,8 @@ type ProductCardProps = {
   tags: string[];
   price: number;
   sale?: number;
+  saleValue?: number;
+  isNew?: boolean
   onAddToCart?: () => void;
 };
 export function ProductCard(props: ProductCardProps) {
@@ -22,15 +24,26 @@ export function ProductCard(props: ProductCardProps) {
   }
   return (
     <>
-      <div className="flex flex-col">
-        <div className="image-container w-full">
+      <div className="flex flex-col min-w-3xs">
+        <div className="relative w-full">
           <div className="image-wrapper contain">
             <img src={props.image}/>
           </div>
+          {
+            props.isNew && 
+            <div className="new-tag">Mới</div>
+          }
+          {
+            props.saleValue && 
+            <div className="sale-tag flex-center absolute right-0 top-3 text-white font-semibold">
+              <img src="/assets/svg/sale.svg"/>
+              <span className="absolute text-sm">-{props.saleValue}%</span>
+            </div>
+          }
         </div>
         <div className="text-sm text-gray-500 pt-3">{props.categories.map(x => x.name).join(', ')}</div>
-        <div className="text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug">{props.name}</div>
-        <div className="w-full h-20 mt-auto">
+        <div className="text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug h-20 text-ellipsis-3" title={props.name}>{props.name}</div>
+        <div className="w-full h-20">
           {
             props.price ? (
               <>
@@ -62,30 +75,26 @@ export function ProductCard(props: ProductCardProps) {
             )
           }
         </div>
-        <div className="grid grid-cols-2 gap-2 pt-3 mt-2 border-t border-gray-100">
-          <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary
-          hover:border-primary-dark hover:text-primary-dark">Thêm vào giỏ</button>
-          <button className="btn-primary p-0 h-10 text-13">Mua ngay</button>
+        {
+          props.tags?.length ?
+          <div className="flex flex-wrap py-2 border-t border-gray-100">
+            {
+              props.tags.map((tag, index) => (
+                <div key={index} className="p-1">
+                  <span className="bg-primary-light text-primary-dark text-sm py-1 px-3 rounded-full">{tag}</span>
+                </div>
+              ))
+            }
+        </div> : <></>
+        }
+        <div className="mt-auto grid grid-cols-2 gap-2 pt-3 border-t border-gray-100">
+          <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark">
+            Thêm vào giỏ
+          </button>
+          <button className="btn-primary p-0 h-10 text-13">
+            Mua ngay
+          </button>
         </div>
-        {/* <div className="">
-          <div className="">
-            <div className="line-through text-green-200 text-sm">{props.price}</div>
-            <div className="flex space-x-1 items-center">
-              <p className="text-green-500">{props.sale}</p>
-              <p className="text-sm text-gray-400"> /Hộp</p>
-            </div>
-          </div>
-          <div className="w-full">
-            <div className="flex flex-col lg:flex-row lg:space-x-2 lg:space-y-0 space-y-2 items-center py-2">
-              <div className="w-full cursor-pointer text-center text-sm px-3 py-2 border border-green-400 rounded text-green-400">
-                Thêm vào giỏ
-              </div>
-              <div className="w-full cursor-pointer text-center text-sm px-3 py-2 border border-green-400  rounded text-white bg-green-400">
-                Mua ngay
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     </>
   );
