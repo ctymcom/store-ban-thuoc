@@ -4,13 +4,20 @@ export function FormCheck(props) {
     const { title, checkList } = props;
     const [Checked, setChecked] = useState(false);
     const [IDC, setIDC] = useState(0);
-    const setIDChecked = (id) => {
+    const setIDChecked = (id, title) => {
         if (id !== IDC) {
             setIDC(id);
             setChecked(true);
+            if (title === "Chuyển khoản") {
+                props.getCheckPayment(true);
+            }
+            if (title === "COD") {
+                props.getCheckPayment(false);
+            }
         } else {
             setIDC(0);
             setChecked(false);
+            props.getCheckPayment(false);
         }
     }
     const setCheckBox = (id) => {
@@ -18,7 +25,7 @@ export function FormCheck(props) {
             return false;
         return true;
     }
-    const setStyleCheck = (id, type, title) => {
+    const setStyleCheck = (id, type) => {
         switch (type) {
             case "bo": {
                 let tempStyle = "p-2 border rounded col-span-2 hover:border-primary hover:bg-primary-light transition duration-500 ease-in-out"
@@ -30,7 +37,6 @@ export function FormCheck(props) {
                 let tempStyle = ""
                 if (id === IDC) {
                     tempStyle += " text-primary";
-                    if (title = "Chuyển khoản") { props.setIsHide(true); } else { props.setIsHide(false) }
                 }
                 return tempStyle;
             }
@@ -41,11 +47,11 @@ export function FormCheck(props) {
         <div className="grid grid-cols-5 gap-4">
             {
                 checkList.map((item, index) => {
-                    return <div className={setStyleCheck(index, "bo", item.title)} key={index} onClick={() => { setIDChecked(index) }}>
+                    return <div className={setStyleCheck(index, "bo")} key={index} onClick={() => { setIDChecked(index, item.title) }}>
                         <div className="flex items-center">
                             <Checkbox checked={setCheckBox(index)} />
                             <div>
-                                <h4 className={setStyleCheck(index, "he", item.title)}>{item.title}</h4>
+                                <h4 className={setStyleCheck(index, "he")}>{item.title}</h4>
                                 <p className="text-gray-400 text-sm">{item.content}</p>
                             </div>
                         </div>

@@ -5,8 +5,8 @@ import { IconZalo } from "../../lib/svg/icon-zalo";
 
 export function Footer() {
   const [ShowMore, setShowMore] = useState(false);
-  
-  return ( 
+
+  return (
     <>
       <footer className="mt-20 text-white">
         <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3">
@@ -19,24 +19,24 @@ export function Footer() {
               Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên
               khắp Việt Nam.
             </p>
-            { ShowMore ? (
-                          <>
-                            <p className="mt-4 sm:-mt-3.5 md:mt-0 sm:mb-9 md:mb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                              Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng công
-                              nghệ 4.0 vào nền Y Tế
+            {ShowMore ? (
+              <>
+                <p className="mt-4 sm:-mt-3.5 md:mt-0 sm:mb-9 md:mb-4 md:leading-7 text-sm sm:text-base md:text-lg">
+                  Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng công
+                  nghệ 4.0 vào nền Y Tế
                             </p>
-                          </>
-              ) : (
+              </>
+            ) : (
                 ""
               )}
-              <p
-                className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
-                onClick={() => {
-                  setShowMore(!ShowMore);
-                }}
-              >
-                {ShowMore ? "Thu gọn" : "Tìm hiểu thêm"}
-              </p>
+            <p
+              className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
+              onClick={() => {
+                setShowMore(!ShowMore);
+              }}
+            >
+              {ShowMore ? "Thu gọn" : "Tìm hiểu thêm"}
+            </p>
           </div>
           <div className="flex flex-col justify-start lg:w-5/6 mt-6 lg:mt-0">
             <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">Liên kết hữu ích</div>
@@ -52,7 +52,7 @@ export function Footer() {
                 <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">Liên hệ</li>
               </ul>
             </div>
-            
+
           </div>
           <div className="flex flex-col justify-start lg:w-full text-sm sm:mt-6 md:mt-0">
             <div className="">
