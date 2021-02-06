@@ -8,6 +8,7 @@ export const EditPostContext = createContext<{
   post?: Post;
   tags?: Tag[];
   loadTags?: (search?: string) => Promise<Tag[]>
+  createTag?: (name: string) => Promise<Tag>
 }>({});
 type EditPostProviderProps = {
   [x: string]: any;
@@ -26,6 +27,12 @@ export function EditPostProvider({ children, postId, ...props }: EditPostProvide
       return res.data;
     });
   };
+  const createTag = (name: string) => {
+    return tagRepo.create({ data: { name }}).then(res => {
+      setTags([...Tags, res]);
+      return res;
+    })
+  }
   const updatePost = () => {
     return postRepo
       .update({
@@ -70,7 +77,7 @@ export function EditPostProvider({ children, postId, ...props }: EditPostProvide
   }, []);
 
   return (
-    <EditPostContext.Provider value={{ post: Post, tags: Tags, updatePost, createPost, publish, loadTags }}>
+    <EditPostContext.Provider value={{ post: Post, tags: Tags, updatePost, createPost, publish, loadTags, createTag }}>
       {children}
     </EditPostContext.Provider>
   );

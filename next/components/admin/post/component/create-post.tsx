@@ -61,7 +61,7 @@ export function CreatePost() {
         <div className="text-2xl font-semibold">Đăng bài</div>
       </div>
       <EditPostContext.Consumer>
-        {({ post, publish, tags }) => {
+        {({ post, publish, tags, createTag }) => {
           if (!post) return null;
           return (
             <div className="my-10 flex justify-between space-x-4 ">
@@ -114,6 +114,7 @@ export function CreatePost() {
                     values={post.tags.map((t) => ({ value: t.id, display: t.name }))}
                     options={tags.map(t => ({ value: t.id, display: t.name }))}
                     onValuesChanged={(values) => post.tagIds = values}
+                    onAddNew={(value) => createTag(value).then(t => ({ value: t.id, display: t.name }))}
                   />
                   <TextArea
                     label="Trích dẫn"

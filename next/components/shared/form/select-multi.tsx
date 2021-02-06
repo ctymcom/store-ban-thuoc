@@ -13,6 +13,7 @@ type SelectMutilProps = FormFieldProps & {
   onValuesChanged?: (values: string[]) => void;
   validateValues?: (values: string[]) => string;
   onSearch?: (search: string) => Promise<any[]>;
+  onAddNew?: (value: string) => Promise<any>;
 };
 function parseStringToSelectOption(values: any[]) {
   if (values.length > 0 && typeof values[0] == "string") {
@@ -28,8 +29,10 @@ export function SelectMulti({
   tooltip,
   options,
   searchDelay = 250,
+  addOnEmpty = false,
   onValuesChanged,
   onSearch,
+  onAddNew,
   ...props
 }: SelectMutilProps) {
   values = parseStringToSelectOption(values);
@@ -67,7 +70,12 @@ export function SelectMulti({
       case "Enter":
         if (SelectIndex != null) {
           event.preventDefault();
-          selectItem(Options[SelectIndex]);
+          if (Options.length == 0) {
+            addNewValue();
+          } else {
+            selectItem(Options[SelectIndex]);
+          }
+          
         }
         break;
     }
@@ -87,6 +95,17 @@ export function SelectMulti({
     const regex = new RegExp(`(${inputRef.current.value})`, "gi");
     if (item) return item.replace(regex, `<b>$1</b>`);
   };
+  const addNewValue = () => {
+    if (addOnEmpty) {
+      if (onAddNew) {
+        onAddNew(inputRef.current.value).then(res => {
+          selectItem(parseStringToSelectOption([res])[0])
+        })
+      } else {
+        selectItem(parseStringToSelectOption([inputRef.current.value])[0])
+      }
+    }
+  }
   useEffect(() => {
     if (Show) setSelectIndex(null);
   }, [Show]);
@@ -182,16 +201,10 @@ export function SelectMulti({
                   }
                 }}
               />
-              {/* <input
-                onKeyDown={onKeyDown}
-                placeholder={placeholder}
-                className="text-sm bg-transparent p-3 appearance-none outline-none h-full w-full text-gray-800"
-              /> */}
             </div>
           </div>
         </div>
-        {Show && Options.length > 0 ? (
-          <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
+        {Show && Options.length > 0 && <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
             <ul ref={optionsRef}>
               {(Options as any[]).map((item, index) => {
                 return (
@@ -205,10 +218,17 @@ export function SelectMulti({
                 );
               })}
             </ul>
-          </div>
-        ) : (
-          ""
-        )}
+          </div>}
+          {Show && Options.length == 0 && addOnEmpty && <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
+            <ul ref={optionsRef}>
+              <li
+                className={"p-4 hover:bg-gray-200 " + (SelectIndex == 0 && "bg-gray-200")}
+                onClick={() => addNewValue()}
+              >
+                <span>Thêm <b>{inputRef.current.value}</b> ...</span>
+              </li>
+            </ul>
+          </div>}
       </div>
     </>
   );
