@@ -10,6 +10,7 @@ function getSemanticColors(color) {
 
 module.exports = {
   darkMode: false, // or 'media' or 'class'
+  purge: ['./components//*.{js,ts,jsx,tsx}', './pages//*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {

@@ -18,7 +18,7 @@ export function RewardPointPage () {
                             </Link>
                         </ul>
                     </div>
-                    <div className="oder-account w-full flex justify-between my-28">
+                    <div className="oder-account w-full flex justify-between mt-10 my-28">
                         <div className="account__user w-1/4">
                             <ProfileUser activeIndex={3}/>
                         </div>

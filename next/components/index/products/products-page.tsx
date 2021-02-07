@@ -9,7 +9,7 @@ import { ProductsCategoriesLabels } from './components/products-categories-label
 import { ProductsFilterSort } from './components/products-filter-sort';
 import { ProductsData } from "../../shared/product/data/product-data";
 import { ProductCard } from "../../shared/product/product-card";
-import { PaginationRound } from './../../shared/utitlies/pagination/pagination-round';
+import { PaginationRound } from './../../shared/utilities/pagination/pagination-round';
 
 export const SORT_TYPES = [
     { value: 'latest', display: 'Sắp xếp mới nhất' },
@@ -30,11 +30,6 @@ export function ProductsPage() {
 
     const [productsFilter, setProductsFilter] = useState<ProductsFilter>(null);
     const [products, setProducts] = useState([...ProductsData, ...ProductsData, ...ProductsData, ...ProductsData].slice(0, 16));
-    const [pagination, setPagination] = useState({
-        limit: 8,
-        page: 1,
-        total: 143
-    });
 
     useEffect(() => {
         let categories = [...CategoriesData]
@@ -103,10 +98,10 @@ export function ProductsPage() {
                         </div>
                         <div className="flex justify-center mt-8">
                             <PaginationRound
-                                limit={pagination.limit}
-                                page={pagination.page}
-                                total={pagination.total}
-                                onPageChange={(page) => setPagination({...pagination, page})}
+                                limit={8}
+                                page={1}
+                                total={143}
+                                onPageChange={(page) => {}}
                             />
                         </div>
                     </div>                    
