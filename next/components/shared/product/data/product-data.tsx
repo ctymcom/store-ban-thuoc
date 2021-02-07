@@ -30,7 +30,7 @@ export const ProductsData = [
         categories: [{
             name: 'Da liễu'
         }],
-        price: 645000,
+        price: 1245000,
         sale: 516000,
         packagingUnit: 'Hộp 20gr',
         image: 'https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.15752-9/141441082_266663471554853_8815194168553596317_n.png?_nc_cat=107&ccb=2&_nc_sid=ae9488&_nc_ohc=p_LFNCtAa4sAX-0Pvdz&_nc_ht=scontent.fsgn5-2.fna&oh=1e5a747b15132b006264d2a1fb8db6b9&oe=6031E863',
@@ -57,7 +57,7 @@ export const ProductsData = [
         }, {
             name: 'Cao xoa'
         }],
-        price: 645000,
+        price: 35000,
         sale: 516000,
         saleValue: 50,
         packagingUnit: 'Hộp 20gr',

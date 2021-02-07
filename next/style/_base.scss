@@ -1,6 +1,6 @@
 html,
 body {
-  font-family: 'Cabin', sans-serif;
+  font-family: 'Cabin', sans-serif !important;
   @apply bg-white;
   @apply text-base;
   @apply box-border;

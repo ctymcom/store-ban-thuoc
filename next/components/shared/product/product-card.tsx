@@ -66,7 +66,11 @@ export function ProductCard(props: PropsType) {
               </div>
               </>
             ) : (
-              <div className="w-full h-full flex-center font-semibold text-primary text-lg whitespace-normal text-center">Đăng nhập để xem giá</div>
+              <Link href="/login">
+                <a className="btn-default w-full h-full flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark">
+                  Đăng nhập để xem giá
+                </a>
+              </Link>
             )
           }
         </div>

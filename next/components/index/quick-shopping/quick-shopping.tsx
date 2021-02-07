@@ -6,18 +6,34 @@ import { QuickShoppingProduct } from "./components/quick-shopping-product";
 import { QuickShoppingTotal } from "./components/quick-shopping-total";
 import { NotFound } from "../../shared/utitlies/not-found";
 import { RiMedicineBottleLine } from "react-icons/ri";
+import { PaginationRound } from "../../shared/utitlies/pagination/pagination-round";
+import { useInterval } from './../../../hooks/useInterval';
 
 let productsData = ProductsData
+productsData = [...productsData, ...productsData]
+productsData = [...productsData, ...productsData]
 productsData = [...productsData, ...productsData]
 productsData = [...productsData, ...productsData]
 export function QuickShoppingPage() {
 
   const [searchText, setSearchText] = useState('');
-  const [filteredProducts, setFilteredProducts] = useState(productsData);
+  const [pagination, setPagination] = useState({
+    limit: 8,
+    page: 1,
+    total: productsData.length
+  });
+  const [filteredProducts, setFilteredProducts] = useState(productsData.slice(0, pagination.limit));
 
   useEffect(() => {
-    setFilteredProducts(productsData.filter(x => x.name.includes(searchText)))
+    let products = productsData.filter(x => x.name.includes(searchText)).slice(0, pagination.limit)
+    setFilteredProducts(products)
+    setPagination({...pagination, page: 1})
   }, [searchText]);
+
+  useEffect(() => {
+    let products = productsData.filter(x => x.name.includes(searchText)).slice((pagination.page - 1) * pagination.limit, pagination.page * pagination.limit)
+    setFilteredProducts(products)
+  }, [pagination])
 
   return <>
     <div className="py-12 main-container flex">
@@ -31,6 +47,14 @@ export function QuickShoppingPage() {
             ):
             <NotFound icon={<RiMedicineBottleLine/>} text="Không tìm thấy thuốc"/>
           }
+        </div>
+        <div className="mt-4 flex justify-end">
+          <PaginationRound
+            limit={pagination.limit}
+            page={pagination.page}
+            total={pagination.total}
+            onPageChange={(page) => setPagination({...pagination, page})}
+          />
         </div>
       </div>
       <div className="flex-shrink-0 w-80 relative">
