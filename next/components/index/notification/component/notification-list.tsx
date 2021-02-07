@@ -2,7 +2,7 @@
 
 export function NotificationList() {
     return <>
-            <li className="notification-item py-4 px-3 border-b-2 border-gray-300 bg-blue-50">
+            <li className="notification-item py-4 px-3 border-b-2 border-gray-300 bg-primary-light">
                 <p className="date text-gray-400">21/12/2020</p>
                 <div className="info h-28 mt-2">
                     <div className="description w-full">
@@ -23,7 +23,7 @@ export function NotificationList() {
                     </div>
                 </div>
             </li>
-            <li className="notification-item py-4 px-3 border-b-2 border-gray-300 bg-blue-50">
+            <li className="notification-item py-4 px-3 border-b-2 border-gray-300 bg-primary-light">
                 <p className="date text-gray-400">21/12/2020</p>
                 <div className="info h-28 mt-2">
                     <div className="description w-full">
@@ -44,7 +44,7 @@ export function NotificationList() {
                     </div>
                 </div>
             </li>
-            <li className="notification-item py-4 px-3 border-b-2 border-gray-300 bg-blue-50">
+            <li className="notification-item py-4 px-3 border-b-2 border-gray-300 bg-primary-light">
                 <p className="date text-gray-400">21/12/2020</p>
                 <div className="info h-28 mt-2">
                     <div className="description w-full">

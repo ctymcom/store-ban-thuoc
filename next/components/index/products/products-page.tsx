@@ -9,6 +9,7 @@ import { ProductsCategoriesLabels } from './components/products-categories-label
 import { ProductsFilterSort } from './components/products-filter-sort';
 import { ProductsData } from "../../shared/product/data/product-data";
 import { ProductCard } from "../../shared/product/product-card";
+import { PaginationRound } from './../../shared/utilities/pagination/pagination-round';
 
 export const SORT_TYPES = [
     { value: 'latest', display: 'Sắp xếp mới nhất' },
@@ -67,7 +68,7 @@ export function ProductsPage() {
                         <div className="mt-4">
                             <ProductsCategoriesFilter 
                                 title="Nhà sản xuất"
-                                categories={productsFilter.manufactures} 
+                                categories={productsFilter.manufactures}
                                 setCategories={manufactures => setProductsFilter({...productsFilter, manufactures})}
                             />
                         </div>
@@ -94,6 +95,14 @@ export function ProductsPage() {
                             {
                                 products.map((product, index) => <ProductCard {...product}/>)
                             }
+                        </div>
+                        <div className="flex justify-center mt-8">
+                            <PaginationRound
+                                limit={8}
+                                page={1}
+                                total={143}
+                                onPageChange={(page) => {}}
+                            />
                         </div>
                     </div>                    
                 </> : null

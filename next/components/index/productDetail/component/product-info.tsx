@@ -1,4 +1,5 @@
 import { toNumber } from "lodash";
+import Link from "next/link";
 import { useState } from "react";
 import { HiMinusCircle, HiPlusCircle } from "react-icons/hi";
 import { NumberPipe } from '../../../../lib/pipes/number';
@@ -49,7 +50,9 @@ export function ProductInfo(props) {
                     <button className="bg-warning rounded-md text-white px-4 py-2.5 focus:outline-none">Thêm vào giỏ</button>  
                 </div>
                 <div className="btn-add-to-cart">
-                    <button className="bg-primary rounded-md text-white px-4 py-2.5 focus:outline-none ml-8">Mua ngay</button>
+                    <Link href="/cart">
+                        <button className="bg-primary rounded-md text-white px-4 py-2.5 focus:outline-none ml-8">Mua ngay</button>
+                    </Link>
                 </div>
             </div>
             <div className="tag-name mt-5">
