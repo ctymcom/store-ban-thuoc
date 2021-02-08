@@ -12,7 +12,7 @@ export type SelectBoxOption = {
 type SelectBoxProps = FormFieldProps & {
   options?: SelectBoxOption[] | string[];
   noneOption?: SelectBoxOption;
-  onSearch?: (keyword: string) => Promise<SelectBoxOption[] | string[]>;
+  onSearch?: (keyword: string) => void;
 };
 export function SearchBox({
   label,
@@ -23,8 +23,8 @@ export function SearchBox({
   style,
   options = [],
   noneOption,
-  onChanged,
-  onSearch,
+  onChanged = () => {},
+  onSearch = () => {},
   ...props
 }: SelectBoxProps) {
   const [ValueInput, setValueInput] = useState("");
@@ -40,7 +40,7 @@ export function SearchBox({
   };
   const selectItem = (item) => {
     setValueInput(item);
-    if (props.onChange != null) props.onChange(item);
+    onChanged(item);
     setShow(false);
   };
   const replaceBold = (item) => {
@@ -113,21 +113,18 @@ export function SearchBox({
               placeholder="Nhập search"
               onChange={(e) => {
                 setValueInput(e.target.value);
-                if (onSearch) {
-                  const regex = new RegExp(e.target.value, "i");
-                  onSearch(e.target.value)
-                    // .then((res: any[]) => res.map((r) => r.replace(regex, "<b class= text-secondary-400 >$&</b>")))
-                    .then((res) => setOptions(res));
-                }
+                onSearch(e.target.value);
               }}
             />
             <div
-              className={"w-5 h-5 transition absolute right-5 ml-4" + (Show && " text-secondary-400")}
+              className={
+                "w-5 h-5 transition absolute right-5 ml-4" + (Show && " text-secondary-400")
+              }
             >
               <IconSearch />
             </div>
           </div>
-          {Show ? (
+          {Show && Options.length > 0 ? (
             <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
               <ul>
                 {(Options as any[]).map((item, index) => {
@@ -136,9 +133,6 @@ export function SearchBox({
                       key={index}
                       className={"p-4 hover:bg-gray-200 " + (SelectIndex == index && "bg-gray-200")}
                       onClick={() => {
-                        setValueInput(item);
-                        if (onChanged != null) onChanged(item);
-                        setShow(false);
                         selectItem(item);
                       }}
                     >
@@ -149,8 +143,8 @@ export function SearchBox({
               </ul>
             </div>
           ) : (
-              ""
-            )}
+            ""
+          )}
         </div>
       </div>
     </>

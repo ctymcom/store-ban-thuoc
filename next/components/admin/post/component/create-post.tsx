@@ -1,17 +1,16 @@
-import "react-quill/dist/quill.snow.css";
+import 'react-quill/dist/quill.snow.css';
 
-import { format } from "date-fns";
-import dynamic from "next/dynamic";
-import { createRef, useEffect, useState } from "react";
+import dynamic from 'next/dynamic';
+import { createRef, useEffect, useState } from 'react';
 
-import { Card } from "../../../../components/shared/card/card";
-import { ImageUploader } from "../../../../components/shared/form/image-uploader";
-import { Input } from "../../../../components/shared/form/input";
-import { SelectMulti } from "../../../../components/shared/form/select-multi";
-import { TextArea } from "../../../../components/shared/form/text-area";
-import { Imgur } from "../../../../lib/imgur";
-import { Button } from "../../../shared/form/button";
-import { EditPostContext } from "../providers/edit-post-provider";
+import { Card } from '../../../../components/shared/card/card';
+import { ImageUploader } from '../../../../components/shared/form/image-uploader';
+import { Input } from '../../../../components/shared/form/input';
+import { SelectMulti } from '../../../../components/shared/form/select-multi';
+import { TextArea } from '../../../../components/shared/form/text-area';
+import { Imgur } from '../../../../lib/imgur';
+import { Button } from '../../../shared/form/button';
+import { EditPostContext } from '../providers/edit-post-provider';
 
 const ReactQuill = dynamic(import("react-quill"), {
   ssr: false,
@@ -62,7 +61,7 @@ export function CreatePost() {
         <div className="text-2xl font-semibold">Đăng bài</div>
       </div>
       <EditPostContext.Consumer>
-        {({ post, publish }) => {
+        {({ post, publish, tags, createTag }) => {
           if (!post) return null;
           return (
             <div className="my-10 flex justify-between space-x-4 ">
@@ -108,9 +107,14 @@ export function CreatePost() {
                     onChanged={(value) => (post.publishedAt = new Date(value))}
                   />
                   <SelectMulti
-                    label="Tag trong bài đăng"
-                    options={["Marketing", "Coder"]}
                     style="bg-white"
+                    label="Tag trong bài đăng"
+                    placeholder="Nhập tên tag"
+                    addOnEmpty
+                    values={post.tags.map((t) => ({ value: t.id, display: t.name }))}
+                    options={tags.map(t => ({ value: t.id, display: t.name }))}
+                    onValuesChanged={(values) => post.tagIds = values}
+                    onAddNew={(value) => createTag(value).then(t => ({ value: t.id, display: t.name }))}
                   />
                   <TextArea
                     label="Trích dẫn"

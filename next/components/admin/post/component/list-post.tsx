@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+
 import { SelectBox } from "../../../../components/shared/form/select-box";
-import { TablePaginationCustom } from "../../../../components/shared/table/table-pagination-custom";
-import { PostProvider, PostContext } from "../providers/post-provider";
+import { TablePagination } from "../../../shared/table/table-pagination";
+import { PostContext, PostProvider } from "../providers/post-provider";
 import { PostCard } from "./post-card";
 
 export function ListPost() {
@@ -21,8 +22,12 @@ export function ListPost() {
             />
           </div>
           <div className="ml-4">
-            <div className="px-3 py-2 text-sm bg-primary-500 cursor-pointer text-white rounded"
-              onClick={() => { router.push('/admin/post/create-post') }}>
+            <div
+              className="px-3 py-2 text-sm bg-primary-500 cursor-pointer text-white rounded"
+              onClick={() => {
+                router.push("/admin/post/create-post");
+              }}
+            >
               Tạo bài viết
             </div>
           </div>
@@ -35,10 +40,10 @@ export function ListPost() {
           </PostContext.Consumer>
         </div>
         <PostContext.Consumer>
-          {({ Pagination, loadPosts }) => (
-            <TablePaginationCustom
+          {({ Pagination, setQuery, query }) => (
+            <TablePagination
               pagination={Pagination}
-              onPageChanged={(e) => loadPosts({ ...Pagination, page: e })}
+              onPageChanged={(e) => setQuery({ ...query, page: e })}
             />
           )}
         </PostContext.Consumer>
