@@ -49,17 +49,17 @@ export function ProductCard(props: PropsType) {
             <div className="text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug h-20 text-ellipsis-3 group-hover:text-primary-dark" title={props.name}>{props.name}</div>
           </a>
         </Link>
-        <div className="w-full h-20">
+        <div className="w-full h-28 sm:h-20">
           {
             props.price ? (
               <>
-              <div>
+              <div className="flex flex-col sm:flex-row">
                 <span className="font-semibold text-lg text-primary">{NumberPipe(props.price, true)}</span>
-                <span className="pl-2 line-through text-sm text-gray-600">{NumberPipe(props.sale, true)}</span>
+                <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">{NumberPipe(props.sale, true)}</span>
               </div>
-              <div className="flex justify-between mt-2">
+              <div className="flex flex-col sm:flex-row justify-between mt-2">
                 <div>
-                  <div className="text-sm text-gray-500">Chọn số lượng</div>
+                  <div className="text-sm text-gray-500 hidden sm:block">Chọn số lượng</div>
                   <div className="text-sm text-gray-700">{props.packagingUnit}</div>
                 </div>
                 <ProductQuantity alternateStyle={true} quantity={quantity} setQuantity={setQuantity}/>
@@ -86,7 +86,7 @@ export function ProductCard(props: PropsType) {
             }
         </div>
         }
-        <div className="mt-auto grid grid-cols-2 gap-2 pt-3 border-t border-gray-100">
+        <div className="mt-auto grid grid-cols-1 xs:grid-cols-2 gap-2 pt-3 border-t border-gray-100">
           <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark">
             Thêm vào giỏ
           </button>
