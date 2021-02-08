@@ -9,12 +9,16 @@ type HeaderProps = {
   activeMenu?: number;
 };
 export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderProps) {
+
+  const [menuOpened, setMenuOpened] = useState(false);
+  const [user, setUser] = useState(null);
+
   return (
     <>
       <div className="w-full">
         <TopHeader />
-        <MainHeader />
-        <MenuHeader />
+        <MainHeader user={user} setUser={setUser} setMenuOpened={setMenuOpened}/>
+        <MenuHeader user={user} setUser={setUser} menuOpened={menuOpened} setMenuOpened={setMenuOpened}/>
       </div>
 
       {/* do header có nhiều thay đổi so với desktop nên em tạo thêm 1 cái mới luôn ạ */}

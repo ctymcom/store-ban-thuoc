@@ -2,6 +2,13 @@
   height: 0;
   padding-top: 40%;
   box-sizing: border-box;
+  position: relative;
+  @screen 2xl {
+    width: 86% !important;
+    margin: auto;
+    margin-top: 2rem;
+    @apply container;
+  }
 }
 .BrainhubCarousel {
   position: absolute;
@@ -20,19 +27,19 @@
 .BrainhubCarousel__dot--selected::before {
   @apply bg-primary #{!important};
 }
-.custom-checkbox{
-  @apply relative; 
-  @apply border; 
+.custom-checkbox {
+  @apply relative;
+  @apply border;
   @apply border-black;
-  @apply rounded-sm; 
-  @apply w-4; 
+  @apply rounded-sm;
+  @apply w-4;
   @apply h-4;
   @apply cursor-pointer;
 }
-.custom-checkbox-checked{
+.custom-checkbox-checked {
   @extend .custom-checkbox;
-  @apply text-primary; 
-  @apply border-primary; 
+  @apply text-primary;
+  @apply border-primary;
 }
 .new-tag {
   @apply flex;
@@ -40,7 +47,7 @@
   @apply items-center;
   @apply bg-accent text-white pl-4 pr-2 h-10 absolute left-0 top-3;
   &::before {
-    content: '';
+    content: "";
     width: 0;
     height: 0;
     @apply border-accent;
@@ -52,7 +59,7 @@
     top: 0;
   }
   &::after {
-    content: '';
+    content: "";
     width: 0;
     height: 0;
     @apply border-accent;
@@ -65,14 +72,14 @@
   }
 }
 
-.input-profile{
+.input-profile {
   @apply border-gray-200;
   @apply border-2;
   @apply col-span-3;
-  @apply px-3; 
-  @apply py-2; 
-  @apply rounded-md; 
-  &:hover{
-      @apply border-primary;
+  @apply px-3;
+  @apply py-2;
+  @apply rounded-md;
+  &:hover {
+    @apply border-primary;
   }
 }
