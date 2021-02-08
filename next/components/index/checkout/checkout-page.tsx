@@ -9,6 +9,8 @@ import { useState } from 'react';
 import IconCheck from '../../../lib/svg/icon-check';
 import { NumberPipe } from '../../../lib/pipes/number';
 import CustomCheckbox from './component/custom-checkbox';
+import { useDialog } from '../../../hooks/useDialog';
+import Link from 'next/link';
 
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
@@ -24,6 +26,7 @@ export function CheckOutPage() {
         return total;
     }
     const router = useRouter()
+
     return <>
         <div className="main-container">
             <div>
@@ -67,7 +70,9 @@ export function CheckOutPage() {
                             <div className="grid grid-cols-12 gap-4 border-b-2 items-center">
                                 <i className="text-primary text-16 col-span-1"><IoLocationSharp /></i>
                                 <h4 className="uppercase col-span-8">Địa chỉ giao hàng</h4>
-                                <button className="text-primary font-normal text-left btn col-span-3">Đổi</button>
+                                <Link href="/address">
+                                    <a className="text-primary font-normal text-left btn col-span-3">Đổi</a>
+                                </Link>
                             </div>
                             <div className="my-2">
                                 <p className="text-18 font-bold">Minh Đức Uy</p>

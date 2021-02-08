@@ -15,7 +15,7 @@
     "editor.formatOnSave": false
   },
   "[typescriptreact]": {
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
   },
   "search.exclude": {
     "**/node_modules": true,

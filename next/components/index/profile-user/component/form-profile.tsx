@@ -23,10 +23,10 @@ export function FormProfile() {
                     </div>
                 </div>
                 <p className="col-span-1">Ngày sinh</p>
-                <div className="col-span-3 grid grid-cols-3 gap-2">
-                    <div className="col-span-1 input-profile cursor-pointer flex items-center justify-evenly">Ngày <i><HiChevronDown /></i></div>
-                    <div className="col-span-1 input-profile cursor-pointer flex items-center justify-evenly">Tháng <i><HiChevronDown /></i></div>
-                    <div className="col-span-1 input-profile cursor-pointer flex items-center justify-evenly">Năm <i><HiChevronDown /></i></div>
+                <div className="col-span-3 flex space-x-2">
+                    <div className="flex-grow input-profile cursor-pointer flex items-center justify-evenly">Ngày <i><HiChevronDown /></i></div>
+                    <div className="flex-grow input-profile cursor-pointer flex items-center justify-evenly">Tháng <i><HiChevronDown /></i></div>
+                    <div className="flex-grow input-profile cursor-pointer flex items-center justify-evenly">Năm <i><HiChevronDown /></i></div>
                 </div>
                 <p className="col-span-1">Mật khẩu</p>
                 <button className="col-span-3 btn-outline border-primary text-primary">Đổi mật khẩu</button>

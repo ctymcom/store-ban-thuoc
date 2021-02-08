@@ -1,9 +1,7 @@
 import { Carousel } from "../../shared/carousel/carousel";
 import { ProductList } from "../../shared/product/product-list";
-import { SectionHeader } from "./component/section-header";
-import { NewsList } from './../../shared/news/news-list';
-import { HomeFeature } from "./component/home-feature";
 import { HomeBanner } from "./component/home-banner";
+import { HomeFeature } from "./component/home-feature";
 import { HomeFeedback } from './component/home-feedback';
 import { HomeNews } from "./component/home-news";
 export function HomePage() {
