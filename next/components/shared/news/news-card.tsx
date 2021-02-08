@@ -1,10 +1,10 @@
 import { isSameYear, format } from 'date-fns'
 type NewsCardProps = {
     [x: string]: any;
-    img: string;
-    title: string;
-    description: string;
-    createdAt: Date;
+    img?: string;
+    title?: string;
+    description?: string;
+    createdAt?: Date;
     onClick?: () => void;
 }
 export function NewsCard(props: NewsCardProps) {
