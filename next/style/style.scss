@@ -3,15 +3,16 @@
 @tailwind utilities;
 
 @layer base {
-  @import './base';
+  @import "./base";
 }
 
 @layer components {
-  @import './buttons';
-  @import './form';
+  @import "./buttons";
+  @import "./form";
 }
 
 @layer utilities {
-  @import './utilities';
-  @import './custom';
+  @import "./utilities";
 }
+
+@import "./custom";
