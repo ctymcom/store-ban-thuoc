@@ -37,6 +37,7 @@
     "@brainhubeu/react-carousel": "^1.19.26",
     "@headlessui/react": "^0.2.0",
     "@next/bundle-analyzer": "^10.0.5",
+    "agenda": "^4.0.1",
     "ajv": "^6.12.3",
     "ajv-errors": "^1.0.1",
     "apollo-link-context": "^1.0.20",
@@ -101,6 +102,7 @@
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
+    "@types/agenda": "^3.0.2",
     "@types/async": "^3.0.2",
     "@types/bcrypt": "^3.0.0",
     "@types/bluebird": "^3.5.27",
