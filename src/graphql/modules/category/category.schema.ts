@@ -21,6 +21,8 @@ const schema = gql`
     name: string; 
     "Nhóm cha"
     parentIds: string[]; 
+
+    parents: [Category]
   }
 
   type CategoryPageData {
