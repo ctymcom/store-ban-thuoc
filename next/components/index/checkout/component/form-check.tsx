@@ -42,7 +42,7 @@ export function FormCheck(props) {
             }
         }
     }
-    return <div className="lg:col-span-5 md:col-span-7">
+    return <>
         <h3 className="uppercase border-b-2 mb-4">{title}</h3>
         <div className="grid lg:grid-cols-5 md:grid-cols-4 gap-4">
             {
@@ -59,5 +59,5 @@ export function FormCheck(props) {
                 })
             }
         </div>
-    </div>
+    </>
 }
