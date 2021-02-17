@@ -1,3 +1,31 @@
+.scroll-block {
+  overflow-y: scroll;
+  position: fixed;
+  width: 100%;
+}
+
+.dialog-wrapper {
+  &.mobile {
+    .dialog {
+      width: 100vw !important;
+      max-width: initial !important;
+      border-radius: 0 !important;
+      position: absolute;
+      bottom: 0;
+      max-height: 86vh;
+      overflow-y: auto;
+    }
+    .dialog-header {
+      position: sticky;
+      top: 0;
+    }
+    .dialog-footer {
+      position: sticky;
+      bottom: 0;
+    }
+  }
+}
+
 // @import "./mixins";
 
 // .dialog-wrapper {
@@ -46,7 +74,7 @@
 // }
 
 // .dialog-content {
-//   // min-height: 33vh;    
+//   // min-height: 33vh;
 //   align-content: flex-start;
 // }
 

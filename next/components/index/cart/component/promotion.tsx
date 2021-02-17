@@ -1,14 +1,20 @@
 import { useState } from "react";
+import { HiOutlineTicket } from "react-icons/hi";
 import { IoTicketOutline } from "react-icons/io5";
+import { Dialog } from './../../../shared/utilities/dialog/dialog';
 type PromotionProps = {
     [x: string]: any,
     onChanged?: (promotion: any) => void,
     PrUsing: { code: '', des: '' }
 }
+
+const text = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`
 export function Promotion({ onChanged = () => { }, PrUsing, ...props }: PromotionProps) {
     const [UsePromotion, setUsePromotion] = useState(false);
     const [Promotion, setPromotion] = useState<string>();
     const [Success, setSuccess] = useState(true);
+    const [showDialog, setShowDialog] = useState(false);
+    const [showDialog2, setShowDialog2] = useState(false);
 
     const applyPromotion = () => {
         if (UsePromotion && PrUsing.code !== "") {
@@ -20,6 +26,7 @@ export function Promotion({ onChanged = () => { }, PrUsing, ...props }: Promotio
             setUsePromotion(true);
         }
     }
+    
     return (<div>
         <div className="flex border-b-2 items-center pb-2">
             <i className="text-primary text-24 transform -rotate-135"><IoTicketOutline /></i>
@@ -35,7 +42,9 @@ export function Promotion({ onChanged = () => { }, PrUsing, ...props }: Promotio
                     </div>
                 ) : (
                         <div>
-                            <p className="cursor-pointer text-primary">Xem danh sách mã khuyến mãi</p>
+                            <p className="cursor-pointer text-primary"
+                                onClick={() => setShowDialog(true)}
+                            >Xem danh sách mã khuyến mãi</p>
                             <input id="Input__Promotion"
                                 className="block w-full border border-gray-300 rounded mt-2 px-2 py-2"
                                 type="text"
@@ -50,5 +59,18 @@ export function Promotion({ onChanged = () => { }, PrUsing, ...props }: Promotio
             className={Promotion ? "btn font-normal btn-primary w-full" : "btn btn-disabled w-full"}>
             {UsePromotion && PrUsing.code !== "" ? "Hủy áp dụng" : "Áp dụng"}
         </button>
+        
+        <Dialog width="500px" isOpen={showDialog}
+            onClose={() => setShowDialog(false)}
+            title="Mã khuyến mãi"
+            icon={<HiOutlineTicket/>}
+        >
+            <Dialog.Body>
+                {text} {text}{text}{text}
+            </Dialog.Body>
+            <Dialog.Footer>
+                <button className="btn-primary w-full">Áp dụng</button>
+            </Dialog.Footer>
+        </Dialog>
     </div>)
 }

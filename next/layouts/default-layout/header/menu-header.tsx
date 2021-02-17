@@ -1,7 +1,7 @@
+import { Transition } from '@headlessui/react';
 import Link from "next/link";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
-import { Transition } from '@headlessui/react';
 import { HiChevronRight, HiOutlineX } from 'react-icons/hi';
 import { HeaderUser } from "./header-user";
 interface PropsType extends ReactProps {
@@ -24,10 +24,6 @@ export function MenuHeader(props: PropsType) {
   useEffect(() => {
     props.setMenuOpened(false)
   }, [router.pathname]);
-
-  useEffect(() => {
-    document.body.style.overflowY = props.menuOpened?'hidden':'auto'
-  }, [props.menuOpened])
 
   return <>
     {

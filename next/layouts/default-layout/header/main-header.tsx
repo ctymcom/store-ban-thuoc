@@ -11,7 +11,7 @@ export function MainHeader({ user, setUser, ...props}: PropsType) {
   const [searchText, setSearchText] = useState("");
 
   return (
-    <>
+    <div className="bg-white shadow md:shadow-none">
       <div className="main-container h-16 md:h-20 flex items-center justify-between">
         <button className="btn-default text-28 h-10 w-12 md:hidden" onClick={() => props.setMenuOpened(true)}>
           <i><HiOutlineMenu/></i>
@@ -70,6 +70,6 @@ export function MainHeader({ user, setUser, ...props}: PropsType) {
           </Link>   
         </div>
       </div>
-    </>
+    </div>
   );
 }

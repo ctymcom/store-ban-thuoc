@@ -15,7 +15,7 @@
     "editor.formatOnSave": false
   },
   "[typescriptreact]": {
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": false
   },
   "search.exclude": {
     "**/node_modules": true,
@@ -23,7 +23,6 @@
     "**/dist": true,
     "**/coverage": true
   },
-  "typescript.referencesCodeLens.enabled": true,
   "appService.zipIgnorePattern": [".vscode{,/**}"],
   "appService.deploySubpath": "",
   "typescript.preferences.importModuleSpecifier": "relative",

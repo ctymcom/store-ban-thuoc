@@ -1,6 +1,6 @@
 html,
 body {
-  font-family: 'Cabin', sans-serif !important;
+  font-family: "Cabin", sans-serif;
   @apply bg-white;
   @apply text-base;
   @apply box-border;
@@ -14,7 +14,6 @@ a:hover,
 a:focus {
   text-decoration: none;
 }
-
 
 .tooltip {
   position: relative;
@@ -65,7 +64,6 @@ a:focus {
   box-shadow: 0 0 70px 5px rgba(1, 1, 1, 0.5);
 }
 
-
 .container-1 {
   width: 100%;
   padding-left: 10%;
@@ -76,7 +74,10 @@ a:focus {
   @apply container;
   margin-left: auto;
   margin-right: auto;
-  width: 96%;
+  width: 98%;
+  @screen xs {
+    width: 96%;
+  }
   @screen sm {
     width: 94%;
   }
@@ -94,7 +95,7 @@ a:focus {
   }
 }
 
-@media(max-width:1024px) {
+@media (max-width: 1024px) {
   .container-1 {
     width: 100%;
     padding-left: 2%;
@@ -107,10 +108,9 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-input:focus{
+input:focus {
   outline: none;
 }
-
 
 // input {
 //   box-shadow: none !important;
