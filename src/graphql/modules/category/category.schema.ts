@@ -1,4 +1,5 @@
 import { gql } from "apollo-server-express";
+import { CategoryType } from "./category.model";
 
 const schema = gql`
   extend type Query {
@@ -12,8 +13,8 @@ const schema = gql`
     createdAt: DateTime
     updatedAt: DateTime
 
-    "Loại nhóm"
-    type: CategoryType; 
+    "Loại nhóm ${Object.values(CategoryType)}"
+    type: String; 
     "Mã nhóm"
     code: string; 
     "Tên nhóm"
