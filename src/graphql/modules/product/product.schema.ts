@@ -65,9 +65,9 @@ const schema = gql`
     "Mã hình ảnh"
     imageId: String
 
-    categories?: [Category];
-    ingredients?: [Ingredient];
-    image?: String;
+    categories: [Category]
+    ingredients: [Ingredient]
+    image: String
   }
 
   type ProductPageData {

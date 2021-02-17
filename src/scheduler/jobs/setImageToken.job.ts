@@ -1,7 +1,7 @@
 import { Job } from "agenda";
 import moment from "moment-timezone";
 import { Agenda } from "../agenda";
-import { AritoHelper } from "../../helpers/arito.helper";
+import { AritoHelper } from "../../helpers/arito/arito.helper";
 
 export class SetImageTokenJob {
   static jobName = "SetImageToken";

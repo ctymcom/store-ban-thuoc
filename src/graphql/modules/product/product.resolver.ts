@@ -4,7 +4,7 @@ import { GraphQLHelper } from "../../../helpers/graphql.helper";
 import { CategoryLoader } from "../category/category.model";
 import { IngredientLoader } from "../ingredient/ingredient.model";
 import { IProduct } from "./product.model";
-import { AritoHelper } from "../../../helpers/arito.helper";
+import { AritoHelper } from "../../../helpers/arito/arito.helper";
 
 const Query = {
   getAllProduct: async (root: any, args: any, context: Context) => {

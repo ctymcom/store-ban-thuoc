@@ -14,13 +14,13 @@ const schema = gql`
     updatedAt: DateTime
 
     "Loại nhóm ${Object.values(CategoryType)}"
-    type: String; 
+    type: String
     "Mã nhóm"
-    code: string; 
+    code: String
     "Tên nhóm"
-    name: string; 
+    name: String
     "Nhóm cha"
-    parentIds: string[]; 
+    parentIds: [ID]
 
     parents: [Category]
   }

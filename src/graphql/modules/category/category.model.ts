@@ -19,7 +19,7 @@ const categorySchema = new Schema(
     type: { type: String, enum: Object.values(CategoryType), required: true },
     code: { type: String, required: true },
     name: { type: String, required: true },
-    parentIds: { type: [String], default: [] },
+    parentIds: { type: [{ type: Schema.Types.ObjectId, ref: "Category" }], default: [] },
   },
   { timestamps: true }
 );
