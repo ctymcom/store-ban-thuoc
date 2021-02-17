@@ -44,4 +44,29 @@ export class AritoHelper {
       };
     });
   }
+  static getAllIngredient(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/List/GetIngredient`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["ma_hc", "C", ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          code: d["ma_hc"],
+          name: d["ten_hc"],
+        })) as { type: string; code: string; name: string }[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
 }

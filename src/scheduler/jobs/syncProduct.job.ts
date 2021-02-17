@@ -9,6 +9,7 @@ import {
 } from "../../graphql/modules/category/category.model";
 import { AritoHelper } from "../../helpers/arito/arito.helper";
 import { get, keyBy } from "lodash";
+import { IngredientModel } from "../../graphql/modules/ingredient/ingredient.model";
 
 export class SyncProductJob {
   static jobName = "SyncProduct";
@@ -17,57 +18,91 @@ export class SyncProductJob {
   }
   static async execute(job: Job) {
     console.log("Execute Job " + SyncProductJob.jobName, moment().format());
-    console.log(chalk.yellow("==> Động bộ danh mục sản phẩm..."));
-    const categoryUpdatedAt = await CategoryModel.findOne()
-      .sort({ updatedAt: -1 })
-      .then((res) => {
-        return res ? res.updatedAt : null;
-      });
-    for (const type of Object.values(CategoryType)) {
-      console.log(chalk.yellow("====> Đồng bộ danh mục loại", type));
-      let getCategoryResult = await AritoHelper.getAllCategory(type, 1, categoryUpdatedAt);
-      const categoryBulk = CategoryModel.collection.initializeUnorderedBulkOp();
-      do {
-        console.log(chalk.yellow("======> Đồng bộ trang ", getCategoryResult.paging.page));
-        let parentCategories: { [x: string]: ICategory } = {};
-        if (
-          getCategoryResult.data.length > 0 &&
-          getCategoryResult.data[0].type != CategoryType.VT1
-        ) {
-          const parentCategoryCodes = getCategoryResult.data.map((d) =>
-            d.code.substr(0, d.code.length - 2)
-          );
-          parentCategories = await CategoryModel.find({
-            code: { $in: parentCategoryCodes },
-          }).then((res) => keyBy(res, "code"));
-        }
-        getCategoryResult.data.forEach((d) => {
-          const parentCategory = get(parentCategories, `${d.code.substr(0, d.code.length - 2)}`);
-          categoryBulk
-            .find({ code: d.code })
-            .upsert()
-            .updateOne({
-              $set: {
-                ...d,
-                parentIds: parentCategory ? [parentCategory._id, ...parentCategory.parentIds] : [],
-              },
-            });
-        });
-        if (getCategoryResult.paging.page == getCategoryResult.paging.pageCount) break;
-        getCategoryResult = await AritoHelper.getAllCategory(
-          type,
-          getCategoryResult.paging.page + 1,
-          categoryUpdatedAt
-        );
-      } while (getCategoryResult.paging.page <= getCategoryResult.paging.pageCount);
-      if (categoryBulk.length > 0) {
-        console.log(chalk.yellow(`======> Đồng bộ ${categoryBulk.length} danh mục...`));
-        await categoryBulk.execute();
-      }
-    }
+    console.log(chalk.cyan("==> Động bộ danh mục sản phẩm..."));
+    await syncCategory();
+    console.log(chalk.cyan("==> Động bộ hoạt chất..."));
+    await syncIngredient();
+    console.log(chalk.bgCyan("==> Động bộ sản phẩm..."));
+  }
+}
 
-    console.log(chalk.yellow("Động bộ hoạt chất..."));
-    console.log(chalk.yellow("Động bộ sản phẩm..."));
+async function syncCategory() {
+  const categoryUpdatedAt = await CategoryModel.findOne()
+    .sort({ updatedAt: -1 })
+    .then((res) => {
+      return res ? res.updatedAt : null;
+    });
+  for (const type of Object.values(CategoryType)) {
+    console.log(chalk.yellow("====> Đồng bộ danh mục loại", type));
+    let getCategoryResult = await AritoHelper.getAllCategory(type, 1, categoryUpdatedAt);
+    const categoryBulk = CategoryModel.collection.initializeUnorderedBulkOp();
+    do {
+      console.log(chalk.yellow("======> Đồng bộ trang ", getCategoryResult.paging.page));
+      let parentCategories: { [x: string]: ICategory } = {};
+      if (getCategoryResult.data.length > 0 && getCategoryResult.data[0].type != CategoryType.VT1) {
+        const parentCategoryCodes = getCategoryResult.data.map((d) =>
+          d.code.substr(0, d.code.length - 2)
+        );
+        parentCategories = await CategoryModel.find({
+          code: { $in: parentCategoryCodes },
+        }).then((res) => keyBy(res, "code"));
+      }
+      getCategoryResult.data.forEach((d) => {
+        const parentCategory = get(parentCategories, `${d.code.substr(0, d.code.length - 2)}`);
+        categoryBulk
+          .find({ code: d.code })
+          .upsert()
+          .updateOne({
+            $setOnInsert: { createdAt: new Date() },
+            $set: {
+              ...d,
+              parentIds: parentCategory ? [parentCategory._id, ...parentCategory.parentIds] : [],
+              updatedAt: new Date(),
+            },
+          });
+      });
+      if (getCategoryResult.paging.page == getCategoryResult.paging.pageCount) break;
+      getCategoryResult = await AritoHelper.getAllCategory(
+        type,
+        getCategoryResult.paging.page + 1,
+        categoryUpdatedAt
+      );
+    } while (getCategoryResult.paging.page <= getCategoryResult.paging.pageCount);
+    if (categoryBulk.length > 0) {
+      console.log(chalk.yellow(`======> Đồng bộ ${categoryBulk.length} danh mục...`));
+      await categoryBulk.execute();
+    }
+  }
+}
+async function syncIngredient() {
+  const ingredientUpdatedAt = await CategoryModel.findOne()
+    .sort({ updatedAt: -1 })
+    .exec()
+    .then((res) => {
+      return res ? res.updatedAt : null;
+    });
+  let getIngredientResult = await AritoHelper.getAllIngredient(1, ingredientUpdatedAt);
+  const ingredientBulk = IngredientModel.collection.initializeUnorderedBulkOp();
+  do {
+    console.log(chalk.yellow("====> Đồng bộ trang ", getIngredientResult.paging.page));
+    getIngredientResult.data.forEach((d) => {
+      ingredientBulk
+        .find({ code: d.code })
+        .upsert()
+        .updateOne({
+          $setOnInsert: { createdAt: new Date() },
+          $set: { ...d, updatedAt: new Date() },
+        });
+    });
+    if (getIngredientResult.paging.page == getIngredientResult.paging.pageCount) break;
+    getIngredientResult = await AritoHelper.getAllIngredient(
+      getIngredientResult.paging.page + 1,
+      ingredientUpdatedAt
+    );
+  } while (getIngredientResult.paging.page <= getIngredientResult.paging.pageCount);
+  if (ingredientBulk.length > 0) {
+    console.log(chalk.yellow(`====> Đồng bộ ${ingredientBulk.length} hoạt chất...`));
+    await ingredientBulk.execute();
   }
 }
 
