@@ -42,6 +42,8 @@ const schema = gql`
     interactions: String
     "Tác dụng phụ"
     sideEffects: String
+    "Thận trọng"
+    careful: String
     "Quá liều"
     overdose: String
     "Bảo quản"
@@ -64,6 +66,10 @@ const schema = gql`
     byt: String
     "Mã hình ảnh"
     imageId: String
+    "Giá trước khi giảm"
+    basePrice: Float
+    "Giá bán đã giảm"
+    salePrice: Float
 
     categories: [Category]
     ingredients: [Ingredient]

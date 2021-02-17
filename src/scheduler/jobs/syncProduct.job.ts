@@ -8,8 +8,9 @@ import {
   ICategory,
 } from "../../graphql/modules/category/category.model";
 import { AritoHelper } from "../../helpers/arito/arito.helper";
-import { get, keyBy } from "lodash";
+import { flatten, get, keyBy, uniq } from "lodash";
 import { IngredientModel } from "../../graphql/modules/ingredient/ingredient.model";
+import { ProductModel } from "../../graphql/modules/product/product.model";
 
 export class SyncProductJob {
   static jobName = "SyncProduct";
@@ -22,7 +23,51 @@ export class SyncProductJob {
     await syncCategory();
     console.log(chalk.cyan("==> Động bộ hoạt chất..."));
     await syncIngredient();
-    console.log(chalk.bgCyan("==> Động bộ sản phẩm..."));
+    console.log(chalk.cyan("==> Động bộ sản phẩm..."));
+    await syncProduct();
+    console.log(chalk.green("==> Đồng bộ xong"));
+  }
+}
+async function syncProduct() {
+  const productUpdatedAt = await ProductModel.findOne()
+    .sort({ updatedAt: -1 })
+    .exec()
+    .then((res) => {
+      return res ? res.updatedAt : null;
+    });
+  let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
+  const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
+  do {
+    console.log(chalk.yellow("====> Đồng bộ trang ", getProductResult.paging.page));
+    const categoryData = await CategoryModel.find({
+      code: { $in: uniq(flatten(getProductResult.data.map((d) => d.categoryIds))) },
+    }).then((res) => keyBy(res, "code"));
+    const ingredientData = await IngredientModel.find({
+      code: { $in: uniq(flatten(getProductResult.data.map((d) => d.ingredientIds))) },
+    }).then((res) => keyBy(res, "code"));
+    getProductResult.data.forEach((d) => {
+      productBulk
+        .find({ code: d.code })
+        .upsert()
+        .updateOne({
+          $setOnInsert: { createdAt: new Date() },
+          $set: {
+            ...d,
+            updatedAt: new Date(),
+            categoryIds: d.categoryIds.map((code: string) => get(categoryData, code)._id),
+            ingredientIds: d.ingredientIds.map((code: string) => get(ingredientData, code)._id),
+          },
+        });
+    });
+    if (getProductResult.paging.page == getProductResult.paging.pageCount) break;
+    getProductResult = await AritoHelper.getAllProduct(
+      getProductResult.paging.page + 1,
+      productUpdatedAt
+    );
+  } while (getProductResult.paging.page <= getProductResult.paging.pageCount);
+  if (productBulk.length > 0) {
+    console.log(chalk.yellow(`====> Đồng bộ ${productBulk.length} sản phẩm...`));
+    await productBulk.execute();
   }
 }
 

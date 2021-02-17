@@ -19,6 +19,7 @@ export type IProduct = BaseDocument & {
   contraindicated?: string; // Chống chỉ định
   interactions?: string; // Tương tác thuốc
   sideEffects?: string; // Tác dụng phụ
+  careful?: string; // Thận trọng
   overdose?: string; // Quá liều
   preservation?: string; // Bảo quản
   volume?: number; // Thể tích
@@ -30,6 +31,8 @@ export type IProduct = BaseDocument & {
   description?: string; // Mô tả
   byt?: string; // Nhóm sản phẩm BYT
   imageId?: string; // Mã hình ảnh
+  basePrice?: number; // Giá trước khi giảm
+  salePrice?: number; // Giá bán đã giảm
 };
 
 const productSchema = new Schema(
@@ -60,6 +63,8 @@ const productSchema = new Schema(
     description: { type: String },
     byt: { type: String },
     imageId: { type: String },
+    basePrice: { type: Number, default: 0 },
+    salePrice: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
