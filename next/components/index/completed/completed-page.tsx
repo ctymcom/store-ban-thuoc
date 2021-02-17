@@ -3,10 +3,10 @@ import { ContentStatus } from './component/content-status';
 import { statusSuccessed, statusFailed } from './component/completed-data';
 export function CompletedPage(props) {
     const status = statusSuccessed;
-    return <div className="main-container lg:w-3/4 mx-auto pb-0">
-        <CartPayHeader title="comp" />
+    return <div className="md:w-3/4 mx-auto pb-0">
+        <CartPayHeader/>
         <div className="md:flex mt-10">
-            <div className="px-20 md:px-0 md:w-1/2">
+            <div className="w-1/2 mx-auto">
                 <img src={status.img} alt="" />
             </div>
             <div className="md:w-1/2">
