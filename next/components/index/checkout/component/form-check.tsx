@@ -44,7 +44,7 @@ export function FormCheck(props) {
     }
     return <>
         <h3 className="uppercase border-b-2 mb-4">{title}</h3>
-        <div className="grid lg:grid-cols-5 md:grid-cols-4 gap-4">
+        <div className="grid lg:grid-cols-5 sm:grid-cols-4 gap-4">
             {
                 checkList.map((item, index) => {
                     return <div className={setStyleCheck(index, "bo")} key={index} onClick={() => { setIDChecked(index, item.title) }}>
