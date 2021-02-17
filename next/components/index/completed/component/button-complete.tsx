@@ -1,7 +1,7 @@
 export function ListButton(props) {
     const { type, listButton } = props;
     const styleButton = (type, href) => {
-        let tempStyle: string = 'block w-3/5 ml-10 border border-gray-300 rounded p-2 mt-2 ';
+        let tempStyle: string = 'block w-4/5 mx-auto md:w-3/5 md:ml-10 border border-gray-300 rounded p-2 mt-2 ';
         if (href !== "/oder-history") {
             if (type === "successed")
                 tempStyle += "bg-primary text-white";
