@@ -29,6 +29,7 @@ export type IProduct = BaseDocument & {
   unit?: string; // Đơn vị
   description?: string; // Mô tả
   byt?: string; // Nhóm sản phẩm BYT
+  imageId?: string; // Mã hình ảnh
 };
 
 const productSchema = new Schema(
@@ -58,6 +59,7 @@ const productSchema = new Schema(
     unit: { type: String },
     description: { type: String },
     byt: { type: String },
+    imageId: { type: String },
   },
   { timestamps: true }
 );

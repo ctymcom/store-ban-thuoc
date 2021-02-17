@@ -62,9 +62,12 @@ const schema = gql`
     description: String
     "Nhóm sản phẩm BYT"
     byt: String
+    "Mã hình ảnh"
+    imageId: String
 
     categories?: [Category];
     ingredients?: [Ingredient];
+    image?: String;
   }
 
   type ProductPageData {
