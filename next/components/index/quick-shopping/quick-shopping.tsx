@@ -1,13 +1,12 @@
 
 import { useEffect, useState } from "react";
-import { QuickShoppingSearch } from './components/quick-shopping-search';
+import { RiMedicineBottleLine } from "react-icons/ri";
+import { NotFound } from "../../shared/utilities/not-found";
+import { PaginationRound } from "../../shared/utilities/pagination/pagination-round";
 import { ProductsData } from './../../shared/product/data/product-data';
 import { QuickShoppingProduct } from "./components/quick-shopping-product";
+import { QuickShoppingSearch } from './components/quick-shopping-search';
 import { QuickShoppingTotal } from "./components/quick-shopping-total";
-import { NotFound } from "../../shared/utilities/not-found";
-import { RiMedicineBottleLine } from "react-icons/ri";
-import { PaginationRound } from "../../shared/utilities/pagination/pagination-round";
-import { useInterval } from './../../../hooks/useInterval';
 
 let productsData = ProductsData
 productsData = [...productsData, ...productsData]

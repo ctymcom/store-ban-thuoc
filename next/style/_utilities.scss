@@ -39,12 +39,12 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    @apply bg-gray-500;
+    @apply bg-gray-400;
     border-radius: 1px;
   }
 }
 
-.h-scrollbar {  
+.h-scrollbar {
   overflow-x: auto;
 
   &::-webkit-scrollbar {
@@ -172,8 +172,7 @@
   font-weight: 600;
   min-width: 72px;
 
-  &.primary
-   {
+  &.primary {
     @apply bg-primary;
   }
 
@@ -302,12 +301,12 @@
 .btn-group {
   display: flex;
 
-  >*:not(:last-child) {
+  > *:not(:last-child) {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 
-  >*:not(:first-child) {
+  > *:not(:first-child) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -322,8 +321,8 @@
   -webkit-box-orient: vertical;
 }
 .text-ellipsis-2 {
-  @include text-ellipsis(2)
+  @include text-ellipsis(2);
 }
 .text-ellipsis-3 {
-  @include text-ellipsis(3)
+  @include text-ellipsis(3);
 }
