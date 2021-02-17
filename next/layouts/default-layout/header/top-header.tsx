@@ -13,7 +13,7 @@ export function TopHeader() {
   ]
 
   return <>
-    <div className="bg-gray-200">
+    <div className="bg-gray-200 hidden md:block">
       <div className="main-container flex items-center justify-end ">
         {topMenus.map((menu, index) => (
           <Link href={menu.path} key={index}>

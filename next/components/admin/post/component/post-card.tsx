@@ -18,7 +18,7 @@ export function PostCard({ post, ...props }: PostCardProps) {
           <img
             src={post.featureImage || "https://placekitten.com/600/300"}
             alt=""
-            className="object-cover w-full"
+            className="object-cover w-full h-full"
           />
         </div>
         <div className="py-4 max-h-80">

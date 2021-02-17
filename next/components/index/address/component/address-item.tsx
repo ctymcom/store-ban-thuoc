@@ -9,7 +9,7 @@ export function AddressItem(props) {
                     <div className="">{props.item.name}</div>
                     <div className="text-12 cursor-pointer">
                         {
-                            props.item.default ? <p className="text-primary">Địa chỉ mặt định</p> : <p className="text-danger">Xóa địa chỉ</p>
+                            props.item.default ? <p className="text-primary">Địa chỉ mặc định</p> : <p className="text-danger">Xóa địa chỉ</p>
                         }
                     </div>
                 </div>

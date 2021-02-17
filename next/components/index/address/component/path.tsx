@@ -5,7 +5,6 @@ export const Path = (props) => {
     const { pathname } = router;
     const goPage = (href) => {
         router.push(href)
-
     }
     return (
         <div className="flex uppercase text-sm pt-10">

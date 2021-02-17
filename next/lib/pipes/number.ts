@@ -11,8 +11,8 @@ export function NumberPipe(value: any, isCurrency = false) {
 
   return price
     .toLocaleString("en")
-    .replace(",", ".")
-    .replace(/\.(?=[^.]*$)/g, Number.isInteger(price) ? "." : ",")
+    .replace(/,/g, ".")
+    .replace(/\.(?=[^.]*$)/g, Number.isInteger(price) ? "." : ".")
     .concat(isCurrency ? "đ" : "");
   // const formatter = new Intl.NumberFormat("vi", {
   //   style: "currency",

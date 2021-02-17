@@ -1,3 +1,7 @@
+.form-input {
+  @apply px-6 h-12 rounded border border-gray-400 hover:border-primary focus:border-primary-dark;
+}
+
 // @import "mixins";
 // @import "~@ng-select/ng-select/themes/default.theme.css";
 
