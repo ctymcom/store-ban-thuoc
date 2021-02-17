@@ -3,7 +3,7 @@ export function ContentStatus(props) {
     const { status } = props;
     const compStyle = (type: string) => {
         let tempType: string = '';
-        tempType += "text-4xl font-bold mx-10 my-4";
+        tempType += "text-2xl md:text-4xl font-bold mx-10 my-0 md:my-4";
         if (type === "successed")
             tempType += " text-primary";
         if (type === "failed")
@@ -11,9 +11,9 @@ export function ContentStatus(props) {
         return tempType;
     }
     return <>
-        <div>
+        <div className="text-center md:text-left">
             <h3 className={compStyle(status.type)}>{status.header}</h3>
-            <div className="mx-16 my-10">
+            <div className="w-4/5 mx-auto my-5 md:my-10">
                 {
                     status.listContent.map((item: any, index: any) => {
                         return <p key={index}>{item}</p>

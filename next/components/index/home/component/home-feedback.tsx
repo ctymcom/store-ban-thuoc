@@ -1,7 +1,7 @@
-import { SectionHeader } from "./section-header"
+import { useState } from "react"
 import { ImQuotesLeft, ImQuotesRight } from 'react-icons/im'
-import { useEffect, useState } from "react"
-import { useInterval } from "../../../../hooks/useInterval"
+import useInterval from "../../../../hooks/useInterval"
+import { SectionHeader } from "./section-header"
 
 
 const feedbacks = [

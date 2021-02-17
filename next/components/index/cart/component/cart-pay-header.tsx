@@ -1,11 +1,16 @@
-export function CartPayHeader(props) {
-    const { title } = props;
-    switch (title) {
-        case "cart":
-            return <h2 className="text-28 mb-10 text-center uppercase m-6 text-gray-300"><span className="text-black"> Giỏ Hàng </span><span>{`>`} Thanh Toán </span> <span>{`>`} Hoàn tất </span></h2>
-        case "pay":
-            return <h2 className="text-28 mb-10 text-center uppercase m-6 text-gray-300"><span> Giỏ Hàng </span><span className="text-black">{`>`} Thanh Toán </span> <span>{`>`} Hoàn tất </span></h2>
-        case "comp":
-            return <h2 className="text-28  mb-10 text-center uppercase m-6 text-gray-300"><span > Giỏ Hàng </span><span>{`>`} Thanh Toán </span> <span className="text-black">{`>`} Hoàn tất </span></h2>
+import { fr } from "date-fns/esm/locale";
+import {HiOutlineChevronRight} from "react-icons/hi"
+export function CartPayHeader() {
+    let pathName=null;
+    try {
+        const { pathname } = window.location;
+        pathName= pathname;
+    } catch (error) {
+        pathName="/cart";
     }
+    return <div className="text-16 sm:text-28 lg:text-32 w-11/12 lg:w-3/5 mx-auto my-10 text-center uppercase text-gray-300 flex items-center">
+            <h2 className={pathName ==="/cart"?"text-black":"cursor-pointer"}> Giỏ Hàng</h2>
+            <h2 className={pathName ==="/checkout"?"text-black flex justify-around items-center":"flex justify-around items-center cursor-pointer"}><i><HiOutlineChevronRight/></i>Thanh Toán</h2> 
+            <h2 className={pathName ==="/complete"?"text-black flex justify-around items-center":"flex justify-around items-center cursor-pointer"}><i><HiOutlineChevronRight/></i>Hoàn tất</h2>
+        </div>
 }

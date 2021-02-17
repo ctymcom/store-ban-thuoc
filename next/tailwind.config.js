@@ -88,6 +88,10 @@ module.exports = {
         'screen-xl': '1280px',
         'screen-2xl': '1536px',
       },
+      height: {
+        'min': 'min-content',
+        'max': 'max-content',
+      },
       minHeight: {
         'none': 'none',
         1: '0.25rem',
@@ -136,20 +140,55 @@ module.exports = {
           from: { opacity: 0 },
           to: { opacity: 1 }
         },
-        slideUp: {
+        fade: {
+          from: { opacity: 1 },
+          to: { opacity: 0 }
+        },
+        emergeUp: {
           from: { opacity: 0, transform: 'translateY(4px)' },
           to: { opacity: 1, transform: 'translateY(0)' }
+        },
+        slideUp: {
+          from: { opacity: 0, transform: 'translateY(100%)' },
+          to: { opacity: 1, transform: 'translateY(0)' }
+        },
+        slideDown: {
+          from: { opacity: 1, transform: 'translateY(0)' },
+          to: { opacity: 0, transform: 'translateY(100%)' }
+        },
+        scaleUp: {
+          from: { opacity: 0, transform: 'scale(0)' },
+          to: { opacity: 1, transform: 'scale(1)' }
+        },
+        scaleDown: {
+          from: { opacity: 1, transform: 'scale(1)' },
+          to: { opacity: 0, transform: 'scale(0)' }
         } 
-      }
+      },
+      screens: {
+        'xs': '480px',
+      },      
+      zIndex: {
+        '100': '100',
+        '200': '200',
+        '300': '300',
+        '400': '400',
+        '500': '500',
+       },
+       animation: {
+         wiggle: 'wiggle 1s ease-in-out infinite',
+         emerge: 'emerge 0.2s ease-in',
+         fade: 'fade .2s ease-out forwards',
+         'emerge-up': 'emergeUp .2s ease-in',
+         'slide-up': 'slideUp .2s ease-in',
+         'slide-down': 'slideDown .2s ease-out forwards',
+         'scale-up': 'scaleUp .2s ease-in',
+         'scale-down': 'scaleDown .2s ease-out forwards',
+       },
+       rotate:{
+         '-135': '-135deg',
+       }
     },
-    animation: {
-      wiggle: 'wiggle 1s ease-in-out infinite',
-      emerge: 'emerge 0.3s ease-in-out',
-      'slide-up': 'slideUp 0.3s ease-in-out',
-    },
-    rotate:{
-      '-135': '-135deg',
-    }
   },
   variants: {
     extend: {
