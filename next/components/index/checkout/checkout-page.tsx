@@ -6,10 +6,8 @@ import { useRouter } from 'next/router';
 import { IoLocationSharp } from 'react-icons/io5'
 import TransferInformation from './component/transfer-information';
 import { useState } from 'react';
-import IconCheck from '../../../lib/svg/icon-check';
 import { NumberPipe } from '../../../lib/pipes/number';
 import CustomCheckbox from './component/custom-checkbox';
-import { useDialog } from '../../../hooks/useDialog';
 import Link from 'next/link';
 
 export function CheckOutPage() {
@@ -30,7 +28,7 @@ export function CheckOutPage() {
     return <>
         <div className="main-container">
             <div>
-                <CartPayHeader title="pay" />
+                <CartPayHeader/>
             </div>
             <div className="">
                 <div className="col-span-3 grid grid-cols-7 gap-4 lg:gap-16">

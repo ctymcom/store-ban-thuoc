@@ -4,8 +4,15 @@ import { RiSubtractLine } from 'react-icons/ri'
 import { HiPlus } from 'react-icons/hi'
 import { NumberPipe } from '../../../../lib/pipes/number';
 export function CartItem(props) {
+    const styleItem=(checked)=>{
+        let sty="grid grid-cols-12 text-center border-b-2 h-24 items-center ";
+        if(!checked){
+            sty+="opacity-50";
+        }
+        return sty;
+    }
     return (
-        <div className="grid grid-cols-12 text-center border-b-2 h-24 items-center">
+        <div className={styleItem(props.item.isCheck)}>
             <div className="col-span-5 text-left grid grid-cols-12">
                 <div className="col-span-1 my-auto">
                     <Checkbox checked={props.item.isCheck}
@@ -37,8 +44,8 @@ export function CartItem(props) {
                 <div className="font-bold text-center">{NumberPipe(props.item.sale * props.item.amount, true)}</div>
             </div>
             <div className="col-span-1 grid-cols-5">
-                <button className="col-span-1 hover:text-white hover:bg-red-500 px-2 rounded-lg text-red-500 btn" onClick={() => { props.handleDeleteCart(props.item.id) }}>Xóa</button>
-            </div>
+            <button className="col-span-1 hover:text-white hover:bg-red-500 px-2 rounded-lg text-red-500 btn" onClick={() => { props.handleDeleteCart(props.item.id) }}>Xóa</button>
+        </div>
         </div>
     )
 }

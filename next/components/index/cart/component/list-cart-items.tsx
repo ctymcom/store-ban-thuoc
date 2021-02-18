@@ -24,8 +24,6 @@ export function ListCartItems(props) {
             <div>
                 {
                     props.listCart.map((item, index) => {
-                        console.log(item);
-
                         return <CartItem key={index} item={item} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem} />
                     })
                 }

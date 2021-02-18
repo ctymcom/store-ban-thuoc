@@ -3,7 +3,7 @@ export function ContentStatus(props) {
     const { status } = props;
     const compStyle = (type: string) => {
         let tempType: string = '';
-        tempType += "text-2xl md:text-4xl font-bold mx-10 my-0 md:my-4";
+        tempType += "text-3xl md:text-4xl font-bold mx-10 my-0 md:my-4";
         if (type === "successed")
             tempType += " text-primary";
         if (type === "failed")

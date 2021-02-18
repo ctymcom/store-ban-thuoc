@@ -49,8 +49,7 @@ export default function CartPage(props) {
         setListCart([...listNew]);
         setListMoney(PrUsing);
         setChange(true);
-        console.log(listCart);
-
+        checkAndsetCheckAll();
     }
     const findIndex = (id) => {
         return listCart.findIndex((item) => { return item.id === id });
@@ -136,15 +135,15 @@ export default function CartPage(props) {
                 setListMoney(null);
             } break;
             default: {
-                setPrUsing(listPromotionCode[2]);
-                setListMoney(listPromotionCode[2]);
+                setPrUsing(null);
+                setListMoney(null);
             } break;
         }
     }
     return <>
         <div className="main-container">
             <div>
-                <CartPayHeader title={"cart"} />
+                <CartPayHeader />
             </div>
             <div className="">
                 <div className="col-span-3 grid grid-cols-7 gap-20">
@@ -163,7 +162,7 @@ export default function CartPage(props) {
                         <div>
                             <Promotion onChanged={(promotion) => {
                                 handleSetPromotion(promotion);
-                            }} PrUsing={PrUsing} />
+                            }} PrUsing={PrUsing} listPromotionCode={listPromotionCode}/>
                         </div>
                         <div className="mt-10">
                             <PayMoney listMoney={ListMoneyCart} />
