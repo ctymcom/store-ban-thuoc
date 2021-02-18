@@ -1,4 +1,3 @@
-
 import { Footer } from "./default-layout/footer";
 import { HeadSEO } from "./default-layout/head-seo";
 import { Header } from "./default-layout/header/header";
