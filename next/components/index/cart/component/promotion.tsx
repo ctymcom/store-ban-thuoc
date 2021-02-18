@@ -25,7 +25,10 @@ export function Promotion({ onChanged = () => { }, PrUsing, listPromotionCode, .
             onChanged(Promotion);
             setUsePromotion(true);
         }
-        setShowDialog(false)
+    }
+    const choseCode =(code)=>{
+        setPromotion(code);
+        setShowDialog(false);
     }
     
     return (<div>
@@ -50,7 +53,7 @@ export function Promotion({ onChanged = () => { }, PrUsing, listPromotionCode, .
                                 className="block w-full border border-gray-300 rounded mt-2 px-2 py-2"
                                 type="text"
                                 placeholder="Nhập mã ưu đãi"
-                                onChange={(e) => setPromotion(e.target.value)} />
+                                onChange={(e) => setPromotion(e.target.value)} value={Promotion} />
                             <p className={PrUsing !== null && PrUsing.code === "" ? "block text-lg text-red-600" : "hidden"}>Mã khuyến mãi không tồn tại</p>
                         </div>
                     )
@@ -67,11 +70,8 @@ export function Promotion({ onChanged = () => { }, PrUsing, listPromotionCode, .
             icon={<HiOutlineTicket/>}
         >
             <Dialog.Body>
-                <ListCode listPromotionCode={listPromotionCode} setPromotion={setPromotion}/>
+                <ListCode listPromotionCode={listPromotionCode} choseCode={choseCode}/>
             </Dialog.Body>
-            <Dialog.Footer>
-                <button className={Promotion ? "btn-primary w-full" : "btn-disabled w-full"} onClick={applyPromotion} >Áp dụng</button>
-            </Dialog.Footer>
         </Dialog>
     </div>)
 }

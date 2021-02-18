@@ -82,13 +82,13 @@ export const listMoneyCart = [
 export const listPromotionCode = [
     {
         code: "KM50",
-        content:"Giảm 5k cho hóa đơn từ 100k",
+        content:"Giảm 50% cho hóa đơn từ 100k",
         expDate:"20/02/2022",
         des: 50
     },
     {
         code: "KM30",
-        content:"Giảm 5k cho hóa đơn từ 100k",
+        content:"Giảm 30% cho hóa đơn từ 100k",
         expDate:"20/02/2022",
         des: 30
     }
