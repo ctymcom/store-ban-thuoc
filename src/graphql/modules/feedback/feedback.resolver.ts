@@ -1,15 +1,12 @@
 import { ROLES } from "../../../constants/role.const";
-import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
 import { feedbackService } from "./feedback.service";
 
 const Query = {
   getAllFeedback: async (root: any, args: any, context: Context) => {
-    context.auth(ROLES.ADMIN_EDITOR);
     return feedbackService.fetch(args.q);
   },
   getOneFeedback: async (root: any, args: any, context: Context) => {
-    context.auth(ROLES.ADMIN_EDITOR);
     const { id } = args;
     return await feedbackService.findOne({ _id: id });
   },
@@ -33,9 +30,7 @@ const Mutation = {
   },
 };
 
-const Feedback = {
-  
-};
+const Feedback = {};
 
 export default {
   Query,
