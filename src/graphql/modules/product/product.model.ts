@@ -33,6 +33,7 @@ export type IProduct = BaseDocument & {
   imageId?: string; // Mã hình ảnh
   basePrice?: number; // Giá trước khi giảm
   salePrice?: number; // Giá bán đã giảm
+  containers?: string[]; // Nhóm sản phẩm hiển thị trang chủ
 };
 
 const productSchema = new Schema(
@@ -65,6 +66,7 @@ const productSchema = new Schema(
     imageId: { type: String },
     basePrice: { type: Number, default: 0 },
     salePrice: { type: Number, default: 0 },
+    containers: { type: [String], default: [] },
   },
   { timestamps: true }
 );
