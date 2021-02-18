@@ -1,16 +1,20 @@
-import { FormCheck } from './component/form-check';
-import { listFormCheckTrans, listFormCheckPayment, listMoneyCheckout, transferInformation } from './component/form-check-data';
-import { PayMoney } from '../cart/component/pay-money';
-import { CartPayHeader } from '../cart/component/cart-pay-header';
-import { useRouter } from 'next/router';
-import { IoLocationSharp } from 'react-icons/io5'
-import TransferInformation from './component/transfer-information';
-import { useState } from 'react';
-import IconCheck from '../../../lib/svg/icon-check';
-import { NumberPipe } from '../../../lib/pipes/number';
-import CustomCheckbox from './component/custom-checkbox';
-import { useDialog } from '../../../hooks/useDialog';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { IoLocationSharp } from 'react-icons/io5';
+
+import { NumberPipe } from '../../../lib/pipes/number';
+import { CartPayHeader } from '../cart/component/cart-pay-header';
+import { PayMoney } from '../cart/component/pay-money';
+import CustomCheckbox from './component/custom-checkbox';
+import { FormCheck } from './component/form-check';
+import {
+    listFormCheckPayment,
+    listFormCheckTrans,
+    listMoneyCheckout,
+    transferInformation,
+} from './component/form-check-data';
+import TransferInformation from './component/transfer-information';
 
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
@@ -30,7 +34,7 @@ export function CheckOutPage() {
     return <>
         <div className="main-container">
             <div>
-                <CartPayHeader title="pay" />
+                <CartPayHeader/>
             </div>
             <div className="">
                 <div className="col-span-3 grid grid-cols-7 gap-4 lg:gap-16">
