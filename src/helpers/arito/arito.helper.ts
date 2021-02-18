@@ -4,9 +4,11 @@ import { CacheHelper } from "../cache.helper";
 import moment from "moment-timezone";
 import { compact, get, keyBy } from "lodash";
 import { IProduct } from "../../graphql/modules/product/product.model";
+import { AritoUser } from "./types/aritoUser.type";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
+  static clientId: string = configs.arito.clientId;
   static get imageToken() {
     return CacheHelper.get("arito-image-token");
   }
@@ -119,6 +121,59 @@ export class AritoHelper {
           pageCount: pageInfo["t_page"] || 0,
           group: pageInfo["group"],
         },
+      };
+    });
+  }
+  static login({
+    language = "v",
+    ...params
+  }: {
+    username: string;
+    password: string;
+    deviceId: string;
+    deviceToken: string;
+    deviceModel: string;
+    deviceName: string;
+    deviceBrand: string;
+    deviceOsVersion: string;
+    language?: string;
+  }) {
+    return Axios.post(`${this.host}/Login`, {
+      ClientID: this.clientId,
+      Language: language,
+      UserName: params.username,
+      Password: params.password,
+      memvars: [
+        ["deviceId", "C", params.deviceId],
+        ["deviceToken", "C", params.deviceToken],
+        ["model", "C", params.deviceModel],
+        ["deviceName", "C", params.deviceName],
+        ["brand", "C", params.deviceBrand],
+        ["osVersion", "C", params.deviceOsVersion],
+      ],
+    }).then((res) => {
+      const userData = get(res.data, "data.userinfo.0", {});
+      return {
+        token: get(res.data, "value"),
+        user: {
+          id: userData["user_id"],
+          username: userData["username"],
+          admin: userData["admin"],
+          nickname: userData["nickname"],
+          userRef: userData["user_ref"],
+          unitId: userData["unit_id"],
+          imageId: userData["image_id"],
+          locationId: userData["location_id"],
+          devId: userData["dev_id"],
+          language: userData["language"],
+          country: userData["country"],
+          email: userData["e_mail"],
+          phone: userData["phone"],
+          birthday: userData["birthday"],
+          datetime2: userData["datetime2"],
+          timeout: userData["timeout"],
+          permission: get(res.data, "data.permission.0.permission"),
+        } as AritoUser,
       };
     });
   }

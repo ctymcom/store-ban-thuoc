@@ -50,6 +50,7 @@ export default {
   domainName: process.env.DOMAIN_NAME || "http://localhost:5555",
   nextDev: UtilsHelper.toBoolean(process.env.NEXT_DEV || "FALSE"),
   arito: {
+    clientId: process.env.ARITO_CLIENT_ID || "KHOTHUOCSI",
     host: process.env.ARITO_HOST || "https://api.arito.vn/api/v1",
   },
 };
