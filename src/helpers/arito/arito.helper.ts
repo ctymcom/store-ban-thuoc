@@ -177,4 +177,19 @@ export class AritoHelper {
       };
     });
   }
+  static getItemContainer() {
+    return Axios.post(`${this.host}/Item/GetItemContainer`, {
+      token: this.imageToken,
+    }).then((res) => {
+      return get(res.data, "data.master", []).map((master: any) => ({
+        id: master["id"],
+        name: master["name"],
+        name2: master["name2"],
+        note: master["note"],
+        products: get(res.data, "data.detail", [])
+          .filter((detail: any) => detail["id"] == master["id"])
+          .map((d: any) => d["ma_vt"]),
+      })) as { id: string; name: string; name2: string; note: string; products: string[] }[];
+    });
+  }
 }
