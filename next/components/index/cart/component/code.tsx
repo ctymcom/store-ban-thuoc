@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { expect } from 'chai';
+import { Dialog } from '../../../shared/utilities/dialog/dialog';
 const Code = (props) => {
     const sendCode=()=>{
         props.choseCode(props.item.code);
@@ -22,17 +22,18 @@ const Code = (props) => {
             <div className="p-2 cursor-pointer">
                 <h3 className="text-lg">{props.item.content}</h3>
                 <p className="text-gray-400">Hạn dùng đến: {props.item.expDate}</p>
-                <p className={showMore?"cursor-pointer w-16 whitespace-nowrap rounded-md hover:bg-danger-light":"cursor-pointer text-primary w-16 whitespace-nowrap rounded-md hover:bg-info-light" } onClick={(e)=>setShow(e)}>{showMore?"Thu nhỏ":"Điều kiện"}</p>
+                <p className="cursor-pointer text-primary w-16 whitespace-nowrap rounded-md hover:bg-info-light" onClick={(e)=>setShow(e)}>Điều kiện</p>
             </div>
         </div>
-        {
-            showMore?
-                <div>
-                    <p className="m-2">
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non obcaecati voluptatum ab, nulla tenetur eius molestiae dolore ea. Iure, quibusdam.
-                        </p>
-                </div>: <div></div>
-        }</>
+        
+         <Dialog width="410px" isOpen={showMore}
+            onClose={() => setShowMore(false)}
+        >
+            <Dialog.Body>
+                    <p className="m-2" onClick={()=>setShowMore(false)}>{props.item.condition}</p>
+            </Dialog.Body>
+        </Dialog>
+        </>
     );
 }
 

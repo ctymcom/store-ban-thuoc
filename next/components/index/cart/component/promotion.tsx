@@ -29,6 +29,8 @@ export function Promotion({ onChanged = () => { }, PrUsing, listPromotionCode, .
     const choseCode =(code)=>{
         setPromotion(code);
         setShowDialog(false);
+        onChanged(code);
+        setUsePromotion(true);
     }
     
     return (<div>

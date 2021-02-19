@@ -83,12 +83,14 @@ export const listPromotionCode = [
     {
         code: "KM50",
         content:"Giảm 50% cho hóa đơn từ 100k",
+        condition: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod iure alias ea fugit sit laudantium ullam eum quasi quas! Optio libero ipsum alias provident quos nemo, consequuntur reprehenderit accusantium iure beatae cupiditate expedita hic quis consequatur, praesentium perspiciatis debitis vitae, at delectus voluptate laudantium modi facilis sapiente? Rerum, tempora. Veniam?",
         expDate:"20/02/2022",
         des: 50
     },
     {
         code: "KM30",
         content:"Giảm 30% cho hóa đơn từ 100k",
+        condition: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod iure alias ea fugit sit laudantium ullam eum quasi quas! Optio libero ipsum alias provident quos nemo, consequuntur reprehenderit accusantium iure beatae cupiditate expedita hic quis consequatur, praesentium perspiciatis debitis vitae, at delectus voluptate laudantium modi facilis sapiente? Rerum, tempora. Veniam?",
         expDate:"20/02/2022",
         des: 30
     }
