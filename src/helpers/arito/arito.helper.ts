@@ -82,6 +82,17 @@ export class AritoHelper {
     }).then((res) => {
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       const imageData = keyBy(get(res.data, "data.images", []), "ma_vt");
+      const priceGroupData = keyBy(
+        get(res.data, "data.groupprice", []).map((g) => ({
+          productCode: g["ma_vt"],
+          customerGroup: g["nh_khg"],
+          expiredAt: g["ngay_hl"] ? moment(g["ngay_hl"]).toDate() : null,
+          basePrice: g["gia_truoc_ck"],
+          salePrice: g["gia_ban"],
+          saleRate: g["tl_ck"],
+        })),
+        "productCode"
+      );
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
           code: d["ma_vt"],
@@ -113,6 +124,10 @@ export class AritoHelper {
           imageId: get(imageData, d["ma_vt"], {})["image_id"],
           basePrice: d["gia_truoc_ck"],
           salePrice: d["gia_ban"],
+          saleRate: d["tl_ck"],
+          saleExpiredDate: d["ngay_hl"] ? moment(d["ngay_hl"]).toDate() : null,
+          tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
+          priceGroups: get(priceGroupData, d["ma_vt"], []),
         })) as IProduct[],
         paging: {
           limit: pageInfo["pagecount"] || 0,
