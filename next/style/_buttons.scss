@@ -159,31 +159,6 @@
   }
 }
 
-.btnchange {
-  @extend .btn;
-  @apply px-3;
-  @apply py-1.5;
-  @apply transform;
-  @apply transition;
-  @apply duration-700;
-  @apply ease-out;
-  @apply text-gray-400;
-}
-.btnchange-down {
-  @extend .btnchange;
-  &:hover {
-    @apply text-gray-900;
-    @apply scale-75;
-  }
-}
-.btnchange-up {
-  @extend .btnchange;
-  @apply text-gray-400;
-  &:hover {
-    @apply text-primary-dark;
-    @apply scale-125;
-  }
-}
 
 // @mixin button {
 //   @include flex-center;

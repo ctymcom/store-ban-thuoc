@@ -30,7 +30,7 @@ export function Checkbox({
   return (
     <div className={"flex items-center space-x-3 py-1"}>
       <input
-        className="w-4 h-4 transition form-checkbox text-primary border-gray-100 border rounded-lg cursor-pointer"
+        className="w-4 h-4 transition form-checkbox text-primary border-gray-300 border rounded-lg cursor-pointer"
         defaultValue={value}
         onChange={onChange}
         id={name}
