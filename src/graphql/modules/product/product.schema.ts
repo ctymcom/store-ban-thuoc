@@ -70,6 +70,8 @@ const schema = gql`
     basePrice: Float
     "Giá bán đã giảm"
     salePrice: Float
+    "Nhóm sản phẩm hiển thị trang chủ"
+    containers: [String]
 
     categories: [Category]
     ingredients: [Ingredient]

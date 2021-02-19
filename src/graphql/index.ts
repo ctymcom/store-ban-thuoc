@@ -63,6 +63,13 @@ export default (app: Express, httpServer: Server) => {
     const { default: fragment } = require(f);
     defaultFragment = _.merge(defaultFragment, fragment);
   });
+  ModuleFiles.filter((f: any) => /(.*).graphql.js$/.test(f)).map((f: any) => {
+    const {
+      default: { resolver, schema },
+    } = require(f);
+    if (schema) typeDefs.push(schema);
+    if (resolver) resolvers = _.merge(resolvers, resolver);
+  });
   const server = new ApolloServer({
     typeDefs,
     resolvers,
