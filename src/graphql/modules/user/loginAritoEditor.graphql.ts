@@ -37,6 +37,7 @@ export default {
       datetime2: DateTime
       timeout: Int
       permission: Int
+      group: String
 
       imageLink: String
     }

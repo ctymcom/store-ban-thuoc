@@ -188,6 +188,7 @@ export class AritoHelper {
           datetime2: userData["datetime2"],
           timeout: userData["timeout"],
           permission: get(res.data, "data.permission.0.permission"),
+          group: get(res.data, "data.permission.0.user_group"),
         } as AritoUser,
       };
     });
