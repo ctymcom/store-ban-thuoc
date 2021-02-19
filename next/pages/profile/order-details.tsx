@@ -3,7 +3,7 @@ import { DefaultLayout } from "../../layouts/default-layout";
 import { ProfileUserLayout } from "../../layouts/profile-user-layout";
 export default function OrderDetails() {
     return <>
-        <ProfileUserLayout>
+        <ProfileUserLayout breadcrumbs={"order-details"}>
             <OrderDetailsPage />
         </ProfileUserLayout>
     </>

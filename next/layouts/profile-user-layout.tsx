@@ -1,25 +1,24 @@
 import Link from "next/link";
 import { ProductList } from "../components/shared/product/product-list";
 import { ProfileUser } from "./profile-user-layout/profile-user";
-import { useRouter } from "next/router";
 
 interface PropsType extends ReactProps {
     [x: string]: any;
-    breadcrumbs: 'account-user' | 'order' | 'notification' | 'reward-point' | 'order-details';
-  }
+    breadcrumbs?: 'account-user' | 'order' | 'notification' | 'reward-point' | 'order-details';
+}
 
 export function ProfileUserLayout(props: PropsType) {
 
-    let title = '';
+    let showLabelBreadcrumb = '';
+    let showSimilarProducts = null;
     switch (props.breadcrumbs) {
-        case 'account-user': title = "Tài khoản của tôi"; break;
-        case 'order': title = "Đơn hàng"; break;
-        case 'notification': title = "Thông báo"; break;
-        case 'reward-point': title = "Điểm tích luỹ"; break;
-        case 'order-details': title = "Chi tiết đơn hàng"; break;
-    }
+        case 'account-user': showLabelBreadcrumb = "Tài khoản của tôi"; break;
+        case 'order': showLabelBreadcrumb = "Đơn hàng"; showSimilarProducts = <ProductList type='similar-products' />; break;
+        case 'notification': showLabelBreadcrumb = "Thông báo"; break;
+        case 'reward-point': showLabelBreadcrumb = "Điểm tích luỹ"; break;
+        case 'order-details': showLabelBreadcrumb = "Chi tiết đơn hàng"; break;
+    };
     
-    const router = useRouter();
     return (
         <>
             <div className="main-container h-auto pl-4">
@@ -31,16 +30,7 @@ export function ProfileUserLayout(props: PropsType) {
                             </Link>
                             <span> / </span>
                             <li>
-                                <span className="breadbcrum text-primary ml-1">
-                                {/* {
-                                    router.pathname == "/profile" ? "Tài khoản của tôi" : 
-                                    (router.pathname == "/profile/order-history" ? "Đơn hàng" : 
-                                    (router.pathname == "/profile/notification" ? "Thông báo" : 
-                                    (router.pathname == "/profile/reward-point" ? "Điểm tích luỹ" : 
-                                    (router.pathname == "/profile/order-details" ? "Chi tiết đơn hàng" : "Đơn hàng"))))
-                                }     */}
-                                {title}
-                                </span>
+                                <span className="breadbcrum text-primary ml-1">{showLabelBreadcrumb}</span>
                             </li>
                         </ul>
                     </div>
@@ -51,13 +41,7 @@ export function ProfileUserLayout(props: PropsType) {
                         {props.children}
                     </div> 
                     <div className="similar-products">
-                        {
-                            router.pathname == "/profile/order-history" ||
-                            router.pathname == "/profile/order-history/wait-confirm-order" ||
-                            router.pathname == "/profile/order-history/wait-delivery-order" || 
-                            router.pathname == "/profile/order-history/delivered-order" || 
-                            router.pathname == "/profile/order-history/canceled-order"? <ProductList type='similar-products' /> : ""
-                        }
+                        { showSimilarProducts }
                     </div> 
                 </div>
             </div>

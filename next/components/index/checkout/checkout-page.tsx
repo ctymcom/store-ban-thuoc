@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { BiMap } from 'react-icons/bi';
 import { IoLocationSharp } from 'react-icons/io5';
 
 import { NumberPipe } from '../../../lib/pipes/number';
+import { Dialog } from '../../shared/utilities/dialog/dialog';
+import AddressPage from '../address/address-page';
 import { CartPayHeader } from '../cart/component/cart-pay-header';
 import { PayMoney } from '../cart/component/pay-money';
 import CustomCheckbox from './component/custom-checkbox';
@@ -31,6 +34,9 @@ export function CheckOutPage() {
     }
     const router = useRouter()
 
+    const [showDialog, setShowDialog] = useState(false);
+    const content = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`
+
     return <>
         <div className="main-container">
             <div>
@@ -57,9 +63,9 @@ export function CheckOutPage() {
                                         <i className="text-primary text-16 col-span-1"><IoLocationSharp /></i>
                                         <h4 className="uppercase col-span-8">Địa chỉ giao hàng</h4>
                                     </div>
-                                    <Link href="/address">
-                                        <a className="text-primary font-normal btn col-span-3">Đổi</a>
-                                    </Link>
+                                    
+                                    <a className="text-primary font-normal btn col-span-3" onClick={() => setShowDialog(true)}>Đổi</a>
+                                    
                                 </div>
                                 <div className="my-2">
                                     <p className="text-18 font-bold">Minh Đức Uy</p>
@@ -97,6 +103,15 @@ export function CheckOutPage() {
                     </div>
                 </div>
             </div>
+            <Dialog width="550px" isOpen={showDialog}
+                onClose={() => setShowDialog(false)}
+                title="Địa chỉ giao hàng"
+                icon={<BiMap/>}>
+                <Dialog.Body>
+                    <AddressPage/>
+                </Dialog.Body>
+                
+            </Dialog>
         </div >
     </>
 }
