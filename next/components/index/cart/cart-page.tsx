@@ -102,7 +102,7 @@ export default function CartPage(props) {
                 let listNew = listCart;
                 listNew[index].isCheck = value;
                 setListCart([...listNew]);
-                checkAndsetCheckAll()
+                checkAndsetCheckAll();
                 setListMoney(PrUsing);
             } break;
             case "ca": {
