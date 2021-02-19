@@ -59,7 +59,6 @@ export function Dialog({
   let footer = Children.map(props.children, child => child.type?.displayName === 'Footer' ? child : null);
   let children = Children.map(props.children, child => !child.type?.displayName ? child : null);
 
-  console.log(header)
   if (title && !header.length) {
     header = [<>
       <div className="flex items-center">

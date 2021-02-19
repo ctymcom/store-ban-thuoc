@@ -10,7 +10,6 @@ interface PropsType extends ReactProps {
   onPageChange: Function
 }
 export function PaginationRound(props: PropsType) {
-
   const [page, setPage] = useState(props.page);
 
   const defaultButtonClass = `border-2 border-gray-400 bg-white text-gray-500 disabled:opacity-40 disabled:pointer-events-none ` + 
