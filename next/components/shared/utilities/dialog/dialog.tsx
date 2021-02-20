@@ -26,9 +26,9 @@ export function Dialog({
   wrapperClass = 'fixed w-screen h-screen top-0 left-0 z-100 flex flex-col overflow-y-scroll py-20',
   overlayClass = 'fixed w-full h-full top-0 left-0 pointer-events-none',
   dialogClass = 'relative bg-white shadow-md rounded m-auto',
-  headerClass = 'relative flex justify-between p-4 py-2 box-content bg-white z-10',
-  bodyClass = 'relative p-4 py-2 bg-white',
-  footerClass = 'relative flex p-4 pb-3 pt-2 bg-white z-10',
+  headerClass = 'relative flex justify-between p-4 py-2 box-content bg-white z-10 border-top rounded-t',
+  bodyClass = 'relative p-4 py-2 bg-white rounded',
+  footerClass = 'relative flex p-4 pb-3 pt-2 bg-white z-10 rounded-b',
   mobileMode = true,
   width = 'auto',
   maxWidth = '86vw',
@@ -59,7 +59,6 @@ export function Dialog({
   let footer = Children.map(props.children, child => child.type?.displayName === 'Footer' ? child : null);
   let children = Children.map(props.children, child => !child.type?.displayName ? child : null);
 
-  console.log(header)
   if (title && !header.length) {
     header = [<>
       <div className="flex items-center">

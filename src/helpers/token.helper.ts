@@ -1,6 +1,7 @@
 import { configs } from "../configs";
 import jwt from "jsonwebtoken";
 import { ROLES } from "../constants/role.const";
+import { AritoUser } from "./arito/types/aritoUser.type";
 
 export interface IPayloadToken {
   role: string;
@@ -21,6 +22,13 @@ export class TokenHelper {
   static getAdministratorToken() {
     return this.generateToken({
       role: ROLES.ADMIN,
+    });
+  }
+  static getAritorEditorToken(user: AritoUser, token: string) {
+    return this.generateToken({
+      role: ROLES.EDITOR,
+      user: user,
+      ref: token,
     });
   }
 }

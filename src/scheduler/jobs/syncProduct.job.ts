@@ -18,6 +18,7 @@ export class SyncProductJob {
     return Agenda.create(this.jobName, data);
   }
   static async execute(job: Job) {
+    console.log("HEREEE");
     console.log("Execute Job " + SyncProductJob.jobName, moment().format());
     console.log(chalk.cyan("==> Động bộ danh mục sản phẩm..."));
     await syncCategory();
@@ -25,7 +26,27 @@ export class SyncProductJob {
     await syncIngredient();
     console.log(chalk.cyan("==> Động bộ sản phẩm..."));
     await syncProduct();
+    console.log(chalk.cyan("==> Động bộ nhóm sản phẩm hiển thị..."));
+    await syncProductContainer();
     console.log(chalk.green("==> Đồng bộ xong"));
+  }
+}
+async function syncProductContainer() {
+  const productContainers = await AritoHelper.getItemContainer();
+  const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
+  for (const container of productContainers) {
+    console.log(
+      chalk.yellow(`====> Nhóm ${container.name} có ${container.products.length} sản phẩm`)
+    );
+    productBulk
+      .find({ code: { $in: container.products } })
+      .update({ $addToSet: { containers: container.name } });
+    productBulk
+      .find({ code: { $nin: container.products }, containers: { $in: [container.name] } })
+      .update({ $pullAll: { containers: [container.name] } });
+  }
+  if (productBulk.length > 0) {
+    await productBulk.execute();
   }
 }
 async function syncProduct() {
@@ -35,6 +56,7 @@ async function syncProduct() {
     .then((res) => {
       return res ? res.updatedAt : null;
     });
+  // const productUpdatedAt =null;
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
   const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
   do {

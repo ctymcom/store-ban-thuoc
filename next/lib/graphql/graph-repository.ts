@@ -3,8 +3,8 @@ import gql from "graphql-tag";
 import { Pagination } from "./pagination";
 import { GetListData } from "./get-list-data";
 import { QueryInput } from "./query-input";
-import { initializeApollo, useApollo } from "./apolloClient";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
+import { initializeApollo } from "./apollo-client";
 export abstract class GraphRepository<T> {
   abstract shortFragment: string;
   abstract fullFragment: string;

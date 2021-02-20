@@ -3,7 +3,7 @@ import { AddressItem } from './address-item';
 
 export function ListAddress(props) {
     return (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
             {
                 props.ListAddr.map((item, index) => {
 

@@ -2,22 +2,22 @@ import { useState } from "react";
 import { HiOutlineTicket } from "react-icons/hi";
 import { IoTicketOutline } from "react-icons/io5";
 import { Dialog } from './../../../shared/utilities/dialog/dialog';
+import ListCode from "./list-code";
 type PromotionProps = {
     [x: string]: any,
     onChanged?: (promotion: any) => void,
-    PrUsing: { code: '', des: '' }
+    PrUsing: { code: '', des: '' },
+    listPromotionCode,
 }
 
 const text = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`
-export function Promotion({ onChanged = () => { }, PrUsing, ...props }: PromotionProps) {
+export function Promotion({ onChanged = () => { }, PrUsing, listPromotionCode, ...props }: PromotionProps) {
     const [UsePromotion, setUsePromotion] = useState(false);
     const [Promotion, setPromotion] = useState<string>();
-    const [Success, setSuccess] = useState(true);
     const [showDialog, setShowDialog] = useState(false);
-    const [showDialog2, setShowDialog2] = useState(false);
 
     const applyPromotion = () => {
-        if (UsePromotion && PrUsing.code !== "") {
+        if (UsePromotion && PrUsing) {
             setPromotion(null);
             onChanged(null);
             setUsePromotion(false);
@@ -25,6 +25,12 @@ export function Promotion({ onChanged = () => { }, PrUsing, ...props }: Promotio
             onChanged(Promotion);
             setUsePromotion(true);
         }
+    }
+    const choseCode =(code)=>{
+        setPromotion(code);
+        setShowDialog(false);
+        onChanged(code);
+        setUsePromotion(true);
     }
     
     return (<div>
@@ -34,7 +40,7 @@ export function Promotion({ onChanged = () => { }, PrUsing, ...props }: Promotio
         </div>
         <div className="py-3 h-24">
             {
-                UsePromotion && PrUsing.code !== "" ? (
+                UsePromotion && PrUsing ? (
                     <div>
                         <h4 className="text-xl text-primary font-semibold">
                             Mã ưu đãi {PrUsing.code}</h4>
@@ -49,7 +55,7 @@ export function Promotion({ onChanged = () => { }, PrUsing, ...props }: Promotio
                                 className="block w-full border border-gray-300 rounded mt-2 px-2 py-2"
                                 type="text"
                                 placeholder="Nhập mã ưu đãi"
-                                onChange={(e) => setPromotion(e.target.value)} />
+                                onChange={(e) => setPromotion(e.target.value)} value={Promotion} />
                             <p className={PrUsing !== null && PrUsing.code === "" ? "block text-lg text-red-600" : "hidden"}>Mã khuyến mãi không tồn tại</p>
                         </div>
                     )
@@ -57,20 +63,17 @@ export function Promotion({ onChanged = () => { }, PrUsing, ...props }: Promotio
         </div>
         <button onClick={applyPromotion} type="button"
             className={Promotion ? "btn font-normal btn-primary w-full" : "btn btn-disabled w-full"}>
-            {UsePromotion && PrUsing.code !== "" ? "Hủy áp dụng" : "Áp dụng"}
+            {UsePromotion && PrUsing ? "Hủy áp dụng" : "Áp dụng"}
         </button>
         
-        <Dialog width="500px" isOpen={showDialog}
+        <Dialog width="410px" isOpen={showDialog}
             onClose={() => setShowDialog(false)}
             title="Mã khuyến mãi"
             icon={<HiOutlineTicket/>}
         >
             <Dialog.Body>
-                {text} {text}{text}{text}
+                <ListCode listPromotionCode={listPromotionCode} choseCode={choseCode}/>
             </Dialog.Body>
-            <Dialog.Footer>
-                <button className="btn-primary w-full">Áp dụng</button>
-            </Dialog.Footer>
         </Dialog>
     </div>)
 }

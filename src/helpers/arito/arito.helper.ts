@@ -4,9 +4,11 @@ import { CacheHelper } from "../cache.helper";
 import moment from "moment-timezone";
 import { compact, get, keyBy } from "lodash";
 import { IProduct } from "../../graphql/modules/product/product.model";
+import { AritoUser } from "./types/aritoUser.type";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
+  static clientId: string = configs.arito.clientId;
   static get imageToken() {
     return CacheHelper.get("arito-image-token");
   }
@@ -80,6 +82,17 @@ export class AritoHelper {
     }).then((res) => {
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       const imageData = keyBy(get(res.data, "data.images", []), "ma_vt");
+      const priceGroupData = keyBy(
+        get(res.data, "data.groupprice", []).map((g) => ({
+          productCode: g["ma_vt"],
+          customerGroup: g["nh_khg"],
+          expiredAt: g["ngay_hl"] ? moment(g["ngay_hl"]).toDate() : null,
+          basePrice: g["gia_truoc_ck"],
+          salePrice: g["gia_ban"],
+          saleRate: g["tl_ck"],
+        })),
+        "productCode"
+      );
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
           code: d["ma_vt"],
@@ -111,6 +124,10 @@ export class AritoHelper {
           imageId: get(imageData, d["ma_vt"], {})["image_id"],
           basePrice: d["gia_truoc_ck"],
           salePrice: d["gia_ban"],
+          saleRate: d["tl_ck"],
+          saleExpiredDate: d["ngay_hl"] ? moment(d["ngay_hl"]).toDate() : null,
+          tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
+          priceGroups: get(priceGroupData, d["ma_vt"], []),
         })) as IProduct[],
         paging: {
           limit: pageInfo["pagecount"] || 0,
@@ -120,6 +137,75 @@ export class AritoHelper {
           group: pageInfo["group"],
         },
       };
+    });
+  }
+  static login({
+    language = "v",
+    ...params
+  }: {
+    username: string;
+    password: string;
+    deviceId: string;
+    deviceToken: string;
+    deviceModel: string;
+    deviceName: string;
+    deviceBrand: string;
+    deviceOsVersion: string;
+    language?: string;
+  }) {
+    return Axios.post(`${this.host}/Login`, {
+      ClientID: this.clientId,
+      Language: language,
+      UserName: params.username,
+      Password: params.password,
+      memvars: [
+        ["deviceId", "C", params.deviceId],
+        ["deviceToken", "C", params.deviceToken],
+        ["model", "C", params.deviceModel],
+        ["deviceName", "C", params.deviceName],
+        ["brand", "C", params.deviceBrand],
+        ["osVersion", "C", params.deviceOsVersion],
+      ],
+    }).then((res) => {
+      const userData = get(res.data, "data.userinfo.0", {});
+      return {
+        token: get(res.data, "value"),
+        user: {
+          id: userData["user_id"],
+          username: userData["username"],
+          admin: userData["admin"],
+          nickname: userData["nickname"],
+          userRef: userData["user_ref"],
+          unitId: userData["unit_id"],
+          imageId: userData["image_id"],
+          locationId: userData["location_id"],
+          devId: userData["dev_id"],
+          language: userData["language"],
+          country: userData["country"],
+          email: userData["e_mail"],
+          phone: userData["phone"],
+          birthday: userData["birthday"],
+          datetime2: userData["datetime2"],
+          timeout: userData["timeout"],
+          permission: get(res.data, "data.permission.0.permission"),
+          group: get(res.data, "data.permission.0.user_group"),
+        } as AritoUser,
+      };
+    });
+  }
+  static getItemContainer() {
+    return Axios.post(`${this.host}/Item/GetItemContainer`, {
+      token: this.imageToken,
+    }).then((res) => {
+      return get(res.data, "data.master", []).map((master: any) => ({
+        id: master["id"],
+        name: master["name"],
+        name2: master["name2"],
+        note: master["note"],
+        products: get(res.data, "data.detail", [])
+          .filter((detail: any) => detail["id"] == master["id"])
+          .map((d: any) => d["ma_vt"]),
+      })) as { id: string; name: string; name2: string; note: string; products: string[] }[];
     });
   }
 }

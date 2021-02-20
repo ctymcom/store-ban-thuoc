@@ -4,6 +4,7 @@ import { HomeBanner } from "./component/home-banner";
 import { HomeFeature } from "./component/home-feature";
 import { HomeFeedback } from './component/home-feedback';
 import { HomeNews } from "./component/home-news";
+import { FeedbackProvider } from "./providers/feedback-provider";
 export function HomePage() {
 
     const sliderImages =  [
@@ -31,7 +32,9 @@ export function HomePage() {
             <ProductList type='personalized' />
         </div>
         <div className="main-container py-12">
-            <HomeFeedback/>
+            <FeedbackProvider>
+                <HomeFeedback/>
+            </FeedbackProvider>
         </div>
         <div className="main-container py-12">
             <HomeFeature/>
