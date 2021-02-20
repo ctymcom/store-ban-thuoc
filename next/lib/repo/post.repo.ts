@@ -1,5 +1,5 @@
-import { GraphRepository } from "../graphql/graph-repository";
-import { Tag } from "./tag-repo";
+import { GraphRepository } from "../graphql/graph.repo";
+import { Tag } from "./tag.repo";
 export type Post = {
   id?: string;
   createdAt: Date;

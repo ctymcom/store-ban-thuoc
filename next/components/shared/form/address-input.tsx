@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { AddressRepository } from '../../../lib/repo/address-repo';
+import { AddressRepository } from '../../../lib/repo/address.repo';
 import { FormFieldProps } from './form-field.type';
 import { SelectBox, SelectBoxOption } from './select-box';
 

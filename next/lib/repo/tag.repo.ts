@@ -1,4 +1,4 @@
-import { GraphRepository } from "../graphql/graph-repository";
+import { GraphRepository } from "../graphql/graph.repo";
 export type Tag = {
   id?: string;
   createdAt?: string;

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Feedback, FeedbackRepository } from "../../../../lib/repo/feedback-repo";
+import { Feedback, FeedbackRepository } from "../../../../lib/repo/feedback.repo";
 export const FeedbackContext = createContext<{
   [x: string]: any;
   feedbacks?: Feedback[]

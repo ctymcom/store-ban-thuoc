@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Post } from "../../../../lib/repo/post-repo";
+import { Post } from "../../../../lib/repo/post.repo";
 import { Button } from "../../../shared/form/button";
 
 type PostCardProps = {

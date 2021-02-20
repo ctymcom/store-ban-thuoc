@@ -1,4 +1,4 @@
-import { GraphRepository } from "../graphql/graph-repository";
+import { GraphRepository } from "../graphql/graph.repo";
 // import { any } from "../../../src/graphql/modules/user/user.model";
 
 import { QueryOptions } from "@apollo/client/core";
