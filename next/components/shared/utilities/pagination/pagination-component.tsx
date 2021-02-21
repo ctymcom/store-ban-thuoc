@@ -22,7 +22,7 @@ interface PropsType extends ReactProps {
   onPageChange: Function
 }
 const defaultButtonClass = `min-w-10 h-10 font-semibold border border-gray-400 text-gray-600 hover:text-primary hover:border-primary disabled:cursor-not-allowed disabled:opacity-50`
-export function Pagination({
+export function PaginationComponent({
   firstButtonClass = `${defaultButtonClass}`,
   lastButtonClass = `${defaultButtonClass}`,
   prevButtonClass = `${defaultButtonClass}`,
@@ -38,6 +38,8 @@ export function Pagination({
   visiblePageCount = 5,
   limit, page = 1, total,
   ...props}: PropsType) {
+  if (!total || !limit || !page) return <></>
+
   const buttonClass = `flex-center cursor-pointer p-2 focus:outline-none`
 
   const [pageCount, setPageCount] = useState(0);
@@ -55,36 +57,66 @@ export function Pagination({
       let prevPageCount = Math.floor(visiblePageCount / 2)
       let minPage = page - prevPageCount
       if (minPage <= 0) minPage = 1
+      
+      let nextPageCount = visiblePageCount - prevPageCount
+      let maxPage = page + nextPageCount - 1
+      if (maxPage > pageCount) maxPage = pageCount
   
       while (minPage + visiblePageCount > pageCount + 1 && minPage > 1) minPage--
-      let visiblePages = Array.from(Array(visiblePageCount > pageCount ? pageCount : visiblePageCount).keys()).map(x => ({ index: x + minPage}))
+      let visiblePages = Array.from(Array(visiblePageCount > pageCount ? pageCount : visiblePageCount).keys())
+        .map(x => ({ index: x + minPage })) as { index: any }[]
       
-      if (props.hasDots) {
-        let hiddenPageCount = visiblePages[0].index - prevPageCount - 1
-        if (hiddenPageCount >= 0) {
-          visiblePages.splice(0, 0, { index: hiddenPageCount == 0 ? 2 :-2 })
-          visiblePages.splice(0, 0, { index: 1 })
-        } else {
-          while (visiblePages[0].index > 1) {
-            for (let i = 0; i <= visiblePages.length - 1; i++) {
-              if (visiblePages[i].index < 0) break
-              visiblePages[i].index = visiblePages[i].index - 1
+      if (props.hasDots && pageCount > visiblePages.length) {
+        visiblePages.splice(0, 1, { index: 1 })
+        visiblePages.splice(visiblePages.length - 1, 1, { index: pageCount })
+        if (minPage >= prevPageCount) {
+          visiblePages.splice(1, 0, { index: -2 })
+        }        
+        if (maxPage <= pageCount - nextPageCount + 2) {
+          visiblePages.splice(visiblePages.length - 1, 0, { index: -1 })
+        }
+
+        if (minPage < prevPageCount) {
+          for (let i = 0; i < visiblePageCount; i++) {
+            if (visiblePages[i].index == i + 1) continue
+            else {
+              if (visiblePages[i].index < 0) {
+                visiblePages.splice(i, 0, { index: i + 1})
+              } else {  
+                visiblePages.splice(i, 1, { index: i + 1 })
+              }
             }
           }
         }
-        
-        let nextPageCount = visiblePageCount - prevPageCount - 1
-        hiddenPageCount = (pageCount - nextPageCount) - visiblePages[visiblePages.length - 1].index
-        if (hiddenPageCount >= 0) {
-          visiblePages.splice(visiblePages.length, 0, { index: hiddenPageCount == 0 ? pageCount - 1 : -1 })
-          visiblePages.splice(visiblePages.length, 0, { index: pageCount })
-        } else {
-          while (visiblePages[visiblePages.length - 1].index < pageCount) {
-            for (let i = visiblePages.length - 1; i >=0; i--) {
-              if (visiblePages[i].index < 0) break
-              visiblePages[i].index = visiblePages[i].index + 1
+        if (maxPage > pageCount - nextPageCount + 2) {
+          let lastIndex = visiblePages.length - 1
+          for (let i = 0; i < visiblePageCount; i++) {
+            if (visiblePages[lastIndex - i].index == pageCount - i) continue
+            else {
+              if (visiblePages[lastIndex - i].index < 0) {
+                visiblePages.splice(lastIndex - i + 1, 0, { index: pageCount - i })
+              } else {
+                visiblePages.splice(lastIndex - i, 1, { index: pageCount - i })
+              }
             }
           }
+        }
+
+        if (visiblePages[0].index == 1 && visiblePages[1].index < 0 && visiblePages[2].index == 3) {
+          visiblePages[1].index = 2
+        }
+        if (visiblePages[0].index == 1 && visiblePages[1].index < 0 && visiblePages[2].index == 2) {
+          visiblePages.splice(1, 1)
+        }
+        if (visiblePages[visiblePages.length - 1].index == pageCount && 
+          visiblePages[visiblePages.length - 2].index < 0 && 
+          visiblePages[visiblePages.length - 3].index == pageCount - 2) {
+          visiblePages[visiblePages.length - 2].index = pageCount - 1
+        }
+        if (visiblePages[visiblePages.length - 1].index == pageCount && 
+          visiblePages[visiblePages.length - 2].index < 0 && 
+          visiblePages[visiblePages.length - 3].index == pageCount - 1) {
+            visiblePages.splice(visiblePages.length - 2, 1)
         }
       }
 
@@ -118,8 +150,8 @@ export function Pagination({
             <button
               key={currentPage.index}
               className={`${buttonClass} ${currentPage.index > 0 ? 
-                (page == currentPage.index?pageActiveButtonClass:pageButtonClass) : (dotsButtonClass)}`}
-              disabled={currentPage.index < 0}
+                (page == currentPage.index?pageActiveButtonClass:pageButtonClass) : dotsButtonClass}`}
+              disabled={currentPage.index < 0 || (typeof(currentPage.index) == 'string') }
               onClick={() => handlePageChange(currentPage.index)}
             >
               {currentPage.index > 0 ? currentPage.index : dotsButtonContent}

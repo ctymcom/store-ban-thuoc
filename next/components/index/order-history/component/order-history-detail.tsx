@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { drop, take } from "lodash";
 import Link from 'next/link';
 import { PaginationRound } from "../../../shared/utilities/pagination/pagination-round";
-import { Pagination } from "../../../../lib/graphql/pagination";
+import { Pagination } from "../../../../lib/repo/crud.repo";
 // import { Pagination } from "../../../../lib/graphql/pagination";
 
 export function OrderHistoryDetail() {

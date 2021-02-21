@@ -1,14 +1,9 @@
 import { useState } from "react";
-import { BreadcrumbItem } from "../../admin-layout";
 import { MainHeader } from './main-header';
 import { MenuHeader } from './menu-header';
 import { TopHeader } from "./top-header";
-type HeaderProps = {
-  [x: string]: any;
-  breadcrumbs?: BreadcrumbItem[];
-  activeMenu?: number;
-};
-export function Header({ activeMenu = 0, breadcrumbs = [], ...props }: HeaderProps) {
+
+export function Header() {
 
   const [menuOpened, setMenuOpened] = useState(false);
   const [user, setUser] = useState(null);

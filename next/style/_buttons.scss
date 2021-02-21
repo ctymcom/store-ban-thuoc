@@ -61,10 +61,11 @@
 
 .btn-gray {
   @extend .btn;
-  @apply bg-gray-200;
+  @apply bg-gray-100;
+  @apply text-gray-500;
   &:hover {
-    @apply bg-gray-300;
-    @apply text-gray-800;
+    @apply bg-gray-200;
+    @apply text-primary;
   }
   &.is-danger:hover {
     @apply text-danger;
@@ -158,7 +159,6 @@
     @apply bg-danger-dark;
   }
 }
-
 
 // @mixin button {
 //   @include flex-center;

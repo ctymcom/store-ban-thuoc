@@ -1,9 +1,6 @@
-import { GraphRepository } from "../graphql/graph.repo";
+import { BaseModel, CrudRepository } from "./crud.repo";
 import { Tag } from "./tag.repo";
-export type Post = {
-  id?: string;
-  createdAt: Date;
-  updateAt: Date;
+export interface Post extends BaseModel {
   title?: string; // Tiêu đề
   excerpt?: string; // Đoạn trích
   slug?: string; // từ khoá
@@ -21,33 +18,34 @@ export type Post = {
   twitterImage?: string; // Hình ảnh twitter
   twitterTitle?: string; // Tiêu đề twitter
   priority?: number; // Độ ưu tiên
-
   tags?: Tag[];
-};
-export class PostRepository extends GraphRepository<Post> {
-  shortFragment: string = "id title excerpt status featureImage slug";
-  fullFragment: string = `
-    id
-    createdAt
-    updatedAt
-
-    title
-    excerpt
-    slug
-    status
-    publishedAt
-    featureImage
-    metaDescription
-    metaTitle
-    content
-    tagIds
-    ogDescription
-    ogImage
-    ogTitle
-    twitterDescription
-    twitterImage
-    twitterTitle
-
-    tags { id name }`;
-  apiName: string = "Post";
 }
+export class PostRepository extends CrudRepository<Post> {
+  apiName: string = "Post";
+  shortFragment: string = "id title excerpt status featureImage slug createdAt";
+  fullFragment: string = this.parseFragment(`
+    id: String
+    createdAt: DateTime
+    updatedAt: DateTime
+    title: String
+    excerpt: String
+    slug: String
+    status: String
+    publishedAt: DateTime
+    featureImage: String
+    metaDescription: String
+    metaTitle: String
+    content: String
+    tagIds: [ID]
+    ogDescription: String
+    ogImage: String
+    ogTitle: String
+    twitterDescription: String
+    twitterImage: String
+    twitterTitle: String
+    priority: Int
+    tags { id name }: [Tag]
+  `);
+}
+
+export const PostService = new PostRepository();

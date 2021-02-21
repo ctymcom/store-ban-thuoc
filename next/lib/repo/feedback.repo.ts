@@ -33,3 +33,5 @@ export class FeedbackRepository extends CrudRepository<Feedback> {
     priority: Int
   `);
 }
+
+export const FeedbackService = new FeedbackRepository();

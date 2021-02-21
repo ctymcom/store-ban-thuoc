@@ -11,9 +11,9 @@ export function ProductDetailPage() {
           <ProductMain />
         </div>
         <div className="grid grid-rows-1">
-          <div className="py-12">
+          {/* <div className="py-12">
               <ProductList type='similar-products' />
-          </div>
+          </div> */}
           <div className="grid mt-20 text-lg uppercase font-medium">
             <ul className="flex">
               <ProductHeading />

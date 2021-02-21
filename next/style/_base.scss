@@ -64,12 +64,6 @@ a:focus {
   box-shadow: 0 0 70px 5px rgba(1, 1, 1, 0.5);
 }
 
-.container-1 {
-  width: 100%;
-  padding-left: 10%;
-  padding-right: 10%;
-}
-
 .main-container {
   @apply container;
   margin-left: auto;
@@ -92,14 +86,6 @@ a:focus {
   }
   @screen 2xl {
     width: 86%;
-  }
-}
-
-@media (max-width: 1024px) {
-  .container-1 {
-    width: 100%;
-    padding-left: 2%;
-    padding-right: 2%;
   }
 }
 

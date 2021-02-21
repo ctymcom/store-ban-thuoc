@@ -3,7 +3,16 @@ import { ApolloQueryResult, FetchResult, MutationOptions, QueryOptions } from "@
 import { initializeApollo } from "./apollo-client";
 import gql from "graphql-tag";
 
-export abstract class GraphRepository {
+export class GraphRepository {
+  static instance = null;
+  static getInstance() {
+    if (GraphRepository.instance == null) {
+      GraphRepository.instance = new GraphRepository();
+    }
+
+    return GraphRepository.instance;
+  }
+
   private _apollo: ApolloClient<NormalizedCacheObject>;
   get apollo() {
     if (!this._apollo) {
@@ -21,7 +30,7 @@ export abstract class GraphRepository {
   }: {
     query: string[] | string;
     options?: Partial<QueryOptions>;
-    variablesParams: string;
+    variablesParams?: string;
   }) {
     return this.apollo.query<any>({
       query: gql`
@@ -39,7 +48,7 @@ export abstract class GraphRepository {
   }: {
     query: string[] | string;
     options?: Partial<QueryOptions>;
-    variablesParams: string;
+    variablesParams?: string;
   }) {
     return this.apollo.watchQuery<any>({
       query: gql`
@@ -89,20 +98,20 @@ export abstract class GraphRepository {
   }
 
   generateGQL(type: "query" | "mutation", list: string[] | string, variableParams = null) {
-    let gql = `${type} ${variableParams || ""} {
+    let gql = `${type}${variableParams || ""} {
         `;
     if (typeof list == "string") {
       gql += `g0: ${list}
         `;
     } else {
       for (let i = 0; i < list.length; i++) {
-        gql += `g${i}: ${list[i]}
-        `;
+        gql += `\ng${i}: ${list[i]}`;
       }
     }
     gql += `
       }`;
-    console.log(gql.trim());
+    gql = gql.replace(/\s{2,}/g, " ");
+    console.log(gql);
     return gql;
   }
 

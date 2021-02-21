@@ -1,18 +1,18 @@
 import { MutationOptions, QueryOptions } from "@apollo/client/core";
-import gql from "graphql-tag";
 import { GraphRepository } from "../graphql/graph.repo";
 import { queryParser } from "../helpers/query-parser.helper";
 
 export interface Pagination {
-  limit: number;
-  offset: number;
-  page: number;
-  total: number;
+  limit?: number;
+  offset?: number;
+  page?: number;
+  total?: number;
 }
 
 export class QueryInput {
   limit?: number;
   page?: number;
+  offset?: number;
   search?: string;
   order?: any;
   filter?: any;
@@ -35,7 +35,21 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
   abstract shortFragment: string;
   abstract fullFragment: string;
 
-  getAllQuery(query?: QueryInput | string, fragment?: string): string {
+  getAllQuery(
+    {
+      query = { limit: 10 },
+      fragment = this.shortFragment,
+    }: {
+      query: QueryInput | string;
+      fragment?: string;
+    } = {
+      query: { limit: 10 },
+    }
+  ): string {
+    if ((query as QueryInput).limit == 0) {
+      query = { ...(query as QueryInput), limit: 1000 };
+    }
+
     const api = `getAll${this.apiName}`;
     return `${api}(q: ${queryParser(query, {
       hasBraces: true,
@@ -43,32 +57,33 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
   }
 
   async getAll({
+    query = { limit: 10 },
     fragment = this.shortFragment,
-    query = { limit: 20, page: 1 },
     cache = true,
   }: {
     fragment?: string;
     query?: QueryInput;
     cache?: boolean;
-  }): Promise<GetListData<T>> {
+  } = {}): Promise<GetListData<T>> {
     const options = {
-      query: gql`
-        query GetAll($q: QueryGetListInput!) {
-          g0: ${this.getAllQuery("$q", fragment)}
-        }
-      `,
+      query: this.gql`${this.generateGQL(
+        "query",
+        `${this.getAllQuery({ query: "$q", fragment })}`,
+        `($q: QueryGetListInput!)`
+      )}`,
       variables: { q: query },
       fetchPolicy: cache ? "network-only" : "no-cache",
     } as QueryOptions;
     const result = await this.apollo.query<any>(options);
     this.handleError(result);
+    console.log("getAll" + this.apiName, result.data["g0"].data);
     return {
       data: result.data["g0"].data as T[],
       pagination: result.data["g0"].pagination,
     };
   }
 
-  getOneQuery(id: string, fragment?: string): string {
+  getOneQuery({ id, fragment = this.fullFragment }: { id: string; fragment?: string }): string {
     const api = `getOne${this.apiName}`;
     return `${api}(id: "${id}") { ${fragment} }`;
   }
@@ -83,30 +98,33 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     cache?: boolean;
   }) {
     const options = {
-      query: gql`
-        query GetOne {
-          g0: ${this.getOneQuery(id, fragment)}
-        }
-      `,
+      query: this.gql`${this.generateGQL("query", `${this.getOneQuery({ id, fragment })}`)}`,
       fetchPolicy: cache ? "network-only" : "no-cache",
     } as QueryOptions;
     const result = await this.apollo.query(options);
     this.handleError(result);
+    console.log("getOne" + this.apiName, result.data["g0"]);
     return result.data["g0"] as T;
   }
 
-  createQuery(data: any, fragment: string = "id"): string {
+  createQuery({
+    data,
+    fragment = this.fullFragment,
+  }: {
+    data: Partial<T> | string;
+    fragment?: string;
+  }): string {
     const api = `create${this.apiName}`;
     return `${api}(data: ${queryParser(data, { hasBraces: true })}) { ${fragment} }`;
   }
 
   async create({ data, fragment = this.fullFragment }: { data: Partial<T>; fragment?: string }) {
     const options = {
-      mutation: gql`
-        mutation Create($data: Create${this.apiName}Input!) {
-          g0: ${this.createQuery("$data", fragment)}
-        }
-      `,
+      mutation: this.gql`${this.generateGQL(
+        "mutation",
+        `${this.createQuery({ data: "$data", fragment })}`,
+        `($data: Create${this.apiName}Input!)`
+      )}`,
       fetchPolicy: "no-cache",
       variables: { data },
     } as MutationOptions;
@@ -115,7 +133,15 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     return result.data["g0"] as T;
   }
 
-  updateQuery(id: string, data: any, fragment: string = "id"): string {
+  updateQuery({
+    id,
+    data,
+    fragment = this.fullFragment,
+  }: {
+    id: string;
+    data: Partial<T> | string;
+    fragment?: string;
+  }): string {
     const api = `update${this.apiName}`;
     return `${api}(id: "${id}", data: ${queryParser(data, { hasBraces: true })}) { ${fragment} }`;
   }
@@ -130,13 +156,13 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     fragment?: string;
   }) {
     const options = {
-      mutation: gql`
-        mutation Update($data: Update${this.apiName}Input!) {
-          g0: ${this.updateQuery(id, "$data", fragment)}
-        }
-      `,
-      fetchPolicy: "no-cache",
+      mutation: this.gql`${this.generateGQL(
+        "mutation",
+        `${this.updateQuery({ id, data: "$data", fragment })}`,
+        `($data: Update${this.apiName}Input!)`
+      )}`,
       variables: { data },
+      fetchPolicy: "no-cache",
     } as MutationOptions;
     const result = await this.apollo.mutate(options);
     this.handleError(result);
@@ -146,7 +172,7 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
   createOrUpdate({
     id,
     data,
-    fragment = null,
+    fragment = this.shortFragment,
   }: {
     id?: string;
     data: Partial<T>;
@@ -159,7 +185,7 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     }
   }
 
-  deleteQuery(id: string, fragment: string = "id"): string {
+  deleteQuery({ id, fragment = "id" }: { id: string; fragment?: string }): string {
     const api = `deleteOne${this.apiName}`;
     return `${api}(id: "${id}") { ${fragment} }`;
   }
@@ -170,16 +196,15 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     fragment = this.shortFragment,
   }: {
     id?: string;
-    ids?: string;
+    ids?: string[];
     fragment?: string;
   }) {
     if (id) {
       const options = {
-        mutation: gql`
-          mutation Delete {
-            g0: ${this.deleteQuery(id, fragment)}
-          }
-        `,
+        mutation: this.gql`${this.generateGQL(
+          "mutation",
+          `${this.deleteQuery({ id, fragment })}`
+        )}`,
         fetchPolicy: "no-cache",
       } as MutationOptions;
 
@@ -188,6 +213,18 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
       this.handleError(result);
       return result.data["g0"] as T;
     } else if (ids && ids.length) {
+      const options = {
+        mutation: this.gql`${this.generateGQL(
+          "mutation",
+          ids.map((id) => `${this.deleteQuery({ id, fragment })}`)
+        )}`,
+        fetchPolicy: "no-cache",
+      } as MutationOptions;
+
+      const result = await this.apollo.mutate(options);
+      ids.map((id) => this.apollo.cache.removeOptimistic(id));
+      this.handleError(result);
+      return result.data;
     } else return;
   }
 

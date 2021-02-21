@@ -4,24 +4,24 @@ import { useEffect, useState } from 'react';
 import { drop, take } from 'lodash';
 import Link from 'next/link';
 // import { Pagination } from './../../../../../lib/graphql/pagination';
-import { Pagination } from "../../../../shared/utilities/pagination/pagination";
 import { PaginationRound } from '../../../../shared/utilities/pagination/pagination-round';
+import { Pagination } from '../../../../../lib/repo/crud.repo';
 
 export function DeliveredOrderDetail () {
     const [ Data, setData ] = useState([]);
-    const [ Pagination, setPagination ] = useState<Pagination >({
+    const [ pagination, setPagination ] = useState<Pagination>({
         page: 1,
         limit: 10,
         offset: 0,
         total: DeliveredOrderData.length
     });
     useEffect(() => {
-        const data = take(drop(DeliveredOrderData, (Pagination.page - 1) * Pagination.limit), Pagination.limit);
+        const data = take(drop(DeliveredOrderData, (pagination.page - 1) * pagination.limit), pagination.limit);
         setData(data);
-    }, [Pagination]);
+    }, [pagination]);
 
     const onPageChanged = (page) => {
-        setPagination({ ...Pagination, page: page});
+        setPagination({ ...pagination, page: page});
         window.scroll({
             top: 200,
             left: 0,

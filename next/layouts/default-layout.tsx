@@ -2,28 +2,19 @@ import { Footer } from "./default-layout/footer";
 import { HeadSEO } from "./default-layout/head-seo";
 import { Header } from "./default-layout/header/header";
 // import Sidebar from './components/sidebar';
-type DashboardProps = {
-  [x: string]: any;
-  title?: string;
-  breadcrumbs?: BreadcrumbItem[];
-  activeMenu?: string;
-  activeSubmenu?: string;
-};
-export type BreadcrumbItem = {
-  title: string;
-  path: string;
-};
+
+interface PropsType extends ReactProps {
+  title?: string
+}
+
 export function DefaultLayout({
   title = "Kho Thuốc Sỉ",
-  breadcrumbs,
-  activeMenu,
-  activeSubmenu,
   ...props
-}: DashboardProps) {
+}: PropsType) {
   return (
     <>
       <HeadSEO title={title}></HeadSEO>
-      <Header breadcrumbs={breadcrumbs} />
+      <Header/>
         <div className="w-full min-h-screen">
           {props.children}
         </div>
