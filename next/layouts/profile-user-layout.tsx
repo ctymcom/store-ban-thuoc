@@ -13,7 +13,7 @@ export function ProfileUserLayout(props: PropsType) {
     let showSimilarProducts = null;
     switch (props.breadcrumbs) {
         case 'account-user': showLabelBreadcrumb = "Tài khoản của tôi"; break;
-        case 'order': showLabelBreadcrumb = "Đơn hàng"; showSimilarProducts = <ProductList type='similar-products' />; break;
+        case 'order': showLabelBreadcrumb = "Đơn hàng"; break;
         case 'notification': showLabelBreadcrumb = "Thông báo"; break;
         case 'reward-point': showLabelBreadcrumb = "Điểm tích luỹ"; break;
         case 'order-details': showLabelBreadcrumb = "Chi tiết đơn hàng"; break;
@@ -40,9 +40,9 @@ export function ProfileUserLayout(props: PropsType) {
                         </div>
                         {props.children}
                     </div> 
-                    <div className="similar-products">
+                    {/* <div className="similar-products">
                         { showSimilarProducts }
-                    </div> 
+                    </div>  */}
                 </div>
             </div>
         </>

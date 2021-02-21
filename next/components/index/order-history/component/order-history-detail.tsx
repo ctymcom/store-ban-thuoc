@@ -1,26 +1,26 @@
 import { OrderHisttoryList } from "./order-history-list";
 import { OrderHistoryData } from "../data/order-history-data";
 import { useEffect, useState } from "react";
-import { Pagination } from "../../../shared/utilities/pagination/pagination";
 import { drop, take } from "lodash";
 import Link from 'next/link';
 import { PaginationRound } from "../../../shared/utilities/pagination/pagination-round";
+import { Pagination } from "../../../../lib/repo/crud.repo";
 // import { Pagination } from "../../../../lib/graphql/pagination";
 
 export function OrderHistoryDetail() {
-    const [Data, setData] = useState([]);
-    const [Pagination, setPagination] = useState<Pagination >({
+    const [data, setData] = useState([]);
+    const [pagination, setPagination] = useState<Pagination>({
         page: 1,
         limit: 10,
         total: OrderHistoryData.length,
         offset: 0
     })
     useEffect(() => {
-        const data = take(drop(OrderHistoryData, (Pagination.page - 1) * Pagination.limit), Pagination.limit);
+        const data = take(drop(OrderHistoryData, (pagination.page - 1) * pagination.limit), pagination.limit);
         setData(data) ;
-    }, [Pagination])
+    }, [pagination])
     const onPageChanged = (page) => {        
-        setPagination({ ...Pagination, page}); 
+        setPagination({ ...pagination, page}); 
         window.scroll({
             top: 200,
             behavior: 'smooth'
@@ -55,7 +55,7 @@ export function OrderHistoryDetail() {
             </li>
         </ul>
         <div className="order-history__info-list">
-            <OrderHisttoryList data={Data}/>
+            <OrderHisttoryList data={data}/>
         </div>
         
         <ul className="pavigation-pages flex mt-4 justify-between w-full">

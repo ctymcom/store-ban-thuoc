@@ -1,17 +1,18 @@
 
 import { useEffect, useState } from 'react';
 import { HiOutlineX } from 'react-icons/hi';
+import { FilterCategory } from '../products-page';
 
 interface PropsType {
-  categories: any[],
-  manufactures: any[],
+  categories: FilterCategory[],
+  // manufactures: any[],
   setCategories: Function
-  setManufactures: Function
+  // setManufactures: Function
 }
 export function ProductsCategoriesLabels(props: PropsType) {
 
   const [filteredCategories, setFilteredCategories] = useState(null);
-  const [filteredManufactures, setFilteredManufactures] = useState(null);
+  // const [filteredManufactures, setFilteredManufactures] = useState(null);
 
   useEffect(() => {
     let filteredList = []
@@ -33,9 +34,9 @@ export function ProductsCategoriesLabels(props: PropsType) {
     setFilteredCategories(filteredList)
   }, [props.categories]);
 
-  useEffect(() => {
-    setFilteredManufactures(props.manufactures.filter(man => man.checked))
-  }, [props.manufactures]);
+  // useEffect(() => {
+  //   setFilteredManufactures(props.manufactures.filter(man => man.checked))
+  // }, [props.manufactures]);
 
   const removeCategories = (cat) => {
     cat.checked = false
@@ -73,7 +74,7 @@ export function ProductsCategoriesLabels(props: PropsType) {
         </div>
       )
     }
-    {
+    {/* {
       !!filteredManufactures?.length && (
         <div className="flex flex-wrap space-y-1 space-x-2 mb-2">
           <span className="text-gray-700 pt-1">Nhà sản xuất: </span>
@@ -90,6 +91,6 @@ export function ProductsCategoriesLabels(props: PropsType) {
           }
         </div>
       )
-    }
+    } */}
   </>
 }

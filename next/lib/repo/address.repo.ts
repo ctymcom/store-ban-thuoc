@@ -1,15 +1,10 @@
-import { GraphRepository } from "../graphql/graph-repository";
-// import { any } from "../../../src/graphql/modules/address/address.model";
-import gql from "graphql-tag";
-export class AddressRepository extends GraphRepository<any> {
-  shortFragment: string = "id province district ward";
-  fullFragment: string = "id province district ward";
-  apiName: string = "Address";
+import { GraphRepository } from "../graphql/graph.repo";
 
+export class AddressRepository extends GraphRepository {
   async getAllProvince() {
     const api = "getProvince";
     const result = await this.apollo.query({
-      query: gql`
+      query: this.gql`
         query {
           ${api} {
             id
@@ -24,7 +19,7 @@ export class AddressRepository extends GraphRepository<any> {
   async getDistricts(provinceId: string) {
     const api = "getDistrict";
     const result = await this.apollo.query({
-      query: gql`
+      query: this.gql`
         query {
           ${api}(provinceId: "${provinceId}") {
             id
@@ -39,7 +34,7 @@ export class AddressRepository extends GraphRepository<any> {
   async getWards(districtId: string) {
     const api = "getWard";
     const result = await this.apollo.query({
-      query: gql`
+      query: this.gql`
         query {
           ${api}(districtId: "${districtId}") {
             id

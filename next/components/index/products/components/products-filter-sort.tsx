@@ -1,7 +1,7 @@
 
 import { HiChevronDown } from 'react-icons/hi';
 import { SORT_TYPES } from './../products-page';
-interface PropsType {
+interface PropsType extends ReactProps {
   sort: string
   onChange: Function
 }
@@ -11,7 +11,7 @@ export function ProductsFilterSort(props: PropsType) {
       value={props.sort}
       onChange={e => props.onChange(e.target.value)}>
         {
-          SORT_TYPES.map(type => <option value={type.value}>{type.display}</option>)
+          SORT_TYPES.map(type => <option key={type.value} value={type.value}>{type.display}</option>)
         }      
     </select>
     <i className="text-gray-500 text-xl absolute right-1 p-2 pointer-events-none group-hover:text-primary"><HiChevronDown/></i>

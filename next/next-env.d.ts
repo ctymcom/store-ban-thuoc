@@ -6,3 +6,9 @@ interface ReactProps {
   key?: any;
   children?: any;
 }
+
+interface Options {
+  value: any;
+  label: string;
+  className?: string;
+}

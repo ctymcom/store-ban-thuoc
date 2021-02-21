@@ -5,7 +5,7 @@ export default function Admin() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/admin/post/list-post");
+    router.replace("/admin/post/list");
   });
 
   return null;
