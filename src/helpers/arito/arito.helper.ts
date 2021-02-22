@@ -5,6 +5,7 @@ import moment from "moment-timezone";
 import { compact, get, keyBy } from "lodash";
 import { IProduct } from "../../graphql/modules/product/product.model";
 import { AritoUser } from "./types/aritoUser.type";
+import { IProductTab } from "../../graphql/modules/productTab/productTab.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -206,6 +207,32 @@ export class AritoHelper {
           .filter((detail: any) => detail["id"] == master["id"])
           .map((d: any) => d["ma_vt"]),
       })) as { id: string; name: string; name2: string; note: string; products: string[] }[];
+    });
+  }
+  static getTabInfo(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetTabInfo`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          code: d["id"],
+          name: d["name"],
+          name2: d["name2"],
+          cfield: d["cfield"],
+        })) as IProductTab[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
     });
   }
 }

@@ -18,8 +18,8 @@ export class SyncProductJob {
     return Agenda.create(this.jobName, data);
   }
   static async execute(job: Job) {
-    console.log("HEREEE");
     console.log("Execute Job " + SyncProductJob.jobName, moment().format());
+    await AritoHelper.setImageToken();
     console.log(chalk.cyan("==> Động bộ danh mục sản phẩm..."));
     await syncCategory();
     console.log(chalk.cyan("==> Động bộ hoạt chất..."));
