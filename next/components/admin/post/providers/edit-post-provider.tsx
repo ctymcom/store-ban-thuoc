@@ -1,7 +1,7 @@
 import { createContext, useEffect, useRef, useState } from "react";
-import { Post, PostRepository } from "../../../../lib/repo/post-repo";
+import { Post, PostRepository } from "../../../../lib/repo/post.repo";
 import { useRouter } from "next/router";
-import { Tag, TagRepository } from "../../../../lib/repo/tag-repo";
+import { Tag, TagRepository } from "../../../../lib/repo/tag.repo";
 
 export const EditPostContext = createContext<{
   [x: string]: any;

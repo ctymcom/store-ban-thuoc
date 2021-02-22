@@ -7,8 +7,10 @@ const Gender = (props) => {
     const handleChangeGender=(e:boolean,id:string)=>{
         if(e){
             setGender(id);
+            props.handleChange("gender",id);
         }else{
             setGender("male");
+            props.handleChange("gender","male");
         }
     }
     return (

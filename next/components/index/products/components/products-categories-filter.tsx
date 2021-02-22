@@ -1,18 +1,11 @@
 
+import { Category } from '../../../../lib/repo/category.repo';
+import { FilterCategory } from '../products-page';
 import { ProductsFilterCheckbox } from './products-filter-checkbox';
 interface PropsType {
   [key: string]: any
   title: string
-  categories: {
-    id: string
-    name: string
-    checked?: boolean
-    subcategories?: {
-      id: string
-      name: string
-      checked?: boolean
-    }[]
-  }[]
+  categories: FilterCategory[]
   setCategories: Function
 }
 export function ProductsCategoriesFilter(props: PropsType) {

@@ -1,10 +1,11 @@
-import { GraphRepository } from "../graphql/graph-repository";
+import { GraphRepository } from "../graphql/graph.repo";
 // import { any } from "../../../src/graphql/modules/user/user.model";
 
 import { QueryOptions } from "@apollo/client/core";
 import gql from "graphql-tag";
+import { CrudRepository } from "./crud.repo";
 
-export class UserRepository extends GraphRepository<any> {
+export class UserRepository extends CrudRepository<any> {
   shortFragment: string = "id";
   fullFragment: string = "id";
   apiName: string = "User";
@@ -21,7 +22,7 @@ export class UserRepository extends GraphRepository<any> {
         }
       `,
     });
-    this.handleFetchError(result);
+    this.handleError(result);
     return result.data[api] as {
       user: any;
       token: string;

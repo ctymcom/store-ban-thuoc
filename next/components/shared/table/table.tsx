@@ -1,8 +1,7 @@
 import { TableStatusItem } from "./table-status-item";
 import { TableTileItem } from './table-tile-item';
-import { Pagination } from '../../../lib/graphql/pagination';
-import { TablePagination } from "./table-pagination";
 import { TableLinkItem } from "./table-link-item";
+import { Pagination } from "../../../lib/repo/crud.repo";
 export enum TableDataItemType {
     text = "text",
     tile = 'tile',
@@ -68,6 +67,6 @@ export function Table({ headers, data, pagination, onPageChanged }: TableProps) 
         </tbody>
       </table>
     </div>
-    { pagination && <TablePagination pagination={pagination} onPageChanged={(page) => onPageChanged && onPageChanged(page)}/>}
+    {/* { pagination && <TablePagination pagination={pagination} onPageChanged={(page) => onPageChanged && onPageChanged(page)}/>} */}
   </div>
 }

@@ -3,25 +3,25 @@ import { DeliveredOrderData } from "../data/delivered-order-data";
 import { useEffect, useState } from 'react';
 import { drop, take } from 'lodash';
 import Link from 'next/link';
-import { PaginationPages } from '../../../pagination-pages/pagination-pages';
-import { Pagination } from './../../../../../lib/graphql/pagination';
+// import { Pagination } from './../../../../../lib/graphql/pagination';
+import { PaginationRound } from '../../../../shared/utilities/pagination/pagination-round';
+import { Pagination } from '../../../../../lib/repo/crud.repo';
 
 export function DeliveredOrderDetail () {
     const [ Data, setData ] = useState([]);
-    const [ Pagination, setPagination ] = useState<Pagination>({
+    const [ pagination, setPagination ] = useState<Pagination>({
         page: 1,
         limit: 10,
         offset: 0,
         total: DeliveredOrderData.length
     });
     useEffect(() => {
-        const data = take(drop(DeliveredOrderData, (Pagination.page - 1) * Pagination.limit), Pagination.limit);
+        const data = take(drop(DeliveredOrderData, (pagination.page - 1) * pagination.limit), pagination.limit);
         setData(data);
-    }, [Pagination]);
+    }, [pagination]);
 
     const onPageChanged = (page) => {
-        let orderHistoryListElement = document.querySelector('.order-history__list');
-        setPagination({ ...Pagination, page: page});
+        setPagination({ ...pagination, page: page});
         window.scroll({
             top: 200,
             left: 0,
@@ -59,8 +59,14 @@ export function DeliveredOrderDetail () {
         <div className="order-history__info-list">
             <DeliveredOrderList data={Data}/>
         </div>
-        <ul className="pagination-pages flex">
-            <PaginationPages pagination={Pagination} onPageChanged={(page) => onPageChanged(page)}/>
+        <ul className="pagination-pages flex mt-4 justify-between w-full">
+            {/* <PaginationPages pagination={Pagination} onPageChanged={(page) => onPageChanged(page)}/> */}
+            <PaginationRound
+                limit={8}
+                page={1}
+                total={143}
+                onPageChange={(page) => {}}
+            />
         </ul>
     </>;
 }

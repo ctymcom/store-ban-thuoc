@@ -3,5 +3,5 @@ export const user={
     phoneNumber:"0909 666 333",
     gender:"male",
     email:"anthuylinh999@gmail.com",
-    dateOfBirth:"1999-02-10"
+    dateOfBirth: new Date("1999-02-10")
 }

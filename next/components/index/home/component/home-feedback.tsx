@@ -1,17 +1,19 @@
 import { useState } from "react"
 import { ImQuotesLeft, ImQuotesRight } from 'react-icons/im'
 import useInterval from "../../../../hooks/useInterval"
+import { useHomeContext } from "../providers/home-provider"
 import { SectionHeader } from "./section-header"
-import { useFeedbackContext } from '../providers/feedback-provider';
+import { Feedback } from './../../../../lib/repo/feedback.repo';
 
-const partitionArray = (array: any[], size) => array.sort((a, b) => a.content > b.content ? 1 : 0).map((e,i) => (i % size === 0) ? array.slice(i, i + size) : null).filter( (e) => e )
+const partitionArray = (array: any[], size) => array.slice().sort((a, b) => a.content > b.content ? 1 : 0).map((e,i) => (i % size === 0) ? array.slice(i, i + size) : null).filter( (e) => e )
 
-
-export function HomeFeedback() {
+interface PropsType extends ReactProps {
+  feedbacks: Feedback[]
+}
+export function HomeFeedback(props: PropsType) {
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const { feedbacks } = useFeedbackContext();
-  const feedbackGroups = partitionArray(feedbacks, 2)
+  const feedbackGroups = partitionArray(props.feedbacks, 2)
 
   useInterval(() => {
     if (activeIndex >= feedbackGroups.length - 1) {

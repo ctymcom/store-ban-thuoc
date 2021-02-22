@@ -23,6 +23,7 @@
     "**/dist": true,
     "**/coverage": true
   },
+  "editor.tabSize": 2,
   "appService.zipIgnorePattern": [".vscode{,/**}"],
   "appService.deploySubpath": "",
   "typescript.preferences.importModuleSpecifier": "relative",

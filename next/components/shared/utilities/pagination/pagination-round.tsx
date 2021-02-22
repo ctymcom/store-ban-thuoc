@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import { HiChevronLeft, HiChevronRight, HiDotsHorizontal, HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
-import { Pagination } from "./pagination";
+import { PaginationComponent } from "./pagination-component";
 
 interface PropsType extends ReactProps {
   limit: number
   page: number
   total: number
-  onPageChange: Function
+  onPageChange?: Function
 }
 export function PaginationRound(props: PropsType) {
-
   const [page, setPage] = useState(props.page);
 
   const defaultButtonClass = `border-2 border-gray-400 bg-white text-gray-500 disabled:opacity-40 disabled:pointer-events-none ` + 
   `hover:text-primary hover:border-primary font-bold rounded-full min-w-10 h-10 mx-1`
 
   useEffect(() => {
-    props.onPageChange(page)
+    if (page != props.page) {
+      props.onPageChange(page)
+    }
   }, [page]);
 
-  return <Pagination
+  return <PaginationComponent
     limit={props.limit}
     total={props.total}
     page={page}

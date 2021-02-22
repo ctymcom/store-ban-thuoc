@@ -1,39 +1,40 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { Post } from "../../../../lib/repo/post-repo";
+import { Post } from "../../../../lib/repo/post.repo";
 import { Button } from "../../../shared/form/button";
+import { usePostListContext } from "../providers/post-list-provider";
 
 type PostCardProps = {
   [x: string]: any;
   post: Post;
 };
 export function PostCard({ post, ...props }: PostCardProps) {
-  const router = useRouter();
-  const editPost = (post) => {
-    router.push(`/admin/post/${post.slug}`, null, { shallow: true });
-  };
+
+  const { togglePostStatus } = usePostListContext()
+
   return (
-    <div {...props} className="p-2 rounded bg-white flex flex-col justify-between">
-      <div className="cursor-pointer">
-        <div className="h-40">
-          <img
-            src={post.featureImage || "https://placekitten.com/600/300"}
-            alt=""
-            className="object-cover w-full h-full"
-          />
-        </div>
-        <div className="py-4 max-h-80">
-          <h1 className="py-2 font-semibold">{post.title}</h1>
-          <h3 className="py-2 text-sm font-semibold text-gray-400">
-            Người viết: <span className="text-blue-500">Tac gia</span>
-          </h3>
-          <p className="text-sm text-gray-400"> {post.excerpt} </p>
-        </div>
+    <div {...props} className="p-3 rounded bg-white flex flex-col justify-between">
+      <div className="image-wrapper ratio-16-9">
+        <img
+          src={post.featureImage || '/assets/img/default.png'}
+          onError={(e)=>{(e.target as any).src="/assets/img/default.png"}}
+        />
       </div>
-      <div className="flex items-center justify-end px-2">
-        {post.status == "PUBLIC" ? <Button>Gỡ bài</Button> : <Button>Đăng bài</Button>}
-        <Button primary onClick={() => editPost(post)}>
-          Chỉnh sửa
-        </Button>
+      <h1 className="mt-3 text-gray-800 font-semibold">{post.title}</h1>
+      <h3 className="text-sm font-semibold text-gray-600">
+        Tác giả: <span className="text-primary">Thu Trinh</span>
+      </h3>
+      <p className="text-sm text-gray-700"> {post.excerpt} </p>
+      <div className="flex items-center justify-end mt-auto">
+        <Link href={'/admin/post/' + post.slug}>
+          <a className="btn-gray btn-lg mr-2">Chỉnh sửa</a>
+        </Link>
+        {post.status == "PUBLIC" ? <button className="btn-outline is-primary btn-lg" onClick={ () => togglePostStatus(post) }>
+          <span>Gỡ bài</span>
+        </button> : <button className="btn-primary btn-lg" onClick={ () => togglePostStatus(post) }>
+          <span>Đăng bài</span>
+        </button>}
+        
       </div>
     </div>
   );

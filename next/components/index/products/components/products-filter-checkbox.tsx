@@ -17,10 +17,10 @@ export function ProductsFilterCheckbox(props: PropsType) {
     onClick={() => props.onClick()}>
         {
           props.checked === true ? 
-          <i className="pt-1 text-xl text-primary group-hover:text-primary-dark"><MdCheckBox /></i> : 
+          <i className="pt-0.5 text-xl text-primary group-hover:text-primary-dark"><MdCheckBox /></i> : 
           props.checked === false ? 
-          <i className="pt-1 text-xl text-gray-500 group-hover:text-primary"><MdCheckBoxOutlineBlank /></i> : 
-          <i className="pt-1 text-xl text-accent group-hover:text-accent-dark"><MdIndeterminateCheckBox /></i>
+          <i className="pt-0.5 text-xl text-gray-500 group-hover:text-primary"><MdCheckBoxOutlineBlank /></i> : 
+          <i className="pt-0.5 text-xl text-accent group-hover:text-accent-dark"><MdIndeterminateCheckBox /></i>
         }
       
       <span className="pl-2">{props.text}</span>

@@ -3,11 +3,17 @@
   padding-top: 32%;
   box-sizing: border-box;
   position: relative;
-  @screen 2xl {
-    width: 86% !important;
+  @screen lg {
+    width: 90% !important;
     margin: auto;
     margin-top: 2rem;
     @apply container;
+  }
+  @screen xl {
+    width: 88% !important;
+  }
+  @screen 2xl {
+    width: 86% !important;
   }
 }
 .BrainhubCarousel {
@@ -26,6 +32,11 @@
 }
 .BrainhubCarousel__dot--selected::before {
   @apply bg-primary #{!important};
+}
+.quill {
+  .ql-editor {
+    min-height: 800px;
+  }
 }
 .custom-checkbox {
   @apply relative;
