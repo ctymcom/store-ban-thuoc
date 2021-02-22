@@ -1,8 +1,14 @@
 import Gender from './gender';
 import DateTime from './datetime';
 import { useState } from 'react';
-type PropsType ={
-    user:{name:string,phoneNumber:string,email:string,gender:string,dateOfBirth:Date},
+interface PropsType extends ReactProps {
+    user: {
+        name:string,
+        phoneNumber:string,
+        email:string,
+        gender:string,
+        dateOfBirth:Date
+    },
 }
 export function FormProfile({user}: PropsType) {
     const [userP,setUserP] = useState(user);
@@ -32,7 +38,7 @@ export function FormProfile({user}: PropsType) {
                 break;
         }
     }
-    return <>
+    return <div className="w-3/4 mx-auto">
         <h3 className="uppercase border-gray-200 border-b-2 pb-2">Thông tin tài khoản</h3>
         <div className="grid grid-cols-3 pt-2 ">
             <div className="col-span-2 grid grid-cols-4 gap-2 pr-16 border-r border-gray-200 items-center">
@@ -53,8 +59,8 @@ export function FormProfile({user}: PropsType) {
                 <button className="col-span-3 btn-outline w-10/12 border-primary text-primary">Đổi mật khẩu</button>
             </div>
             <div className="col-span-1 text-center">
-                <div className="my-10 mx-16">
-                    <img src="public/assets/images/avatar.png" alt="" />
+                <div className="p-4 mx-auto flex items-center justify-around">
+                    <img src="public/assets/images/avatar.png" alt=""/>
                 </div>
                 <button className="btn-outline border-primary-light border-2 px-16 font-normal text-primary">Đổi ảnh</button>
                 <p className="text-12 text-gray-400">Dung lượng file tối đa 1MB</p>
@@ -65,5 +71,5 @@ export function FormProfile({user}: PropsType) {
                 <button className="btn-primary font-normal col-span-3 w-10/12">Cập Nhật</button>
             </div>
         </div>
-    </>
+    </div>
 }
