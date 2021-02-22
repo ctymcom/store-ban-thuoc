@@ -36,8 +36,6 @@ export default ({ app }: { app: express.Application }) => {
   // app.get("/", function (req: Request, res: Response) {
   //   res.send(`${configs.name} - ${configs.version} - ${configs.description}`);
   // });
-
-  app.use(express.static(path.join(__dirname, "../../next/public")));
   app.use("/", router);
   const nextApp = next({ dev: configs.nextDev, dir: "./next" });
   const handle = nextApp.getRequestHandler();
