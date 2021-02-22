@@ -26,7 +26,7 @@ export default function Sidebar() {
         <div className="flex items-center px-6 pt-12 pb-8">
           <div className="flex-grow-0 w-16">
             <div className="image-wrapper circle">
-              <img src="https://i.pinimg.com/originals/71/f1/84/71f1843b56fa00a64c429a1980657dc5.jpg"/>
+              <img src="/assets/img/avatar.svg"/>
             </div>
           </div>
           <div className="pl-4">

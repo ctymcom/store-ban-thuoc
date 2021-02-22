@@ -9,7 +9,7 @@ const listButtonSuccessed = [
     },
     {
         title: "Lịch sử đơn hàng",
-        href: "/oder-history"
+        href: "/profile/order-history"
     }
 ]
 const listButtonFailed = [
@@ -19,7 +19,7 @@ const listButtonFailed = [
     },
     {
         title: "Trở về trang chủ",
-        href: "/oder-history"
+        href: "/profile/order-history"
     }
 
 ]

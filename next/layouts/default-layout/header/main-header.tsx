@@ -20,7 +20,7 @@ export function MainHeader({ user, setUser, ...props}: PropsType) {
           <Link href="/">
             <a className="w-20 pr-2 md:w-24">
               <img 
-                src="https://i.imgur.com/IgAKijh.png"
+                src="/assets/img/logo.png"
                 className="w-full h-full object-contain"
               />
             </a>              
