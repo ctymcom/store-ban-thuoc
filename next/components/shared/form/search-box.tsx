@@ -1,6 +1,5 @@
-import { useRef, useEffect, useState } from "react";
-import { IconInfor } from "../../../lib/svg/icon-infor";
-import { IconSearch } from "../../../lib/svg/icon-search";
+import { useEffect, useRef, useState } from "react";
+import { HiInformationCircle, HiSearch } from "react-icons/hi";
 import { FormFieldProps } from "./form-field.type";
 import { Label } from "./label";
 
@@ -89,7 +88,7 @@ export function SearchBox({
               {props.tooltip && (
                 <div className="group pt-1 ml-2 w-5 tooltip">
                   <i className="text-gray-400">
-                    <IconInfor />
+                    <HiInformationCircle />
                   </i>
                   <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
                     {props.tooltip}
@@ -121,7 +120,7 @@ export function SearchBox({
                 "w-5 h-5 transition absolute right-5 ml-4" + (Show && " text-secondary-400")
               }
             >
-              <IconSearch />
+              <HiSearch />
             </div>
           </div>
           {Show && Options.length > 0 ? (

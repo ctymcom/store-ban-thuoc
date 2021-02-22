@@ -8,7 +8,7 @@ export function HeadAdmin({ title }) {
                 <meta name="theme-color" content="#000000" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 {/* Favicon */}
-                <link rel="icon" href="/assets/img/favicon.ico" />
+                <link rel="icon" href="/favicon.ico" />
                 {/* Font Open Sans */}
                 
 

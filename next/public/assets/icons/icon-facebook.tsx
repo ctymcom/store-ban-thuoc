@@ -5,7 +5,7 @@ export function IconFacebook(props) {
       width="100%"
       height="100%"
       viewBox="0 0 16.759 30.999"
-      className="fill-current text-gray-400 hover:text-blue-500"
+      className="fill-current"
     >
       <path
         id="Path_72"

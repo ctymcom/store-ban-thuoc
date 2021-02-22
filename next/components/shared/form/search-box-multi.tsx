@@ -1,8 +1,7 @@
-import { FormFieldProps } from "./form-field.type"
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { HiInformationCircle } from "react-icons/hi";
+import { FormFieldProps } from "./form-field.type";
 import { Label } from "./label";
-import { SelectBox } from "./select-box";
-import { IconInfor } from "../../../lib/svg/icon-infor";
 import { SearchBox } from "./search-box";
 
 type SelectMutilProps = FormFieldProps & {
@@ -34,7 +33,7 @@ export function SearchBoxMulti({ name, label, values = [], placeholder, onValues
             {label && <div className="flex items-center">
                 <Label text={label} htmlFor={name} />
                 {tooltip && <div className="group pt-1 ml-2 w-5 tooltip" >
-                    <i className='text-gray-400'><IconInfor /></i>
+                    <i className='text-gray-400'><HiInformationCircle/></i>
                     <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
                         {tooltip}
                     </div>

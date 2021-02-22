@@ -33,7 +33,7 @@ export function FormProfile() {
             </div>
             <div className="col-span-1 text-center">
                 <div className="my-10 mx-16 flex justify-center items-center">
-                    <img src="../../../../public/assets/images/avatar.png" alt="" />
+                    <img src="assets/svg/" alt="" />
                 </div>
                 <button className="btn-outline border-primary-light border-2 px-16 font-normal text-primary">Đổi ảnh</button>
                 <p className="text-12 text-gray-400">Dung lượng file tối đa 1MB</p>

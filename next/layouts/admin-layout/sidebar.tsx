@@ -1,8 +1,6 @@
-import { SelectBox } from "../../components/shared/form/select-box";
-import { IconLogout } from "../../lib/svg/icon-logout";
 import Link from "next/link";
-import { HiLogout } from "react-icons/hi";
 import { useRouter } from "next/router";
+import { HiLogout } from "react-icons/hi";
 
 const SIDEBAR_MENUS = [
   {

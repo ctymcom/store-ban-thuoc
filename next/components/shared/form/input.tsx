@@ -1,7 +1,7 @@
 import { FormFieldProps } from "./form-field.type";
 import { Label } from "./label";
-import { IconInfor } from "../../../lib/svg/icon-infor";
 import format from "date-fns/format";
+import { HiInformationCircle } from "react-icons/hi";
 export function Input({
   label,
   name,
@@ -33,7 +33,7 @@ export function Input({
           {tooltip && (
             <div className="group pt-1 ml-2 w-5 tooltip">
               <i className="text-gray-400">
-                <IconInfor />
+                <HiInformationCircle />
               </i>
               <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
                 {tooltip}

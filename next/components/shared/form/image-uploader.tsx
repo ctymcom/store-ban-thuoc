@@ -1,8 +1,7 @@
-import { Imgur } from "../../../lib/imgur";
-import { IconUpload } from "../../../lib/svg/icon-upload";
-import { FormFieldProps } from "./form-field.type";
 import { useState } from "react";
-import { IconInfor } from "../../../lib/svg/icon-infor";
+import { HiInformationCircle, HiOutlineCloudUpload } from "react-icons/hi";
+import { Imgur } from "../../../lib/imgur";
+import { FormFieldProps } from "./form-field.type";
 import { Label } from "./label";
 type ImageUploaderProps = FormFieldProps & {};
 export function ImageUploader({
@@ -33,7 +32,7 @@ export function ImageUploader({
           {tooltip && (
             <div className="group pt-1 ml-2 w-5 tooltip">
               <i className="text-gray-400">
-                <IconInfor />
+                <HiInformationCircle />
               </i>
               <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
                 {tooltip}
@@ -49,7 +48,7 @@ export function ImageUploader({
         {!Src ? (
           <div className="flex flex-col items-center py-20">
             <div className="w-10">
-              <IconUpload />
+              <HiOutlineCloudUpload />
             </div>
             <p className="text-xs">Upload hình ảnh</p>
           </div>

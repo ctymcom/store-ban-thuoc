@@ -1,9 +1,8 @@
 import { useRef, useEffect, useState } from "react";
-import { IconArrowDown } from "../../../lib/svg/icon-arrow-down";
-import { IconInfor } from "../../../lib/svg/icon-infor";
 import { FormFieldProps } from "./form-field.type";
 import { Input } from "./input";
 import { Label } from "./label";
+import { HiChevronDown, HiInformationCircle } from 'react-icons/hi';
 
 export type SelectBoxOption = {
   value: string;
@@ -85,7 +84,7 @@ export function SelectBox({
             {props.tooltip && (
               <div className="group pt-1 ml-2 w-5 tooltip">
                 <i className="text-gray-400">
-                  <IconInfor />
+                  <HiInformationCircle />
                 </i>
                 <div className="tooltiptext bg-gray-100 text-gray-400 p-1 w-44 max-w-xl text-center ml-3 text-xs">
                   {props.tooltip}
@@ -104,7 +103,7 @@ export function SelectBox({
         >
           {ValueInput != "" ? ValueInput : placeholder != null ? placeholder : options[0]}
           <div className={"w-5 h-5 transition " + (Show && " transform rotate-180 ")}>
-            <IconArrowDown />
+            <HiChevronDown />
           </div>
         </div>
         {Show ? (

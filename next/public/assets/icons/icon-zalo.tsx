@@ -10,7 +10,7 @@ export function IconZalo(props) {
             width="77.488"
             height="30.999"
             viewBox="0 0 77.488 30.999"
-            className="w-12 sm:w-20 md:w-14 lg:w-20 fill-current text-gray-400 hover:text-blue-500 " 
+            className="fill-current" 
         >  
             <path
                 id="Path_10644"

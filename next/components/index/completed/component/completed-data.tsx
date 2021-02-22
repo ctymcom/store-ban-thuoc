@@ -27,13 +27,13 @@ export const statusSuccessed = {
     header: "Đặt hàng thành công.",
     type: "successed",
     listContent,
-    img: "../../../../../../public/assets/images/completed.png",
+    img: "/assets/img/completed.png",
     listButton: listButtonSuccessed
 }
 export const statusFailed = {
     header: "Đặt hàng thành công",
     type: "failed",
     listContent,
-    img: "../../../../../assets/images/product.png",
+    img: "/assets/img/product.png",
     listButton: listButtonFailed
 }

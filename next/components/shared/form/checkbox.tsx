@@ -1,6 +1,6 @@
 import { FormFieldProps } from "./form-field.type";
-import { IconInfor } from "../../../lib/svg/icon-infor";
 import { useEffect, useState } from 'react';
+import { HiInformationCircle } from "react-icons/hi";
 type CheckBoxProps = FormFieldProps & {
   onChanged?: (value: boolean) => void;
   validate?: (value: boolean) => string;
@@ -51,7 +51,7 @@ export function Checkbox({
         tooltip !== "" ? (
           <div className="group pt-1 ml-2 w-5 tooltip">
             <i className="text-gray-400">
-              <IconInfor />
+              <HiInformationCircle />
             </i>
             <div className="tooltiptext bg-gray-100 text-gray-400 p-2 w-44 max-w-xl text-center ml-3 text-xs">
               {label}

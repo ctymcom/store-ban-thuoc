@@ -10,7 +10,7 @@ export function ProfileUser() {
     
     return <>
         <div className="user flex items-center">
-            <img src="../../../../public/assets/images/avatar.png" alt="" className="user__avatar" />
+            <img src="/assets/img/avatar.svg" alt="" className="user__avatar" />
             <div className="profile__user ml-4 sm:w-3/6">
                 <a href="#" className="profile__user-link block font-normal mb-2">
                     minhuy2996543
