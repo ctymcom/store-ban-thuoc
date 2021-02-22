@@ -8,7 +8,7 @@ export function Footer() {
 
   return (
     <>
-      <footer className="mt-20 text-white">
+      <footer className="mt-20 text-white" style={{ backgroundColor: '#343A40' }}>
         <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3">
           <div className="flex flex-col justify-start text-md sm:text-lg md:text-sm lg:w-4/6">
             <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">Về khoThuocsi.vn</div>
@@ -92,13 +92,6 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <style jsx>
-          {`            
-            footer {
-              background: #343A40;
-            }
-          `}
-        </style>
       </footer>
     </>
   );
