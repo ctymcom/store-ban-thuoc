@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ProfileUser } from "../order-history/component/profile-user";
 import { FormProfile } from './component/form-profile';
+import { user } from './component/data-profile';
 export function ProfileUserPage() {
     return <>
         <div className="main-container h-auto px-4">
@@ -21,7 +22,7 @@ export function ProfileUserPage() {
                         <ProfileUser activeIndex={1} />
                     </div>
                     <div className="oder-history w-3/5">
-                        <FormProfile />
+                        <FormProfile user={user}/>
                     </div>
                 </div>
             </div>
