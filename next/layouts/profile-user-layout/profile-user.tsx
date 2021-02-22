@@ -9,9 +9,9 @@ export function ProfileUser() {
     const router = useRouter();
     
     return <>
-        <div className="user flex items-center">
+        <div className="user flex items-center justify-center lg:justify-start mb-3 md:mb-0">
             <img src="../../../../public/assets/images/avatar.png" alt="" className="user__avatar" />
-            <div className="profile__user ml-4 sm:w-3/6">
+            <div className="profile__user ml-4">
                 <a href="#" className="profile__user-link block font-normal mb-2">
                     minhuy2996543
                 </a>
@@ -20,8 +20,8 @@ export function ProfileUser() {
                 </a>
             </div>
         </div>
-        <ul className="user__info-list">
-                <li className="user__info-item flex my-4 items-center">
+        <ul className="user__info-list flex flex-col md:flex-row lg:flex-col items-center md:items-start md:justify-between md:mt-4">
+                <li className="user__info-item flex my-2.5 md:my-2 items-center">
                     <ImUser className="text-primary border-2 border-primary rounded-full text-2xl p-0.5 mr-2"/>
                     <Link href="/profile" shallow={true}>
                         <a className={`"user__info-link uppercase text-sm hover:text-primary " 
@@ -31,7 +31,7 @@ export function ProfileUser() {
                     </Link>
                     
                 </li>
-                <li className="user__info-item flex my-4 items-center">
+                <li className="user__info-item flex my-2.5 md:my-2 items-center">
                     <BiListPlus className="text-primary border-2 border-primary rounded text-2xl mr-2"/>
                     <Link href="/profile/order-history" shallow={true}>
                         <a className={`"order-link uppercase text-sm hover:text-primary "
@@ -46,7 +46,7 @@ export function ProfileUser() {
                     </Link>
                    
                 </li>
-                <li className="user__info-item flex my-4 items-center">
+                <li className="user__info-item flex my-2.5 md:my-2 items-center">
                     <AiOutlineBell className="text-primary text-2xl mr-2"/>
                     <Link href="/profile/notification" shallow={true}>
                         <a className={`"notification-link uppercase text-sm hover:text-primary "
@@ -55,7 +55,7 @@ export function ProfileUser() {
                         </a>
                     </Link>
                 </li>
-                <li className="user__info-item flex my-4 items-center">
+                <li className="user__info-item flex my-2.5 md:my-2 items-center">
                     <BiDonateHeart className="text-primary text-2xl mr-2"/>
                     <Link href="/profile/reward-point" shallow={true}>
                         <a className={`"reward-point-link uppercase text-sm hover:text-primary "
