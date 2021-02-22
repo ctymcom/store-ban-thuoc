@@ -10,7 +10,7 @@ function getSemanticColors(color) {
 
 module.exports = {
   darkMode: false, // or 'media' or 'class'
-  purge: ['./next/**/*.tsx'],
+  purge: ['./next/**/*.tsx', './**/*.tsx'],
   theme: {
     extend: {
       colors: {
