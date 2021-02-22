@@ -21,7 +21,11 @@ export function OrderDetailsTimeline(props: PropsType) {
     <style jsx>{`
       .timeline:not(:last-child)::before {
         content: '';
-        @apply absolute left-1 top-3 h-8 border-l border-dashed;
+        position: absolute;
+        left: 0.25rem;
+        top: 0.75rem;
+        height: 2rem;
+        border-left: 1px dashed;
       }
     `}</style>
   </div>
