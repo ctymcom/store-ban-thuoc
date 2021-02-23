@@ -19,7 +19,7 @@ const Query = {
 
 const Mutation = {
   createTag: async (root: any, args: any, context: Context) => {
-    // AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { data } = args;
     if (!data.slug) {
       data.slug = KhongDau(data.name).toLowerCase().trim().replace(/\ +/g, "-");
@@ -30,12 +30,12 @@ const Mutation = {
     return await tagService.create(data);
   },
   updateTag: async (root: any, args: any, context: Context) => {
-    // AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { id, data } = args;
     return await tagService.updateOne(id, data);
   },
   deleteOneTag: async (root: any, args: any, context: Context) => {
-    // AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { id } = args;
     return await tagService.deleteOne(id);
   },

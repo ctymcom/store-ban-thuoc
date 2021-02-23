@@ -3,14 +3,18 @@ import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
 import { postService } from "./post.service";
 import KhongDau from "khong-dau";
-import { PostModel } from "./post.model";
-import { random } from "lodash";
+import { PostModel, PostStatus } from "./post.model";
+import { random, set } from "lodash";
 import { GraphQLHelper } from "../../../helpers/graphql.helper";
 import { TagLoader } from "../tag/tag.model";
 
 const Query = {
   getAllPost: async (root: any, args: any, context: Context) => {
     // AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
+    if (!context.isEditor) {
+      set(args, "q.filter.status", PostStatus.PUBLIC);
+      set(args, "q.filter.publishedAt", { $lte: new Date() });
+    }
     return postService.fetch(args.q);
   },
   getOnePost: async (root: any, args: any, context: Context) => {
@@ -22,7 +26,7 @@ const Query = {
 
 const Mutation = {
   createPost: async (root: any, args: any, context: Context) => {
-    // AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { data } = args;
     if (!data.slug) {
       data.slug = KhongDau(data.title).toLowerCase().trim().replace(/\ +/g, "-");
@@ -43,12 +47,12 @@ const Mutation = {
     return await postService.create(data);
   },
   updatePost: async (root: any, args: any, context: Context) => {
-    // AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { id, data } = args;
     return await postService.updateOne(id, data);
   },
   deleteOnePost: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { id } = args;
     return await postService.deleteOne(id);
   },
