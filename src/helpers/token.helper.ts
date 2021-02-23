@@ -31,4 +31,11 @@ export class TokenHelper {
       ref: token,
     });
   }
+  static getAritorUserToken(user: AritoUser, token: string, role: string) {
+    return this.generateToken({
+      role: role,
+      user: user,
+      ref: token,
+    });
+  }
 }
