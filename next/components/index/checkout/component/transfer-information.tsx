@@ -1,15 +1,30 @@
 import React from 'react';
-
-const TransferInformation = (props) => {
+interface PropsType extends ReactProps{
+    info:{
+        title:string,
+        content:string
+    }[]
+}
+const TransferInformation = (props:PropsType) => {
+    const coppyToClip =(value:string)=>{
+        let listener = (e: ClipboardEvent) => {
+            e.clipboardData.setData('text/plain', (value));
+            e.preventDefault();
+        };
+    
+        document.addEventListener('copy', listener);
+        document.execCommand('copy');
+        document.removeEventListener('copy', listener);
+    }
     return (
-        <div className="p-3 border rounded lg:w-4/5 border-primary bg-green-50">
+        <div className="p-3 border rounded w-full xl:w-4/5 border-primary bg-green-50">
             {
                 props.info.map((item, index) => {
-                    return <div className="grid grid-cols-5" key={index}>
+                    return <div className="grid grid-cols-3 items-center" key={index}>
                         <p className="col-span-1 text-gray-400">{item.title}: </p>
-                        <div className="col-span-3">
+                        <div className="col-span-2">
                             <p className="inline-block">{item.content}</p>
-                            <button className={item.title === "Số tài khoản" ? "inline-block btn-default" : "hidden"}>Sao chép</button>
+                            <button className={item.title === "Số tài khoản" ? "inline-block btn-default" : "hidden"} onClick={(e)=>{coppyToClip(item.content)}}>Sao chép</button>
                         </div>
                     </div>
                 })
