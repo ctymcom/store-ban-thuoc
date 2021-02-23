@@ -12,9 +12,11 @@ Agenda.on("ready", () => {
   console.log("Agenda Ready");
   Agenda.start().then(async () => {
     console.log("Agenda started");
+    if (includeJobs[0] == "NONE") return;
     const JobFiles = UtilsHelper.walkSyncFiles(path.join(__dirname));
     JobFiles.filter((f: any) => /(.*).job.js$/.test(f)).map((f: any) => {
       const { default: job } = require(f);
+
       if (includeJobs.length > 0 && !includeJobs.includes(job.jobName)) {
         console.log(chalk.yellow("Skip Job ", job.jobName));
         return;
