@@ -5,6 +5,7 @@ import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { TokenHelper } from "../../../helpers/token.helper";
 import { AritoUser } from "../../../helpers/arito/types/aritoUser.type";
 import { ROLES } from "../../../constants/role.const";
+import { ErrorHelper } from "../../../helpers";
 
 export default {
   schema: gql`
@@ -62,10 +63,12 @@ export default {
           deviceName,
           deviceOsVersion,
         });
-        const editorToken = TokenHelper.getAritorEditorToken(user, token);
+        if (user.permission != 3) throw ErrorHelper.permissionDeny();
+        const userData = { ...user, role: ROLES.EDITOR };
+        const editorToken = TokenHelper.getAritorEditorToken(userData, token);
         return {
           token: editorToken,
-          user: { ...user, role: ROLES.EDITOR },
+          user: userData,
         };
       },
     },
