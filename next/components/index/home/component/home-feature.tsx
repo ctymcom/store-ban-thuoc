@@ -1,7 +1,7 @@
-import { IconHandHeart } from "../../../../lib/svg/icon-hand-heart";
-import { IconMap } from "../../../../lib/svg/icon-map";
-import { IconShip } from "../../../../lib/svg/icon-ship";
-import { IconShoppingOnline } from "../../../../lib/svg/icon-shopping-online";
+import { IconHandHeart } from "../../../../public/assets/icons/icon-hand-heart";
+import { IconMap } from "../../../../public/assets/icons/icon-map";
+import { IconShip } from "../../../../public/assets/icons/icon-ship";
+import { IconShoppingOnline } from "../../../../public/assets/icons/icon-shopping-online";
 export function HomeFeature() {
 
   const features = [

@@ -143,7 +143,7 @@ export default function CartPage(props) {
     return <>
         <div className="main-container">
             <div>
-                <CartPayHeader />
+                <CartPayHeader name="cart"/>
             </div>
             <div className="">
                 <div className="col-span-3 grid grid-cols-7 gap-20">

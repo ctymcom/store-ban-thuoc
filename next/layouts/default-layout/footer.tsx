@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { IconFacebook } from "../../lib/svg/icon-facebook";
-import { IconYoutube } from "../../lib/svg/icon-youtube";
-import { IconZalo } from "../../lib/svg/icon-zalo";
+import { IconFacebook } from "../../public/assets/icons/icon-facebook";
+import { IconYoutube } from "../../public/assets/icons/icon-youtube";
+import { IconZalo } from "../../public/assets/icons/icon-zalo";
 
 export function Footer() {
   const [ShowMore, setShowMore] = useState(false);
@@ -72,13 +72,13 @@ export function Footer() {
             <div className="">
               <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">Kết nối với chúng tôi</div>
               <div className="flex space-x-5 sm:space-x-8 md:space-x-7 mb-4 sm:mb-7 md:mb-8 lg:mb-8 mt-4 sm:mt-7 md:mt-4 lg:mt-4 items-center">
-                <div className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer">
+                <div className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500">
                   <IconFacebook />
                 </div>
-                <div className="transition w-7 sm:w-10 md:w-8 lg:w-10 cursor-pointer">
+                <div className="transition w-7 sm:w-10 md:w-8 lg:w-10 cursor-pointer text-gray-400 hover:text-red-500">
                   <IconYoutube />
                 </div>
-                <div className="transition cursor-pointer">
+                <div className="transition cursor-pointer text-gray-400 hover:text-blue-500">
                   <IconZalo />
                 </div>
               </div>

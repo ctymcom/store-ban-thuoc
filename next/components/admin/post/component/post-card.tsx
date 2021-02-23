@@ -1,7 +1,6 @@
+import { parseISO, format } from 'date-fns';
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { Post } from "../../../../lib/repo/post.repo";
-import { Button } from "../../../shared/form/button";
 import { usePostListContext } from "../providers/post-list-provider";
 
 type PostCardProps = {
@@ -19,13 +18,15 @@ export function PostCard({ post, ...props }: PostCardProps) {
           src={post.featureImage || '/assets/img/default.png'}
           onError={(e)=>{(e.target as any).src="/assets/img/default.png"}}
         />
+        {
+          !!post.priority && 
+            <div className="absolute right-0 top-3 p-1 px-3 rounded-l bg-accent text-white shadow-md">Ưu tiên: { post.priority }</div>
+        }
       </div>
-      <h1 className="mt-3 text-gray-800 font-semibold">{post.title}</h1>
-      <h3 className="text-sm font-semibold text-gray-600">
-        Tác giả: <span className="text-primary">Thu Trinh</span>
-      </h3>
+      <div className="mt-3 text-gray-800 font-semibold">{post.title}</div>
+      <div className="text-sm text-gray-700 font-semibold">Ngày tạo: { format(parseISO(post.createdAt), 'dd-MM-yyyy HH:mm') }</div>
       <p className="text-sm text-gray-700"> {post.excerpt} </p>
-      <div className="flex items-center justify-end mt-auto">
+      <div className="flex items-center justify-end mt-auto pt-1">
         <Link href={'/admin/post/' + post.slug}>
           <a className="btn-gray btn-lg mr-2">Chỉnh sửa</a>
         </Link>

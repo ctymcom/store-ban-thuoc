@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { ImQuotesLeft, ImQuotesRight } from 'react-icons/im'
-import useInterval from "../../../../hooks/useInterval"
+import useInterval from "../../../../lib/hooks/useInterval"
 import { useHomeContext } from "../providers/home-provider"
 import { SectionHeader } from "./section-header"
 import { Feedback } from './../../../../lib/repo/feedback.repo';

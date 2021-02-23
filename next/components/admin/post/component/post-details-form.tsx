@@ -39,6 +39,12 @@ export function PostDetailsForm({ ...props }: PropsType) {
         value={post.publishedAt ? post.publishedAt.toString() : null}
         onChanged={(value) => (post.publishedAt = new Date(value))}
       />
+      <Input
+        inputType="number"
+        label="Ưu tiên"
+        value={post.priority ? post.priority.toString() : null}
+        onChanged={(value) => (post.priority = Number(value))}
+      />
       <SelectMulti
         style="bg-white"
         label="Tag trong bài đăng"

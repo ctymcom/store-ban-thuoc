@@ -4,6 +4,8 @@ import { Context } from "../../context";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { TokenHelper } from "../../../helpers/token.helper";
 import { AritoUser } from "../../../helpers/arito/types/aritoUser.type";
+import { ROLES } from "../../../constants/role.const";
+import { ErrorHelper } from "../../../helpers";
 
 export default {
   schema: gql`
@@ -13,9 +15,9 @@ export default {
         password: String!
         deviceId: String
         deviceToken: String
-      ): LoginAritoEditorData
+      ): LoginAritoData
     }
-    type LoginAritoEditorData {
+    type LoginAritoData {
       token: String
       user: AritoUser
     }
@@ -40,6 +42,7 @@ export default {
       group: String
 
       imageLink: String
+      role: String
     }
   `,
   resolver: {
@@ -60,10 +63,12 @@ export default {
           deviceName,
           deviceOsVersion,
         });
-        const editorToken = TokenHelper.getAritorEditorToken(user, token);
+        if (user.permission != 3) throw ErrorHelper.permissionDeny();
+        const userData = { ...user, role: ROLES.EDITOR };
+        const editorToken = TokenHelper.getAritorEditorToken(userData, token);
         return {
           token: editorToken,
-          user,
+          user: userData,
         };
       },
     },

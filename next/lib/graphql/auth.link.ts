@@ -1,7 +1,6 @@
 import { setContext } from "apollo-link-context";
 
 export function SetAuthToken(token: string) {
-  console.log("set token", token);
   localStorage.setItem("user-token", token);
 }
 export function ClearAuthToken() {

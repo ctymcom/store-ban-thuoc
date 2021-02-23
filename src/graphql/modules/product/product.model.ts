@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import { MainConnection } from "../../../loaders/database";
 import { BaseDocument, ModelLoader, ModelHook } from "../../../base/baseModel";
-import { ProductGroupPrice } from "./types/productGroupPrice.type";
+import { ProductGroupPrice, ProductGroupPriceSchema } from "./types/productGroupPrice.type";
+import { ProductTabContent, ProductTabContentSchema } from "./types/productTabContent.type";
 const Schema = mongoose.Schema;
 
 export type IProduct = BaseDocument & {
@@ -39,6 +40,7 @@ export type IProduct = BaseDocument & {
   containers?: string[]; // Nhóm sản phẩm hiển thị trang chủ
   priceGroups?: ProductGroupPrice[]; // Bảng giá theo nhóm khách
   tags?: string[]; // Danh sách tag
+  tabs?: ProductTabContent[]; // Danh sách tab và nội dung
 };
 
 const productSchema = new Schema(
@@ -72,6 +74,9 @@ const productSchema = new Schema(
     basePrice: { type: Number, default: 0 },
     salePrice: { type: Number, default: 0 },
     containers: { type: [String], default: [] },
+    priceGroups: { type: [ProductGroupPriceSchema], default: [] },
+    tags: { type: [String], default: [] },
+    tabs: { type: [ProductTabContentSchema], default: [] },
   },
   { timestamps: true }
 );

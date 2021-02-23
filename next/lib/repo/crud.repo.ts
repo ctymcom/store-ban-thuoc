@@ -1,5 +1,5 @@
 import { MutationOptions, QueryOptions } from "@apollo/client/core";
-import { GraphRepository } from "../graphql/graph.repo";
+import { GraphRepository } from "./graph.repo";
 import { queryParser } from "../helpers/query-parser.helper";
 
 export interface Pagination {
@@ -25,8 +25,8 @@ export interface GetListData<T> {
 
 export interface BaseModel {
   id?: string;
-  updatedAt?: Date;
-  createdAt?: Date;
+  updatedAt?: string;
+  createdAt?: string;
   [x: string]: any;
 }
 
@@ -72,7 +72,7 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
         `($q: QueryGetListInput!)`
       )}`,
       variables: { q: query },
-      fetchPolicy: cache ? "network-only" : "no-cache",
+      fetchPolicy: cache ? "cache-first" : "network-only",
     } as QueryOptions;
     const result = await this.apollo.query<any>(options);
     this.handleError(result);
@@ -99,7 +99,7 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
   }) {
     const options = {
       query: this.gql`${this.generateGQL("query", `${this.getOneQuery({ id, fragment })}`)}`,
-      fetchPolicy: cache ? "network-only" : "no-cache",
+      fetchPolicy: cache ? "cache-first" : "network-only",
     } as QueryOptions;
     const result = await this.apollo.query(options);
     this.handleError(result);
@@ -226,16 +226,5 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
       this.handleError(result);
       return result.data;
     } else return;
-  }
-
-  parseFragment(fragment) {
-    const fragments = [];
-    const lines = fragment.trim().split("\n");
-    for (const line of lines) {
-      const parts = line.split(":");
-      const key = parts[0];
-      fragments.push(key);
-    }
-    return fragments.join(" ").trim();
   }
 }
