@@ -3,6 +3,7 @@
 import moment from "moment-timezone";
 import SetImageTokenJob from "./jobs/setImageToken.job";
 import { SyncProductJob } from "./jobs/syncProduct.job";
+import SyncProductTabJob from "./jobs/syncProductTab.job";
 
 export function InitRepeatJobs() {
   console.log("Generate Repeat Jobs");
@@ -11,4 +12,8 @@ export function InitRepeatJobs() {
     .unique({ name: SetImageTokenJob.jobName })
     .save();
   SyncProductJob.create({}).repeatEvery("5 minute").unique({ name: SyncProductJob.jobName }).save();
+  SyncProductTabJob.create({})
+    .repeatEvery("5 minute")
+    .unique({ name: SyncProductTabJob.jobName })
+    .save();
 }
