@@ -20,7 +20,18 @@ export interface AritoUser {
   permission: number;
   group: string;
   imageLink: string;
+  role: ROLE;
 }
+
+enum ROLE {
+  Admin = "ADMIN",
+  Editor = "EDITOR",
+}
+
+export const USER_ROLES = [
+  { value: ROLE.Admin, label: "Quản trị viên" },
+  { value: ROLE.Editor, label: "Biên tập viên" },
+];
 
 export class AritoUserRepository extends GraphRepository {
   fragment = this.parseFragment(`
@@ -43,6 +54,7 @@ export class AritoUserRepository extends GraphRepository {
     permission: Int
     group: String
     imageLink: String
+    role: String
   `);
 
   async loginAritoUser(username, password, headers): Promise<{ token: string; user: AritoUser }> {

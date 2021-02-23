@@ -23,6 +23,7 @@ export function AdminLayout({
     if (checkUser() === null) {
       router.replace('/admin/login')
     }
+    console.log('asdasdasdsad')
   }, []);
 
   console.log('rerender')

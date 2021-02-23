@@ -34,6 +34,7 @@ export function PostDetailsProvider({ postId, children }: any) {
         content: '',
         featureImage: '',
         slug: '',
+        priority: null,
         tags: [],
         tagIds: [],
         publishedAt: new Date()
@@ -49,8 +50,8 @@ export function PostDetailsProvider({ postId, children }: any) {
   }
 
   const savePost = () => {
-    let { title, content, slug, publishedAt, excerpt, tagsIds, featureImage } = post
-    return PostService.createOrUpdate({ id: post.id, data: { title, content, slug, publishedAt, excerpt, tagsIds, featureImage } })
+    let { title, content, slug, publishedAt, excerpt, tagsIds, featureImage, priority } = post
+    return PostService.createOrUpdate({ id: post.id, data: { title, content, slug, publishedAt, excerpt, tagsIds, featureImage, priority } })
   }
 
   return (

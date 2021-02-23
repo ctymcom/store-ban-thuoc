@@ -25,7 +25,7 @@ export function HomeProvider(props) {
     FeedbackService.query({
       query: [
         FeedbackService.getAllQuery(),
-        PostService.getAllQuery({ query: { limit: 4, order: { priority: 1, createdAt: -1 } }}),
+        PostService.getAllQuery({ query: { limit: 4, order: { priority: -1 } }}),
         ...containers.map(x => ProductService.getAllQuery({query: { limit: 5, filter: { containers: x } }}))
       ]
     }).then(res => {

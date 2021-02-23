@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { AdminLayout } from "../../layouts/admin-layout";
 
 export default function Admin() {
   const router = useRouter();
@@ -10,3 +11,5 @@ export default function Admin() {
 
   return null;
 }
+
+Admin.Layout = AdminLayout

@@ -33,6 +33,7 @@ export function AuthProvider({ children }: any) {
         return null;
       }
       setUser(decodedToken.user)
+      console.log(decodedToken.user)
       return true
     } else {
       return null
