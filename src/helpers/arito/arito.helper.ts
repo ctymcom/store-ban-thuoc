@@ -138,6 +138,7 @@ export class AritoHelper {
           saleExpiredDate: d["ngay_hl"] ? moment(d["ngay_hl"]).toDate() : null,
           tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
           priceGroups: get(priceGroupData, d["ma_vt"], []),
+          outOfDate: d["ngay_can_date"] ? moment(d["ngay_can_date"]).toDate() : null,
           __data: d,
         })) as IProduct[],
         paging: {

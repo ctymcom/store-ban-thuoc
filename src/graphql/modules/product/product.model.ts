@@ -41,6 +41,7 @@ export type IProduct = BaseDocument & {
   priceGroups?: ProductGroupPrice[]; // Bảng giá theo nhóm khách
   tags?: string[]; // Danh sách tag
   tabs?: ProductTabContent[]; // Danh sách tab và nội dung
+  outOfDate?: Date; // Ngày hết hạn sử dụng
 };
 
 const productSchema = new Schema(
@@ -77,6 +78,7 @@ const productSchema = new Schema(
     priceGroups: { type: [ProductGroupPriceSchema], default: [] },
     tags: { type: [String], default: [] },
     tabs: { type: [ProductTabContentSchema], default: [] },
+    outOfDate: { type: Date },
   },
   { timestamps: true }
 );
