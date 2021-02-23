@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { HiLogout } from "react-icons/hi";
+import { useAuth } from "../../lib/providers/auth-provider";
 
 const SIDEBAR_MENUS = [
   {
@@ -20,6 +21,7 @@ const SIDEBAR_MENUS = [
 
 export default function Sidebar() {
   const router = useRouter()
+  const { logout } = useAuth()
   return (
     <>
       <div className="flex flex-col h-full">
@@ -52,7 +54,7 @@ export default function Sidebar() {
             </div>
           ))}
         </div>
-        <button className="btn-default is-danger mt-auto px-8 justify-start h-16 mb-4">
+        <button className="btn-default is-danger mt-auto px-8 justify-start h-16 mb-4" onClick={logout}>
           <span>Đăng xuất</span>
           <i className="text-lg"><HiLogout/></i>
         </button>

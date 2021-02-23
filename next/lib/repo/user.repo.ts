@@ -1,14 +1,53 @@
-import { GraphRepository } from "../graphql/graph.repo";
-// import { any } from "../../../src/graphql/modules/user/user.model";
-
 import { QueryOptions } from "@apollo/client/core";
 import gql from "graphql-tag";
-import { CrudRepository } from "./crud.repo";
+import { BaseModel, CrudRepository } from "./crud.repo";
 
-export class UserRepository extends CrudRepository<any> {
-  shortFragment: string = "id";
-  fullFragment: string = "id";
-  apiName: string = "User";
+export interface User extends BaseModel {
+  uid: string;
+  email: string;
+  name: string;
+  phone: string;
+  address: string;
+  avatar: string;
+  province: string;
+  district: string;
+  ward: string;
+  provinceId: string;
+  districtId: string;
+  wardId: string;
+  role: string;
+}
+
+export class UserRepository extends CrudRepository<User> {
+  apiName = "User";
+  shortFragment = this.parseFragment(`
+    id: String
+    email: String
+    name: String
+    phone: String
+    avatar: String
+    role: String
+    createdAt: DateTime
+    updatedAt: DateTime
+  `);
+  fullFragment = this.parseFragment(`
+    id: String
+    uid: String
+    email: String
+    name: String
+    phone: String
+    address: String
+    avatar: String
+    province: String
+    district: String
+    ward: String
+    provinceId: String
+    districtId: String
+    wardId: String
+    role: String
+    createdAt: DateTime
+    updatedAt: DateTime
+  `);
 
   async login(idToken: string) {
     const api = "login";
@@ -38,3 +77,5 @@ export class UserRepository extends CrudRepository<any> {
     return await this.apollo.query(option);
   }
 }
+
+export const UserService = new UserRepository();

@@ -1,6 +1,6 @@
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 import { ApolloQueryResult, FetchResult, MutationOptions, QueryOptions } from "@apollo/client/core";
-import { initializeApollo } from "./apollo-client";
+import { initializeApollo } from "../graphql/apollo-client";
 import gql from "graphql-tag";
 
 export class GraphRepository {
@@ -127,4 +127,17 @@ export class GraphRepository {
       throw Error(result.errors[0].message);
     }
   }
+
+  parseFragment(fragment) {
+    const fragments = [];
+    const lines = fragment.trim().split("\n");
+    for (const line of lines) {
+      const parts = line.split(":");
+      const key = parts[0];
+      fragments.push(key);
+    }
+    return fragments.join(" ").trim();
+  }
 }
+
+export const GraphService = new GraphRepository();

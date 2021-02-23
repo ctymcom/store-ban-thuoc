@@ -1,5 +1,5 @@
 import { MutationOptions, QueryOptions } from "@apollo/client/core";
-import { GraphRepository } from "../graphql/graph.repo";
+import { GraphRepository } from "./graph.repo";
 import { queryParser } from "../helpers/query-parser.helper";
 
 export interface Pagination {
@@ -226,16 +226,5 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
       this.handleError(result);
       return result.data;
     } else return;
-  }
-
-  parseFragment(fragment) {
-    const fragments = [];
-    const lines = fragment.trim().split("\n");
-    for (const line of lines) {
-      const parts = line.split(":");
-      const key = parts[0];
-      fragments.push(key);
-    }
-    return fragments.join(" ").trim();
   }
 }
