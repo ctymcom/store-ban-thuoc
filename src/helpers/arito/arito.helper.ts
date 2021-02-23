@@ -129,6 +129,7 @@ export class AritoHelper {
           saleExpiredDate: d["ngay_hl"] ? moment(d["ngay_hl"]).toDate() : null,
           tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
           priceGroups: get(priceGroupData, d["ma_vt"], []),
+          __data: d,
         })) as IProduct[],
         paging: {
           limit: pageInfo["pagecount"] || 0,
@@ -223,7 +224,7 @@ export class AritoHelper {
           code: d["id"],
           name: d["name"],
           name2: d["name2"],
-          cfield: d["cfield"],
+          productField: d["cfield"],
         })) as IProductTab[],
         paging: {
           limit: pageInfo["pagecount"] || 0,
