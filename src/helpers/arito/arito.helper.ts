@@ -326,4 +326,19 @@ export class AritoHelper {
       };
     });
   }
+  static register({ nickname, email, phone }) {
+    return Axios.post(`${this.host}/Authorize/Register`, {
+      token: this.imageToken,
+      memvars: [
+        ["nickname", "C", nickname],
+        ["e_mail", "C", email],
+        ["phone", "C", phone],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return res.data.msg;
+    });
+  }
 }
+
+AritoHelper.setImageToken();
