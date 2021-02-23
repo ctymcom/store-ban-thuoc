@@ -5,6 +5,7 @@ import moment from "moment-timezone";
 import { compact, get, keyBy } from "lodash";
 import { IProduct } from "../../graphql/modules/product/product.model";
 import { AritoUser } from "./types/aritoUser.type";
+import { IProductTab } from "../../graphql/modules/productTab/productTab.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -12,8 +13,14 @@ export class AritoHelper {
   static get imageToken() {
     return CacheHelper.get("arito-image-token");
   }
+  static handleError(res) {
+    if (get(res, "data.code") && get(res, "data.code") != 200) {
+      throw Error(get(res, "data.msg"));
+    }
+  }
   static async setImageToken() {
     return Axios.post(`${this.host}/GetToken`, { ClientID: "KHOTHUOCSI" }).then((res) => {
+      this.handleError(res);
       CacheHelper.set("arito-image-token", res.data.value);
     });
   }
@@ -30,6 +37,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
@@ -56,6 +64,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
@@ -80,6 +89,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       const imageData = keyBy(get(res.data, "data.images", []), "ma_vt");
       const priceGroupData = keyBy(
@@ -128,6 +138,7 @@ export class AritoHelper {
           saleExpiredDate: d["ngay_hl"] ? moment(d["ngay_hl"]).toDate() : null,
           tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
           priceGroups: get(priceGroupData, d["ma_vt"], []),
+          __data: d,
         })) as IProduct[],
         paging: {
           limit: pageInfo["pagecount"] || 0,
@@ -167,6 +178,7 @@ export class AritoHelper {
         ["osVersion", "C", params.deviceOsVersion],
       ],
     }).then((res) => {
+      this.handleError(res);
       const userData = get(res.data, "data.userinfo.0", {});
       return {
         token: get(res.data, "value"),
@@ -197,6 +209,7 @@ export class AritoHelper {
     return Axios.post(`${this.host}/Item/GetItemContainer`, {
       token: this.imageToken,
     }).then((res) => {
+      this.handleError(res);
       return get(res.data, "data.master", []).map((master: any) => ({
         id: master["id"],
         name: master["name"],
@@ -206,6 +219,111 @@ export class AritoHelper {
           .filter((detail: any) => detail["id"] == master["id"])
           .map((d: any) => d["ma_vt"]),
       })) as { id: string; name: string; name2: string; note: string; products: string[] }[];
+    });
+  }
+  static getTabInfo(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetTabInfo`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          code: d["id"],
+          name: d["name"],
+          name2: d["name2"],
+          productField: d["cfield"],
+        })) as IProductTab[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static getAllProvince(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/List/GetProvince`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          id: d["ma_tinh"],
+          name: d["ten_tinh"],
+        })) as { id: string; name: string }[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static getAllDistrict(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/List/GetDistrict`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          id: d["ma_quan"],
+          name: d["ten_quan"],
+          provinceId: d["ma_tinh"],
+        })) as { id: string; name: string; provinceId: string }[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static getAllWard(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/List/GetWard`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          id: d["ma_xp"],
+          name: d["ten_xp"],
+          provinceId: d["ma_tinh"],
+          districtId: d["ma_quan"],
+        })) as { id: string; name: string; provinceId: string; districtId: string }[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
     });
   }
 }
