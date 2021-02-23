@@ -26,6 +26,9 @@ export class Context {
     public messengerSignPayload?: MessengerTokenDecoded
   ) {}
 
+  get isEditor() {
+    return get(this.tokenData, "role") == ROLES.EDITOR;
+  }
   isMember() {
     return get(this.tokenData, "role") == ROLES.MEMBER;
   }
