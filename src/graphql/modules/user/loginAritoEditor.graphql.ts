@@ -14,9 +14,9 @@ export default {
         password: String!
         deviceId: String
         deviceToken: String
-      ): LoginAritoEditorData
+      ): LoginAritoData
     }
-    type LoginAritoEditorData {
+    type LoginAritoData {
       token: String
       user: AritoUser
     }
