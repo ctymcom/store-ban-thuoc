@@ -1,8 +1,5 @@
 import { BaseModel, CrudRepository } from "./crud.repo";
 export interface Feedback extends BaseModel {
-  id?: string;
-  createdAt: Date;
-  updatedAt: Date;
   name?: string; // Tên người phản hồi
   title?: string; // Tiêu đề phản hồi
   avatar?: string; // Hình đại diện
