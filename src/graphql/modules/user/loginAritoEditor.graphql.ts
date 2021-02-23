@@ -4,6 +4,7 @@ import { Context } from "../../context";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { TokenHelper } from "../../../helpers/token.helper";
 import { AritoUser } from "../../../helpers/arito/types/aritoUser.type";
+import { ROLES } from "../../../constants/role.const";
 
 export default {
   schema: gql`
@@ -40,6 +41,7 @@ export default {
       group: String
 
       imageLink: String
+      role: String
     }
   `,
   resolver: {
@@ -63,7 +65,7 @@ export default {
         const editorToken = TokenHelper.getAritorEditorToken(user, token);
         return {
           token: editorToken,
-          user,
+          user: { ...user, role: ROLES.EDITOR },
         };
       },
     },

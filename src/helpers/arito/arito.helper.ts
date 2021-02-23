@@ -13,8 +13,14 @@ export class AritoHelper {
   static get imageToken() {
     return CacheHelper.get("arito-image-token");
   }
+  static handleError(res) {
+    if (get(res, "data.code") && get(res, "data.code") != 200) {
+      throw Error(get(res, "data.msg"));
+    }
+  }
   static async setImageToken() {
     return Axios.post(`${this.host}/GetToken`, { ClientID: "KHOTHUOCSI" }).then((res) => {
+      this.handleError(res);
       CacheHelper.set("arito-image-token", res.data.value);
     });
   }
@@ -31,6 +37,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
@@ -57,6 +64,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
@@ -81,6 +89,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       const imageData = keyBy(get(res.data, "data.images", []), "ma_vt");
       const priceGroupData = keyBy(
@@ -169,6 +178,7 @@ export class AritoHelper {
         ["osVersion", "C", params.deviceOsVersion],
       ],
     }).then((res) => {
+      this.handleError(res);
       const userData = get(res.data, "data.userinfo.0", {});
       return {
         token: get(res.data, "value"),
@@ -199,6 +209,7 @@ export class AritoHelper {
     return Axios.post(`${this.host}/Item/GetItemContainer`, {
       token: this.imageToken,
     }).then((res) => {
+      this.handleError(res);
       return get(res.data, "data.master", []).map((master: any) => ({
         id: master["id"],
         name: master["name"],
@@ -218,6 +229,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
@@ -244,6 +256,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
@@ -268,6 +281,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
@@ -293,6 +307,7 @@ export class AritoHelper {
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
+      this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
