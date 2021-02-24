@@ -1,7 +1,10 @@
-import { set } from "lodash";
+import { compact, set } from "lodash";
+
 import { ROLES } from "../../../constants/role.const";
-import { AuthHelper } from "../../../helpers";
+import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { Context } from "../../context";
+import { AddressModel } from "../address/address.model";
+import { UserAddressModel } from "./userAddress.model";
 import { userAddressService } from "./userAddress.service";
 
 const Query = {
@@ -21,7 +24,22 @@ const Mutation = {
   createUserAddress: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     const { data } = args;
-    return await userAddressService.create(data);
+    const userId = context.user.id.toString();
+    const addressData = await AddressModel.findOne({ wardId: data.wardId });
+    if (!addressData) throw Error("Chưa chọn phường / xã.");
+    data.fullAddress = compact([
+      data.address,
+      addressData.ward,
+      addressData.district,
+      addressData.province,
+    ]).join(", ");
+    const address = new UserAddressModel({
+      userId: userId,
+      ...data,
+    });
+    await AritoHelper.createUserAddress(address);
+    await userAddressService.syncUserAddress(userId);
+    return await UserAddressModel.findOne({ userId }).sort({ _id: -1 });
   },
   updateUserAddress: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);

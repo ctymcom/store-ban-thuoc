@@ -1,10 +1,11 @@
 import { gql } from "apollo-server-express";
 import { get } from "lodash";
+
 import { ROLES } from "../../../constants/role.const";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { TokenHelper } from "../../../helpers/token.helper";
 import { Context } from "../../context";
-import { UserAddressModel } from "../userAddress/userAddress.model";
+import { userAddressService } from "../userAddress/userAddress.service";
 
 export default {
   schema: gql`
@@ -41,16 +42,8 @@ export default {
         } else {
           userData = { ...user, role: ROLES.CUSTOMER };
         }
-        await AritoHelper.getUserAddress(userData.id.toString()).then(async (res) => {
-          const addressBulk = UserAddressModel.collection.initializeUnorderedBulkOp();
-          res.data.forEach((d) => {
-            addressBulk
-              .find({ addressId: d.addressId, userId: userData.id.toString() })
-              .upsert()
-              .updateOne({ $set: d });
-          });
-          if (addressBulk.length > 0) return await addressBulk.execute();
-        });
+        await userAddressService.syncUserAddress(userData.id.toString());
+
         return {
           token: TokenHelper.getAritorUserToken(userData, token, userData.role),
           user: userData,
