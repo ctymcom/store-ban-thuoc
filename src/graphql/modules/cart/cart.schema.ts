@@ -23,7 +23,7 @@ const schema = gql`
   }
 
   type Cart {
-    id: String    
+    id: String
     createdAt: DateTime
     updatedAt: DateTime
 
@@ -45,8 +45,6 @@ const schema = gql`
     paymentMethod: String
     "Sản phẩm giỏ hàng"
     itemIds: String
-    "Thông tin giao hàng"
-    deliveryInfo: CartDeliveryInfo; // 
     "Mã khuyến mãi"
     discountId: String
     "Tên khuyến mãi"
@@ -55,24 +53,11 @@ const schema = gql`
     discountRate: Float
     "Sử dụng điểm đổi thưởng"
     usePoint: Boolean
-    "Tên người mua"
-    buyerName: String
-    "Điện thoại người mua"
-    buyerPhone: String
-    "Địa chỉ giao"
-    address: String
-    "Tỉnh / thành giao"
-    provinceId: String
-    "Quận / huyện giao"
-    districtId: String
-    "Phường / xã giao"
-    wardId: String
-    "Tên tỉnh /thành"
-    province: String
-    "Tên quận /huyện"
-    district: String
-    "Tên phường / xã"
-    ward: String
+    "Mã địa chỉ"
+    addressId: ID
+
+    address: UserAddress
+    items: [CartItem]
   }
 
   type CartPageData {

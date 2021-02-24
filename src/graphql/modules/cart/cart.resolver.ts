@@ -1,6 +1,8 @@
 import { ROLES } from "../../../constants/role.const";
-import { AuthHelper } from "../../../helpers";
+import { GraphQLHelper } from "../../../helpers/graphql.helper";
 import { Context } from "../../context";
+import { CartItemLoader } from "../cartItem/cartItem.model";
+import { UserAddressLoader } from "../userAddress/userAddress.model";
 import { cartService } from "./cart.service";
 
 const Query = {
@@ -34,7 +36,8 @@ const Mutation = {
 };
 
 const Cart = {
-  
+  address: GraphQLHelper.loadById(UserAddressLoader, "addressId"),
+  items: GraphQLHelper.loadManyById(CartItemLoader, "itemIds"),
 };
 
 export default {

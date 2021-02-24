@@ -17,15 +17,7 @@ export type ICart = BaseDocument & {
   discountName?: string; // Tên khuyến mãi
   discountRate?: number; // Tỷ lệ chiết khấu %
   usePoint?: boolean; // Sử dụng điểm đổi thưởng
-  buyerName?: string; // Tên người mua
-  buyerPhone?: string; // Điện thoại người mua
-  address?: string; // Địa chỉ giao
-  provinceId?: string; // Tỉnh / thành giao
-  districtId?: string; // Quận / huyện giao
-  wardId?: string; // Phường / xã giao
-  province?: string; // Tên tỉnh /thành
-  district?: string; // Tên quận /huyện
-  ward?: string; // Tên phường / xã
+  addressId?: string; // Mã địa chỉ
 };
 
 const cartSchema = new Schema(
@@ -43,15 +35,7 @@ const cartSchema = new Schema(
     discountName: { type: String },
     discountRate: { type: Number, default: 0 },
     usePoint: { type: Boolean, default: false },
-    buyerName: { type: String },
-    buyerPhone: { type: String },
-    address: { type: String },
-    provinceId: { type: String },
-    districtId: { type: String },
-    wardId: { type: String },
-    province: { type: String },
-    district: { type: String },
-    ward: { type: String },
+    addressId: { type: Schema.Types.ObjectId, ref: "UserAddress" },
   },
   { timestamps: true }
 );
