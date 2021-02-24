@@ -11,7 +11,7 @@ type PropsType = {
   };
 const Dropdown = (props:PropsType) => {
     return (
-        <select className="btn-outline w-full" name={props.name} defaultValue={props.defaultValue} id={props.id} onChange={(e)=>props.onChanged(e.target.value)}>
+        <select className="btn-outline w-full h-12 text-20" name={props.name} defaultValue={props.defaultValue} id={props.id} onChange={(e)=>props.onChanged(e.target.value)}>
             {
                 props.listOptions.map((item,index)=>{
                     return <option key={index} value={item}>{item<10?"0"+item:item}</option>

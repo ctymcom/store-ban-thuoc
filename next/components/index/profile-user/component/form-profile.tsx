@@ -38,36 +38,52 @@ export function FormProfile({user}: PropsType) {
                 break;
         }
     }
-    return <div className="w-3/4 mx-auto">
-        <h3 className="uppercase border-gray-200 border-b-2 pb-2">Thông tin tài khoản</h3>
-        <div className="grid grid-cols-3 pt-2 ">
-            <div className="col-span-2 grid grid-cols-4 gap-2 pr-16 border-r border-gray-200 items-center">
-                <p className="col-span-1">Họ và tên</p>
-                <input className="input-profile" type="text" value={userP.name} onChange={(e)=>{handleChange("name",e.target.value)}}/>
-                <p className="col-span-1">Số điện thoại</p>
-                <input className="input-profile" type="text" value={userP.phoneNumber} onChange={(e)=>{handleChange("phoneNumber",e.target.value)}}/>
-                <p className="col-span-1">Email</p>
-                <input className="input-profile" type="text" value={userP.email} onChange={(e)=>{handleChange("email",e.target.value)}}/>
-                <div className="col-span-4 grid grid-cols-4">
-                    <Gender gender={userP.gender} handleChange={handleChange}/>
-                </div>
-                <p className="col-span-1">Ngày sinh</p>
-                <div className="col-span-3 flex space-x-2">
-                    <DateTime dateOfBirth={userP.dateOfBirth} handleChange={handleChange}/>
+    return <div className="w-full lg:w-5/6 ml-0 lg:ml-40 text-20 text-gray-800">
+        <h3 className="uppercase border-gray-200 border-b-2 pb-2 mb-2 text-24">Thông tin tài khoản</h3>
+        <div className="xl:flex justify-between w-full">
+            <div className="w-full xl:w-3/5 items-center">
+                <div className="pr-0 xl:pr-16 xl:border-r border-gray-400">
+                    <div className="sm:flex justify-between items-center py-2">
+                        <p className="w-full sm:w-1/4">Họ và tên</p>
+                        <input className="form-input w-full sm:w-3/4 text-20" value={userP.name} onChange={(e)=>{handleChange("name",e.target.value)}}/>
                     </div>
-                <p className="col-span-1">Mật khẩu</p>
-                <button className="col-span-3 btn-outline w-10/12 border-primary text-primary">Đổi mật khẩu</button>
-            </div>
-            <div className="col-span-1 text-center">
-                <div className="p-4 mx-auto flex items-center justify-around">
-                    <img src="public/assets/images/avatar.png" alt=""/>
+                    <div className="sm:flex justify-between items-center py-2">
+                        <p className="w-full sm:w-1/4">Số điện thoại</p>
+                        <input className="form-input w-full sm:w-3/4 text-20" value={userP.phoneNumber} onChange={(e)=>{handleChange("phoneNumber",e.target.value)}}/>  
+                    </div>
+                    <div className="sm:flex justify-between items-center py-2">
+                        <p className="w-full sm:w-1/4">Email</p>
+                        <input className="form-input w-full sm:w-3/4 text-20" value={userP.email} onChange={(e)=>{handleChange("email",e.target.value)}}/>
+                    </div>
+                    <div className="sm:flex justify-between items-center py-2 sm:h-12">
+                        <p className="w-full sm:w-1/4">Giới tính</p>
+                        <div className="w-full sm:w-3/4 h-12 flex justify-between">
+                            <Gender gender={userP.gender} handleChange={handleChange}/>
+                        </div>
+                    </div>
+                    <div className="sm:flex justify-between items-center py-2">
+                        <p className="w-full sm:w-1/4">Ngày sinh</p>
+                        <div className="w-full sm:w-3/4 flex space-x-2">
+                            <DateTime dateOfBirth={userP.dateOfBirth} handleChange={handleChange}/>
+                        </div>
+                    </div>
+                    <div className="sm:flex justify-between items-center py-2">
+                    <p className="w-full sm:w-1/4">Mật khẩu</p>
+                    <button className="w-full sm:w-3/4 btn-outline h-12 border-primary text-primary text-20">Đổi mật khẩu</button>
                 </div>
-                <button className="btn-outline border-primary-light border-2 text-sm md:text-base px-6 md:px-16 font-normal text-primary">Đổi ảnh</button>
-                <p className="text-12 text-gray-400">Dung lượng file tối đa 1MB</p>
-                <p className="text-12 text-gray-400">Định dạng: .JPEG, .PNG</p>
+                </div>
+                <div className="flex justify-between items-center xl:pr-16 pt-16">
+                        <p className="hidden sm:inline-block w-1/4"></p>
+                        <button className="btn-primary w-full sm:w-3/4 font-normal h-12 text-20">Cập Nhật</button>
+                </div>
             </div>
-            <div className="col-span-2 grid grid-cols-1 md:grid-cols-4 mt-6 md:mt-20 pr-0 md:pr-16">
-                <button className="btn-primary font-normal col-span-4 w-6/12 md:w-8/12 m-auto md:ml-28 text-sm md:text-base">Cập Nhật</button>
+            <div className="text-center w-2/5">
+                <div className="p-4 mx-auto flex items-center justify-around">
+                    <img src="public/assets/images/avatar.svg" alt="avatar"/>
+                </div>
+                <button className="btn-outline text-20 border-primary border font-normal text-primary w-2/3 mx-auto h-12 my-2">Đổi ảnh</button>
+                <p className="text-16 text-gray-400">Dung lượng file tối đa 1MB</p>
+                <p className="text-16 text-gray-400">Định dạng: .JPEG, .PNG</p>
             </div>
         </div>
     </div>
