@@ -1,11 +1,13 @@
-import { configs } from "../../configs";
 import Axios from "axios";
-import { CacheHelper } from "../cache.helper";
-import moment from "moment-timezone";
 import { compact, get, keyBy } from "lodash";
+import moment from "moment-timezone";
+
+import { configs } from "../../configs";
 import { IProduct } from "../../graphql/modules/product/product.model";
-import { AritoUser } from "./types/aritoUser.type";
 import { IProductTab } from "../../graphql/modules/productTab/productTab.model";
+import { IProductTag } from "../../graphql/modules/productTag/productTag.model";
+import { CacheHelper } from "../cache.helper";
+import { AritoUser } from "./types/aritoUser.type";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -138,6 +140,7 @@ export class AritoHelper {
           saleExpiredDate: d["ngay_hl"] ? moment(d["ngay_hl"]).toDate() : null,
           tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
           priceGroups: get(priceGroupData, d["ma_vt"], []),
+          outOfDate: d["ngay_can_date"] ? moment(d["ngay_can_date"]).toDate() : null,
           __data: d,
         })) as IProduct[],
         paging: {
@@ -208,6 +211,7 @@ export class AritoHelper {
   static getItemContainer() {
     return Axios.post(`${this.host}/Item/GetItemContainer`, {
       token: this.imageToken,
+      memvars: [["datetime2", "DT", ""]],
     }).then((res) => {
       this.handleError(res);
       return get(res.data, "data.master", []).map((master: any) => ({
@@ -337,6 +341,35 @@ export class AritoHelper {
     }).then((res) => {
       this.handleError(res);
       return res.data.msg;
+    });
+  }
+  static getAllTag(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetTagList`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          code: d["tag_code"],
+          name: d["tag_name"],
+          name2: d["tag_name2"],
+          color: d["tag_color"],
+          icon: d["icon"],
+          position: d["stt"],
+        })) as IProductTag[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
     });
   }
 }
