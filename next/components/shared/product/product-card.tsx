@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { HiMinusCircle, HiPlusCircle } from 'react-icons/hi';
 import { NumberPipe } from './../../../lib/pipes/number';
 import { ProductQuantity } from './product-quantity';
 import { Product } from './../../../lib/repo/product.repo';
@@ -16,6 +15,9 @@ export function ProductCard(props: PropsType) {
     if (value < 0) setQuantity(0)
     else setQuantity(value)
   }
+
+  const categoryText = `${props.product.categories.filter(x => !x.parents.length)
+      .map(x => x.name).join(', ')} > ${props.product.categories.filter(x => x.parents.length).map(x => x.name).join(', ')}`
 
   return (
     <>
@@ -38,7 +40,7 @@ export function ProductCard(props: PropsType) {
                 </div>
               }
             </div>
-            <div className="text-sm text-gray-500 pt-3 group-hover:text-primary">{props.product.categories.map(x => x.name).join(', ')}</div>
+            <div className="text-sm text-gray-500 pt-3 group-hover:text-primary">{categoryText}</div>
             <div className="text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug h-20 text-ellipsis-3 group-hover:text-primary-dark" title={props.product.name}>{props.product.name}</div>
           </a>
         </Link>
@@ -47,8 +49,8 @@ export function ProductCard(props: PropsType) {
             props.product.basePrice ? (
               <>
               <div className="flex flex-col sm:flex-row">
-                <span className="font-semibold text-lg text-primary">{NumberPipe(props.product.basePrice, true)}</span>
-                <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">{NumberPipe(props.product.salePrice, true)}</span>
+                <span className="font-semibold text-lg text-primary">{NumberPipe(props.product.salePrice, true)}</span>
+                <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">{NumberPipe(props.product.basePrice, true)}</span>
               </div>
               <div className="flex flex-col sm:flex-row justify-between mt-2">
                 <div>

@@ -1,14 +1,12 @@
-
-import { Category } from '../../../../lib/repo/category.repo';
-import { FilterCategory } from '../products-page';
+import { userProductsContext } from '../providers/products-provider';
+import { Accordion } from './../../../shared/utilities/accordion/accordion';
 import { ProductsFilterCheckbox } from './products-filter-checkbox';
-interface PropsType {
-  [key: string]: any
+interface PropsType extends ReactProps {
   title: string
-  categories: FilterCategory[]
-  setCategories: Function
 }
 export function ProductsCategoriesFilter(props: PropsType) {
+
+  const { categories, setCategories } = userProductsContext()
 
   const toggleCategory = (cat, index) => {
     if (cat.checked === undefined) {
@@ -21,7 +19,7 @@ export function ProductsCategoriesFilter(props: PropsType) {
         sub.checked = cat.checked
       })
     }
-    props.setCategories([...props.categories])
+    setCategories([...categories])
   }
 
   const toggleSubcategory = (cat, index, sub, subIndex) => {
@@ -31,31 +29,43 @@ export function ProductsCategoriesFilter(props: PropsType) {
     if (count == cat.subcategories.length) cat.checked = true
     else if (count == 0) cat.checked = false
     else cat.checked = undefined
-    props.setCategories([...props.categories])
+    setCategories([...categories])
+  }
+
+  const toggleOpen = (cat) => {
+    cat.open = !cat.open
+    setCategories([...categories])
   }
 
   return <>
       <div className="text-primary-dark font-semibold text-lg">{props.title}</div>
       <div className="w-12 h-1 my-3 bg-gray-200"></div>
       <div className="flex flex-col">
-          {
-            props.categories.map((cat, index) => <>
-              <div className="" key={cat.id}>
-                <ProductsFilterCheckbox id={cat.id} text={cat.name} checked={cat.checked} onClick={() => {
-                  toggleCategory(cat, index)
-                }}/>                
+        {
+          categories.map((cat, index) => 
+            <div key={cat.id}>
+              <div>
+                <ProductsFilterCheckbox id={cat.id} text={cat.name} checked={cat.checked} open={cat.open}
+                  onClick={() => toggleCategory(cat, index)}
+                  toggleOpen={() => toggleOpen(cat)}
+                />                
               </div>
-                {
-                  cat.subcategories?.map((sub, subIndex) => (
-                    <div className="ml-6" key={sub.id}>
-                      <ProductsFilterCheckbox id={sub.id} text={sub.name} checked={sub.checked} onClick={() => {
-                        toggleSubcategory(cat, index, sub, subIndex)
-                      }}/>
-                    </div>
-                  ))
-                }
-            </>)
-          }
+              {
+                !!cat.subcategories && <Accordion open={cat.open}>
+                  {                      
+                    cat.subcategories?.map((sub, subIndex) => (
+                      <div className="ml-6" key={sub.id}>
+                        <ProductsFilterCheckbox id={sub.id} text={sub.name} checked={sub.checked} onClick={() => {
+                          toggleSubcategory(cat, index, sub, subIndex)
+                        }}/>
+                      </div>
+                    ))
+                  }
+                </Accordion>
+              }
+            </div>
+          )
+        }
       </div>
   </>
 }
