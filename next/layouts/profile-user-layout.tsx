@@ -21,7 +21,7 @@ export function ProfileUserLayout(props: PropsType) {
     
     return (
         <>
-            <div className="main-container h-auto pl-6 md:pl-8 lg:pl-4 pr-6 md:pr-8">
+            <div className="main-container h-auto pl-6 md:pl-8 lg:pl-0 pr-6 md:pr-8 lg:pr-0">
                 <div className="grid grid-rows-1">
                     <div className="breadbcrum">
                         <ul className="breadbcrum flex h-10 items-center mt-8 uppercase justify-center md:justify-center lg:justify-start">
@@ -34,8 +34,8 @@ export function ProfileUserLayout(props: PropsType) {
                             </li>
                         </ul>
                     </div>
-                    <div className="w-full flex flex-col lg:flex-row md:justify-between mt-3 md:mt-8 mb-0">
-                        <div className="account__user-info w-full lg:w-1/4">
+                    <div className="w-full flex flex-col lg:flex-row justify-between lg:space-x-20 mt-3 md:mt-8 mb-0">
+                        <div className="profile__user w-full lg:w-1/4">
                             <ProfileUser/>
                         </div>
                         {props.children}
