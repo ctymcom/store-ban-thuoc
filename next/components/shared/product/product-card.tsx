@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { NumberPipe } from './../../../lib/pipes/number';
 import { ProductQuantity } from './product-quantity';
 import { Product } from './../../../lib/repo/product.repo';
+import { useAuth } from './../../../lib/providers/auth-provider';
 
 interface PropsType extends ReactProps {
   product?: Product
@@ -10,6 +11,8 @@ interface PropsType extends ReactProps {
 };
 export function ProductCard(props: PropsType) {
   const [quantity, setQuantity] = useState(0);
+
+  const { saveCurrentPath } = useAuth()
 
   const handleSetQuantity = (value) => {
     if (value < 0) setQuantity(0)
@@ -35,8 +38,8 @@ export function ProductCard(props: PropsType) {
               {
                 props.product.saleRate && 
                 <div className="sale-tag flex-center absolute right-0 top-3 text-white font-semibold">
-                  <img src="/assets/svg/sale.svg"/>
-                  <span className="absolute text-sm">-{props.product.saleValue}%</span>
+                  <img src="/assets/img/sale.svg"/>
+                  <span className="absolute text-sm">-{props.product.saleRate}%</span>
                 </div>
               }
             </div>
@@ -62,7 +65,9 @@ export function ProductCard(props: PropsType) {
               </>
             ) : (
               <Link href="/login">
-                <a className="btn-default w-full h-full flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark">
+                <a className="btn-default w-full h-full flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark"
+                  onClick={saveCurrentPath}
+                >
                   Đăng nhập để xem giá
                 </a>
               </Link>

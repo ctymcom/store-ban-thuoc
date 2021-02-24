@@ -1,4 +1,4 @@
-import { userProductsContext } from '../providers/products-provider';
+import { useProductsContext } from '../providers/products-provider';
 import { Accordion } from './../../../shared/utilities/accordion/accordion';
 import { ProductsFilterCheckbox } from './products-filter-checkbox';
 interface PropsType extends ReactProps {
@@ -6,7 +6,7 @@ interface PropsType extends ReactProps {
 }
 export function ProductsCategoriesFilter(props: PropsType) {
 
-  const { categories, setCategories } = userProductsContext()
+  const { categories, setCategories } = useProductsContext()
 
   const toggleCategory = (cat, index) => {
     if (cat.checked === undefined) {

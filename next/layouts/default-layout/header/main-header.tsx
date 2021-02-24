@@ -53,7 +53,7 @@ export function MainHeader({ user, setUser, ...props}: PropsType) {
             </i>
           </button>
           <div className="hidden md:flex">
-            <HeaderUser user={user} setUser={setUser}/>
+            <HeaderUser/>
           </div>
           {/* <Link href="/profile/order-history">
             <a className=" px-3 cursor-pointer">Đăng nhập</a>

@@ -2,25 +2,14 @@ import { Menu, Transition } from '@headlessui/react';
 import Link from "next/link";
 import { HiChevronDown, HiOutlineBell } from "react-icons/hi";
 import { useRouter } from 'next/router';
+import { LOGIN_PATHNAME, useAuth } from './../../../lib/providers/auth-provider';
 
 interface PropsType extends ReactProps {
-  user: any
-  setUser: Function
 }
-export function HeaderUser({ user, setUser, ...props }: PropsType) { 
+export function HeaderUser({ ...props }: PropsType) { 
 
   const router = useRouter()
-
-  const handleSetUser = () => {
-    if (user) {
-      setUser(null)
-    } else {
-      setUser({
-        avatar: "https://i.pinimg.com/originals/71/f1/84/71f1843b56fa00a64c429a1980657dc5.jpg",
-        name: "Minh Đức Uy"
-      })
-    }
-  }
+  const { user, logout, saveCurrentPath } = useAuth()
 
   return <>
   {
@@ -30,9 +19,9 @@ export function HeaderUser({ user, setUser, ...props }: PropsType) {
           <i className="text-24">
             <HiOutlineBell />
           </i>
-          <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
+          {/* <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
             <span>76</span>                
-          </div>
+          </div> */}
         </a>
       </Link>
       <div className="relative">
@@ -42,11 +31,11 @@ export function HeaderUser({ user, setUser, ...props }: PropsType) {
               <Menu.Button className="relative flex items-center px-4 cursor-pointer hover:text-primary focus:outline-none">
                 <div className="flex-shrink-0 w-10">
                   <div className="image-wrapper round">
-                    <img src={user.avatar}/>
+                    <img src={user.imageLink} onError={(e)=>{(e.target as any).src="/assets/img/avatar.svg"}}/>
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <div className="pl-3 pr-2 font-semibold text-left leading-tight">{user.name}</div>
+                  <div className="pl-3 pr-2 font-semibold text-left leading-tight">{user.nickname}</div>
                   <i className="text-24">
                     <HiChevronDown/>
                   </i>
@@ -84,7 +73,7 @@ export function HeaderUser({ user, setUser, ...props }: PropsType) {
                   <Menu.Item>
                     {({ active }) => (
                       <a
-                        onClick={() => handleSetUser()}
+                        onClick={() => logout()}
                         className={`${
                           active
                             ? "bg-gray-100 text-primary"
@@ -101,10 +90,12 @@ export function HeaderUser({ user, setUser, ...props }: PropsType) {
           )}
         </Menu>
       </div>
-    </> :            
-    <button className="btn-default h-12" onClick={() => handleSetUser()}>
-      Đăng nhập
-    </button>
+    </> :
+    <Link href="/login">
+      <a className="btn-default h-12" onClick={saveCurrentPath}>
+        Đăng nhập
+      </a>
+    </Link>
   }
   </>
 }

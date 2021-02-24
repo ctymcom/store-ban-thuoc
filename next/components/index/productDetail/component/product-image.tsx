@@ -22,7 +22,7 @@ export function ProductImage(props) {
                 <div className="new-tag absolute ml-3 z-10 text-lg">Mới</div>
                 <img className="object-contain rounded-md m-auto block absolute w-full h-full top-0 left-0 "  src={image} alt="" key={props.index}/>
                 <div className="sale-tag flex-center absolute right-6 top-2 text-white font-semibold">
-                    <img className="w-16" src="/assets/svg/sale.svg"/>
+                    <img className="w-16" src="/assets/img/sale.svg"/>
                     <span className="absolute text-xl">-50%</span>
                 </div>
             </div>

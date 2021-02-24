@@ -4,12 +4,17 @@ import { createContext, useContext, useState } from 'react';
 import UAParser from 'ua-parser-js';
 import { ClearAuthToken, SetAuthToken } from '../graphql/auth.link';
 import { AritoUser, AritoUserService } from '../repo/arito-user.repo';
+import { GraphService } from '../repo/graph.repo';
 import { GetAuthToken } from './../graphql/auth.link';
+import { useRouter } from 'next/router';
+
+export const LOGIN_PATHNAME = 'login-pathname'
 
 const AuthContext = createContext<{
   user?: AritoUser 
+  saveCurrentPath?: () => void
   checkUser?: () => boolean
-  login?: (username: string, password: string) => Promise<AritoUser> 
+  login?: (username: string, password: string, mode: 'user' | 'editor') => Promise<AritoUser> 
   logout?: () => void
 }>({});
 
@@ -20,6 +25,11 @@ export function AuthProvider({ children }: any) {
   //   return firebase.auth().onAuthStateChanged(async (user) => {
   //   });
   // }, []);
+  
+  const router = useRouter()
+  const saveCurrentPath = () => {
+    sessionStorage.setItem(LOGIN_PATHNAME, router.pathname)
+  }
 
   const checkUser = (): boolean => {
     let token = GetAuthToken()
@@ -40,7 +50,7 @@ export function AuthProvider({ children }: any) {
     }
   }
 
-  const login = async (username: string, password: string) => {
+  const login = async (username: string, password: string, mode: 'user' | 'editor') => {
     let encryptedPassword = MD5(password).toString()
 
     const parser = new UAParser()
@@ -51,7 +61,8 @@ export function AuthProvider({ children }: any) {
       'x-d-name': result.browser.name,
       'x-d-os': result.os.name,
     }
-    const { token, user } = await AritoUserService.loginAritoUser(username, encryptedPassword, headers)
+    const { token, user } = await AritoUserService.loginArito(username, encryptedPassword, headers, mode)
+    await GraphService.clearStore()
     if (user.id) {
       SetAuthToken(token)
       setUser(user)
@@ -68,7 +79,7 @@ export function AuthProvider({ children }: any) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, checkUser }}>
+    <AuthContext.Provider value={{ user, login, logout, checkUser, saveCurrentPath }}>
       {children}
     </AuthContext.Provider>
   );

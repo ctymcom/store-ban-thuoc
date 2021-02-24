@@ -7,16 +7,16 @@ import { PaginationRound } from './../../shared/utilities/pagination/pagination-
 import { ProductsCategoriesFilter } from "./components/products-categories-filter";
 import { ProductsCategoriesLabels } from './components/products-categories-labels';
 import { ProductsFilterSort } from './components/products-filter-sort';
-import { userProductsContext } from "./providers/products-provider";
+import { useProductsContext } from "./providers/products-provider";
+import { ProductsTags } from './components/products-tags';
 
 export function ProductsPage() {
-    const { loadDone, products, pagination, setPagination } = userProductsContext()
+    const { loadDone, products, pagination, setPagination } = useProductsContext()
 
     useEffect(() => {
         if (!products) {
             scroll({ top: 0 })
         }
-        console.log(products)
     }, [products]);
 
     return <>
@@ -37,10 +37,7 @@ export function ProductsPage() {
                         </div> */}
                     </div>
                     <div className="flex-grow pl-3">
-                        {/* <ProductsTags 
-                            tags={productsFilter.tags} 
-                            setTags={tags => setProductsFilter({...productsFilter, tags})}
-                        /> */}
+                        <ProductsTags/>
                         <hr className="my-4 border"/>
                         <div className="flex justify-between">
                             <div className="flex-grow">

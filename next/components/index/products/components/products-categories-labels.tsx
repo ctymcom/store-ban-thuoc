@@ -2,14 +2,14 @@
 import { useEffect, useState } from 'react';
 import { HiOutlineX } from 'react-icons/hi';
 import { FilterCategory } from '../providers/products-provider';
-import { userProductsContext } from './../providers/products-provider';
+import { useProductsContext } from './../providers/products-provider';
 
 interface PropsType {
 }
 export function ProductsCategoriesLabels(props: PropsType) {
 
   const [filteredCategories, setFilteredCategories] = useState<FilterCategory[]>(null);
-  const { categories, setCategories } = userProductsContext()
+  const { categories, setCategories } = useProductsContext()
 
   useEffect(() => {
     let filteredList = []
