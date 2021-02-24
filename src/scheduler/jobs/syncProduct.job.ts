@@ -1,17 +1,20 @@
 import { Job } from "agenda";
-import moment from "moment-timezone";
-import { Agenda } from "../agenda";
 import chalk from "chalk";
+import { flatten, get, keyBy, uniq } from "lodash";
+import moment from "moment-timezone";
+
 import {
   CategoryModel,
   CategoryType,
   ICategory,
 } from "../../graphql/modules/category/category.model";
-import { AritoHelper } from "../../helpers/arito/arito.helper";
-import { flatten, get, keyBy, uniq } from "lodash";
 import { IngredientModel } from "../../graphql/modules/ingredient/ingredient.model";
 import { ProductModel } from "../../graphql/modules/product/product.model";
+import { ProductTagDetail } from "../../graphql/modules/product/types/productTagDetail.type";
 import { ProductTabModel } from "../../graphql/modules/productTab/productTab.model";
+import { ProductTagModel } from "../../graphql/modules/productTag/productTag.model";
+import { AritoHelper } from "../../helpers/arito/arito.helper";
+import { Agenda } from "../agenda";
 
 export class SyncProductJob {
   static jobName = "SyncProduct";
@@ -19,17 +22,21 @@ export class SyncProductJob {
     return Agenda.create(this.jobName, data);
   }
   static async execute(job: Job) {
-    console.log("Execute Job " + SyncProductJob.jobName, moment().format());
-    await AritoHelper.setImageToken();
-    console.log(chalk.cyan("==> Động bộ danh mục sản phẩm..."));
-    await syncCategory();
-    console.log(chalk.cyan("==> Động bộ hoạt chất..."));
-    await syncIngredient();
-    console.log(chalk.cyan("==> Động bộ sản phẩm..."));
-    await syncProduct();
-    console.log(chalk.cyan("==> Động bộ nhóm sản phẩm hiển thị..."));
-    await syncProductContainer();
-    console.log(chalk.green("==> Đồng bộ xong"));
+    try {
+      console.log("Execute Job " + SyncProductJob.jobName, moment().format());
+      await AritoHelper.setImageToken();
+      console.log(chalk.cyan("==> Động bộ danh mục sản phẩm..."));
+      await syncCategory();
+      console.log(chalk.cyan("==> Động bộ hoạt chất..."));
+      await syncIngredient();
+      console.log(chalk.cyan("==> Động bộ sản phẩm..."));
+      await syncProduct();
+      console.log(chalk.cyan("==> Động bộ nhóm sản phẩm hiển thị..."));
+      await syncProductContainer();
+      console.log(chalk.green("==> Đồng bộ xong"));
+    } catch (err) {
+      console.log(chalk.red("Động bộ lỗi", err.message));
+    }
   }
 }
 async function syncProductContainer() {
@@ -48,6 +55,34 @@ async function syncProductContainer() {
   }
   if (productBulk.length > 0) {
     await productBulk.execute();
+  }
+}
+async function syncProductTag() {
+  const tagUpdatedAt = await ProductTagModel.findOne()
+    .sort({ updatedAt: -1 })
+    .exec()
+    .then((res) => {
+      return res ? res.updatedAt : null;
+    });
+  let tagData = await AritoHelper.getAllTag(1, tagUpdatedAt);
+  const tagBulk = ProductTagModel.collection.initializeUnorderedBulkOp();
+  do {
+    console.log(chalk.yellow("====> Đồng bộ trang ", tagData.paging.page));
+    tagData.data.forEach((d) => {
+      tagBulk
+        .find({ code: d.code })
+        .upsert()
+        .updateOne({
+          $setOnInsert: { createdAt: new Date() },
+          $set: { ...d, updatedAt: new Date() },
+        });
+    });
+    if (tagData.paging.page == tagData.paging.pageCount) break;
+    tagData = await AritoHelper.getAllTag(tagData.paging.page + 1, tagUpdatedAt);
+  } while (tagData.paging.page <= tagData.paging.pageCount);
+  if (tagBulk.length > 0) {
+    console.log(chalk.yellow(`====> Đồng bộ ${tagBulk.length} tag...`));
+    await tagBulk.execute();
   }
 }
 async function syncProductTabs() {
@@ -78,7 +113,10 @@ async function syncProductTabs() {
 async function syncProduct() {
   console.log(chalk.yellow("====> Đồng bộ Product Tab"));
   await syncProductTabs();
+  console.log(chalk.yellow("====> Đồng bộ Product Tag"));
+  await syncProductTag();
   const productTabs = await ProductTabModel.find();
+  const productTags = await ProductTagModel.find().then((res) => keyBy(res, "code"));
   const productUpdatedAt = await ProductModel.findOne()
     .sort({ updatedAt: -1 })
     .exec()
@@ -105,6 +143,12 @@ async function syncProduct() {
           name2: t.name2,
           content: rawData[t.productField],
         }));
+      const tagDetails: ProductTagDetail[] = d.tags
+        .filter((t) => productTags[t])
+        .map((t) => ({
+          ...productTags[t].toJSON(),
+          outOfDate: productTags[t].code == "DATEOFF" ? d.outOfDate : null,
+        }));
 
       productBulk
         .find({ code: d.code })
@@ -114,6 +158,7 @@ async function syncProduct() {
           $set: {
             ...d,
             tabs,
+            tagDetails,
             updatedAt: new Date(),
             categoryIds: d.categoryIds.map((code: string) => get(categoryData, code)._id),
             ingredientIds: d.ingredientIds.map((code: string) => get(ingredientData, code)._id),
@@ -181,7 +226,7 @@ async function syncCategory() {
   }
 }
 async function syncIngredient() {
-  const ingredientUpdatedAt = await CategoryModel.findOne()
+  const ingredientUpdatedAt = await IngredientModel.findOne()
     .sort({ updatedAt: -1 })
     .exec()
     .then((res) => {
