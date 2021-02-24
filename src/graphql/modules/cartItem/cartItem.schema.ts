@@ -7,19 +7,31 @@ const schema = gql`
     # Add Query
   }
 
+  input UpdateCartItemInput {
+    productId: ID!
+    qty: Int!
+  }
+
   type CartItem {
     id: String
     createdAt: DateTime
     updatedAt: DateTime
 
+    "Mã giỏ hàng"
+    cartId: ID
+    "Mã người dùng"
+    userId: String
     "Mã sản phẩm"
     productId: ID
+    productCode: String
     "Số lượng"
     qty: Int
     "Giá bán"
     price: Float
     "Thành tiền"
     amount: Float
+
+    product: Product
   }
 
   type CartItemPageData {

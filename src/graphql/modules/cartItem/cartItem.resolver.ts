@@ -1,6 +1,7 @@
 import { ROLES } from "../../../constants/role.const";
-import { AuthHelper } from "../../../helpers";
+import { GraphQLHelper } from "../../../helpers/graphql.helper";
 import { Context } from "../../context";
+import { ProductLoader } from "../product/product.model";
 import { cartItemService } from "./cartItem.service";
 
 const Query = {
@@ -15,7 +16,9 @@ const Query = {
   },
 };
 
-const CartItem = {};
+const CartItem = {
+  product: GraphQLHelper.loadById(ProductLoader, "productId"),
+};
 
 export default {
   Query,

@@ -1,25 +1,12 @@
 import { gql } from "apollo-server-express";
 
 const schema = gql`
-  extend type Query {
-    getAllCart(q: QueryGetListInput): CartPageData
-    getOneCart(id: ID!): Cart
-    # Add Query
-  }
-
   extend type Mutation {
-    createCart(data: CreateCartInput!): Cart
     updateCart(id: ID!, data: UpdateCartInput!): Cart
-    deleteOneCart(id: ID!): Cart
     # Add Mutation
   }
-
-  input CreateCartInput {
-    name: String
-  }
-
   input UpdateCartInput {
-    name: String
+    items: [UpdateCartItemInput]
   }
 
   type Cart {

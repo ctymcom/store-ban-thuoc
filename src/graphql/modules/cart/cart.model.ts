@@ -12,7 +12,7 @@ export type ICart = BaseDocument & {
   amount?: number; // Tổng thành tiền
   shipMethod?: string; // Phương thức vận chuyển
   paymentMethod?: string; // Phương thức thanh toán
-  itemIds?: string; // Sản phẩm giỏ hàng
+  itemIds?: string[]; // Sản phẩm giỏ hàng
   discountId?: string; // Mã khuyến mãi
   discountName?: string; // Tên khuyến mãi
   discountRate?: number; // Tỷ lệ chiết khấu %
