@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { listItem, listMoneyCart, listPromotionCode } from './component/cart-item-data';
-import { PayMoney } from './component/pay-money';
-import { CartPayHeader } from './component/cart-pay-header';
+import { listItem, listMoneyCart, listPromotionCode } from './components/cart-item-data';
+import { PayMoney } from './components/pay-money';
+import { CartPayHeader } from './components/cart-pay-header';
 import { useRouter } from 'next/router';
 import { toNumber, set } from 'lodash';
-import { Promotion } from './component/promotion';
+import { Promotion } from './components/promotion';
 import { HiArrowNarrowLeft } from 'react-icons/hi'
-import { ListCartItems } from "./component/list-cart-items";
+import { ListCartItems } from "./components/list-cart-items";
 
 export default function CartPage(props) {
     // const [Tit, setTit] = useState('cart');
@@ -15,6 +15,7 @@ export default function CartPage(props) {
     const [PrUsing, setPrUsing] = useState(null);
     const [CheckAll, setCheckAll] = useState(true);
     const router = useRouter();
+    const [ListMoneyCart, setListMoneyCart] = useState([...listMoneyCart]);
     const toTalMoney = (listCart) => {
         let total = 0;
         listCart.forEach(item => {
@@ -24,8 +25,6 @@ export default function CartPage(props) {
         });
         return total;
     }
-    const [ListMoneyCart, setListMoneyCart] = useState([...listMoneyCart]);
-
     const setListMoney = (code) => {
         let des = 0;
         if (code !== null) {
@@ -141,7 +140,7 @@ export default function CartPage(props) {
         }
     }
     return <>
-        <div className="main-container text-gray-800 text-20">
+        <div className="main-container text-gray-700 text-20">
             <div>
                 <CartPayHeader name="cart"/>
             </div>

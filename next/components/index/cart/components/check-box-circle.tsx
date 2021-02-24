@@ -5,12 +5,12 @@ interface PropsType extends ReactProps {
     [x: string]: any;
     checked?: boolean,
   };
-const CheckboxItem = (props:PropsType) => {
+const CheckBoxCricle = (props:PropsType) => {
     
     const [Checked, setChecked] = useState(props.checked);
     useEffect(() => {
         setChecked(props.checked);
-      }, [props.checked])
+      }, [props.checked]);
       return (
         <div className="cursor-pointer px-1">
             {
@@ -20,4 +20,4 @@ const CheckboxItem = (props:PropsType) => {
     );
 }
 
-export default CheckboxItem;
+export default CheckBoxCricle;

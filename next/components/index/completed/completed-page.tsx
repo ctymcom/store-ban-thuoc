@@ -1,4 +1,4 @@
-import { CartPayHeader } from '../cart/component/cart-pay-header';
+import { CartPayHeader } from '../cart/components/cart-pay-header';
 import { ContentStatus } from './component/content-status';
 import { statusSuccessed } from './component/completed-data';
 export function CompletedPage() {

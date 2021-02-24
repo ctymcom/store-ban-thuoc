@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import CheckboxItem from '../../cart/component/checkbox-item';
+import CheckboxItem from '../../cart/components/check-box-circle';
 
 const Gender = (props) => {
     const [gender,setGender]=useState(props.gender);

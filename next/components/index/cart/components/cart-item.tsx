@@ -1,7 +1,7 @@
 import { toNumber } from 'lodash';
 import { HiMinusCircle,HiPlusCircle } from 'react-icons/hi'
 import { NumberPipe } from '../../../../lib/pipes/number';
-import CheckboxItem from './checkbox-item';
+import CheckboxItem from './check-box-circle';
 export function CartItem(props) {
     const styleItem=(checked)=>{
         let sty="grid grid-cols-12 text-center text-20 border-b-2 h-24 items-center transition-all duration-300";

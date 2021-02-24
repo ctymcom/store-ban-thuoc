@@ -1,7 +1,7 @@
 import React from 'react';
 import { AddressItem } from './address-item';
 
-export function ListAddress(props) {
+export function AddressList(props) {
     return (
         <div className="grid grid-cols-1 gap-4">
             {

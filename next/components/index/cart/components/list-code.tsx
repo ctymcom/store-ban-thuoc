@@ -1,6 +1,5 @@
 import React from 'react';
 import Code from './code';
-import { useState } from 'react';
 
 const ListCode = (props) => {
     return (

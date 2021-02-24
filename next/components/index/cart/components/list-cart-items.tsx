@@ -1,5 +1,5 @@
 import { CartItem } from './cart-item';
-import CheckboxItem from './checkbox-item';
+import CheckboxItem from './check-box-circle';
 
 export function ListCartItems(props) {
     return (
