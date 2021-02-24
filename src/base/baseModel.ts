@@ -27,7 +27,11 @@ export type BaseDocument = mongoose.Document & {
 
 export type Model<T extends BaseDocument> = mongoose.Model<T>;
 
-export function ModelLoader<T>(model: any, modelHook?: ModelHook<T>): DataLoader<string, T> {
+export function ModelLoader<T>(
+  model: any,
+  modelHook?: ModelHook<T>,
+  cache = true
+): DataLoader<string, T> {
   model.schema.plugin(uniqueValidator, { message: "{VALUE} đã tồn tại." });
   let loader: DataLoader<string, T>;
   const batchFunction = (ids: string[]) => {
@@ -46,7 +50,7 @@ export function ModelLoader<T>(model: any, modelHook?: ModelHook<T>): DataLoader
   } else {
     loader = new DataLoader<string, T>(
       batchFunction,
-      { cacheMap: new LRUMap(100) } // Giới hạn chỉ cache 100 item sử dụng nhiêu nhất.
+      { cacheMap: new LRUMap(100), cache } // Giới hạn chỉ cache 100 item sử dụng nhiêu nhất.
     );
   }
   if (modelHook) {
