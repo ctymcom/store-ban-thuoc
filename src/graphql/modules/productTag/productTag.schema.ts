@@ -24,6 +24,8 @@ const schema = gql`
     icon: String
     "Thứ tự"
     position: Int
+    "Hiển thị filter"
+    showFilter: Boolean
   }
 
   type ProductTagPageData {

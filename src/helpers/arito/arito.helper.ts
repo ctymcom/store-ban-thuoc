@@ -361,6 +361,7 @@ export class AritoHelper {
           color: d["tag_color"],
           icon: d["icon"],
           position: d["stt"],
+          showFilter: d["show_filter"] == 1,
         })) as IProductTag[],
         paging: {
           limit: pageInfo["pagecount"] || 0,
