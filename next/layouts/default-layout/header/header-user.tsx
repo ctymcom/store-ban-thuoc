@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react';
 import Link from "next/link";
 import { HiChevronDown, HiOutlineBell } from "react-icons/hi";
 import { useRouter } from 'next/router';
-import { LOGIN_PATHNAME, useAuth } from './../../../lib/providers/auth-provider';
+import { useAuth } from './../../../lib/providers/auth-provider';
 
 interface PropsType extends ReactProps {
 }

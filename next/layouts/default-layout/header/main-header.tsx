@@ -3,11 +3,9 @@ import { useState } from "react";
 import { HiOutlineMenu, HiOutlineSearch, HiOutlineShoppingCart, HiOutlineX } from "react-icons/hi";
 import { HeaderUser } from "./header-user";
 interface PropsType extends ReactProps {
-  user: any
-  setUser: Function
   setMenuOpened: Function 
 }
-export function MainHeader({ user, setUser, ...props}: PropsType) {
+export function MainHeader(props: PropsType) {
   const [searchText, setSearchText] = useState("");
 
   return (

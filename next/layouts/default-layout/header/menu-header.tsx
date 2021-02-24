@@ -5,9 +5,6 @@ import { useEffect, useState } from "react";
 import { HiChevronRight, HiOutlineX } from 'react-icons/hi';
 import { HeaderUser } from "./header-user";
 interface PropsType extends ReactProps {
-
-  user: any
-  setUser: Function  
   menuOpened: boolean
   setMenuOpened: Function 
 }
@@ -50,7 +47,7 @@ export function MenuHeader(props: PropsType) {
               </button>
             </div>
             <div className="flex w-full py-4 border-b border-gray-100">
-              <HeaderUser user={props.user} setUser={props.setUser}/>
+              <HeaderUser/>
             </div>
             {menus.map((menu, index) => (
               <Link href={menu.path} key={index}>
