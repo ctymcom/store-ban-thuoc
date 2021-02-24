@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { HiOutlineMenu, HiOutlineSearch, HiOutlineShoppingCart, HiOutlineX } from "react-icons/hi";
+import { useCart } from "../../../lib/providers/cart-provider";
 import { HeaderUser } from "./header-user";
 interface PropsType extends ReactProps {
   setMenuOpened: Function 
 }
 export function MainHeader(props: PropsType) {
   const [searchText, setSearchText] = useState("");
+  const { cartProductCount } = useCart()
 
   return (
     <div className="bg-white shadow md:shadow-none">
@@ -61,9 +63,12 @@ export function MainHeader(props: PropsType) {
               <i className="text-24">
                 <HiOutlineShoppingCart />
               </i>
-              <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
-                <span>5</span>                
-              </div>
+              {
+                !!cartProductCount && 
+                <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
+                  <span>{cartProductCount}</span>                
+                </div>
+              }
             </a>
           </Link>   
         </div>
