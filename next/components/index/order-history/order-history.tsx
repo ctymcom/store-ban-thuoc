@@ -37,7 +37,7 @@ export function OrderHistoryPage() {
     ];
    
     return <>
-        <div className="min-h-full w-9/12 ml-6">
+        <div className="min-h-full w-9/12">
             <div className="grid grid-rows-1">
                 <div className="w-full flex justify-between mb-16 gap-7">
                     <div className="w-full">

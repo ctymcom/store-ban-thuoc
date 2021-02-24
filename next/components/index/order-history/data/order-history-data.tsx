@@ -36,7 +36,7 @@ let data = [
 ]
 data = [...data, ...data]
 data = [...data, ...data]
-data = [...data, ...data, ...data, ...data]
+data = [...data, ...data]
 // data = [...data, ...data]
 // data = [...data, ...data]
 // data = [...data, ...data]
