@@ -1,11 +1,14 @@
-import { configs } from "../../configs";
 import Axios from "axios";
-import { CacheHelper } from "../cache.helper";
+import { compact, get, groupBy, keyBy } from "lodash";
 import moment from "moment-timezone";
-import { compact, get, keyBy } from "lodash";
+
+import { configs } from "../../configs";
 import { IProduct } from "../../graphql/modules/product/product.model";
-import { AritoUser } from "./types/aritoUser.type";
 import { IProductTab } from "../../graphql/modules/productTab/productTab.model";
+import { IProductTag } from "../../graphql/modules/productTag/productTag.model";
+import { IUserAddress } from "../../graphql/modules/userAddress/userAddress.model";
+import { CacheHelper } from "../cache.helper";
+import { AritoUser } from "./types/aritoUser.type";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -92,7 +95,7 @@ export class AritoHelper {
       this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       const imageData = keyBy(get(res.data, "data.images", []), "ma_vt");
-      const priceGroupData = keyBy(
+      const priceGroupData = groupBy(
         get(res.data, "data.groupprice", []).map((g) => ({
           productCode: g["ma_vt"],
           customerGroup: g["nh_khg"],
@@ -138,6 +141,7 @@ export class AritoHelper {
           saleExpiredDate: d["ngay_hl"] ? moment(d["ngay_hl"]).toDate() : null,
           tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
           priceGroups: get(priceGroupData, d["ma_vt"], []),
+          outOfDate: d["ngay_can_date"] ? moment(d["ngay_can_date"]).toDate() : null,
           __data: d,
         })) as IProduct[],
         paging: {
@@ -208,6 +212,7 @@ export class AritoHelper {
   static getItemContainer() {
     return Axios.post(`${this.host}/Item/GetItemContainer`, {
       token: this.imageToken,
+      memvars: [["datetime2", "DT", ""]],
     }).then((res) => {
       this.handleError(res);
       return get(res.data, "data.master", []).map((master: any) => ({
@@ -337,6 +342,70 @@ export class AritoHelper {
     }).then((res) => {
       this.handleError(res);
       return res.data.msg;
+    });
+  }
+  static getAllTag(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetTagList`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          code: d["tag_code"],
+          name: d["tag_name"],
+          name2: d["tag_name2"],
+          color: d["tag_color"],
+          icon: d["icon"],
+          position: d["stt"],
+          showFilter: d["show_filter"] == 1,
+        })) as IProductTag[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static async getUserAddress(userId: string) {
+    return Axios.post(`${this.host}/List/GetUserAddress`, {
+      token: this.imageToken,
+      memvars: [
+        ["user_id", "I", userId], //Không được = 0, lấy từ API Login
+        ["pageIndex", "I", 1],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          userId: userId,
+          addressId: d["ma_dc"],
+          fullAddress: d["ten_dc"],
+          contactName: d["lien_he"],
+          address: d["so_nha"],
+          provinceId: d["ma_tinh"],
+          districtId: d["ma_quan"],
+          wardId: d["ma_xp"],
+          phone: d["dien_thoai"],
+          location: d["toa_do"],
+          isDefault: d["phan_loai"] == 1,
+        })) as IUserAddress[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
     });
   }
 }

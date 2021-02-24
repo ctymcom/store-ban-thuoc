@@ -3,11 +3,9 @@ import { useState } from "react";
 import { HiOutlineMenu, HiOutlineSearch, HiOutlineShoppingCart, HiOutlineX } from "react-icons/hi";
 import { HeaderUser } from "./header-user";
 interface PropsType extends ReactProps {
-  user: any
-  setUser: Function
   setMenuOpened: Function 
 }
-export function MainHeader({ user, setUser, ...props}: PropsType) {
+export function MainHeader(props: PropsType) {
   const [searchText, setSearchText] = useState("");
 
   return (
@@ -53,7 +51,7 @@ export function MainHeader({ user, setUser, ...props}: PropsType) {
             </i>
           </button>
           <div className="hidden md:flex">
-            <HeaderUser user={user} setUser={setUser}/>
+            <HeaderUser/>
           </div>
           {/* <Link href="/profile/order-history">
             <a className=" px-3 cursor-pointer">Đăng nhập</a>

@@ -1,15 +1,19 @@
 
 import { HiChevronDown } from 'react-icons/hi';
-import { SORT_TYPES } from './../products-page';
+import { SORT_TYPES } from '../providers/products-provider';
+import { useProductsContext } from './../providers/products-provider';
+
 interface PropsType extends ReactProps {
-  sort: string
-  onChange: Function
+  
 }
 export function ProductsFilterSort(props: PropsType) {
+
+  const { sort, setSort } = useProductsContext()
+
   return <div className="relative flex items-center group">
     <select className="border border-gray-400 rounded pl-4 pr-8 py-2 appearance-none hover:border-primary focus:border-primary-dark focus:outline-none"
-      value={props.sort}
-      onChange={e => props.onChange(e.target.value)}>
+      value={sort}
+      onChange={e => setSort(e.target.value)}>
         {
           SORT_TYPES.map(type => <option key={type.value} value={type.value}>{type.display}</option>)
         }      

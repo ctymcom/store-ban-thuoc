@@ -78,6 +78,8 @@ const schema = gql`
     tags: [String]
     "Ngày hiệu lực chiêt khấu"
     saleExpiredDate: DateTime
+    "Ngày hết hạn sử dụng"
+    outOfDate: DateTime
 
     categories: [Category]
     ingredients: [Ingredient]

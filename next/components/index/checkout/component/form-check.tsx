@@ -37,13 +37,13 @@ export function FormCheck(props:PropsType) {
     const setStyleCheck = (id:number, type:string) => {
         switch (type) {
             case "bo": {
-                let tempStyle = "text-xl px-5 py-4 border rounded col-span-2 hover:bg-primary-light transition duration-500 ease-in-out"
+                let tempStyle = "text-16 md:text-20 cursor-pointer px-3 py-2 md:px-5 md:py-4 mt-4 border rounded w-full xl:w-1/2 hover:bg-primary-light transition duration-500 ease-in-out whitespace-nowrap"
                 if (id === IDC)
                     tempStyle += " border-primary bg-primary-light";
                 return tempStyle;
             }
             case "he": {
-                let tempStyle = " text-24"
+                let tempStyle = " text-20 md:text-24"
                 if (id === IDC) {
                     tempStyle += " text-primary";
                 }
@@ -52,8 +52,8 @@ export function FormCheck(props:PropsType) {
         }
     }
     return <>
-        <h3 className="uppercase text-24 pb-2 border-b-4">{title}</h3>
-        <div className="grid lg:grid-cols-5 sm:grid-cols-4 gap-6 my-5">
+        <h3 className="uppercase text-20 md:text-24 border-b-4">{title}</h3>
+        <div className="w-full xl:w-4/5 block sm:flex gap-5">
             {
                 checkList.map((item:Option, index:number) => {
                     return <div className={setStyleCheck(index, "bo")} key={index} onClick={() => { setIDChecked(index, item.title) }}>
@@ -61,7 +61,7 @@ export function FormCheck(props:PropsType) {
                             <Checkbox checked={setCheckBox(index)} />
                             <div>
                                 <h4 className={setStyleCheck(index, "he")}>{item.title}</h4>
-                                <p className="text-gray-500 text-base">{item.content}</p>
+                                <p className="text-gray-500 text-18">{item.content}</p>
                             </div>
                         </div>
                     </div>
