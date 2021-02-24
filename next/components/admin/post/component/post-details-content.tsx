@@ -1,16 +1,8 @@
-import 'react-quill/dist/quill.snow.css';
-
 import dynamic from 'next/dynamic';
-import { createRef, useEffect, useState } from 'react';
-
-import { Card } from '../../../shared/card/card';
-import { ImageUploader } from '../../../shared/form/image-uploader';
-import { Input } from '../../../shared/form/input';
-import { SelectMulti } from '../../../shared/form/select-multi';
-import { TextArea } from '../../../shared/form/text-area';
+import { useEffect, useState } from 'react';
+import 'react-quill/dist/quill.snow.css';
 import { Imgur } from '../../../../lib/imgur';
-import { Button } from '../../../shared/form/button';
-import { EditPostContext } from '../providers/edit-post-provider';
+import { Input } from '../../../shared/form/input';
 import { PostDetailsContext } from '../providers/post-details-provider';
 
 const ReactQuill = dynamic(import("react-quill"), {

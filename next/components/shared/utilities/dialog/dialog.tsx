@@ -1,7 +1,7 @@
 import { Children, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import useDevice from "../../../../hooks/useDevice";
-import useScrollBlock from "../../../../hooks/useScrollBlock";
+import useDevice from "../../../../lib/hooks/useDevice";
+import useScrollBlock from "../../../../lib/hooks/useScrollBlock";
 import { HiOutlineX } from 'react-icons/hi';
 
 export interface DialogPropsType extends ReactProps {

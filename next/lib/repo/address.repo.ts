@@ -1,4 +1,4 @@
-import { GraphRepository } from "../graphql/graph.repo";
+import { GraphRepository } from "./graph.repo";
 
 export class AddressRepository extends GraphRepository {
   async getAllProvince() {
@@ -47,3 +47,5 @@ export class AddressRepository extends GraphRepository {
     return result.data[api] as any[];
   }
 }
+
+export const AddressService = new AddressRepository();

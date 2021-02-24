@@ -11,6 +11,7 @@ import { AritoHelper } from "../../helpers/arito/arito.helper";
 import { flatten, get, keyBy, uniq } from "lodash";
 import { IngredientModel } from "../../graphql/modules/ingredient/ingredient.model";
 import { ProductModel } from "../../graphql/modules/product/product.model";
+import { ProductTabModel } from "../../graphql/modules/productTab/productTab.model";
 
 export class SyncProductJob {
   static jobName = "SyncProduct";
@@ -18,8 +19,8 @@ export class SyncProductJob {
     return Agenda.create(this.jobName, data);
   }
   static async execute(job: Job) {
-    console.log("HEREEE");
     console.log("Execute Job " + SyncProductJob.jobName, moment().format());
+    await AritoHelper.setImageToken();
     console.log(chalk.cyan("==> Động bộ danh mục sản phẩm..."));
     await syncCategory();
     console.log(chalk.cyan("==> Động bộ hoạt chất..."));
@@ -49,14 +50,42 @@ async function syncProductContainer() {
     await productBulk.execute();
   }
 }
+async function syncProductTabs() {
+  const productTabUpdatedAt = await ProductTabModel.findOne()
+    .sort({ updatedAt: -1 })
+    .then((res) => {
+      return res ? res.updatedAt : null;
+    });
+  const tabInfo = await AritoHelper.getTabInfo(1, productTabUpdatedAt);
+  const productTabBulk = ProductTabModel.collection.initializeUnorderedBulkOp();
+  console.log(chalk.yellow(`====> Có ${tabInfo.data.length} tab`));
+  for (const tab of tabInfo.data) {
+    productTabBulk
+      .find({ code: tab.code })
+      .upsert()
+      .updateOne({
+        $setOnInsert: { createdAt: new Date() },
+        $set: {
+          ...tab,
+          updatedAt: new Date(),
+        },
+      });
+  }
+  if (productTabBulk.length > 0) {
+    await productTabBulk.execute();
+  }
+}
 async function syncProduct() {
+  console.log(chalk.yellow("====> Đồng bộ Product Tab"));
+  await syncProductTabs();
+  const productTabs = await ProductTabModel.find();
   const productUpdatedAt = await ProductModel.findOne()
     .sort({ updatedAt: -1 })
     .exec()
     .then((res) => {
       return res ? res.updatedAt : null;
     });
-  // const productUpdatedAt =null;
+  // const productUpdatedAt = null;
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
   const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
   do {
@@ -67,7 +96,16 @@ async function syncProduct() {
     const ingredientData = await IngredientModel.find({
       code: { $in: uniq(flatten(getProductResult.data.map((d) => d.ingredientIds))) },
     }).then((res) => keyBy(res, "code"));
-    getProductResult.data.forEach((d) => {
+    getProductResult.data.forEach(({ __data, ...d }: any) => {
+      const rawData = __data;
+      const tabs = productTabs
+        .filter((t) => rawData[t.productField] && rawData[t.productField] != "")
+        .map((t) => ({
+          name: t.name,
+          name2: t.name2,
+          content: rawData[t.productField],
+        }));
+
       productBulk
         .find({ code: d.code })
         .upsert()
@@ -75,6 +113,7 @@ async function syncProduct() {
           $setOnInsert: { createdAt: new Date() },
           $set: {
             ...d,
+            tabs,
             updatedAt: new Date(),
             categoryIds: d.categoryIds.map((code: string) => get(categoryData, code)._id),
             ingredientIds: d.ingredientIds.map((code: string) => get(ingredientData, code)._id),

@@ -1,5 +1,5 @@
 .form-input {
-  @apply px-6 h-12 rounded border border-gray-400 hover:border-primary focus:border-primary-dark;
+  @apply px-3 h-12 rounded border border-gray-400 hover:border-primary focus:border-primary-dark;
 }
 
 // @import "mixins";
@@ -344,7 +344,6 @@
 //   text-align: right;
 //   animation: emerge 0.3s ease-in-out;
 // }
-
 
 // .form-header {
 //   margin: -16px -12px 12px;

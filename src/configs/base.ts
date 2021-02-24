@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
 import { UtilsHelper } from "../helpers/utils.helper";
+import { compact, get } from "lodash";
 const pjson = require("../../package.json");
 
 if (fs.existsSync(path.join(__dirname, "../../.env"))) {
@@ -52,5 +53,9 @@ export default {
   arito: {
     clientId: process.env.ARITO_CLIENT_ID || "KHOTHUOCSI",
     host: process.env.ARITO_HOST || "https://api.arito.vn/api/v1",
+  },
+  scheduler: {
+    includes: compact(get(process.env, "SCHEDULER_INCLUDES", "").split(",")),
+    excludes: compact(get(process.env, "SCHEDULER_EXCLUDES", "").split(",")),
   },
 };

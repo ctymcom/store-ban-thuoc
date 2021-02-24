@@ -168,6 +168,7 @@ module.exports = {
       },
       screens: {
         'xs': '480px',
+        'xl': '1440px'
       },      
       zIndex: {
         '100': '100',

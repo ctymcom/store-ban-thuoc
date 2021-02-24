@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import useDebounce from "../../../../lib/hooks/useDebounce";
 import { Pagination } from "../../../../lib/repo/crud.repo";
 import { Post, PostService } from "../../../../lib/repo/post.repo";
 // Nơi chứa dữ liệu
@@ -18,23 +19,29 @@ export const PostListContext = createContext<{
 }>({});
 
 const ORDER_OPTIONS = [
+  { value: 'priority', label: 'Sắp xếp ưu tiên' },
   { value: 'latest', label: 'Sắp xếp mới nhất' },
   { value: 'oldest', label: 'Sắp xếp cũ nhất' },
 ]
 export function PostListProvider({ children }: any) {
-  const [posts, setPosts] = useState<Post[]>([]); // Sản xuất ra Danh sách post
+  const [posts, setPosts] = useState<Post[]>([]);
   
   const [order, setOrder] = useState(ORDER_OPTIONS[0].value);
   const [search, setSearch] = useState('');
   const [limit, setLimit] = useState(9);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const debouncedSearch = useDebounce(search, 300);
 
   const loadPosts = (cache?: boolean) => {
     setPosts(null);
 
     let orderObj = {}
     switch (order) {
+      case 'priority': {
+        orderObj = { priority: -1 }
+        break
+      }
       case 'latest': {
         orderObj = { createdAt: -1 }
         break
@@ -46,7 +53,7 @@ export function PostListProvider({ children }: any) {
     }
     return PostService.getAll({ query: {
       order: orderObj,
-      search,
+      search: debouncedSearch,
       limit,
       page,
     }, cache }).then(res => {
@@ -64,7 +71,11 @@ export function PostListProvider({ children }: any) {
 
   useEffect(() => {
     loadPosts()
-  }, [order, search, page]);
+  }, [order, page]);
+
+  useEffect(() => {
+    loadPosts()
+  }, [debouncedSearch]);
 
   return (
     <PostListContext.Provider value={{ posts, loadPosts, page, limit, total, togglePostStatus,

@@ -22,7 +22,7 @@ export interface Post extends BaseModel {
 }
 export class PostRepository extends CrudRepository<Post> {
   apiName: string = "Post";
-  shortFragment: string = "id title excerpt status featureImage slug createdAt";
+  shortFragment: string = "id title excerpt status featureImage slug createdAt priority";
   fullFragment: string = this.parseFragment(`
     id: String
     createdAt: DateTime
