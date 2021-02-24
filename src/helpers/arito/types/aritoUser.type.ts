@@ -16,4 +16,5 @@ export type AritoUser = {
   datetime2: Date;
   timeout: number;
   permission: number;
+  group: string;
 };

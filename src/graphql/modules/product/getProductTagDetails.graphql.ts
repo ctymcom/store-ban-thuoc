@@ -3,7 +3,7 @@ import { gql } from "apollo-server-express";
 export default {
   schema: gql`
     extend type Product {
-      tabDetails: [ProductTagDetail]
+      tagDetails: [ProductTagDetail]
     }
     type ProductTagDetail {
       "Mã tag"

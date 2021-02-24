@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { compact, get, keyBy } from "lodash";
+import { compact, get, groupBy, keyBy } from "lodash";
 import moment from "moment-timezone";
 
 import { configs } from "../../configs";
@@ -94,7 +94,7 @@ export class AritoHelper {
       this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       const imageData = keyBy(get(res.data, "data.images", []), "ma_vt");
-      const priceGroupData = keyBy(
+      const priceGroupData = groupBy(
         get(res.data, "data.groupprice", []).map((g) => ({
           productCode: g["ma_vt"],
           customerGroup: g["nh_khg"],
@@ -361,6 +361,7 @@ export class AritoHelper {
           color: d["tag_color"],
           icon: d["icon"],
           position: d["stt"],
+          showFilter: d["show_filter"] == 1,
         })) as IProductTag[],
         paging: {
           limit: pageInfo["pagecount"] || 0,

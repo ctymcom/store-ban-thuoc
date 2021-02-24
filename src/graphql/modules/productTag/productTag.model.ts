@@ -10,6 +10,7 @@ export type IProductTag = BaseDocument & {
   color?: string; // Màu sắc
   icon?: string; // Mã icon
   position?: number; // Thứ tự
+  showFilter?: boolean; // Hiển thị filter
 };
 
 const productTagSchema = new Schema(
@@ -20,6 +21,7 @@ const productTagSchema = new Schema(
     color: { type: String },
     icon: { type: String },
     position: { type: Number, default: 0 },
+    showFilter: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

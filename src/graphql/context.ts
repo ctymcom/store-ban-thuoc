@@ -4,10 +4,11 @@ import { TokenHelper } from "../helpers/token.helper";
 import { TokenExpiredError } from "jsonwebtoken";
 import { ROLES } from "../constants/role.const";
 import { ChatBotHelper, MessengerTokenDecoded } from "../helpers/chatbot.helper";
+import { AritoUser } from "../helpers/arito/types/aritoUser.type";
 export type TokenData = {
   role: string;
   _id: string;
-  [name: string]: string;
+  [name: string]: any;
 };
 export type SignedRequestPayload = {
   psid: string;
@@ -46,6 +47,9 @@ export class Context {
   }
   get ip() {
     return get(this, "req.headers.x-forwarded-for") || get(this, "req.headers.remoteAddress");
+  }
+  get user() {
+    return get(this.tokenData, "user") as AritoUser;
   }
   parseToken(params: any) {
     try {
