@@ -3,28 +3,27 @@ import { OrderHisttoryList } from "./component/order-history-list";
 import Link from 'next/link';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { drop, take } from "lodash";
 import { OrderHistoryData } from "./data/order-history-data";
 import { Pagination } from "../../../lib/repo/crud.repo";
 
 export function OrderHistoryPage() {
     const [data, setData] = useState([]);
-    const [pagination, setPagination] = useState<Pagination>({
-        page: 1,
-        limit: 10,
-        total: OrderHistoryData.length,
-        offset: 0
-    })
+    // const [pagination, setPagination] = useState<Pagination>({
+    //     page: 1,
+    //     limit: 10,
+    //     total: OrderHistoryData.length,
+    //     offset: 0
+    // })
+    // const onPageChanged = (page) => {        
+    //     setPagination({ ...pagination, page}); 
+    //     window.scroll({
+    //         top: 200,
+    //         behavior: 'smooth'
+    //     });
+    // };
     useEffect(() => {
         setData(OrderHistoryData)
     }, []);
-    const onPageChanged = (page) => {        
-        setPagination({ ...pagination, page}); 
-        window.scroll({
-            top: 200,
-            behavior: 'smooth'
-        });
-    };
 
     const router = useRouter();
     const { status } = router.query;
@@ -44,11 +43,9 @@ export function OrderHistoryPage() {
                         <ul className="flex justify-between  border-b-4 pb-1.5">
                             { menus.map((menu, index) => (
                                 <li key={index}>
-                                    <Link href= {
-                                            { pathname: '/profile/order-history', query: menu.status ? { status: menu.status} : {} }
-                                        }>
+                                    <Link href= {{ pathname: '/profile/order-history', query: menu.status ? { status: menu.status } : {} }}>
                                         <a  className={`uppercase font-semibold text-sm px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary
-                                            ${status == menu.status ? 'text-primary border-primary' : ''}`}
+                                            ${status == menu.status ? 'text-primary border-primary animate-slide-up' : ''}`}
                                             >
                                             {menu.label} 
                                         </a>

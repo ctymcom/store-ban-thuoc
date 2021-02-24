@@ -1,14 +1,14 @@
 
 export function RewardPointNav () {
     return <>
-            <li className="reward-point__item mr-8"> 
-                <span className="reward-point__link capitalize text-lg px-3">Điểm tích luỹ</span>  
+            <li className="w-1/4 text-left"> 
+                <span className="w-full capitalize text-lg ">Điểm tích luỹ</span>  
             </li>
-            <li className="reward-point__item mr-24">
-                <span className="reward-point__link capitalize text-lg px-3">Thời gian</span>
+            <li className="w-1/4">
+                <span className="capitalize text-lg ">Thời gian</span>
             </li>
-            <li className="reward-point__item">
-                <span className="reward-point__link capitalize text-lg px-3">Nội dung</span>
+            <li className="w-1/4">
+                <span className="capitalize text-lg ">Nội dung</span>
             </li>
     </>;
 }       
