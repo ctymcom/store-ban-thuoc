@@ -1,14 +1,21 @@
-import React from 'react';
-import { FaCheckCircle } from 'react-icons/fa';
+import React, { useEffect } from 'react';
+import { FaCheckCircle,FaRegCircle } from 'react-icons/fa';
 import { useState } from 'react';
-type PropsType = {
+interface PropsType extends ReactProps {
     [x: string]: any;
-    checked?: boolean
+    checked?: boolean,
   };
 const CheckboxItem = (props:PropsType) => {
-    return (
-        <div>
-            <i className={props.checked?"text-primary":"text-gray-300"}><FaCheckCircle/></i>
+    
+    const [Checked, setChecked] = useState(props.checked);
+    useEffect(() => {
+        setChecked(props.checked);
+      }, [props.checked])
+      return (
+        <div className="cursor-pointer px-1">
+            {
+                Checked?<i className="text-primary"><FaCheckCircle/></i>:<i className="opacity-100"><FaRegCircle/></i>
+            }
         </div>
     );
 }

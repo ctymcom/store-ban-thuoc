@@ -141,7 +141,7 @@ export default function CartPage(props) {
         }
     }
     return <>
-        <div className="main-container">
+        <div className="main-container text-gray-800 text-20">
             <div>
                 <CartPayHeader name="cart"/>
             </div>
@@ -150,11 +150,11 @@ export default function CartPage(props) {
                     <div className="col-span-5" id="cart__Table">
                         <ListCartItems listCart={listCart} handleDeleteCart={handleDeleteCart} handleChangeItem={handleChangeItem} CheckAll={CheckAll} />
                         <div className="text-primary flex items-center">
-                            <div className="cursor-pointer flex items-center" onClick={() => router.push('/home')}>
+                            <div className="cursor-pointer flex items-center text-20" onClick={() => router.push('/home')}>
                                 <i className="text-18 px-1"><HiArrowNarrowLeft /></i>
                                 <p>Tiếp tục mua sắm</p>
                             </div>
-                            <button className="bt btn-disabled m-2"
+                            <button className="bt btn-disabled m-2 text-20"
                                 onClick={() => setChange(false)}>Cập nhật đơn hàng</button>
                         </div>
                     </div>
@@ -166,7 +166,7 @@ export default function CartPage(props) {
                         </div>
                         <div className="mt-10">
                             <PayMoney listMoney={ListMoneyCart} />
-                            <button className="btn btn-primary w-full py-6 mt-2"
+                            <button className="btn btn-primary w-full py-6 mt-2 text-20"
                                 onClick={() => router.push('/checkout')}>Tiến hành thanh toán</button>
                         </div>
                     </div>

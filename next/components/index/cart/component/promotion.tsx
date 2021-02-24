@@ -62,7 +62,7 @@ export function Promotion({ onChanged = () => { }, PrUsing, listPromotionCode, .
             }
         </div>
         <button onClick={applyPromotion} type="button"
-            className={Promotion ? "btn font-normal btn-primary w-full" : "btn btn-disabled w-full"}>
+            className={Promotion ? "btn font-normal btn-primary w-full text-20 h-12" : "text-20 h-12 btn btn-disabled w-full"}>
             {UsePromotion && PrUsing ? "Hủy áp dụng" : "Áp dụng"}
         </button>
         

@@ -7,7 +7,7 @@ const ListCode = (props) => {
         <div>
             {
                 props.listPromotionCode.map((item,index)=>{
-                    return <div key={index}>
+                    return <div key={index} className="text-20">
                         <Code item={item}  index={index} choseCode={props.choseCode}/>
                     </div>
                 })
