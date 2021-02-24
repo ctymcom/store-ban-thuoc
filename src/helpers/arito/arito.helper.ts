@@ -408,6 +408,30 @@ export class AritoHelper {
       };
     });
   }
+  static async createUserAddress(address: IUserAddress) {
+    return Axios.post(`${this.host}/List/UpdateUserAddress`, {
+      token: this.imageToken,
+      data: {
+        "#detail": [
+          {
+            ma_dc: "", //Nếu mã địa chỉ trắng, Arito sẽ nhận diện là trường hợp thêm mới địa chỉ
+            ten_dc: address.fullAddress || "",
+            user_id: parseInt(address.userId),
+            lien_he: address.contactName || "",
+            so_nha: address.address || "",
+            ma_tinh: address.provinceId || "", //Lay tu API GetProvince
+            ma_quan: address.districtId || "", // GetDistrict
+            ma_xp: address.wardId || "", //GetWard
+            dien_thoai: address.phone || "",
+            toa_do: address.location || "", //Tọa độ của Google map
+            phan_loai: address.isDefault ? 1 : 0, // 0: Chưa phân loại, 1: địa chỉ mặc định
+          },
+        ],
+      },
+    }).then((res) => {
+      this.handleError(res);
+    });
+  }
 }
 
 AritoHelper.setImageToken();

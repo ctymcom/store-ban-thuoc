@@ -127,11 +127,6 @@ module.exports = {
         '6xl': '72rem',
         '7xl': '80rem',
         'min': 'min-content',
-        'screen-sm': '640px',
-        'screen-md': '768px',
-        'screen-lg': '1024px',
-        'screen-xl': '1280px',
-        'screen-2xl': '1536px',
       },
       keyframes: {
         wiggle: {
@@ -188,9 +183,6 @@ module.exports = {
          'scale-up': 'scaleUp .2s ease-in',
          'scale-down': 'scaleDown .2s ease-out forwards',
        },
-       rotate:{
-         '-135': '-135deg',
-       }
     },
   },
   variants: {
