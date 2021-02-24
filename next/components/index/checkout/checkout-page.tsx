@@ -17,10 +17,13 @@ import {
 import TransferInformation from './components/transfer-information';
 import CheckBoxSquare from './components/check-box-square';
 import AddressDialog from './components/address-dialog';
+import AddressCreateDialog from './components/address-dialog-create';
 
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
     const [isCheck, setIsCheck] = useState(true);
+    const [showDialogAddress, setShowDialogAddress] = useState(false);
+    const [showDialogCreateAddress, setShowDialogCreateAddress] = useState(false);
     const getCheckPayment = (status:boolean) => {
         setIsHide(status)
     }
@@ -35,7 +38,6 @@ export function CheckOutPage() {
         let style="w-full text-16 md:text-20 py-6 my-2"
         return isCheck? style+" btn-primary": style+" btn-disabled";
     }
-    const [showDialog, setShowDialog] = useState(false);
 
     return <>
         <div className="w-11/12 mx-auto sm:main-container leading-relaxed text-gray-800">
@@ -72,7 +74,7 @@ export function CheckOutPage() {
                                         <i className="text-primary text-16 md:text-20"><IoLocationSharp /></i>
                                         <h4 className="uppercase text-20 md:text-24">Địa chỉ giao hàng</h4>
                                     </div>
-                                    <a className="text-primary text-16 md:text-20 cursor-pointer" onClick={() => setShowDialog(true)}>Đổi</a>
+                                    <a className="text-primary text-16 md:text-20 cursor-pointer" onClick={() => setShowDialogAddress(true)}>Đổi</a>
                                 </div>
                                 <div className="my-2 text-16 md:text-20">
                                     <p className="text-20 md:text-24 font-bold">Minh Đức Uy</p>
@@ -102,15 +104,9 @@ export function CheckOutPage() {
                         <p className="whitespace-nowrap text-center text-12 md:text-16">(Xin vui lòng kiểm tra lại đơn hàng trước Đặt mua)</p>
                     </div>
                 </div>
-            </div>
-            <Dialog width="500px" isOpen={showDialog}
-                onClose={() => setShowDialog(false)}
-                title="Địa chỉ giao hàng"
-                icon={<BiMap/>}>
-                <Dialog.Body>
-                    <AddressDialog/>
-                </Dialog.Body>
-            </Dialog>
+            </div> 
+            <AddressCreateDialog isOpen={showDialogCreateAddress} setShowDialog={setShowDialogCreateAddress}/>
+            <AddressDialog isOpen={showDialogAddress} setShowDialog={setShowDialogAddress} setShowDialogCreateAddress={setShowDialogCreateAddress}/>
         </div >
     </>
 }
