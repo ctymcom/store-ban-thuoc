@@ -5,22 +5,25 @@ import { IoLocationSharp } from 'react-icons/io5';
 
 import { NumberPipe } from '../../../lib/pipes/number';
 import { Dialog } from '../../shared/utilities/dialog/dialog';
-import AddressPage from '../address/address-page';
-import { CartPayHeader } from '../cart/component/cart-pay-header';
-import { PayMoney } from '../cart/component/pay-money';
-import CustomCheckbox from './component/custom-checkbox';
-import { FormCheck } from './component/form-check';
+import { CartPayHeader } from '../cart/components/cart-pay-header';
+import { PayMoney } from '../cart/components/pay-money';
+import { FormCheck } from './components/form-check';
 import {
     listFormCheckPayment,
     listFormCheckTrans,
     listMoneyCheckout,
     transferInformation,
-} from './component/form-check-data';
-import TransferInformation from './component/transfer-information';
+} from './components/form-check-data';
+import TransferInformation from './components/transfer-information';
+import CheckBoxSquare from './components/check-box-square';
+import AddressDialog from './components/address-dialog';
+import AddressCreateDialog from './components/address-dialog-create';
 
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
     const [isCheck, setIsCheck] = useState(true);
+    const [showDialogAddress, setShowDialogAddress] = useState(false);
+    const [showDialogCreateAddress, setShowDialogCreateAddress] = useState(false);
     const getCheckPayment = (status:boolean) => {
         setIsHide(status)
     }
@@ -35,7 +38,6 @@ export function CheckOutPage() {
         let style="w-full text-16 md:text-20 py-6 my-2"
         return isCheck? style+" btn-primary": style+" btn-disabled";
     }
-    const [showDialog, setShowDialog] = useState(false);
 
     return <>
         <div className="w-11/12 mx-auto sm:main-container leading-relaxed text-gray-800">
@@ -72,7 +74,7 @@ export function CheckOutPage() {
                                         <i className="text-primary text-16 md:text-20"><IoLocationSharp /></i>
                                         <h4 className="uppercase text-20 md:text-24">Địa chỉ giao hàng</h4>
                                     </div>
-                                    <a className="text-primary text-16 md:text-20 cursor-pointer" onClick={() => setShowDialog(true)}>Đổi</a>
+                                    <a className="text-primary text-16 md:text-20 cursor-pointer" onClick={() => setShowDialogAddress(true)}>Đổi</a>
                                 </div>
                                 <div className="my-2 text-16 md:text-20">
                                     <p className="text-20 md:text-24 font-bold">Minh Đức Uy</p>
@@ -93,7 +95,7 @@ export function CheckOutPage() {
                     <div className="w-full">
                         <div className="flex items-center gap-1 text-16 md:text-20 whitespace-nowrap" >
                             <div className="flex items-center gap-1 cursor-pointer" onClick={()=>{setIsCheck(!isCheck)}}>
-                                <CustomCheckbox isCheck={isCheck} setIsCheck={setIsCheck} />
+                                <CheckBoxSquare checked={isCheck} />
                                 <p>Tôi đồng ý với</p>
                             </div>
                             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
@@ -102,16 +104,9 @@ export function CheckOutPage() {
                         <p className="whitespace-nowrap text-center text-12 md:text-16">(Xin vui lòng kiểm tra lại đơn hàng trước Đặt mua)</p>
                     </div>
                 </div>
-            </div>
-            <Dialog width="500px" isOpen={showDialog}
-                onClose={() => setShowDialog(false)}
-                title="Địa chỉ giao hàng"
-                icon={<BiMap/>}>
-                <Dialog.Body>
-                    <AddressPage/>
-                </Dialog.Body>
-                
-            </Dialog>
+            </div> 
+            <AddressCreateDialog isOpen={showDialogCreateAddress} setShowDialog={setShowDialogCreateAddress}/>
+            <AddressDialog isOpen={showDialogAddress} setShowDialog={setShowDialogAddress} setShowDialogCreateAddress={setShowDialogCreateAddress}/>
         </div >
     </>
 }
