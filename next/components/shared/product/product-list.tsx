@@ -1,10 +1,10 @@
-import { SectionHeader } from "../../index/home/component/section-header";
+import { SectionHeader } from "../../index/home/components/section-header";
 import { ProductCard } from "./product-card";
 import { Product } from './../../../lib/repo/product.repo';
 
 interface PropsType extends ReactProps {
-  products?: Product[]
-  title?: string
+  products: Product[]
+  title: string
 }
 export function ProductList(props: PropsType) {
 

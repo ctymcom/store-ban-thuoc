@@ -14,7 +14,8 @@ const AuthContext = createContext<{
   user?: AritoUser 
   saveCurrentPath?: () => void
   checkUser?: () => boolean
-  login?: (username: string, password: string, mode: 'user' | 'editor') => Promise<AritoUser> 
+  login?: (username: string, password: string, mode: 'user' | 'editor') => Promise<AritoUser>
+  register?: (nickname: string, email: string, phone: string) => Promise<string>
   logout?: () => void
 }>({});
 
@@ -73,13 +74,18 @@ export function AuthProvider({ children }: any) {
     return user
   }
 
+  const register = async (nickname: string, email: string, phone: string) => {
+    const res = await AritoUserService.regisAritoUser(nickname, email, phone)
+    return res
+  }
+
   const logout = () => {
     ClearAuthToken()
     location.reload()
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, checkUser, saveCurrentPath }}>
+    <AuthContext.Provider value={{ user, login, register, logout, checkUser, saveCurrentPath }}>
       {children}
     </AuthContext.Provider>
   );
