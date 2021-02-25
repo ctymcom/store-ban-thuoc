@@ -3,6 +3,7 @@ import { compact, get, groupBy, keyBy } from "lodash";
 import moment from "moment-timezone";
 
 import { configs } from "../../configs";
+import { INotification } from "../../graphql/modules/notification/notification.model";
 import { IProduct } from "../../graphql/modules/product/product.model";
 import { IProductTab } from "../../graphql/modules/productTab/productTab.model";
 import { IProductTag } from "../../graphql/modules/productTag/productTag.model";
@@ -487,6 +488,34 @@ export class AritoHelper {
       ],
     }).then((res) => {
       this.handleError(res);
+    });
+  }
+  static getAllUserNotify(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Notification/GetMessageUsers`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          userId: d["user_id"],
+          code: d["id"],
+          title: d["title"],
+          content: d["content"],
+          link: d["link"],
+        })) as INotification[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
     });
   }
 }
