@@ -212,7 +212,7 @@ export class AritoHelper {
   static getItemContainer() {
     return Axios.post(`${this.host}/Item/GetItemContainer`, {
       token: this.imageToken,
-      memvars: [["datetime2", "DT", ""]],
+      memvars: [["datetime2", "DT", "2020-02-15 16:53:00"]],
     }).then((res) => {
       this.handleError(res);
       return get(res.data, "data.master", []).map((master: any) => ({
