@@ -15,7 +15,7 @@ export function ProfileUserLayout(props: PropsType) {
         case 'account-user': showLabelBreadcrumb = "Tài khoản của tôi"; break;
         case 'order': showLabelBreadcrumb = "Đơn hàng"; break;
         case 'notification': showLabelBreadcrumb = "Thông báo"; break;
-        case 'reward-point': showLabelBreadcrumb = "Điểm tích luỹ"; break;
+        case 'reward-point': showLabelBreadcrumb = "Điểm thưởng"; break;
         case 'order-details': showLabelBreadcrumb = "Chi tiết đơn hàng"; break;
     };
     
@@ -23,19 +23,19 @@ export function ProfileUserLayout(props: PropsType) {
         <>
             <div className="main-container h-auto sm:pl-4 md:pl-4 lg:pl-0 sm:pr-4 md:pr-4 lg:pr-0">
                 <div className="w-full">
-                    <div className="breadbcrum max-w-full text-center text-sm md:text-base">
-                        <ul className="breadbcrum flex h-10 w-full items-center mt-8 uppercase text-center justify-center md:justify-center lg:justify-start">
+                    <div className="max-w-full text-center text-sm md:text-base">
+                        <ul className="flex h-10 w-full items-center mt-8 uppercase px-5 md:px-0 font-extralight">
                             <Link href="/">
-                                <a className="breadbcrum hover:text-primary mr-1"> Trang chủ</a>
+                                <a className="hover:text-primary mr-1"> Trang chủ</a>
                             </Link>
                             <span> / </span>
                             <li>
-                                <span className="breadbcrum text-primary ml-1">{showLabelBreadcrumb}</span>
+                                <span className="text-primary ml-1">{showLabelBreadcrumb}</span>
                             </li>
                         </ul>
                     </div>
-                    <div className="w-full flex flex-col lg:flex-row justify-between lg:space-x-20 mt-3 md:mt-8 mb-0">
-                        <div className="w-full lg:w-1/4">
+                    <div className="w-full flex flex-col lg:flex-row justify-between lg:space-x-20 mt-2 md:mt-8 mb-0">
+                        <div className="w-full lg:w-1/4 hidden md:block">
                             <ProfileUser/>
                         </div>
                         {props.children}

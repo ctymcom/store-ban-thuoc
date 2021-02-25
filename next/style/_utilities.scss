@@ -126,7 +126,7 @@
   height: 0;
   position: relative;
 
-  img {
+  > img {
     position: absolute;
     top: 0;
     left: 0;
@@ -140,20 +140,20 @@
   }
 
   &.contain {
-    img {
+    > img {
       object-fit: contain;
     }
   }
 
   &.circle,
   &.round {
-    img {
+    > img {
       @apply rounded-full;
     }
   }
 
-  &.border {
-    img {
+  &.rounded {
+    > img {
       @apply rounded;
     }
   }

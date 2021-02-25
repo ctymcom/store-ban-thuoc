@@ -11,8 +11,6 @@ export function OrderHisttoryList({ data, status }: PropsType) {
 
     const [listOrder, setListOrder] = useState([]);
     useEffect(() => {
-        
-    console.log(data, status);
         if(status) {
         setListOrder(data.filter(x => x.status == status))
         } else {
