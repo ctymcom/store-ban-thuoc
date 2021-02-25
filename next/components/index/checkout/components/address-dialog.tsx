@@ -15,12 +15,10 @@ export default function AddressDialog(props:PropsType) {
         onClose={() => props.setShowDialog(false)}
         title="Danh sách địa chỉ"
         icon={<BiMap/>}>
-        <Dialog.Body>
-            <div className=" pb-10 text-20 text-gray-800">
-                <button className="btn-primary font-normal py-6 my-5 w-full" onClick={()=>{setShowDialogCreateAddress(true)}}>Tạo địa chỉ mới</button>
+            <div className=" pb-10 text-20 text-gray-800 justify-around flex-wrap flex" >
+                <button className="btn-primary font-normal py-6 my-4 w-11/12" onClick={()=>{setShowDialogCreateAddress(true)}}>Tạo địa chỉ mới</button>
                 <AddressList/>
             </div>
-        </Dialog.Body>
         <AddressCreateDialog isOpen={showDialogCreateAddress} setShowDialog={setShowDialogCreateAddress}/>
     </Dialog>
     );
