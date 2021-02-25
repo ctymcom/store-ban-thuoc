@@ -1,12 +1,10 @@
 import { toNumber } from 'lodash';
-import { Checkbox } from '../../../shared/form/checkbox';
 import { HiMinusCircle,HiPlusCircle } from 'react-icons/hi'
 import { NumberPipe } from '../../../../lib/pipes/number';
-import { useState } from 'react';
-import CheckboxItem from './checkbox-item';
+import CheckboxItem from './check-box-circle';
 export function CartItem(props) {
     const styleItem=(checked)=>{
-        let sty="grid grid-cols-12 text-center border-b-2 h-24 items-center transition-all duration-300";
+        let sty="grid grid-cols-12 text-center text-20 border-b-2 h-24 items-center transition-all duration-300";
         if(!checked){
             sty+=" opacity-50";
         }
@@ -41,7 +39,7 @@ export function CartItem(props) {
                     <div className="font-bold text-center">{NumberPipe(props.item.sale * props.item.amount, true)}</div>
                 </div>
                 <div className="col-span-1 grid-cols-5">
-            <button className="col-span-1 btn-outline border-none text-danger hover:text-danger-dark" onClick={() => { props.handleDeleteCart(props.item.id) }}>Xóa</button>
+            <button className="col-span-1 btn-outline border-none text-20 text-danger hover:text-danger-dark" onClick={() => { props.handleDeleteCart(props.item.id) }}>Xóa</button>
         </div>
             </div>
     )

@@ -12,8 +12,8 @@ export function Header() {
     <>
       <div className="w-full sticky top-0 md:-top-7 z-50">
         <TopHeader />
-        <MainHeader user={user} setUser={setUser} setMenuOpened={setMenuOpened}/>
-        <MenuHeader user={user} setUser={setUser} menuOpened={menuOpened} setMenuOpened={setMenuOpened}/>
+        <MainHeader setMenuOpened={setMenuOpened}/>
+        <MenuHeader menuOpened={menuOpened} setMenuOpened={setMenuOpened}/>
       </div>
     </>
   );

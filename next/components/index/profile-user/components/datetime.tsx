@@ -11,22 +11,22 @@ const DateTime = (props:PropsType) => {
     switch (id) {
       case "day":{
         let dayInMonth=getDaysInMonth(date);
-        let listDay:number[] =[];
+        let listDay:string[] =[];
         for(let index=1;index<=dayInMonth;index++){
-          listDay.push(index);
+          listDay.push(index.toString());
         }
         return listDay;
       }
       case "month":{
-        let listMonth:number[]=[1,2,3,4,5,6,7,8,9,10,11,12];
+        let listMonth:string[]=["Tháng 1","Tháng 2","Tháng 3","Tháng 4","Tháng 5","Tháng 6","Tháng 7","Tháng 8","Tháng 9","Tháng 10","Tháng 11","Tháng 12"];
         return listMonth;
       }
       case "year":{
-        let listYear:number[]=[];
+        let listYear:string[]=[];
         let dateCur =  new Date();
         let yearCur =getYear(dateCur);
         for(let index=1930;index<=yearCur;index++){
-          listYear.push(index);
+          listYear.push(index.toString());
         }
         return listYear;
       }
@@ -35,9 +35,9 @@ const DateTime = (props:PropsType) => {
       }
   }
   const [listDay,setListDay]=useState(getListOptions(props.dateOfBirth,"day"));
-  const listMonth:number[]=getListOptions(props.dateOfBirth,"month");
-  const listYear:number[]=getListOptions(props.dateOfBirth,"year");
-  const handleChangeDateOfBirth=(id:string,value:number)=>{
+  const listMonth:string[]=getListOptions(props.dateOfBirth,"month");
+  const listYear:string[]=getListOptions(props.dateOfBirth,"year");
+  const handleChangeDateOfBirth=(id:string,value:any)=>{
     let date =new Date(props.dateOfBirth);
     switch (id) {
       case "day":{
@@ -45,7 +45,8 @@ const DateTime = (props:PropsType) => {
         props.handleChange("dateOfBirth",date);        
       }break;
       case "month":{
-        date = setMonth(date,value-1);
+        let month = listMonth.findIndex(item=>item===value);
+        date = setMonth(date,month);
         props.handleChange("dateOfBirth",date);
         let listDayNew = getListOptions(date,"day");
         setListDay([...listDayNew]);
@@ -64,7 +65,7 @@ const DateTime = (props:PropsType) => {
   return (
     <>
       <Dropdown name={"day"} id={"day"} 
-      defaultValue={getDate(props.dateOfBirth)} 
+      defaultValue={getDate(props.dateOfBirth).toString()} 
       listOptions={listDay} 
       onChanged={(e)=>{handleChangeDateOfBirth("day",e)}}/>
       <Dropdown name={"month"} id={"month"} 
@@ -72,7 +73,7 @@ const DateTime = (props:PropsType) => {
       listOptions={listMonth} 
       onChanged={(e)=>{handleChangeDateOfBirth("month",e)}} />
       <Dropdown name={"year"} id={"year"} 
-      defaultValue={getYear(props.dateOfBirth)} 
+      defaultValue={getYear(props.dateOfBirth).toString()} 
       listOptions={listYear} 
       onChanged={(e)=>{handleChangeDateOfBirth("year",e)}}/>
     </>

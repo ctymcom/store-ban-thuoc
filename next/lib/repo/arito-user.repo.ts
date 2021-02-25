@@ -57,11 +57,26 @@ export class AritoUserRepository extends GraphRepository {
     role: String
   `);
 
-  async loginAritoUser(username, password, headers): Promise<{ token: string; user: AritoUser }> {
+  async loginArito(
+    username,
+    password,
+    headers,
+    mode: "user" | "editor"
+  ): Promise<{ token: string; user: AritoUser }> {
+    let mutationName;
+    switch (mode) {
+      case "user":
+        mutationName = "loginAritoUser";
+        break;
+      case "editor":
+        mutationName = "loginAritoEditor";
+        break;
+    }
+
     const res = await this.apollo.mutate({
       mutation: this.gql`
         mutation {
-          loginAritoEditor(
+          ${mutationName}(
             username: "${username}",
             password: "${password}",
           ) {
@@ -74,7 +89,7 @@ export class AritoUserRepository extends GraphRepository {
         headers,
       },
     });
-    return res.data.loginAritoEditor;
+    return res.data[mutationName];
   }
 }
 

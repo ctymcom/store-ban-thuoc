@@ -3,8 +3,8 @@ import { OrderDetailsTimeline } from "./components/order-details-timeline";
 import { OrderDetailsInfo } from './components/order-details-info';
 import { OrderDetailsProducts } from './components/order-details-products';
 import { ProductsData } from './../../shared/product/data/product-data';
-import { PayMoney } from './../cart/component/pay-money';
-import { listMoneyCheckout } from "../checkout/component/form-check-data";
+import { PayMoney } from '../cart/components/pay-money';
+import { listMoneyCheckout } from "../checkout/components/form-check-data";
 import { NumberPipe } from "../../../lib/pipes/number";
 
 const timelines = [

@@ -6,6 +6,7 @@ import { configs } from "../../configs";
 import { IProduct } from "../../graphql/modules/product/product.model";
 import { IProductTab } from "../../graphql/modules/productTab/productTab.model";
 import { IProductTag } from "../../graphql/modules/productTag/productTag.model";
+import { IUserAddress } from "../../graphql/modules/userAddress/userAddress.model";
 import { CacheHelper } from "../cache.helper";
 import { AritoUser } from "./types/aritoUser.type";
 
@@ -371,6 +372,64 @@ export class AritoHelper {
           group: pageInfo["group"],
         },
       };
+    });
+  }
+  static async getUserAddress(userId: string) {
+    return Axios.post(`${this.host}/List/GetUserAddress`, {
+      token: this.imageToken,
+      memvars: [
+        ["user_id", "I", userId], //Không được = 0, lấy từ API Login
+        ["pageIndex", "I", 1],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          userId: userId,
+          addressId: d["ma_dc"],
+          fullAddress: d["ten_dc"],
+          contactName: d["lien_he"],
+          address: d["so_nha"],
+          provinceId: d["ma_tinh"],
+          districtId: d["ma_quan"],
+          wardId: d["ma_xp"],
+          phone: d["dien_thoai"],
+          location: d["toa_do"],
+          isDefault: d["phan_loai"] == 1,
+        })) as IUserAddress[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static async createUserAddress(address: IUserAddress) {
+    return Axios.post(`${this.host}/List/UpdateUserAddress`, {
+      token: this.imageToken,
+      data: {
+        "#detail": [
+          {
+            ma_dc: "", //Nếu mã địa chỉ trắng, Arito sẽ nhận diện là trường hợp thêm mới địa chỉ
+            ten_dc: address.fullAddress || "",
+            user_id: parseInt(address.userId),
+            lien_he: address.contactName || "",
+            so_nha: address.address || "",
+            ma_tinh: address.provinceId || "", //Lay tu API GetProvince
+            ma_quan: address.districtId || "", // GetDistrict
+            ma_xp: address.wardId || "", //GetWard
+            dien_thoai: address.phone || "",
+            toa_do: address.location || "", //Tọa độ của Google map
+            phan_loai: address.isDefault ? 1 : 0, // 0: Chưa phân loại, 1: địa chỉ mặc định
+          },
+        ],
+      },
+    }).then((res) => {
+      this.handleError(res);
     });
   }
 }

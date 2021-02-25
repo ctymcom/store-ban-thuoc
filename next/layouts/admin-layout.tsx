@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { Spinner } from "../components/shared/utilities/spinner";
-import { useAuth } from "../lib/providers/auth-provider";
+import { LOGIN_PATHNAME, useAuth } from "../lib/providers/auth-provider";
 import Sidebar from "./admin-layout/sidebar";
 import { HeadSEO } from './default-layout/head-seo';
 import { useRouter } from 'next/router';
-
-export const LOGIN_PATHNAME = 'login-pathname'
 
 interface AdminLayoutProps extends ReactProps {
   title?: string;

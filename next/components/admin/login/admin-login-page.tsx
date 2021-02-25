@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react"
-import { LOGIN_PATHNAME } from "../../../layouts/admin-layout";
-import { useAuth } from "../../../lib/providers/auth-provider";
+import { LOGIN_PATHNAME, useAuth } from "../../../lib/providers/auth-provider";
 
 export default function AdminLoginPage() {
 
@@ -27,7 +26,7 @@ export default function AdminLoginPage() {
     if (!username || !password) {
       alert('Yêu cầu nhập đầy đủ')  
     } else {
-      login(username, password).then(res => {
+      login(username, password, 'editor').then(res => {
         alert('Đăng nhập thành công')
         let pathname = sessionStorage.getItem(LOGIN_PATHNAME)
         router.replace(pathname || '/admin')
