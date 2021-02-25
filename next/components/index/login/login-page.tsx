@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../lib/providers/auth-provider";
@@ -18,12 +19,16 @@ export default function LoginPage() {
 
   return <>
     {
-      user !== null ? null : 
+      user !== undefined ? null : 
       <div 
         className="w-screen h-screen bg-center bg-no-repeat bg-cover flex-center" 
         style={{ backgroundImage: `url(/assets/img/background.jpg)`}}>
         <div className="relative flex flex-col items-center bg-white shadow-lg rounded-lg border-primary border-4 min-h-sm p-4 sm:p-8 md:p-10 pt-24 md:pt-24">
-          <img src='/assets/img/logo.png/' className="absolute w-40 -top-12"/>
+          <Link href="/">
+            <a className="absolute -top-12">
+              <img src='/assets/img/logo.png/' className="w-40"/>
+            </a>
+          </Link>
           {
             {
               'login': <Login setMode={setMode}/>,
