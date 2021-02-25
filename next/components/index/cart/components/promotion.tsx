@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { HiOutlineTicket } from "react-icons/hi";
 import { IoTicketOutline } from "react-icons/io5";
-import { Dialog } from '../../../shared/utilities/dialog/dialog';
-import ListCode from "./list-code";
+import PromotionListDialog from './promotion-list-dialog';
 type PromotionProps = {
     [x: string]: any,
     onChanged?: (promotion: any) => void,
@@ -65,15 +63,6 @@ export function Promotion({ onChanged = () => { }, PrUsing, listPromotionCode, .
             className={Promotion ? "btn font-normal btn-primary w-full text-20 h-12" : "text-20 h-12 btn btn-disabled w-full"}>
             {usePromotion && PrUsing ? "Hủy áp dụng" : "Áp dụng"}
         </button>
-        
-        <Dialog width="410px" isOpen={showDialog}
-            onClose={() => setShowDialog(false)}
-            title="Mã khuyến mãi"
-            icon={<HiOutlineTicket/>}
-        >
-            <Dialog.Body>
-                <ListCode listPromotionCode={listPromotionCode} choseCode={choseCode}/>
-            </Dialog.Body>
-        </Dialog>
+        <PromotionListDialog isOpen={showDialog} setShowDialog={setShowDialog} listPromotionCode={listPromotionCode} choseCode={choseCode}/>
     </div>)
 }

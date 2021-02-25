@@ -1,10 +1,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import { BiMap } from 'react-icons/bi';
 import { IoLocationSharp } from 'react-icons/io5';
 
 import { NumberPipe } from '../../../lib/pipes/number';
-import { Dialog } from '../../shared/utilities/dialog/dialog';
 import { CartPayHeader } from '../cart/components/cart-pay-header';
 import { PayMoney } from '../cart/components/pay-money';
 import { FormCheck } from './components/form-check';
@@ -17,13 +15,12 @@ import {
 import TransferInformation from './components/transfer-information';
 import CheckBoxSquare from './components/check-box-square';
 import AddressDialog from './components/address-dialog';
-import AddressCreateDialog from './components/address-dialog-create';
 
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
     const [isCheck, setIsCheck] = useState(true);
     const [showDialogAddress, setShowDialogAddress] = useState(false);
-    const [showDialogCreateAddress, setShowDialogCreateAddress] = useState(false);
+
     const getCheckPayment = (status:boolean) => {
         setIsHide(status)
     }
@@ -105,8 +102,7 @@ export function CheckOutPage() {
                     </div>
                 </div>
             </div> 
-            <AddressCreateDialog isOpen={showDialogCreateAddress} setShowDialog={setShowDialogCreateAddress}/>
-            <AddressDialog isOpen={showDialogAddress} setShowDialog={setShowDialogAddress} setShowDialogCreateAddress={setShowDialogCreateAddress}/>
+            <AddressDialog isOpen={showDialogAddress} setShowDialog={setShowDialogAddress}/>
         </div >
     </>
 }
