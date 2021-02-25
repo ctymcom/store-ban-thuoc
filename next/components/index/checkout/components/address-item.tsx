@@ -1,26 +1,27 @@
 import React from 'react';
+import CheckBoxCricle from '../../cart/components/check-box-circle';
+import { MyAddress } from './address-data';
+interface Proptype extends ReactProps{
+    address:MyAddress,
+    onClick:Function
+}
 
-
-export function AddressItem(props) {
+export function AddressItem(props:Proptype) {
     return (
-        <div className="col-span-1 border-2 border-gray-300 rounded" >
-            <div className="p-3">
-                <div className="flex justify-between">
-                    <div className="">{props.item.name}</div>
-                    <div className="text-12 cursor-pointer">
-                        {
-                            props.item.default ? <p className="text-primary">Địa chỉ mặc định</p> : <p className="text-danger">Xóa địa chỉ</p>
-                        }
-                    </div>
+        <div className="border-b-2 text-16 sm:text-20 py-2 leading-7" >
+            <div className="flex items-center gap-1">
+                <CheckBoxCricle checked={true}/>
+                <div className="">
+                    <p className="font-semibold whitespace-nowrap">{props.address.name} - {props.address.numberPhone}</p>
+                    <p>{props.address.address}</p>
                 </div>
-                <div className="text-12 pb-2">
-                    <p>Địa chỉ: {props.item.address}</p>
-                    <p>Điện thoại: {props.item.numberPhone}</p>
-                </div>
-                <div className="flex gap-3">
-                    <button className="btn-primary font-normal">Giao đến địa chỉ này</button>
-                    <button className="btn-outline text-primary font-normal">Chỉnh sửa địa chỉ</button>
-                </div>
+            </div>
+            <div className="flex whitespace-nowrap text-gray-500 my-2">
+                {
+                    props.address.default ? <p className="text-primary text-center px-4">[Mặc định]</p> : <button className="btn-outline rounded-lg">Đặt mặc định</button>
+                }
+                <button className="ml-auto">Chỉnh sửa</button>
+                <button className="ml-3">Xóa</button>
             </div>
         </div >
     );

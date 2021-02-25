@@ -61,7 +61,7 @@ export function FormCheck(props:PropsType) {
                             <Checkbox checked={setCheckBox(index)} />
                             <div>
                                 <h4 className={setStyleCheck(index, "he")}>{item.title}</h4>
-                                <p className="text-gray-500 text-18">{item.content}</p>
+                                <p className="text-gray-500 text-14 md:text-18">{item.content}</p>
                             </div>
                         </div>
                     </div>

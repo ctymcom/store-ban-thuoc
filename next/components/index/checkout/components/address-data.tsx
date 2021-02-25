@@ -1,4 +1,11 @@
-export const listAdress = [
+export type MyAddress ={
+    id: number,
+    name: string,
+    default: boolean,
+    address: string,
+    numberPhone: string,
+}
+export const listAdressData:MyAddress[] = [
     {
         id: 1,
         name: "Lý Thanh Liêm",
