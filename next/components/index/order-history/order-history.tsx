@@ -61,12 +61,12 @@ export function OrderHistoryPage() {
             <div className="">
                 <div className="w-full flex justify-between mb-16 gap-7">
                     <div className="w-full">
-                        <p className="md:hidden whitespace-nowrap text-center my-3">Lọc theo đơn hàng:</p>
-                        <select className="block md:hidden border border-gray-400 rounded w-full pl-6 pr-6 py-2 hover:border-primary focus:border-primary-dark focus:outline-none"
+                        <p className="md:hidden whitespace-nowrap text-center mb-3">Lọc theo đơn hàng:</p>
+                        <select className="block md:hidden m-auto border border-gray-400 rounded w-8/12 px-4 py-2 hover:border-primary focus:border-primary-dark focus:outline-none"
                                 value={status}
                                 onChange={(e) => handlerOrder(e.target.value)}>
                                     {
-                                        menus.map(type => <option key={type.status} value={(type.status) ? type.status : ''}>{type.label}</option>)
+                                        menus.map(type => <option key={type.status} value={(type.status) ? type.status : ''}>{ (type.status) ? type.label : 'Tất cả đơn hàng'}</option>)
                                     }      
                         </select>
                         <ul className="hidden md:flex justify-between border-b-4 pb-1.5 mt-3 md:mt-0 h-auto">
