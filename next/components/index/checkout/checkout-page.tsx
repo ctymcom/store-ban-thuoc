@@ -59,7 +59,7 @@ export function CheckOutPage() {
                     </div>
                     <div className="w-full text-16 md:text-20 my-5">
                         <h4 className="uppercase text-20 md:text-24">Ghi chú khác</h4>
-                        <p>Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên dưới. Chúng tôi sẽ</p>
+                        <p>Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.</p>
                         <textarea className="w-full border-2 border-gray-300 rounded-md p-3 outline-none" placeholder="Nhập ghi chú của bạn"></textarea>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ export function CheckOutPage() {
                             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
                         </div>
                             <Link href="/complete" ><button className={setStyleBtn()} disabled={!isCheck}>Đặt mua</button></Link>
-                        <p className="whitespace-nowrap text-center text-12 md:text-16">(Xin vui lòng kiểm tra lại đơn hàng trước Đặt mua)</p>
+                        <p className="whitespace-nowrap text-center text-12 md:text-16">(Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)</p>
                     </div>
                 </div>
             </div> 
