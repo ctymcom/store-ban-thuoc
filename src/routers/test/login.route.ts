@@ -3,10 +3,10 @@ import { configs } from "../../configs";
 export default [
   {
     method: "get",
-    path: "/login",
+    path: "/loginPhone",
     midd: [],
     action: async (req: Request, res: Response) => {
-      res.render("login", { config: configs.firebaseView });
+      res.render("loginPhone", { config: configs.firebaseView });
     },
   },
   {

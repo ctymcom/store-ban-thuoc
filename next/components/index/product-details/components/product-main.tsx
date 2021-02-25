@@ -26,10 +26,6 @@ export function ProductMain() {
         {
           href: '/products',
           label: product.categories[0]?.name
-        },
-        {
-          href: router.pathname,
-          label: product.name
         }
       ])
     }
@@ -41,13 +37,16 @@ export function ProductMain() {
         {
           breadcrumbs.map((breadcrumb, index) => 
             <Link href={breadcrumb.href} key={index}>
-              <a className={index == breadcrumbs.length - 1?"text-primary":"hover:text-primary"}>
+              <a className="text-gray-600 hover:text-primary">
                 <span>{breadcrumb.label}</span>
-                <span className="px-1">{index == breadcrumbs.length - 1 ? '/' : ''}</span>
+                <span className="px-1">/</span>
               </a>
             </Link>
           )
         }
+        <a className="text-primary">
+          <span>{product.name}</span>
+        </a>
       </div>
       <div className="grid grid-cols-2 gap-x-6 mt-4">
         <div>

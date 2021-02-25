@@ -96,7 +96,6 @@
     "redis": "^3.0.2",
     "redis-dataloader": "^0.5.0",
     "rxjs": "^6.6.0",
-    "sass": "^1.32.2",
     "swagger-jsdoc": "^4.0.0",
     "swagger-ui-express": "^4.1.4",
     "tailwindcss": "^2.0.2",
