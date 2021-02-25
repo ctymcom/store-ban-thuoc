@@ -331,7 +331,24 @@ export class AritoHelper {
       };
     });
   }
-  static register({ nickname, email, phone }) {
+  static register({
+    nickname,
+    email,
+    phone,
+    language = "v",
+    ...device
+  }: {
+    nickname: string;
+    email: string;
+    phone: string;
+    deviceId: string;
+    deviceToken: string;
+    deviceModel: string;
+    deviceName: string;
+    deviceBrand: string;
+    deviceOsVersion: string;
+    language?: string;
+  }) {
     return Axios.post(`${this.host}/Authorize/Register`, {
       token: this.imageToken,
       memvars: [
@@ -341,7 +358,13 @@ export class AritoHelper {
       ],
     }).then((res) => {
       this.handleError(res);
-      return res.data.msg;
+      const password = get(res.data, "data.message.0.val");
+      return this.login({
+        username: email,
+        password: password,
+        language: language,
+        ...device,
+      });
     });
   }
   static getAllTag(page: number = 1, updatedAt?: Date) {
