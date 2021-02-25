@@ -34,17 +34,38 @@ export function OrderHistoryPage() {
         { label: 'Đã giao',status: 'complete'},
         { label: 'Đã hủy', status: 'canceled'},
     ];
+    const handleScrollIntoView = (index) => {
+        let ele = document.getElementsByClassName('abcd')[index];
+        console.log(ele);   
+        if(ele) {
+            ele.scrollIntoView({ behavior: 'smooth', inline: 'center'});
+        }
+    }
+    const arrayABC = [
+        { title: 'abc' },
+        { title: 'def' },
+        { title: 'ghl' },
+        { title: 'nam' },
+        { title: 'minh' },
+        { title: 'phước' },
+        { title: 'nam' },
+        { title: 'minh' },
+        { title: 'phước' },
+        { title: 'nam' },
+        { title: 'minh' },
+        { title: 'phước' },
+    ]
    
     return <>
-        <div className="min-h-full w-9/12">
-            <div className="grid grid-rows-1">
+        <div className="min-h-full w-full lg:w-9/12 px-3 md:px-0">
+            <div className="">
                 <div className="w-full flex justify-between mb-16 gap-7">
                     <div className="w-full">
-                        <ul className="flex justify-between  border-b-4 pb-1.5">
+                        <ul className="flex justify-between border-b-4 pb-1.5 mt-3 md:mt-0 overflow-x-scroll h-auto md:overflow-hidden">
                             { menus.map((menu, index) => (
                                 <li key={index}>
                                     <Link href= {{ pathname: '/profile/order-history', query: menu.status ? { status: menu.status } : {} }}>
-                                        <a  className={`uppercase font-semibold text-sm px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary
+                                        <a  className={`uppercase font-normal md:font-semibold whitespace-nowrap text-sm px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary
                                             ${status == menu.status ? 'text-primary border-primary animate-slide-up' : ''}`}
                                             >
                                             {menu.label} 
@@ -53,6 +74,15 @@ export function OrderHistoryPage() {
                                 </li> 
                             ))}
                         </ul>
+                        {/* <ul className="flex overflow-x-scroll">
+                            {
+                                arrayABC.map((item, index) => {
+                                    <li className="abcd mr-3"
+                                    onClick={() => handleScrollIntoView(index)}>{item.title}</li>  
+                                })
+                            }
+                            
+                        </ul> */}
                         <div className="">
                             <OrderHisttoryList data={data} status={status}/>
                         </div>

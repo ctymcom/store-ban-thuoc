@@ -8,14 +8,14 @@ export function RewardPointPage () {
                 <div className="">
                     <div className="w-full flex justify-between mt-0 my-28">
                         <div className="w-full md:w-full">
-                            <div className="flex items-center justify-center md:justify-start mb-6 md:mb-10 mt-6 md:mt-4 lg:mt-0">
-                                <img className="object-contain mr-6 md:mr-7 w-1/3 md:w-1/4" src="/assets/img/reward-point.png" alt=""/>
-                                <div className="">
-                                    <p className="text-md xs:text-2xl md:text-lg font-normal text-gray-700 mt-5">Số Điểm Bạn Đang Có</p>
+                            <div className="flex flex-col md:flex-row items-center justify-center md:justify-start mb-0 md:mb-10 mt-6 md:mt-4 lg:mt-0">
+                                <img className="object-contain mr-0 md:mr-7 w-3/6 sm:w-2/5 md:w-1/4" src="/assets/img/reward-point.png" alt=""/>
+                                <div className="text-center -mt-2">
+                                    <p className="text-md xs:text-2xl md:text-lg font-extralight text-gray-700 mt-5">Số Điểm Bạn Đang Có</p>
                                     <p className="text-xl xs:text-3xl md:text-4xl font-medium text-yellow-400">165.520 Điểm</p>
                                 </div>
                             </div>
-                            <ul className="hidden md:flex border-b-4 pb-1 pl-2">
+                            <ul className="hidden md:flex border-b-4 pb-1 pl-0">
                                 <RewardPointNav/>
                             </ul>
                             <ul className="">
