@@ -456,6 +456,16 @@ export class AritoHelper {
       this.handleError(res);
     });
   }
+  static async deleteUserAddress(addressId: string) {
+    return Axios.post(`${this.host}/List/DeleteUserAddress`, {
+      token: this.imageToken,
+      memvars: [
+        ["ma_dc", "C", addressId], //Xóa địa chỉ dựa theo mã, lấy được từ API GetUserAddress
+      ],
+    }).then((res) => {
+      this.handleError(res);
+    });
+  }
 }
 
 AritoHelper.setImageToken();
