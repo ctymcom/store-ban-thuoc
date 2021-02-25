@@ -44,7 +44,11 @@ const Mutation = {
   updateUserAddress: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     const { id, data } = args;
-    return await userAddressService.updateOne(id, data);
+
+    return await userAddressService.updateOne(id, data).then(async (res) => {
+      await AritoHelper.updateUserAddress(res);
+      return res;
+    });
   },
   deleteOneUserAddress: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
