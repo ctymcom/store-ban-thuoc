@@ -3,7 +3,7 @@ import { ImQuotesLeft, ImQuotesRight } from 'react-icons/im'
 import useInterval from "../../../../lib/hooks/useInterval"
 import { useHomeContext } from "../providers/home-provider"
 import { SectionHeader } from "./section-header"
-import { Feedback } from './../../../../lib/repo/feedback.repo';
+import { Feedback } from '../../../../lib/repo/feedback.repo';
 
 const partitionArray = (array: any[], size) => array.slice().sort((a, b) => a.content > b.content ? 1 : 0).map((e,i) => (i % size === 0) ? array.slice(i, i + size) : null).filter( (e) => e )
 

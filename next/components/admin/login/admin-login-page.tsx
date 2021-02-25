@@ -4,12 +4,14 @@ import { LOGIN_PATHNAME, useAuth } from "../../../lib/providers/auth-provider";
 
 export default function AdminLoginPage() {
 
-  const { checkUser } = useAuth()
-  useEffect(() => {
-    if (checkUser() === true) {
-      router.replace('/admin')
-    }
-  }, []);
+  const { checkUser, login } = useAuth()
+    const router = useRouter()
+
+    useEffect(() => {
+      if (checkUser() === true) {
+        router.replace('/admin')
+      }
+    }, []);
 
   const ref = useCallback(input => {
     if (input) input.focus()
@@ -17,9 +19,6 @@ export default function AdminLoginPage() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
-  const { login } = useAuth()
-  const router = useRouter()
 
   const onFormSubmit = e => {
     e.preventDefault();

@@ -1,6 +1,6 @@
-import { Post } from './../../../../lib/repo/post.repo';
+import { Post } from '../../../../lib/repo/post.repo';
 import { SectionHeader } from "./section-header";
-import { PostCard } from './../../../shared/news/post-card';
+import { PostCard } from '../../../shared/news/post-card';
 
 interface PropsType extends ReactProps {
   posts: Post[]

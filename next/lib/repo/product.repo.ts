@@ -1,6 +1,7 @@
 import { Category } from "./category.repo";
 import { BaseModel, CrudRepository } from "./crud.repo";
 import { Ingredient } from "./ingredient.repo";
+
 export interface Product extends BaseModel {
   code: string;
   name: string;
@@ -31,13 +32,32 @@ export interface Product extends BaseModel {
   imageId: string;
   basePrice: number;
   salePrice: number;
-  containers: [string];
+  containers: string[];
   saleRate: number;
-  tags: [string];
-  saleExpiredDate: Date;
+  tags: string[];
+  tagDetails: ProductTagDetail[];
+  tabs: ProductTabContent[];
+  relatedProducts: Product[];
+  saleExpiredDate: string;
   categories: Category[];
   ingredients: Ingredient[];
   image: string;
+}
+
+interface ProductTagDetail {
+  code: string;
+  name: string;
+  name2: string;
+  color: string;
+  icon: string;
+  position: number;
+  outOfDate: string;
+}
+
+interface ProductTabContent {
+  name: string;
+  name2: string;
+  content: string;
 }
 
 export class ProductRepository extends CrudRepository<Product> {
@@ -54,6 +74,7 @@ export class ProductRepository extends CrudRepository<Product> {
     containers: [string]
     saleRate: number
     tags: [string]
+    tagDetails { code name }: [ProductTagDetail]
     categories { id name parents { id name } }: [Category]
     image: string
   `);
@@ -94,6 +115,36 @@ export class ProductRepository extends CrudRepository<Product> {
     saleRate: number
     tags: [string]
     saleExpiredDate: DateTime
+    tagDetails {
+      code: String
+      name: String
+      name2: String
+      color: String
+      icon: String
+      position: Int
+      outOfDate: DateTime
+    }: [ProductTagDetail]
+    tabs {
+      name: String
+      name2: String
+      content: String
+    }: [ProductTabContent]
+    relatedProducts {
+      id: string
+      createdAt: DateTime
+      updatedAt: DateTime
+      code: string
+      name: string
+      unit: string
+      basePrice: number
+      salePrice: number
+      containers: [string]
+      saleRate: number
+      tags: [string]
+      tagDetails { code name }: [ProductTagDetail]
+      categories { id name parents { id name } }: [Category]
+      image: string
+    }: [Product]
     categories { id name parents { id name } }: [Category]
     ingredients { id name }: [Ingredient]
     image: string
