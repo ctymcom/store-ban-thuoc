@@ -1,33 +1,32 @@
 import React from 'react';
 import { AddressItem } from './address-item';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MyAddress, listAdressData } from './address-data';
 
 export function AddressList(props) {
     const [listAdress, setListAdress] = useState([...listAdressData]);
-    let index = props.listAdress.findIndex((item:MyAddress)=>item.default);
-    const [addressCurent, setAddressCurent] = useState(listAdress[index]);
-    const handleSetCurrentAddress =(id:number,type:string)=>{
+    let index = listAdress.findIndex((item:MyAddress)=>item.default);
+    useEffect(() => {
+        setListAdress(listAdress);
+      }, [listAdress]);
+    const handleChange =(id:number,type:string)=>{
         switch (type) {
             case "setDefault":{
-                
-                index = props.listAdress.findIndex((item:MyAddress)=>item.id);
-                setListAdress
-            }
-                
+                setListAdress(listAdress.map((item:MyAddress)=> item.id === index+1 ? {...item, default : false} : item));
+                setListAdress(listAdress.map((item:MyAddress)=> item.id === id ? {...item, default : true} : item))
+                }
                 break;
-        
             default:
                 break;
         }
     }
     return (
-        <div className="">
+        <>
             {
-                props.listAdress.map((item:MyAddress, index:number) => {
-                    return <AddressItem key={index} address={item} onClick={handleSetCurrentAddress}/>
+                listAdress.map((item:MyAddress, index:number) => {
+                    return <AddressItem key={index} address={item} onClick={handleChange}/>
                 })
             }
-        </div>
+        </>
     );
 }

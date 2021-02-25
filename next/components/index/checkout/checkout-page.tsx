@@ -98,7 +98,7 @@ export function CheckOutPage() {
                             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
                         </div>
                             <Link href="/complete" ><button className={setStyleBtn()} disabled={!isCheck}>Đặt mua</button></Link>
-                        <p className="whitespace-nowrap text-center text-12 md:text-16">(Xin vui lòng kiểm tra lại đơn hàng trước Đặt mua)</p>
+                        <p className="whitespace-nowrap text-center text-12 md:text-16">(Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)</p>
                     </div>
                 </div>
             </div> 
