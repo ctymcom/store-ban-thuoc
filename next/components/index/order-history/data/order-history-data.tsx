@@ -2,7 +2,7 @@
 let now = new Date();
 let data = [
     {
-        id_oder: 'SDF13Z5A63',
+        id_oder: 'SDF13Z5',
         delivery_time: now,
         intend_time: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3),
         total_product: 5,
@@ -10,7 +10,7 @@ let data = [
         status: 'pending'
     },
     {
-        id_oder: 'SDF13Z5A63',
+        id_oder: 'SDF13Z5',
         delivery_time: now,
         intend_time: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3),
         total_product: 5,
@@ -18,7 +18,7 @@ let data = [
         status: 'delivering'
     },
     {
-        id_oder: 'SDF13Z5A63',
+        id_oder: 'SDF13Z5',
         delivery_time: now,
         intend_time: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3),
         total_product: 5,
@@ -26,7 +26,7 @@ let data = [
         status: 'complete'
     },
     {
-        id_oder: 'SDF13Z5A63',
+        id_oder: 'SDF13Z5',
         delivery_time: now,
         intend_time: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3),
         total_product: 5,

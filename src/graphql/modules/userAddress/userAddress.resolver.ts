@@ -4,7 +4,7 @@ import { ROLES } from "../../../constants/role.const";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { Context } from "../../context";
 import { AddressModel } from "../address/address.model";
-import { UserAddressModel } from "./userAddress.model";
+import { IUserAddress, UserAddressModel } from "./userAddress.model";
 import { userAddressService } from "./userAddress.service";
 
 const Query = {
@@ -44,12 +44,21 @@ const Mutation = {
   updateUserAddress: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     const { id, data } = args;
-    return await userAddressService.updateOne(id, data);
+
+    return await userAddressService.updateOne(id, data).then(async (res) => {
+      await AritoHelper.updateUserAddress(res);
+      await userAddressService.syncUserAddress(context.user.id.toString());
+      return await UserAddressModel.findById(res._id);
+    });
   },
   deleteOneUserAddress: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     const { id } = args;
-    return await userAddressService.deleteOne(id);
+    return await userAddressService.deleteOne(id).then(async (res: IUserAddress) => {
+      await AritoHelper.deleteUserAddress(res.addressId);
+      await userAddressService.syncUserAddress(context.user.id.toString());
+      return res;
+    });
   },
 };
 

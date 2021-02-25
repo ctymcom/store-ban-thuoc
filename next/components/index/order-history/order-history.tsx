@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { OrderHistoryData } from "./data/order-history-data";
-import { Pagination } from "../../../lib/repo/crud.repo";
 
 export function OrderHistoryPage() {
     const [data, setData] = useState([]);
@@ -21,38 +20,80 @@ export function OrderHistoryPage() {
     //         behavior: 'smooth'
     //     });
     // };
-    useEffect(() => {
-        setData(OrderHistoryData)
-    }, []);
-
     const router = useRouter();
     const { status } = router.query;
+
+    const handlerOrder = (value) => {
+        router.push({
+            pathname: '/profile/order-history',
+            query: value ? { status: value } : ''
+        });
+        console.log(value);
+        
+    }; 
+        
+    useEffect(() => {
+        setData(OrderHistoryData);
+        // console.log(filterOrder);
+        // console.log(typeof filterOrder);
+        
+        // switch(filterOrder.toString()) {
+        //     case '1': setData(OrderHistoryData.filter(x => x.status == 'pending'));
+        //     case '2': setData(OrderHistoryData.filter(x => x.status == 'delivering'));
+        //     case '3': setData(OrderHistoryData.filter(x => x.status == 'complete'));
+        //     case '4': setData(OrderHistoryData.filter(x => x.status == 'canceled'));
+        //     default: setData(OrderHistoryData);
+        // }
+    }, []);
+
     const menus = [
-        { label: 'Tất cả', status: undefined},
+        { label: 'Tất cả đơn hàng', status: ''},
         { label: 'Chờ xác nhận', status: 'pending'},
         { label: 'Đang giao', status: 'delivering'},
         { label: 'Đã giao',status: 'complete'},
         { label: 'Đã hủy', status: 'canceled'},
     ];
-   
+    console.log(status);
+    
     return <>
-        <div className="min-h-full w-9/12">
-            <div className="grid grid-rows-1">
+    
+        <div className="min-h-full w-full lg:w-9/12 px-3 md:px-0">
+            <div className="">
                 <div className="w-full flex justify-between mb-16 gap-7">
                     <div className="w-full">
-                        <ul className="flex justify-between  border-b-4 pb-1.5">
+                        <p className="md:hidden whitespace-nowrap text-center my-3">Lọc theo đơn hàng:</p>
+                        <select className="block md:hidden border border-gray-400 rounded w-full pl-6 pr-6 py-2 hover:border-primary focus:border-primary-dark focus:outline-none"
+                                value={status}
+                                onChange={(e) => handlerOrder(e.target.value)}>
+                                    {
+                                        menus.map(type => <option key={type.status} value={(type.status) ? type.status : ''}>{type.label}</option>)
+                                    }      
+                        </select>
+                        <ul className="hidden md:flex justify-between border-b-4 pb-1.5 mt-3 md:mt-0 h-auto">
                             { menus.map((menu, index) => (
-                                <li key={index}>
-                                    <Link href= {{ pathname: '/profile/order-history', query: menu.status ? { status: menu.status } : {} }}>
-                                        <a  className={`uppercase font-semibold text-sm px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary
-                                            ${status == menu.status ? 'text-primary border-primary animate-slide-up' : ''}`}
-                                            >
-                                            {menu.label} 
-                                        </a>
-                                    </Link>
-                                </li> 
+                                <>
+                                    <li key={index}>
+                                        <Link href= {{ pathname: '/profile/order-history', query: menu.status ? { status: menu.status } : {} } }>
+                                            <a  className={`normal-case lg:uppercase font-extralight md:font-semibold whitespace-nowrap text-base px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary
+                                                ${(status ? status == menu.status : !menu.status) ? ' text-primary border-primary animate-slide-up' : ''}`}
+                                                >
+                                                {menu.label}
+                                                
+                                            </a>
+                                        </Link>
+                                    </li> 
+                              </>
                             ))}
                         </ul>
+                        {/* <ul className="flex justify-between border-b-4 pb-1.5 mt-3 md:mt-0 overflow-x-auto md:overflow-hidden">
+                            { list.map((item, index) => (
+                                <li className="abcdefg" key={index} onClick={() => handleScrollIntoView(index)}>   
+                                    <a  className=' normal-case lg:uppercase font-extralight md:font-semibold whitespace-nowrap text-base px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary'>
+                                            {item} 
+                                        </a>
+                                </li> 
+                            ))}
+                        </ul> */}
                         <div className="">
                             <OrderHisttoryList data={data} status={status}/>
                         </div>

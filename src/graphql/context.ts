@@ -1,10 +1,12 @@
-import _, { get } from "lodash";
-import { AuthHelper } from "../helpers";
-import { TokenHelper } from "../helpers/token.helper";
+import { Request } from "express";
 import { TokenExpiredError } from "jsonwebtoken";
+import _, { get } from "lodash";
+
 import { ROLES } from "../constants/role.const";
-import { ChatBotHelper, MessengerTokenDecoded } from "../helpers/chatbot.helper";
+import { AuthHelper } from "../helpers";
 import { AritoUser } from "../helpers/arito/types/aritoUser.type";
+import { TokenHelper } from "../helpers/token.helper";
+
 export type TokenData = {
   role: string;
   _id: string;
@@ -20,12 +22,13 @@ export type SignedRequestPayload = {
 };
 export class Context {
   req: Request;
-  constructor(
-    public isAuth: boolean = false,
-    public isTokenExpired: boolean = false,
-    public tokenData?: TokenData,
-    public messengerSignPayload?: MessengerTokenDecoded
-  ) {}
+  isAuth = false;
+  isTokenExpired = false;
+  tokenData: TokenData;
+  constructor(params: { req?: Request; connection?: any }) {
+    this.req = params.req;
+    this.parseToken(params);
+  }
 
   get isEditor() {
     return get(this.tokenData, "role") == ROLES.EDITOR;
@@ -78,43 +81,11 @@ export class Context {
       return this;
     }
   }
-
-  async parseSig(params: any) {
-    try {
-      const { req, connection } = params;
-      let sig;
-      let psid;
-      if (req) {
-        this.req = req;
-        sig = _.get(req, "headers.x-sig") || _.get(req, "query.x-sig");
-        psid = _.get(req, "headers.x-psid") || _.get(req, "query.x-psid");
-      }
-      if (connection && connection.context) {
-        sig = connection.context["x-sig"];
-        psid = connection.context["x-psid"];
-      }
-
-      if (sig) {
-        const signPayload = await ChatBotHelper.decodeSignedRequest(sig);
-        signPayload.psid = !signPayload.psid || signPayload.psid == "" ? psid : signPayload.psid;
-        this.messengerSignPayload = signPayload;
-        this.isAuth = true;
-
-        this.tokenData = { _id: this.messengerSignPayload.psid, role: ROLES.MESSENGER };
-      }
-    } catch (err) {
-    } finally {
-      return this;
-    }
-  }
   auth(roles: string[]) {
     AuthHelper.acceptRoles(this, roles);
   }
 }
 
 export async function onContext(params: any) {
-  let context: Context = new Context();
-  await context.parseSig(params);
-  context.parseToken(params);
-  return context;
+  return new Context(params);
 }

@@ -45,7 +45,7 @@ export function Footer() {
                 <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">Quy định sử dụng Website</li>
                 <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">Chính sách bảo mật</li>
                 <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">Chính sách bán hàng</li>
-                <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">Chính sách vận chuyễn</li>
+                <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">Chính sách vận chuyển</li>
                 <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">Hướng dẫn thanh toán</li>
                 <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">Chính sách giải quyết khiếu nại</li>
                 <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">Các câu hỏi thường gặp</li>
@@ -57,7 +57,7 @@ export function Footer() {
           <div className="flex flex-col justify-start lg:w-full text-sm sm:mt-6 md:mt-0">
             <div className="">
               <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">Đăng kí nhận tin mới</div>
-              <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-0 mt-2 sm:mt-1 md:mt-0 lg:mt-3">Hãy đăng ký email để nhận được khuyến mãi hoặc</div>
+              <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-0 mt-2 sm:mt-1 md:mt-0 lg:mt-3">Hãy đăng ký email để nhận được khuyến mãi</div>
               <div className="py-6 sm:py-10 md:py-10 lg:py-8 flex w-full sm:w-8/12 md:w-11/12 lg:w-full">
                 <input
                   type="text"
