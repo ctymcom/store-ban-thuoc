@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa'
+import { FaCheckSquare, FaRegSquare } from 'react-icons/fa'
 import { useState, useEffect } from 'react';
 interface PropType extends ReactProps{
     checked:boolean
@@ -12,7 +12,7 @@ const CheckBoxSquare = (props:PropType) => {
     return (
         <div>
             {
-                checkedLocal ? <i className="text-primary"><FaRegCheckSquare /></i> : <i><FaRegSquare/></i>
+                checkedLocal ? <i className="text-primary"><FaCheckSquare /></i> : <i><FaRegSquare/></i>
             }
         </div>
     );

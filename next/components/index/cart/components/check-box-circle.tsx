@@ -14,7 +14,7 @@ const CheckBoxCricle = (props:PropsType) => {
       return (
         <div className="cursor-pointer px-1">
             {
-                Checked?<i className="text-primary"><FaCheckCircle/></i>:<i className="opacity-100"><FaRegCircle/></i>
+                Checked?<i className="text-primary"><FaCheckCircle/></i>:<i><FaRegCircle/></i>
             }
         </div>
     );
