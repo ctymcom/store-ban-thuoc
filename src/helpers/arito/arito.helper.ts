@@ -1,6 +1,7 @@
 import Axios from "axios";
 import { compact, get, groupBy, keyBy } from "lodash";
 import moment from "moment-timezone";
+import FormData from "form-data";
 
 import { configs } from "../../configs";
 import { INotification } from "../../graphql/modules/notification/notification.model";
@@ -516,6 +517,21 @@ export class AritoHelper {
           group: pageInfo["group"],
         },
       };
+    });
+  }
+  static uploadUserAvatar(userId: string, stream: any, token: string) {
+    var data = new FormData();
+    data.append("file", stream);
+    return Axios({
+      url: `${this.host}/UploadFile/SysUser/${userId}/${token}`,
+      method: "POST",
+      data: data,
+      headers: {
+        ...data.getHeaders(),
+      },
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "value");
     });
   }
 }
