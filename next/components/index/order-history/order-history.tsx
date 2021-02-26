@@ -66,7 +66,7 @@ export function OrderHistoryPage() {
                                 value={status}
                                 onChange={(e) => handlerOrder(e.target.value)}>
                                     {
-                                        menus.map(type => <option key={type.status} value={(type.status) ? type.status : ''}>{ type.status == '' ? 'Tất cả đơn hàng' : type.label }</option>)
+                                        menus.map(type => <option key={type.status} selected={type.status==status?true:false} value={(type.status) ? type.status : ''}>{ type.status == '' ? 'Tất cả đơn hàng' : type.label }</option>)
                                     }      
                         </select>
                         <ul className="hidden md:flex justify-between border-b-4 pb-2 mt-3 md:mt-0 h-auto">
