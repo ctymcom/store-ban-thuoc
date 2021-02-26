@@ -13,6 +13,8 @@ export enum SettingKey {
   BANNER_1 = "BANNER_1", // Cấu hình banner 1
   BANNER_2 = "BANNER_2", // Cấu hình banner 2
   BANNER_3 = "BANNER_3", // Cấu hình banner 3
+  HOTLINE = "HOTLINE", // Cấu hình hotline
+  FEATURE = "FEATURE", // Cấu hình tính năng
 }
 export const SETTING_DATA = [
   {
@@ -146,6 +148,69 @@ export const SETTING_DATA = [
               image: "https://i.imgur.com/y3RgrFT.jpg",
               link: "https://arito-store.mcom.app",
               visable: false,
+            },
+          ],
+        },
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.object,
+        name: "HOTLINE",
+        key: SettingKey.HOTLINE,
+        value: {
+          text: "HOTLINE: 1900 6067 (miễn phí)",
+          phone: "1900 6067",
+          footerText: "HOTLINE MIỄN PHÍ (7H-22H)",
+          items: [
+            {
+              display: "Tư vấn bán hàng: 1900 6067",
+              phone: "1900 6067",
+            },
+            {
+              display: "Góp ý dịch vụ: 1900 6067",
+              phone: "1900 6067",
+            },
+            {
+              display: "Lắng nghe khiếu nại: 1900 6067",
+              phone: "1900 6067",
+            },
+          ],
+        },
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.object,
+        name: "Tính năng",
+        key: SettingKey.FEATURE,
+        value: {
+          items: [
+            {
+              image: "https://placehold.it/16x16",
+              title: "MIỄN PHÍ GIAO VẬN",
+              contnet:
+                "Miễn phí vận chuyển cho các đơn hàng trên 300,000VNĐ và nhận hàng nhanh chóng.",
+            },
+            {
+              image: "https://placehold.it/16x16",
+              title: "TẬN TÂM PHỤC VỤ",
+              contnet:
+                "Dịch vụ chăm sóc khách hàng chuyên nghiệp luôn sẵn sàng giải đáp mọi thắc mắc của bạn. Hotline miễn phí: 1800 6821",
+            },
+            {
+              image: "https://placehold.it/16x16",
+              title: "CỬA HÀNG GẦN BẠN",
+              contnet:
+                "ThuocSi.vn đang mở rộng hệ thống cửa hàng gần bạn để chăm sóc bạn tốt hơn. Hãy ghé thăm và trải nghiệm nhé!",
+            },
+            {
+              image: "https://placehold.it/16x16",
+              title: "MUA HÀNG TRỰC TUYẾN",
+              contnet:
+                "Giá bán trên trang chỉ áp dụng khi mua sắm trên trang thương mại điện tử của ThuocSi.vn",
             },
           ],
         },
