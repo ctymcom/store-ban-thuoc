@@ -10,6 +10,9 @@ export enum SettingKey {
   LOGO = "LOGO", // Hình logo
   // Cấu hình trang chủ
   TOP_MENU = "TOP_MENU", // Cấu hình top menu
+  BANNER_1 = "BANNER_1", // Cấu hình banner 1
+  BANNER_2 = "BANNER_2", // Cấu hình banner 2
+  BANNER_3 = "BANNER_3", // Cấu hình banner 3
 }
 export const SETTING_DATA = [
   {
@@ -57,6 +60,92 @@ export const SETTING_DATA = [
             {
               name: "Tuyển dụng",
               link: "/tuyen-dung",
+            },
+          ],
+        },
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.object,
+        name: "Banner 1",
+        key: SettingKey.BANNER_1,
+        value: {
+          items: [
+            {
+              image: "https://i.imgur.com/XMTJQSx.png",
+              link: "https://arito-store.mcom.app",
+              visable: false,
+            },
+            {
+              image: "https://i.imgur.com/jriMx2e.jpg",
+              link: "https://arito-store.mcom.app",
+              visable: false,
+            },
+            {
+              image: "https://i.imgur.com/ycOejfb.png",
+              link: "https://arito-store.mcom.app",
+              visable: false,
+            },
+          ],
+        },
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.object,
+        name: "Banner 2",
+        key: SettingKey.BANNER_2,
+        value: {
+          items: [
+            {
+              image: "https://i.imgur.com/jriMx2e.jpg",
+              link: "https://arito-store.mcom.app",
+              visable: false,
+            },
+          ],
+        },
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.object,
+        name: "Banner 3",
+        key: SettingKey.BANNER_3,
+        value: {
+          items: [
+            {
+              image: "https://i.imgur.com/XMTJQSx.png",
+              link: "https://arito-store.mcom.app",
+              visable: false,
+            },
+            {
+              image: "https://i.imgur.com/jriMx2e.jpg",
+              link: "https://arito-store.mcom.app",
+              visable: false,
+            },
+            {
+              image: "https://i.imgur.com/ycOejfb.png",
+              link: "https://arito-store.mcom.app",
+              visable: false,
+            },
+            {
+              image: "https://i.imgur.com/OY7IIUM.png",
+              link: "https://arito-store.mcom.app",
+              visable: false,
+            },
+            {
+              image: "https://i.imgur.com/i9lJPRX.png",
+              link: "https://arito-store.mcom.app",
+              visable: false,
+            },
+            {
+              image: "https://i.imgur.com/y3RgrFT.jpg",
+              link: "https://arito-store.mcom.app",
+              visable: false,
             },
           ],
         },
