@@ -5,7 +5,7 @@ export type MyAddress ={
     address: string,
     numberPhone: string,
 }
-export const listAdressData:MyAddress[] = [
+export const listAddressData:MyAddress[] = [
     {
         id: 1,
         name: "Lý Thanh Liêm",
