@@ -69,6 +69,7 @@ export class ProductRepository extends CrudRepository<Product> {
     code: string
     name: string
     unit: string
+    packing: string
     basePrice: number
     salePrice: number
     containers: [string]

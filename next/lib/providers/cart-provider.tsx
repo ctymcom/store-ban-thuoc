@@ -20,7 +20,8 @@ export interface CartProduct {
 const CartContext = createContext<Partial<{
   cartProducts: CartProduct[]
   cartProductCount: number
-  addProductToCart: (product: Product, qty: number) => void
+  cartTotal: number
+  addProductToCart: (product: Product, qty: number) => boolean
   changeProductQuantity: (product: Product, qty: number) => void
   removeProductFromCart: (product: Product) => void
 }>>({});
@@ -29,13 +30,15 @@ export function CartProvider({ children }: any) {
   
   const [cartProducts, setcartProducts] = useState<CartProduct[]>([]);
   const [cartProductCount, setCartProductCount] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
 
   useEffect(() => {
     setCartProductCount(cartProducts.reduce((count, cartProduct) => count += cartProduct.qty, 0))
+    setCartTotal(cartProducts.reduce((total, cartProduct) => total += cartProduct.amount, 0))
   }, [cartProducts]);
 
-  const addProductToCart = (product: Product, qty: number) => {
-    if (!qty) return
+  const addProductToCart = (product: Product, qty: number): boolean => {
+    if (!qty) return false
     
     let cartProduct = cartProducts.find(x => x.productId == product.id)
     if (cartProduct) {
@@ -51,6 +54,7 @@ export function CartProvider({ children }: any) {
       })
     }
     setcartProducts([...cartProducts])
+    return true
   }
 
   const changeProductQuantity = (product: Product, qty: number) => {
@@ -81,7 +85,8 @@ export function CartProvider({ children }: any) {
   }
 
   return (
-    <CartContext.Provider value={{ cartProducts, cartProductCount, addProductToCart, changeProductQuantity, removeProductFromCart }}>
+    <CartContext.Provider value={{ cartProducts, cartProductCount, cartTotal, addProductToCart, 
+    changeProductQuantity, removeProductFromCart }}>
       {children}
     </CartContext.Provider>
   );

@@ -1,12 +1,11 @@
-import { toNumber } from "lodash";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { HiMinusCircle, HiPlusCircle } from "react-icons/hi";
-import { NumberPipe } from '../../../../lib/pipes/number';
-import { useProductDetailsContext } from './../providers/product-details-provider';
-import useInterval from './../../../../lib/hooks/useInterval';
 import { intervalToDuration, parseISO } from "date-fns";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { NumberPipe } from '../../../../lib/pipes/number';
+import { useCart } from "../../../../lib/providers/cart-provider";
 import { ProductQuantity } from "../../../shared/product/product-quantity";
+import useInterval from './../../../../lib/hooks/useInterval';
+import { useProductDetailsContext } from './../providers/product-details-provider';
 
 interface PropsType extends ReactProps {
     
@@ -17,6 +16,18 @@ export function ProductInfo(props: PropsType) {
     const [expiredFromNowText, setExpiredFromNowText] = useState('');
 
     const { product } = useProductDetailsContext()
+    const router = useRouter()
+    const { addProductToCart } = useCart()
+    const onAddToCart = (redirect: boolean = false) => {
+      if (redirect) {
+        if (addProductToCart(product, quantity)) {
+            router.push('/cart')
+        }
+      } else {
+        addProductToCart(product, quantity)
+        setQuantity(0)
+      }
+    }
     
     useInterval(() => {
         if (product?.saleExpiredDate) {
@@ -49,8 +60,8 @@ export function ProductInfo(props: PropsType) {
             />
         </div>
         <div className="flex">
-            <button className="btn-accent btn-lg">Thêm vào giỏ</button>                        
-            <button className="btn-primary btn-lg ml-2">Mua ngay</button>
+            <button className="btn-accent btn-lg" onClick={() => onAddToCart()}>Thêm vào giỏ</button>                        
+            <button className="btn-primary btn-lg ml-2" onClick={() => onAddToCart(true)}>Mua ngay</button>
         </div>
         <div className="mt-4">
             {

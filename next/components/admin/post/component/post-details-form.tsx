@@ -52,7 +52,7 @@ export function PostDetailsForm({ ...props }: PropsType) {
         addOnEmpty
         values={post.tags.map((t) => ({ value: t.id, display: t.name }))}
         options={tags.map(t => ({ value: t.id, display: t.name }))}
-        onValuesChanged={(values) => post.tagIds = values}
+        onValuesChanged={(values) => { post.tagIds = values; console.log(post.tagIds) }}
         onAddNew={(value) => createTag(value).then(t => ({ value: t.id, display: t.name }))}
       />
       <TextArea

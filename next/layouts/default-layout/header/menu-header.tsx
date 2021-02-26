@@ -15,7 +15,7 @@ export function MenuHeader(props: PropsType) {
     { label: 'Sản phẩm', path: '/products' },
     { label: 'Hoạt chất', path: '/ingredients' },
     { label: 'Đặt hàng nhanh', path: '/quick-shopping' },
-    { label: 'Khuyến mãi', path: '/promotions' },
+    { label: 'Khuyến mãi', path: '/products' },
   ];
   
   useEffect(() => {

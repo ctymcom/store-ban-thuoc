@@ -35,7 +35,7 @@ export function HeaderUser({ ...props }: PropsType) {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <div className="pl-3 pr-2 font-semibold text-left leading-tight">{user.nickname}</div>
+                  <div className="pl-3 pr-2 font-semibold text-left leading-tight max-w-3xs">{user.nickname}</div>
                   <i className="text-24">
                     <HiChevronDown/>
                   </i>

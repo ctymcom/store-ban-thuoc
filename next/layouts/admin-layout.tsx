@@ -4,6 +4,7 @@ import { LOGIN_PATHNAME, useAuth } from "../lib/providers/auth-provider";
 import Sidebar from "./admin-layout/sidebar";
 import { HeadSEO } from './default-layout/head-seo';
 import { useRouter } from 'next/router';
+import { USER_ROLES } from "../lib/repo/arito-user.repo";
 
 interface AdminLayoutProps extends ReactProps {
   title?: string;
@@ -18,13 +19,10 @@ export function AdminLayout({
   const { user, checkUser } = useAuth()
   useEffect(() => {
     sessionStorage.setItem(LOGIN_PATHNAME, router.pathname)
-    if (checkUser() === null) {
+    if (!checkUser(USER_ROLES.map(x => x.value))) {
       router.replace('/admin/login')
     }
-    console.log('asdasdasdsad')
   }, []);
-
-  console.log('rerender')
   
   return (
     <>

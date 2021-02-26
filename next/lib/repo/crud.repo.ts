@@ -129,6 +129,7 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
       variables: { data },
     } as MutationOptions;
     const result = await this.apollo.mutate(options);
+    await this.clearStore();
     this.handleError(result);
     return result.data["g0"] as T;
   }
@@ -165,6 +166,7 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
       fetchPolicy: "no-cache",
     } as MutationOptions;
     const result = await this.apollo.mutate(options);
+    await this.clearStore();
     this.handleError(result);
     return result.data["g0"] as T;
   }
