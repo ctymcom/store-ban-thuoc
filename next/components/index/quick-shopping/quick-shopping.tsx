@@ -32,14 +32,14 @@ export function QuickShoppingPage() {
                 limit={pagination.limit}
                 page={pagination.page}
                 total={pagination.total}
-                onPageChange={(page) => setPagination({...pagination, page})}
+                onPageChange={(page) => { setPagination({...pagination, page}); scroll(0, 0) }}
               />
             </div>
           </>
         }
       </div>
       <div className="flex-shrink-0 w-80 relative">
-        <QuickShoppingTotal total={1200000}/>
+        <QuickShoppingTotal/>
       </div>
     </div>
   </>

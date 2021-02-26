@@ -1,6 +1,6 @@
 import MD5 from 'crypto-js/md5';
 import jwt_decode from 'jwt-decode';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import UAParser from 'ua-parser-js';
 import { ClearAuthToken, SetAuthToken } from '../graphql/auth.link';
 import { AritoUser, AritoUserService } from '../repo/arito-user.repo';
@@ -13,7 +13,7 @@ export const LOGIN_PATHNAME = 'login-pathname'
 const AuthContext = createContext<{
   user?: AritoUser 
   saveCurrentPath?: () => void
-  checkUser?: () => boolean
+  checkUser?: (roles?: string[]) => boolean
   login?: (username: string, password: string, mode: 'user' | 'editor') => Promise<AritoUser>
   register?: (nickname: string, email: string, phone: string) => Promise<string>
   logout?: () => void
@@ -26,13 +26,21 @@ export function AuthProvider({ children }: any) {
   //   return firebase.auth().onAuthStateChanged(async (user) => {
   //   });
   // }, []);
+
+  useEffect(() => {
+    if (user) {
+      console.log(user)
+    } else if (user === null) {
+      ClearAuthToken()
+    }
+  }, [user]);
   
   const router = useRouter()
   const saveCurrentPath = () => {
     sessionStorage.setItem(LOGIN_PATHNAME, router.pathname)
   }
 
-  const checkUser = (): boolean => {
+  const checkUser = (roles: any[] = null): boolean => {
     let token = GetAuthToken()
     if (token) {
       let decodedToken = jwt_decode(token) as {
@@ -41,13 +49,19 @@ export function AuthProvider({ children }: any) {
         user: AritoUser
       }
       if (Date.now() >= decodedToken.exp * 1000) {
-        return null;
+        setUser(null)
+        return false;
       }
-      setUser(decodedToken.user)
-      console.log(decodedToken.user)
-      return true
+      if (!roles || (roles && roles.includes(decodedToken.user.role))) {
+        setUser(decodedToken.user)
+        return true
+      } else {
+        setUser(null)
+        return false
+      }
     } else {
-      return null
+      setUser(null)
+      return false
     }
   }
 

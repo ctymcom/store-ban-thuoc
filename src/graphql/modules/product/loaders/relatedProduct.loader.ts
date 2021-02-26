@@ -14,7 +14,9 @@ export class RelatedProduct {
           ProductModel.aggregate([
             { $match: { categoryIds: Types.ObjectId(id) } },
             { $sample: { size: 5 } },
-          ]).exec()
+          ])
+            .exec()
+            .then((res) => res.map((r) => new ProductModel(r)))
         );
       });
       return await Promise.all(tasks).then((res: any[]) => {

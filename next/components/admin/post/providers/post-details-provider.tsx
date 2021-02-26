@@ -5,7 +5,7 @@ import { Tag, TagService } from './../../../../lib/repo/tag.repo';
 
 export const PostDetailsContext = createContext<{
   post?: Post
-  savePost?: Function
+  savePost?: () => Promise<Post>
   tags?: Tag[]
   createTag?: Function
 }>({});
@@ -45,13 +45,14 @@ export function PostDetailsProvider({ postId, children }: any) {
   const createTag = (name: string) => {
     return TagService.create({ data: { name }}).then(res => {
       setTags([...tags, res]);
+      post.tagIds = [...post.tagIds, res.id]
       return res;
     })
   }
 
-  const savePost = () => {
-    let { title, content, slug, publishedAt, excerpt, tagsIds, featureImage, priority } = post
-    return PostService.createOrUpdate({ id: post.id, data: { title, content, slug, publishedAt, excerpt, tagsIds, featureImage, priority } })
+  const savePost = (): Promise<Post> => {
+    let { title, content, slug, publishedAt, excerpt, tagIds, featureImage, priority } = post
+    return PostService.createOrUpdate({ id: post.id, data: { title, content, slug, publishedAt, excerpt, tagIds, featureImage, priority } })
   }
 
   return (

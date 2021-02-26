@@ -6,6 +6,7 @@ import { Product } from './../../../lib/repo/product.repo';
 import { useAuth } from './../../../lib/providers/auth-provider';
 import { useCart } from './../../../lib/providers/cart-provider';
 import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 
 interface PropsType extends ReactProps {
   product?: Product
@@ -33,81 +34,84 @@ export function ProductCard({
     }
   }
 
-  return (
-    <>
-      <div className="flex flex-col min-w-4xs">
-        <Link href={"/product/" + product.code}>
-          <a className="group">
-            <div className="relative w-full">
-              <div className="image-wrapper contain">
-                <img src={product.image} onError={(e)=>{(e.target as any).src="/assets/img/default.png"}}/>
-              </div>
-              {
-                product.isNew && 
-                <div className="new-tag">Mới</div>
-              }
-              {
-                product.saleRate && 
-                <div className="flex-center absolute right-0 top-3 text-white font-semibold">
-                  <img src="/assets/img/sale.svg"/>
-                  <span className="absolute text-sm">-{product.saleRate}%</span>
+  return useMemo(() => {
+    return (
+      <>
+        <div className="flex flex-col min-w-4xs">
+          <Link href={"/product/" + product.code}>
+            <a className="group">
+              <div className="relative w-full">
+                <div className="image-wrapper contain">
+                  <img src={product.image} onError={(e)=>{(e.target as any).src="/assets/img/default.png"}}/>
                 </div>
-              }
-            </div>
-            <div className="text-sm text-gray-500 pt-3 group-hover:text-primary">{categoryText}</div>
-            <div className="text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug h-20 text-ellipsis-3 group-hover:text-primary-dark" title={product.name}>{product.name}</div>
-          </a>
-        </Link>
-        <div className="w-full h-28 sm:h-20">
-          {
-            product.basePrice ? (
-              <>
-              <div className="flex flex-col sm:flex-row">
-                <span className="font-semibold text-lg text-primary">{NumberPipe(product.salePrice, true)}</span>
-                <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">{NumberPipe(product.basePrice, true)}</span>
+                {
+                  product.isNew && 
+                  <div className="new-tag">Mới</div>
+                }
+                {
+                  product.saleRate && 
+                  <div className="flex-center absolute right-0 top-3 text-white font-semibold">
+                    <img src="/assets/img/sale.svg"/>
+                    <span className="absolute text-sm">-{product.saleRate}%</span>
+                  </div>
+                }
               </div>
-              <div className="flex flex-col sm:flex-row justify-between mt-2">
-                <div>
-                  <div className="text-sm text-gray-500 hidden sm:block">Chọn số lượng</div>
-                  <div className="text-sm text-gray-700">{product.unit}</div>
-                </div>
-                <ProductQuantity alternateStyle={true} quantity={quantity} setQuantity={setQuantity}/>
-              </div>
-              </>
-            ) : (
-              <Link href="/login">
-                <a className="btn-default w-full h-full flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark"
-                  onClick={saveCurrentPath}
-                >
-                  Đăng nhập để xem giá
-                </a>
-              </Link>
-            )
-          }
-        </div>
-        {
-          !!product.tags?.length &&
-          <div className="flex flex-wrap py-2 -mx-1">
+              <div className="text-sm text-gray-500 pt-3 group-hover:text-primary">{categoryText}</div>
+              <div className="text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug h-20 text-ellipsis-3 group-hover:text-primary-dark" title={product.name}>{product.name}</div>
+            </a>
+          </Link>
+          <div className="w-full h-28 sm:h-20">
             {
-              product.tags.map((tag, index) => (
-                <div key={index} className="p-1">
-                  <span className="bg-primary-light text-primary-dark text-sm py-1 px-3 rounded-full">{tag}</span>
+              product.basePrice ? (
+                <>
+                <div className="flex flex-col sm:flex-row">
+                  <span className="font-semibold text-lg text-primary">{NumberPipe(product.salePrice, true)}</span>
+                  <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">{NumberPipe(product.basePrice, true)}</span>
                 </div>
-              ))
+                <div className="flex flex-col sm:flex-row justify-between mt-2">
+                  <div>
+                    <div className="text-sm text-gray-500 hidden sm:block">Chọn số lượng</div>
+                    <div className="text-sm text-gray-700">{product.unit}</div>
+                  </div>
+                  <ProductQuantity alternateStyle={true} quantity={quantity} setQuantity={setQuantity}/>
+                </div>
+                </>
+              ) : (
+                <Link href="/login">
+                  <a className="btn-default w-full h-full flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark"
+                    onClick={saveCurrentPath}
+                  >
+                    Đăng nhập để xem giá
+                  </a>
+                </Link>
+              )
             }
+          </div>
+          {
+            !!product.tags?.length &&
+            <div className="flex flex-wrap py-2 -mx-1">
+              {
+                product.tagDetails.map((tagDetail) => (
+                  <div key={tagDetail.code} className="p-1">
+                    <span className="bg-primary-light text-primary-dark text-sm py-1 px-3 rounded-full">{tagDetail.name}</span>
+                  </div>
+                ))
+              }
+          </div>
+          }
+          <div className="mt-auto grid grid-cols-1 xs:grid-cols-2 gap-2 pt-3 border-t border-gray-100">
+            <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark"
+              onClick={() => onAddToCart()}  
+            >
+              Thêm vào giỏ
+            </button>
+            <button className="btn-primary p-0 h-10 text-13" onClick={() => onAddToCart(true)}>
+              Mua ngay
+            </button>
+          </div>
         </div>
-        }
-        <div className="mt-auto grid grid-cols-1 xs:grid-cols-2 gap-2 pt-3 border-t border-gray-100">
-          <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark"
-            onClick={() => onAddToCart()}  
-          >
-            Thêm vào giỏ
-          </button>
-          <button className="btn-primary p-0 h-10 text-13" onClick={() => onAddToCart(true)}>
-            Mua ngay
-          </button>
-        </div>
-      </div>
-    </>
-  );
+      </>
+    )
+  }, [product, quantity]
+  )
 }

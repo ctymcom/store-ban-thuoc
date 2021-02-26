@@ -92,6 +92,7 @@ export class GraphRepository {
     }
     if (clearStoreFlag) {
       await this.clearStore();
+      console.log("clear store");
     }
 
     return result.data;
