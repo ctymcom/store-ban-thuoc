@@ -38,8 +38,8 @@ export function FormProfile({user}: PropsType) {
                 break;
         }
     }
-    return <div className="w-full lg:w-5/6 mx-auto xl:ml-40 text-16 sm:text-20 text-gray-800 mt-10">
-        <h3 className="uppercase border-gray-200 border-b-4 pb-2 mb-4 text-24 text-center sm:text-left">Thông tin tài khoản</h3>
+    return <div className="w-11/12 lg:w-5/6 mx-auto xl:ml-40 text-16 sm:text-20 text-gray-800 mt-10">
+        <h3 className="uppercase border-gray-200 border-b-4 pb-2 mb-4 text-24 text-left hidden sm:block">Thông tin tài khoản</h3>
         <div className="flex flex-wrap-reverse justify-between w-full">
             <div className="w-full xl:w-3/5 items-center">
                 <div className="pr-0 xl:pr-16 xl:border-r border-gray-400">
@@ -78,12 +78,12 @@ export function FormProfile({user}: PropsType) {
                 </div>
             </div>
             <div className="text-center w-full xl:w-2/5 flex items-center xl:block">
-                <div className="xl:p-4 flex items-center justify-around w-1/4 xl:w-full">
+                <div className="xl:p-4 flex items-center justify-around w-1/3 xl:w-full">
                     <img src="/assets/img/avatar.svg" className="user__avatar max-w-4xs rounded-full" alt="avatar"/>
                 </div>
                 <div className="w-full sm:w-3/4 xl:w-full">
-                    <button className="btn-outline text-16 sm:text-20 border-primary border font-normal text-primary w-2/3 mx-auto h-12 my-2">Đổi ảnh</button>
-                    <p className="text-12 whitespace-nowrap sm:text-16 text-gray-400">Dung lượng file tối đa 1MB. <span className="block sm:inline xl:block">Định dạng: .JPEG, .PNG</span></p>
+                    <button className="btn-outline text-16 sm:text-20 border-primary border font-normal text-primary w-2/3 mx-auto xl:h-12 my-2">Đổi ảnh</button>
+                    <p className="text-12 sm:text-16 text-gray-400">Dung lượng file tối đa 1MB. <span className="xl:block">Định dạng: .JPEG, .PNG</span></p>
                 </div>
             </div>
         </div>
