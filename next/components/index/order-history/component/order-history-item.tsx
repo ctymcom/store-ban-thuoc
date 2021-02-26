@@ -25,7 +25,7 @@ export function OrderHistoryItem({ item, index }: PropsType) {
               <p className="text-base"> Mã đơn hàng: 
                 <span className="ml-1.5">{item.id_oder}</span>
                 <Link href="/profile/order-details">
-                  <a className="text-primary ml-1 hidden md:inline-block">Xem chi tiết đơn hàng</a>
+                  <a className="text-primary ml-1">Xem chi tiết đơn hàng</a>
                 </Link>
               </p>
 
