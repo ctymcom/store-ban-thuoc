@@ -16,6 +16,7 @@ export enum SettingKey {
   HOTLINE = "HOTLINE", // Cấu hình hotline
   FEATURE = "FEATURE", // Cấu hình tính năng
   FOOTER_INTRO = "FOOTER_INTRO", // Cấu hình giới thiệu footer
+  FOOTER_MENU = "FOOTER_MENU", // Cấu hình menu ở footer
 }
 export const SETTING_DATA = [
   {
@@ -227,6 +228,26 @@ export const SETTING_DATA = [
           content: `Thuocsi.vn được thành lập từ năm 2018, là một trong những startup thành công trong lĩnh vực công nghệ về y tế
           Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên khắp Việt Nam.`,
           link: "https://arito-store.mcom.app",
+        },
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.object,
+        name: "Menu Footer",
+        key: SettingKey.FOOTER_MENU,
+        value: {
+          items: [
+            { text: "Quy định sử dụng Website", link: "https://arito-store.mcom.app" },
+            { text: "Chính sách bảo mật", link: "https://arito-store.mcom.app" },
+            { text: "Chính sách bán hàng", link: "https://arito-store.mcom.app" },
+            { text: "Chính sách vận chuyển", link: "https://arito-store.mcom.app" },
+            { text: "Hướng dẫn thanh toán", link: "https://arito-store.mcom.app" },
+            { text: "Chính sách giải quyết khiếu nại", link: "https://arito-store.mcom.app" },
+            { text: "Các câu hỏi thường gặp", link: "https://arito-store.mcom.app" },
+            { text: "Liên hệ", link: "https://arito-store.mcom.app" },
+          ],
         },
         isActive: true,
         isPrivate: false,
