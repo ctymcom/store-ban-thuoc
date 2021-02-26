@@ -36,10 +36,6 @@ export function ProfileUser() {
                     <Link href="/profile/order-history" shallow={true}>
                         <a className={`" uppercase text-sm hover:text-primary "
                             ${router.pathname == "/profile/order-history" || 
-                            router.pathname == "/profile/order-history/wait-confirm-order" || 
-                            router.pathname == "/profile/order-history/wait-delivery-order" || 
-                            router.pathname == "/profile/order-history/delivered-order" || 
-                            router.pathname == "/profile/order-history/canceled-order" ||
                             router.pathname == "/profile/order-details" ? " text-primary" : ""}`}>
                             Đơn mua
                         </a>

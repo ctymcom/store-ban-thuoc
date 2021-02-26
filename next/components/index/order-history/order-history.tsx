@@ -53,23 +53,23 @@ export function OrderHistoryPage() {
         { label: 'Đã giao',status: 'complete'},
         { label: 'Đã hủy', status: 'canceled'},
     ];
-    console.log(status);
+    // console.log(status);
     
     return <>
     
-        <div className="min-h-full w-full lg:w-9/12 px-3 md:px-0">
+        <div className="w-full lg:w-9/12 px-3 md:px-0">
             <div className="">
-                <div className="w-full flex justify-between mb-16 gap-7">
+                <div className="w-full flex justify-between mt-0 md:mt-5 lg:mt-0 mb-0 gap-7">
                     <div className="w-full">
                         <p className="md:hidden whitespace-nowrap text-center mb-3">Lọc theo đơn hàng:</p>
                         <select className="block md:hidden m-auto border border-gray-400 rounded w-8/12 px-4 py-2 hover:border-primary focus:border-primary-dark focus:outline-none"
                                 value={status}
                                 onChange={(e) => handlerOrder(e.target.value)}>
                                     {
-                                        menus.map(type => <option key={type.status} value={(type.status) ? type.status : ''}>{ (type.status) ? type.label : 'Tất cả đơn hàng'}</option>)
+                                        menus.map(type => <option key={type.status} value={(type.status) ? type.status : ''}>{ type.status == '' ? 'Tất cả đơn hàng' : type.label }</option>)
                                     }      
                         </select>
-                        <ul className="hidden md:flex justify-between border-b-4 pb-1.5 mt-3 md:mt-0 h-auto">
+                        <ul className="hidden md:flex justify-between border-b-4 pb-2 mt-3 md:mt-0 h-auto">
                             { menus.map((menu, index) => (
                                 <>
                                     <li key={index}>
@@ -78,11 +78,10 @@ export function OrderHistoryPage() {
                                                 ${(status ? status == menu.status : !menu.status) ? ' text-primary border-primary animate-slide-up' : ''}`}
                                                 >
                                                 {menu.label}
-                                                
                                             </a>
                                         </Link>
                                     </li> 
-                              </>
+                                </>
                             ))}
                         </ul>
                         {/* <ul className="flex justify-between border-b-4 pb-1.5 mt-3 md:mt-0 overflow-x-auto md:overflow-hidden">
@@ -94,11 +93,11 @@ export function OrderHistoryPage() {
                                 </li> 
                             ))}
                         </ul> */}
-                        <div className="">
+                        <div className="w-full">
                             <OrderHisttoryList data={data} status={status}/>
                         </div>
                         
-                        <ul className="pavigation-pages flex mt-4 justify-between w-full">
+                        <ul className="pavigation-pages flex mt-4 md:mt-7 justify-between w-full">
                             <PaginationRound
                                 limit={8}
                                 page={1}
