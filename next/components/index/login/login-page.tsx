@@ -1,59 +1,43 @@
-import Link from "next/link"
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
-import { LOGIN_PATHNAME, useAuth } from "../../../lib/providers/auth-provider";
-
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../lib/providers/auth-provider";
+import { Login } from './components/login';
+import { Register } from './components/register';
 
 export default function LoginPage() {
 
-  const ref = useCallback(input => {
-    if (input) input.focus()
-  }, [])
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const { login } = useAuth()
+  const [mode, setMode] = useState<'login' | 'register' | 'forget_password'>('login');
+  const { user, checkUser } = useAuth()
   const router = useRouter()
 
-  const onFormSubmit = e => {
-    e.preventDefault();
-    if (!username || !password) {
-      alert('Yêu cầu nhập đầy đủ')  
-    } else {
-      login(username, password, 'user').then(res => {        
-        let pathname = sessionStorage.getItem(LOGIN_PATHNAME)
-        router.replace(pathname || '/')
-      }).catch(err => {
-        alert(err.message)
-      })
+  useEffect(() => {
+    if (checkUser() === true) {
+      router.replace('/')
     }
-  }
+  }, []);
 
   return <>
-    <div 
-      className="w-screen h-screen bg-center bg-no-repeat bg-cover flex-center" 
-      style={{ backgroundImage: `url(https://i.imgur.com/fAa2OAZ.jpg)`}}>
-      <form 
-        className="relative bg-white shadow-lg rounded-lg border-primary border-4 min-h-sm max-w-7xl flex flex-col items-center p-12" 
-        onSubmit={onFormSubmit}
-      >
-        <img src='/assets/img/logo.png/' className="absolute w-40 -top-12"/>
-        <div className="uppercase text-primary font-bold text-center text-lg mt-16">Đăng nhập</div>
-        <input 
-          className="form-input mt-8 min-w-xs" 
-          placeholder="Username" autoFocus
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input className="form-input mt-4 min-w-xs" 
-          placeholder="Mật khẩu" 
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit" className="btn-primary btn-lg mt-4">Đăng nhập</button>
-      </form>
-    </div>
+    {
+      user !== undefined ? null : 
+      <div 
+        className="w-screen h-screen bg-center bg-no-repeat bg-cover flex-center" 
+        style={{ backgroundImage: `url(/assets/img/background.jpg)`}}>
+        <div className="relative flex flex-col items-center bg-white shadow-lg rounded-lg border-primary border-4 min-h-sm p-4 sm:p-8 md:p-10 pt-24 md:pt-24">
+          <Link href="/">
+            <a className="absolute -top-12">
+              <img src='/assets/img/logo.png/' className="w-40"/>
+            </a>
+          </Link>
+          {
+            {
+              'login': <Login setMode={setMode}/>,
+              'register': <Register setMode={setMode}/>,
+              'forget_password': null
+            }[mode]
+          }
+        </div>
+      </div>
+    }
   </>
 }

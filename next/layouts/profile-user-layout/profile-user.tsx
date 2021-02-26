@@ -60,7 +60,7 @@ export function ProfileUser() {
                     <Link href="/profile/reward-point" shallow={true}>
                         <a className={`" uppercase text-sm hover:text-primary "
                             ${router.pathname == "/profile/reward-point" ? " text-primary" : ""}`}>
-                            Điểm tích luỹ
+                            Điểm thưởng
                         </a>
                     </Link>
                 </li>

@@ -1,10 +1,10 @@
 import { Carousel } from "../../shared/carousel/carousel";
 import { ProductList } from "../../shared/product/product-list";
 import { Spinner } from "../../shared/utilities/spinner";
-import { HomeBanner } from "./component/home-banner";
-import { HomeFeature } from "./component/home-feature";
-import { HomeFeedback } from './component/home-feedback';
-import { HomeNews } from "./component/home-news";
+import { HomeBanner } from "./components/home-banner";
+import { HomeFeature } from "./components/home-feature";
+import { HomeFeedback } from './components/home-feedback';
+import { HomeNews } from "./components/home-news";
 import { HomeContext, HomeProvider, useHomeContext } from "./providers/home-provider";
 
 export function HomePage() {

@@ -36,7 +36,7 @@ export function ProductCard({
   return (
     <>
       <div className="flex flex-col min-w-4xs">
-        <Link href="/product-detail">
+        <Link href={"/product/" + product.code}>
           <a className="group">
             <div className="relative w-full">
               <div className="image-wrapper contain">
@@ -48,7 +48,7 @@ export function ProductCard({
               }
               {
                 product.saleRate && 
-                <div className="sale-tag flex-center absolute right-0 top-3 text-white font-semibold">
+                <div className="flex-center absolute right-0 top-3 text-white font-semibold">
                   <img src="/assets/img/sale.svg"/>
                   <span className="absolute text-sm">-{product.saleRate}%</span>
                 </div>

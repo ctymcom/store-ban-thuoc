@@ -1,8 +1,10 @@
 import Axios from "axios";
 import { compact, get, groupBy, keyBy } from "lodash";
 import moment from "moment-timezone";
+import FormData from "form-data";
 
 import { configs } from "../../configs";
+import { INotification } from "../../graphql/modules/notification/notification.model";
 import { IProduct } from "../../graphql/modules/product/product.model";
 import { IProductTab } from "../../graphql/modules/productTab/productTab.model";
 import { IProductTag } from "../../graphql/modules/productTag/productTag.model";
@@ -331,7 +333,24 @@ export class AritoHelper {
       };
     });
   }
-  static register({ nickname, email, phone }) {
+  static register({
+    nickname,
+    email,
+    phone,
+    language = "v",
+    ...device
+  }: {
+    nickname: string;
+    email: string;
+    phone: string;
+    deviceId: string;
+    deviceToken: string;
+    deviceModel: string;
+    deviceName: string;
+    deviceBrand: string;
+    deviceOsVersion: string;
+    language?: string;
+  }) {
     return Axios.post(`${this.host}/Authorize/Register`, {
       token: this.imageToken,
       memvars: [
@@ -341,7 +360,13 @@ export class AritoHelper {
       ],
     }).then((res) => {
       this.handleError(res);
-      return res.data.msg;
+      const password = get(res.data, "data.message.0.val");
+      return this.login({
+        username: email,
+        password: password,
+        language: language,
+        ...device,
+      });
     });
   }
   static getAllTag(page: number = 1, updatedAt?: Date) {
@@ -464,6 +489,49 @@ export class AritoHelper {
       ],
     }).then((res) => {
       this.handleError(res);
+    });
+  }
+  static getAllUserNotify(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Notification/GetMessageUsers`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          userId: d["user_id"],
+          code: d["id"],
+          title: d["title"],
+          content: d["content"],
+          link: d["link"],
+        })) as INotification[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static uploadUserAvatar(userId: string, stream: any, token: string) {
+    var data = new FormData();
+    data.append("file", stream);
+    return Axios({
+      url: `${this.host}/UploadFile/SysUser/${userId}/${token}`,
+      method: "POST",
+      data: data,
+      headers: {
+        ...data.getHeaders(),
+      },
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "value");
     });
   }
 }
