@@ -23,7 +23,7 @@ export interface AritoUser {
   role: ROLE;
 }
 
-enum ROLE {
+export enum ROLE {
   Admin = "ADMIN",
   Editor = "EDITOR",
 }

@@ -7,7 +7,7 @@ interface ReactProps {
   children?: any;
 }
 
-interface Options {
+interface Option {
   value: any;
   label: string;
   className?: string;

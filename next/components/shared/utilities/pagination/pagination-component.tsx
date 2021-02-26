@@ -21,7 +21,7 @@ interface PropsType extends ReactProps {
   hasFirstLast?: boolean
   onPageChange: Function
 }
-const defaultButtonClass = `min-w-10 h-10 font-semibold border border-gray-400 text-gray-600 hover:text-primary hover:border-primary disabled:cursor-not-allowed disabled:opacity-50`
+const defaultButtonClass = `p-2 min-w-10 h-10 font-semibold border border-gray-400 text-gray-600 hover:text-primary hover:border-primary disabled:cursor-not-allowed disabled:opacity-50`
 export function PaginationComponent({
   firstButtonClass = `${defaultButtonClass}`,
   lastButtonClass = `${defaultButtonClass}`,
@@ -40,7 +40,7 @@ export function PaginationComponent({
   ...props}: PropsType) {
   if (!total || !limit || !page) return <></>
 
-  const buttonClass = `flex-center cursor-pointer p-2 focus:outline-none`
+  const buttonClass = `flex-center cursor-pointer focus:outline-none`
 
   const [pageCount, setPageCount] = useState(0);
   const [pages, setPages] = useState([{ index: 1 }]);

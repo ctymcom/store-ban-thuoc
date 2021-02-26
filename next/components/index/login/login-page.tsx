@@ -12,14 +12,14 @@ export default function LoginPage() {
   const router = useRouter()
 
   useEffect(() => {
-    if (checkUser() === true) {
+    if (checkUser()) {
       router.replace('/')
     }
   }, []);
 
   return <>
     {
-      user !== undefined ? null : 
+      user !== null ? null : 
       <div 
         className="w-screen h-screen bg-center bg-no-repeat bg-cover flex-center" 
         style={{ backgroundImage: `url(/assets/img/background.jpg)`}}>

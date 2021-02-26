@@ -14,18 +14,25 @@ export const PostListContext = createContext<{
   setOrder?: Function
   search?: any
   setSearch?: Function
-  orderOptions?: Options[]
+  status?: any
+  setStatus?: Function
   togglePostStatus?: Function
 }>({});
 
-const ORDER_OPTIONS = [
+export const ORDER_OPTIONS: Option[] = [
   { value: 'priority', label: 'Sắp xếp ưu tiên' },
   { value: 'latest', label: 'Sắp xếp mới nhất' },
   { value: 'oldest', label: 'Sắp xếp cũ nhất' },
 ]
+export const STATUS_OPTIONS: Option[] = [
+  { value: '', label: 'Tất cả trạng thái' },
+  { value: 'PUBLIC', label: 'Bài viết đã đăng' },
+  { value: 'DRAFT', label: 'Bài viết nháp' },
+]
 export function PostListProvider({ children }: any) {
   const [posts, setPosts] = useState<Post[]>([]);
   
+  const [status, setStatus] = useState();
   const [order, setOrder] = useState(ORDER_OPTIONS[0].value);
   const [search, setSearch] = useState('');
   const [limit, setLimit] = useState(9);
@@ -51,11 +58,18 @@ export function PostListProvider({ children }: any) {
         break
       }
     }
+    
+    let filter = {}
+    if (status) {
+      filter = {...filter, status }
+    }
+
     return PostService.getAll({ query: {
       order: orderObj,
       search: debouncedSearch,
       limit,
       page,
+      filter
     }, cache }).then(res => {
       setPosts(res.data)
       setTotal(res.pagination.total)
@@ -71,15 +85,11 @@ export function PostListProvider({ children }: any) {
 
   useEffect(() => {
     loadPosts()
-  }, [order, page]);
-
-  useEffect(() => {
-    loadPosts()
-  }, [debouncedSearch]);
+  }, [order, page, status, debouncedSearch]);
 
   return (
     <PostListContext.Provider value={{ posts, loadPosts, page, limit, total, togglePostStatus,
-      setPage, order, setOrder, search, setSearch, orderOptions: ORDER_OPTIONS }}>
+      setPage, order, setOrder, status, setStatus, search, setSearch }}>
       {children}
     </PostListContext.Provider>
   );

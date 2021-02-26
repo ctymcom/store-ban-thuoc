@@ -8,7 +8,7 @@ export default function AdminLoginPage() {
     const router = useRouter()
 
     useEffect(() => {
-      if (checkUser() === true) {
+      if (checkUser()) {
         router.replace('/admin')
       }
     }, []);

@@ -26,7 +26,7 @@ export function DefaultLayout({
       <HeadSEO title={title}></HeadSEO>
       <CartProvider>
         <Header/>
-          <div className="w-full" style={{ minHeight: '80vh' }}>
+          <div className="w-full" style={{ minHeight: '60vh' }}>
             {props.children}
           </div>
         <Footer/>
