@@ -1,7 +1,7 @@
 import { HiChevronDown } from 'react-icons/hi';
 interface PropsType extends ReactProps {
   value: any
-  options: Options[]
+  options: Option[]
   onChange: Function
 }
 export function Select(props: PropsType) {

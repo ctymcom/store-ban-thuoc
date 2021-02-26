@@ -20,11 +20,11 @@ export function ProductImage(props) {
     }
 
     return <>
-        <div className="image-wrapper rounded ratio-16-9">
+        <div className="image-wrapper rounded ratio-16-9 contain">
             <img src={image || "/assets/img/default.png"}
                 onError={(e)=>{(e.target as any).src="/assets/img/default.png"}}
             />
-            <div className="new-tag absolute z-10 text-lg">Mới</div>
+            {/* <div className="new-tag absolute z-10 text-lg">Mới</div> */}
             {
                 !!product.saleRate && 
                 <div className="flex-center absolute right-6 top-2 text-white font-semibold">

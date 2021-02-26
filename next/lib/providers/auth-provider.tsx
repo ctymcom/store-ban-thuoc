@@ -35,9 +35,8 @@ export function AuthProvider({ children }: any) {
     }
   }, [user]);
   
-  const router = useRouter()
   const saveCurrentPath = () => {
-    sessionStorage.setItem(LOGIN_PATHNAME, router.pathname)
+    sessionStorage.setItem(LOGIN_PATHNAME, location.pathname)
   }
 
   const checkUser = (roles: any[] = null): boolean => {
