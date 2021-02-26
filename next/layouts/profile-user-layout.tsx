@@ -24,7 +24,7 @@ export function ProfileUserLayout(props: PropsType) {
             <div className="main-container h-auto sm:pl-4 md:pl-4 lg:pl-0 sm:pr-4 md:pr-4 lg:pr-0">
                 <div className="w-full">
                     <div className="max-w-full text-center text-sm md:text-base">
-                        <ul className="flex h-10 w-full items-center mt-8 uppercase px-5 md:px-0 font-extralight">
+                        <ul className="flex h-10 w-full items-center mt-2 md:mt-8 uppercase px-5 md:px-0 font-extralight">
                             <Link href="/">
                                 <a className="hover:text-primary mr-1"> Trang chủ</a>
                             </Link>
