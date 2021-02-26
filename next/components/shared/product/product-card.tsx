@@ -21,8 +21,7 @@ export function ProductCard({
   const { addProductToCart } = useCart()
   const router = useRouter()
 
-  const categoryText = `${product.categories.filter(x => !x.parents.length)
-      .map(x => x.name).join(', ')} > ${product.categories.filter(x => x.parents.length).map(x => x.name).join(', ')}`
+  const categoryText = `${product.categories.filter(x => x.parents.length).map(x => x.name).join(', ')}`
 
   const onAddToCart = (redirect: boolean = false) => {
     if (redirect) {
@@ -56,29 +55,56 @@ export function ProductCard({
                   </div>
                 }
               </div>
-              <div className="text-sm text-gray-500 pt-3 group-hover:text-primary">{categoryText}</div>
+              <div className="text-sm text-gray-500 pt-3 group-hover:text-primary overflow-ellipsis overflow-hidden whitespace-nowrap">{categoryText}</div>
               <div className="text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug h-20 text-ellipsis-3 group-hover:text-primary-dark" title={product.name}>{product.name}</div>
             </a>
           </Link>
-          <div className="w-full h-28 sm:h-20">
+          <div className="w-full flex-grow flex flex-col">
             {
               product.basePrice ? (
                 <>
-                <div className="flex flex-col sm:flex-row">
-                  <span className="font-semibold text-lg text-primary">{NumberPipe(product.salePrice, true)}</span>
-                  <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">{NumberPipe(product.basePrice, true)}</span>
-                </div>
-                <div className="flex flex-col sm:flex-row justify-between mt-2">
-                  <div>
-                    <div className="text-sm text-gray-500 hidden sm:block">Chọn số lượng</div>
-                    <div className="text-sm text-gray-700">{product.unit}</div>
+                <div className="h-28 sm:h-20">
+                  <div className="flex flex-col sm:flex-row">
+                    <span className="font-semibold text-lg text-primary">{NumberPipe(product.salePrice, true)}</span>
+                    <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">{NumberPipe(product.basePrice, true)}</span>
                   </div>
-                  <ProductQuantity alternateStyle={true} quantity={quantity} setQuantity={setQuantity}/>
+                  <div className="flex flex-col sm:flex-row justify-between mt-2">
+                    <div>
+                      <div className="text-sm text-gray-500 hidden sm:block">Chọn số lượng</div>
+                      <div className="text-sm text-gray-700">{product.unit}</div>
+                    </div>
+                    <ProductQuantity alternateStyle={true} quantity={quantity} setQuantity={setQuantity}/>
+                  </div>  
+                </div>
+                <div className="text-15 leading-tight text-accent">{product.packing}</div>
+                <div className="mt-auto">            
+                  {
+                    !!product.tags?.length &&
+                    <div className="flex flex-wrap py-2 -mx-1">
+                      {
+                        product.tagDetails.map((tagDetail) => (
+                          <div key={tagDetail.code} className="p-1">
+                            <span className="bg-primary-light text-primary-dark text-sm py-1 px-3 rounded-full">{tagDetail.name}</span>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  }
+                  <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 pt-3 border-t border-gray-100">                    
+                    <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark"
+                      onClick={() => onAddToCart()}  
+                    >
+                      Thêm vào giỏ
+                    </button>
+                    <button className="btn-primary p-0 h-10 text-13" onClick={() => onAddToCart(true)}>
+                      Mua ngay
+                    </button>
+                  </div>
                 </div>
                 </>
               ) : (
                 <Link href="/login">
-                  <a className="btn-default w-full h-full flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark"
+                  <a className="btn-outline w-full h-16 flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark"
                     onClick={saveCurrentPath}
                   >
                     Đăng nhập để xem giá
@@ -86,28 +112,6 @@ export function ProductCard({
                 </Link>
               )
             }
-          </div>
-          {
-            !!product.tags?.length &&
-            <div className="flex flex-wrap py-2 -mx-1">
-              {
-                product.tagDetails.map((tagDetail) => (
-                  <div key={tagDetail.code} className="p-1">
-                    <span className="bg-primary-light text-primary-dark text-sm py-1 px-3 rounded-full">{tagDetail.name}</span>
-                  </div>
-                ))
-              }
-          </div>
-          }
-          <div className="mt-auto grid grid-cols-1 xs:grid-cols-2 gap-2 pt-3 border-t border-gray-100">
-            <button className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark"
-              onClick={() => onAddToCart()}  
-            >
-              Thêm vào giỏ
-            </button>
-            <button className="btn-primary p-0 h-10 text-13" onClick={() => onAddToCart(true)}>
-              Mua ngay
-            </button>
           </div>
         </div>
       </>
