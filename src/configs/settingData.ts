@@ -17,6 +17,7 @@ export enum SettingKey {
   FEATURE = "FEATURE", // Cấu hình tính năng
   FOOTER_INTRO = "FOOTER_INTRO", // Cấu hình giới thiệu footer
   FOOTER_MENU = "FOOTER_MENU", // Cấu hình menu ở footer
+  SOCIAL = "SOCIAL", // Cấu hình các liên kết mạng xã hội
 }
 export const SETTING_DATA = [
   {
@@ -248,6 +249,19 @@ export const SETTING_DATA = [
             { text: "Các câu hỏi thường gặp", link: "https://arito-store.mcom.app" },
             { text: "Liên hệ", link: "https://arito-store.mcom.app" },
           ],
+        },
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.object,
+        name: "Icon Social",
+        key: SettingKey.SOCIAL,
+        value: {
+          facebook: { link: "https://facebook.com", visable: true },
+          youtube: { link: "https://youtube.com", visable: true },
+          zalo: { link: "https://chat.zalo.me", visable: true },
         },
         isActive: true,
         isPrivate: false,
