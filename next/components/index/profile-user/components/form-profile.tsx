@@ -82,8 +82,8 @@ export function FormProfile({user}: PropsType) {
                     <img src="/assets/img/avatar.svg" className="user__avatar max-w-4xs rounded-full" alt="avatar"/>
                 </div>
                 <div className="w-full sm:w-3/4 xl:w-full">
-                    <button className="btn-outline text-16 sm:text-20 border-primary border font-normal text-primary w-2/3 mx-auto xl:h-12 my-2">Đổi ảnh</button>
-                    <p className="text-12 sm:text-16 text-gray-400">Dung lượng file tối đa 1MB. <span className="xl:block">Định dạng: .JPEG, .PNG</span></p>
+                    <button className="btn-outline text-16 sm:text-20 border-primary border font-normal text-primary w-2/3 sm:mx-auto xl:h-12 my-2">Đổi ảnh</button>
+                    <p className="text-12 sm:text-16 text-gray-400 hidden sm:block">Dung lượng file tối đa 1MB. <span className="xl:block">Định dạng: .JPEG, .PNG</span></p>
                 </div>
             </div>
         </div>
