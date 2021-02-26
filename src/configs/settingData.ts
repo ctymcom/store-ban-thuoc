@@ -15,6 +15,7 @@ export enum SettingKey {
   BANNER_3 = "BANNER_3", // Cấu hình banner 3
   HOTLINE = "HOTLINE", // Cấu hình hotline
   FEATURE = "FEATURE", // Cấu hình tính năng
+  FOOTER_INTRO = "FOOTER_INTRO", // Cấu hình giới thiệu footer
 }
 export const SETTING_DATA = [
   {
@@ -213,6 +214,19 @@ export const SETTING_DATA = [
                 "Giá bán trên trang chỉ áp dụng khi mua sắm trên trang thương mại điện tử của ThuocSi.vn",
             },
           ],
+        },
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.object,
+        name: "Giới thiệu Footer",
+        key: SettingKey.FOOTER_INTRO,
+        value: {
+          content: `Thuocsi.vn được thành lập từ năm 2018, là một trong những startup thành công trong lĩnh vực công nghệ về y tế
+          Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên khắp Việt Nam.`,
+          link: "https://arito-store.mcom.app",
         },
         isActive: true,
         isPrivate: false,
