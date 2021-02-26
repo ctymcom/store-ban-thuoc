@@ -14,17 +14,39 @@ export const AddressContext = createContext<Partial<{
 export const AddressProvider = (props) => {
   const [listAddress, setListAdress] = useState<MyAddress[]>(listAddressData);
   const [showDialogCreateAddress, setShowDialogCreateAddress] = useState<boolean>(false);
-  let addr = listAddress.find((item:MyAddress)=>item.default);
-  const [addressSelected, setAddressSelected] = useState<MyAddress>(addr);
+  const [addressSelected, setAddressSelected] = useState<MyAddress>(listAddress.find((item:MyAddress)=>item.default));
   useEffect(() => {
       setListAdress(listAddress);
     }, [listAddress]);
   const handleChange=(id:number,type:string)=>{
       switch (type) {
           case "setDefault":{
-                console.log(type);
-                setListAdress(listAddress.map((item:MyAddress)=> item.id === addr.id ? {...item, default : false} : item));
-                setListAdress(listAddress.map((item:MyAddress)=> item.id === id ? {...item, default : true} : item))
+                setListAdress(listAddress.map((item:MyAddress)=> item.id!== id ? {...item, default : false} : {...item,default:true}));
+              }
+              break;
+          case "delete":{
+            let index = listAddress.findIndex((item:MyAddress)=>item.id===id)
+            let listNew = listAddress;
+            if (index !== -1&&listAddress.length>1) {
+                if(listNew[index].id===addressSelected.id)
+                {
+                  if(listNew[index+1]){
+                    setAddressSelected(listNew[index+1])
+                  }else{
+                    setAddressSelected(listNew[index-1])
+                  }
+                }
+                if(listNew[index].default)
+                {
+                  if(listNew[index+1]){
+                    listNew[index+1].default=true
+                  }else{
+                    listNew[index-1].default=true
+                  }
+                }
+                listNew.splice(index, 1);
+            }
+            setListAdress([...listNew]);
               }
               break;
           default:
