@@ -60,10 +60,7 @@ export function ProductCard({
             </a>
           </Link>
           <div className="w-full flex-grow flex flex-col place-content-between">
-            {
-              product.basePrice ? (
-                <>
-                <div >
+          <div >
                   
                   {
                     !!product.tags?.length &&
@@ -79,6 +76,10 @@ export function ProductCard({
                   }
                   <div className="text-15 leading-tight text-accent">{product.packing}</div>
                 </div>
+            {
+              product.basePrice ? (
+                <>
+                
                 
                 <div>
                   <div className="h-28 sm:h-20">
@@ -112,7 +113,7 @@ export function ProductCard({
                 </>
               ) : (
                 <Link href="/login">
-                  <a className="btn-outline w-full h-16 flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark"
+                  <a className="btn-outline w-full h-16 flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark mt-4"
                     onClick={saveCurrentPath}
                   >
                     Đăng nhập để xem giá
