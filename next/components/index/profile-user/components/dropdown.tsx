@@ -13,10 +13,10 @@ const Dropdown = (props:PropsType) => {
                 name={props.name} 
                 defaultValue={props.defaultValue} 
                 id={props.id} 
-                onChange={(e)=>props.onChanged(e.target.value)}>
+                onChange={e=>props.onChange(e.target.value)}>
             {
                 props.listOptions.map((item,index)=>{
-                    return <option className={item===props.defaultValue?"bg-primary-light":""} key={index} value={item}>{item}</option>
+                    return <option className={item===props.defaultValue?"bg-primary-light":""} key={index} value={item.value}>{item.label}</option>
                 })
             }
         </select>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { createContext, useState, useEffect, useContext, Children } from 'react';
 import { MyAddress, listAddressData } from '../components/address-data';
+import { AddressService } from '../../../../lib/repo/address.repo';
 export const AddressContext = createContext<Partial<{
   listAddress: MyAddress[]
   addressSelected: MyAddress,
@@ -12,7 +13,17 @@ export const AddressContext = createContext<Partial<{
   setShowAddressFormDialog:Function,
   setAddressSelected:Function,
   handleChange:Function,
-  setAddressEdit:Function
+  setAddressEdit:Function,
+  provinces:Option[], 
+  setProvinces:Function,
+  province:string, 
+  setProvince:Function,
+  districts:Option[],
+  setDistrict:Function,
+  district:string,
+  wards:Option[],
+  ward:string, 
+  setWard:Function,
 }>>({});
 
 export const AddressProvider = (props) => {
@@ -24,9 +35,36 @@ export const AddressProvider = (props) => {
   useEffect(() => {
       setListAdress(listAddress);
     }, [listAddress]);
+
   const setDefaultAddress=(id:number)=>{
     setListAdress(listAddress.map((item:MyAddress)=> item.id!== id ? {...item, default : false} : {...item,default:true}));
   }
+
+  const [provinces, setProvinces] = useState<Option[]>(null);
+  const [province, setProvince] = useState<string>('');
+  const [districts,setDistricts] = useState<Option[]>(null);
+  const [district,setDistrict] = useState<string>('');
+  const [wards, setWards] = useState<Option[]>(null);
+  const [ward, setWard] = useState<string>('');
+  useEffect(() => {
+    AddressService.getProvinces().then(res => {
+      setProvinces([{ value: '', label: 'Chọn Tỉnh/Thành' }, ...res.map(x => ({ value: x.id, label: x.province }) )])
+      setProvince('');
+    }).catch((err)=>{console.log(err);
+    })
+  }, []);
+  useEffect(() => {
+    AddressService.getDistricts(province).then(res=>{
+      setDistricts([{ value:'',label: 'Chọn Quận/Huyện' },...res.map(x=>({value:x.id,label:x.district}))])
+      setDistrict('');
+    })
+  }, [province]);
+  useEffect(() => {
+    AddressService.getWards(district).then(res=>{
+      setWards([{value:'',label:'Chọn Phường/Xã'},...res.map(x=>({value:x.id,label:x.ward}))])
+      setWard('');
+    })
+  }, [district]);
   const handleChange=(id:number,type:string)=>{
       switch (type) {
           case "setDefault":{
@@ -75,7 +113,17 @@ export const AddressProvider = (props) => {
               break;
       }
   }
-  return<AddressContext.Provider value={{ handleChange,listAddress, addressSelected, addressEdit, showDialogAddress, setShowDialogAddress, setAddressSelected, setListAdress, setShowAddressFormDialog, showAddressFormDialog, setAddressEdit}}>
+  return<AddressContext.Provider value={{districts, 
+                                        district, setDistrict, 
+                                        provinces, setProvinces, 
+                                        setProvince, province,
+                                        wards, ward, setWard,
+                                        handleChange,listAddress, 
+                                        addressSelected, addressEdit, 
+                                        showDialogAddress, setShowDialogAddress, 
+                                        setAddressSelected, setListAdress, 
+                                        setShowAddressFormDialog, showAddressFormDialog, 
+                                        setAddressEdit}}>
       {props.children}
     </AddressContext.Provider>;
 }

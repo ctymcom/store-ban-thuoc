@@ -1,7 +1,10 @@
 import { GraphRepository } from "./graph.repo";
 
 export class AddressRepository extends GraphRepository {
-  async getAllProvince() {
+  async getProvinces(): Promise<{
+    id: string
+    province: string
+  }[]> {
     const api = "getProvince";
     const result = await this.apollo.query({
       query: this.gql`
