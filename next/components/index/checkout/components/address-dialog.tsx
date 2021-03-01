@@ -3,7 +3,7 @@ import { AddressList } from './address-list';
 import { useState } from 'react';
 import { Dialog } from '../../../shared/utilities/dialog/dialog';
 import { BiMap } from 'react-icons/bi';
-import AddressCreateDialog from './address-create-dialog';
+import AddressCreateDialog from './address-form-dialog';
 import { useAddressContext } from '../providers/address-provider';
 interface PropsType extends ReactProps{
     setShowDialog:Function,

@@ -4,17 +4,20 @@ import { MyAddress, listAddressData } from '../components/address-data';
 export const AddressContext = createContext<Partial<{
   listAddress: MyAddress[]
   addressSelected: MyAddress,
-  setListAdress:Function,
   showDialogCreateAddress:boolean,
+  addressEdit:MyAddress,
+  setListAdress:Function,
   setShowDialogCreateAddress:Function,
   setAddressSelected:Function,
-  handleChange:Function
+  handleChange:Function,
+  setAddressEdit:Function
 }>>({});
 
 export const AddressProvider = (props) => {
   const [listAddress, setListAdress] = useState<MyAddress[]>(listAddressData);
   const [showDialogCreateAddress, setShowDialogCreateAddress] = useState<boolean>(false);
   const [addressSelected, setAddressSelected] = useState<MyAddress>(listAddress.find((item:MyAddress)=>item.default));
+  const [addressEdit, setAddressEdit] = useState<MyAddress>(listAddress.find((item:MyAddress)=>item.default));
   useEffect(() => {
       setListAdress(listAddress);
     }, [listAddress]);
@@ -49,11 +52,19 @@ export const AddressProvider = (props) => {
             setListAdress([...listNew]);
               }
               break;
+          case "edit":{
+            if(addressEdit){
+              if(addressEdit.default){
+                setListAdress(listAddress.map((item:MyAddress)=> item.id!== addressEdit.id ? {...item, default : false} : {...item,default:true}));
+              }
+              setListAdress(listAddress.map((item:MyAddress)=> item.id!== addressEdit.id ? item : addressEdit));
+            }
+          }
           default:
               break;
       }
   }
-  return<AddressContext.Provider value={{ handleChange,listAddress, addressSelected, setAddressSelected, setListAdress, showDialogCreateAddress, setShowDialogCreateAddress}}>
+  return<AddressContext.Provider value={{ handleChange,listAddress, addressSelected, addressEdit, setAddressSelected, setListAdress, showDialogCreateAddress, setShowDialogCreateAddress, setAddressEdit}}>
       {props.children}
     </AddressContext.Provider>;
 }
