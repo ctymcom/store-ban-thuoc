@@ -35,7 +35,7 @@ export function ProfileUserLayout(props: PropsType) {
                         </ul>
                     </div>
                     <div className="w-full flex flex-col lg:flex-row justify-between lg:space-x-20 mt-2 md:mt-6 mb-0">
-                        <div className="w-full lg:w-96 hidden md:block">
+                        <div className="w-full lg:w-96">
                             <ProfileUser/>
                         </div>
                         {props.children}

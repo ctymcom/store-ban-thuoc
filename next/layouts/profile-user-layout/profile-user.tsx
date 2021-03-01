@@ -13,7 +13,7 @@ export function ProfileUser() {
     useEffect(() => {
         sessionStorage.setItem(LOGIN_PATHNAME, router.pathname)
         if(checkUser() === null) {
-            router.replace('/home');
+            router.replace('/login');
         }
     }, []);
     
@@ -21,7 +21,7 @@ export function ProfileUser() {
     {
         user ? <>
             <div className="hidden lg:flex items-center justify-center lg:justify-start mb-3 md:mb-0">
-                <img src={ user.imageLink || "/assets/img/avatar.svg" } onError={(e) => {(e.target as any).src="/assets/img/avatar.svg"}} alt="" className="max-w-6xs lg:max-w-5xs rounded-full" />
+                <img src={ user.imageLink || "/assets/img/avatar.svg" } onError={(e) => {(e.target as any).src="/assets/img/avatar.svg"}} alt="" className="lg:w-1/4 rounded-full" />
                 <div className=" ml-3 text-sm md:text-base">
                     <a href="#" className="block font-normal mb-1 md:mb-2">
                         { user.nickname }
@@ -31,7 +31,7 @@ export function ProfileUser() {
                     </a>
                 </div>
             </div>
-            <ul className="flex flex-col md:flex-row lg:flex-col md:justify-between lg:mt-4 mb-4 sm:mb-3 md:mb-0 w-36 sm:w-40 md:w-full m-auto">
+            <ul className="flex flex-col md:flex-row lg:flex-col md:justify-between lg:mt-4 mb-2 sm:mb-3 md:mb-0 w-36 sm:w-40 md:w-full m-auto">
                     <li className="flex mb-2.5 sm:mb-3.5 md:mb-5 items-center">
                         <ImUser className="text-primary border-2 border-primary rounded-full text-lg sm:text-lg md:text-2xl p-0.5 mr-2"/>
                         <Link href="/profile" shallow={true}>

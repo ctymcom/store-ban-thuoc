@@ -5,7 +5,7 @@ export type MyAddress ={
     address: string,
     numberPhone: string,
 }
-export const listAdressData:MyAddress[] = [
+export const listAddressData:MyAddress[] = [
     {
         id: 1,
         name: "Lý Thanh Liêm",
@@ -15,14 +15,14 @@ export const listAdressData:MyAddress[] = [
     },
     {
         id: 2,
-        name: "Lý Thanh Liêm",
+        name: "Nguyễn Văn A",
         default: false,
         address: "M2 Jamona, Đường Đào Trí Từ, Phường Phú Thuận, Quận 7, Hồ Chí Minh",
         numberPhone: "0378760880",
     },
     {
         id: 3,
-        name: "Lý Thanh Liêm",
+        name: "Trần Thanh N",
         default: false,
         address: "M2 Jamona, Đường Đào Trí Từ, Phường Phú Thuận, Quận 7, Hồ Chí Minh",
         numberPhone: "0378760880",

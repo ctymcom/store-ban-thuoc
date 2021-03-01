@@ -21,28 +21,28 @@ export function OrderHistoryItem({ item, index }: PropsType) {
 
   return <>
           <div className="flex flex-col md:flex-row justify-between items-center border-b-2 py-5 md:py-3" key={index}>
-            <div className="w-full md:w-3/5 text-sm md:text-base">
-              <p className="text-base"> Mã đơn hàng: 
-                <span className="ml-1.5">{item.id_oder}</span>
+            <div className="w-full md:w-3/5 text-sm">
+              <p className=""> Mã đơn hàng: 
+                <span className="ml-1.5 font-bold">{item.id_oder}</span>
                 <Link href="/profile/order-details">
                   <a className="text-primary ml-1">Xem chi tiết đơn hàng</a>
                 </Link>
               </p>
 
               <p className="pt-1 md:pt-0">Thời gian giao hàng dự kiến:  
-                <span className="ml-1 md:ml-2">{moment(item.delivery_time).format("DD/MM")} đến {moment(item.intend_time).subtract(-5).format("DD/MM/YYYY")}</span>
+                <span className="ml-1 md:ml-2 font-bold">{moment(item.delivery_time).format("DD/MM")} đến {moment(item.intend_time).subtract(-5).format("DD/MM/YYYY")}</span>
               </p>
 
               <p className="pt-1 md:pt-0">Tổng sản phẩm: 
-                <span className="ml-2">{item.total_product} sản phẩm</span>
+                <span className="ml-2 font-bold">{item.total_product} sản phẩm</span>
               </p>
 
               <p className="pt-1 md:pt-0">Tổng tiển:
-                <span className="number-price text-primary ml-2">{NumberPipe(item.total_price)}</span>
+                <span className="number-price text-primary ml-2 font-bold">{NumberPipe(item.total_price)}</span>
               </p>
 
               <p className="pt-1 md:pt-0">Trạng thái sản phẩm:
-                <span className="ml-2">{showLabelStatus}</span>
+                <span className="ml-2 font-bold">{showLabelStatus}</span>
               </p>
             </div>
             <button className={`${backgroundBtn} hidden md:block text-white px-6 py-1.5 rounded-md whitespace-nowrap text-sm md:text-base mt-4 md:mt-0`}>{showLabelStatus}</button>

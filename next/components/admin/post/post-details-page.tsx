@@ -3,11 +3,10 @@ import { PostDetailsContent } from './component/post-details-content';
 import { usePostDetailsContext } from "./providers/post-details-provider";
 import { Spinner } from "../../shared/utilities/spinner";
 import { useEffect, useState } from "react";
-type CreatePostPageProps = {
-  [x: string]: any;
-  postId?: string;
+
+interface PropTypes extends ReactProps {
 };
-export function PostDetailsPage({ postId }: CreatePostPageProps) {
+export function PostDetailsPage(props: PropTypes) {
 
   const { post } = usePostDetailsContext()
   const [title, setTitle] = useState('');

@@ -34,16 +34,6 @@ export function OrderHistoryPage() {
         
     useEffect(() => {
         setData(OrderHistoryData);
-        // console.log(filterOrder);
-        // console.log(typeof filterOrder);
-        
-        // switch(filterOrder.toString()) {
-        //     case '1': setData(OrderHistoryData.filter(x => x.status == 'pending'));
-        //     case '2': setData(OrderHistoryData.filter(x => x.status == 'delivering'));
-        //     case '3': setData(OrderHistoryData.filter(x => x.status == 'complete'));
-        //     case '4': setData(OrderHistoryData.filter(x => x.status == 'canceled'));
-        //     default: setData(OrderHistoryData);
-        // }
     }, []);
 
     const menus = [
@@ -53,7 +43,6 @@ export function OrderHistoryPage() {
         { label: 'Đã giao',status: 'complete'},
         { label: 'Đã hủy', status: 'canceled'},
     ];
-    // console.log(status);
     
     return <>
     
@@ -66,7 +55,7 @@ export function OrderHistoryPage() {
                                 value={status}
                                 onChange={(e) => handlerOrder(e.target.value)}>
                                     {
-                                        menus.map(type => <option key={type.status} selected={type.status==status?true:false} value={(type.status) ? type.status : ''}>{ type.status == '' ? 'Tất cả đơn hàng' : type.label }</option>)
+                                        menus.map(type => <option key={type.status} selected={ type.status== status ? true : false } value={(type.status) ? type.status : ''}>{ type.status == '' ? 'Tất cả đơn hàng' : type.label }</option>)
                                     }      
                         </select>
                         <ul className="hidden md:flex justify-between border-b-4 pb-2 mt-3 md:mt-0 h-auto">

@@ -89,7 +89,7 @@ export function FormProfile(props : PropsType) {
                     </div>
                     <div className="text-center w-full xl:w-2/5 flex items-center xl:block">
                         <div className="xl:p-4 flex items-center justify-around w-1/4 xl:w-full">
-                            <img src={ user.imageLink || "/assets/img/avatar.svg"} onError={(e) => {(e.target as any).src="/assets/img/avatar.svg"}} className="user__avatar max-w-4xs rounded-full" alt="avatar" />
+                            <img src={ user.imageLink || "/assets/img/avatar.svg"} onError={(e) => {(e.target as any).src="/assets/img/avatar.svg"}} className="w-1/3 rounded-full" alt="avatar" />
                         </div>
                         <div className="w-full sm:w-3/4 xl:w-full">
                             <button className="btn-outline text-16 sm:text-20 border-primary border font-normal text-primary w-2/3 mx-auto h-12 my-2">Đổi ảnh</button>

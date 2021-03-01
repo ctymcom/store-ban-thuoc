@@ -42,7 +42,7 @@ export default function CartPage(props) {
     const handleDeleteCart = (id: number) => {
         let listNew = listCart;
         let index = listCart.findIndex((item) => { return item.id === id });
-        if (index !== -1) {
+        if (index !== -1&&listCart.length>1) {
             listNew.splice(index, 1);
         }
         setListCart([...listNew]);
