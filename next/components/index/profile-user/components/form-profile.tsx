@@ -3,17 +3,7 @@ import DateTime from './datetime';
 import { useState } from 'react';
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import Link from 'next/link';
-interface PropsType extends ReactProps {
-    // userData: {
-    //     // name:string,
-    //     // phoneNumber:string,
-    //     // email:string,
-    //     // gender:string,
-    //     // dateOfBirth:Date
-    // },
-    user: any[]
-}
-export function FormProfile(props : PropsType) {
+export function FormProfile() {
     const { user, saveCurrentPath } = useAuth()
     const [userP,setUserP] = useState(user);
     const handleChange=(id:string,value:any)=>{

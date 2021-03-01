@@ -3,7 +3,7 @@ import { user } from './components/data-profile';
 export function ProfileUserPage() {
     return <>
         <div className="w-full">
-            <FormProfile user={user}/>
+            <FormProfile/>
         </div>
     </>;
 }
