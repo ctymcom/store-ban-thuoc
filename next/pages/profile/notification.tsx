@@ -4,7 +4,7 @@ import { ProfileUserLayout } from "../../layouts/profile-user-layout";
 
 export default function Notification() {
     return <>
-    <ProfileUserLayout breadcrumbs="notification">
+    <ProfileUserLayout breadcrumb="notification">
         <NotificationPage />
     </ProfileUserLayout>
         
