@@ -6,12 +6,17 @@ import { useAddressContext } from '../providers/address-provider';
 export function AddressList() {
     const{ listAddress } = useAddressContext();
     return (
-        <>
+        <div>
             {
                 listAddress.map((item:MyAddress, index:number) => {
-                    return <AddressItem key={index} address={item}/>
+                    return item.default? <AddressItem key={index} address={item}/>:""
+                })
+            };
+            {
+                listAddress.map((item:MyAddress, index:number) => {
+                    return !item.default? <AddressItem key={index} address={item}/>:""
                 })
             }
-        </>
+        </div>
     );
 }

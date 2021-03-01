@@ -7,13 +7,14 @@ import { useAddressContext } from '../providers/address-provider';
 interface PropsType extends ReactProps{
   setShowDialog:Function,
   isOpen:boolean,
+  title?:string
 }
-const AddressCreateDialog = (props:PropsType) => {
-  const {addressEdit, handleChange, setAddressEdit, setShowDialogCreateAddress} = useAddressContext();
+const AddressFormDialog = (props:PropsType) => {
+  const {addressEdit, handleChange, setAddressEdit, setShowAddressFormDialog} = useAddressContext();
   return (
     <Dialog width="420px" isOpen={props.isOpen} mobileMode={false}
                 onClose={() => props.setShowDialog(false)}
-                title="Tạo Địa Chỉ Mới">
+                title={props.title?props.title:"Chỉnh sửa địa chỉ"}>
                 <Dialog.Body>
                   <div className="flex flex-wrap gap-4 py-4 text-16 sm:text-20">
                     <input className="form-input w-full h-12 text-16 sm:text-20" defaultValue={addressEdit?addressEdit.name:"Họ và tên"} onChange={(e)=>{setAddressEdit({...addressEdit,name:e.target.value})}}/>
@@ -25,10 +26,10 @@ const AddressCreateDialog = (props:PropsType) => {
                     <div className="w-full h-12 flex items-center gap-2 cursor-pointer" onClick={()=>{setAddressEdit({...addressEdit,default:!addressEdit.default})}}>
                       <CheckBoxSquare checked={addressEdit?addressEdit.default:true} /> Chọn làm địa chỉ mặc định
                       </div>
-                    <button className="btn-primary w-full h-12 text-16 sm:text-20" onClick={()=>{setShowDialogCreateAddress(false);handleChange(null,"edit")}}>Xác nhận</button>
+                    <button className="btn-primary w-full h-12 text-16 sm:text-20" onClick={()=>{setShowAddressFormDialog(false);handleChange(addressEdit.id,"edit")}}>Xác nhận</button>
                   </div>
                 </Dialog.Body>
             </Dialog>
   );
 }
-export default AddressCreateDialog;
+export default AddressFormDialog;

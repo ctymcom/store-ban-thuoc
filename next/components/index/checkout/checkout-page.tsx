@@ -20,8 +20,7 @@ import { useAddressContext } from './providers/address-provider';
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
     const [isCheck, setIsCheck] = useState(true);
-    const [showDialogAddress, setShowDialogAddress] = useState(false);
-    const {addressSelected} = useAddressContext();
+    const {addressSelected, showDialogAddress, setShowDialogAddress} = useAddressContext();
     const getCheckPayment = (status:boolean) => {
         setIsHide(status)
     }
