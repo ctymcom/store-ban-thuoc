@@ -1,6 +1,7 @@
 // Repeat Hello World
 
 import moment from "moment-timezone";
+import SyncAritoOptionsJob from "./jobs/syncAritoOptions.job";
 import SyncLocationDataJob from "./jobs/syncLocationData.job";
 import { SyncProductJob } from "./jobs/syncProduct.job";
 import SyncPromotionJob from "./jobs/syncPromotion.job";
@@ -20,5 +21,9 @@ export function InitRepeatJobs() {
   SyncPromotionJob.create({})
     .repeatEvery("6 minute")
     .unique({ name: SyncPromotionJob.jobName })
+    .save();
+  SyncAritoOptionsJob.create({})
+    .repeatEvery("7 minute")
+    .unique({ name: SyncAritoOptionsJob.jobName })
     .save();
 }
