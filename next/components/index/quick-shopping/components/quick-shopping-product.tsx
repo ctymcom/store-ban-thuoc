@@ -29,15 +29,19 @@ export function QuickShoppingProduct({ product }: PropsType) {
   }, [quantity]);
 
   return <div className="relative flex items-center border-b border-gray-300 px-2 py-1">
-    <div className="flex-shrink-0 w-16 rounded p-2">
-      <div className="image-wrapper">
-        <img src={product.image} onError={(e)=>{(e.target as any).src="/assets/img/default.png"}}/>
-      </div>
-    </div>
-    <div className="flex-grow pl-4">
-      <div className="text-gray-700 text-lg font-semibold leading-tight">{product.name}</div>
-      <div className="text-gray-600 text-sm">{product.unit}</div>
-    </div>
+    <Link href={"/product/" + product.code}>
+      <a className="flex items-center flex-grow group">
+        <div className="flex-shrink-0 w-16 rounded p-2">
+          <div className="image-wrapper">
+            <img src={product.image} onError={(e)=>{(e.target as any).src="/assets/img/default.png"}}/>
+          </div>
+        </div>
+        <div className="flex-grow pl-4">
+          <div className="text-gray-700 text-lg font-semibold leading-tight group-hover:text-primary-dark">{product.name}</div>
+          <div className="text-gray-600 text-sm group-hover:text-primary">{product.unit} {!!product.packing && <span>- {product.packing}</span>}</div>
+        </div>
+      </a>
+    </Link>
     <div className="flex-shrink-0 text-gray-700 font-semibold text-lg text-center px-4">
       {product.basePrice?
         <div className="flex items-center">

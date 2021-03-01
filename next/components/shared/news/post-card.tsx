@@ -28,7 +28,7 @@ export function PostCard(props: PropsType) {
         <div className="px-4 pt-4 pb-3 text-lg text-gray-800 font-semibold group-hover:text-primary-dark">
             {props.post.title}
         </div>
-        <div className="px-4 mb-4 text text-gray-600 group-hover:text-primary text-ellipsis-3 h-18">
+        <div className="px-4 mb-4 text text-gray-600 group-hover:text-primary text-ellipsis-3 h-18 font-normal">
             {props.post.excerpt}
         </div>
     </div>
