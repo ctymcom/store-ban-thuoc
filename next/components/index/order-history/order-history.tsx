@@ -5,7 +5,21 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { OrderHistoryData } from "./data/order-history-data";
 
-export function OrderHistoryPage() {
+interface PropsType extends ReactProps {
+    [x : string] : any;
+    menus?: any[]
+}
+
+export function OrderHistoryPage({
+    menus = [
+        { label: 'Tất cả đơn hàng', status: ''},
+        { label: 'Chờ xác nhận', status: 'pending'},
+        { label: 'Đang giao', status: 'delivering'},
+        { label: 'Đã giao',status: 'complete'},
+        { label: 'Đã hủy', status: 'canceled'}
+    ]
+    ,... props
+}: PropsType) {
     const [data, setData] = useState([]);
     // const [pagination, setPagination] = useState<Pagination>({
     //     page: 1,
@@ -28,24 +42,14 @@ export function OrderHistoryPage() {
             pathname: '/profile/order-history',
             query: value ? { status: value } : ''
         });
-        console.log(value);
-        
+        // console.log(value);
     }; 
         
     useEffect(() => {
         setData(OrderHistoryData);
     }, []);
 
-    const menus = [
-        { label: 'Tất cả đơn hàng', status: ''},
-        { label: 'Chờ xác nhận', status: 'pending'},
-        { label: 'Đang giao', status: 'delivering'},
-        { label: 'Đã giao',status: 'complete'},
-        { label: 'Đã hủy', status: 'canceled'},
-    ];
-    
     return <>
-    
         <div className="w-full lg:w-9/12 px-3 md:px-0">
             <div className="">
                 <div className="w-full flex justify-between mt-0 md:mt-5 lg:mt-0 mb-0 gap-7">
@@ -73,15 +77,6 @@ export function OrderHistoryPage() {
                                 </>
                             ))}
                         </ul>
-                        {/* <ul className="flex justify-between border-b-4 pb-1.5 mt-3 md:mt-0 overflow-x-auto md:overflow-hidden">
-                            { list.map((item, index) => (
-                                <li className="abcdefg" key={index} onClick={() => handleScrollIntoView(index)}>   
-                                    <a  className=' normal-case lg:uppercase font-extralight md:font-semibold whitespace-nowrap text-base px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary'>
-                                            {item} 
-                                        </a>
-                                </li> 
-                            ))}
-                        </ul> */}
                         <div className="w-full">
                             <OrderHisttoryList data={data} status={status}/>
                         </div>

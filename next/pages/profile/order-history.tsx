@@ -3,7 +3,7 @@ import { DefaultLayout } from "../../layouts/default-layout";
 import { ProfileUserLayout } from "../../layouts/profile-user-layout";
 export default function OrderHistory() {
     return <>
-        <ProfileUserLayout breadcrumbs="order">
+        <ProfileUserLayout breadcrumb="order">
             <OrderHistoryPage />
         </ProfileUserLayout>
         

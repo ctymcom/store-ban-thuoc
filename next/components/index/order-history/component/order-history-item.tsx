@@ -3,14 +3,19 @@ import moment from 'moment-timezone';
 import Link from 'next/link';
 
 interface PropsType extends ReactProps {
-  item: any;
-  index: any;
+  [x : string] : any;
+  item?: any;
+  index?: any;
+  showLabelStatus?: string;
+  backgroundBtn?: string;
 }
 
-export function OrderHistoryItem({ item, index }: PropsType) {
-
-  let showLabelStatus = '';
-  let backgroundBtn = '';
+export function OrderHistoryItem({ 
+  item, 
+  index,
+  showLabelStatus = '',
+  backgroundBtn = '',
+}: PropsType) {
   switch (item.status) {
     case 'pending': showLabelStatus = 'Chờ xác nhận'; backgroundBtn = 'bg-info'; break;
     case 'delivering': showLabelStatus = 'Đang giao'; backgroundBtn = 'bg-warning'; break;

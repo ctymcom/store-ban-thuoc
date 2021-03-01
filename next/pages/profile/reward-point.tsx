@@ -3,7 +3,7 @@ import { DefaultLayout } from "../../layouts/default-layout";
 import { ProfileUserLayout } from "../../layouts/profile-user-layout";
 export default function RewardPoint() {
     return <>
-        <ProfileUserLayout breadcrumbs="reward-point">
+        <ProfileUserLayout breadcrumb="reward-point">
             <RewardPointPage />
         </ProfileUserLayout>
     </>
