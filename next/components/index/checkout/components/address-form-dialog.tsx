@@ -17,17 +17,17 @@ const AddressFormDialog = (props:PropsType) => {
                 onClose={() => props.setShowDialog(false)}
                 title={props.title?props.title:"Chỉnh sửa địa chỉ"}>
                 <Dialog.Body>
-                  <div className="flex flex-wrap gap-4 py-4 text-16 sm:text-20">
-                    <input className="form-input w-full h-12 text-16 sm:text-20" defaultValue={addressEdit?addressEdit.name:"Họ và tên"} onChange={(e)=>{setAddressEdit({...addressEdit,name:e.target.value})}}/>
-                    <input className="form-input w-full h-12 text-16 sm:text-20" defaultValue={addressEdit?addressEdit.numberPhone:"Số điện thoại"} onChange={(e)=>{(e.target.value).length<=10?setAddressEdit({...addressEdit,numberPhone:e.target.value}):false}}/>
-                    <Select className=" w-full h-12 text-16 sm:text-20" options={provinces} value={province} onChange={(val)=>{setProvince(val);}}/>
-                    <Select className=" w-full h-12 text-16 sm:text-20" options={districts} value={district} onChange={(val)=>setDistrict(val)}/>
-                    <Select className=" w-full h-12 text-16 sm:text-20" options={wards} value={ward} onChange={(val)=>setWard(val)}/>
-                    <input className="form-input w-full h-12 text-16 sm:text-20" defaultValue={addressEdit?addressEdit.address:"Nhập địa chỉ, tên đường, tòa nhà..."}/>
+                  <div className="flex flex-wrap gap-4 py-4 text-16">
+                    <input className="form-input w-full h-12 text-16" defaultValue={addressEdit?addressEdit.name:"Họ và tên"} onChange={(e)=>{setAddressEdit({...addressEdit,name:e.target.value})}}/>
+                    <input className="form-input w-full h-12 text-16" defaultValue={addressEdit?addressEdit.numberPhone:"Số điện thoại"} onChange={(e)=>{(e.target.value).length<=10?setAddressEdit({...addressEdit,numberPhone:e.target.value}):false}}/>
+                    <Select className={`w-full h-12 text-16`} options={provinces} value={province} onChange={(val)=>{setProvince(val);}}/>
+                    <Select disabled={province?false:true} className={`w-full h-12 text-16 ${provinces?"disabled:pointer-events-none disabled:cursor-not-allowed":""}`} options={districts} value={district} onChange={(val)=>setDistrict(val)}/>
+                    <Select disabled={district?false:true} className={`w-full h-12 text-16 ${wards?"disabled:pointer-events-none disabled:cursor-not-allowed":""}`} options={wards} value={ward} onChange={(val)=>setWard(val)}/>
+                    <input className="form-input w-full h-12 text-16" defaultValue={addressEdit?addressEdit.address:"Nhập địa chỉ, tên đường, tòa nhà..."}/>
                     <div className="w-full h-12 flex items-center gap-2 cursor-pointer" onClick={()=>{setAddressEdit({...addressEdit,default:!addressEdit.default})}}>
                       <CheckBoxSquare checked={addressEdit?addressEdit.default:true} /> Chọn làm địa chỉ mặc định
                       </div>
-                    <button className="btn-primary w-full h-12 text-16 sm:text-20" onClick={()=>{setShowAddressFormDialog(false);addressEdit?handleChange(addressEdit.id,"edit"):handleChange(addressEdit.id,"add")}}>Xác nhận</button>
+                    <button className="btn-primary w-full h-12 text-16" onClick={()=>{setShowAddressFormDialog(false);addressEdit?handleChange(addressEdit.id,"edit"):handleChange(addressEdit.id,"add")}}>Xác nhận</button>
                   </div>
                 </Dialog.Body>
             </Dialog>
