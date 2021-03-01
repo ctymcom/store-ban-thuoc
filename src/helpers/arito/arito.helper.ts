@@ -12,6 +12,7 @@ import { IUserAddress } from "../../graphql/modules/userAddress/userAddress.mode
 import { CacheHelper } from "../cache.helper";
 import { AritoUser } from "./types/aritoUser.type";
 import { IPromotion } from "../../graphql/modules/promotion/promotion.model";
+import { IAritoOption } from "../../graphql/modules/aritoOption/aritoOption.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -559,6 +560,20 @@ export class AritoHelper {
           group: pageInfo["group"],
         },
       };
+    });
+  }
+  static getAllOptions(page: number = 1) {
+    return Axios.post(`${this.host}/Item/GetOptions`, {
+      token: this.imageToken,
+      memvars: [["pageIndex", "I", page]],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["name"],
+        name: d["descript"],
+        name2: d["descript2"],
+        value: d["val"],
+      })) as IAritoOption[];
     });
   }
 }
