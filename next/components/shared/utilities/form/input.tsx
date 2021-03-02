@@ -1,15 +1,18 @@
 interface PropsType extends ReactProps {
   value: any
   placeholder?: string
+  name?: string
   type?: 'text' | 'tel' | 'email' | 'number' | 'password'
-  onChange: Function
+  onChange: (val: string) => any
 }
 export function Input({
     type = 'text',
+    className = "form-input",
     ...props
   }: PropsType) {
   return <div className="relative flex items-center group">
-    <input className={`border border-gray-400 rounded pl-4 pr-8 py-2 hover:border-primary focus:border-primary-dark focus:outline-none ${props.className}`} 
+    <input className={`flex-grow ${className || ''}`} 
+      name={props.name}
       value={props.value}
       type={type}
       placeholder={props.placeholder}

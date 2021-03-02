@@ -3,7 +3,7 @@ import { NumberPipe } from '../../../../lib/pipes/number';
 interface PropsType extends ReactProps{
     listMoney:ItemCart[],
 }
-type ItemCart={
+type ItemCart = {
     title:string,
     money:number,
 }
