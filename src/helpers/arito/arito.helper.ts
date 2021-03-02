@@ -11,6 +11,8 @@ import { IProductTag } from "../../graphql/modules/productTag/productTag.model";
 import { IUserAddress } from "../../graphql/modules/userAddress/userAddress.model";
 import { CacheHelper } from "../cache.helper";
 import { AritoUser } from "./types/aritoUser.type";
+import { IPromotion } from "../../graphql/modules/promotion/promotion.model";
+import { IAritoOption } from "../../graphql/modules/aritoOption/aritoOption.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -532,6 +534,46 @@ export class AritoHelper {
     }).then((res) => {
       this.handleError(res);
       return get(res.data, "value");
+    });
+  }
+  static getAllPromotion(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetPromotion`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          code: d["ma_ck"],
+          name: d["ten_ck"],
+          description: d["ghi_chu"],
+        })) as IPromotion[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static getAllOptions(page: number = 1) {
+    return Axios.post(`${this.host}/Item/GetOptions`, {
+      token: this.imageToken,
+      memvars: [["pageIndex", "I", page]],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["name"],
+        name: d["descript"],
+        name2: d["descript2"],
+        value: d["val"],
+      })) as IAritoOption[];
     });
   }
 }
