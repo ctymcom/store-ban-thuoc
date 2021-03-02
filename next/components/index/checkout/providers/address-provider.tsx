@@ -1,14 +1,14 @@
 import React from 'react';
 import { createContext, useState, useEffect, useContext, Children } from 'react';
-import { MyAddress, listAddressData } from '../components/address-data';
 import { AddressService } from '../../../../lib/repo/address.repo';
+import { UserAddressService, UserAddress } from '../../../../lib/repo/user-address.repo';
 export const AddressContext = createContext<Partial<{
-  listAddress: MyAddress[]
-  addressSelected: MyAddress,
+  listAddress: UserAddress[]
+  addressSelected: UserAddress,
   showAddressFormDialog:boolean,
   showDialogAddress:boolean,
   setShowDialogAddress:Function,
-  addressEdit:MyAddress,
+  addressEdit:UserAddress,
   setListAdress:Function,
   setShowAddressFormDialog:Function,
   setAddressSelected:Function,
@@ -27,19 +27,24 @@ export const AddressContext = createContext<Partial<{
 }>>({});
 
 export const AddressProvider = (props) => {
-  const [listAddress, setListAdress] = useState<MyAddress[]>(listAddressData);
+  const [listAddress, setListAdress] = useState<any[]>(null);
   const [showDialogAddress, setShowDialogAddress] = useState(false);
   const [showAddressFormDialog, setShowAddressFormDialog] = useState<boolean>(false);
-  const [addressSelected, setAddressSelected] = useState<MyAddress>(listAddress.find((item:MyAddress)=>item.default));
-  const [addressEdit, setAddressEdit] = useState<MyAddress>(listAddress.find((item:MyAddress)=>item.default));
+  const [addressSelected, setAddressSelected] = useState<UserAddress>(listAddress.find((item:UserAddress)=>item.default));
+  const [addressEdit, setAddressEdit] = useState<UserAddress>(listAddress.find((item:UserAddress)=>item.default));
   useEffect(() => {
       setListAdress(listAddress);
     }, [listAddress]);
 
-  const setDefaultAddress=(id:number)=>{
-    setListAdress(listAddress.map((item:MyAddress)=> item.id!== id ? {...item, default : false} : {...item,default:true}));
+  const setDefaultAddress=(id:string)=>{
+    setListAdress(listAddress.map((item:UserAddress)=> item.id!== id ? {...item, default : false} : {...item,default:true}));
   }
-
+  useEffect(() => {
+   UserAddressService.getAll( {query:{limit:0},fragment:UserAddressService.fullFragment}).then(res=>{
+    console.log(res);
+    
+   }) 
+  }, []);
   const [provinces, setProvinces] = useState<Option[]>(null);
   const [province, setProvince] = useState<string>('');
   const [districts,setDistricts] = useState<Option[]>(null);
@@ -65,14 +70,14 @@ export const AddressProvider = (props) => {
       setWard('');
     })
   }, [district]);
-  const handleChange=(id:number,type:string)=>{
+  const handleChange=(id:string,type:string)=>{
       switch (type) {
           case "setDefault":{
             setDefaultAddress(id)    
           }
               break;
           case "delete":{
-            let index = listAddress.findIndex((item:MyAddress)=>item.id===id)
+            let index = listAddress.findIndex((item:UserAddress)=>item.id===id)
             let listNew = listAddress;
             if (index !== -1&&listAddress.length>1) {
                 if(listNew[index].id===addressSelected.id)
@@ -98,13 +103,13 @@ export const AddressProvider = (props) => {
               break;
           case "edit":{
             if(addressEdit){
-              setListAdress(listAddress.map((item:MyAddress)=> item.id!== addressEdit.id ? item : addressEdit));
+              setListAdress(listAddress.map((item:UserAddress)=> item.id!== addressEdit.id ? item : addressEdit));
               if(addressEdit.default){
                 setDefaultAddress(addressEdit.id);
               }else{
                 let index = listAddress.findIndex((item)=>item.default);
                 if(index===-1){
-                  setListAdress(listAddress.map((item:MyAddress)=>item.id===1?{...item, default : false} : {...item,default:true}));
+                  setListAdress(listAddress.map((item:UserAddress)=>item.id===""?{...item, default : false} : {...item,default:true}));
                 }
               }
             }
