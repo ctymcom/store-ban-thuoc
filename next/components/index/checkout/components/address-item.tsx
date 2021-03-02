@@ -1,11 +1,11 @@
 import React from 'react';
 import { HiOutlinePencilAlt, HiOutlineTrash } from 'react-icons/hi';
 import CheckBoxCricle from '../../cart/components/check-box-circle';
-import { MyAddress } from './address-data';
 import { useEffect, useState } from 'react';
 import { useAddressContext } from '../providers/address-provider';
+import { UserAddress } from '../../../../lib/repo/user-address.repo';
 interface Proptype extends ReactProps{
-    address:MyAddress,
+    address:UserAddress,
 }
 
 export function AddressItem(props:Proptype) {
@@ -19,13 +19,13 @@ export function AddressItem(props:Proptype) {
             <div className="flex items-center gap-1 cursor-pointer w-11/12 mx-auto" onClick={()=>{setAddressSelected(props.address)}}>
                 <CheckBoxCricle checked={address.id===addressSelected.id}/>
                 <div className="">
-                    <p className="font-semibold whitespace-nowrap">{address.name} - {address.numberPhone}</p>
-                    <p>{address.address}</p>
+                    <p className="font-semibold whitespace-nowrap">{address.contactName} - {address.phone}</p>
+                    <p>{address.fullAddress}</p>
                 </div>
             </div>
             <div className="flex items-center whitespace-nowrap text-gray-500 pt-2 w-11/12 mx-auto">
                 {
-                    address.default ? <p className="text-primary text-center px-4">[Mặc định]</p>
+                    address.isDefault ? <p className="text-primary text-center px-4">[Mặc định]</p>
                      : <button className="btn-outline rounded-lg text-16 sm:text-20"
                      onClick={()=>handleChange(address.id,"setDefault")}>Đặt mặc định</button>
                 }

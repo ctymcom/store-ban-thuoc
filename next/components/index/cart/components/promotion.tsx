@@ -31,38 +31,34 @@ export function Promotion({ onChanged = () => { }, PrUsing, listPromotionCode, .
         setUsePromotion(true);
     }
     
-    return (<div>
-        <div className="flex border-b-2 items-center pb-2">
-            <i className="text-primary text-24 transform -rotate-135"><IoTicketOutline /></i>
-            <p className="uppercase px-2"> Mã khuyến mãi</p>
+    return (<div className="my-5 border-b-2 sm:border-0">
+        <div className="flex border-0 sm:border-b-2 items-center pb-2">
+            <i className="text-primary hidden sm:block text-24 transform"><IoTicketOutline /></i>
+            <p className="uppercase px-2 text-16 sm:text-20"> Mã khuyến mãi</p>
         </div>
-        <div className="py-3 h-24">
+        <div className="sm:py-3 h-36 flex-wrap sm:block items-center relative">
             {
-                usePromotion && PrUsing ? (
-                    <div>
-                        <h4 className="text-xl text-primary font-semibold">
-                            Mã ưu đãi {PrUsing.code}</h4>
-                        <p>Giảm giá: {PrUsing.des}%</p>
-                    </div>
-                ) : (
-                        <div>
-                            <p className="cursor-pointer text-primary"
-                                onClick={() => setShowDialog(true)}
-                            >Xem danh sách mã khuyến mãi</p>
-                            <input id="Input__Promotion"
-                                className="block w-full border border-gray-300 rounded mt-2 px-2 py-2"
-                                type="text"
-                                placeholder="Nhập mã ưu đãi"
-                                onChange={(e) => setPromotion(e.target.value)} value={promotion} />
-                            <p className={PrUsing !== null && PrUsing.code === "" ? "block text-lg text-red-600" : "hidden"}>Mã khuyến mãi không tồn tại</p>
+                    usePromotion && PrUsing ? (
+                        <div className="my-4 w-full">
+                            <h4 className="text-lg sm:text-xl text-primary font-semibold">
+                                Mã ưu đãi {PrUsing.code}</h4>
+                            <p>Giảm giá: {PrUsing.des}%</p>
                         </div>
+                    ) : (
+                    <>
+                        <p className="cursor-pointer text-primary text-16 sm:text-20"
+                            onClick={() => setShowDialog(true)}
+                        >Xem danh sách mã khuyến mãi</p>
+                        <input className="form-input w-2/3 sm:my-4 sm:w-full rounded-r-none sm:rounded-md border-gray-200"
+                            placeholder="Nhập mã ưu đãi"
+                            onChange={(e) => setPromotion(e.target.value)} value={promotion} />
+                    </>
                     )
             }
+            <button onClick={applyPromotion} className={` absolute sm:top-28 sm:left-0 font-normal sm:w-full text-16 sm:text-20 h-12 sm:my-2 ${promotion ?"btn-primary":"btn-disabled"} ${PrUsing?"w-full":"w-1/3 rounded-l-none sm:rounded-md"}`}>
+                {usePromotion && PrUsing ? "Hủy áp dụng" : "Áp dụng"}
+            </button>
         </div>
-        <button onClick={applyPromotion} type="button"
-            className={Promotion ? "btn font-normal btn-primary w-full text-20 h-12" : "text-20 h-12 btn btn-disabled w-full"}>
-            {usePromotion && PrUsing ? "Hủy áp dụng" : "Áp dụng"}
-        </button>
         <PromotionListDialog isOpen={showDialog} setShowDialog={setShowDialog} listPromotionCode={listPromotionCode} choseCode={choseCode}/>
     </div>)
 }
