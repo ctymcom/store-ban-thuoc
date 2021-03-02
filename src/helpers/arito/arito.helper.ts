@@ -34,6 +34,12 @@ export class AritoHelper {
   static getImageLink(imageId: string) {
     return `${this.host}/GetImageFile350/${imageId}/${this.imageToken}`;
   }
+  static getAvatarLink(imageId: string) {
+    return `${this.host}/DownloadFile0/${imageId}/${this.imageToken}`;
+  }
+  static getThumbnailLink(imageId: string) {
+    return `${this.host}/DownloadFile1/${imageId}/${this.imageToken}`;
+  }
   static getAllCategory(type: string, page: number = 1, updatedAt?: Date) {
     return Axios.post(`${this.host}/Item/GetItemGroup`, {
       token: this.imageToken,

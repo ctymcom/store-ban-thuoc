@@ -42,6 +42,7 @@ export default {
       group: String
 
       imageLink: String
+      thumbnailLink: String
       role: String
     }
   `,
@@ -74,7 +75,10 @@ export default {
     },
     AritoUser: {
       imageLink: async (root: AritoUser, args: any, context: Context) => {
-        return AritoHelper.getImageLink(root.imageId);
+        return AritoHelper.getAvatarLink(root.imageId);
+      },
+      thumbnailLink: async (root: AritoUser, args: any, context: Context) => {
+        return AritoHelper.getThumbnailLink(root.imageId);
       },
     },
   },
