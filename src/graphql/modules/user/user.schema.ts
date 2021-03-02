@@ -15,7 +15,7 @@ extend type Mutation {
   deleteManyUser(ids: [ID]): Int
   login(idToken: String!, deviceId: String, deviceToken: String): LoginData
   updateUserPassword(id: ID!, password: String!): User
-  userUpdateMe(data: UserUpdateMeInput!): User
+  userUpdateMe(data: UserUpdateMeInput!): LoginAritoData
 }
 
 input CreateUserInput {
@@ -45,15 +45,16 @@ input UpdateUserInput {
 }
 
 input UserUpdateMeInput {
-  name: String
+  "Tên hiển thị"
+  nickname: String
+  "Điện thoại"
   phone: String
-  address: String
-  avatar: String
-  provinceId: String
-  districtId: String
-  wardId: String
-  """${Object.values(UserRole).join("|")}"""
-  role: String
+  "Ngày sinh"
+  birthday: DateTime
+  "Loại cửa hàng"
+  companyType: String
+  "Tên cửa hàng"
+  companyName: String
 }
 
 type User {
