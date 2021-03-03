@@ -35,7 +35,7 @@ export function FormProfile() {
     //             break;
     //     }
     // }
-    console.log(user);
+    // console.log(user);
     
     return <>
     {

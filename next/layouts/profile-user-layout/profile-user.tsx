@@ -16,7 +16,7 @@ export function ProfileUser() {
             router.replace('/login');
         }
     }, [user]);
-    console.log(user);
+    // console.log(user);
     
 
     return <>

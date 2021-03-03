@@ -4,6 +4,7 @@ import { CartProvider } from "../lib/providers/cart-provider";
 import { Footer } from "./default-layout/footer";
 import { HeadSEO } from "./default-layout/head-seo";
 import { Header } from "./default-layout/header/header";
+import { FooterProvider } from "./default-layout/providers/footer-providers";
 // import Sidebar from './components/sidebar';
 
 interface PropsType extends ReactProps {
@@ -24,13 +25,15 @@ export function DefaultLayout({
   return (
     <>
       <HeadSEO title={title}></HeadSEO>
+      <FooterProvider>
       <CartProvider>
         <Header/>
           <div className="w-full" style={{ minHeight: '60vh' }}>
             {props.children}
           </div>
-        <Footer/>
+          <Footer/>
       </CartProvider>
+      </FooterProvider>
     </>
   );
 }
