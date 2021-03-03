@@ -49,19 +49,40 @@ export function OrderHistoryPage({
         setData(OrderHistoryData);
     }, []);
 
+    const handlerScrollIntoView = (index) => {
+        let ele = document.getElementsByClassName('abc')[index];
+        ele.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center'})
+    }
+
     return <>
         <div className="w-full lg:w-9/12 px-3 md:px-0">
             <div className="">
                 <div className="w-full flex justify-between mt-0 md:mt-5 lg:mt-0 mb-0 gap-7">
                     <div className="w-full">
-                        <p className="md:hidden whitespace-nowrap text-center mb-3">Lọc theo đơn hàng:</p>
+                        {/* <p className="block md:hidden whitespace-nowrap text-center mb-3">Lọc theo đơn hàng:</p>
                         <select className="block md:hidden m-auto border border-gray-400 rounded w-8/12 px-4 py-2 hover:border-primary focus:border-primary-dark focus:outline-none"
                                 value={status}
                                 onChange={(e) => handlerOrder(e.target.value)}>
                                     {
                                         menus.map(type => <option key={type.status} selected={ type.status== status ? true : false } value={(type.status) ? type.status : ''}>{ type.status == '' ? 'Tất cả đơn hàng' : type.label }</option>)
                                     }      
-                        </select>
+                        </select> */}
+
+                        <ul className="flex md:hidden justify-between border-b-0 md:border-b-4 pb-2 mt-3 md:mt-0 h-auto overflow-x-scroll md:overflow-hidden">
+                            { menus.map((menu, index) => (
+                                <>
+                                    <li key={index}>
+                                        <Link href= {{ pathname: '/profile/order-history', query: menu.status ? { status: menu.status } : {} } } scroll={false}>
+                                            <a  className={` abc normal-case lg:uppercase font-extralight md:font-semibold whitespace-nowrap text-base px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary
+                                                ${(status ? status == menu.status : !menu.status) ? ' text-primary border-primary animate-slide-up' : ''}`}
+                                                onClick={() => handlerScrollIntoView(index)}>
+                                                {menu.label}
+                                            </a>
+                                        </Link>
+                                    </li> 
+                                </>
+                            ))}
+                        </ul>
                         <ul className="hidden md:flex justify-between border-b-4 pb-2 mt-3 md:mt-0 h-auto">
                             { menus.map((menu, index) => (
                                 <>

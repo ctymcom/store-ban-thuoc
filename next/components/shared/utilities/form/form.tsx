@@ -21,7 +21,7 @@ export function Form({
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    props.onSubmit()
+    if (props.onSubmit) props.onSubmit()
   }
 
   return <form ref={ref} className={className} id={props.id} onSubmit={e => onSubmit(e)}>

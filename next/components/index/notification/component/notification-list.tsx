@@ -2,7 +2,7 @@
 
 export function NotificationList() {
     return <>
-            <li className="w-full py-4 px-3 md:px-3 border-b-2 border-gray-300">
+            <li className="w-full py-4 px-5 md:px-3 border-b-2 border-gray-300">
                 <p className="text-gray-400">21/12/2020</p>
                 <div className="h-auto mt-2 text-sm md:text-base">
                     <div className="w-full">
@@ -12,7 +12,7 @@ export function NotificationList() {
                     </div>
                 </div>
             </li>
-            <li className="w-full py-4 px-3 md:px-3 border-b-2 border-gray-300">
+            <li className="w-full py-4 px-5 md:px-3 border-b-2 border-gray-300">
                 <p className="text-gray-400">21/12/2020</p>
                 <div className="h-auto mt-2 text-sm md:text-base">
                     <div className="w-full">
@@ -22,7 +22,7 @@ export function NotificationList() {
                     </div>
                 </div>
             </li>
-            <li className="w-full py-4 px-3 md:px-3 border-b-2 border-gray-300">
+            <li className="w-full py-4 px-5 md:px-3 border-b-2 border-gray-300">
                 <p className="text-gray-400">21/12/2020</p>
                 <div className="h-auto mt-2 text-sm md:text-base">
                     <div className="w-full">
@@ -32,7 +32,7 @@ export function NotificationList() {
                     </div>
                 </div>
             </li>
-            <li className="w-full py-4 px-3 md:px-3 border-b-2 border-gray-300">
+            <li className="w-full py-4 px-5 md:px-3 border-b-2 border-gray-300">
                 <p className="text-gray-400">21/12/2020</p>
                 <div className="h-auto mt-2 text-sm md:text-base">
                     <div className="w-full">
@@ -42,7 +42,7 @@ export function NotificationList() {
                     </div>
                 </div>
             </li>
-            <li className="w-full py-4 px-3 md:px-3 border-b-2 border-gray-300">
+            <li className="w-full py-4 px-5 md:px-3 border-b-2 border-gray-300">
                 <p className="text-gray-400">21/12/2020</p>
                 <div className="h-auto mt-2 text-sm md:text-base">
                     <div className="w-full">
@@ -52,7 +52,7 @@ export function NotificationList() {
                     </div>
                 </div>
             </li>
-            <li className="w-full py-4 px-3 md:px-3 border-b-2 border-gray-300">
+            <li className="w-full py-4 px-5 md:px-3 border-b-2 border-gray-300">
                 <p className="text-gray-400">21/12/2020</p>
                 <div className="h-auto mt-2 text-sm md:text-base">
                     <div className="w-full">

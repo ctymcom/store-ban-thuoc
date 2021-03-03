@@ -33,7 +33,7 @@ export function ProductMain() {
 
   return (
     <>
-      <div className="flex uppercase h-8 items-center mt-12 text-sm">
+      <div className="hidden lg:flex uppercase h-8 items-center mt-5 md:mt-7 lg:mt-12 text-xs md:text-sm">
         {
           breadcrumbs.map((breadcrumb, index) => 
             <Link href={breadcrumb.href} key={index}>
@@ -48,11 +48,11 @@ export function ProductMain() {
           <span>{product.name}</span>
         </a>
       </div>
-      <div className="grid grid-cols-2 gap-x-6 mt-4">
-        <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 mt-4">
+        <div className="mt-2 md:mt-0">
           <ProductImage/>
         </div>
-        <div>
+        <div className="mt-4 md:mt-0">
           <ProductInfo/>
         </div>
       </div>

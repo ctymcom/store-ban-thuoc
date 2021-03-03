@@ -26,8 +26,8 @@ export function ProfileUserLayout({
     
     return (
         <>
-            <div className="main-container h-auto sm:pl-4 md:pl-4 lg:pl-0 sm:pr-4 md:pr-4 lg:pr-0">
-                <div className="w-full">
+            <div className="main-container h-auto xs:pl-3 sm:pl-4 md:pl-4 lg:pl-0 xs:pr-3 sm:pr-4 md:pr-4 lg:pr-0">
+                <div className="w-full ">
                     <div className="max-w-full text-center text-xs md:text-base">
                         <ul className="flex h-10 w-full items-center mt-2 md:mt-8 uppercase px-5 md:px-0 font-extralight">
                             <Link href="/">

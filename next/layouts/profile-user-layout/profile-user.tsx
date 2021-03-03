@@ -34,7 +34,7 @@ export function ProfileUser() {
                 </div>
             </div> */}
             <ul className="flex flex-col md:flex-row lg:flex-col md:justify-between lg:mt-4 mb-5 sm:mb-3 md:mb-0 w-full">
-                    <li className="flex md:mb-5 items-center py-2.5 border-t border-b pl-5 md:pl-0">
+                    <li className="flex md:mb-5 xl:mb-7 items-center py-2.5 md:py-0 border-t border-b md:border-0 pl-5 md:pl-0">
                         <ImUser className="text-primary border-2 border-primary rounded-full text-md sm:text-lg md:text-2xl p-0.5 mr-2"/>
                         <Link href="/profile" shallow={true}>
                             <a className={`"  uppercase text-sm md:text-base hover:text-primary font-extralight " 
@@ -44,7 +44,7 @@ export function ProfileUser() {
                         </Link>
                         
                     </li>
-                    <li className="flex md:mb-5 items-center py-2.5 border-b pl-5 md:pl-0">
+                    <li className="flex md:mb-5 xl:mb-7 items-center py-2.5 md:py-0 border-b md:border-b-0 pl-5 md:pl-0">
                         <BiListPlus className="text-primary border-2 border-primary rounded text-md sm:text-lg md:text-2xl mr-2"/>
                         <Link href="/profile/order-history" shallow={true}>
                             <a className={`"  uppercase text-sm md:text-base hover:text-primary font-extralight "
@@ -55,7 +55,7 @@ export function ProfileUser() {
                         </Link>
                     
                     </li>
-                    <li className="flex md:mb-5 items-center py-2.5 border-b pl-5 md:pl-0">
+                    <li className="flex md:mb-5 xl:mb-7 items-center py-2.5 md:py-0 border-b md:border-b-0 pl-5 md:pl-0">
                         <AiOutlineBell className="text-primary text-md sm:text-lg md:text-2xl mr-2"/>
                         <Link href="/profile/notification" shallow={true}>
                             <a className={`"  uppercase text-sm md:text-base hover:text-primary font-extralight "
@@ -64,7 +64,7 @@ export function ProfileUser() {
                             </a>
                         </Link>
                     </li>
-                    <li className="flex md:mb-5 items-center py-2.5 border-b pl-5 md:pl-0">
+                    <li className="flex md:mb-5 xl:mb-7 items-center py-2.5 md:py-0 border-b md:border-b-0 pl-5 md:pl-0">
                         <BiDonateHeart className="text-primary text-md sm:text-lg md:text-2xl mr-2"/>
                         <Link href="/profile/reward-point" shallow={true}>
                             <a className={`"  uppercase text-sm md:text-base hover:text-primary font-extralight "

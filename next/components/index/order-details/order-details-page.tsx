@@ -98,10 +98,10 @@ const timelines = [
 ]
 export function OrderDetailsPage () {
     return  <>
-            <div className="h-auto w-9/12 ml-4">
-                <div className="grid grid-rows-1">
-                    <div className="oder-account w-full flex justify-between mt-0 my-28">
-                        <div className="flex-grow">
+            <div className="h-auto w-full lg:w-full ml-0 lg:ml-4 px-3 lg:px-0">
+                <div className="">
+                    <div className="w-full flex justify-between lg:my-28">
+                        <div className="w-full">
                             <OrderDetailsHeader id="210202USQ0UB" status="success"/>
                             <OrderDetailsTimeline timelines={timelines}/>
                             <OrderDetailsInfo 
@@ -114,11 +114,11 @@ export function OrderDetailsPage () {
                                 paymentStatus="Thanh toán thành công"
                             />
                             <OrderDetailsProducts products={[...ProductsData, ...ProductsData].filter(x => x.price)}/>
-                            <div className="flex justify-end mt-3">
-                                <div className="min-w-xs">
+                            <div className="flex justify-end w-full mt-7 lg:mt-3">
+                                <div className="min-w-full sm:min-w-xs ">
                                     <PayMoney listMoney={listMoneyCheckout} />
-                                    <div className="flex justify-between pt-2 border-t-2 border-gray-200">
-                                        <p className="text-lg">Thành tiền</p>
+                                    <div className="flex justify-between mt-5 md:mt-0 py-2 md:pt-2 border-t-4 border-b-4 md:border-b-0 border-gray-200">
+                                        <p className="text-md lg:text-lg uppercase md:normal-case font-extralight">Thành tiền</p>
                                         <p className="font-bold text-primary text-lg">{NumberPipe(1223000, true)}</p>
                                     </div>
                                 </div>                    

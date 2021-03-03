@@ -31,7 +31,7 @@ export function AddressInput({ label, name, dName, dLabel, dRequired, wName, wLa
     const changeDistrict = (e) => setAddress({  ...address, district: e, ward: null });
     const changeWard = (e) => setAddress({  ...address, ward: e });
     useEffect(() => {
-        addressRepo.getAllProvince().then(res => {
+        addressRepo.getProvinces().then(res => {
             setProvinces(res.map(r => ({ value: r.id, display: r.province })));
         })
     }, []);
