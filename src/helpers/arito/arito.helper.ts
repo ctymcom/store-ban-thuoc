@@ -13,6 +13,7 @@ import { CacheHelper } from "../cache.helper";
 import { AritoUser } from "./types/aritoUser.type";
 import { IPromotion } from "../../graphql/modules/promotion/promotion.model";
 import { IAritoOption } from "../../graphql/modules/aritoOption/aritoOption.model";
+import { IOrderStatus } from "../../graphql/modules/orderStatus/orderStatus.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -574,6 +575,19 @@ export class AritoHelper {
         name2: d["descript2"],
         value: d["val"],
       })) as IAritoOption[];
+    });
+  }
+  static getOrderStatus() {
+    return Axios.post(`${this.host}/Voucher/GetOrderStatus`, {
+      token: this.imageToken,
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["ma_ttct"],
+        name: d["ten_ttct"],
+        name2: d["ten_ttct2"],
+        position: d["stt"],
+      })) as IOrderStatus[];
     });
   }
 }
