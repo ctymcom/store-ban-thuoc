@@ -140,10 +140,7 @@ export default function CartPage(props) {
             } break;
         }
     }
-    return <>
-    <LayoutCart name="cart">
-        
-        <div className="mx-auto w-11/12 sm:w-full">
+    return  <div className="mx-auto w-11/12 sm:w-full">
                 <div className="lg:flex gap-20">
                     <div className="w-full lg:w-3/4 border-b-2 sm:border-0 mt-5">
                         <ListCartItems listCart={listCart} handleDeleteCart={handleDeleteCart} handleChangeItem={handleChangeItem} CheckAll={CheckAll} />
@@ -171,6 +168,4 @@ export default function CartPage(props) {
                     </div>
                 </div>
             </div>
-    </LayoutCart>
-    </>
 } 

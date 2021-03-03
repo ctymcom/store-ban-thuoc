@@ -30,8 +30,8 @@ export const AddressProvider = (props) => {
   const [listAddress, setListAdress] = useState<any[]>(null);
   const [showDialogAddress, setShowDialogAddress] = useState(false);
   const [showAddressFormDialog, setShowAddressFormDialog] = useState<boolean>(false);
-  const [addressSelected, setAddressSelected] = useState<UserAddress>(listAddress.find((item:UserAddress)=>item.default));
-  const [addressEdit, setAddressEdit] = useState<UserAddress>(listAddress.find((item:UserAddress)=>item.default));
+  const [addressSelected, setAddressSelected] = useState<UserAddress>();
+  const [addressEdit, setAddressEdit] = useState<UserAddress>(null);
   useEffect(() => {
       setListAdress(listAddress);
     }, [listAddress]);
@@ -40,9 +40,8 @@ export const AddressProvider = (props) => {
     setListAdress(listAddress.map((item:UserAddress)=> item.id!== id ? {...item, default : false} : {...item,default:true}));
   }
   useEffect(() => {
-   UserAddressService.getAll( {query:{limit:0},fragment:UserAddressService.fullFragment}).then(res=>{
+    UserAddressService.getAll( {query:{limit:0},fragment:UserAddressService.fullFragment}).then(res=>{
     console.log(res);
-    
    }) 
   }, []);
   const [provinces, setProvinces] = useState<Option[]>(null);

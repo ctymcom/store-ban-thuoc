@@ -3,6 +3,7 @@ import router from 'next/router';
 import { useRouter } from 'next/router';
 import { useAuth, LOGIN_PATHNAME } from '../../../../lib/providers/auth-provider';
 import { useEffect } from 'react';
+import { Spinner } from '../../../shared/utilities/spinner';
 interface Proptype extends ReactProps{
     name:string
 }
@@ -60,7 +61,8 @@ export function LayoutCart(props:Proptype) {
         }
         return style;
     }
-    return <div>
+    return <>
+            { user?
                 <div className="main-container text-gray-700 text-20">
                     <div className="text-18 sm:text-28 lg:text-32 w-1/2 xl:w-1/3 mx-auto my-10 text-center uppercase whitespace-nowrap text-gray-300 flex items-center justify-around">
                         <h2 className={styleSteps("cart")} onClick={() => listStep[0].actv? router.push('/cart'):""}> Giỏ Hàng</h2>
@@ -68,6 +70,7 @@ export function LayoutCart(props:Proptype) {
                         <h2 className={styleSteps("complete")} onClick={() => listStep[2].actv? router.push('/complete'):""}><i><HiOutlineChevronRight/></i>Hoàn tất</h2>
                     </div>
                     {props.children}
-                </div >
-            </div>
+                </div >:<Spinner/>
+            }     
+        </>       
 }
