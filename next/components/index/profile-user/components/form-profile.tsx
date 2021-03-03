@@ -31,11 +31,19 @@ export function FormProfile() {
             // }
             //     break;
 
+<<<<<<< HEAD
+    //         default:
+    //             break;
+    //     }
+    // }
+    // console.log(user);
+=======
             default:
                 break;
         }
     }
     console.log(user);
+>>>>>>> 3c71374989fb510125bf8f7d30668e2ab64f0c51
     
     return <>
     {

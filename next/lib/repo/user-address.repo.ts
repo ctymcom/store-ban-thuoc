@@ -1,20 +1,20 @@
 import { BaseModel, CrudRepository } from "./crud.repo";
 
 export interface UserAddress extends BaseModel {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    userId: string;
-    addressId: string;
-    fullAddress: string
-    contactName: string
-    address: string
-    provinceId: string
-    districtId: string
-    wardId: string;
-    phone: string;
-    location: string;
-    isDefault: boolean;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
+  addressId: string;
+  fullAddress: string;
+  contactName: string;
+  address: string;
+  provinceId: string;
+  districtId: string;
+  wardId: string;
+  phone: string;
+  location: string;
+  isDefault: boolean;
 }
 
 export class UserAddressRepository extends CrudRepository<UserAddress> {
@@ -44,8 +44,6 @@ export class UserAddressRepository extends CrudRepository<UserAddress> {
     location: string
     isDefault: Boolean
   `);
-
-  
 }
 
 export const UserAddressService = new UserAddressRepository();

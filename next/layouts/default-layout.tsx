@@ -4,6 +4,7 @@ import { CartProvider } from "../lib/providers/cart-provider";
 import { Footer } from "./default-layout/footer";
 import { HeadSEO } from "./default-layout/head-seo";
 import { Header } from "./default-layout/header/header";
+import { FooterProvider } from "./default-layout/providers/footer-providers";
 import { HeaderProvider } from "./default-layout/providers/header-provider";
 // import Sidebar from './components/sidebar';
 
@@ -25,6 +26,7 @@ export function DefaultLayout({
   return (
     <>
       <HeadSEO title={title}></HeadSEO>
+      <FooterProvider>
       <CartProvider>
         <HeaderProvider>
           <Header/>
@@ -32,8 +34,9 @@ export function DefaultLayout({
           <div className="w-full" style={{ minHeight: '60vh' }}>
             {props.children}
           </div>
-        <Footer/>
+          <Footer/>
       </CartProvider>
+      </FooterProvider>
     </>
   );
 }
