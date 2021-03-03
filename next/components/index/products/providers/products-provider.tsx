@@ -1,5 +1,5 @@
-import { cloneDeep, isEqual } from "lodash";
 import { createContext, useContext, useEffect, useState } from "react";
+import { cloneDeep } from "../../../../lib/lodash";
 import { ProductTag, ProductTagService } from "../../../../lib/repo/product-tag.repo";
 import { Category, CategoryService } from './../../../../lib/repo/category.repo';
 import { Pagination } from './../../../../lib/repo/crud.repo';
@@ -124,7 +124,7 @@ export function ProductsProvider(props) {
         return ids
       }, [])
 
-      if (!isEqual(ids.sort(), categoryIds.sort())) {
+      if (ids.sort().join() != categoryIds.sort().join()) {
         setCategoryIds(ids)
       }
     }

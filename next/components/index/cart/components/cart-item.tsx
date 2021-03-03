@@ -1,4 +1,4 @@
-import { toNumber } from 'lodash';
+
 import { HiMinusCircle,HiPlusCircle } from 'react-icons/hi'
 import { NumberPipe } from '../../../../lib/pipes/number';
 import CheckboxItem from './check-box-circle';
@@ -23,7 +23,7 @@ export function CartItem(props) {
                             onClick={() => { props.handleChangeItem(props.item.id, "d", 0) }}><HiMinusCircle/></i>
                         <input className="w-full text-center" type="number"
                             value={props.item.amount < 10 ? '0' + props.item.amount : (props.item.amount).toString()}
-                            onChange={(e) => { props.handleChangeItem(props.item.id, "i", toNumber(e.target.value)) }} />
+                            onChange={(e) => { props.handleChangeItem(props.item.id, "i", parseInt(e.target.value)) }} />
                         <i className="btn-default p-0 w-8 h-10 text-32 text-primary hover:text-primary-dark"
                             onClick={() => { props.handleChangeItem(props.item.id, "u", 0) }}><HiPlusCircle/></i>
                     </div>

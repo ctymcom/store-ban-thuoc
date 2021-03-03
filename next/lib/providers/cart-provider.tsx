@@ -1,12 +1,5 @@
-import MD5 from 'crypto-js/md5';
-import jwt_decode from 'jwt-decode';
 import { createContext, useContext, useEffect, useState } from 'react';
-import UAParser from 'ua-parser-js';
-import { ClearAuthToken, SetAuthToken } from '../graphql/auth.link';
-import { AritoUser, AritoUserService } from '../repo/arito-user.repo';
-import { GraphService } from '../repo/graph.repo';
-import { GetAuthToken } from './../graphql/auth.link';
-import { useRouter } from 'next/router';
+
 import { Product } from './../repo/product.repo';
 
 export interface CartProduct {

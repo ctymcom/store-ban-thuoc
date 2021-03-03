@@ -1,12 +1,13 @@
-import MD5 from 'crypto-js/md5';
+// import MD5 from 'crypto-js/md5';
+import md5 from 'md5';
 import jwt_decode from 'jwt-decode';
 import { createContext, useContext, useEffect, useState } from 'react';
 import UAParser from 'ua-parser-js';
+
 import { ClearAuthToken, SetAuthToken } from '../graphql/auth.link';
 import { AritoUser, AritoUserService } from '../repo/arito-user.repo';
 import { GraphService } from '../repo/graph.repo';
 import { GetAuthToken } from './../graphql/auth.link';
-import { useRouter } from 'next/router';
 
 export const LOGIN_PATHNAME = 'login-pathname'
 
@@ -65,7 +66,7 @@ export function AuthProvider({ children }: any) {
   }
 
   const login = async (username: string, password: string, mode: 'user' | 'editor') => {
-    let encryptedPassword = MD5(password).toString()
+    let encryptedPassword = md5(password)
 
     const parser = new UAParser()
     const result = parser.getResult()
