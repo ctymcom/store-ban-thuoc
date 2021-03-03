@@ -1,6 +1,6 @@
 .BrainhubCarousel__container {
   height: 0;
-  padding-top: 32%;
+  padding-top: 40%;
   box-sizing: border-box;
   position: relative;
   @screen lg {
@@ -28,7 +28,7 @@
 .BrainhubCarousel__dot::before {
   width: 12px !important;
   height: 12px !important;
-  @apply bg-white #{!important};
+  background: rgba(0, 0, 0, 0.2);
 }
 .BrainhubCarousel__dot--selected::before {
   @apply bg-primary #{!important};

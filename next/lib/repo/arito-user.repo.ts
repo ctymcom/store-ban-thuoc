@@ -92,7 +92,11 @@ export class AritoUserRepository extends GraphRepository {
     return res.data[mutationName];
   }
 
-  async regisAritoUser(nickname: string, email: string, phone: string): Promise<string> {
+  async regisAritoUser(
+    nickname: string,
+    email: string,
+    phone: string
+  ): Promise<{ token: string; user: AritoUser }> {
     let mutationName = "regisAritoUser";
     const res = await this.apollo.mutate({
       mutation: this.gql`
@@ -101,7 +105,10 @@ export class AritoUserRepository extends GraphRepository {
             nickname: "${nickname}",
             email: "${email}",
             phone: "${phone}",
-          )
+          ) {
+            token
+            user { ${this.fragment} }
+          }
         }
       `,
     });

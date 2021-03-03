@@ -21,27 +21,11 @@ interface PropTypes extends ReactProps {
 };
 export function SettingList(props: PropTypes) {
 
-  const { loadingSettings, settings, settingGroup } = useSettingsContext()
+  const { loadingSettings, saveSettings, settings, settingGroup } = useSettingsContext()
 
   const [mutableSettings, setMutableSettings] = useState<MutableSetting[]>(null);
   useEffect(() => {
-    if (settings) {
-      let clonedSettings = cloneDeep(settings) as MutableSetting[]
-      
-      for (let setting of clonedSettings) {
-        switch(setting.type) {
-          case 'object': {
-            setting.values = Object.keys(setting.value).map((key) => ({ key, value: setting.value[key] }));
-            break
-          }
-        }
-      }
-      console.log(clonedSettings)
-  
-      setMutableSettings(clonedSettings)
-    } else {
-      setMutableSettings(null)
-    }
+    onInitData()
   }, [settings]);
 
   const [isStaticSettings, setIsStaticSettings] = useState<boolean>(false);
@@ -67,6 +51,25 @@ export function SettingList(props: PropTypes) {
     console.log(form, event)
   }
 
+  const onInitData = () => {
+    if (settings) {
+      let clonedSettings = cloneDeep(settings) as MutableSetting[]
+      
+      // for (let setting of clonedSettings) {
+      //   switch(setting.type) {
+      //     case 'object': {
+      //       setting.values = Object.keys(setting.value).map((key) => ({ key, value: setting.value[key] }));
+      //       break
+      //     }
+      //   }
+      // }
+  
+      setMutableSettings(clonedSettings)
+    } else {
+      setMutableSettings(null)
+    }
+  }
+
   return <>
     {
       loadingSettings ? <Spinner/> : <>
@@ -75,13 +78,13 @@ export function SettingList(props: PropTypes) {
             {
               <Form className="bg-white shadow-sm border rounded border-gray-300" onChange={onFormChanged}>
                 <div className="p-3 font-semibold border-b border-gray-200 text-gray-600">{settingGroup.name}</div>
-                <div className="p-3">
+                <div className="p-3 v-scrollbar" style={{ maxHeight: 'calc(100vh - 156px)' }}>
                   {
                     !mutableSettings.length ? <NotFound text="Chưa có cấu hình nào" icon={<HiCog/>}/> : <>
                       {
                         isStaticSettings ? <> {
                           {
-                            'TRANG_CHU': <HomepageSettings settings={mutableSettings} />
+                            'TRANG_CHU': <HomepageSettings settings={mutableSettings} onSettingsChange={settings => setMutableSettings(settings)}/>
                           }[settingGroup.slug]
                         } </> :
                         <> {
@@ -94,10 +97,10 @@ export function SettingList(props: PropTypes) {
                   }
                 </div>
                 <div className="p-3 flex justify-end border-t border-gray-200">
-                  <button className="btn-gray">
+                  <button type="button" className="btn-gray" onClick={onInitData}>
                     <span>Reset dữ liệu</span>
                   </button>
-                  <button className="btn-primary ml-2">
+                  <button type="submit" className="btn-primary ml-2" onClick={() => saveSettings(mutableSettings)}>
                     <span>Lưu thay đổi</span>
                   </button>
                 </div>

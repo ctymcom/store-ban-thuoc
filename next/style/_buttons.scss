@@ -8,7 +8,7 @@
   @apply px-4;
   @apply text-base;
   @apply font-semibold;
-  @apply text-gray-500;
+  @apply text-gray-600;
   @apply cursor-pointer;
   @apply rounded;
   @apply transition-all;
@@ -81,7 +81,7 @@
 .btn-outline {
   @extend .btn;
   @apply border;
-  @apply border-gray-300;
+  @apply border-gray-400;
   &:hover {
     @apply border-primary;
     @apply text-primary;

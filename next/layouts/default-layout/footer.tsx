@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { Spinner } from "../../components/shared/utilities/spinner";
-import { FooterHotline } from "./footer/footer-hotline";
-import { FooterInfo } from "./footer/footer-info";
-import { FooterLink } from "./footer/footer-link";
 import { useFooterContext } from "./providers/footer-providers";
 import { IconFacebook } from "../../public/assets/icons/icon-facebook";
 import { IconYoutube } from "../../public/assets/icons/icon-youtube";
@@ -13,9 +10,7 @@ export function Footer() {
   
   const [ShowMore, setShowMore] = useState(false);
   const { setting } = useFooterContext();
-  
-  console.log(setting);
-  
+  // console.log(setting);
 
   return (
     <>  {

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { HiChevronRight, HiOutlineX } from 'react-icons/hi';
 import { HeaderUser } from "./header-user";
+import { useHeaderContext } from './../providers/header-provider';
 interface PropsType extends ReactProps {
   menuOpened: boolean
   setMenuOpened: Function 
@@ -17,6 +18,8 @@ export function MenuHeader(props: PropsType) {
     { label: 'Đặt hàng nhanh', path: '/quick-shopping' },
     { label: 'Khuyến mãi', path: '/products' },
   ];
+
+  const { hotline } = useHeaderContext()
   
   useEffect(() => {
     props.setMenuOpened(false)
@@ -78,14 +81,13 @@ export function MenuHeader(props: PropsType) {
           onMouseEnter={() => setShowHotline(true)}
           onMouseLeave={() => setShowHotline(false)}
         >
-          <span className="">HOTLINE: </span>
-          <strong className="text-yellow-200"> 1900 6067 </strong> 
-          <span> (miễn phí)</span>
+          <span>{hotline?.headerText}</span>
           {
             showHotline && <div className="absolute emerge shadow-lg top-full -left-8 bg-white z-10 text-gray-700 p-4 px-6 rounded whitespace-nowrap font-semibold">
-              <div>Tư vấn bán hàng: 1900 6067</div>
-              <div>Góp ý dịch vụ: 1900 6067</div>
-              <div>Lắng nghe khiếu nại: 1900 6067</div>
+              {
+                hotline?.items.map(item => <a className="block hover:underline hover:text-primary" 
+                  href={'tel:' + item.phone}>{item.display}</a>)
+              }
             </div>
           }
         </div>

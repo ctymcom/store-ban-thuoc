@@ -3,12 +3,15 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { SettingGroup, SettingGroupService } from "../../../../lib/repo/setting-group.repo";
 import { Setting } from "../../../../lib/repo/setting.repo";
 import { SettingService } from './../../../../lib/repo/setting.repo';
+import { MutableSetting } from './../components/setting-list';
+import { isEqual } from 'lodash';
 
 export const SettingsContext = createContext<Partial<{
   loadingSettings: boolean
   settings: Setting[]
   settingGroups: SettingGroup[]
   settingGroup: SettingGroup
+  saveSettings: (settings: MutableSetting[]) => any
   loadDone: boolean
 }>>({});
 
@@ -63,8 +66,33 @@ export function SettingsProvider({ children }: any) {
     }
   }, [settingGroup]);
 
+  const saveSettings = (mutableSettings: MutableSetting[]) => {
+    const filteredSettings = mutableSettings.filter(setting => 
+      !isEqual(setting.value, settings.find(x => x.id == setting.id).value))
+    if (!filteredSettings.length) {
+      alert('Chưa có dữ liệu nào thay đổi')
+      return
+    }
+
+    SettingService.mutate({
+      mutation: filteredSettings
+        .map(setting => SettingService.updateQuery({
+        id: setting.id, data: { value: setting.value }
+      }))
+    }).then(res => {
+      setSettings(mutableSettings.map(x => {
+        const { values, ...settings } = x
+        return settings
+      }))
+      alert('Lưu cấu hình thành công')
+    }).catch(err => {
+      console.error(err)
+      alert('Lưu cấu hình thất bại')
+    })
+  }
+
   return (
-    <SettingsContext.Provider value={{ loadingSettings, settings, settingGroups, settingGroup, loadDone }}>
+    <SettingsContext.Provider value={{ loadingSettings, settings, settingGroups, settingGroup, saveSettings, loadDone }}>
       {children}
     </SettingsContext.Provider>
   );

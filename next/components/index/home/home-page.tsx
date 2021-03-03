@@ -5,32 +5,23 @@ import { HomeBanner } from "./components/home-banner";
 import { HomeFeature } from "./components/home-feature";
 import { HomeFeedback } from './components/home-feedback';
 import { HomeNews } from "./components/home-news";
-import { HomeContext, HomeProvider, useHomeContext } from "./providers/home-provider";
+import { HomeContext, HomeProvider } from "./providers/home-provider";
 
 export function HomePage() {
-
-    const sliderImages =  [
-        {
-            image: "https://i.imgur.com/XMTJQSx.png"
-        },
-        {
-            image: "https://i.imgur.com/jriMx2e.jpg"
-        },
-        {
-            image: "https://i.imgur.com/ycOejfb.png"
-        },
-    ]
-
+    
     return <>
         <HomeProvider>         
             <HomeContext.Consumer>
                 {
-                   ({ loadDone, feedbacks, posts, productGroups  }) => {
+                   ({ loadDone, feedbacks, posts, productGroups, banners1, banners2 }) => {
                         return !loadDone ? <Spinner/> : 
                         <>                                
                             <Carousel infinite autoPlay={3000} animationSpeed={1000}>
-                                {sliderImages.map((slide, index) => (
-                                    <img className="w-full h-full object-cover" key={slide.image} src={slide.image} alt="" />
+                                { banners1.map((slide, index) => (
+                                    <a className="w-full h-full" key={slide.image} href={slide.link}>
+                                        <img className="w-full h-full object-cover" src={slide.image} alt="" />
+                                    </a>
+                                    
                                 ))}
                             </Carousel>
                             {
@@ -47,10 +38,15 @@ export function HomePage() {
                                 <HomeFeature/>
                             </div>
                             <div className="w-full py-8">
-                                <img
-                                    className="w-full"
-                                    src="https://i.imgur.com/jriMx2e.jpg"
-                                />
+                                {
+                                    banners2.map(banner => <a className="w-full" key={banner.image}>
+                                        <img
+                                            className="w-full"
+                                            src={banner.image}
+                                        />
+                                    </a>)
+                                }
+                                
                             </div>        
                             <div className="main-container py-12">
                                 <HomeBanner/>
