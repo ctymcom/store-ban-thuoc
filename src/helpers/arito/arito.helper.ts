@@ -369,6 +369,7 @@ export class AritoHelper {
       ],
     }).then((res) => {
       this.handleError(res);
+
       const password = get(res.data, "data.message.0.val");
       return this.login({
         username: email,
