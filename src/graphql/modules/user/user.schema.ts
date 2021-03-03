@@ -5,7 +5,7 @@ const schema = gql`
 extend type Query {
   getAllUser(q: QueryGetListInput): UserPageData
   getOneUser(id: ID!): User
-  userGetMe: User
+  userGetMe: AritoUser
 }
 
 extend type Mutation {
