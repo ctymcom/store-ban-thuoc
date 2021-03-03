@@ -1,5 +1,6 @@
 import { Input } from './../../../shared/utilities/form/input';
 import { MutableSetting } from './setting-list';
+import { SettingName } from './setting-name';
 
 interface PropTypes extends ReactProps {
   setting: MutableSetting
@@ -26,7 +27,7 @@ export function SettingItem({
   }
 
   return <div className="pb-3">
-    <div className="text-gray-600 font-semibold pl-1 pb-1">{setting.name}</div>
+    <SettingName name={setting.name}/>
     {
       {
         'string': <Input name={setting.name} value={setting.value} onChange={onSettingValueChanged}/>,
