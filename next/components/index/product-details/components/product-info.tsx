@@ -41,7 +41,7 @@ export function ProductInfo(props: PropsType) {
 
     return  <>
         <div className="text-gray-600 mb-2 text-sm">{product.categories.filter(x => x.parents.length).map(x => x.name).join(', ')}</div>
-        <h2 className="text-gray-700 mb-2 font-bold text-2xl">{product.name}</h2>
+        <h2 className="text-gray-700 mb-1 lg:mb-2 font-bold text-xl lg:text-2xl">{product.name}</h2>
         {
             !!expiredFromNowText && 
             <div className="finish-time text-danger font-extrabold mb-4">Kết thúc sau: {expiredFromNowText}</div>
@@ -53,13 +53,13 @@ export function ProductInfo(props: PropsType) {
         }
         {
             product.basePrice ? <>    
-                <div className="mb-4">
-                    <span className="text-primary font-semibold mr-2 text-2xl">{NumberPipe(product.salePrice)} VND</span>
+                <div className="mb-1 lg:mb-4">
+                    <span className="text-primary font-semibold mr-2 text-xl lg:text-2xl">{NumberPipe(product.salePrice)} VND</span>
                     <span className="text-gray-400 line-through">{NumberPipe(product.basePrice)} VND</span>
                 </div>        
                 <div className="mb-4">
-                    <div className="text-gray-700 mb-1">Đơn vị: <span className="font-semibold">{product.unit}</span></div>
-                    <div className="text-gray-700 mb-1">Quy cách đóng gói: <span className="font-semibold">{product.packing}</span></div>
+                    <div className="text-gray-700 mb-1 text-sm lg:text-base">Đơn vị: <span className="font-semibold">{product.unit}</span></div>
+                    <div className="text-gray-700 mb-1 text-sm lg:text-base">Quy cách đóng gói: <span className="font-semibold">{product.packing}</span></div>
                     <ProductQuantity 
                         inputClassName="w-20 mx-4 border rounded border-gray-400 hover:border-primary focus:border-primary-dark"
                         buttonClassName="text-40"
