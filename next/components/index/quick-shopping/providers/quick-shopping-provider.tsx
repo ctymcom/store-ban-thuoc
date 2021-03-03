@@ -1,10 +1,8 @@
-import { cloneDeep, isEqual } from "lodash";
-import { createContext, useContext, useEffect, useState } from "react";
-import { ProductTag, ProductTagService } from "../../../../lib/repo/product-tag.repo";
-import { Category, CategoryService } from '../../../../lib/repo/category.repo';
+import { createContext, useContext, useEffect, useState } from 'react';
+
+import useDebounce from '../../../../lib/hooks/useDebounce';
 import { Pagination } from '../../../../lib/repo/crud.repo';
 import { Product, ProductService } from '../../../../lib/repo/product.repo';
-import useDebounce from "../../../../lib/hooks/useDebounce";
 
 export const QuickShoppingContext = createContext<Partial<{
   products: Product[]

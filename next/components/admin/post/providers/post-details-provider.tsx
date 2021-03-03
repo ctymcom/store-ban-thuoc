@@ -1,4 +1,3 @@
-import { cloneDeep } from "lodash";
 import { createContext, useContext, useEffect, useState } from "react";
 import { Post, PostService } from "../../../../lib/repo/post.repo";
 import { Tag, TagService } from './../../../../lib/repo/tag.repo';
@@ -25,7 +24,7 @@ export function PostDetailsProvider({ postId, children }: any) {
   useEffect(() => {
     if (postId) {
       PostService.getOne({ id: postId }).then(res => {
-        setPost(cloneDeep(res))
+        setPost(JSON.parse(JSON.stringify(res)))
       })
     } else {
       setPost({
