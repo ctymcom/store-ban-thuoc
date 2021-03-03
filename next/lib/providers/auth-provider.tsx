@@ -1,12 +1,13 @@
-import MD5 from 'crypto-js/md5';
+// import MD5 from 'crypto-js/md5';
+import md5 from 'md5';
 import jwt_decode from 'jwt-decode';
 import { createContext, useContext, useEffect, useState } from 'react';
 import UAParser from 'ua-parser-js';
+
 import { ClearAuthToken, SetAuthToken } from '../graphql/auth.link';
 import { AritoUser, AritoUserService } from '../repo/arito-user.repo';
 import { GraphService } from '../repo/graph.repo';
 import { GetAuthToken } from './../graphql/auth.link';
-import { useRouter } from 'next/router';
 
 export const LOGIN_PATHNAME = 'login-pathname'
 
@@ -15,7 +16,7 @@ const AuthContext = createContext<{
   saveCurrentPath?: () => void
   checkUser?: (roles?: string[]) => boolean
   login?: (username: string, password: string, mode: 'user' | 'editor') => Promise<AritoUser>
-  register?: (nickname: string, email: string, phone: string) => Promise<string>
+  register?: (nickname: string, email: string, phone: string) => Promise<AritoUser>
   logout?: () => void
 }>({});
 
@@ -29,7 +30,7 @@ export function AuthProvider({ children }: any) {
 
   useEffect(() => {
     if (user) {
-      console.log(user)
+      // console.log(user)
     } else if (user === null) {
       ClearAuthToken()
     }
@@ -65,7 +66,7 @@ export function AuthProvider({ children }: any) {
   }
 
   const login = async (username: string, password: string, mode: 'user' | 'editor') => {
-    let encryptedPassword = MD5(password).toString()
+    let encryptedPassword = md5(password)
 
     const parser = new UAParser()
     const result = parser.getResult()
@@ -88,8 +89,17 @@ export function AuthProvider({ children }: any) {
   }
 
   const register = async (nickname: string, email: string, phone: string) => {
-    const res = await AritoUserService.regisAritoUser(nickname, email, phone)
-    return res
+    const { token, user } = await AritoUserService.regisAritoUser(nickname, email, phone)
+    await GraphService.clearStore()
+    ClearAuthToken();
+    if (user.id) {
+      SetAuthToken(token, true);
+      setUser(user)
+    } else {
+      ClearAuthToken()
+      throw Error('Đăng ký thất bại')
+    }
+    return user
   }
 
   const logout = () => {

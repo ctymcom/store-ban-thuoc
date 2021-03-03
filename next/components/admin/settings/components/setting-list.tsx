@@ -1,7 +1,8 @@
 
-import { cloneDeep } from 'lodash';
+
 import { useEffect, useState } from 'react';
 import { HiCog } from 'react-icons/hi';
+import { cloneDeep } from '../../../../lib/lodash';
 import { Setting } from '../../../../lib/repo/setting.repo';
 import { Form } from '../../../shared/utilities/form/form';
 import { NotFound } from '../../../shared/utilities/not-found';

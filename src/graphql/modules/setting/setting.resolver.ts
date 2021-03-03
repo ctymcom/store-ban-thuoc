@@ -8,8 +8,7 @@ import { set } from "lodash";
 
 const Query = {
   getAllSetting: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
-    if (context.isCustomer() || context.isMember() || context.isMessenger()) {
+    if (context.isEditor) {
       set(args, "q.filter.isPrivate", false);
     }
     return settingService.fetch(args.q);

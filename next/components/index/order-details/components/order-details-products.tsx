@@ -24,13 +24,13 @@ export function OrderDetailsProducts(props: PropsType) {
             </div>
           </div>
           <div className="pl-3">
-            <div className="flex-grow font-normal text-13 md:text-base">
+            <div className="flex-grow font-normal text-13 sm:text-16 md:text-base">
               <span className="inline-block md:hidden">Sản phẩm:</span>
               <span className="font-semibold ml-1">{product.name}</span>
             </div>
-            <div className="flex md:hidden flex-grow font-normal text-13" key={index + 'price'}>Giá: <span className="font-semibold ml-1">{NumberPipe(product.price, true)}</span></div>
-            <div className="flex md:hidden flex-grow font-normal text-13" key={index + 'qty'}>Số lượng: <span className="font-semibold ml-1">{5}</span></div>
-            <div className="flex md:hidden flex-grow font-normal text-13" key={index + 'product'}>Tạm tính: <span className="font-semibold ml-1">{NumberPipe(product.price, true)}</span></div>
+            <div className="flex md:hidden flex-grow font-normal text-13 sm:text-16" key={index + 'price'}>Giá: <span className="font-semibold ml-1">{NumberPipe(product.price, true)}</span></div>
+            <div className="flex md:hidden flex-grow font-normal text-13 sm:text-16" key={index + 'qty'}>Số lượng: <span className="font-semibold ml-1">{5}</span></div>
+            <div className="flex md:hidden flex-grow font-normal text-13 sm:text-16" key={index + 'product'}>Tạm tính: <span className="font-semibold ml-1">{NumberPipe(product.price, true)}</span></div>
           </div>
           
         </div>

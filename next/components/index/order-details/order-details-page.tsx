@@ -100,7 +100,7 @@ export function OrderDetailsPage () {
     return  <>
             <div className="h-auto w-full lg:w-full ml-0 lg:ml-4 px-3 lg:px-0">
                 <div className="">
-                    <div className="w-full flex justify-between lg:my-28">
+                    <div className="w-full flex justify-between">
                         <div className="w-full">
                             <OrderDetailsHeader id="210202USQ0UB" status="success"/>
                             <OrderDetailsTimeline timelines={timelines}/>

@@ -14,6 +14,7 @@ export function Register(props: PropsType) {
   
   const { register } = useAuth()
   const { isDesktop } = useDevice()
+  const router = useRouter()
 
   const ref = useCallback(input => {
     if (input && isDesktop) input.focus()
@@ -25,8 +26,8 @@ export function Register(props: PropsType) {
       alert('Yêu cầu nhập đầy đủ')
     } else {
       register(nickname, email, phone).then(res => {        
-        alert(res)
-        props.setMode('login')
+        let pathname = sessionStorage.getItem(LOGIN_PATHNAME)
+        router.replace(pathname || '/')
       }).catch(err => {
         alert(err.message)
       })
