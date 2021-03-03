@@ -11,13 +11,10 @@ export function HomePage() {
 
     const sliderImages =  [
         {
-            image: "https://i.imgur.com/XMTJQSx.png"
+            image: "https://i.imgur.com/65NoOtc.jpg"
         },
         {
-            image: "https://i.imgur.com/jriMx2e.jpg"
-        },
-        {
-            image: "https://i.imgur.com/ycOejfb.png"
+            image: "https://i.imgur.com/udkzrWY.jpg"
         },
     ]
 
@@ -49,7 +46,7 @@ export function HomePage() {
                             <div className="w-full py-8">
                                 <img
                                     className="w-full"
-                                    src="https://i.imgur.com/jriMx2e.jpg"
+                                    src="https://i.imgur.com/udkzrWY.jpg"
                                 />
                             </div>        
                             <div className="main-container py-12">

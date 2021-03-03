@@ -3,22 +3,21 @@ export function HomeBanner() {
   
   const banners = [
     {
-      image: "https://i.imgur.com/XMTJQSx.png"
+      image: "https://i.imgur.com/GDe9XNf.jpg"
     },
     {
-      image: "https://i.imgur.com/jriMx2e.jpg"
+      image: "https://i.imgur.com/bTbcQq3.jpg"
     },
     {
-      image: "https://i.imgur.com/ycOejfb.png"
+      image: "https://i.imgur.com/BwBrQ3d.jpg"
     },
     {
-      image: "https://i.imgur.com/OY7IIUM.png"
+      image: "https://i.imgur.com/yNbyXbN.jpg"
     },
     {
-      image: "https://i.imgur.com/i9lJPRX.png"
+      image: "https://i.imgur.com/l648sLm.jpg"
     },
-    {
-      image: "https://i.imgur.com/y3RgrFT.jpg"
+    { image: "https://i.imgur.com/ru7DXLg.jpg"
     },
   ]
   return (
