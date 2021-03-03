@@ -12,8 +12,8 @@ export function HomeFeature() {
       {
         features.map((feature, index) => 
           <div className="p-6 flex items-center flex-col" key={index}>
-            <div className="w-16 h-16">
-                {feature.image}
+            <div className="w-16 h-16 md:w-20 md:h-20">
+              <img className="w-full h-full object-contain" src={feature.image}></img>
             </div>
             <div className="uppercase py-4 font-semibold text-primary">{feature.title}</div>
             <div className="text-gray-700">

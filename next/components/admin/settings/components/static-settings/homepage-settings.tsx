@@ -27,7 +27,7 @@ const HOTLINE_ITEM_OPTIONS: SettingItemsOption[] = [
 ]
 
 const FEATURE_ITEM_OPTIONS: SettingItemsOption[] = [
-  { value: 'image', label: 'Hình ảnh', type: 'string' },
+  { value: 'image', label: 'Hình ảnh', type: 'image' },
   { value: 'title', label: 'Tiêu đề', type: 'string' },
   { value: 'content', label: 'Nội dung', type: 'string' },
 ]
