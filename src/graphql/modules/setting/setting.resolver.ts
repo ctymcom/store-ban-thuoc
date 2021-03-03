@@ -28,22 +28,22 @@ const Query = {
 
 const Mutation = {
   createSetting: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { data } = args;
     return await settingService.create(data);
   },
   updateSetting: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { id, data } = args;
     return await settingService.updateOne(id, data);
   },
   deleteOneSetting: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { id } = args;
     return await settingService.deleteOne(id);
   },
   deleteManySetting: async (root: any, args: any, context: Context) => {
-    AuthHelper.acceptRoles(context, [ROLES.ADMIN]);
+    AuthHelper.acceptRoles(context, ROLES.ADMIN_EDITOR);
     const { ids } = args;
     let result = await settingService.deleteMany(ids);
     return result;
