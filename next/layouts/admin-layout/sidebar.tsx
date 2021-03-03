@@ -14,7 +14,7 @@ const SIDEBAR_MENUS = [
       },
       {
         title: "Cấu hình",
-        path: "/admin/config",
+        path: "/admin/settings",
       },
     ],
   },

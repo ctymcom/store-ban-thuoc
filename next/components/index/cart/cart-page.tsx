@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { listItem, listMoneyCart, listPromotionCode } from './components/cart-item-data';
 import { PayMoney } from './components/pay-money';
-import { CartPayHeader } from './components/cart-pay-header';
 import { useRouter } from 'next/router';
 import { toNumber, set } from 'lodash';
 import { Promotion } from './components/promotion';
 import { HiArrowNarrowLeft } from 'react-icons/hi'
 import { ListCartItems } from "./components/list-cart-items";
+import Link from 'next/link';
+import { LayoutCart } from './components/layout-cart';
 
 export default function CartPage(props) {
     // const [Tit, setTit] = useState('cart');
@@ -139,38 +140,32 @@ export default function CartPage(props) {
             } break;
         }
     }
-    return <>
-        <div className="main-container text-gray-700 text-20">
-            <div>
-                <CartPayHeader name="cart"/>
-            </div>
-            <div className="">
-                <div className="col-span-3 grid grid-cols-7 gap-20">
-                    <div className="col-span-5" id="cart__Table">
+    return  <div className="mx-auto w-11/12 sm:w-full">
+                <div className="lg:flex gap-20">
+                    <div className="w-full lg:w-3/4 border-b-2 sm:border-0 mt-5">
                         <ListCartItems listCart={listCart} handleDeleteCart={handleDeleteCart} handleChangeItem={handleChangeItem} CheckAll={CheckAll} />
-                        <div className="text-primary flex items-center">
-                            <div className="cursor-pointer flex items-center text-20" onClick={() => router.push('/home')}>
+                        <div className="text-primary flex items-center whitespace-nowrap">
+                            <div className="cursor-pointer flex items-center text-16 sm:text-20" onClick={() => router.push('/home')}>
                                 <i className="text-18 px-1"><HiArrowNarrowLeft /></i>
                                 <p>Tiếp tục mua sắm</p>
                             </div>
-                            <button className="bt btn-disabled m-2 text-20"
-                                onClick={() => setChange(false)}>Cập nhật đơn hàng</button>
+                            <button className="bt btn-disabled px-1 m-2 sm:text-20"
+                                onClick={() => setChange(false)}>Cập nhật giỏ hàng</button>
                         </div>
                     </div>
-                    <div className="col-span-2">
-                        <div>
+                    <div className="w-full lg:w-1/4 flex flex-wrap">
+                        <div className="w-full sm:w-1/2 lg:w-full sm:pr-2 lg:pr-0">
                             <Promotion onChanged={(promotion) => {
                                 handleSetPromotion(promotion);
                             }} PrUsing={PrUsing} listPromotionCode={listPromotionCode}/>
                         </div>
-                        <div className="mt-10">
+                        <div className="w-full sm:w-1/2 lg:w-full sm:pl-2 lg:pl-0 sm:mt-5 lg:mt-3.5">
                             <PayMoney listMoney={ListMoneyCart} />
-                            <button className="btn btn-primary w-full py-6 mt-2 text-20"
-                                onClick={() => router.push('/checkout')}>Tiến hành thanh toán</button>
+                            <Link href="/checkout">
+                                <button className="btn btn-primary w-full py-6 mt-2 sm:text-20">Tiến hành thanh toán</button>
+                            </Link>
                         </div>
                     </div>
                 </div>
             </div>
-        </div >
-    </>
 } 

@@ -1,6 +1,4 @@
-import { Category } from "./category.repo";
 import { BaseModel, CrudRepository } from "./crud.repo";
-import { Ingredient } from "./ingredient.repo";
 export interface ProductTag extends BaseModel {
   code: string;
   name: string;

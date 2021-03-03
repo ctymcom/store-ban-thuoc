@@ -44,7 +44,10 @@ export class PostRepository extends CrudRepository<Post> {
     twitterImage: String
     twitterTitle: String
     priority: Int
-    tags { id name }: [Tag]
+    tags { 
+      id 
+      name 
+    }: [Tag]
   `);
 }
 

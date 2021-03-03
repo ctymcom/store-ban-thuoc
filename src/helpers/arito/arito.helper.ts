@@ -11,6 +11,8 @@ import { IProductTag } from "../../graphql/modules/productTag/productTag.model";
 import { IUserAddress } from "../../graphql/modules/userAddress/userAddress.model";
 import { CacheHelper } from "../cache.helper";
 import { AritoUser } from "./types/aritoUser.type";
+import { IPromotion } from "../../graphql/modules/promotion/promotion.model";
+import { IAritoOption } from "../../graphql/modules/aritoOption/aritoOption.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -31,6 +33,12 @@ export class AritoHelper {
   }
   static getImageLink(imageId: string) {
     return `${this.host}/GetImageFile350/${imageId}/${this.imageToken}`;
+  }
+  static getAvatarLink(imageId: string) {
+    return `${this.host}/DownloadFile0/${imageId}/${this.imageToken}`;
+  }
+  static getThumbnailLink(imageId: string) {
+    return `${this.host}/DownloadFile1/${imageId}/${this.imageToken}`;
   }
   static getAllCategory(type: string, page: number = 1, updatedAt?: Date) {
     return Axios.post(`${this.host}/Item/GetItemGroup`, {
@@ -532,6 +540,87 @@ export class AritoHelper {
     }).then((res) => {
       this.handleError(res);
       return get(res.data, "value");
+    });
+  }
+  static getAllPromotion(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetPromotion`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          code: d["ma_ck"],
+          name: d["ten_ck"],
+          description: d["ghi_chu"],
+        })) as IPromotion[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static getAllOptions(page: number = 1) {
+    return Axios.post(`${this.host}/Item/GetOptions`, {
+      token: this.imageToken,
+      memvars: [["pageIndex", "I", page]],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["name"],
+        name: d["descript"],
+        name2: d["descript2"],
+        value: d["val"],
+      })) as IAritoOption[];
+    });
+  }
+  static updateUserProfile({ nickname, phone, birthday, companyType, companyName }, token: string) {
+    return Axios.post(`${this.host}/Authorize/UpdateUserInfo`, {
+      token: token,
+      memvars: [
+        ["nickname", "C", nickname], // Ten day du
+        ["phone", "C", phone], // Dt
+        ["birthday", "D", birthday ? moment(birthday).format("YYYYMMDD") : ""], // Ngay sinh
+        ["company_type", "I", companyType], // Loai cua hang 1. Phòng khám, 2. Nhà thuốc, 3. Trình dược viên
+        ["company_name", "C", companyName], // Tên cửa hàng
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return this.getUserProfile(token);
+    });
+  }
+  static getUserProfile(token: string) {
+    return Axios.post(`${this.host}/Authorize/GetUserInfo`, { token }).then((res) => {
+      this.handleError(res);
+      const userData = get(res.data, "data.userinfo.0", {});
+      return {
+        id: userData["user_id"],
+        username: userData["username"],
+        admin: userData["admin"],
+        nickname: userData["nickname"],
+        userRef: userData["user_ref"],
+        unitId: userData["unit_id"],
+        imageId: userData["image_id"],
+        locationId: userData["location_id"],
+        devId: userData["dev_id"],
+        language: userData["language"],
+        country: userData["country"],
+        email: userData["e_mail"],
+        phone: userData["phone"],
+        birthday: userData["birthday"],
+        datetime2: userData["datetime2"],
+        timeout: userData["timeout"],
+        permission: get(res.data, "data.permission.0.permission"),
+        group: get(res.data, "data.permission.0.user_group"),
+      } as AritoUser;
     });
   }
 }

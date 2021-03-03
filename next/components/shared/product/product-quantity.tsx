@@ -20,7 +20,7 @@ export function ProductQuantity(props: PropsType) {
 
   return (
     <>      
-      <div className="flex items-center">
+      <div className="flex items-center my-2.5 md:py-1">
         <button className={`${buttonStyle} ${props.buttonClassName || ''}`} disabled={props.disabled}
           onClick={() => handleSetQuantity(props.quantity - 1)}>
           <i><HiMinusCircle/></i>
