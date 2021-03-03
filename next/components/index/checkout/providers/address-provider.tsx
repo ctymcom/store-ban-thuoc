@@ -1,37 +1,30 @@
 import React from 'react';
 import { createContext, useState, useEffect, useContext, Children } from 'react';
 import { AddressService } from '../../../../lib/repo/address.repo';
-import { UserAddressService, UserAddress } from '../../../../lib/repo/user-address.repo';
+import { UserAddressService, UserAddress, UpdateUserAddressInput } from '../../../../lib/repo/user-address.repo';
+import { useAuth } from '../../../../lib/providers/auth-provider';
 export const AddressContext = createContext<Partial<{
   listAddress: UserAddress[]
   addressSelected: UserAddress,
-  showAddressFormDialog:boolean,
   showDialogAddress:boolean,
   setShowDialogAddress:Function,
   addressEdit:UserAddress,
   setListAdress:Function,
-  setShowAddressFormDialog:Function,
   setAddressSelected:Function,
   handleChange:Function,
   setAddressEdit:Function,
   provinces:Option[], 
   setProvinces:Function,
-  province:string, 
-  setProvince:Function,
   districts:Option[],
-  setDistrict:Function,
-  district:string,
   wards:Option[],
-  ward:string, 
-  setWard:Function,
 }>>({});
 
 export const AddressProvider = (props) => {
-  const [listAddress, setListAdress] = useState<any[]>(null);
+  const [listAddress, setListAdress] = useState<UserAddress[]>(null);
   const [showDialogAddress, setShowDialogAddress] = useState(false);
-  const [showAddressFormDialog, setShowAddressFormDialog] = useState<boolean>(false);
-  const [addressSelected, setAddressSelected] = useState<UserAddress>();
+  const [addressSelected, setAddressSelected] = useState<UserAddress>(null);
   const [addressEdit, setAddressEdit] = useState<UserAddress>(null);
+  const [reload, setReload] = useState<boolean>(false);
   useEffect(() => {
       setListAdress(listAddress);
     }, [listAddress]);
@@ -39,36 +32,36 @@ export const AddressProvider = (props) => {
   const setDefaultAddress=(id:string)=>{
     setListAdress(listAddress.map((item:UserAddress)=> item.id!== id ? {...item, default : false} : {...item,default:true}));
   }
+
+  const { user } = useAuth()
   useEffect(() => {
-    UserAddressService.getAll( {query:{limit:0},fragment:UserAddressService.fullFragment}).then(res=>{
-    console.log(res);
+    UserAddressService.getAll( {query:{
+      limit:0,
+      filter: { userId: user.id }
+    },fragment:UserAddressService.fullFragment}).then(res=>{
+    setListAdress(res.data.map((item:UserAddress)=> item));
+    setAddressSelected(res.data.find((item:UserAddress)=>item.isDefault));
+    setReload(false);
    }) 
   }, []);
   const [provinces, setProvinces] = useState<Option[]>(null);
-  const [province, setProvince] = useState<string>('');
   const [districts,setDistricts] = useState<Option[]>(null);
-  const [district,setDistrict] = useState<string>('');
   const [wards, setWards] = useState<Option[]>(null);
-  const [ward, setWard] = useState<string>('');
   useEffect(() => {
     AddressService.getProvinces().then(res => {
       setProvinces([{ value: '', label: 'Chọn Tỉnh/Thành' }, ...res.map(x => ({ value: x.id, label: x.province }) )])
-      setProvince('');
-    }).catch((err)=>{console.log(err);
     })
   }, []);
   useEffect(() => {
-    AddressService.getDistricts(province).then(res=>{
+    AddressService.getDistricts(addressEdit?addressEdit.provinceId:"").then(res=>{
       setDistricts([{ value:'',label: 'Chọn Quận/Huyện' },...res.map(x=>({value:x.id,label:x.district}))])
-      setDistrict('');
     })
-  }, [province]);
+  }, [addressEdit]);
   useEffect(() => {
-    AddressService.getWards(district).then(res=>{
+    AddressService.getWards(addressEdit?addressEdit.districtId:"").then(res=>{
       setWards([{value:'',label:'Chọn Phường/Xã'},...res.map(x=>({value:x.id,label:x.ward}))])
-      setWard('');
     })
-  }, [district]);
+  }, [addressEdit]);
   const handleChange=(id:string,type:string)=>{
       switch (type) {
           case "setDefault":{
@@ -101,32 +94,34 @@ export const AddressProvider = (props) => {
               }
               break;
           case "edit":{
-            if(addressEdit){
-              setListAdress(listAddress.map((item:UserAddress)=> item.id!== addressEdit.id ? item : addressEdit));
-              if(addressEdit.default){
-                setDefaultAddress(addressEdit.id);
-              }else{
-                let index = listAddress.findIndex((item)=>item.default);
-                if(index===-1){
-                  setListAdress(listAddress.map((item:UserAddress)=>item.id===""?{...item, default : false} : {...item,default:true}));
-                }
-              }
-            }
+              let ward=wards[wards.findIndex(item=>item.value===addressEdit.wardId)].label;
+              let district=districts[districts.findIndex(item=>item.value===addressEdit.districtId)].label;
+              let province=provinces[provinces.findIndex(item=>item.value===addressEdit.provinceId)].label;
+              let fullAddress=`${addressEdit.address}, ${ward}, ${district}, ${province}`
+              setAddressEdit({...addressEdit,fullAddress})
+              const { contactName, address, provinceId,
+                districtId, wardId, phone, location, isDefault } = addressEdit
+                UserAddressService.update({ id: addressEdit.id, data: { 
+                contactName, fullAddress,
+                address, provinceId,
+                districtId, wardId, phone, location, isDefault } }).then(res => {
+                setReload(false);
+                alert('Thành công')
+              }).catch(err => {
+                alert('Thất bại')
+              }) 
           } break;
           default:
               break;
       }
   }
-  return<AddressContext.Provider value={{districts, 
-                                        district, setDistrict, 
+  return<AddressContext.Provider value={{districts,
                                         provinces, setProvinces, 
-                                        setProvince, province,
-                                        wards, ward, setWard,
+                                        wards,
                                         handleChange,listAddress, 
                                         addressSelected, addressEdit, 
                                         showDialogAddress, setShowDialogAddress, 
                                         setAddressSelected, setListAdress, 
-                                        setShowAddressFormDialog, showAddressFormDialog, 
                                         setAddressEdit}}>
       {props.children}
     </AddressContext.Provider>;
