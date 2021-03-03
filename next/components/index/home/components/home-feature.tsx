@@ -1,7 +1,3 @@
-import { IconHandHeart } from "../../../../public/assets/icons/icon-hand-heart";
-import { IconMap } from "../../../../public/assets/icons/icon-map";
-import { IconShip } from "../../../../public/assets/icons/icon-ship";
-import { IconShoppingOnline } from "../../../../public/assets/icons/icon-shopping-online";
 import { useHomeContext } from './../providers/home-provider';
 export function HomeFeature() {
 

@@ -4,6 +4,8 @@ import { ProductTag, ProductTagService } from "../../../../lib/repo/product-tag.
 import { Category, CategoryService } from './../../../../lib/repo/category.repo';
 import { Pagination } from './../../../../lib/repo/crud.repo';
 import { Product, ProductService } from './../../../../lib/repo/product.repo';
+import { useRouter } from 'next/router';
+import { Ingredient } from './../../../../lib/repo/ingredient.repo';
 
 enum SORT {
   latest,
@@ -38,6 +40,8 @@ export const ProductsContext = createContext<Partial<{
   setCategories: Function
   pagination: Pagination
   setPagination: Function
+  ingredient: Partial<Ingredient>
+  setIngredient: Function
 }>>({});
 
 export function ProductsProvider(props) {
@@ -48,8 +52,17 @@ export function ProductsProvider(props) {
   const [categories, setCategories] = useState<FilterCategory[]>(null);
   const [categoryIds, setCategoryIds] = useState<string[]>([]);
   const [pagination, setPagination] = useState<Pagination>({ limit: 16, page: 1, total: 0 });
+  const [ingredient, setIngredient] = useState<Partial<Ingredient>>(null);
 
+  const router = useRouter()
   const initData = () => {
+    if (router.query['ingredientId']) {
+      setIngredient({
+        id: router.query['ingredientId'] as string,
+        name: router.query['ingredientName'] as string
+      })
+    }
+    
     CategoryService.query({
       query: [
         CategoryService.getAllQuery({ query: { limit: 0, filter: { parentIds: { __size: 0 } } }, fragment: CategoryService.fullFragment }),
@@ -65,8 +78,14 @@ export function ProductsProvider(props) {
           cat.subcategories.forEach(sub => sub.checked = false)
       })
       setCategories(newCategories)
-      setTags(cloneDeep(res.data.g2.data))
       setSort(SORT_TYPES[0].value)
+
+      const clonedTags = cloneDeep(res.data.g2.data) as ProductTag[]
+      if (router.query['sale']) {
+        clonedTags.filter(x => ["FLASHSALES", "SALESDOWN"].includes(x.code)).forEach(x => x.active = true)
+      }
+      setTags(clonedTags)
+
       setLoadDone(true)
     })
   }
@@ -104,7 +123,8 @@ export function ProductsProvider(props) {
         page: pagination.page,
         filter: {
           ...categoryIds.length?{ categoryIds: { __in: categoryIds } }:{},
-          ...tagCodes.length?{ tags: { __in: tagCodes } }:{}
+          ...tagCodes.length?{ tags: { __in: tagCodes } }:{},
+          ...ingredient?{ ingredientIds: { __in: ingredient.id } }:{}
         },
         order
       }
@@ -132,14 +152,14 @@ export function ProductsProvider(props) {
 
   useEffect(() => {
     loadProducts()
-  }, [categoryIds, sort, pagination.page, tags]);
+  }, [categoryIds, sort, pagination.page, tags, ingredient]);
 
   useEffect(() => {
     initData();
   }, []);
 
   return <ProductsContext.Provider value={{ loadDone, products, categories, setCategories, sort, setSort, 
-  tags, setTags, pagination, setPagination }}>
+  tags, setTags, pagination, setPagination, ingredient, setIngredient }}>
     {props.children}
   </ProductsContext.Provider>;
 }

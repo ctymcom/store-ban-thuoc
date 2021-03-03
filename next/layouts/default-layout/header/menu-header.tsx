@@ -16,7 +16,7 @@ export function MenuHeader(props: PropsType) {
     { label: 'Sản phẩm', path: '/products' },
     { label: 'Hoạt chất', path: '/ingredients' },
     { label: 'Đặt hàng nhanh', path: '/quick-shopping' },
-    { label: 'Khuyến mãi', path: '/products' },
+    { label: 'Khuyến mãi', path: '/products?sale=true' },
   ];
 
   const { hotline } = useHeaderContext()
@@ -85,7 +85,7 @@ export function MenuHeader(props: PropsType) {
           {
             showHotline && <div className="absolute emerge shadow-lg top-full -left-8 bg-white z-10 text-gray-700 p-4 px-6 rounded whitespace-nowrap font-semibold">
               {
-                hotline?.items.map(item => <a className="block hover:underline hover:text-primary" 
+                hotline?.items.map(item => <a key={item.display} className="block hover:underline hover:text-primary" 
                   href={'tel:' + item.phone}>{item.display}</a>)
               }
             </div>

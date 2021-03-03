@@ -9,7 +9,7 @@ interface PropsType {
 export function ProductsCategoriesLabels(props: PropsType) {
 
   const [filteredCategories, setFilteredCategories] = useState<FilterCategory[]>(null);
-  const { categories, setCategories } = useProductsContext()
+  const { categories, setCategories, ingredient, setIngredient } = useProductsContext()
 
   useEffect(() => {
     let filteredList = []
@@ -53,6 +53,18 @@ export function ProductsCategoriesLabels(props: PropsType) {
   "px-3 py-1 rounded-md flex-center group hover:text-danger hover:bg-danger-light cursor-pointer"
 
   return <>
+    {
+      ingredient &&
+      <div className="flex flex-wrap space-y-1 space-x-2 mb-2">
+        <span className={labelClass} onClick={() => { setIngredient(null) }}>
+            <span className="pr-2 mr-2 border-r border-primary group-hover:border-danger">Hoạt chất</span>
+            <span className="pr-2 mr-2 border-r border-primary group-hover:border-danger">
+              { ingredient.name }
+            </span>
+            <i><HiOutlineX/></i>
+          </span>
+      </div>
+    }
     {
       !!filteredCategories?.length && (
         <div className="flex flex-wrap space-y-1 space-x-2 mb-2">
