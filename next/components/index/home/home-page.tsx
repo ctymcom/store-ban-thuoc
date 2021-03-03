@@ -6,6 +6,7 @@ import { HomeFeature } from "./components/home-feature";
 import { HomeFeedback } from './components/home-feedback';
 import { HomeNews } from "./components/home-news";
 import { HomeContext, HomeProvider } from "./providers/home-provider";
+import LazyLoad from 'react-lazyload';
 
 export function HomePage() {
     
@@ -19,7 +20,7 @@ export function HomePage() {
                             <Carousel infinite autoPlay={3000} animationSpeed={1000}>
                                 { banners1.map((slide, index) => (
                                     <a className="w-full h-full" key={slide.image} href={slide.link}>
-                                        <img className="w-full h-full object-cover" src={slide.image} alt="" />
+                                        <LazyLoad><img className="w-full h-full object-cover" src={slide.image} alt="" /></LazyLoad>
                                     </a>
                                     
                                 ))}
@@ -40,10 +41,11 @@ export function HomePage() {
                             <div className="w-full py-8">
                                 {
                                     banners2.map(banner => <a className="w-full" key={banner.image}>
-                                        <img
+                                        <LazyLoad><img
                                             className="w-full"
                                             src={banner.image}
-                                        />
+                                        /></LazyLoad>
+                                        
                                     </a>)
                                 }
                                 
