@@ -14,6 +14,7 @@ export function Switch({
       checked={props.value}
       name={props.name}
       readOnly={props.readonly}
+      onChange={() => {}}
     />
     <span className="slider round"></span>
   </span>

@@ -4,6 +4,7 @@ import { SettingGroup, SettingGroupService } from "../../../../lib/repo/setting-
 import { Setting } from "../../../../lib/repo/setting.repo";
 import { SettingService } from './../../../../lib/repo/setting.repo';
 import { MutableSetting } from './../components/setting-list';
+import { isEqual } from 'lodash';
 
 export const SettingsContext = createContext<Partial<{
   loadingSettings: boolean
@@ -65,12 +66,24 @@ export function SettingsProvider({ children }: any) {
     }
   }, [settingGroup]);
 
-  const saveSettings = (settings: MutableSetting[]) => {
+  const saveSettings = (mutableSettings: MutableSetting[]) => {
+    const filteredSettings = mutableSettings.filter(setting => 
+      !isEqual(setting.value, settings.find(x => x.id == setting.id).value))
+    if (!filteredSettings.length) {
+      alert('Chưa có dữ liệu nào thay đổi')
+      return
+    }
+
     SettingService.mutate({
-      mutation: settings.map(setting => SettingService.updateQuery({
+      mutation: filteredSettings
+        .map(setting => SettingService.updateQuery({
         id: setting.id, data: { value: setting.value }
       }))
     }).then(res => {
+      setSettings(mutableSettings.map(x => {
+        const { values, ...settings } = x
+        return settings
+      }))
       alert('Lưu cấu hình thành công')
     }).catch(err => {
       console.error(err)

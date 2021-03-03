@@ -25,11 +25,15 @@ export class Imgur {
           if (response.status === 200 && response.success) {
             resolve(response.data.link);
           } else {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-              resolve(e.target.result as string);
-            };
-            reader.readAsDataURL(image);
+            if (response.success) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                resolve(e.target.result as string);
+              };
+              reader.readAsDataURL(image);
+            } else {
+              reject(response.error)
+            }
           }
         }
       };

@@ -63,7 +63,6 @@ export function SettingList(props: PropTypes) {
       //     }
       //   }
       // }
-      console.log(clonedSettings)
   
       setMutableSettings(clonedSettings)
     } else {
