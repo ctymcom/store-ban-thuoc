@@ -49,7 +49,7 @@ export function Promotion({ onChanged = () => { }, PrUsing, listPromotionCode, .
                         <p className="cursor-pointer text-primary text-16 sm:text-20"
                             onClick={() => setShowDialog(true)}
                         >Xem danh sách mã khuyến mãi</p>
-                        <input className="form-input w-2/3 sm:my-4 sm:w-full rounded-r-none sm:rounded-md border-gray-200"
+                        <input className="form-input w-2/3 sm:my-4 sm:w-full rounded-r-none h-12 sm:rounded-md border-gray-200"
                             placeholder="Nhập mã ưu đãi"
                             onChange={(e) => setPromotion(e.target.value)} value={promotion} />
                     </>

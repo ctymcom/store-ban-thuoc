@@ -9,9 +9,9 @@ export function CartItem(props) {
                     <div className="w-1/12 h-full cursor-pointer flex items-center" onClick={()=> props.handleChangeItem(props.item.id, "c", !props.item.isCheck)}>
                         <CheckboxItem checked={props.item.isCheck}/>
                     </div>
-                    <div className={`w-11/12 sm:col-span-11 flex gap-2 h-24 items-center overflow-scroll sm:overflow-hidden ${props.item.isCheck?"":"opacity-50"}`}>
-                        <img className="w-1/3 max-h-16 object-contain my-auto" src={props.item.img} alt="" />
-                        <p className="w-2/3 text-left flex-wrap items-center justify-between whitespace-nowrap sm:whitespace-normal"><span className="h-1/2">{props.item.name}</span><span className="mt-4 h-1/2 block sm:hidden text-primary">{NumberPipe(props.item.sale, true)}</span></p>
+                    <div className={`w-11/12 flex gap-2 items-center sm:h-24  ${props.item.isCheck?"":"opacity-50"}`}>
+                        <img className="w-1/4 sm:w-1/3 max-h-16 object-contain my-auto" src={props.item.img} alt="" />
+                        <p className="w-3/4 sm:w-2/3 text-left flex-wrap items-center justify-between"><span>{props.item.name}</span><span className="block sm:hidden text-primary">{NumberPipe(props.item.sale, true)}</span></p>
                     </div>
                 </div>
                 <div className={`col-span-2 hidden sm:block ${props.item.isCheck?"":"opacity-50"}`}>

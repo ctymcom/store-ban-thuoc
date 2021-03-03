@@ -147,7 +147,7 @@ export default function CartPage(props) {
             </div>
             <div className="mx-auto w-11/12 sm:w-full">
                 <div className="lg:flex gap-20">
-                    <div className="w-full lg:w-3/4 border-b-2 sm:border-0">
+                    <div className="w-full lg:w-3/4 border-b-2 sm:border-0 mt-5">
                         <ListCartItems listCart={listCart} handleDeleteCart={handleDeleteCart} handleChangeItem={handleChangeItem} CheckAll={CheckAll} />
                         <div className="text-primary flex items-center whitespace-nowrap">
                             <div className="cursor-pointer flex items-center text-16 sm:text-20" onClick={() => router.push('/home')}>
@@ -158,13 +158,13 @@ export default function CartPage(props) {
                                 onClick={() => setChange(false)}>Cập nhật giỏ hàng</button>
                         </div>
                     </div>
-                    <div className="w-full lg:w-1/4 flex flex-wrap gap-4">
-                        <div className="w-full sm:w-1/2 lg:w-full">
+                    <div className="w-full lg:w-1/4 flex flex-wrap">
+                        <div className="w-full sm:w-1/2 lg:w-full sm:pr-2 lg:pr-0">
                             <Promotion onChanged={(promotion) => {
                                 handleSetPromotion(promotion);
                             }} PrUsing={PrUsing} listPromotionCode={listPromotionCode}/>
                         </div>
-                        <div className="w-full sm:w-1/2 lg:w-full">
+                        <div className="w-full sm:w-1/2 lg:w-full sm:pl-2 lg:pl-0 sm:mt-5 lg:mt-3.5">
                             <PayMoney listMoney={ListMoneyCart} />
                             <Link href="/checkout">
                                 <button className="btn btn-primary w-full py-6 mt-2 sm:text-20">Tiến hành thanh toán</button>
