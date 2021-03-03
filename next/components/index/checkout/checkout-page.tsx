@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { IoLocationSharp } from 'react-icons/io5';
 
 import { NumberPipe } from '../../../lib/pipes/number';
-import { CartPayHeader } from '../cart/components/cart-pay-header';
+import { LayoutCart } from '../cart/components/layout-cart';
 import { PayMoney } from '../cart/components/pay-money';
 import { FormCheck } from './components/form-check';
 import {
@@ -39,7 +39,7 @@ export function CheckOutPage() {
     return <>
             <div className="w-11/12 mx-auto sm:main-container leading-relaxed text-gray-800">
                 <div>
-                    <CartPayHeader name="checkout"/>
+                    <LayoutCart name="checkout"/>
                 </div>
                 <div className="lg:flex justify-between gap-4 md:gap-8 xl:gap-16">
                     <div className="w-full lg:w-2/3 xl:w-3/4 gap-4">

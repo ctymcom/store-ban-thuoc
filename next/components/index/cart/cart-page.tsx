@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { listItem, listMoneyCart, listPromotionCode } from './components/cart-item-data';
 import { PayMoney } from './components/pay-money';
-import { CartPayHeader } from './components/cart-pay-header';
 import { useRouter } from 'next/router';
 import { toNumber, set } from 'lodash';
 import { Promotion } from './components/promotion';
 import { HiArrowNarrowLeft } from 'react-icons/hi'
 import { ListCartItems } from "./components/list-cart-items";
 import Link from 'next/link';
+import { LayoutCart } from './components/layout-cart';
 
 export default function CartPage(props) {
     // const [Tit, setTit] = useState('cart');
@@ -141,11 +141,9 @@ export default function CartPage(props) {
         }
     }
     return <>
-        <div className="main-container text-gray-700 text-20">
-            <div>
-                <CartPayHeader name="cart"/>
-            </div>
-            <div className="mx-auto w-11/12 sm:w-full">
+    <LayoutCart name="cart">
+        
+        <div className="mx-auto w-11/12 sm:w-full">
                 <div className="lg:flex gap-20">
                     <div className="w-full lg:w-3/4 border-b-2 sm:border-0 mt-5">
                         <ListCartItems listCart={listCart} handleDeleteCart={handleDeleteCart} handleChangeItem={handleChangeItem} CheckAll={CheckAll} />
@@ -173,6 +171,6 @@ export default function CartPage(props) {
                     </div>
                 </div>
             </div>
-        </div >
+    </LayoutCart>
     </>
 } 
