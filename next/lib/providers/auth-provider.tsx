@@ -15,7 +15,7 @@ const AuthContext = createContext<{
   saveCurrentPath?: () => void
   checkUser?: (roles?: string[]) => boolean
   login?: (username: string, password: string, mode: 'user' | 'editor') => Promise<AritoUser>
-  register?: (nickname: string, email: string, phone: string) => Promise<string>
+  register?: (nickname: string, email: string, phone: string) => Promise<AritoUser>
   logout?: () => void
 }>({});
 
@@ -29,7 +29,7 @@ export function AuthProvider({ children }: any) {
 
   useEffect(() => {
     if (user) {
-      console.log(user)
+      // console.log(user)
     } else if (user === null) {
       ClearAuthToken()
     }
@@ -88,8 +88,17 @@ export function AuthProvider({ children }: any) {
   }
 
   const register = async (nickname: string, email: string, phone: string) => {
-    const res = await AritoUserService.regisAritoUser(nickname, email, phone)
-    return res
+    const { token, user } = await AritoUserService.regisAritoUser(nickname, email, phone)
+    await GraphService.clearStore()
+    ClearAuthToken();
+    if (user.id) {
+      SetAuthToken(token, true);
+      setUser(user)
+    } else {
+      ClearAuthToken()
+      throw Error('Đăng ký thất bại')
+    }
+    return user
   }
 
   const logout = () => {
