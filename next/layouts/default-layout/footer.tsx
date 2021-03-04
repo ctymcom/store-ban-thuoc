@@ -59,9 +59,9 @@ export function Footer() {
                     <ul className="text-sm sm:text-base md:text-lg">
                       {
                         footerMenus.map((menu, index) => 
-                          <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer hover:text-primary">
+                          <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer hover:underline">
                             <Link href={ menu.link } key={index}>
-                              <a className={` ${menu.link ? 'text-primary' : ''}`} >
+                              <a >
                                 {menu.text}
                               </a>
                             </Link>
@@ -94,19 +94,19 @@ export function Footer() {
                       socials && 
                       <>
                         {<Link href={socials.facebook.link}>
-                            <a className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500">
+                            <a className="transition w-5 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500" target="_blank">
                               <IconFacebook />
                             </a>
                           </Link>
                         }
                         {<Link href={socials.youtube.link}>
-                            <a className="transition w-3 sm:w-5 md:w-4 lg:w-10 cursor-pointer text-gray-400 hover:text-red-500">
+                            <a className="transition w-8 sm:w-8 md:w-9 lg:w-10 cursor-pointer text-gray-400 hover:text-red-500" target="_blank">
                               <IconYoutube />
                             </a>
                           </Link>
                         }
                         {<Link href={socials.zalo.link}>
-                            <a className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500">
+                            <a className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500" target="_blank">
                               <IconZalo />
                             </a>
                           </Link>
@@ -116,10 +116,10 @@ export function Footer() {
                   </div>
                 </div>
                 <div className="">
-                  <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">{ hotline?.footerText }</div>
-                  <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-2 ">
-                    <p className="mb-1 md:mb-1">Gọi điện đặt hàng: { hotline?.phone }</p>
-                    <p className="">Gọi điện tư vấn - hỗ trợ: { hotline?.phone }</p>
+                  <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">{ hotline?.headerText }</div>
+                  <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-2 cursor-pointer ">
+                    <p className="mb-1 md:mb-1 hover:underline hover:text-primary">Gọi điện đặt hàng: { hotline?.phone }</p>
+                    <p className="hover:underline hover:text-primary">Gọi điện tư vấn - hỗ trợ: { hotline?.phone }</p>
                   </div>
                 </div>
               </div>

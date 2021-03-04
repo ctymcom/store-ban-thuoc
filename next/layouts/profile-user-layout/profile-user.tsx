@@ -17,7 +17,6 @@ export function ProfileUser() {
         }
     }, [user]);
     // console.log(user);
-    
 
     return <>
     {
