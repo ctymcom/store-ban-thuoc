@@ -216,6 +216,8 @@ export class AritoHelper {
           timeout: userData["timeout"],
           permission: get(res.data, "data.permission.0.permission"),
           group: get(res.data, "data.permission.0.user_group"),
+          companyName: userData["company_name"],
+          companyType: userData["company_type"],
         } as AritoUser,
       };
     });
@@ -635,7 +637,21 @@ export class AritoHelper {
         timeout: userData["timeout"],
         permission: get(res.data, "data.permission.0.permission"),
         group: get(res.data, "data.permission.0.user_group"),
+        companyName: userData["company_name"],
+        companyType: userData["company_type"],
       } as AritoUser;
+    });
+  }
+  static changeUserPassword(oldPassword: string, newPassword: string, token: string) {
+    return Axios.post(`${this.host}/Authorize/ChangePassword`, {
+      token,
+      memvars: [
+        ["o", "C", oldPassword], //Password cu
+        ["p", "C", newPassword], //Password moi
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "msg");
     });
   }
 }

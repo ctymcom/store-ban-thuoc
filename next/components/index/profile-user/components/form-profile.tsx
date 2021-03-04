@@ -6,37 +6,39 @@ import Link from "next/link";
 import { useProfileUserContext } from "../providers/profile-user-provider";
 
 export function FormProfile() {
-  const { user, saveCurrentPath } = useAuth();
-  // const { user } = useProfileUserContext();
-  const [userP, setUserP] = useState(user);
-  const handleChange = (id: string, value: any) => {
-    switch (id) {
-      case "dateOfBirth":
-        {
-          setUserP({ ...userP, birthday: value });
+    const { user, saveCurrentPath } = useAuth()
+    // const { user } = useProfileUserContext();
+    const [userP,setUserP] = useState(user);
+    const handleChange=(id:string,value:any)=>{
+        switch (id) {
+            case "dateOfBirth":{
+                setUserP({...userP,birthday:value});
+            }
+                break;
+            case "name":{
+                setUserP({...userP,username:value});
+            }
+            case "phoneNumber":{
+                setUserP({...userP,phone:value});
+            }
+                break;  
+            case "email":{
+                setUserP({...userP,email:value});
+            }
+                break;
+            // case "gender":{
+            //     setUserP({...userP,gender:value});
+            // }
+            //     break;
+            default:
+                break;
         }
-        break;
-      case "name": {
-        setUserP({ ...userP, username: value });
-      }
-      case "phoneNumber":
-        {
-          setUserP({ ...userP, phone: value });
-        }
-        break;
-      case "email":
-        {
-          setUserP({ ...userP, email: value });
-        }
-        break;
     }
-  };
-
-  return (
-    <>
-      {
-        user ? (
-          <>
+    // console.log(user);
+    
+    return <>
+    {
+        user ? <>
             <div className="w-11/12 lg:w-full text-16 sm:text-20 text-gray-700">
               <h3 className="uppercase border-gray-200 border-b-4 pb-2 mb-4 text-24 hidden sm:block text-left">
                 Thông tin tài khoản
@@ -128,7 +130,7 @@ export function FormProfile() {
               </div>
             </div>
           </>
-        ) : (
+         : (
           ""
         )
         //             <Link href="/login">
@@ -138,6 +140,5 @@ export function FormProfile() {
         //             </Link>
         // }
       }
-    </>
-  );
+    </>;
 }

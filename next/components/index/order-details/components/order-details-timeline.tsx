@@ -29,7 +29,7 @@ export function OrderDetailsTimeline(props: PropsType) {
         height: 2rem;
         border-left: 1px dashed;
       }
-      .timeline-mobile::before {
+      .timeline-mobile:not(:last-child)::before {
         content: '';
         position: absolute;
         left: 0.25rem;

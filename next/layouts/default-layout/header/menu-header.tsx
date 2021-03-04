@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import { HiChevronRight, HiOutlineX } from 'react-icons/hi';
 import { HeaderUser } from "./header-user";
-import { useHeaderContext } from './../providers/header-provider';
+import { useDefaultLayoutContext } from "../providers/default-layout-providers";
 interface PropsType extends ReactProps {
   menuOpened: boolean
   setMenuOpened: Function 
@@ -19,7 +19,7 @@ export function MenuHeader(props: PropsType) {
     { label: 'Khuyến mãi', path: '/products?sale=true' },
   ];
 
-  const { hotline } = useHeaderContext()
+  const { hotline } = useDefaultLayoutContext();
   
   useEffect(() => {
     props.setMenuOpened(false)
