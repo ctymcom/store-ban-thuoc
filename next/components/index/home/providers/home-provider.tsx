@@ -49,7 +49,7 @@ export function HomeProvider(props) {
             filter: { key: { __in: ["BANNER_1", "BANNER_2", "BANNER_3", "FEATURE"] } }
           }
         }),
-        ...containers.map(x => ProductService.getAllQuery({query: { limit: 5, filter: { containers: x } }}))
+        ...containers.map(x => ProductService.getAllQuery({query: { limit: 10, filter: { containers: x } }}))
       ]
     }).then(res => {
       setFeedbacks(res.data.g0.data)
