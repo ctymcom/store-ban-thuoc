@@ -34,10 +34,10 @@ const AddressFormDialog = (props:PropsType) => {
                 title={props.title?props.title:"Chỉnh sửa địa chỉ"}>
                 <Dialog.Body>
                   <div className="flex flex-wrap gap-4 py-4 text-16">
-                    <input className="form-input w-full h-12 text-16" value={userAddress?.contactName}
+                    <input className="form-input w-full h-12 text-16" defaultValue={userAddress?.contactName}
                             placeholder="Họ và tên" 
                             onChange={(e)=>{setUserAddress({...userAddress,contactName:e.target.value})}}/>
-                    <input className="form-input w-full h-12 text-16" value={userAddress?.phone}
+                    <input className="form-input w-full h-12 text-16" defaultValue={userAddress?.phone}
                             placeholder="Số điện thoại" 
                             onChange={(e)=>{setUserAddress({...userAddress,phone:e.target.value})}}/>
                     <Select className={`w-full h-12 text-16`} options={provinces} 

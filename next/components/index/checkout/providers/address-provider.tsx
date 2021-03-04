@@ -4,6 +4,7 @@ import { AddressService } from '../../../../lib/repo/address.repo';
 import { UserAddressService, UserAddress, UpdateUserAddressInput } from '../../../../lib/repo/user-address.repo';
 import { useAuth } from '../../../../lib/providers/auth-provider';
 import { cloneDeep } from 'lodash';
+import { useCheckoutContext } from './checkout-provider';
 export const AddressContext = createContext<Partial<{
   listAddress: UserAddress[]
   addressSelected: UserAddress,
@@ -20,8 +21,8 @@ export const AddressContext = createContext<Partial<{
 
 export const AddressProvider = (props) => {
   const [listAddress, setListAdress] = useState<UserAddress[]>(null);
-  const [addressSelected, setAddressSelected] = useState<UserAddress>(null);
   const [userAddress, setUserAddress] = useState<UserAddress>(null);
+  const {setAddressSelected} = useCheckoutContext();
 
   const { user } = useAuth()
   const loadList = () =>{
@@ -30,6 +31,7 @@ export const AddressProvider = (props) => {
       filter: { userId: user.id }
     },fragment:UserAddressService.fullFragment}).then(res=>{
     setListAdress(cloneDeep(res.data));
+    setAddressSelected(res.data.find((item:UserAddress)=>item.isDefault));
    })
   }
   useEffect(() => {
@@ -53,49 +55,39 @@ export const AddressProvider = (props) => {
       setWards([{value:'',label:'Chọn Phường/Xã'},...res.map(x=>({value:x.id,label:x.ward}))])
     })
   }, [userAddress]);
+  const updateUserAddress =(data:UserAddress)=>{
+    console.log(data);
+    const { contactName, address, provinceId,
+      districtId, wardId, phone, location, isDefault } = data
+      UserAddressService.createOrUpdate({ id: data.id, data: { 
+      contactName,
+      address, provinceId,
+      districtId, wardId, phone, location, isDefault } }).then(res => {
+        if(data.isDefault){
+          listAddress.forEach((item:UserAddress)=>{
+            item.id!==data.id?updateUserAddress({...item,isDefault:false}):updateUserAddress({...item,isDefault:true});
+          })
+        }
+      setUserAddress(null)
+      loadList();
+    }).catch(err => {
+      alert(err)
+    }) 
+  }
   const handleChange=(id:string,type:string)=>{
       switch (type) {
           case "setDefault":{
-             
+             updateUserAddress({...listAddress[listAddress.findIndex(item=>item.id=id)],isDefault:true})
           }
               break;
           case "delete":{
-            let index = listAddress.findIndex((item:UserAddress)=>item.id===id)
-            let listNew = listAddress;
-            if (index !== -1&&listAddress.length>1) {
-                if(listNew[index].id===addressSelected.id)
-                {
-                  if(listNew[index+1]){
-                    setAddressSelected(listNew[index+1])
-                  }else{
-                    setAddressSelected(listNew[index-1])
-                  }
-                }
-                if(listNew[index].default)
-                {
-                  if(listNew[index+1]){
-                    listNew[index+1].default=true
-                  }else{
-                    listNew[index-1].default=true
-                  }
-                }
-                listNew.splice(index, 1);
-            }
-            setListAdress([...listNew]);
+                listAddress.length>1? UserAddressService.delete({id}).then(res=>
+                  loadList()
+                  ):""
               }
               break;
           case "formAddress":{
-              const { contactName, address, provinceId,
-                districtId, wardId, phone, location, isDefault } = userAddress
-                UserAddressService.createOrUpdate({ id: userAddress.id, data: { 
-                contactName,
-                address, provinceId,
-                districtId, wardId, phone, location, isDefault } }).then(res => {
-                setUserAddress(null);
-                loadList();
-              }).catch(err => {
-                alert('Thất bại')
-              }) 
+            updateUserAddress(userAddress);
           } break;
           default:
               break;
