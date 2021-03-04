@@ -216,6 +216,8 @@ export class AritoHelper {
           timeout: userData["timeout"],
           permission: get(res.data, "data.permission.0.permission"),
           group: get(res.data, "data.permission.0.user_group"),
+          companyName: userData["company_name"],
+          companyType: userData["company_type"],
         } as AritoUser,
       };
     });
@@ -635,6 +637,8 @@ export class AritoHelper {
         timeout: userData["timeout"],
         permission: get(res.data, "data.permission.0.permission"),
         group: get(res.data, "data.permission.0.user_group"),
+        companyName: userData["company_name"],
+        companyType: userData["company_type"],
       } as AritoUser;
     });
   }
