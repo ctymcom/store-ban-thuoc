@@ -48,11 +48,11 @@ export function ProductMain() {
           <span>{product.name}</span>
         </a>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 mt-4">
-        <div className="mt-2 md:mt-0">
+      <div className="flex flex-col md:flex-row mt-4">
+        <div className="mt-2 md:mt-0 w-full md:w-2/5 z-20">
           <ProductImage/>
         </div>
-        <div className="mt-4 md:mt-0">
+        <div className="mt-4 md:mt-0 pl-0 md:pl-8">
           <ProductInfo/>
         </div>
       </div>

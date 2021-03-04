@@ -11,7 +11,7 @@ export function ProductList(props: PropsType) {
   return (
     <>
       <SectionHeader text={props.title}/>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 xs:gap-3 md:gap-5">
         {
           props.products.map((product, index) => {
             return <ProductCard key={product.id} product={product} />

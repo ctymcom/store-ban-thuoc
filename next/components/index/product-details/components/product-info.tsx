@@ -82,7 +82,7 @@ export function ProductInfo(props: PropsType) {
         <div className="mt-4">
             {
                 product.tagDetails.map((tag) => 
-                    <span className="bg-primary-light text-primary px-3 py-1 rounded-full mr-2 mb-2 hover:bg-primary hover:text-white cursor-pointer">
+                    <span key={tag.code} className="bg-primary-light text-primary px-3 py-1 rounded-full mr-2 mb-2 hover:bg-primary hover:text-white cursor-pointer">
                         {tag.name}
                     </span>
                 )

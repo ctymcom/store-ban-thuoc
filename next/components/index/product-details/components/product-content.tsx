@@ -12,12 +12,12 @@ export function ProductContent() {
     }
 
     return <>
-        <div className="flex w-full h-scrollbar">
+        <div className="flex w-full no-scrollbar bg-white sticky top-16 pt-2 md:top-32 z-10 md:pt-4">
         {
             product.tabs.map((tab, index) => 
                     <a key={tab.name} id={'tab-' + tab.name}
                      onClick={() => scrollTo(tab.name)}
-                        className="flex-grow text-center px-4 pb-1 font-semibold text-primary hover:text-primary cursor-pointer border-b-4 whitespace-nowrap">{tab.name}
+                        className="flex-grow text-center px-3 pb-2 font-semibold text-primary hover:text-primary cursor-pointer border-b-2 whitespace-nowrap">{tab.name}
                     </a>
             )
         }
