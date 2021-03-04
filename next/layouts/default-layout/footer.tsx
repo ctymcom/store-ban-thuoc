@@ -55,8 +55,8 @@ export function Footer() {
                   <ul className="text-sm sm:text-base md:text-lg">
                     {
                       setting[2].value.items.map((item, index) => 
-                        <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">
-                          <Link href={ item.link } key={index}>
+                        <li key={index} className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">
+                          <Link href={ item.link } >
                             <a>{item.text}</a>
                           </Link>
                         </li>
