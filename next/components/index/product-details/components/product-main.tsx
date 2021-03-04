@@ -1,10 +1,10 @@
-import { ProductImage } from "./product-image";
-import { ProductInfo } from "./product-info";
-import Link from "next/link";
-import { toNumber } from 'lodash';
-import { useProductDetailsContext } from './../providers/product-details-provider';
-import { useEffect, useState } from "react";
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
+import { useProductDetailsContext } from './../providers/product-details-provider';
+import { ProductImage } from './product-image';
+import { ProductInfo } from './product-info';
 
 export function ProductMain() {
 
