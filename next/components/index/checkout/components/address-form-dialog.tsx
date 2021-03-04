@@ -11,16 +11,16 @@ interface PropsType extends PropsTypeFormDialog{
   title?:string
 }
 const AddressFormDialog = (props:PropsType) => {
-  const {addressEdit, handleChange, setAddressEdit, provinces, districts, wards } = useAddressContext();
+  const {userAddress, handleChange, setUserAddress, provinces, districts, wards } = useAddressContext();
   const handleOnChangSelect=(value:string,id:string)=>{
-    if(addressEdit[id]!==value){
+    if(userAddress[id]!==value){
       switch (id) {
         case "provinceId":{
-          setAddressEdit({...addressEdit,[id]:value,districtId:"",wardId:""})
+          setUserAddress({...userAddress,[id]:value,districtId:"",wardId:""})
         }
         break;
         case "districtId":{
-          setAddressEdit({...addressEdit,[id]:value,wardId:""})
+          setUserAddress({...userAddress,[id]:value,wardId:""})
         }
         break;
         default:
@@ -34,26 +34,27 @@ const AddressFormDialog = (props:PropsType) => {
                 title={props.title?props.title:"Chỉnh sửa địa chỉ"}>
                 <Dialog.Body>
                   <div className="flex flex-wrap gap-4 py-4 text-16">
-                    <input className="form-input w-full h-12 text-16" value={addressEdit?addressEdit.contactName:"Họ và tên"} 
-                            onChange={(e)=>{setAddressEdit({...addressEdit,contactName:e.target.value})}}/>
-                    <input className="form-input w-full h-12 text-16" value={addressEdit?addressEdit.phone:"Số điện thoại"} 
-                            onChange={(e)=>{setAddressEdit({...addressEdit,phone:e.target.value})}}/>
+                    <input className="form-input w-full h-12 text-16" value={userAddress?userAddress.contactName:"Họ và tên"} 
+                            onChange={(e)=>{setUserAddress({...userAddress,contactName:e.target.value})}}/>
+                    <input className="form-input w-full h-12 text-16" value={userAddress?userAddress.phone:"Số điện thoại"} 
+                            onChange={(e)=>{setUserAddress({...userAddress,phone:e.target.value})}}/>
                     <Select className={`w-full h-12 text-16`} options={provinces} 
-                            value={addressEdit?addressEdit.provinceId:""} 
+                            value={userAddress?userAddress.provinceId:""} 
                             onChange={e=>{handleOnChangSelect(e,"provinceId")}}/>
-                    <Select disabled={!addressEdit||addressEdit.provinceId===""?true:false} 
+                    <Select disabled={!userAddress||userAddress.provinceId===""?true:false} 
                             className={`w-full h-12 text-16`} options={districts} 
-                            value={addressEdit?addressEdit.districtId:""} 
+                            value={userAddress?userAddress.districtId:""} 
                             onChange={e=>{handleOnChangSelect(e,"districtId")}}/>
-                    <Select disabled={addressEdit&&addressEdit.districtId!==""&&addressEdit.provinceId!==""?false:true} 
+                    <Select disabled={userAddress&&userAddress.districtId!==""&&userAddress.provinceId!==""?false:true} 
                             className={`w-full h-12 text-16`} options={wards} 
-                            value={addressEdit?addressEdit.wardId:""} 
-                            onChange={e=>{setAddressEdit({...addressEdit,wardId:e})}}/>
-                    <input className="form-input w-full h-12 text-16" defaultValue={addressEdit?addressEdit.address:"Nhập địa chỉ, tên đường, tòa nhà..."}/>
-                    <div className="w-full h-12 flex items-center gap-2 cursor-pointer" onClick={()=>{setAddressEdit({...addressEdit,isDefault:!addressEdit.isDefault})}}>
-                      <CheckBoxSquare checked={addressEdit?addressEdit.isDefault:true} /> Chọn làm địa chỉ mặc định
+                            value={userAddress?userAddress.wardId:""} 
+                            onChange={e=>{setUserAddress({...userAddress,wardId:e})}}/>
+                    <input className="form-input w-full h-12 text-16" value={userAddress?userAddress.address:"Nhập địa chỉ, tên đường, tòa nhà..."} 
+                            onChange={(e)=>{setUserAddress({...userAddress,address:e.target.value})}}/>
+                    <div className="w-full h-12 flex items-center gap-2 cursor-pointer" onClick={()=>{setUserAddress({...userAddress,isDefault:!userAddress.isDefault})}}>
+                      <CheckBoxSquare checked={userAddress?userAddress.isDefault:true} /> Chọn làm địa chỉ mặc định
                       </div>
-                    <button className="btn-primary w-full h-12 text-16" onClick={()=>{props.setShowAddressFormDialog(false);handleChange(addressEdit.id,"edit")}}>Xác nhận</button>
+                    <button className="btn-primary w-full h-12 text-16" onClick={()=>{props.setShowAddressFormDialog(false);handleChange(userAddress.id,"formAddress")}}>Xác nhận</button>
                   </div>
                 </Dialog.Body>
             </Dialog>

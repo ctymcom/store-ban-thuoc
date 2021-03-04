@@ -15,13 +15,13 @@ import {
 import TransferInformation from './components/transfer-information';
 import CheckBoxSquare from './components/check-box-square';
 import AddressDialog from './components/address-dialog';
-import { useAddressContext } from './providers/address-provider';
 import { Spinner } from '../../shared/utilities/spinner';
+import { useCheckoutContext } from './providers/checkout-provider';
 
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
     const [isCheck, setIsCheck] = useState(true);
-    const {addressSelected, showDialogAddress, setShowDialogAddress} = useAddressContext();
+    const {addressSelected, setAddressSelected, setShowDialogAddress, showDialogAddress} = useCheckoutContext();
     const getCheckPayment = (status:boolean) => {
         setIsHide(status)
     }

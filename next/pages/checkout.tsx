@@ -1,13 +1,13 @@
 import { DefaultLayout } from '../layouts/default-layout';
 import { CheckOutPage } from '../components/index/checkout/checkout-page';
-import { AddressProvider } from '../components/index/checkout/providers/address-provider';
 import { LayoutCart } from '../components/index/cart/components/layout-cart';
+import { CheckoutProvider } from '../components/index/checkout/providers/checkout-provider';
 
 export default function CheckOut() {
     return  <LayoutCart name="cart">
-                <AddressProvider>
+                <CheckoutProvider>
                     <CheckOutPage />
-            </AddressProvider>
+            </CheckoutProvider>
         </LayoutCart> 
 }
 CheckOut.Layout = DefaultLayout
