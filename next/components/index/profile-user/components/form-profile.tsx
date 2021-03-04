@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useProfileUserContext } from "../providers/profile-user-provider";
 
 export function FormProfile() {
-    const { user, saveCurrentPath } = useAuth()
+    const { user } = useAuth()
     // const { user } = useProfileUserContext();
     const [userP,setUserP] = useState(user);
     const handleChange=(id:string,value:any)=>{
@@ -18,23 +18,16 @@ export function FormProfile() {
             case "name":{
                 setUserP({...userP,username:value});
             }
+                break;
             case "phoneNumber":{
                 setUserP({...userP,phone:value});
             }
                 break;  
-            case "email":{
-                setUserP({...userP,email:value});
-            }
-                break;
-            // case "gender":{
-            //     setUserP({...userP,gender:value});
-            // }
-            //     break;
             default:
                 break;
         }
     }
-    // console.log(user);
+    console.log(user);
     
     return <>
     {
@@ -71,24 +64,32 @@ export function FormProfile() {
                       <input
                         className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
                         value={user.email}
-                        onChange={(e) => {
-                          handleChange("email", e.target.value);
-                        }}
                       />
                     </div>
-                    <div className="hidden justify-between items-center pt-4 sm:h-12">
+                    {/* <div className="justify-between items-center pt-4 sm:h-12">
                       <p className="w-full sm:w-1/4">Giới tính</p>
                       <div className="w-full sm:w-3/4 h-12 flex gap-4">
                         <Gender gender={user.userRef} />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="sm:flex justify-between items-center pt-4">
                       <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Ngày sinh</p>
                       <div className="w-full sm:w-3/4 flex space-x-2 xl:w-4/6">
                         <DateTime
+                          // dateOfBirth={user.birthday == null ? new Date() : user.birthday}
                           dateOfBirth={user.birthday == null ? new Date() : user.birthday}
                         />
                       </div>
+                    </div>
+                    <div className="sm:flex justify-between items-center pt-4">
+                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Tên cửa hàng</p>
+                      <input
+                        className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
+                        value=""
+                        // onChange={(e) => {
+                        //   handleChange("email", e.target.value);
+                        // }}
+                      />
                     </div>
                     <div className="sm:flex justify-between items-center pt-4">
                       <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Mật khẩu</p>
