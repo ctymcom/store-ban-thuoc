@@ -17,4 +17,6 @@ export type AritoUser = {
   timeout: number;
   permission: number;
   group: string;
+  companyName: string;
+  companyType: number;
 };

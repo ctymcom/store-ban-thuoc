@@ -38,6 +38,7 @@ function useScreen(breakpoint: BreakPoint = "") {
     function handleResize() {
       setScreen(isBreakPoint());
     }
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);

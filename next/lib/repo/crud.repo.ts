@@ -9,7 +9,7 @@ export interface Pagination {
   total?: number;
 }
 
-export class QueryInput {
+export class QueryInput<T> {
   limit?: number;
   page?: number;
   offset?: number;
@@ -40,14 +40,14 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
       query = { limit: 10 },
       fragment = this.shortFragment,
     }: {
-      query: QueryInput | string;
+      query: QueryInput<T> | string;
       fragment?: string;
     } = {
       query: { limit: 10 },
     }
   ): string {
-    if ((query as QueryInput).limit == 0) {
-      query = { ...(query as QueryInput), limit: 1000 };
+    if ((query as QueryInput<T>).limit == 0) {
+      (query as QueryInput<T>).limit = 1000;
     }
 
     const api = `getAll${this.apiName}`;
@@ -62,9 +62,13 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     cache = true,
   }: {
     fragment?: string;
-    query?: QueryInput;
+    query?: QueryInput<T>;
     cache?: boolean;
   } = {}): Promise<GetListData<T>> {
+    if ((query as QueryInput<T>).limit == 0) {
+      (query as QueryInput<T>).limit = 1000;
+    }
+
     const options = {
       query: this.gql`${this.generateGQL(
         "query",

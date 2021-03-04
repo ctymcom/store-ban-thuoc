@@ -16,6 +16,17 @@ export interface UserAddress extends BaseModel {
   location: string;
   isDefault: boolean;
 }
+export interface UpdateUserAddressInput extends BaseModel {
+  fullAddress: string
+  contactName: string
+  address: string
+  provinceId: string
+  districtId: string
+  wardId: string
+  phone: string
+  location: string
+  isDefault: boolean
+}
 
 export class UserAddressRepository extends CrudRepository<UserAddress> {
   apiName = "UserAddress";
@@ -27,6 +38,13 @@ export class UserAddressRepository extends CrudRepository<UserAddress> {
     addressId: string
     fullAddress: string
     contactName: string
+    address: string
+    provinceId: string
+    districtId: string
+    wardId: string
+    phone: string
+    location: string
+    isDefault: Boolean
   `);
   fullFragment = this.parseFragment(`
     id: string

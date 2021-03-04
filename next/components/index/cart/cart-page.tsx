@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { listItem, listMoneyCart, listPromotionCode } from './components/cart-item-data';
-import { PayMoney } from './components/pay-money';
-import { useRouter } from 'next/router';
-import { toNumber, set } from 'lodash';
-import { Promotion } from './components/promotion';
-import { HiArrowNarrowLeft } from 'react-icons/hi'
-import { ListCartItems } from "./components/list-cart-items";
 import Link from 'next/link';
-import { LayoutCart } from './components/layout-cart';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { HiArrowNarrowLeft } from 'react-icons/hi';
+
+import { listItem, listMoneyCart, listPromotionCode } from './components/cart-item-data';
+import { ListCartItems } from './components/list-cart-items';
+import { PayMoney } from './components/pay-money';
+import { Promotion } from './components/promotion';
 
 export default function CartPage(props) {
     // const [Tit, setTit] = useState('cart');
@@ -87,7 +86,7 @@ export default function CartPage(props) {
                 break;
             case "i":
                 {
-                    let numIt = toNumber(value);
+                    let numIt = parseInt(value || "0");
                     if (numIt >= 0 && numIt <= 1000) {
                         let index = findIndex(id);
                         let listNew = listCart;

@@ -1,7 +1,7 @@
 import { BaseModel, CrudRepository } from "./crud.repo";
 export interface Ingredient extends BaseModel {
-  code: String;
-  name: String;
+  code: string;
+  name: string;
 }
 
 export class IngredientRepository extends CrudRepository<Ingredient> {

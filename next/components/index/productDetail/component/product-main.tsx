@@ -1,9 +1,9 @@
-import { ProductDetailData } from "../data/product-detail-data";
-import { ProductImage } from "./product-image";
-import { ProductInfo } from "./product-info";
-import Link from "next/link";
+import Link from 'next/link';
 import { useState } from 'react';
-import { toNumber } from 'lodash';
+
+import { ProductDetailData } from '../data/product-detail-data';
+import { ProductImage } from './product-image';
+import { ProductInfo } from './product-info';
 
 export function ProductMain() {
 
@@ -35,7 +35,7 @@ export function ProductMain() {
           break;
       case "i":
           {
-            let numberAmout = toNumber(value);
+            let numberAmout = parseInt(value.toString());
             if (numberAmout >= 0 && numberAmout <= 100000) {
               let index = findIndex(id);
               let productNew = product;
