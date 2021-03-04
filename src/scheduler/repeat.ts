@@ -10,7 +10,11 @@ import SyncUserNotificationJob from "./jobs/syncUserNotification.job";
 
 export function InitRepeatJobs() {
   console.log("Generate Repeat Jobs");
-  SyncProductJob.create({}).repeatEvery("5 minute").unique({ name: SyncProductJob.jobName }).save();
+  SyncProductJob.create({})
+    .repeatEvery("5 minute")
+    .unique({ name: SyncProductJob.jobName })
+    .save()
+    .then((job) => job.run());
   SyncLocationDataJob.create({})
     .repeatEvery("1 days")
     .unique({ name: SyncLocationDataJob.jobName })
