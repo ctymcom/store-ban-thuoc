@@ -1,17 +1,18 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { AritoUser } from "../../../../lib/repo/arito-user.repo";
 import { User } from "../../../../lib/repo/user.repo";
 
 export const ProfileUserContext = createContext<Partial<{
-  users: User[]
-  setUsers: Function
+  user: AritoUser
+  
 }>>({});
 
-export function ProfileUserProvider(props) {
-  const [users, setUsers] = useState<User[]>();
-  return  <ProfileUserContext.Provider value={{ users, setUsers }}>
-            { props.children }
-          </ProfileUserContext.Provider>
-  ;
+export function ProfileUserProvider({ children} : any) {
+  const [user, setUser] = useState(null);
+  return  (
+    <ProfileUserContext.Provider value={{ user }}>
+      { children }
+    </ProfileUserContext.Provider>
+  );
 }
-
 export const useProfileUserContext = () => useContext(ProfileUserContext);

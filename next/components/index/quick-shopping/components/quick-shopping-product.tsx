@@ -28,7 +28,7 @@ export function QuickShoppingProduct({ product }: PropsType) {
     }
   }, [quantity]);
 
-  return <div className="relative flex items-center border-b border-gray-300 px-2 py-1">
+  return <div className="relative flex flex-col items-start md:flex-row md:items-center border-b border-gray-300 px-1 py-2 md:px-2 md:py-1">
     <Link href={"/product/" + product.code}>
       <a className="flex items-center flex-grow group">
         <div className="flex-shrink-0 w-16 rounded p-2">
@@ -37,8 +37,8 @@ export function QuickShoppingProduct({ product }: PropsType) {
           </div>
         </div>
         <div className="flex-grow pl-4">
-          <div className="text-gray-700 text-lg font-semibold leading-tight group-hover:text-primary-dark">{product.name}</div>
-          <div className="text-gray-600 text-sm group-hover:text-primary">{product.unit} {!!product.packing && <span>- {product.packing}</span>}</div>
+          <div className="text-gray-700 lg:text-lg font-semibold leading-tight group-hover:text-primary-dark">{product.name}</div>
+          <div className="text-gray-600 text-xs lg:text-sm group-hover:text-primary">{product.unit} {!!product.packing && <span>- {product.packing}</span>}</div>
         </div>
       </a>
     </Link>
@@ -46,7 +46,7 @@ export function QuickShoppingProduct({ product }: PropsType) {
       {product.basePrice?
         <div className="flex items-center">
           <span className="pr-4">{NumberPipe(product.salePrice, true)}</span>
-          <ProductQuantity inputClassName="w-20 mx-2 border rounded border-gray-400 hover:border-primary focus:border-primary-dark" 
+          <ProductQuantity inputClassName="h-8 w-16 mx-1 md:h-10 md:w-20 md:mx-2 border rounded border-gray-400 hover:border-primary focus:border-primary-dark" 
           quantity={quantity} setQuantity={setQuantity} disabled={!product.basePrice}/>
         </div>
         :

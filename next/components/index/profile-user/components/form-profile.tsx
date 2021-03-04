@@ -6,37 +6,32 @@ import Link from "next/link";
 import { useProfileUserContext } from "../providers/profile-user-provider";
 
 export function FormProfile() {
-  const { user, saveCurrentPath } = useAuth();
-  // const { user } = useProfileUserContext();
-  const [userP, setUserP] = useState(user);
-  const handleChange = (id: string, value: any) => {
-    switch (id) {
-      case "dateOfBirth":
-        {
-          setUserP({ ...userP, birthday: value });
+    const { user } = useAuth()
+    // const { user } = useProfileUserContext();
+    const [userP,setUserP] = useState(user);
+    const handleChange=(id:string,value:any)=>{
+        switch (id) {
+            case "dateOfBirth":{
+                setUserP({...userP,birthday:value});
+            }
+                break;
+            case "name":{
+                setUserP({...userP,username:value});
+            }
+                break;
+            case "phoneNumber":{
+                setUserP({...userP,phone:value});
+            }
+                break;  
+            default:
+                break;
         }
-        break;
-      case "name": {
-        setUserP({ ...userP, username: value });
-      }
-      case "phoneNumber":
-        {
-          setUserP({ ...userP, phone: value });
-        }
-        break;
-      case "email":
-        {
-          setUserP({ ...userP, email: value });
-        }
-        break;
     }
-  };
-
-  return (
-    <>
-      {
-        user ? (
-          <>
+    console.log(user);
+    
+    return <>
+    {
+        user ? <>
             <div className="w-11/12 lg:w-full text-16 sm:text-20 text-gray-700">
               <h3 className="uppercase border-gray-200 border-b-4 pb-2 mb-4 text-24 hidden sm:block text-left">
                 Thông tin tài khoản
@@ -69,24 +64,32 @@ export function FormProfile() {
                       <input
                         className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
                         value={user.email}
-                        onChange={(e) => {
-                          handleChange("email", e.target.value);
-                        }}
                       />
                     </div>
-                    <div className="hidden justify-between items-center pt-4 sm:h-12">
+                    {/* <div className="justify-between items-center pt-4 sm:h-12">
                       <p className="w-full sm:w-1/4">Giới tính</p>
                       <div className="w-full sm:w-3/4 h-12 flex gap-4">
                         <Gender gender={user.userRef} />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="sm:flex justify-between items-center pt-4">
                       <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Ngày sinh</p>
                       <div className="w-full sm:w-3/4 flex space-x-2 xl:w-4/6">
                         <DateTime
+                          // dateOfBirth={user.birthday == null ? new Date() : user.birthday}
                           dateOfBirth={user.birthday == null ? new Date() : user.birthday}
                         />
                       </div>
+                    </div>
+                    <div className="sm:flex justify-between items-center pt-4">
+                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Tên cửa hàng</p>
+                      <input
+                        className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
+                        value=""
+                        // onChange={(e) => {
+                        //   handleChange("email", e.target.value);
+                        // }}
+                      />
                     </div>
                     <div className="sm:flex justify-between items-center pt-4">
                       <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Mật khẩu</p>
@@ -128,7 +131,7 @@ export function FormProfile() {
               </div>
             </div>
           </>
-        ) : (
+         : (
           ""
         )
         //             <Link href="/login">
@@ -138,6 +141,5 @@ export function FormProfile() {
         //             </Link>
         // }
       }
-    </>
-  );
+    </>;
 }
