@@ -24,6 +24,10 @@ const schema = gql`
     note: String
     "vị trí"
     position: Int
+    "Danh sách sản phẩm"
+    productIds: [ID]
+
+    products(limit: Int): [Product]
   }
 
   type ProductContainerPageData {

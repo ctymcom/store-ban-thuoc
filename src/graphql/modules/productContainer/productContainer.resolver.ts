@@ -1,7 +1,9 @@
 import { set } from "lodash";
 import { ROLES } from "../../../constants/role.const";
 import { AuthHelper } from "../../../helpers";
+import { GraphQLHelper } from "../../../helpers/graphql.helper";
 import { Context } from "../../context";
+import { ProductLoader } from "../product/product.model";
 import { productContainerService } from "./productContainer.service";
 
 const Query = {
@@ -15,7 +17,9 @@ const Query = {
   },
 };
 
-const ProductContainer = {};
+const ProductContainer = {
+  products: GraphQLHelper.loadManyById(ProductLoader, "productIds"),
+};
 
 export default {
   Query,

@@ -10,6 +10,7 @@ export type IProductContainer = BaseDocument & {
   tagCode?: string; // Mã tag
   note?: string; // Ghi chú
   position?: number; // vị trí
+  productIds?: string[]; // Danh sách sản phẩm
 };
 
 const productContainerSchema = new Schema(
@@ -20,6 +21,7 @@ const productContainerSchema = new Schema(
     tagCode: { type: String },
     note: { type: String },
     position: { type: Number },
+    productIds: [{ type: Schema.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }
 );

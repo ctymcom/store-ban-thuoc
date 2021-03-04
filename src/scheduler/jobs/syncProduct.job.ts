@@ -54,6 +54,9 @@ async function syncProductContainer() {
         $set: {
           updatedAt: new Date(),
           ...container,
+          productIds: await ProductModel.find({ code: { $in: products } }).then((res) =>
+            res.map((p) => p._id)
+          ),
         },
       });
     productBulk
