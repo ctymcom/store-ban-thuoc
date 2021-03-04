@@ -1,6 +1,6 @@
 import { Dialog } from "./dialog";
 
-export interface PropsType extends ReactProps {
+interface PropsType extends ReactProps {
   isOpen: boolean
   image: string
   onClose: Function

@@ -1,12 +1,11 @@
 import ReactCarousel, { Dots } from "@brainhubeu/react-carousel";
 import "@brainhubeu/react-carousel/lib/style.css";
 import { useState } from "react";
-type CarouselProps = {
-  [x: string]: any;
-  value?: number;
+interface PropsType extends ReactProps {
+  [x: string]: any
 };
-export function Carousel({ value, ...props }: CarouselProps) {
-  const [activeIndex, setActiveIndex] = useState(value);
+export function Carousel({ ...props }: PropsType) {
+  const [activeIndex, setActiveIndex] = useState(0);
   const onChangeIndex = (value) => {
     if (value == activeIndex) return;
     setActiveIndex(value);

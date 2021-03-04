@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ImQuotesLeft, ImQuotesRight } from 'react-icons/im';
 import LazyLoad from 'react-lazyload';
-
 import useInterval from '../../../../lib/hooks/useInterval';
 import { Feedback } from '../../../../lib/repo/feedback.repo';
 import { SectionHeader } from './section-header';

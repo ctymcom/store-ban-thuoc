@@ -88,7 +88,7 @@ export function ProductCard({ product, ...props }: PropsType) {
             {product.basePrice ? (
               <>
                 <div>
-                  <div className="h-28 sm:h-20">
+                  <div className="">
                     <div className="flex flex-col sm:flex-row">
                       <span className="font-semibold text-lg text-primary">
                         {NumberPipe(product.salePrice, true)}
@@ -131,7 +131,7 @@ export function ProductCard({ product, ...props }: PropsType) {
             ) : (
               <Link href="/login">
                 <a
-                  className="btn-primary w-full h-12 flex-center font-semibold hover:underline mt-4"
+                  className="btn-primary w-full h-12 flex-center text-center leading-tight font-semibold hover:underline mt-4"
                   onClick={saveCurrentPath}
                 >
                   Đăng nhập để xem giá
