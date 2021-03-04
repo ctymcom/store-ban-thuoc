@@ -15,12 +15,13 @@ import {
 import TransferInformation from './components/transfer-information';
 import CheckBoxSquare from './components/check-box-square';
 import AddressDialog from './components/address-dialog';
-import { useAddressContext } from './providers/address-provider';
+import { Spinner } from '../../shared/utilities/spinner';
+import { useCheckoutContext } from './providers/checkout-provider';
 
 export function CheckOutPage() {
     const [isHide, setIsHide] = useState(false);
     const [isCheck, setIsCheck] = useState(true);
-    const {addressSelected, showDialogAddress, setShowDialogAddress} = useAddressContext();
+    const {addressSelected, setAddressSelected, setShowDialogAddress, showDialogAddress} = useCheckoutContext();
     const getCheckPayment = (status:boolean) => {
         setIsHide(status)
     }
@@ -69,7 +70,13 @@ export function CheckOutPage() {
                                     <a className="text-primary text-16 md:text-20 cursor-pointer" onClick={() => setShowDialogAddress(true)}>Đổi</a>
                                 </div>
                                 <div className="my-2 text-16 md:text-20">
-                                    
+                                    {
+                                        addressSelected?<>
+                                            <p className="text-20 md:text-24 font-bold">{addressSelected.contactName}</p>
+                                            <p>{addressSelected.fullAddress}</p>
+                                            <p>{addressSelected.phone}</p>
+                                        </>:<Spinner/>
+                                    }
                                 </div>
                             </div>
                             <div className="w-full md:w-1/2 lg:w-full">
@@ -94,6 +101,6 @@ export function CheckOutPage() {
                         <p className="whitespace-nowrap text-center text-12 md:text-16">(Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)</p>
                     </div>
                 </div>
-            <AddressDialog isOpen={showDialogAddress} setShowDialog={setShowDialogAddress}/>
+                <AddressDialog isOpen={showDialogAddress} setShowDialog={setShowDialogAddress}/>
         </div> 
 }

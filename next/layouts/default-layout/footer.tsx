@@ -1,34 +1,36 @@
 import { useState } from "react";
 import { Spinner } from "../../components/shared/utilities/spinner";
-import { useFooterContext } from "./providers/footer-providers";
 import { IconFacebook } from "../../public/assets/icons/icon-facebook";
 import { IconYoutube } from "../../public/assets/icons/icon-youtube";
 import { IconZalo } from "../../public/assets/icons/icon-zalo";
 import Link from "next/link";
+import { useDefaultLayoutContext } from "./providers/default-layout-providers";
 
 export function Footer() {
-  
   const [ShowMore, setShowMore] = useState(false);
-  const { setting } = useFooterContext();
-  // console.log(setting);
+  const { hotline, footerIntro, footerMenus, socials } = useDefaultLayoutContext();
+  const [ active, setActive ] = useState(false);
+  const handlerActiveLink = () => {
+    setActive(true);
+  }
 
   return (
     <>  {
-          !setting ? <Spinner/> : <>
+          !hotline ? <Spinner/> : <>
           <footer className="mt-20 text-white" style={{ backgroundColor: '#343A40' }}>
             <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3">
               <div className="flex flex-col justify-start text-md sm:text-lg md:text-sm lg:w-4/6">
-                <Link href={ setting[1].value.link }>
-                  <a className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">Về khoThuocsi.vn</a>
-                </Link>
-                
+                {
+                  footerIntro &&
+                  <>
+                    <Link href={ footerIntro?.link }>
+                      <a className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">Về khoThuocsi.vn</a>
+                    </Link>
+                  </>
+                }
                 <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                  { setting[1].value.content }
+                  { footerIntro?.content }
                 </p>
-                {/* <p className="mt-4 md:mt-0 sm:mb-8 md:mb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                  Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên
-                  khắp Việt Nam.
-                </p> */}
                 {ShowMore ? (
                   <>
                     <p className="mt-4 sm:-mt-3.5 md:mt-0 sm:mb-9 md:mb-4 md:leading-7 text-sm sm:text-base md:text-lg">
@@ -52,17 +54,22 @@ export function Footer() {
               <div className="flex flex-col justify-start lg:w-5/6 mt-6 lg:mt-0">
                 <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">Liên kết hữu ích</div>
                 <div className="sm:py-1 md:pb-4">
-                  <ul className="text-sm sm:text-base md:text-lg">
-                    {
-                      setting[2].value.items.map((item, index) => 
-                        <li key={index} className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">
-                          <Link href={ item.link } >
-                            <a>{item.text}</a>
-                          </Link>
-                        </li>
-                      )
-                    }
-                  </ul>
+                  {
+                    footerMenus && 
+                    <ul className="text-sm sm:text-base md:text-lg">
+                      {
+                        footerMenus.map((menu, index) => 
+                          <li className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer hover:text-primary">
+                            <Link href={ menu.link } key={index}>
+                              <a className={` ${menu.link ? 'text-primary' : ''}`} >
+                                {menu.text}
+                              </a>
+                            </Link>
+                          </li>
+                        )
+                      }
+                    </ul>
+                  } 
                 </div>
               </div>
               <div className="flex flex-col justify-start lg:w-full text-sm sm:mt-6 md:mt-0">
@@ -83,31 +90,36 @@ export function Footer() {
                 <div className="">
                   <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">Kết nối với chúng tôi</div>
                   <div className="flex space-x-5 sm:space-x-8 md:space-x-7 mb-4 sm:mb-7 md:mb-8 lg:mb-8 mt-4 sm:mt-7 md:mt-4 lg:mt-4 items-center">
-                    <Link href={ setting[3].value.facebook.link }>
-                      <a className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500">
-                        <IconFacebook />
-                      </a>
-                    </Link>
-                    
-                    <Link href={ setting[3].value.youtube.link }>
-                      <a className="transition w-7 sm:w-10 md:w-8 lg:w-10 cursor-pointer text-gray-400 hover:text-red-500">
-                        <IconYoutube />
-                      </a>
-                    </Link>
-                    
-                    <Link href={ setting[3].value.zalo.link }>
-                      <a className="transition cursor-pointer text-gray-400 hover:text-blue-500">
-                        <IconZalo />
-                      </a>
-                    </Link>
-                    
+                    {
+                      socials && 
+                      <>
+                        {<Link href={socials.facebook.link}>
+                            <a className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500">
+                              <IconFacebook />
+                            </a>
+                          </Link>
+                        }
+                        {<Link href={socials.youtube.link}>
+                            <a className="transition w-3 sm:w-5 md:w-4 lg:w-10 cursor-pointer text-gray-400 hover:text-red-500">
+                              <IconYoutube />
+                            </a>
+                          </Link>
+                        }
+                        {<Link href={socials.zalo.link}>
+                            <a className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500">
+                              <IconZalo />
+                            </a>
+                          </Link>
+                        }
+                      </>
+                    } 
                   </div>
                 </div>
                 <div className="">
-                  <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">{ setting[0].value.footerText }</div>
+                  <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">{ hotline?.footerText }</div>
                   <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-2 ">
-                    <p className="mb-1 md:mb-1">Gọi điện đặt hàng: { setting[0].value.phone }</p>
-                    <p className="">Gọi điện tư vấn - hỗ trợ: { setting[0].value.phone }</p>
+                    <p className="mb-1 md:mb-1">Gọi điện đặt hàng: { hotline?.phone }</p>
+                    <p className="">Gọi điện tư vấn - hỗ trợ: { hotline?.phone }</p>
                   </div>
                 </div>
               </div>
