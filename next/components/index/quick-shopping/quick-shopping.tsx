@@ -13,8 +13,8 @@ export function QuickShoppingPage() {
   const { products, pagination, setPagination } = useQuickShoppingContext()
 
   return <>
-    <div className="py-12 main-container flex">
-      <div className="flex-grow pr-8">
+    <div className="py-4 md:py-12 main-container flex">
+      <div className="flex-grow px-2 lg:px-0 lg:pr-8">
         <QuickShoppingSearch/>
         {
           !products ? <Spinner/> : <>            
@@ -38,7 +38,7 @@ export function QuickShoppingPage() {
           </>
         }
       </div>
-      <div className="flex-shrink-0 w-80 relative">
+      <div className="fixed left-0 bottom-0 lg:relative lg:flex-shrink-0 w-full lg:w-80">
         <QuickShoppingTotal/>
       </div>
     </div>

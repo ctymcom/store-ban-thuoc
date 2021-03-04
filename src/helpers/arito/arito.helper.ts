@@ -642,6 +642,18 @@ export class AritoHelper {
       } as AritoUser;
     });
   }
+  static changeUserPassword(oldPassword: string, newPassword: string, token: string) {
+    return Axios.post(`${this.host}/Authorize/ChangePassword`, {
+      token,
+      memvars: [
+        ["o", "C", oldPassword], //Password cu
+        ["p", "C", newPassword], //Password moi
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "msg");
+    });
+  }
 }
 
 AritoHelper.setImageToken();

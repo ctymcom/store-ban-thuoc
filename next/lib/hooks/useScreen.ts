@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
-type BreakPoint = "" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+type BreakPoint = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
-function useScreen(breakpoint: BreakPoint = "") {
+function useScreen(breakpoint: BreakPoint) {
   function isBreakPoint(): boolean {
     if (typeof window !== "undefined") {
       let width = window.screen.width;
