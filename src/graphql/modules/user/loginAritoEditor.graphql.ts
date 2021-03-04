@@ -40,6 +40,8 @@ export default {
       timeout: Int
       permission: Int
       group: String
+      companyName: String
+      companyType: Int
 
       imageLink: String
       thumbnailLink: String
