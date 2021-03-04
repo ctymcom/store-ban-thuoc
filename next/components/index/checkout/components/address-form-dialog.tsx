@@ -34,9 +34,11 @@ const AddressFormDialog = (props:PropsType) => {
                 title={props.title?props.title:"Chỉnh sửa địa chỉ"}>
                 <Dialog.Body>
                   <div className="flex flex-wrap gap-4 py-4 text-16">
-                    <input className="form-input w-full h-12 text-16" value={userAddress?userAddress.contactName:"Họ và tên"} 
+                    <input className="form-input w-full h-12 text-16" value={userAddress?.contactName}
+                            placeholder="Họ và tên" 
                             onChange={(e)=>{setUserAddress({...userAddress,contactName:e.target.value})}}/>
-                    <input className="form-input w-full h-12 text-16" value={userAddress?userAddress.phone:"Số điện thoại"} 
+                    <input className="form-input w-full h-12 text-16" value={userAddress?.phone}
+                            placeholder="Số điện thoại" 
                             onChange={(e)=>{setUserAddress({...userAddress,phone:e.target.value})}}/>
                     <Select className={`w-full h-12 text-16`} options={provinces} 
                             value={userAddress?userAddress.provinceId:""} 
@@ -49,7 +51,8 @@ const AddressFormDialog = (props:PropsType) => {
                             className={`w-full h-12 text-16`} options={wards} 
                             value={userAddress?userAddress.wardId:""} 
                             onChange={e=>{setUserAddress({...userAddress,wardId:e})}}/>
-                    <input className="form-input w-full h-12 text-16" value={userAddress?userAddress.address:"Nhập địa chỉ, tên đường, tòa nhà..."} 
+                    <input className="form-input w-full h-12 text-16" defaultValue={userAddress?.address}
+                            placeholder="Nhập địa chỉ, tên đường, tòa nhà..." 
                             onChange={(e)=>{setUserAddress({...userAddress,address:e.target.value})}}/>
                     <div className="w-full h-12 flex items-center gap-2 cursor-pointer" onClick={()=>{setUserAddress({...userAddress,isDefault:!userAddress.isDefault})}}>
                       <CheckBoxSquare checked={userAddress?userAddress.isDefault:true} /> Chọn làm địa chỉ mặc định

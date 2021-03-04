@@ -24,14 +24,16 @@ export const AddressProvider = (props) => {
   const [userAddress, setUserAddress] = useState<UserAddress>(null);
 
   const { user } = useAuth()
-  useEffect(() => {
+  const loadList = () =>{
     UserAddressService.getAll( {query:{
       limit:0,
       filter: { userId: user.id }
     },fragment:UserAddressService.fullFragment}).then(res=>{
     setListAdress(cloneDeep(res.data));
-    setAddressSelected(res.data.find((item:UserAddress)=>item.isDefault));
    })
+  }
+  useEffect(() => {
+    loadList();
   }, []);
   const [provinces, setProvinces] = useState<Option[]>(null);
   const [districts,setDistricts] = useState<Option[]>(null);
@@ -90,6 +92,7 @@ export const AddressProvider = (props) => {
                 address, provinceId,
                 districtId, wardId, phone, location, isDefault } }).then(res => {
                 setUserAddress(null);
+                loadList();
               }).catch(err => {
                 alert('Thất bại')
               }) 
@@ -98,13 +101,9 @@ export const AddressProvider = (props) => {
               break;
       }
   }
-  return<AddressContext.Provider value={{districts,
-                                        provinces, setProvinces, 
-                                        wards,
-                                        handleChange,listAddress, 
-                                        addressSelected, userAddress,
-                                        setAddressSelected, setListAdress, 
-                                        setUserAddress}}>
+  return<AddressContext.Provider value={{districts, provinces, setProvinces, 
+                                        wards, handleChange, listAddress, 
+                                        userAddress, setListAdress, setUserAddress}}>
       {props.children}
     </AddressContext.Provider>;
 }
