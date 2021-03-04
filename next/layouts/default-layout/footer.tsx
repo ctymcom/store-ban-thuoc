@@ -54,7 +54,6 @@ export function Footer() {
               <div className="flex flex-col justify-start lg:w-5/6 mt-6 lg:mt-0">
                 <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">Liên kết hữu ích</div>
                 <div className="sm:py-1 md:pb-4">
-<<<<<<< HEAD
                   {
                     footerMenus && 
                     <ul className="text-sm sm:text-base md:text-lg">
@@ -69,19 +68,7 @@ export function Footer() {
                           </li>
                         )
                       }
-=======
-                  <ul className="text-sm sm:text-base md:text-lg">
-                    {
-                      setting[2].value.items.map((item, index) => 
-                        <li key={index} className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer">
-                          <Link href={ item.link } >
-                            <a>{item.text}</a>
-                          </Link>
-                        </li>
-                      )
-                    }
->>>>>>> 965babb7c23aae74ffb46fc4c2e0dff9158acef3
-                  </ul>
+                    </ul>
                   } 
                 </div>
               </div>
