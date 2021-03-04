@@ -63,7 +63,7 @@ export function ProductCard({ product, ...props }: PropsType) {
                 {categoryText}
               </div>
               <div
-                className="text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug text-ellipsis-3 group-hover:text-primary-dark"
+                className="h-14 text-ellipsis-2 text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug group-hover:text-primary-dark"
                 title={product.name}
               >
                 {product.name}
@@ -76,7 +76,7 @@ export function ProductCard({ product, ...props }: PropsType) {
                 <div className="flex flex-wrap py-2 -mx-1">
                   {product.tagDetails.map((tagDetail) => (
                     <div key={tagDetail.code} className="p-1">
-                      <span className="bg-primary-light text-primary-dark text-sm py-1 px-3 rounded-full">
+                      <span className="bg-primary-light text-primary-dark text-sm py-1 px-3 rounded-sm">
                         {tagDetail.name}
                       </span>
                     </div>
@@ -131,7 +131,7 @@ export function ProductCard({ product, ...props }: PropsType) {
             ) : (
               <Link href="/login">
                 <a
-                  className="btn-outline w-full h-16 flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark mt-4"
+                  className="btn-primary w-full h-12 flex-center font-semibold hover:underline mt-4"
                   onClick={saveCurrentPath}
                 >
                   Đăng nhập để xem giá
