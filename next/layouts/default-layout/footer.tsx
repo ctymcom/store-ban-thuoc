@@ -40,8 +40,7 @@ export function Footer() {
                 {ShowMore ? (
                   <>
                     <p className="mt-4 sm:-mt-3.5 md:mt-0 sm:mb-9 md:mb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                      Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng
-                      công nghệ 4.0 vào nền Y Tế
+                      {footerIntro?.more}
                     </p>
                   </>
                 ) : (

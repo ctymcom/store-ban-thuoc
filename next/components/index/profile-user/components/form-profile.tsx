@@ -1,15 +1,15 @@
-import Gender from "./gender";
-import DateTime from "./datetime";
 import { useEffect, useState } from "react";
+
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { Select } from "../../../shared/utilities/form/select";
+import DateTime from "./datetime";
 
 interface PropsType extends ReactProps {
   [x: string]: any;
   name?: string;
   id?: string;
   defaultValue?: string;
-  listOptionsTypeStore: any[];
+  listOptionsTypeStore?: any[];
 }
 
 export function FormProfile({
