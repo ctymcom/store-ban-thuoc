@@ -2,6 +2,7 @@ import { keyBy } from "lodash";
 
 import { ErrorHelper } from "../../../base/error";
 import { ROLES } from "../../../constants/role.const";
+import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { GraphQLHelper } from "../../../helpers/graphql.helper";
 import { Context } from "../../context";
 import { CartItemLoader, CartItemModel, ICartItem } from "../cartItem/cartItem.model";
@@ -15,6 +16,7 @@ const Mutation = {
     const { id, data } = args;
     const cart = await CartModel.findOne({ userId: context.user.id.toString() });
     if (!cart || cart._id.toString() != id) throw ErrorHelper.permissionDeny();
+    let items: ICartItem[] = [];
     if (data.items) {
       cart.itemCount = 0;
       cart.subtotal = 0;
@@ -25,7 +27,6 @@ const Mutation = {
       const products = await ProductModel.find({
         _id: data.items.map((i) => i.productId),
       }).then((res) => keyBy(res, "_id"));
-      const items: ICartItem[] = [];
       data.items.forEach((i) => {
         const product = products[i.productId];
         if (!product) return;
@@ -41,6 +42,7 @@ const Mutation = {
           userId: cart.userId,
           productId: product._id,
           productCode: product.code,
+          unit: product.unitCode,
           qty: i.qty,
           price: price,
           amount: price * i.qty,
@@ -54,8 +56,13 @@ const Mutation = {
       if (items.length > 0) {
         await CartItemModel.insertMany(items);
       }
+    } else {
+      items = await CartItemModel.find({ _id: { $in: cart.itemIds } });
     }
-    cart.amount = cart.subtotal + cart.shipfee - cart.discount;
+
+    // cart.discount = draftOrder.discount;
+    // cart.subtotal = draftOrder.subtotal;
+    // cart.amount = draftOrder.amount;
     return await cart.save();
   },
 };

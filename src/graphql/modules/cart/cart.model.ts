@@ -11,7 +11,7 @@ export type ICart = BaseDocument & {
   discount?: number; // Giảm giá
   amount?: number; // Tổng thành tiền
   shipMethod?: string; // Phương thức vận chuyển
-  paymentMethod?: string; // Phương thức thanh toán
+  paymentMethod?: number; // Phương thức thanh toán
   itemIds?: string[]; // Sản phẩm giỏ hàng
   discountId?: string; // Mã khuyến mãi
   discountName?: string; // Tên khuyến mãi
@@ -29,7 +29,7 @@ const cartSchema = new Schema(
     discount: { type: Number, default: 0 },
     amount: { type: Number, default: 0 },
     shipMethod: { type: String },
-    paymentMethod: { type: String },
+    paymentMethod: { type: Number, default: 0 },
     itemIds: { type: [{ type: Schema.Types.ObjectId, ref: "CartItem" }], default: [] },
     discountId: { type: String },
     discountName: { type: String },

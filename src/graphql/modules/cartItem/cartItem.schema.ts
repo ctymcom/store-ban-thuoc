@@ -24,6 +24,8 @@ const schema = gql`
     "Mã sản phẩm"
     productId: ID
     productCode: String
+    "Đơn vị"
+    unit: String
     "Số lượng"
     qty: Int
     "Giá bán"
