@@ -1,13 +1,13 @@
-import { QuickShoppingProvider } from "../components/index/quick-shopping/providers/quick-shopping-provider";
+import { PostsProvider } from "../components/index/posts/providers/posts-provider";
 import { DefaultLayout } from "../layouts/default-layout";
-import { QuickShoppingPage } from "./../components/index/quick-shopping/quick-shopping";
+import { PostsPage } from "./../components/index/posts/posts";
 
-export default function QuickShopping() {
+export default function Posts() {
   return (
-    <QuickShoppingProvider>
-      <QuickShoppingPage />
-    </QuickShoppingProvider>
+    <PostsProvider>
+      <PostsPage />
+    </PostsProvider>
   );
 }
 
-QuickShopping.Layout = DefaultLayout;
+Posts.Layout = DefaultLayout;

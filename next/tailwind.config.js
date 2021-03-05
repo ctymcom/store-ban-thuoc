@@ -220,7 +220,8 @@ module.exports = {
       fill: ['hover', 'focus'],
       backgroundColor: ['checked'],
       borderColor: ['checked'],
-      textColor:['checked']
+      textColor:['checked'],
+      scale: ['active', 'group-hover'],
     },
   },
   plugins: [
