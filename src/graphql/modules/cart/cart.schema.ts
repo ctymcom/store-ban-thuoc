@@ -2,11 +2,13 @@ import { gql } from "apollo-server-express";
 
 const schema = gql`
   extend type Mutation {
-    updateCart(id: ID!, data: UpdateCartInput!): Cart
+    updateCart(data: UpdateCartInput!): Cart
     # Add Mutation
   }
   input UpdateCartInput {
-    items: [UpdateCartItemInput]
+    items: [CartItemInput]
+    shipMethod: String
+    paymentMethod: String
   }
 
   type Cart {
@@ -31,7 +33,7 @@ const schema = gql`
     "Phương thức thanh toán"
     paymentMethod: String
     "Sản phẩm giỏ hàng"
-    itemIds: String
+    items: [CartItem]
     "Mã khuyến mãi"
     discountId: String
     "Tên khuyến mãi"
@@ -44,7 +46,6 @@ const schema = gql`
     addressId: ID
 
     address: UserAddress
-    items: [CartItem]
   }
 
   type CartPageData {
