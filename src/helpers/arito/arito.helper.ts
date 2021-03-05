@@ -675,6 +675,66 @@ export class AritoHelper {
       return get(res.data, "msg");
     });
   }
+  static viewDraftOrder(data: {
+    promotionCode?: string;
+    paymentMethod: number;
+    items: {
+      productCode: string;
+      qty: number;
+      unit: string;
+      price: number;
+      amount: number;
+    }[];
+  }) {
+    let subtotal = 0;
+    return Axios.post(`${this.host}/Voucher/ViewDraftOrder`, {
+      token: this.imageToken,
+      memvars: [
+        ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
+        ["chuyen_khoan", "I", data.paymentMethod], //Chuyen khoan
+      ],
+      data: {
+        "#master": [
+          {
+            api_id: 1,
+            ngay_ct: moment().toISOString(),
+          },
+        ],
+        "#detail": data.items.map((i) => {
+          subtotal += i.amount;
+          return {
+            api_id: 1, //Trường liên kết với master
+            ma_vt: i.productCode, //Mã vật tư
+            dvt: i.unit, //Đơn vị tính
+            so_luong: i.qty, //Số lượng đơn hàng
+            gia_nt2: i.price, //Giá bán
+            tien_nt2: i.amount, //Thành tiền
+          };
+        }),
+      },
+    }).then((res) => {
+      this.handleError(res);
+      return {
+        subtotal: subtotal,
+        discount: get(res.data, "data.data.0.t_ck_nt", 0),
+        amount: get(res.data, "data.data.0.t_tt_nt", 0),
+        items: get(res.data, "data.table1", []).map((t) => ({
+          productCode: t["ma_vt"],
+          unit: t["dvt"],
+          storeCode: t["ma_kho"],
+          qty: t["so_luong"],
+          factor: t["he_so"],
+          price: t["gia_nt2"],
+          amount: t["tien_nt2"],
+          discountRate: t["tl_ck"],
+          discount: t["ck_nt"],
+          vatRate: t["thue_suat"],
+          vat: t["thue_nt"],
+          position: t["line"],
+        })),
+      };
+    });
+  }
 }
 
 AritoHelper.setImageToken();

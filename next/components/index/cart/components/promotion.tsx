@@ -4,9 +4,6 @@ import { PromotionContext, PromotionProvider } from "../providers/promotion-prov
 import PromotionListDialog from "./promotion-list-dialog";
 type PromotionProps = {
   [x: string]: any;
-  onChanged?: (promotion: any) => void;
-  PrUsing: { code: ""; des: "" };
-  listPromotionCode;
 };
 
 const text = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`;
@@ -20,16 +17,16 @@ export function Promotion({
   const [promotion, setPromotion] = useState<string>();
   const [showDialog, setShowDialog] = useState(false);
 
-  const applyPromotion = () => {
-    if (usePromotion && PrUsing) {
-      setPromotion(null);
-      onChanged(null);
-      setUsePromotion(false);
-    } else if (!!Promotion) {
-      onChanged(Promotion);
-      setUsePromotion(true);
-    }
-  };
+  // const applyPromotion = () => {
+  //   if (usePromotion && PrUsing) {
+  //     setPromotion(null);
+  //     onChanged(null);
+  //     setUsePromotion(false);
+  //   } else if (!!Promotion) {
+  //     onChanged(Promotion);
+  //     setUsePromotion(true);
+  //   }
+  // };
   const choseCode = (code) => {
     setPromotion(code);
     setShowDialog(false);
@@ -41,7 +38,7 @@ export function Promotion({
     <PromotionProvider>
       <div className="my-5 border-b-2 sm:border-0">
         <div className="flex border-0 sm:border-b-2 items-center pb-2">
-          <i className="text-primary hidden sm:block text-24 transform">
+          <i className="text-primary text-20 sm:text-24">
             <IoTicketOutline />
           </i>
           <p className="uppercase px-2 text-16 sm:text-20"> Mã khuyến mãi</p>
@@ -55,7 +52,7 @@ export function Promotion({
                     <h4 className="text-lg sm:text-xl text-primary font-semibold">
                       Mã ưu đãi {selectedPromotion.code}
                     </h4>
-                    <p>Giảm giá: {selectedPromotion.description}%</p>
+                    <p className="text-16 sm:text-20">Giảm giá: {selectedPromotion.description}%</p>
                   </div>
                 ) : (
                   <>
