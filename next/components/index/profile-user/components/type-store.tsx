@@ -1,18 +1,18 @@
-import React from 'react';
-import Dropdown from './dropdown';
-import { getDate,getDaysInMonth,getMonth,getYear, setDate, setMonth, setYear } from 'date-fns'
-import { useState } from 'react';
+import React from "react";
+import Dropdown from "./dropdown";
+import { getDate, getDaysInMonth, getMonth, getYear, setDate, setMonth, setYear } from "date-fns";
+import { useState } from "react";
 type PropsType = {
   [x: string]: any;
-  typeStore: number
+  typeStore: number;
 };
-const TypeStore = (props:PropsType) => {
-  const getListOptions=(type:Number,id:string)=>{
+const TypeStore = (props: PropsType) => {
+  const getListOptions = (type: Number, id: string) => {
     switch (id) {
-      case "day":{
-        let typeStores= ["Phòng khám", "Nhà thuốc", "Trình dược viên"];
-        let listTypeStore:string[] =[];
-        for(let index=1;index<=typeStores.length;index++){
+      case "day": {
+        let typeStores = ["Phòng khám", "Nhà thuốc", "Trình dược viên"];
+        let listTypeStore: string[] = [];
+        for (let index = 1; index <= typeStores.length; index++) {
           listTypeStore.push(index.toString());
         }
         return listTypeStore;
@@ -33,28 +33,36 @@ const TypeStore = (props:PropsType) => {
       // default:
       //   break;
       // }
-  }
-  const [listTypeStore,setListTypeStore]=useState(getListOptions(props.typeStore,"day"));
-  
-  const handleChangeDateOfBirth=(id:string,value:any)=>{
-    let date =new Date(props.dateOfBirth);
-    switch (id) {
-      case "day":{
-        date = setDate(date,value);
-        props.handleChange("dateOfBirth",date);        
-      }break;
-      default:
-        break;
     }
-  }
-  return (
-    <>
-      <Dropdown name={"type-store"} id={"type-store"} 
-      defaultValue={getDate(props.dateOfBirth).toString()} 
-      listOptions={listTypeStore} 
-      onChanged={(e)=>{handleChangeDateOfBirth("day",e)}}/>
-    </>
-  );
-}
+    const [listTypeStore, setListTypeStore] = useState(getListOptions(props.typeStore, "day"));
+
+    const handleChangeDateOfBirth = (id: string, value: any) => {
+      let date = new Date(props.dateOfBirth);
+      switch (id) {
+        case "day":
+          {
+            date = setDate(date, value);
+            props.handleChange("dateOfBirth", date);
+          }
+          break;
+        default:
+          break;
+      }
+    };
+    return (
+      <>
+        <Dropdown
+          name={"type-store"}
+          id={"type-store"}
+          defaultValue={getDate(props.dateOfBirth).toString()}
+          listOptions={listTypeStore as any[]}
+          onChanged={(e) => {
+            handleChangeDateOfBirth("day", e);
+          }}
+        />
+      </>
+    );
+  };
+};
 
 export default TypeStore;

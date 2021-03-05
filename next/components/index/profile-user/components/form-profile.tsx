@@ -9,7 +9,7 @@ interface PropsType extends ReactProps {
   name?: string;
   id?: string;
   defaultValue?: string;
-  listOptions: any[];
+  listOptionsTypeStore: any[];
 }
 
 export function FormProfile({
