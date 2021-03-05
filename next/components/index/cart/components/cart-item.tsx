@@ -13,7 +13,7 @@ export function CartItem(props:Proptype) {
             <div className="grid grid-cols-12 text-center text-16 sm:text-20 border-b-2 items-center overflow-hidden">
                 <div className="col-span-8 sm:col-span-5 text-left flex items-center gap-2">
                     <div className="w-1/12 h-full cursor-pointer flex items-center" 
-                    onClick={()=> props.handleChangeItem(props.cartProduct.productId, "c", !props.cartProduct.active)}
+                    onClick={()=> props.handleChangeItem(props.cartProduct.productId, "changeActive", !props.cartProduct.active)}
                     >
                         <CheckboxItem checked={props.cartProduct.active}/>
                     </div>

@@ -16,6 +16,7 @@ const CartContext = createContext<Partial<{
   cartProductCount: number
   cartTotal: number
   setcartProducts:Function
+  setCartTotal:Function
   addProductToCart: (product: Product, qty: number) => boolean
   changeProductQuantity: (product: Product, qty: number) => void
   removeProductFromCart: (product: Product) => void
@@ -29,7 +30,7 @@ export function CartProvider({ children }: any) {
 
   useEffect(() => {
     setCartProductCount(cartProducts.reduce((count, cartProduct) => count += cartProduct.qty, 0))
-    setCartTotal(cartProducts.reduce((total, cartProduct) => total += cartProduct.amount, 0))
+    setCartTotal(cartProducts.reduce((total, cartProduct) => cartProduct.active?total += cartProduct.amount:total+=0, 0))
   }, [cartProducts]);
 
   const addProductToCart = (product: Product, qty: number): boolean => {
