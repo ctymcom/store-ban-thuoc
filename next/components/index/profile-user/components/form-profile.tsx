@@ -32,7 +32,7 @@ export function FormProfile() {
     return <>
     {
         user ? <>
-            <div className="w-11/12 lg:w-full text-16 sm:text-20 text-gray-700">
+            <div className="w-11/12 mx-auto lg:w-full text-16 sm:text-20 text-gray-700">
               <h3 className="uppercase border-gray-200 border-b-4 pb-2 mb-4 text-24 hidden sm:block text-left">
                 Thông tin tài khoản
               </h3>
