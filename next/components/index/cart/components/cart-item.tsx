@@ -18,7 +18,7 @@ export function CartItem(props:Proptype) {
                         <CheckboxItem checked={props.cartProduct.active}/>
                     </div>
                     <div className={`w-11/12 flex gap-2 items-center sm:h-24  ${props.cartProduct.active?"":"opacity-50"}`}>
-                        <img className="w-1/4 sm:w-1/3 max-h-16 object-contain my-auto" src={props.cartProduct.product.image} alt={props.cartProduct.product.imageId} />
+                        <img className="w-1/4 sm:w-1/3 max-h-16 object-contain mr-auto my-auto" src={props.cartProduct.product.image} alt={props.cartProduct.product.imageId} />
                         <p className="w-3/4 sm:w-2/3 text-left flex-wrap items-center justify-between"><span>{props.cartProduct.product.name}</span>
                         <span className="block sm:hidden text-primary">
                             {NumberPipe(props.cartProduct.product.salePrice?

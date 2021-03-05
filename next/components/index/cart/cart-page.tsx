@@ -7,6 +7,7 @@ import { ListCartItems } from "./components/list-cart-items";
 import { PayMoney } from "./components/pay-money";
 import { Promotion } from "./components/promotion";
 import { Spinner } from '../../shared/utilities/spinner';
+import { NotFound } from '../../shared/utilities/not-found';
 
 export default function CartPage(props) {
   // const [Tit, setTit] = useState('cart');
@@ -47,7 +48,7 @@ export default function CartPage(props) {
   const handleDeleteCart = (id: string) => {    
     let listNew = cartProducts;
     let index = cartProducts.findIndex((cartProd:CartProduct) => cartProd.productId===id);
-    if (index !== -1 && cartProducts.length > 1) {
+    if (index !== -1) {
       listNew.splice(index, 1);
     }
     setcartProducts([...listNew]);
@@ -108,7 +109,7 @@ export default function CartPage(props) {
     }
   };
   return (
-    !cartProducts?<Spinner/>:
+    cartProducts.length>0?
     <div className="mx-auto w-11/12 sm:w-full">
       <div className="lg:flex gap-20">
         <div className="w-full lg:w-3/4 border-b-2 sm:border-0 mt-5">
@@ -142,6 +143,6 @@ export default function CartPage(props) {
           </div>
         </div>
       </div>
-    </div>
+    </div>:<NotFound text={"Bạn chưa có sản phẩm nào trong giỏ hàng"} className="text-32" href={"/home"} textBtn={"Quay về trang chủ"}/>
   );
 }

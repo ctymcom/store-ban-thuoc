@@ -1,13 +1,14 @@
 import { CartItem } from './cart-item';
 import CheckboxItem from './check-box-circle';
 import { CartProduct, useCart } from '../../../../lib/providers/cart-provider';
+import { Spinner } from '../../../shared/utilities/spinner';
 interface Proptype extends ReactProps{
     checkAll:boolean,
     handleDeleteCart:Function,
     handleChangeItem:Function
 }
 export function ListCartItems(props:Proptype) {
-    const {cartProducts} =useCart();
+    const {cartProducts, loading} =useCart();
     return (
         <>
             <div>
@@ -30,9 +31,10 @@ export function ListCartItems(props:Proptype) {
             </div>
             <div>
                 {
+                    !loading?
                     cartProducts.map((cartProduct:CartProduct, index) => {
                         return <CartItem key={index} cartProduct={cartProduct} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem}/>
-                    })
+                    }):<Spinner/>
                 }
             </div>
         </ >
