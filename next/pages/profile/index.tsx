@@ -6,10 +6,12 @@ import { ProfileUserLayout } from "../../layouts/profile-user-layout";
 import { AuthProvider } from "../../lib/providers/auth-provider";
 
 export default function ProfileUser() {
-    return <>
-        <ProfileUserLayout breadcrumb='account-user'>
-                <ProfileUserPage />
-        </ProfileUserLayout>
+  return (
+    <>
+      <ProfileUserLayout breadcrumb="account-user">
+        <ProfileUserPage />
+      </ProfileUserLayout>
     </>
+  );
 }
 ProfileUser.Layout = DefaultLayout;

@@ -2,23 +2,25 @@ import Gender from "./gender";
 import DateTime from "./datetime";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../../lib/providers/auth-provider";
+import { Select } from "../../../shared/utilities/form/select";
 
 interface PropsType extends ReactProps {
   [x: string]: any;
   name?: string;
   id?: string;
   defaultValue?: string;
-  listOptions?: any[];
+  listOptionsTypeStore: any[];
 }
 
 export function FormProfile({
   name = "typeStore",
   id = "TypeStore",
   defaultValue = "",
-  listOptions = [
-    { type: 1, value: "Phòng khám" },
-    { type: 2, value: "Nhà thuốc" },
-    { type: 3, value: "Trình dược viên" },
+  listOptionsTypeStore = [
+    { value: 0, label: "Vui lòng chọn loại cửa hàng" },
+    { value: 1, label: "Phòng khám" },
+    { value: 2, label: "Nhà thuốc" },
+    { value: 3, label: "Trình dược viên" },
   ],
   ...props
 }: PropsType) {
@@ -27,50 +29,41 @@ export function FormProfile({
   useEffect(() => {
     setUserA(user);
   }, [user]);
-  console.log(userA);
+  // console.log(userA);
+  // console.log(listOptionsTypeStore);
 
-  const [valueTypeStore, setValueTypeStore] = useState(defaultValue);
+  const [valueTypeStore, setValueTypeStore] = useState(null);
+  console.log(valueTypeStore);
+
   const [valueNameStore, setValueNameStore] = useState(null);
   const handleChange = (id: string, value: any) => {
-    switch (id) {
-      // case "dateOfBirth":{
-      //     setUserP({...user,birthday:value});
-      //     break;
-      // }
+    if (listOptionsTypeStore[id] !== value) {
+      switch (id) {
+        case "username": {
+          setUserA({ ...userA, username: value });
+          break;
+        }
 
-      case "username": {
-        setUserA({ ...userA, username: value });
-        break;
-      }
-      case "email": {
-        setUserA({ ...userA, email: value });
-        break;
-      }
-      case "phone": {
-        setUserA({ ...userA, phone: value });
-        break;
-      }
+        case "phone": {
+          setUserA({ ...userA, phone: value });
+          break;
+        }
 
-      case "typeStore": {
-        setValueTypeStore(value);
-        break;
+        case "type-store": {
+          setValueTypeStore(value);
+          break;
+        }
+
+        case "nameStore": {
+          setValueNameStore(value);
+          break;
+        }
+
+        default:
+          break;
       }
-
-      case "nameStore": {
-        setValueNameStore(value);
-        break;
-      }
-
-      // case "phone":{
-      //     setUserP({...user,phone:value});
-      //     break;
-      // }
-
-      default:
-        break;
     }
   };
-  // console.log(user);
 
   return (
     <>
@@ -99,9 +92,7 @@ export function FormProfile({
                       <input
                         className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
                         value={userA.email}
-                        onChange={(e) => {
-                          handleChange("email", e.target.value);
-                        }}
+                        readOnly
                       />
                     </div>
                     <div className="sm:flex justify-between items-center pt-4">
@@ -122,25 +113,18 @@ export function FormProfile({
                     </div>
                     <div className="sm:flex justify-between items-center pt-4">
                       <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Loại cửa hàng</p>
-                      <select
-                        className="btn-outline w-full sm:w-3/4 xl:w-4/6 h-12 text-16 sm:text-20 px-0 sm:pl-2"
-                        name={name}
-                        value={valueTypeStore}
-                        id={id}
-                        onChange={(e) => handleChange("typeStore", e.target.value)}
-                      >
-                        {listOptions.map((item, index) => {
-                          return (
-                            <option
-                              className={item === defaultValue ? "bg-primary-light" : ""}
-                              key={index}
-                              value={item.type}
-                            >
-                              {item.value}
-                            </option>
-                          );
-                        })}
-                      </select>
+                      <div className="w-full sm:w-3/4 flex space-x-2 xl:w-4/6">
+                        <Select
+                          className={`w-full  h-12`}
+                          options={listOptionsTypeStore}
+                          value={
+                            valueTypeStore == null ? "Vui lòng chọn loại cửa hàng" : valueTypeStore
+                          }
+                          onChange={(e) => {
+                            handleChange("type-store", e);
+                          }}
+                        />
+                      </div>
                     </div>
                     {/* <div className="justify-between items-center pt-4 sm:h-12">
                       <p className="w-full sm:w-1/4">Giới tính</p>
