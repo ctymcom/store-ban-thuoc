@@ -103,7 +103,7 @@ export function Footer() {
                   <div className="flex space-x-5 sm:space-x-8 md:space-x-7 mb-4 sm:mb-7 md:mb-8 lg:mb-8 mt-4 sm:mt-7 md:mt-4 lg:mt-4 items-center">
                     {socials && (
                       <>
-                        {
+                        {socials.facebook && socials.facebook.visible && (
                           <Link href={socials.facebook.link}>
                             <a
                               className="transition w-5 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500"
@@ -112,8 +112,8 @@ export function Footer() {
                               <IconFacebook />
                             </a>
                           </Link>
-                        }
-                        {
+                        )}
+                        {socials.youtube && socials.youtube.visible && (
                           <Link href={socials.youtube.link}>
                             <a
                               className="transition w-8 sm:w-8 md:w-9 lg:w-10 cursor-pointer text-gray-400 hover:text-red-500"
@@ -122,8 +122,8 @@ export function Footer() {
                               <IconYoutube />
                             </a>
                           </Link>
-                        }
-                        {
+                        )}
+                        {socials.zalo && socials.zalo.visible && (
                           <Link href={socials.zalo.link}>
                             <a
                               className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500"
@@ -132,7 +132,7 @@ export function Footer() {
                               <IconZalo />
                             </a>
                           </Link>
-                        }
+                        )}
                       </>
                     )}
                   </div>
