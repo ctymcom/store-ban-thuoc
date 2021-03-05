@@ -32,8 +32,8 @@ export function ListCartItems(props:Proptype) {
             <div>
                 {
                     !loading?
-                    cartProducts.map((cartProduct:CartProduct, index) => {
-                        return <CartItem key={index} cartProduct={cartProduct} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem}/>
+                    cartProducts.map((cartProduct:CartProduct) => {
+                        return <CartItem key={cartProduct.productId} cartProduct={cartProduct} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem}/>
                     }):<Spinner/>
                 }
             </div>
