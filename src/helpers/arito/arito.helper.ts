@@ -664,6 +664,17 @@ export class AritoHelper {
       return get(res.data, "msg");
     });
   }
+  static recoveryPassword(email: string) {
+    return Axios.post(`${this.host}/Authorize/RecoveryPassword`, {
+      token: this.imageToken,
+      memvars: [
+        ["e_mail", "C", email], //Email của tài khoản -> Cả 2 thông tin này phải khớp với dữ liệu chương trình thì mới khôi phục thành công
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "msg");
+    });
+  }
 }
 
 AritoHelper.setImageToken();
