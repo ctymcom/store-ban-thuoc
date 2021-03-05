@@ -232,11 +232,21 @@ export class AritoHelper {
         id: master["id"],
         name: master["name"],
         name2: master["name2"],
-        note: master["note"],
+        note: master["ghi_chu"],
+        tagCode: master["tag_code"],
+        position: master["stt"],
         products: get(res.data, "data.detail", [])
           .filter((detail: any) => detail["id"] == master["id"])
           .map((d: any) => d["ma_vt"]),
-      })) as { id: string; name: string; name2: string; note: string; products: string[] }[];
+      })) as {
+        id: string;
+        name: string;
+        name2: string;
+        note: string;
+        tagCode: string;
+        position: number;
+        products: string[];
+      }[];
     });
   }
   static getTabInfo(page: number = 1, updatedAt?: Date) {

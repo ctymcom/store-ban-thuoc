@@ -1,3 +1,4 @@
+import Link from "next/link";
 import LazyLoad from "react-lazyload";
 
 import { Carousel } from "../../shared/carousel/carousel";
@@ -27,29 +28,31 @@ export function HomePage() {
                   ))}
                 </Carousel>
                 {productGroups.map((productGroup) => (
-                  <div className="main-container py-12" key={productGroup.title}>
+                  <div className="main-container px-2 md:px-0 py-4 md:py-12" key={productGroup.title}>
                     <ProductList title={productGroup.title} products={productGroup.products} />
                   </div>
                 ))}
-                <div className="main-container py-12">
+                <div className="main-container px-2 md:px-0 py-4 md:py-12 mb-8">
                   <HomeFeedback feedbacks={feedbacks} />
                 </div>
-                <div className="main-container py-12">
+                <div className="main-container py-4 md:py-8">
                   <HomeFeature />
                 </div>
-                <div className="w-full py-8">
+                <div className="w-full py-0 md:py-8">
                   {banners2.map((banner) => (
-                    <a className="w-full" key={banner.image}>
-                      <LazyLoad>
-                        <img className="w-full" src={banner.image} />
-                      </LazyLoad>
-                    </a>
+                    <Link href={banner.link} key={banner.image}>
+                      <a className="w-full">
+                        <LazyLoad>
+                          <img className="w-full min-h-3xs object-cover" src={banner.image} />
+                        </LazyLoad>
+                      </a>
+                    </Link>
                   ))}
                 </div>
-                <div className="main-container py-12">
+                <div className="main-container px-2 md:px-0 py-12">
                   <HomeBanner />
                 </div>
-                <div className="main-container py-8">
+                <div className="main-container px-2 md:px-0 py-8">
                   <HomeNews posts={posts} />
                 </div>
               </>

@@ -11,6 +11,7 @@ import {
 import { IngredientModel } from "../../graphql/modules/ingredient/ingredient.model";
 import { ProductModel } from "../../graphql/modules/product/product.model";
 import { ProductTagDetail } from "../../graphql/modules/product/types/productTagDetail.type";
+import { ProductContainerModel } from "../../graphql/modules/productContainer/productContainer.model";
 import { ProductTabModel } from "../../graphql/modules/productTab/productTab.model";
 import { ProductTagModel } from "../../graphql/modules/productTag/productTag.model";
 import { AritoHelper } from "../../helpers/arito/arito.helper";
@@ -41,20 +42,35 @@ export class SyncProductJob {
 }
 async function syncProductContainer() {
   const productContainers = await AritoHelper.getItemContainer();
+  const productContainerBulk = ProductContainerModel.collection.initializeUnorderedBulkOp();
   const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
-  for (const container of productContainers) {
-    console.log(
-      chalk.yellow(`====> Nhóm ${container.name} có ${container.products.length} sản phẩm`)
-    );
+  for (const { products, ...container } of productContainers) {
+    console.log(chalk.yellow(`====> Nhóm ${container.name} có ${products.length} sản phẩm`));
+    productContainerBulk
+      .find({ code: container.id })
+      .upsert()
+      .updateOne({
+        $setOnInsert: { createdAt: new Date() },
+        $set: {
+          updatedAt: new Date(),
+          ...container,
+          productIds: await ProductModel.find({ code: { $in: products } }).then((res) =>
+            res.map((p) => p._id)
+          ),
+        },
+      });
     productBulk
-      .find({ code: { $in: container.products } })
+      .find({ code: { $in: products } })
       .update({ $addToSet: { containers: container.name } });
     productBulk
-      .find({ code: { $nin: container.products }, containers: { $in: [container.name] } })
+      .find({ code: { $nin: products }, containers: { $in: [container.name] } })
       .update({ $pullAll: { containers: [container.name] } });
   }
   if (productBulk.length > 0) {
     await productBulk.execute();
+  }
+  if (productContainerBulk.length > 0) {
+    await productContainerBulk.execute();
   }
 }
 async function syncProductTag() {

@@ -215,7 +215,8 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
       } as MutationOptions;
 
       const result = await this.apollo.mutate(options);
-      this.apollo.cache.removeOptimistic(id);
+      await this.clearStore();
+      // this.apollo.cache.removeOptimistic(id);
       this.handleError(result);
       return result.data["g0"] as T;
     } else if (ids && ids.length) {
@@ -228,7 +229,8 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
       } as MutationOptions;
 
       const result = await this.apollo.mutate(options);
-      ids.map((id) => this.apollo.cache.removeOptimistic(id));
+      await this.clearStore();
+      // ids.map((id) => this.apollo.cache.removeOptimistic(id));
       this.handleError(result);
       return result.data;
     } else return;

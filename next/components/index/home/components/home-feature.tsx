@@ -6,7 +6,7 @@ export function HomeFeature() {
   const { features } = useHomeContext()
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-y-0">
+    <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-y-0">
       {
         features.map((feature, index) => 
           <div className="p-6 flex items-center flex-col" key={index}>

@@ -27,6 +27,19 @@
   @apply text-gray-500;
 }
 
+.no-scrollbar {
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+
 .v-scrollbar {
   overflow-y: auto;
 
