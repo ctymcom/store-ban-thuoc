@@ -17,15 +17,15 @@ export interface UserAddress extends BaseModel {
   isDefault: boolean;
 }
 export interface UpdateUserAddressInput extends BaseModel {
-  fullAddress: string
-  contactName: string
-  address: string
-  provinceId: string
-  districtId: string
-  wardId: string
-  phone: string
-  location: string
-  isDefault: boolean
+  fullAddress: string;
+  contactName: string;
+  address: string;
+  provinceId: string;
+  districtId: string;
+  wardId: string;
+  phone: string;
+  location: string;
+  isDefault: boolean;
 }
 
 export class UserAddressRepository extends CrudRepository<UserAddress> {

@@ -62,16 +62,19 @@ const DateTime = (props:PropsType) => {
         break;
     }
   }
+  
   return (
     <>
       <Dropdown name={"day"} id={"day"} 
       defaultValue={getDate(props.dateOfBirth).toString()} 
       listOptions={listDay} 
       onChanged={(e)=>{handleChangeDateOfBirth("day",e)}}/>
+
       <Dropdown name={"month"} id={"month"} 
       defaultValue={listMonth[getMonth(props.dateOfBirth)]} 
       listOptions={listMonth} 
       onChanged={(e)=>{handleChangeDateOfBirth("month",e)}} />
+
       <Dropdown name={"year"} id={"year"} 
       defaultValue={getYear(props.dateOfBirth).toString()} 
       listOptions={listYear} 

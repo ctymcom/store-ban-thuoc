@@ -37,13 +37,13 @@ export function OrderHistoryPage({
     const router = useRouter();
     const { status } = router.query;
 
-    const handlerOrder = (value) => {
-        router.push({
-            pathname: '/profile/order-history',
-            query: value ? { status: value } : ''
-        });
-        // console.log(value);
-    }; 
+    // const handlerOrder = (value) => {
+    //     router.push({
+    //         pathname: '/profile/order-history',
+    //         query: value ? { status: value } : ''
+    //     });
+    //     // console.log(value);
+    // }; 
         
     useEffect(() => {
         setData(OrderHistoryData);
