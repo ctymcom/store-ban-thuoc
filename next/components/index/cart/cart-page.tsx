@@ -1,157 +1,108 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import { HiArrowNarrowLeft } from "react-icons/hi";
-
-import { listItem, listMoneyCart, listPromotionCode } from "./components/cart-item-data";
+import { useCart, CartProduct } from '../../../lib/providers/cart-provider';
 import { ListCartItems } from "./components/list-cart-items";
 import { PayMoney } from "./components/pay-money";
 import { Promotion } from "./components/promotion";
 
 export default function CartPage(props) {
   // const [Tit, setTit] = useState('cart');
+  const {cartProducts,setcartProducts} = useCart()
   const [Change, setChange] = useState(false);
-  const [listCart, setListCart] = useState(listItem);
-  const [PrUsing, setPrUsing] = useState(null);
-  const [CheckAll, setCheckAll] = useState(true);
+  const [listCart, setListCart] = useState<CartProduct[]>(cartProducts);
+  const [checkAll, setCheckAll] = useState(true);
   const router = useRouter();
-  const [ListMoneyCart, setListMoneyCart] = useState([...listMoneyCart]);
-  const toTalMoney = (listCart) => {
+  const [listMoneyCart, setListMoneyCart] = useState([ 
+    {
+    title: "Tạm tính",
+    money: 0
+    },
+    {
+        title: "Khuyến mãi",
+        money: 0
+    },
+    {
+        title: "Tổng tiền",
+        money: 0
+    }]);
+  const toTalMoney = (listCart:CartProduct[]) => {
     let total = 0;
-    listCart.forEach((item) => {
-      if (item.isCheck) {
-        total += item.sale * item.amount;
+    listCart.forEach((item:CartProduct) => {
+      if (item.active) {
+        total += item.amount;
       }
     });
     return total;
   };
-  const setListMoney = (code) => {
-    let des = 0;
-    if (code !== null) {
-      des = code.des;
-    }
-    let total = toTalMoney(listCart);
-    let listMoneyNew = ListMoneyCart;
-    let discount = (-total * des) / 100;
-    let final = total + discount;
-    listMoneyNew[0].money = total;
-    listMoneyNew[1].money = discount;
-    listMoneyNew[2].money = final;
-    setListMoneyCart([...listMoneyNew]);
-  };
-  const handleDeleteCart = (id: number) => {
+  useEffect(() => {
+    let newListMoney = listMoneyCart;
+    newListMoney[0].money=toTalMoney(listCart);
+    newListMoney[2].money=toTalMoney(listCart);
+    setListMoneyCart([...newListMoney]);
+    checkAndsetCheckAll();
+    setChange(true);
+  }, [listCart]);
+
+  const handleDeleteCart = (id: string) => {    
     let listNew = listCart;
-    let index = listCart.findIndex((item) => {
-      return item.id === id;
-    });
+    let index = listCart.findIndex((cartProd:CartProduct) => cartProd.productId===id);
     if (index !== -1 && listCart.length > 1) {
       listNew.splice(index, 1);
     }
     setListCart([...listNew]);
-    setListMoney(PrUsing);
-    setChange(true);
     checkAndsetCheckAll();
-  };
-  const findIndex = (id) => {
-    return listCart.findIndex((item) => {
-      return item.id === id;
-    });
   };
   const checkAndsetCheckAll = () => {
     let isCheckAll = true;
-    listCart.forEach((item) => {
-      if (!item.isCheck) {
-        isCheckAll = item.isCheck;
+    listCart.forEach((item:CartProduct) => {
+      if (!item.active) {
+        isCheckAll = item.active;
       }
     });
     setCheckAll(isCheckAll);
   };
-  const handleChangeItem = (id: number, type: string, value: any) => {
+  const handleChangeItem = (id: string, type: string, value: any) => {
     switch (type) {
-      case "u":
+      case "add":
         {
-          let index = findIndex(id);
-          let listNew = listCart;
-          listNew[index].amount += 1;
-          setListCart([...listNew]);
-          setListMoney(PrUsing);
+          setListCart(listCart.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value+1,amount:value*cartProduct.price}));
         }
         break;
-      case "d":
+      case "sub":
         {
-          let index = findIndex(id);
-          let listNew = listCart;
-          if (listNew[index].amount > 1) {
-            listNew[index].amount -= 1;
-          }
-          setListCart([...listNew]);
-          setListMoney(PrUsing);
-        }
-        break;
-      case "i":
-        {
-          let numIt = parseInt(value || "0");
-          if (numIt >= 0 && numIt <= 1000) {
-            let index = findIndex(id);
-            let listNew = listCart;
-            listNew[index].amount = numIt;
-            setListCart([...listNew]);
-            setListMoney(PrUsing);
+          if(value>1){
+            setListCart(listCart.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value-1,amount:value*cartProduct.price}));
           }
         }
         break;
-      case "c":
+      case "input":
         {
-          let index = findIndex(id);
-          let listNew = listCart;
-          listNew[index].isCheck = value;
-          setListCart([...listNew]);
-          checkAndsetCheckAll();
-          setListMoney(PrUsing);
+          if(value<=10000&&value>1){
+            setListCart(listCart.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value,amount:value*cartProduct.price}));
+          }
         }
         break;
-      case "ca": {
+      case "changeActive":
+        {
+          setListCart(listCart.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,active:value}));
+        }
+        break;
+      case "activeAll": {
         let listNew = listCart;
-        listNew.forEach((item) => {
-          item.isCheck = value;
+        listNew.forEach((item:CartProduct) => {
+          item.active = value;
         });
         setCheckAll(value);
         setListCart([...listNew]);
-        setListMoney(PrUsing);
       }
       default:
         break;
     }
   };
-  const handleChangeListCart = (list) => {};
-  const handleSetPromotion = (Cod) => {
-    switch (Cod) {
-      case listPromotionCode[0].code:
-        {
-          setPrUsing(listPromotionCode[0]);
-          setListMoney(listPromotionCode[0]);
-        }
-        break;
-      case listPromotionCode[1].code:
-        {
-          setPrUsing(listPromotionCode[1]);
-          setListMoney(listPromotionCode[1]);
-        }
-        break;
-      case null:
-        {
-          setPrUsing(null);
-          setListMoney(null);
-        }
-        break;
-      default:
-        {
-          setPrUsing(null);
-          setListMoney(null);
-        }
-        break;
-    }
-  };
+  // const handleChangeListCart = (list) => {};
+
   return (
     <div className="mx-auto w-11/12 sm:w-full">
       <div className="lg:flex gap-20">
@@ -160,7 +111,7 @@ export default function CartPage(props) {
             listCart={listCart}
             handleDeleteCart={handleDeleteCart}
             handleChangeItem={handleChangeItem}
-            CheckAll={CheckAll}
+            checkAll={checkAll}
           />
           <div className="text-primary flex items-center whitespace-nowrap">
             <div
@@ -173,8 +124,8 @@ export default function CartPage(props) {
               <p>Tiếp tục mua sắm</p>
             </div>
             <button
-              className="bt btn-disabled px-1 m-2 sm:text-20"
-              onClick={() => setChange(false)}
+              className={`px-1 m-2 sm:text-20 ${Change?"btn-primary":"btn-disabled"}`}
+              onClick={() =>{setcartProducts(listCart.map((cartProduct:CartProduct)=>cartProduct)); setChange(false)}}
             >
               Cập nhật giỏ hàng
             </button>
@@ -182,16 +133,10 @@ export default function CartPage(props) {
         </div>
         <div className="w-full lg:w-1/4 flex flex-col">
           <div className="sm:pr-2 lg:pr-0 row-auto">
-            <Promotion
-              onChanged={(promotion) => {
-                handleSetPromotion(promotion);
-              }}
-              PrUsing={PrUsing}
-              listPromotionCode={listPromotionCode}
-            />
+            <Promotion/>
           </div>
           <div className="sm:pl-2 lg:pl-0 sm:mt-5 lg:mt-3.5">
-            <PayMoney listMoney={ListMoneyCart} />
+            <PayMoney listMoney={listMoneyCart} />
             <Link href="/checkout">
               <button className="btn btn-primary w-full py-6 mt-2 sm:text-20">
                 Tiến hành thanh toán
@@ -201,5 +146,6 @@ export default function CartPage(props) {
         </div>
       </div>
     </div>
+  
   );
 }

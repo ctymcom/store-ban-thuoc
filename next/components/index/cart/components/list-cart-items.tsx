@@ -1,14 +1,24 @@
 import { CartItem } from './cart-item';
 import CheckboxItem from './check-box-circle';
-
-export function ListCartItems(props) {
+import { CartProduct } from '../../../../lib/providers/cart-provider';
+interface Proptype extends ReactProps{
+    listCart: CartProduct[],
+    checkAll:boolean,
+    handleDeleteCart:Function,
+    handleChangeItem:Function
+}
+export function ListCartItems(props:Proptype) {
     return (
         <>
             <div>
                 <div className="sm:grid grid-cols-12 uppercase text-center border-b-2 pb-2 text-24 hidden">
                     <div className="col-span-5 text-left grid grid-cols-12">
-                        <div className="col-span-1 text-20" onClick={()=>props.handleChangeItem(null, "ca", !props.CheckAll)}>
-                            <CheckboxItem checked={props.CheckAll}/></div>
+                        <div className="col-span-1 text-20" 
+                        onClick={()=>props.handleChangeItem(null, "ca", !props.checkAll)}
+                        >
+                            <CheckboxItem 
+                            checked={props.checkAll}
+                            /></div>
                         <span className="col-span-11">Sản Phẩm</span>
                     </div>
                     <div className="col-span-2">Giá</div>
@@ -20,8 +30,8 @@ export function ListCartItems(props) {
             </div>
             <div>
                 {
-                    props.listCart.map((item, index) => {
-                        return <CartItem key={index} item={item} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem} />
+                    props.listCart.map((cartProduct:CartProduct, index) => {
+                        return <CartItem key={index} cartProduct={cartProduct} handleDeleteCart={props.handleDeleteCart} handleChangeItem={props.handleChangeItem}/>
                     })
                 }
             </div>

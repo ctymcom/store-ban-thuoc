@@ -8,12 +8,14 @@ export interface CartProduct {
   qty: number
   price: number
   amount: number
+  active?: boolean,
 }
 
 const CartContext = createContext<Partial<{
   cartProducts: CartProduct[]
   cartProductCount: number
   cartTotal: number
+  setcartProducts:Function
   addProductToCart: (product: Product, qty: number) => boolean
   changeProductQuantity: (product: Product, qty: number) => void
   removeProductFromCart: (product: Product) => void
@@ -43,7 +45,8 @@ export function CartProvider({ children }: any) {
         product: product,
         qty,
         price: product.salePrice,
-        amount: product.salePrice * qty
+        amount: product.salePrice * qty,
+        active:true,
       })
     }
     setcartProducts([...cartProducts])
@@ -78,7 +81,7 @@ export function CartProvider({ children }: any) {
   }
 
   return (
-    <CartContext.Provider value={{ cartProducts, cartProductCount, cartTotal, addProductToCart, 
+    <CartContext.Provider value={{ cartProducts, cartProductCount, cartTotal, addProductToCart, setcartProducts,
     changeProductQuantity, removeProductFromCart }}>
       {children}
     </CartContext.Provider>
