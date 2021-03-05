@@ -12,6 +12,14 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   purge: ['./next/**/*.tsx', './**/*.tsx'],
   theme: {
+    screens: {
+      'xs': '480px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',      
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: {
         primary: {
@@ -185,9 +193,6 @@ module.exports = {
           to: { opacity: 0, transform: 'scale(0)' }
         } 
       },
-      screens: {
-        'xs': '480px'
-      },      
       zIndex: {
         '100': '100',
         '200': '200',
@@ -215,7 +220,8 @@ module.exports = {
       fill: ['hover', 'focus'],
       backgroundColor: ['checked'],
       borderColor: ['checked'],
-      textColor:['checked']
+      textColor:['checked'],
+      scale: ['active', 'group-hover'],
     },
   },
   plugins: [

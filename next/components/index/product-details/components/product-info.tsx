@@ -94,10 +94,7 @@ export function ProductInfo(props: PropsType) {
         </>
       ) : (
         <Link href="/login">
-          <a
-            className="btn-outline w-60 h-16 flex-center font-semibold text-primary text-lg whitespace-normal text-center hover:underline hover:text-primary-dark"
-            onClick={saveCurrentPath}
-          >
+          <a className="btn-primary w-60 h-12 hover:underline" onClick={saveCurrentPath}>
             Đăng nhập để xem giá
           </a>
         </Link>

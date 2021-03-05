@@ -10,17 +10,10 @@ import { useDefaultLayoutContext } from "./providers/default-layout-providers";
 export function Footer() {
   const [ShowMore, setShowMore] = useState(false);
   const { hotline, footerIntro, footerMenus, socials } = useDefaultLayoutContext();
-  const [active, setActive] = useState(false);
-  const handlerActiveLink = () => {
-    setActive(true);
-  };
 
   return (
     <>
-      {" "}
-      {!hotline ? (
-        <Spinner />
-      ) : (
+      {!!hotline && (
         <>
           <footer className="mt-20 text-white" style={{ backgroundColor: "#343A40" }}>
             <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3">
