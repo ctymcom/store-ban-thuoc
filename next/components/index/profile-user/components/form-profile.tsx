@@ -1,37 +1,82 @@
 import Gender from "./gender";
 import DateTime from "./datetime";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../../lib/providers/auth-provider";
-import Link from "next/link";
-import { useProfileUserContext } from "../providers/profile-user-provider";
 
-export function FormProfile() {
-    const { user } = useAuth()
-    // const { user } = useProfileUserContext();
-    const [userP,setUserP] = useState(user);
-    const handleChange=(id:string,value:any)=>{
-        switch (id) {
-            case "dateOfBirth":{
-                setUserP({...userP,birthday:value});
-            }
-                break;
-            case "name":{
-                setUserP({...userP,username:value});
-            }
-                break;
-            case "phoneNumber":{
-                setUserP({...userP,phone:value});
-            }
-                break;  
-            default:
-                break;
-        }
+interface PropsType extends ReactProps {
+  [x: string]: any;
+  name?: string;
+  id?: string;
+  defaultValue?: string;
+  listOptions?: any[];
+}
+
+export function FormProfile({
+  name = "typeStore",
+  id = "TypeStore",
+  defaultValue = "",
+  listOptions = [
+    { type: 1, value: "Phòng khám" },
+    { type: 2, value: "Nhà thuốc" },
+    { type: 3, value: "Trình dược viên" },
+  ],
+  ...props
+}: PropsType) {
+  const { user } = useAuth();
+  const [userA, setUserA] = useState(null);
+  useEffect(() => {
+    setUserA(user);
+  }, [user]);
+  console.log(userA);
+
+  const [valueTypeStore, setValueTypeStore] = useState(defaultValue);
+  const [valueNameStore, setValueNameStore] = useState(null);
+  const handleChange = (id: string, value: any) => {
+    switch (id) {
+      // case "dateOfBirth":{
+      //     setUserP({...user,birthday:value});
+      //     break;
+      // }
+
+      case "username": {
+        setUserA({ ...userA, username: value });
+        break;
+      }
+      case "email": {
+        setUserA({ ...userA, email: value });
+        break;
+      }
+      case "phone": {
+        setUserA({ ...userA, phone: value });
+        break;
+      }
+
+      case "typeStore": {
+        setValueTypeStore(value);
+        break;
+      }
+
+      case "nameStore": {
+        setValueNameStore(value);
+        break;
+      }
+
+      // case "phone":{
+      //     setUserP({...user,phone:value});
+      //     break;
+      // }
+
+      default:
+        break;
     }
-    console.log(user);
-    
-    return <>
-    {
-        user ? <>
+  };
+  // console.log(user);
+
+  return (
+    <>
+      {
+        userA ? (
+          <>
             <div className="w-11/12 lg:w-full text-16 sm:text-20 text-gray-700">
               <h3 className="uppercase border-gray-200 border-b-4 pb-2 mb-4 text-24 hidden sm:block text-left">
                 Thông tin tài khoản
@@ -40,22 +85,12 @@ export function FormProfile() {
                 <div className="w-full xl:w-4/6 items-center">
                   <div className="pr-0 xl:pr-16 xl:border-r-2 border-gray-200">
                     <div className="sm:flex justify-between items-center">
-                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Họ và tên</p>
+                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Họ tên</p>
                       <input
                         className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
-                        value={user.username}
+                        value={userA.username}
                         onChange={(e) => {
-                          handleChange("name", e.target.value);
-                        }}
-                      />
-                    </div>
-                    <div className="sm:flex justify-between items-center pt-4">
-                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Số điện thoại</p>
-                      <input
-                        className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
-                        value={user.phone}
-                        onChange={(e) => {
-                          handleChange("phoneNumber", e.target.value);
+                          handleChange("username", e.target.value);
                         }}
                       />
                     </div>
@@ -63,8 +98,49 @@ export function FormProfile() {
                       <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Email</p>
                       <input
                         className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
-                        value={user.email}
+                        value={userA.email}
+                        onChange={(e) => {
+                          handleChange("email", e.target.value);
+                        }}
                       />
+                    </div>
+                    <div className="sm:flex justify-between items-center pt-4">
+                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Điện thoại</p>
+                      <input
+                        className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
+                        value={userA.phone}
+                        onChange={(e) => {
+                          handleChange("phone", e.target.value);
+                        }}
+                      />
+                    </div>
+                    <div className="sm:flex justify-between items-center pt-4">
+                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Ngày sinh</p>
+                      <div className="w-full sm:w-3/4 flex space-x-2 xl:w-4/6">
+                        <DateTime dateOfBirth={new Date()} handleChange={handleChange} />
+                      </div>
+                    </div>
+                    <div className="sm:flex justify-between items-center pt-4">
+                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Loại cửa hàng</p>
+                      <select
+                        className="btn-outline w-full sm:w-3/4 xl:w-4/6 h-12 text-16 sm:text-20 px-0 sm:pl-2"
+                        name={name}
+                        value={valueTypeStore}
+                        id={id}
+                        onChange={(e) => handleChange("typeStore", e.target.value)}
+                      >
+                        {listOptions.map((item, index) => {
+                          return (
+                            <option
+                              className={item === defaultValue ? "bg-primary-light" : ""}
+                              key={index}
+                              value={item.type}
+                            >
+                              {item.value}
+                            </option>
+                          );
+                        })}
+                      </select>
                     </div>
                     {/* <div className="justify-between items-center pt-4 sm:h-12">
                       <p className="w-full sm:w-1/4">Giới tính</p>
@@ -72,23 +148,15 @@ export function FormProfile() {
                         <Gender gender={user.userRef} />
                       </div>
                     </div> */}
-                    <div className="sm:flex justify-between items-center pt-4">
-                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Ngày sinh</p>
-                      <div className="w-full sm:w-3/4 flex space-x-2 xl:w-4/6">
-                        <DateTime
-                          // dateOfBirth={user.birthday == null ? new Date() : user.birthday}
-                          dateOfBirth={user.birthday == null ? new Date() : user.birthday}
-                        />
-                      </div>
-                    </div>
+
                     <div className="sm:flex justify-between items-center pt-4">
                       <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Tên cửa hàng</p>
                       <input
                         className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
-                        value=""
-                        // onChange={(e) => {
-                        //   handleChange("email", e.target.value);
-                        // }}
+                        value={valueNameStore}
+                        onChange={(e) => {
+                          handleChange("nameStore", e.target.value);
+                        }}
                       />
                     </div>
                     <div className="sm:flex justify-between items-center pt-4">
@@ -112,7 +180,7 @@ export function FormProfile() {
                       onError={(e) => {
                         (e.target as any).src = "/assets/img/avatar.svg";
                       }}
-                      className="w-11/12 rounded-full"
+                      className="w-9/12 sm:w-6/12 md:w-6/12 lg:w-7/12 xl:w-11/12 rounded-full"
                       alt="avatar"
                     />
                   </div>
@@ -131,7 +199,7 @@ export function FormProfile() {
               </div>
             </div>
           </>
-         : (
+        ) : (
           ""
         )
         //             <Link href="/login">
@@ -141,5 +209,6 @@ export function FormProfile() {
         //             </Link>
         // }
       }
-    </>;
+    </>
+  );
 }

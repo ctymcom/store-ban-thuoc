@@ -1,6 +1,6 @@
 import { AuthHelper } from "./auth.helper";
 import { Context } from "../graphql/context";
-import { get } from "lodash";
+import { get, take } from "lodash";
 
 export class GraphQLHelper {
   static loadById(loader: any, idField: string, option: { defaultValue: any } = {} as any) {
@@ -14,7 +14,7 @@ export class GraphQLHelper {
     return (root: any, args: any, context: Context) => {
       return root[idField]
         ? loader
-            .loadMany(root[idField])
+            .loadMany(args.limit ? take(root[idField], args.limit) : root[idField])
             .then((res: any[]) => res.map((r) => r || option.defaultValue))
         : undefined;
     };

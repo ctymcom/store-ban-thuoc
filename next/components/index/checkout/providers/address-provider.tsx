@@ -4,6 +4,7 @@ import { AddressService } from '../../../../lib/repo/address.repo';
 import { UserAddressService, UserAddress, UpdateUserAddressInput } from '../../../../lib/repo/user-address.repo';
 import { useAuth } from '../../../../lib/providers/auth-provider';
 import { cloneDeep } from 'lodash';
+import { useCheckoutContext } from './checkout-provider';
 export const AddressContext = createContext<Partial<{
   listAddress: UserAddress[]
   addressSelected: UserAddress,
@@ -20,9 +21,8 @@ export const AddressContext = createContext<Partial<{
 
 export const AddressProvider = (props) => {
   const [listAddress, setListAdress] = useState<UserAddress[]>(null);
-  const [addressSelected, setAddressSelected] = useState<UserAddress>(null);
   const [userAddress, setUserAddress] = useState<UserAddress>(null);
-
+  const {setAddressSelected} = useCheckoutContext();
   const { user } = useAuth()
   const loadList = () =>{
     UserAddressService.getAll( {query:{
@@ -30,6 +30,8 @@ export const AddressProvider = (props) => {
       filter: { userId: user.id }
     },fragment:UserAddressService.fullFragment}).then(res=>{
     setListAdress(cloneDeep(res.data));
+    setUserAddress(null);
+    setAddressSelected(res.data.find((item:UserAddress)=>item.isDefault));
    })
   }
   useEffect(() => {
@@ -53,49 +55,76 @@ export const AddressProvider = (props) => {
       setWards([{value:'',label:'Chọn Phường/Xã'},...res.map(x=>({value:x.id,label:x.ward}))])
     })
   }, [userAddress]);
+  
+  const updateOrUserAddress = (data:UserAddress)=>{
+      const { contactName, address, provinceId,
+        districtId, wardId, phone, location, isDefault } = data
+        UserAddressService.createOrUpdate({ id: data.id, data: { 
+        contactName,
+        address, provinceId,
+        districtId, wardId, phone, location, isDefault } }).then(res => {
+        loadList();
+      }).catch(err => {
+        alert(err)
+      }) 
+  }
+  async function setDefaultAddress(id:string) {
+    let oldDefault = listAddress.find(item=>item.isDefault);
+    let newDefault = listAddress.find(item=>item.id===id);
+    UserAddressService.mutate({
+      mutation:[
+        UserAddressService.updateQuery({id: oldDefault.id, data: { isDefault: false}}),
+        UserAddressService.updateQuery({id: newDefault.id, data: { isDefault: true}}),
+      ]
+    }).then(res => {
+      loadList()
+    }).catch(err => {
+      console.error(err)
+  })
+}
+
   const handleChange=(id:string,type:string)=>{
       switch (type) {
           case "setDefault":{
-             
+            setDefaultAddress(id);
           }
               break;
           case "delete":{
-            let index = listAddress.findIndex((item:UserAddress)=>item.id===id)
-            let listNew = listAddress;
-            if (index !== -1&&listAddress.length>1) {
-                if(listNew[index].id===addressSelected.id)
+                if(listAddress.length>1)
                 {
-                  if(listNew[index+1]){
-                    setAddressSelected(listNew[index+1])
-                  }else{
-                    setAddressSelected(listNew[index-1])
+                  let addressDeleting = listAddress.find(item=>item.id===id);
+                  if(addressDeleting.isDefault){
+                    let idNewDefault:string;
+                    listAddress.forEach(item => {
+                      if(!item.isDefault)
+                      {
+                        idNewDefault=item.id
+                        return;
+                      }
+                    });
+                    setDefaultAddress(idNewDefault);
                   }
-                }
-                if(listNew[index].default)
-                {
-                  if(listNew[index+1]){
-                    listNew[index+1].default=true
-                  }else{
-                    listNew[index-1].default=true
-                  }
-                }
-                listNew.splice(index, 1);
-            }
-            setListAdress([...listNew]);
+                  UserAddressService.delete({id}).then(res=>
+                  loadList()
+                  )}
               }
               break;
           case "formAddress":{
-              const { contactName, address, provinceId,
-                districtId, wardId, phone, location, isDefault } = userAddress
-                UserAddressService.createOrUpdate({ id: userAddress.id, data: { 
-                contactName,
-                address, provinceId,
-                districtId, wardId, phone, location, isDefault } }).then(res => {
-                setUserAddress(null);
-                loadList();
-              }).catch(err => {
-                alert('Thất bại')
-              }) 
+              if(userAddress.isDefault){
+                if(id){
+                  setDefaultAddress(id)
+                }else{
+                  let oldDefault = listAddress.find(item=>item.isDefault);
+                  UserAddressService.update({id:oldDefault.id,data:{isDefault:false}}).then(res=>
+                    updateOrUserAddress(userAddress)   
+                  )
+                }
+              }else{
+                let oldDefault = listAddress.find(item=>!item.isDefault);
+                UserAddressService.update({id:oldDefault.id,data:{isDefault:true}}).then(res=>
+                  updateOrUserAddress(userAddress)   
+                )
+              }
           } break;
           default:
               break;

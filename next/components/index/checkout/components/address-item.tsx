@@ -13,14 +13,14 @@ interface Proptype extends PropsTypeFormDialog{
 export function AddressItem(props:Proptype) {
     const [address, setAddress] = useState(props.address);
     const {handleChange, setUserAddress} = useAddressContext();
-    const {setAddressSelected} = useCheckoutContext();
+    const {setAddressSelected,addressSelected} = useCheckoutContext();
     useEffect(() => {
         setAddress(props.address);
       }, [props.address]);
     return (
-        <div className={props.address.id?"border-b-2 text-16 sm:text-20 leading-7 py-4 text-gray-600 bg-primary-light":"border-b-2 text-16 sm:text-20 leading-7 py-4"} >
-            <div className="flex items-center gap-1 cursor-pointer w-11/12 mx-auto" onClick={()=>{setAddressSelected(props.address)}}>
-                <CheckBoxCricle checked={address.isDefault}/>
+        <div className={address.id?"border-b-2 text-16 sm:text-20 leading-7 py-4 text-gray-600 bg-primary-light":"border-b-2 text-16 sm:text-20 leading-7 py-4"} >
+            <div className="flex items-center gap-1 cursor-pointer w-11/12 mx-auto" onClick={()=>{setAddressSelected(address)}}>
+                <CheckBoxCricle checked={address.id?true:false}/>
                 <div className="">
                     <p className="font-semibold whitespace-nowrap">{address.contactName} - {address.phone}</p>
                     <p>{address.fullAddress}</p>
