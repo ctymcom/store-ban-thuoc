@@ -31,7 +31,7 @@ const schema = gql`
     "Phương thức vận chuyển"
     shipMethod: String
     "Phương thức thanh toán"
-    paymentMethod: String
+    paymentMethod: Int
     "Sản phẩm giỏ hàng"
     items: [CartItem]
     "Mã khuyến mãi"
