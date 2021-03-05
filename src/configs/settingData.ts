@@ -81,17 +81,17 @@ export const SETTING_DATA = [
             {
               image: "https://i.imgur.com/XMTJQSx.png",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
             {
               image: "https://i.imgur.com/jriMx2e.jpg",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
             {
               image: "https://i.imgur.com/ycOejfb.png",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
           ],
         },
@@ -108,7 +108,7 @@ export const SETTING_DATA = [
             {
               image: "https://i.imgur.com/jriMx2e.jpg",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
           ],
         },
@@ -125,32 +125,32 @@ export const SETTING_DATA = [
             {
               image: "https://i.imgur.com/XMTJQSx.png",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
             {
               image: "https://i.imgur.com/jriMx2e.jpg",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
             {
               image: "https://i.imgur.com/ycOejfb.png",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
             {
               image: "https://i.imgur.com/OY7IIUM.png",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
             {
               image: "https://i.imgur.com/i9lJPRX.png",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
             {
               image: "https://i.imgur.com/y3RgrFT.jpg",
               link: "https://arito-store.mcom.app",
-              visable: false,
+              visible: false,
             },
           ],
         },
@@ -228,6 +228,7 @@ export const SETTING_DATA = [
         value: {
           content: `Thuocsi.vn được thành lập từ năm 2018, là một trong những startup thành công trong lĩnh vực công nghệ về y tế
           Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên khắp Việt Nam.`,
+          more: `Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng công nghệ 4.0 vào nền Y Tế`,
           link: "https://arito-store.mcom.app",
         },
         isActive: true,
@@ -259,9 +260,9 @@ export const SETTING_DATA = [
         name: "Icon Social",
         key: SettingKey.SOCIAL,
         value: {
-          facebook: { link: "https://facebook.com", visable: true },
-          youtube: { link: "https://youtube.com", visable: true },
-          zalo: { link: "https://chat.zalo.me", visable: true },
+          facebook: { link: "https://facebook.com", visible: true },
+          youtube: { link: "https://youtube.com", visible: true },
+          zalo: { link: "https://chat.zalo.me", visible: true },
         },
         isActive: true,
         isPrivate: false,

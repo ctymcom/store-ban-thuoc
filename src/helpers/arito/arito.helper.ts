@@ -32,8 +32,8 @@ export class AritoHelper {
       CacheHelper.set("arito-image-token", res.data.value);
     });
   }
-  static getImageLink(imageId: string) {
-    return `${this.host}/GetImageFile350/${imageId}/${this.imageToken}`;
+  static getImageLink(imageId: string, size: 200 | 350 | 576 | 1024 = 350) {
+    return `${this.host}/GetImageFile${size}/${imageId}/${this.imageToken}`;
   }
   static getAvatarLink(imageId: string) {
     return `${this.host}/DownloadFile0/${imageId}/${this.imageToken}`;
@@ -658,6 +658,17 @@ export class AritoHelper {
       memvars: [
         ["o", "C", oldPassword], //Password cu
         ["p", "C", newPassword], //Password moi
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "msg");
+    });
+  }
+  static recoveryPassword(email: string) {
+    return Axios.post(`${this.host}/Authorize/RecoveryPassword`, {
+      token: this.imageToken,
+      memvars: [
+        ["e_mail", "C", email], //Email của tài khoản -> Cả 2 thông tin này phải khớp với dữ liệu chương trình thì mới khôi phục thành công
       ],
     }).then((res) => {
       this.handleError(res);
