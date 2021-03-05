@@ -32,8 +32,8 @@ export class AritoHelper {
       CacheHelper.set("arito-image-token", res.data.value);
     });
   }
-  static getImageLink(imageId: string) {
-    return `${this.host}/GetImageFile350/${imageId}/${this.imageToken}`;
+  static getImageLink(imageId: string, size: 200 | 350 | 576 | 1024 = 350) {
+    return `${this.host}/GetImageFile${size}/${imageId}/${this.imageToken}`;
   }
   static getAvatarLink(imageId: string) {
     return `${this.host}/DownloadFile0/${imageId}/${this.imageToken}`;
