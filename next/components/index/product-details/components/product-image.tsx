@@ -12,7 +12,7 @@ export function ProductImage(props) {
 
   useEffect(() => {
     if (product) {
-      setImage(product.image || "/assets/img/default.png");
+      setImage(product.imageM || "/assets/img/default.png");
     }
   }, [product]);
 
@@ -51,7 +51,7 @@ export function ProductImage(props) {
               src: image,
             },
             largeImage: {
-              src: image,
+              src: product.imageL,
               width: 1200,
               height: 1200 / dimension,
             },

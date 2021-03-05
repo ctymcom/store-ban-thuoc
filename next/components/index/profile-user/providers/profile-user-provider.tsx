@@ -1,16 +1,20 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { AritoUser } from "../../../../lib/repo/arito-user.repo";
-import { User } from "../../../../lib/repo/user.repo";
+import { AritoUser, AritoUserService } from "../../../../lib/repo/arito-user.repo";
 
 export const ProfileUserContext = createContext<Partial<{
-  user: AritoUser
+  users: AritoUser[]
   
 }>>({});
 
 export function ProfileUserProvider({ children} : any) {
-  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState(null);
+  
+  useEffect(() => {
+    
+  }, []);
+
   return  (
-    <ProfileUserContext.Provider value={{ user }}>
+    <ProfileUserContext.Provider value={{ users }}>
       { children }
     </ProfileUserContext.Provider>
   );

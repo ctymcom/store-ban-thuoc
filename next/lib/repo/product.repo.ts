@@ -42,6 +42,9 @@ export interface Product extends BaseModel {
   categories: Category[];
   ingredients: Ingredient[];
   image: string;
+  imageS: string;
+  imageM: string;
+  imageL: string;
 }
 
 interface ProductTagDetail {
@@ -78,6 +81,7 @@ export class ProductRepository extends CrudRepository<Product> {
     tagDetails { code name }: [ProductTagDetail]
     categories { id name parents { id name } }: [Category]
     image: string
+    imageS: string
   `);
   fullFragment: string = this.parseFragment(`
     id: string
@@ -149,6 +153,9 @@ export class ProductRepository extends CrudRepository<Product> {
     categories { id name parents { id name } }: [Category]
     ingredients { id name }: [Ingredient]
     image: string
+    imageS: string
+    imageM: string
+    imageL: string
   `);
 }
 
