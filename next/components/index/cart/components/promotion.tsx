@@ -38,7 +38,7 @@ export function Promotion({
     <PromotionProvider>
       <div className="my-5 border-b-2 sm:border-0">
         <div className="flex border-0 sm:border-b-2 items-center pb-2">
-          <i className="text-primary hidden sm:block text-24 transform">
+          <i className="text-primary text-20 sm:text-24">
             <IoTicketOutline />
           </i>
           <p className="uppercase px-2 text-16 sm:text-20"> Mã khuyến mãi</p>
@@ -52,7 +52,7 @@ export function Promotion({
                     <h4 className="text-lg sm:text-xl text-primary font-semibold">
                       Mã ưu đãi {selectedPromotion.code}
                     </h4>
-                    <p>Giảm giá: {selectedPromotion.description}%</p>
+                    <p className="text-16 sm:text-20">Giảm giá: {selectedPromotion.description}%</p>
                   </div>
                 ) : (
                   <>
