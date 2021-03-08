@@ -84,6 +84,9 @@ const schema = gql`
     categories: [Category]
     ingredients: [Ingredient]
     image: String
+    imageS: String
+    imageM: String
+    imageL: String
   }
 
   type ProductPageData {

@@ -4,28 +4,27 @@ import { ErrorHelper } from "../../../base/error";
 import { ROLES } from "../../../constants/role.const";
 import { GraphQLHelper } from "../../../helpers/graphql.helper";
 import { Context } from "../../context";
-import { CartItemLoader, CartItemModel, ICartItem } from "../cartItem/cartItem.model";
 import { ProductModel } from "../product/product.model";
 import { UserAddressLoader } from "../userAddress/userAddress.model";
 import { CartModel } from "./cart.model";
+import { CartItem } from "./types/cartItem.type";
 
 const Mutation = {
   updateCart: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
-    const { id, data } = args;
+    const { data } = args;
     const cart = await CartModel.findOne({ userId: context.user.id.toString() });
-    if (!cart || cart._id.toString() != id) throw ErrorHelper.permissionDeny();
+    if (!cart) throw ErrorHelper.permissionDeny();
     if (data.items) {
       cart.itemCount = 0;
       cart.subtotal = 0;
       cart.shipfee = 0;
       cart.discount = 0;
       cart.amount = 0;
-      cart.itemIds = [];
+      cart.items = [];
       const products = await ProductModel.find({
         _id: data.items.map((i) => i.productId),
       }).then((res) => keyBy(res, "_id"));
-      const items: ICartItem[] = [];
       data.items.forEach((i) => {
         const product = products[i.productId];
         if (!product) return;
@@ -36,24 +35,19 @@ const Mutation = {
             price = groupPrice.salePrice;
           }
         }
-        const item = new CartItemModel({
-          cartId: cart._id,
+        const item: CartItem = {
           userId: cart.userId,
           productId: product._id,
           productCode: product.code,
+          unit: product.unitCode,
           qty: i.qty,
           price: price,
           amount: price * i.qty,
-        });
-        items.push(item);
+        };
+        cart.items.push(item);
         cart.itemCount += item.qty;
         cart.subtotal += item.amount;
-        cart.itemIds.push(item._id);
       });
-      await CartItemModel.remove({ cartId: cart._id });
-      if (items.length > 0) {
-        await CartItemModel.insertMany(items);
-      }
     }
     cart.amount = cart.subtotal + cart.shipfee - cart.discount;
     return await cart.save();
@@ -62,7 +56,6 @@ const Mutation = {
 
 const Cart = {
   address: GraphQLHelper.loadById(UserAddressLoader, "addressId"),
-  items: GraphQLHelper.loadManyById(CartItemLoader, "itemIds"),
 };
 
 export default {

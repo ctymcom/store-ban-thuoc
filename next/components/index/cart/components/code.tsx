@@ -38,7 +38,7 @@ const Code = (props: CodeProps) => {
 
       <Dialog width="410px" isOpen={showMore} onClose={() => setShowMore(false)}>
         <Dialog.Body>
-          <p className="m-2" onClick={() => setShowMore(false)}>
+          <p className="m-2" onClick={() => setShowMore(false)} key={props.item.code}>
             {props.item.condition}
           </p>
         </Dialog.Body>

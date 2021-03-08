@@ -8,21 +8,32 @@ import { ClearAuthToken, SetAuthToken } from "../graphql/auth.link";
 import { AritoUser, AritoUserService } from "../repo/arito-user.repo";
 import { GraphService } from "../repo/graph.repo";
 import { GetAuthToken } from "./../graphql/auth.link";
+<<<<<<< HEAD
 import data from "../../components/index/ingredients/data/ingredients-data";
+=======
+>>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
 
 export const LOGIN_PATHNAME = "login-pathname";
 
 const AuthContext = createContext<{
   user?: AritoUser;
+<<<<<<< HEAD
   showDialogUpdatePassword?: boolean;
   setShowDialogUpdatePassword?: Function;
+=======
+>>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
   saveCurrentPath?: () => void;
   checkUser?: (roles?: string[]) => boolean;
   login?: (username: string, password: string, mode: "user" | "editor") => Promise<AritoUser>;
   register?: (nickname: string, email: string, phone: string) => Promise<AritoUser>;
+<<<<<<< HEAD
   logout?: () => void;
   updateAritoUser?: (data: AritoUser) => void;
   changeAritoUserPasswrod?: (oldPass: string, newPass: string) => void;
+=======
+  recoveryPassword?: (email: string) => Promise<string>;
+  logout?: () => void;
+>>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
 }>({});
 
 export function AuthProvider({ children }: any) {
@@ -112,11 +123,19 @@ export function AuthProvider({ children }: any) {
     }
     return user;
   };
+<<<<<<< HEAD
+=======
+
+  const recoveryPassword = async (email: string) => {
+    return AritoUserService.recoveryPassword(email);
+  };
+>>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
 
   const logout = () => {
     ClearAuthToken();
     location.reload();
   };
+<<<<<<< HEAD
 
   const updateAritoUser = async (data: AritoUser) => {
     const { nickname, phone, birthday, companyType, companyName } = data;
@@ -160,6 +179,12 @@ export function AuthProvider({ children }: any) {
         saveCurrentPath,
         updateAritoUser,
       }}
+=======
+
+  return (
+    <AuthContext.Provider
+      value={{ user, login, register, recoveryPassword, logout, checkUser, saveCurrentPath }}
+>>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
     >
       {children}
     </AuthContext.Provider>

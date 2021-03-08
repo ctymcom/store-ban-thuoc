@@ -51,19 +51,19 @@ export const listFormCheckPayment = {
 export const listMoneyCheckout = [
     {
         title: "Tổng tiền hàng",
-        money: 856000
+        money: 0
     },
     {
         title: "Phí vận chuyển",
-        money: 100000
+        money: 0
     },
     {
         title: "Voucher giảm giá",
-        money: -200000
+        money: 0
     },
     {
         title: "Voucher vận chuyển",
-        money: -50000
+        money: 0
     },
 
 ]

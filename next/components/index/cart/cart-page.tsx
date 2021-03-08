@@ -1,154 +1,106 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import { HiArrowNarrowLeft } from "react-icons/hi";
-
-import { listItem, listMoneyCart, listPromotionCode } from "./components/cart-item-data";
+import { useCart, CartProduct } from '../../../lib/providers/cart-provider';
 import { ListCartItems } from "./components/list-cart-items";
 import { PayMoney } from "./components/pay-money";
 import { Promotion } from "./components/promotion";
+import { Spinner } from '../../shared/utilities/spinner';
+import { NotFound } from '../../shared/utilities/not-found';
 
 export default function CartPage(props) {
   // const [Tit, setTit] = useState('cart');
-  const [Change, setChange] = useState(false);
-  const [listCart, setListCart] = useState(listItem);
-  const [PrUsing, setPrUsing] = useState(null);
-  const [CheckAll, setCheckAll] = useState(true);
+  const {cartProducts,setcartProducts} = useCart();
+  const [checkAll, setCheckAll] = useState(true);
   const router = useRouter();
-  const [ListMoneyCart, setListMoneyCart] = useState([...listMoneyCart]);
-  const toTalMoney = (listCart) => {
+  const [listMoneyCart, setListMoneyCart] = useState([ 
+    {
+    title: "Tạm tính",
+    money: 0
+    },
+    {
+        title: "Khuyến mãi",
+        money: 0
+    },
+    {
+        title: "Tổng tiền",
+        money: 0
+    }]);
+  const toTalMoney = (cartProducts:CartProduct[]) => {
     let total = 0;
-    listCart.forEach((item) => {
-      if (item.isCheck) {
-        total += item.sale * item.amount;
-      }
-    });
+    if(cartProducts){
+      cartProducts.forEach((item:CartProduct) => {
+        if (item.active) {
+          total += item.amount;
+        }
+      });
+    }
     return total;
   };
-  const setListMoney = (code) => {
-    let des = 0;
-    if (code !== null) {
-      des = code.des;
-    }
-    let total = toTalMoney(listCart);
-    let listMoneyNew = ListMoneyCart;
-    let discount = (-total * des) / 100;
-    let final = total + discount;
-    listMoneyNew[0].money = total;
-    listMoneyNew[1].money = discount;
-    listMoneyNew[2].money = final;
-    setListMoneyCart([...listMoneyNew]);
-  };
-  const handleDeleteCart = (id: number) => {
-    let listNew = listCart;
-    let index = listCart.findIndex((item) => {
-      return item.id === id;
-    });
-    if (index !== -1 && listCart.length > 1) {
+  useEffect(() => {
+    let newListMoney = listMoneyCart;
+    newListMoney[2].money=toTalMoney(cartProducts);
+    setListMoneyCart([...newListMoney]);
+    checkAndsetCheckAll();
+  }, [cartProducts]);
+
+  const handleDeleteCart = (id: string) => {    
+    let listNew = cartProducts;
+    let index = cartProducts.findIndex((cartProd:CartProduct) => cartProd.productId===id);
+    if (index !== -1) {
       listNew.splice(index, 1);
     }
-    setListCart([...listNew]);
-    setListMoney(PrUsing);
-    setChange(true);
+    setcartProducts([...listNew]);
     checkAndsetCheckAll();
-  };
-  const findIndex = (id) => {
-    return listCart.findIndex((item) => {
-      return item.id === id;
-    });
   };
   const checkAndsetCheckAll = () => {
     let isCheckAll = true;
-    listCart.forEach((item) => {
-      if (!item.isCheck) {
-        isCheckAll = item.isCheck;
-      }
-    });
+    if(cartProducts)
+    {
+      cartProducts.forEach((item:CartProduct) => {
+        if (!item.active) {
+          isCheckAll = item.active;
+        }
+      });
+    }
     setCheckAll(isCheckAll);
   };
-  const handleChangeItem = (id: number, type: string, value: any) => {
+  const handleChangeItem = (id: string, type: string, value: any) => {
     switch (type) {
-      case "u":
+      case "add":
         {
-          let index = findIndex(id);
-          let listNew = listCart;
-          listNew[index].amount += 1;
-          setListCart([...listNew]);
-          setListMoney(PrUsing);
+          setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value+1,amount:(value+1)*cartProduct.price}));
         }
         break;
-      case "d":
+      case "sub":
         {
-          let index = findIndex(id);
-          let listNew = listCart;
-          if (listNew[index].amount > 1) {
-            listNew[index].amount -= 1;
-          }
-          setListCart([...listNew]);
-          setListMoney(PrUsing);
-        }
-        break;
-      case "i":
-        {
-          let numIt = parseInt(value || "0");
-          if (numIt >= 0 && numIt <= 1000) {
-            let index = findIndex(id);
-            let listNew = listCart;
-            listNew[index].amount = numIt;
-            setListCart([...listNew]);
-            setListMoney(PrUsing);
+          if(value>1){
+            setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value-1,amount:(value-1)*cartProduct.price}));
           }
         }
         break;
-      case "c":
+      case "input":
         {
-          let index = findIndex(id);
-          let listNew = listCart;
-          listNew[index].isCheck = value;
-          setListCart([...listNew]);
-          checkAndsetCheckAll();
-          setListMoney(PrUsing);
+          if(value<=10000&&value>=0){
+              setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value,amount:value*cartProduct.price}));
+          }
         }
         break;
-      case "ca": {
-        let listNew = listCart;
-        listNew.forEach((item) => {
-          item.isCheck = value;
+      case "changeActive":
+        {
+          setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,active:value}));
+        }
+        break;
+      case "activeAll": {
+        let listNew = cartProducts;
+        listNew.forEach((item:CartProduct) => {
+          item.active = value;
         });
         setCheckAll(value);
-        setListCart([...listNew]);
-        setListMoney(PrUsing);
+        setcartProducts([...listNew]);
       }
       default:
-        break;
-    }
-  };
-  const handleChangeListCart = (list) => {};
-  const handleSetPromotion = (Cod) => {
-    switch (Cod) {
-      case listPromotionCode[0].code:
-        {
-          setPrUsing(listPromotionCode[0]);
-          setListMoney(listPromotionCode[0]);
-        }
-        break;
-      case listPromotionCode[1].code:
-        {
-          setPrUsing(listPromotionCode[1]);
-          setListMoney(listPromotionCode[1]);
-        }
-        break;
-      case null:
-        {
-          setPrUsing(null);
-          setListMoney(null);
-        }
-        break;
-      default:
-        {
-          setPrUsing(null);
-          setListMoney(null);
-        }
         break;
     }
   };
@@ -156,15 +108,13 @@ export default function CartPage(props) {
     <div className="mx-auto w-11/12 sm:w-full">
       <div className="lg:flex gap-20">
         <div className="w-full lg:w-3/4 border-b-2 sm:border-0 mt-5">
-          <ListCartItems
-            listCart={listCart}
-            handleDeleteCart={handleDeleteCart}
+          <ListCartItems handleDeleteCart={handleDeleteCart}
             handleChangeItem={handleChangeItem}
-            CheckAll={CheckAll}
+            checkAll={checkAll}
           />
           <div className="text-primary flex items-center whitespace-nowrap">
             <div
-              className="cursor-pointer flex items-center text-16 sm:text-20"
+              className="cursor-pointer flex items-center text-16 "
               onClick={() => router.push("/home")}
             >
               <i className="text-18 px-1">
@@ -172,28 +122,16 @@ export default function CartPage(props) {
               </i>
               <p>Tiếp tục mua sắm</p>
             </div>
-            <button
-              className="bt btn-disabled px-1 m-2 sm:text-20"
-              onClick={() => setChange(false)}
-            >
-              Cập nhật giỏ hàng
-            </button>
           </div>
         </div>
         <div className="w-full lg:w-1/4 flex flex-col">
           <div className="sm:pr-2 lg:pr-0 row-auto">
-            <Promotion
-              onChanged={(promotion) => {
-                handleSetPromotion(promotion);
-              }}
-              PrUsing={PrUsing}
-              listPromotionCode={listPromotionCode}
-            />
+            <Promotion/>
           </div>
           <div className="sm:pl-2 lg:pl-0 sm:mt-5 lg:mt-3.5">
-            <PayMoney listMoney={ListMoneyCart} />
+            <PayMoney listMoney={listMoneyCart} />
             <Link href="/checkout">
-              <button className="btn btn-primary w-full py-6 mt-2 sm:text-20">
+              <button className="btn btn-primary w-full py-6 mt-2 ">
                 Tiến hành thanh toán
               </button>
             </Link>

@@ -14,6 +14,8 @@ import { AritoUser } from "./types/aritoUser.type";
 import { IPromotion } from "../../graphql/modules/promotion/promotion.model";
 import { IAritoOption } from "../../graphql/modules/aritoOption/aritoOption.model";
 import { IOrderStatus } from "../../graphql/modules/orderStatus/orderStatus.model";
+import { IDeliveryMethod } from "../../graphql/modules/deliveryMethod/deliveryMethod.model";
+import { IPaymentMethod } from "../../graphql/modules/paymentMethod/paymentMethod.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -32,8 +34,8 @@ export class AritoHelper {
       CacheHelper.set("arito-image-token", res.data.value);
     });
   }
-  static getImageLink(imageId: string) {
-    return `${this.host}/GetImageFile350/${imageId}/${this.imageToken}`;
+  static getImageLink(imageId: string, size: 200 | 350 | 576 | 1024 = 350) {
+    return `${this.host}/GetImageFile${size}/${imageId}/${this.imageToken}`;
   }
   static getAvatarLink(imageId: string) {
     return `${this.host}/DownloadFile0/${imageId}/${this.imageToken}`;
@@ -609,6 +611,44 @@ export class AritoHelper {
       })) as IOrderStatus[];
     });
   }
+  static getDeliveryMethod() {
+    return Axios.post(`${this.host}/Item/GetDeliveryMethod`, {
+      token: this.imageToken,
+      memvars: [
+        //Lấy quốc gia sản xuất
+        ["datetime2", "DT", "2020-01-01 16:53:00"], //Thời gian từ
+        ["pageIndex", "I", 1],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["code"],
+        name: d["name"],
+        name2: d["name2"],
+        discountRate: d["tl_ck"],
+        position: d["stt"],
+      })) as IDeliveryMethod[];
+    });
+  }
+  static getPaymentMethod() {
+    return Axios.post(`${this.host}/Item/GetPaymentMethod`, {
+      token: this.imageToken,
+      memvars: [
+        //Lấy quốc gia sản xuất
+        ["datetime2", "DT", "2020-01-01 16:53:00"], //Thời gian từ
+        ["pageIndex", "I", 1],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["code"],
+        name: d["name"],
+        name2: d["name2"],
+        discountRate: d["tl_ck"],
+        position: d["stt"],
+      })) as IPaymentMethod[];
+    });
+  }
   static updateUserProfile({ nickname, phone, birthday, companyType, companyName }, token: string) {
     return Axios.post(`${this.host}/Authorize/UpdateUserInfo`, {
       token: token,
@@ -662,6 +702,79 @@ export class AritoHelper {
     }).then((res) => {
       this.handleError(res);
       return get(res.data, "msg");
+    });
+  }
+  static recoveryPassword(email: string) {
+    return Axios.post(`${this.host}/Authorize/RecoveryPassword`, {
+      token: this.imageToken,
+      memvars: [
+        ["e_mail", "C", email], //Email của tài khoản -> Cả 2 thông tin này phải khớp với dữ liệu chương trình thì mới khôi phục thành công
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "msg");
+    });
+  }
+  static viewDraftOrder(data: {
+    promotionCode?: string;
+    paymentMethod: string;
+    deliveryMethod: string;
+    items: {
+      productCode: string;
+      qty: number;
+      unit: string;
+      price: number;
+      amount: number;
+    }[];
+  }) {
+    let subtotal = 0;
+    return Axios.post(`${this.host}/Voucher/ViewDraftOrder`, {
+      token: this.imageToken,
+      memvars: [
+        ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
+        ["payment", "C", data.paymentMethod], //Chuyen khoan
+        ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
+      ],
+      data: {
+        "#master": [
+          {
+            api_id: 1,
+            ngay_ct: moment().toISOString(),
+          },
+        ],
+        "#detail": data.items.map((i) => {
+          subtotal += i.amount;
+          return {
+            api_id: 1, //Trường liên kết với master
+            ma_vt: i.productCode, //Mã vật tư
+            dvt: i.unit, //Đơn vị tính
+            so_luong: i.qty, //Số lượng đơn hàng
+            gia_nt2: i.price, //Giá bán
+            tien_nt2: i.amount, //Thành tiền
+          };
+        }),
+      },
+    }).then((res) => {
+      this.handleError(res);
+      return {
+        subtotal: subtotal,
+        discount: get(res.data, "data.data.0.t_ck_nt", 0),
+        amount: get(res.data, "data.data.0.t_tt_nt", 0),
+        items: get(res.data, "data.table1", []).map((t) => ({
+          productCode: t["ma_vt"],
+          unit: t["dvt"],
+          storeCode: t["ma_kho"],
+          qty: t["so_luong"],
+          factor: t["he_so"],
+          price: t["gia_nt2"],
+          amount: t["tien_nt2"],
+          discountRate: t["tl_ck"],
+          discount: t["ck_nt"],
+          vatRate: t["thue_suat"],
+          vat: t["thue_nt"],
+          position: t["line"],
+        })),
+      };
     });
   }
 }

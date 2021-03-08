@@ -159,6 +159,20 @@ export class AritoUserRepository extends GraphRepository {
     });
     return res.data[mutationName];
   }
+
+  async recoveryPassword(email: string): Promise<string> {
+    let mutationName = "recoveryPassword";
+    const res = await this.apollo.mutate({
+      mutation: this.gql`
+        mutation {
+          ${mutationName}(
+            email: "${email}",
+          )
+        }
+      `,
+    });
+    return res.data[mutationName];
+  }
 }
 
 export const AritoUserService = new AritoUserRepository();

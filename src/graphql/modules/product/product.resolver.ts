@@ -22,6 +22,15 @@ const Product = {
   image: async (root: IProduct, args: any, context: Context) => {
     return AritoHelper.getImageLink(root.imageId);
   },
+  imageS: async (root: IProduct, args: any, context: Context) => {
+    return AritoHelper.getImageLink(root.imageId, 200);
+  },
+  imageM: async (root: IProduct, args: any, context: Context) => {
+    return AritoHelper.getImageLink(root.imageId, 576);
+  },
+  imageL: async (root: IProduct, args: any, context: Context) => {
+    return AritoHelper.getImageLink(root.imageId, 1024);
+  },
   basePrice: getGroupPrice("basePrice"),
   salePrice: getGroupPrice("salePrice"),
   saleRate: getGroupPrice("saleRate"),

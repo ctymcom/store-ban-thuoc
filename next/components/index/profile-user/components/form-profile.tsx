@@ -1,8 +1,8 @@
-import Gender from "./gender";
-import DateTime from "./datetime";
 import { useEffect, useState } from "react";
+
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { Select } from "../../../shared/utilities/form/select";
+<<<<<<< HEAD
 import { format } from "date-fns";
 import { AritoUser } from "../../../../lib/repo/arito-user.repo";
 import { parseInt } from "lodash";
@@ -11,6 +11,16 @@ import UpdatePasswordDialog from "./update-password-dialog";
 interface PropsType extends ReactProps {
   [x: string]: any;
   listOptionsTypeStore: any[];
+=======
+import DateTime from "./datetime";
+
+interface PropsType extends ReactProps {
+  [x: string]: any;
+  name?: string;
+  id?: string;
+  defaultValue?: string;
+  listOptionsTypeStore?: any[];
+>>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
 }
 
 export function FormProfile({

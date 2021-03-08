@@ -10,7 +10,11 @@ export const DefaultLayoutContext = createContext<
       phone: string;
       items: { display: string; phone: string }[];
     };
+<<<<<<< HEAD
     footerIntro: { content: string; link: string };
+=======
+    footerIntro: { content: string; link: string; more: string };
+>>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
     footerMenus: { link: string; text: string }[];
     socials: {
       facebook: { link: string; visable: boolean; visible: boolean };

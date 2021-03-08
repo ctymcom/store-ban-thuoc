@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
+
 import { Feedback, FeedbackService } from "../../../../lib/repo/feedback.repo";
 import { Post, PostService } from "../../../../lib/repo/post.repo";
-import { Product, ProductService } from "../../../../lib/repo/product.repo";
+import { Product } from "../../../../lib/repo/product.repo";
 import { ProductContainerService } from "../../../../lib/repo/productContainer.repo";
 import { SettingService } from "../../../../lib/repo/setting.repo";
 
@@ -12,6 +13,7 @@ export const HomeContext = createContext<
     posts?: Post[];
     productGroups?: {
       title: string;
+
       products: Product[];
     }[];
     banners1: Banner[];
@@ -46,7 +48,11 @@ export function HomeProvider(props) {
       query: [
         FeedbackService.getAllQuery(),
         PostService.getAllQuery({
-          query: { limit: 4, filter: { status: "PUBLIC" }, order: { priority: -1 } },
+          query: {
+            limit: 4,
+            filter: { status: "PUBLIC", slug: { __exists: true } },
+            order: { priority: -1 },
+          },
         }),
         SettingService.getAllQuery({
           query: {
@@ -60,9 +66,15 @@ export function HomeProvider(props) {
     }).then((res) => {
       setFeedbacks(res.data.g0.data);
       setPosts(res.data.g1.data);
-      setBanners1(res.data.g2.data.find((x) => x.key == "BANNER_1").value.items);
-      setBanners2(res.data.g2.data.find((x) => x.key == "BANNER_2").value.items);
-      setBanners3(res.data.g2.data.find((x) => x.key == "BANNER_3").value.items);
+      setBanners1(
+        res.data.g2.data.find((x) => x.key == "BANNER_1").value.items.filter((i) => i.visible)
+      );
+      setBanners2(
+        res.data.g2.data.find((x) => x.key == "BANNER_2").value.items.filter((i) => i.visible)
+      );
+      setBanners3(
+        res.data.g2.data.find((x) => x.key == "BANNER_3").value.items.filter((i) => i.visible)
+      );
       setFeatures(res.data.g2.data.find((x) => x.key == "FEATURE").value.items);
       setProductGroups(
         res.data.g3.data.map((x, i) => ({
