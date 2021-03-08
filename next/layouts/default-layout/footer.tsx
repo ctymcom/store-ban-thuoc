@@ -13,14 +13,7 @@ export function Footer() {
 
   return (
     <>
-<<<<<<< HEAD
-      {" "}
-      {!hotline ? (
-        <Spinner />
-      ) : (
-=======
       {!!hotline && (
->>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
         <>
           <footer className="mt-20 text-white" style={{ backgroundColor: "#343A40" }}>
             <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3">
@@ -40,12 +33,7 @@ export function Footer() {
                 {ShowMore ? (
                   <>
                     <p className="mt-4 sm:-mt-3.5 md:mt-0 sm:mb-9 md:mb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-<<<<<<< HEAD
-                      Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng
-                      công nghệ 4.0 vào nền Y Tế
-=======
                       {footerIntro?.more}
->>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
                     </p>
                   </>
                 ) : (
@@ -69,17 +57,10 @@ export function Footer() {
                     <ul className="text-sm sm:text-base md:text-lg">
                       {footerMenus.map((menu, index) => (
                         <li
-<<<<<<< HEAD
-                          className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer hover:underline"
-                          key={index}
-                        >
-                          <Link href={menu.link}>
-=======
                           key={index}
                           className="pb-2 sm:pb-2.5 md:pb-3 lg:pb-2 cursor-pointer hover:underline"
                         >
                           <Link href={menu.link} key={index}>
->>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
                             <a>{menu.text}</a>
                           </Link>
                         </li>
@@ -114,11 +95,7 @@ export function Footer() {
                   <div className="flex space-x-5 sm:space-x-8 md:space-x-7 mb-4 sm:mb-7 md:mb-8 lg:mb-8 mt-4 sm:mt-7 md:mt-4 lg:mt-4 items-center">
                     {socials && (
                       <>
-<<<<<<< HEAD
-                        {
-=======
                         {socials.facebook && socials.facebook.visible && (
->>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
                           <Link href={socials.facebook.link}>
                             <a
                               className="transition w-5 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500"
@@ -127,13 +104,8 @@ export function Footer() {
                               <IconFacebook />
                             </a>
                           </Link>
-<<<<<<< HEAD
-                        }
-                        {
-=======
                         )}
                         {socials.youtube && socials.youtube.visible && (
->>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
                           <Link href={socials.youtube.link}>
                             <a
                               className="transition w-8 sm:w-8 md:w-9 lg:w-10 cursor-pointer text-gray-400 hover:text-red-500"
@@ -142,13 +114,8 @@ export function Footer() {
                               <IconYoutube />
                             </a>
                           </Link>
-<<<<<<< HEAD
-                        }
-                        {
-=======
                         )}
                         {socials.zalo && socials.zalo.visible && (
->>>>>>> 714cacf1454a6543f2183a92b146fe8d999d8938
                           <Link href={socials.zalo.link}>
                             <a
                               className="transition w-3 sm:w-5 md:w-4 lg:w-5 cursor-pointer text-gray-400 hover:text-blue-500"
