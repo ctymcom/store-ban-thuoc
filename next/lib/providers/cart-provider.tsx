@@ -61,6 +61,15 @@ export function CartProvider({ children }: any) {
           });
           cartProductStorage = cartProductStorage.filter((x) => x.product);
           setLoading(false);
+          setCartProductCount(
+            cartProductStorage.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
+          );
+          setCartTotal(
+            cartProductStorage.reduce(
+              (total, cartProduct) => (cartProduct.active ? (total += cartProduct.amount) : total),
+              0
+            )
+          );
         });
         setcartProducts([...cartProductStorage]);
       }
@@ -81,7 +90,7 @@ export function CartProvider({ children }: any) {
     setCartProductCount(cartProducts.reduce((count, cartProduct) => (count += cartProduct.qty), 0));
     setCartTotal(
       cartProducts.reduce(
-        (total, cartProduct) => (cartProduct.active ? (total += cartProduct.amount) : (total += 0)),
+        (total, cartProduct) => (cartProduct.active ? (total += cartProduct.amount) : total),
         0
       )
     );

@@ -183,6 +183,7 @@ const AddressFormDialog = (props: PropsType) => {
           isOpen={mess ? true : false}
           mobileMode={false}
           onClose={() => setMess(null)}
+          key={mess}
         >
           <Dialog.Body>
             <div>{mess}</div>

@@ -1,9 +1,6 @@
-import Link from "next/link";
 interface PropsType extends ReactProps {
   icon?: JSX.Element;
   text: string;
-  href?: string;
-  textBtn?: string;
 }
 export function NotFound(props: PropsType) {
   return (
