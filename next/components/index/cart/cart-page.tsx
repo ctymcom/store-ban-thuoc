@@ -70,24 +70,20 @@ export default function CartPage(props) {
     switch (type) {
       case "add":
         {
-          setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value+1,amount:value*cartProduct.price}));
+          setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value+1,amount:(value+1)*cartProduct.price}));
         }
         break;
       case "sub":
         {
           if(value>1){
-            setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value-1,amount:value*cartProduct.price}));
+            setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value-1,amount:(value-1)*cartProduct.price}));
           }
         }
         break;
       case "input":
         {
-          if(value<=10000){
-            if(value<1){
-              setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:1,amount:1*cartProduct.price}));
-            }else{
+          if(value<=10000&&value>=0){
               setcartProducts(cartProducts.map((cartProduct:CartProduct)=>cartProduct.productId!==id?cartProduct:{...cartProduct,qty:value,amount:value*cartProduct.price}));
-            }
           }
         }
         break;
@@ -109,7 +105,6 @@ export default function CartPage(props) {
     }
   };
   return (
-    cartProducts.length>0?
     <div className="mx-auto w-11/12 sm:w-full">
       <div className="lg:flex gap-20">
         <div className="w-full lg:w-3/4 border-b-2 sm:border-0 mt-5">
@@ -143,6 +138,6 @@ export default function CartPage(props) {
           </div>
         </div>
       </div>
-    </div>:<NotFound text={"Bạn chưa có sản phẩm nào trong giỏ hàng"} className="text-32" href={"/home"} textBtn={"Quay về trang chủ"}/>
+    </div>
   );
 }

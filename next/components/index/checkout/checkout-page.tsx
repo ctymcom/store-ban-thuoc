@@ -17,6 +17,7 @@ import CheckBoxSquare from "./components/check-box-square";
 import AddressDialog from "./components/address-dialog";
 import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
+import { useCart } from '../../../lib/providers/cart-provider';
 
 export function CheckOutPage() {
   const [isHide, setIsHide] = useState(false);
@@ -27,15 +28,11 @@ export function CheckOutPage() {
     showDialogAddress,
     loadAddressDefautl,
   } = useCheckoutContext();
+  const {
+    cartTotal
+  } = useCart();
   const getCheckPayment = (status: boolean) => {
     setIsHide(status);
-  };
-  const totalMonney = (listMoney) => {
-    let total = 0;
-    listMoney.forEach((item) => {
-      total += item.money;
-    });
-    return total;
   };
   const setStyleBtn = () => {
     let style = "w-full text-16 py-6 my-2";
@@ -119,7 +116,7 @@ export function CheckOutPage() {
             <div className="flex justify-between pt-2 text-16 ">
               <p>Thành tiền</p>
               <p className="font-bold text-primary">
-                {NumberPipe(totalMonney(listMoneyCheckout), false)} VND
+                {NumberPipe(cartTotal, false)} VND
               </p>
             </div>
           </div>
@@ -147,7 +144,7 @@ export function CheckOutPage() {
           </p>
         </div>
       </div>
-      <AddressDialog isOpen={showDialogAddress} setShowDialog={setShowDialogAddress} />
+      <AddressDialog key="AddressDialog" isOpen={showDialogAddress} setShowDialog={setShowDialogAddress} />
     </div>
   );
 }

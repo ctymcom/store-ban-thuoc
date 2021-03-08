@@ -18,7 +18,7 @@ export function AddressItem(props:Proptype) {
         setAddress(props.address);
       }, [props.address]);
     return (
-        <div className={address.id===addressSelected?.id?"border-b-2 text-16  leading-7 py-4 text-gray-600 bg-primary-light":"border-b-2 text-16  leading-7 py-4"} >
+        <div key={props.address.id} className={address.id===addressSelected?.id?"border-b-2 text-16  leading-7 py-4 text-gray-600 bg-primary-light":"border-b-2 text-16  leading-7 py-4"} >
             <div className="flex items-center gap-1 cursor-pointer w-11/12 mx-auto" onClick={()=>{setAddressSelected(address)}}>
                 <CheckBoxCricle checked={address.id===addressSelected?.id?true:false}/>
                 <div className="">

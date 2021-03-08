@@ -53,6 +53,8 @@ export function CartProvider({ children }: any) {
           })
           cartProductStorage = cartProductStorage.filter(x=>x.product);
           setLoading(false);
+          setCartProductCount(cartProductStorage.reduce((count, cartProduct) => count += cartProduct.qty, 0))
+          setCartTotal(cartProductStorage.reduce((total, cartProduct) => cartProduct.active?total += cartProduct.amount:total, 0))
         })
         setcartProducts([...cartProductStorage])
       }
