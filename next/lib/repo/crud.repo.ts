@@ -20,6 +20,7 @@ export class QueryInput<T> {
 
 export interface GetListData<T> {
   data: T[];
+  total: number;
   pagination: Pagination;
 }
 
@@ -53,7 +54,7 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     const api = `getAll${this.apiName}`;
     return `${api}(q: ${queryParser(query, {
       hasBraces: true,
-    })}) { data { ${fragment} } pagination { limit page total } }`;
+    })}) { data { ${fragment} } total pagination { limit page total } }`;
   }
 
   async getAll({
@@ -83,6 +84,7 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     console.log("getAll" + this.apiName, result.data["g0"].data);
     return {
       data: result.data["g0"].data as T[],
+      total: result.data["g0"].total,
       pagination: result.data["g0"].pagination,
     };
   }
