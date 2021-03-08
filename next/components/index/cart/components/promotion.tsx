@@ -41,23 +41,23 @@ export function Promotion({
           <i className="text-primary text-20 sm:text-24">
             <IoTicketOutline />
           </i>
-          <p className="uppercase px-2 text-16 sm:text-20"> Mã khuyến mãi</p>
+          <p className="uppercase px-2 text-16 "> Mã khuyến mãi</p>
         </div>
         <PromotionContext.Consumer>
           {({ selectedPromotion, usePromotion, applyPromotion }) => {
             return (
-              <div className="sm:py-3 h-36 flex-wrap sm:block items-center relative">
+              <div className="sm:py-3 flex-wrap sm:block items-center relative">
                 {usePromotion && selectedPromotion ? (
                   <div className="my-4 w-full">
                     <h4 className="text-lg sm:text-xl text-primary font-semibold">
                       Mã ưu đãi {selectedPromotion.code}
                     </h4>
-                    <p className="text-16 sm:text-20">Giảm giá: {selectedPromotion.description}%</p>
+                    <p className="text-16 ">Giảm giá: {selectedPromotion.description}%</p>
                   </div>
                 ) : (
                   <>
                     <p
-                      className="cursor-pointer text-primary text-16 sm:text-20"
+                      className="cursor-pointer text-primary text-16 "
                       onClick={() => setShowDialog(true)}
                     >
                       Xem danh sách mã khuyến mãi
@@ -75,7 +75,7 @@ export function Promotion({
                       />
                       <button
                         onClick={applyPromotion}
-                        className={`sm:hidden font-normal sm:w-full text-16 sm:text-20 h-12 sm:my-2 ${
+                        className={`sm:hidden font-normal sm:w-full text-16  h-12 sm:my-2 ${
                           promotion ? "btn-primary" : "btn-disabled"
                         } ${PrUsing ? "w-full" : "w-1/3 rounded-l-none sm:rounded-md"}`}
                       >
@@ -86,7 +86,7 @@ export function Promotion({
                 )}
                 <button
                   onClick={applyPromotion}
-                  className={`font-normal w-full text-16 sm:text-20 h-12 sm:my-2 ${
+                  className={`font-normal w-full text-16  h-12 sm:my-2 ${
                     promotion ? "btn-primary" : "btn-disabled"
                   } ${!selectedPromotion ? "hidden" : "block "}`}
                 >

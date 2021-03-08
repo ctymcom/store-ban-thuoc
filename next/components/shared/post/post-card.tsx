@@ -16,7 +16,7 @@ export function PostCard({ post, large = false, ...props }: PropsType) {
   return (
     <Link href={"/post/" + post.slug}>
       {large ? (
-        <a className="flex cursor-pointer rounded hover:shadow-lg transition group overflow-hidden border border-gray-400">
+        <a className="flex cursor-pointer rounded hover:shadow-lg transition group overflow-hidden border border-gray-300">
           <div className="w-1/2">
             <LazyLoad>
               <div className="image-wrapper ratio-16-9 overflow-hidden border-r border-gray-300">

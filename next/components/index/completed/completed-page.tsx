@@ -1,4 +1,3 @@
-import { LayoutCart } from '../cart/components/layout-cart';
 import { ContentStatus } from './components/content-status';
 export function CompletedPage() {
     return <div className="md:flex md:w-3/4 mx-auto mt-10">

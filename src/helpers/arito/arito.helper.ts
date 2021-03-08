@@ -14,6 +14,8 @@ import { AritoUser } from "./types/aritoUser.type";
 import { IPromotion } from "../../graphql/modules/promotion/promotion.model";
 import { IAritoOption } from "../../graphql/modules/aritoOption/aritoOption.model";
 import { IOrderStatus } from "../../graphql/modules/orderStatus/orderStatus.model";
+import { IDeliveryMethod } from "../../graphql/modules/deliveryMethod/deliveryMethod.model";
+import { IPaymentMethod } from "../../graphql/modules/paymentMethod/paymentMethod.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -609,6 +611,44 @@ export class AritoHelper {
       })) as IOrderStatus[];
     });
   }
+  static getDeliveryMethod() {
+    return Axios.post(`${this.host}/Item/GetDeliveryMethod`, {
+      token: this.imageToken,
+      memvars: [
+        //Lấy quốc gia sản xuất
+        ["datetime2", "DT", "2020-01-01 16:53:00"], //Thời gian từ
+        ["pageIndex", "I", 1],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["code"],
+        name: d["name"],
+        name2: d["name2"],
+        discountRate: d["tl_ck"],
+        position: d["stt"],
+      })) as IDeliveryMethod[];
+    });
+  }
+  static getPaymentMethod() {
+    return Axios.post(`${this.host}/Item/GetPaymentMethod`, {
+      token: this.imageToken,
+      memvars: [
+        //Lấy quốc gia sản xuất
+        ["datetime2", "DT", "2020-01-01 16:53:00"], //Thời gian từ
+        ["pageIndex", "I", 1],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["code"],
+        name: d["name"],
+        name2: d["name2"],
+        discountRate: d["tl_ck"],
+        position: d["stt"],
+      })) as IPaymentMethod[];
+    });
+  }
   static updateUserProfile({ nickname, phone, birthday, companyType, companyName }, token: string) {
     return Axios.post(`${this.host}/Authorize/UpdateUserInfo`, {
       token: token,
@@ -677,7 +717,8 @@ export class AritoHelper {
   }
   static viewDraftOrder(data: {
     promotionCode?: string;
-    paymentMethod: number;
+    paymentMethod: string;
+    deliveryMethod: string;
     items: {
       productCode: string;
       qty: number;
@@ -691,7 +732,8 @@ export class AritoHelper {
       token: this.imageToken,
       memvars: [
         ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
-        ["chuyen_khoan", "I", data.paymentMethod], //Chuyen khoan
+        ["payment", "C", data.paymentMethod], //Chuyen khoan
+        ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
       ],
       data: {
         "#master": [

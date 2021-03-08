@@ -2,14 +2,13 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { ProductDetailsPage } from "../../components/index/product-details/product-details";
 import { ProductDetailsProvider } from "../../components/index/product-details/providers/product-details-provider";
-import { AdminLayout } from "../../layouts/admin-layout";
 import { Redirect } from "../../lib/redirect";
-import { Product } from '../../lib/repo/product.repo';
-import { ProductModel } from './../../../dist/graphql/modules/product/product.model';
-import { DefaultLayout } from './../../layouts/default-layout';
+import { Product } from "../../lib/repo/product.repo";
+import { ProductModel } from "./../../../dist/graphql/modules/product/product.model";
+import { DefaultLayout } from "./../../layouts/default-layout";
 
 interface PropsType extends ReactProps {
-  product: Product
+  product: Product;
 }
 
 export default function Page(props: PropsType) {
@@ -17,15 +16,17 @@ export default function Page(props: PropsType) {
     const router = useRouter();
     router.replace("/products");
   }
-  
-  return props.product ? <ProductDetailsProvider productId={props.product.id}>
-      <ProductDetailsPage/>
-    </ProductDetailsProvider> : null
+
+  return props.product ? (
+    <ProductDetailsProvider productId={props.product.id}>
+      <ProductDetailsPage />
+    </ProductDetailsProvider>
+  ) : null;
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { code } = context.query;
-  const product = await ProductModel.findOne({ code }) as Product;
+  const product = (await ProductModel.findOne({ code })) as Product;
   if (!product) Redirect(context.res, "/404");
   return {
     props: {
@@ -34,10 +35,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           id: product.id,
           name: product.name,
           code: product.code,
-          image: product.image
-      }))
+          image: product.image,
+        })
+      ),
     },
   };
 }
 
-Page.Layout = DefaultLayout
+Page.Layout = DefaultLayout;
