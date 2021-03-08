@@ -777,6 +777,53 @@ export class AritoHelper {
       };
     });
   }
+  static createOrder(data: {
+    promotionCode?: string;
+    paymentMethod: string;
+    deliveryMethod: string;
+    items: {
+      productCode: string;
+      qty: number;
+      unit: string;
+      price: number;
+      amount: number;
+    }[];
+  }) {
+    let subtotal = 0;
+    return Axios.post(`${this.host}/Voucher/SyncOrder`, {
+      token: this.imageToken,
+      memvars: [
+        ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
+        ["payment", "C", data.paymentMethod], //Chuyen khoan
+        ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
+      ],
+      data: {
+        "#master": [
+          {
+            api_id: 1,
+            ngay_ct: moment().toISOString(),
+          },
+        ],
+        "#detail": data.items.map((i) => {
+          subtotal += i.amount;
+          return {
+            api_id: 1, //Trường liên kết với master
+            ma_vt: i.productCode, //Mã vật tư
+            dvt: i.unit, //Đơn vị tính
+            so_luong: i.qty, //Số lượng đơn hàng
+            gia_nt2: i.price, //Giá bán
+            tien_nt2: i.amount, //Thành tiền
+          };
+        }),
+      },
+    }).then((res) => {
+      this.handleError(res);
+      return {
+        code: get(res.data, "data.data.0.id"),
+        orderNumber: get(res.data, "data.data.0.so_ct"),
+      };
+    });
+  }
 }
 
 AritoHelper.setImageToken();
