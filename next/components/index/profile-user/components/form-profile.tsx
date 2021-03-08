@@ -10,17 +10,9 @@ import DateTime from "./datetime";
 
 interface PropsType extends ReactProps {
   [x: string]: any;
-  listOptionsTypeStore: any[];
 }
 
-export function FormProfile({
-  listOptionsTypeStore = [
-    { value: 1, label: "Phòng khám" },
-    { value: 2, label: "Nhà thuốc" },
-    { value: 3, label: "Trình dược viên" },
-  ],
-  ...props
-}: PropsType) {
+export function FormProfile(props: PropsType) {
   const {
     user,
     updateAritoUser,
@@ -33,6 +25,11 @@ export function FormProfile({
   }, [user]);
 
   const [message, setMessage] = useState(null);
+  let listOptionsTypeStore = [
+    { value: 1, label: "Phòng khám" },
+    { value: 2, label: "Nhà thuốc" },
+    { value: 3, label: "Trình dược viên" },
+  ];
 
   const handleChange = (id: string, value: any) => {
     if (listOptionsTypeStore[id] !== value) {

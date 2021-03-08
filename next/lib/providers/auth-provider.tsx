@@ -23,6 +23,7 @@ const AuthContext = createContext<{
   logout?: () => void;
   updateAritoUser?: (data: AritoUser) => void;
   changeAritoUserPasswrod?: (oldPass: string, newPass: string) => void;
+  recoveryPassword?: (email: string) => Promise<string>;
 }>({});
 
 export function AuthProvider({ children }: any) {
@@ -113,6 +114,10 @@ export function AuthProvider({ children }: any) {
     return user;
   };
 
+  const recoveryPassword = async (email: string) => {
+    return AritoUserService.recoveryPassword(email);
+  };
+
   const logout = () => {
     ClearAuthToken();
     location.reload();
@@ -153,6 +158,7 @@ export function AuthProvider({ children }: any) {
         setShowDialogUpdatePassword,
         showDialogUpdatePassword,
         changeAritoUserPasswrod,
+        recoveryPassword,
         login,
         register,
         logout,

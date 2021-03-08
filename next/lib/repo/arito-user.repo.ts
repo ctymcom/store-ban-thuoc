@@ -118,7 +118,7 @@ export class AritoUserRepository extends GraphRepository {
   }
 
   // ====== UserChangePassword =========
-  async userChangePassword(oldPass: string, newPass: string): Promise<{}> {
+  async userChangePassword(oldPass: string, newPass: string): Promise<string> {
     let mutationName = "changeAritoUserPassword";
     const res = await this.apollo.mutate({
       mutation: this.gql`
