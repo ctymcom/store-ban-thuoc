@@ -25,7 +25,8 @@ export function PostsProvider(props) {
       query: {
         limit: posts ? 9 : 10,
         offset: posts ? posts.length : 0,
-        order: { createdAt: -1 },
+        order: { priority: -1 },
+        filter: { status: "PUBLIC", slug: { __exists: true } },
       },
     });
 

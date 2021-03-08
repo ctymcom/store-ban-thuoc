@@ -1,7 +1,6 @@
-// import "tailwindcss/tailwind.css";
 import "../style/style.scss";
 import { AuthProvider } from "../lib/providers/auth-provider";
-import React from "react";
+import { ToastProvider } from "../lib/providers/toast-provider";
 
 export default function App({ Component, pageProps }) {
   const Layout = Component.Layout ? Component.Layout : React.Fragment;
@@ -9,9 +8,11 @@ export default function App({ Component, pageProps }) {
 
   return (
     <AuthProvider>
-      <Layout {...layoutProps}>
-        <Component {...pageProps} />
-      </Layout>
+      <ToastProvider>
+        <Layout {...layoutProps}>
+          <Component {...pageProps} />
+        </Layout>
+      </ToastProvider>
     </AuthProvider>
   );
 }
