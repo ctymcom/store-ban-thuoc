@@ -7,23 +7,30 @@ export const CheckoutContext = createContext<Partial<{
   setAddressSelected:Function,
   showDialogAddress:boolean,
   setShowDialogAddress:Function,
+  loadAddressDefautl:boolean, 
+  setLoadAddressDefautl:Function
 }>>({});
 
 export const CheckoutProvider = (props) => {
   const [showDialogAddress, setShowDialogAddress] = useState(false);
+  const [loadAddressDefautl, setLoadAddressDefautl ] = useState(false);
   const [addressSelected, setAddressSelected] = useState<UserAddress>(null);
 
   const { user } = useAuth()
   useEffect(() => {
+    setLoadAddressDefautl(true)
     UserAddressService.getAll( {query:{
       limit:1,
       filter: { userId: user.id, isDefault: true }
     },fragment:UserAddressService.fullFragment}).then(res=>{
     setAddressSelected(res.data.find((item:UserAddress)=>item.isDefault));
+    setLoadAddressDefautl(false);
+   }).catch(err=>{
+    setLoadAddressDefautl(false);
    })
   }, []);
   
-  return<CheckoutContext.Provider value={{addressSelected,setAddressSelected,showDialogAddress, setShowDialogAddress }}>
+  return<CheckoutContext.Provider value={{loadAddressDefautl, setLoadAddressDefautl, addressSelected,setAddressSelected,showDialogAddress, setShowDialogAddress }}>
       {props.children}
     </CheckoutContext.Provider>;
 }

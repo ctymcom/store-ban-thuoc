@@ -23,9 +23,9 @@ export function CheckOutPage() {
   const [isCheck, setIsCheck] = useState(true);
   const {
     addressSelected,
-    setAddressSelected,
     setShowDialogAddress,
     showDialogAddress,
+    loadAddressDefautl,
   } = useCheckoutContext();
   const getCheckPayment = (status: boolean) => {
     setIsHide(status);
@@ -61,12 +61,12 @@ export function CheckOutPage() {
             />
           </div>
           <div className="w-full">
-            <p className="text-sm text-left py-2">Giảm 3% cho đơn hàng chuyển khoản trước</p>
+            <p className="text-16 text-left py-2">Giảm 3% cho đơn hàng chuyển khoản trước</p>
             {isHide ? <TransferInformation info={transferInformation} /> : <></>}
           </div>
         </div>
         <div className="w-full text-16  my-5">
-          <h4 className="uppercase text-20 md:text-20">Ghi chú khác</h4>
+          <h4 className="uppercase text-20">Ghi chú khác</h4>
           <p>
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
@@ -102,7 +102,13 @@ export function CheckOutPage() {
                   <p>{addressSelected.phone}</p>
                 </>
               ) : (
-                <Spinner />
+                <>{
+                  loadAddressDefautl?
+                  <Spinner />:<div className="mx-auto w-2/3 items-center">
+                    <p>Bạn chưa có địa chỉ giao hàng?</p>
+                    <button className="btn-primary w-full" onClick={() => setShowDialogAddress(true)}>Bấm vào đây để tạo</button>
+                  </div>
+                }</>
               )}
             </div>
           </div>

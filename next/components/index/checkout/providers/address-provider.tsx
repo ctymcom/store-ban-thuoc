@@ -86,7 +86,9 @@ export const AddressProvider = (props) => {
   const handleChange=(id:string,type:string)=>{
       switch (type) {
           case "setDefault":{
-            setDefaultAddress(id);
+            if(id){
+              setDefaultAddress(id);
+            }
           }
               break;
           case "delete":{
@@ -120,10 +122,11 @@ export const AddressProvider = (props) => {
                   )
                 }
               }else{
-                let oldDefault = listAddress.find(item=>!item.isDefault);
-                UserAddressService.update({id:oldDefault.id,data:{isDefault:true}}).then(res=>
-                  updateOrUserAddress(userAddress)   
-                )
+                if(listAddress.length!==0){
+                    updateOrUserAddress(userAddress) 
+                }else{
+                  updateOrUserAddress({...userAddress,isDefault:true})   
+                }
               }
           } break;
           default:
