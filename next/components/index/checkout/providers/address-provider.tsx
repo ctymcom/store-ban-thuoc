@@ -92,7 +92,7 @@ export const AddressProvider = (props) => {
           }
               break;
           case "delete":{
-                if(listAddress.length>1)
+                if(listAddress.length>0)
                 {
                   let addressDeleting = listAddress.find(item=>item.id===id);
                   if(addressDeleting.isDefault){

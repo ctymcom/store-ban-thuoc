@@ -85,7 +85,7 @@ export function CheckOutPage() {
                 <i className="text-primary text-16 ">
                   <IoLocationSharp />
                 </i>
-                <h4 className="uppercase text-20 md:text-20">Địa chỉ giao hàng</h4>
+                <h4 className="uppercase text-16">Địa chỉ giao hàng</h4>
               </div>
               <a
                 className="text-primary text-16  cursor-pointer"

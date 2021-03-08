@@ -64,7 +64,7 @@ export function CartProvider({ children }: any) {
   useEffect(() => {
     localStorage.setItem('cartProductStorage', JSON.stringify(cartProducts.map(item=>{ return {productId: item.productId, qty: item.qty, active: item.active}})));
     setCartProductCount(cartProducts.reduce((count, cartProduct) => count += cartProduct.qty, 0))
-    setCartTotal(cartProducts.reduce((total, cartProduct) => cartProduct.active?total += cartProduct.amount:total+=0, 0))
+    setCartTotal(cartProducts.reduce((total, cartProduct) => cartProduct.active?total += cartProduct.amount:total, 0))
   }, [cartProducts]);
 
   const addProductToCart = (product: Product, qty: number): boolean => {
