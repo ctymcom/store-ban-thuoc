@@ -15,6 +15,7 @@ import { IPromotion } from "../../graphql/modules/promotion/promotion.model";
 import { IAritoOption } from "../../graphql/modules/aritoOption/aritoOption.model";
 import { IOrderStatus } from "../../graphql/modules/orderStatus/orderStatus.model";
 import { IDeliveryMethod } from "../../graphql/modules/deliveryMethod/deliveryMethod.model";
+import { IPaymentMethod } from "../../graphql/modules/paymentMethod/paymentMethod.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -627,6 +628,25 @@ export class AritoHelper {
         discountRate: d["tl_ck"],
         position: d["stt"],
       })) as IDeliveryMethod[];
+    });
+  }
+  static getPaymentMethod() {
+    return Axios.post(`${this.host}/Item/GetPaymentMethod`, {
+      token: this.imageToken,
+      memvars: [
+        //Lấy quốc gia sản xuất
+        ["datetime2", "DT", "2020-01-01 16:53:00"], //Thời gian từ
+        ["pageIndex", "I", 1],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["code"],
+        name: d["name"],
+        name2: d["name2"],
+        discountRate: d["tl_ck"],
+        position: d["stt"],
+      })) as IPaymentMethod[];
     });
   }
   static updateUserProfile({ nickname, phone, birthday, companyType, companyName }, token: string) {
