@@ -19,6 +19,8 @@ export interface AritoUser {
   timeout: number;
   permission: number;
   group: string;
+  companyType: number;
+  companyName: string;
   imageLink: string;
   role: ROLE;
 }
@@ -53,6 +55,8 @@ export class AritoUserRepository extends GraphRepository {
     timeout: Int
     permission: Int
     group: String
+    companyType: Int
+    companyName: string
     imageLink: String
     role: String
   `);
@@ -87,6 +91,47 @@ export class AritoUserRepository extends GraphRepository {
       `,
       context: {
         headers,
+      },
+    });
+    return res.data[mutationName];
+  }
+
+  // ====== UpdateUserArito =========
+  async userUpdateMe(data: any): Promise<{ token: string; user: AritoUser }> {
+    let mutationName = "userUpdateMe";
+    const res = await this.apollo.mutate({
+      mutation: this.gql`
+        mutation mutationName($data: UserUpdateMeInput!) {
+          ${mutationName} (
+            data: $data
+          ) {
+            token
+            user { ${this.fragment} }
+          }
+        }
+      `,
+      variables: {
+        data,
+      },
+    });
+    return res.data[mutationName];
+  }
+
+  // ====== UserChangePassword =========
+  async userChangePassword(oldPass: string, newPass: string): Promise<{}> {
+    let mutationName = "changeAritoUserPassword";
+    const res = await this.apollo.mutate({
+      mutation: this.gql`
+        mutation mutationName($oldPass: String!, $newPass: String!) {
+          ${mutationName} (
+            oldPass: $oldPass,
+            newPass: $newPass
+          ) 
+        }
+      `,
+      variables: {
+        oldPass,
+        newPass,
       },
     });
     return res.data[mutationName];
