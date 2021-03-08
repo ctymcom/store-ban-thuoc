@@ -17,7 +17,7 @@ const TransferInformation = (props:PropsType) => {
         document.removeEventListener('copy', listener);
     }
     return (
-        <div className="p-3 border rounded w-full xl:w-4/5 border-primary bg-green-50">
+        <div className="p-3 border rounded w-full xl:w-4/5 border-primary bg-green-50 text-16">
             {
                 props.info.map((item, index) => {
                     return <div className="grid grid-cols-3 items-center leading-8" key={index}>
