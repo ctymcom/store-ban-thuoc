@@ -11,7 +11,8 @@ export default {
     extend type Mutation {
       generateDraftOrder(
         promotionCode: String
-        paymentMethod: Int
+        paymentMethod: String
+        deliveryMethod: String
         items: [OrderItemInput]
       ): DraftOrder
     }
@@ -44,7 +45,7 @@ export default {
     Mutation: {
       generateDraftOrder: async (root: any, args: any, context: Context) => {
         context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
-        const { promotionCode, paymentMethod, items } = args;
+        const { promotionCode, paymentMethod, deliveryMethod, items } = args;
         const products = await ProductModel.find({
           _id: items.map((i) => i.productId),
         }).then((res) => keyBy(res, "_id"));
@@ -84,6 +85,7 @@ export default {
         const draftOrder = await AritoHelper.viewDraftOrder({
           promotionCode: promotionCode,
           paymentMethod: paymentMethod,
+          deliveryMethod: deliveryMethod,
           items: orderItems.map((i) => ({
             productCode: i.productCode,
             unit: i.unit,
