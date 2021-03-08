@@ -24,6 +24,9 @@ export const AddressProvider = (props) => {
   const [userAddress, setUserAddress] = useState<UserAddress>(null);
   const {setAddressSelected} = useCheckoutContext();
   const { user } = useAuth()
+  const [provinces, setProvinces] = useState<Option[]>(null);
+  const [districts,setDistricts] = useState<Option[]>(null);
+  const [wards, setWards] = useState<Option[]>(null);
   const loadList = () =>{
     UserAddressService.getAll( {query:{
       limit:0,
@@ -35,15 +38,10 @@ export const AddressProvider = (props) => {
    })
   }
   useEffect(() => {
-    loadList();
-  }, []);
-  const [provinces, setProvinces] = useState<Option[]>(null);
-  const [districts,setDistricts] = useState<Option[]>(null);
-  const [wards, setWards] = useState<Option[]>(null);
-  useEffect(() => {
     AddressService.getProvinces().then(res => {
       setProvinces([{ value: '', label: 'Chọn Tỉnh/Thành' }, ...res.map(x => ({ value: x.id, label: x.province }) )])
-    })
+    });
+    loadList();
   }, []);
   useEffect(() => {
     AddressService.getDistricts(userAddress?userAddress.provinceId:"").then(res=>{

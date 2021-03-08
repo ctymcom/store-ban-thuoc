@@ -72,7 +72,7 @@ export function LayoutCart(props) {
                             <h2 key="complete" className={styleSteps("complete")} onClick={() => listStep[2].actv? router.push('/complete'):""}><i><HiOutlineChevronRight/></i>Hoàn tất</h2>
                         </div>
                         {props.children}
-                    </div >:<div className="w-1/5 mx-auto mt-40 text-center">
+                    </div >:<div className="w-full sm:w-1/5 mx-auto mt-40 text-center">
                             Bạn chưa có sản phẩm nào trong giỏ hàng?
                             <Link href="/home"><button className="btn-primary">Quay về trang chủ</button></Link>
               </div>}</>:<Spinner/>
