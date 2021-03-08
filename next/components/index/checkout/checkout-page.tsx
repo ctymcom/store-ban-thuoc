@@ -38,7 +38,7 @@ export function CheckOutPage() {
     return total;
   };
   const setStyleBtn = () => {
-    let style = "w-full text-16 md:text-20 py-6 my-2";
+    let style = "w-full text-16 py-6 my-2";
     return isCheck ? style + " btn-primary" : style + " btn-disabled";
   };
 
@@ -65,8 +65,8 @@ export function CheckOutPage() {
             {isHide ? <TransferInformation info={transferInformation} /> : <></>}
           </div>
         </div>
-        <div className="w-full text-16 md:text-20 my-5">
-          <h4 className="uppercase text-20 md:text-24">Ghi chú khác</h4>
+        <div className="w-full text-16  my-5">
+          <h4 className="uppercase text-20 md:text-20">Ghi chú khác</h4>
           <p>
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
@@ -82,22 +82,22 @@ export function CheckOutPage() {
           <div className="w-full md:w-1/2 lg:w-full mb-10">
             <div className="flex justify-between items-center border-b-4">
               <div className="flex justify-between items-center gap-1 whitespace-nowrap">
-                <i className="text-primary text-16 md:text-20">
+                <i className="text-primary text-16 ">
                   <IoLocationSharp />
                 </i>
-                <h4 className="uppercase text-20 md:text-24">Địa chỉ giao hàng</h4>
+                <h4 className="uppercase text-20 md:text-20">Địa chỉ giao hàng</h4>
               </div>
               <a
-                className="text-primary text-16 md:text-20 cursor-pointer"
+                className="text-primary text-16  cursor-pointer"
                 onClick={() => setShowDialogAddress(true)}
               >
                 Đổi
               </a>
             </div>
-            <div className="my-2 text-16 md:text-20">
+            <div className="my-2 text-16 ">
               {addressSelected ? (
                 <>
-                  <p className="text-20 md:text-24 font-bold">{addressSelected.contactName}</p>
+                  <p className="text-20 md:text-20 font-bold">{addressSelected.contactName}</p>
                   <p>{addressSelected.fullAddress}</p>
                   <p>{addressSelected.phone}</p>
                 </>
@@ -110,7 +110,7 @@ export function CheckOutPage() {
             <div className="border-b-4 pb-2">
               <PayMoney listMoney={listMoneyCheckout} />
             </div>
-            <div className="flex justify-between pt-2 text-16 md:text-20">
+            <div className="flex justify-between pt-2 text-16 ">
               <p>Thành tiền</p>
               <p className="font-bold text-primary">
                 {NumberPipe(totalMonney(listMoneyCheckout), false)} VND
@@ -119,7 +119,7 @@ export function CheckOutPage() {
           </div>
         </div>
         <div className="w-full">
-          <div className="flex items-center gap-1 text-16 md:text-20 whitespace-nowrap">
+          <div className="flex items-center gap-1 text-16  whitespace-nowrap">
             <div
               className="flex items-center gap-1 cursor-pointer"
               onClick={() => {

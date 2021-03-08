@@ -119,7 +119,7 @@ export default function CartPage(props) {
           />
           <div className="text-primary flex items-center whitespace-nowrap">
             <div
-              className="cursor-pointer flex items-center text-16 sm:text-20"
+              className="cursor-pointer flex items-center text-16 "
               onClick={() => router.push("/home")}
             >
               <i className="text-18 px-1">
@@ -136,7 +136,7 @@ export default function CartPage(props) {
           <div className="sm:pl-2 lg:pl-0 sm:mt-5 lg:mt-3.5">
             <PayMoney listMoney={listMoneyCart} />
             <Link href="/checkout">
-              <button className="btn btn-primary w-full py-6 mt-2 sm:text-20">
+              <button className="btn btn-primary w-full py-6 mt-2 ">
                 Tiến hành thanh toán
               </button>
             </Link>

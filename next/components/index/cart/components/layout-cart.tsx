@@ -4,10 +4,7 @@ import { useRouter } from 'next/router';
 import { useAuth, LOGIN_PATHNAME } from '../../../../lib/providers/auth-provider';
 import { useEffect } from 'react';
 import { Spinner } from '../../../shared/utilities/spinner';
-interface Proptype extends ReactProps{
-    name:string
-}
-export function LayoutCart(props:Proptype) {
+export function LayoutCart(props) {
     const router = useRouter();
     const { user, saveCurrentPath } = useAuth()
     useEffect(() => {
@@ -37,7 +34,7 @@ export function LayoutCart(props:Proptype) {
     }
     ]
     try {
-        let stepCur = listStep.findIndex(step=>step.name===props.name);
+        let stepCur = listStep.findIndex(step=>step.path===router.pathname);
         if(stepCur!==-1){
             listStep.forEach((item)=>{
                 item.cur=false;

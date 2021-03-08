@@ -12,7 +12,7 @@ export function ListCartItems(props:Proptype) {
     return (
         <>
             <div>
-                <div className="sm:grid grid-cols-12 uppercase text-center border-b-2 pb-2 text-24 hidden">
+                <div className="sm:grid grid-cols-12 uppercase text-center border-b-2 pb-2 text-20 hidden">
                     <div className="col-span-5 text-left grid grid-cols-12">
                         <div className="col-span-1 text-20" 
                         onClick={()=>props.handleChangeItem(null, "activeAll", !props.checkAll)}

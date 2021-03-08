@@ -20,7 +20,7 @@ const TransferInformation = (props:PropsType) => {
         <div className="p-3 border rounded w-full xl:w-4/5 border-primary bg-green-50">
             {
                 props.info.map((item, index) => {
-                    return <div className="grid grid-cols-3 items-center" key={index}>
+                    return <div className="grid grid-cols-3 items-center leading-8" key={index}>
                         <p className="col-span-1 text-gray-400">{item.title}: </p>
                         <div className="col-span-2">
                             <p className="inline-block">{item.content}</p>
