@@ -717,7 +717,8 @@ export class AritoHelper {
   }
   static viewDraftOrder(data: {
     promotionCode?: string;
-    paymentMethod: number;
+    paymentMethod: string;
+    deliveryMethod: string;
     items: {
       productCode: string;
       qty: number;
@@ -731,7 +732,8 @@ export class AritoHelper {
       token: this.imageToken,
       memvars: [
         ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
-        ["chuyen_khoan", "I", data.paymentMethod], //Chuyen khoan
+        ["payment", "C", data.paymentMethod], //Chuyen khoan
+        ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
       ],
       data: {
         "#master": [
