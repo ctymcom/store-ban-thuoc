@@ -11,6 +11,7 @@ import {
 import { IngredientModel } from "../../graphql/modules/ingredient/ingredient.model";
 import { ProductModel } from "../../graphql/modules/product/product.model";
 import { ProductTagDetail } from "../../graphql/modules/product/types/productTagDetail.type";
+import { ProductCommentModel } from "../../graphql/modules/productComment/productComment.model";
 import { ProductContainerModel } from "../../graphql/modules/productContainer/productContainer.model";
 import { ProductTabModel } from "../../graphql/modules/productTab/productTab.model";
 import { ProductTagModel } from "../../graphql/modules/productTag/productTag.model";
@@ -34,6 +35,8 @@ export class SyncProductJob {
       await syncProduct();
       console.log(chalk.cyan("==> Động bộ nhóm sản phẩm hiển thị..."));
       await syncProductContainer();
+      console.log(chalk.cyan("==> Động bộ đánh giá..."));
+      await syncProductComment();
       console.log(chalk.green("==> Đồng bộ xong"));
     } catch (err) {
       console.log(chalk.red("Động bộ lỗi", err.message));
@@ -270,6 +273,50 @@ async function syncIngredient() {
   if (ingredientBulk.length > 0) {
     console.log(chalk.yellow(`====> Đồng bộ ${ingredientBulk.length} hoạt chất...`));
     await ingredientBulk.execute();
+  }
+}
+async function syncProductComment() {
+  const updatedAt = await ProductCommentModel.findOne()
+    .sort({ updatedAt: -1 })
+    .exec()
+    .then((res) => {
+      return res ? res.updatedAt : null;
+    });
+  let data = await AritoHelper.getAllComment(1, updatedAt);
+  const bulk = ProductCommentModel.collection.initializeUnorderedBulkOp();
+  do {
+    console.log(chalk.yellow("====> Đồng bộ trang ", data.paging.page));
+    const productComments = data.data.filter((d) => d.type == "PRODUCT");
+    if (productComments.length > 0) {
+      const products = await ProductModel.find({
+        code: { $in: productComments.map((c) => c.ref) },
+      }).then((res) => keyBy(res, "code"));
+      data.data
+        .filter((d) => d.type == "PRODUCT")
+        .forEach((d) => {
+          bulk
+            .find({ code: d.code })
+            .upsert()
+            .updateOne({
+              $setOnInsert: { createdAt: new Date() },
+              $set: {
+                updatedAt: new Date(),
+                productId: products[d.ref]._id,
+                productCode: d.ref,
+                imark: d.imark,
+                content: d.content,
+                reviewer: d.reviewer,
+              },
+            });
+        });
+    }
+
+    if (data.paging.page == data.paging.pageCount) break;
+    data = await AritoHelper.getAllComment(data.paging.page + 1, updatedAt);
+  } while (data.paging.page <= data.paging.pageCount);
+  if (bulk.length > 0) {
+    console.log(chalk.yellow(`====> Đồng bộ ${bulk.length} đánh giá...`));
+    await bulk.execute();
   }
 }
 
