@@ -423,6 +423,58 @@ export class AritoHelper {
       };
     });
   }
+  static getAllComment(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetComment`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          code: d["id"],
+          type: d["type"],
+          ref: d["code"],
+          imark: d["imark"],
+          content: d["content"],
+          reviewer: d["reviewer"],
+        })) as {
+          code: string;
+          type: "PRODUCT" | "ORDER";
+          ref: string;
+          imark: number;
+          content: string;
+          reviewer: string;
+        }[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static postComment({ type, code, reviewer, imark, content }, token) {
+    return Axios.post(`${this.host}/Item/PostComment`, {
+      token: token,
+      memvars: [
+        //Lấy quốc gia sản xuất
+        ["type", "C", type], //Mã sản phẩm
+        ["code", "C", code], //Mã sản phẩm
+        ["reviewer", "C", reviewer], //Người đánh giá
+        ["imark", "I", imark], //Mã sản phẩm
+        ["content", "C", content], //Nội dung
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "msg");
+    });
+  }
   static async getUserAddress(userId: string) {
     return Axios.post(`${this.host}/List/GetUserAddress`, {
       token: this.imageToken,

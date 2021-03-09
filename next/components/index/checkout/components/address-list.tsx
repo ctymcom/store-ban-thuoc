@@ -11,17 +11,17 @@ export interface PropsTypeFormDialog extends ReactProps{
 export function AddressList(props:PropsTypeFormDialog) {
     const{ listAddress } = useAddressContext();
     return (
-        listAddress?<div>
+        listAddress?<>
         {
             listAddress.map((item:UserAddress, index:number) => {
-                return item.isDefault? <AddressItem key={index} address={item} showAddressFormDialog={props.showAddressFormDialog} setShowAddressFormDialog={props.setShowAddressFormDialog}/>:""
+                return item.isDefault? <AddressItem key={index.toString()} address={item} showAddressFormDialog={props.showAddressFormDialog} setShowAddressFormDialog={props.setShowAddressFormDialog}/>:""
             })
         }
         {
             listAddress.map((item:UserAddress, index:number) => {
-                return !item.isDefault? <AddressItem key={index} address={item} showAddressFormDialog={props.showAddressFormDialog} setShowAddressFormDialog={props.setShowAddressFormDialog}/>:""
+                return !item.isDefault? <AddressItem key={index.toString()} address={item} showAddressFormDialog={props.showAddressFormDialog} setShowAddressFormDialog={props.setShowAddressFormDialog}/>:""
             })
         }
-    </div>:<Spinner/>
+    </>:<Spinner/>
     );
 }

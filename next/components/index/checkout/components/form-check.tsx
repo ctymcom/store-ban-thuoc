@@ -43,7 +43,7 @@ export function FormCheck(props:PropsType) {
                 return tempStyle;
             }
             case "he": {
-                let tempStyle = " text-20 md:text-24"
+                let tempStyle = " text-20 md:text-20"
                 if (id === IDC) {
                     tempStyle += " text-primary";
                 }
@@ -52,7 +52,7 @@ export function FormCheck(props:PropsType) {
         }
     }
     return <>
-        <h3 className="uppercase text-20 md:text-24 border-b-4">{title}</h3>
+        <h3 className="uppercase text-20 md:text-20 border-b-4">{title}</h3>
         <div className="w-full xl:w-4/5 block sm:flex gap-5">
             {
                 checkList.map((item:Option, index:number) => {

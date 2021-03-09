@@ -12,7 +12,7 @@ export function PayMoney(props:PropsType) {
     return <>
         <div className="flex border-b-0 md:border-b-2 lg:border-b-4 items-center pb-0 md:pb-3.5">
             <i className="text-primary text-16 md:text-20"><BiMoney /></i>
-            <p className="normal-case lg:uppercase px-2 text-sm md:text-20">Thành Tiền</p>
+            <p className="normal-case lg:uppercase px-2 text-16">Thành Tiền</p>
         </div>
         <div className="my-3">
             {
