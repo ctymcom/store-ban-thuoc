@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { Select } from "../../../shared/utilities/form/select";
 import { format } from "date-fns";
@@ -7,6 +6,7 @@ import { AritoUser } from "../../../../lib/repo/arito-user.repo";
 import { parseInt } from "lodash";
 import UpdatePasswordDialog from "./update-password-dialog";
 import DateTime from "./datetime";
+import { useToast } from "../../../../lib/providers/toast-provider";
 
 interface PropsType extends ReactProps {
   [x: string]: any;
@@ -24,7 +24,8 @@ export function FormProfile(props: PropsType) {
     setUserA(user);
   }, [user]);
 
-  const [message, setMessage] = useState(null);
+  const toast = useToast();
+
   let listOptionsTypeStore = [
     { value: 1, label: "Phòng khám" },
     { value: 2, label: "Nhà thuốc" },
@@ -47,35 +48,56 @@ export function FormProfile(props: PropsType) {
     }
   };
 
-  const checkBeforeMessage = (userA) => {
-    if (userA) {
-      const { username, phone } = userA;
-      if (!username) {
-        setMessage("Họ tên không được để trống");
-        return false;
-      }
-      if (!phone) {
-        setMessage("Điện thoại không được để trống");
-        return false;
-      } else {
-        if (phone.length > 10) {
-          setMessage("Điện thoại không được quá 10 số");
-          return false;
-        }
-      }
-    }
-  };
+  // const checkBeforeMessage = (userA) => {
+  //   if (userA) {
+  //     const { username, phone } = userA;
+  //     if (!username) {
+  //       setMessage("Họ tên không được để trống");
+  //       return false;
+  //     }
+  //     if (!phone) {
+  //       setMessage("Điện thoại không được để trống");
+  //       return false;
+  //     } else {
+  //       if (phone.length > 10) {
+  //         setMessage("Điện thoại không được quá 10 số");
+  //         return false;
+  //       }
+  //     }
+  //   }
+  // };
 
   const handleOnClick = (data: AritoUser) => {
-    console.log(data);
     updateAritoUser(data);
+    toast.success("Cập nhật tài khoản thành công");
   };
 
-  const handlerInputFile = () => {
-    let eleInputFile = document.querySelector("input[type='file']");
-    let eleBtnUpdateAvatar = document.querySelector(".btn__update-avatar");
-    eleInputFile.className = "block text-12 my-3";
+  const handlerChangeAvatar = () => {
+    let eleInputFile = document.getElementById("uploadFile");
+    eleInputFile.className = "block text-12 my-2";
+    let eleBtnUpdateAvatar = document.querySelector(".changeAvatar");
     eleBtnUpdateAvatar.className = "hidden ";
+    let eleBtnSaveAvatar = document.querySelector(".saveAvatar");
+    eleBtnSaveAvatar.className =
+      "flex item-center mx-auto px-10 sm:px-14 md:px-16 py-5 md:py-4 lg:py-6 whitespace-nowrap my-3 btn-outline text-lg border-primary border font-normal text-primary hover:bg-primary hover:text-white";
+  };
+
+  const handlerSaveAvatar = () => {};
+  const readURL = (e) => {
+    let url = e.value;
+    let ext = url.substring(url.lastIndexOf(".") + 1).toLowerCase();
+    let eleAvatar = document.querySelector("#avatar");
+    if (e.files && e.files[0] && (ext == "png" || ext == "jpeg" || ext == "jpg")) {
+      let reader = new FileReader();
+
+      reader.onload = function (e) {
+        eleAvatar.setAttribute("src", e.target.result.toString());
+      };
+      reader.readAsDataURL(e.files[0]);
+    } else {
+      eleAvatar.setAttribute("src", "/assets/img/avatar.svg");
+    }
+    console.log(url);
   };
 
   return (
@@ -157,6 +179,7 @@ export function FormProfile(props: PropsType) {
                     <div className="sm:flex justify-between items-center pt-4">
                       <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Tên cửa hàng</p>
                       <input
+                        id="avatar"
                         className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
                         value={userA?.companyName}
                         onChange={(e) => {
@@ -205,13 +228,21 @@ export function FormProfile(props: PropsType) {
                   </div>
                   <div className="w-9/12 mx-auto flex items-center justify-center flex-wrap">
                     <button
-                      className="btn__update-avatar mx-auto px-10 sm:px-14 md:px-16 py-5 md:py-4 lg:py-6 whitespace-nowrap my-3 btn-outline text-lg border-primary border font-normal text-primary hover:bg-primary hover:text-white"
-                      onClick={() => handlerInputFile()}
+                      className="changeAvatar mx-auto px-10 sm:px-14 md:px-16 py-5 md:py-4 lg:py-6 whitespace-nowrap my-3 btn-outline text-lg border-primary border font-normal text-primary hover:bg-primary hover:text-white"
+                      onClick={() => handlerChangeAvatar()}
                     >
                       Đổi ảnh
                     </button>
+                    <button className="saveAvatar hidden " onClick={() => handlerSaveAvatar()}>
+                      Lưu ảnh
+                    </button>
+                    <input
+                      type="file"
+                      id="uploadFile"
+                      className=" hidden w-full"
+                      onChange={(e) => readURL(e.target)}
+                    />
 
-                    <input type="file" className="avatar hidden w-full text-12 my-3 " />
                     <p className="mx-auto text-12 whitespace-nowrap sm:text-16 text-gray-400 hidden sm:inline-block">
                       Dung lượng file tối đa 1MB.{" "}
                       <span className="block sm:inline xl:w-11/12 xl:block mx-auto">

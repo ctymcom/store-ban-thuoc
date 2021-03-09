@@ -8,8 +8,6 @@ type PropsType = {
   handleChange?: Function;
 };
 const DateTime = (props: PropsType) => {
-  console.log(typeof props.dateOfBirth);
-
   const getListOptions = (date: Date, id: string) => {
     switch (id) {
       case "day": {

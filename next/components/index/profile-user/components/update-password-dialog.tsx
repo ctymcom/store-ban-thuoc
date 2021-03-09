@@ -3,6 +3,7 @@ import { Dialog } from "../../../shared/utilities/dialog/dialog";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { useState } from "react";
 import { useAuth } from "../../../../lib/providers/auth-provider";
+import { useToast } from "../../../../lib/providers/toast-provider";
 interface PropsType extends ReactProps {
   setShowDialog?: Function;
   isOpen?: boolean;
@@ -12,22 +13,20 @@ export default function UpdatePasswordDialog(props: PropsType) {
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmNewPass, setConfirmNewPass] = useState("");
-  const [isCheckConfirm, setIsCheckConfirm] = useState(false);
   const [mess, setMess] = useState("");
-
+  const toast = useToast();
   const { changeAritoUserPasswrod } = useAuth();
 
   const handleOnClick = (oldPass, newPass, confirmNewPass) => {
     if (confirmNewPass) {
       if (newPass === confirmNewPass) {
         changeAritoUserPasswrod(oldPass, newPass);
-        setIsCheckConfirm(true);
-        if (isCheckConfirm) {
-          setMess("");
-        }
+        // toast.success("Đổi mật khẩu thành công");
       } else {
         setMess("Nhập lại mật khẩu chưa đúng!");
       }
+    } else {
+      setMess("Bạn chưa nhập lại mật khẩu mới");
     }
   };
 

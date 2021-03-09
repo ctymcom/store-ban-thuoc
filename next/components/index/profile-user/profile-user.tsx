@@ -1,6 +1,4 @@
 import { FormProfile } from './components/form-profile';
-import { user } from './components/data-profile';
-
 
 export function ProfileUserPage(props) {
 
@@ -8,5 +6,5 @@ export function ProfileUserPage(props) {
         <div className="w-full">
             <FormProfile/>
         </div>
-    </>;
+    </>;2
 }
