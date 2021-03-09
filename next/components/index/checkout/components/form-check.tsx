@@ -1,72 +1,80 @@
-import { Checkbox } from '../../../shared/form/checkbox';
-import { useState } from 'react';
-interface PropsType extends ReactProps{
-    checkList:Option[],
-    title:string,
-    getCheckPayment?:Function
+import { Checkbox } from "../../../shared/form/checkbox";
+import { useState } from "react";
+import { MethodCheckout } from "../../../../lib/repo/checkout.repo";
+interface PropsType extends ReactProps {
+  checkList: MethodCheckout[];
+  title: string;
+  getCheckPayment?: Function;
 }
-type Option ={
-    title:string,
-    content:string,
-}
-export function FormCheck(props:PropsType) {
-    const { title, checkList } = props;
-    const [Checked, setChecked] = useState(false);
-    const [IDC, setIDC] = useState(0);
-    const setIDChecked = (id:number, title:string) => {
-        if (id !== IDC) {
-            setIDC(id);
-            setChecked(true);
-            if (title === "Chuyển khoản") {
-                props.getCheckPayment(true);
-            }
-            if (title === "COD") {
-                props.getCheckPayment(false);
-            }
-        } else {
-            setIDC(-1);
-            setChecked(false);
-            props.getCheckPayment(false);
+export function FormCheck(props: PropsType) {
+  const { title, checkList } = props;
+  const [Checked, setChecked] = useState(false);
+  const [iDChecking, setIDChecking] = useState<string>("");
+  const setIDCheck = (id: string, code: string) => {
+    if (id !== iDChecking) {
+      setIDChecking(id);
+      setChecked(true);
+      if (code === "CK") {
+        props.getCheckPayment(true);
+      }
+      if (code === "COD") {
+        props.getCheckPayment(false);
+      }
+    } else {
+      setIDChecking("");
+      setChecked(false);
+      props.getCheckPayment(false);
+    }
+  };
+  const setCheckBox = (id: string) => {
+    if (id !== iDChecking) return false;
+    return true;
+  };
+  const setStyleCheck = (id: string, type: string) => {
+    switch (type) {
+      case "bo": {
+        let tempStyle =
+          "text-16 md:text-20 cursor-pointer px-3 py-2 md:px-5 md:py-4 mt-4 border rounded w-full xl:w-1/2 hover:bg-primary-light transition duration-500 ease-in-out whitespace-nowrap";
+        if (id === iDChecking) tempStyle += " border-primary bg-primary-light";
+        return tempStyle;
+      }
+      case "he": {
+        let tempStyle = " text-20 md:text-20";
+        if (id === iDChecking) {
+          tempStyle += " text-primary";
         }
+        return tempStyle;
+      }
     }
-    const setCheckBox = (id:number) => {
-        if (id !== IDC)
-            return false;
-        return true;
-    }
-    const setStyleCheck = (id:number, type:string) => {
-        switch (type) {
-            case "bo": {
-                let tempStyle = "text-16 md:text-20 cursor-pointer px-3 py-2 md:px-5 md:py-4 mt-4 border rounded w-full xl:w-1/2 hover:bg-primary-light transition duration-500 ease-in-out whitespace-nowrap"
-                if (id === IDC)
-                    tempStyle += " border-primary bg-primary-light";
-                return tempStyle;
-            }
-            case "he": {
-                let tempStyle = " text-20 md:text-20"
-                if (id === IDC) {
-                    tempStyle += " text-primary";
-                }
-                return tempStyle;
-            }
-        }
-    }
-    return <>
-        <h3 className="uppercase text-20 md:text-20 border-b-4">{title}</h3>
-        <div className="w-full xl:w-4/5 block sm:flex gap-5">
-            {
-                checkList.map((item:Option, index:number) => {
-                    return <div className={setStyleCheck(index, "bo")} key={index} onClick={() => { setIDChecked(index, item.title) }}>
-                        <div className="flex items-center">
-                            <Checkbox checked={setCheckBox(index)} />
-                            <div>
-                                <h4 className={setStyleCheck(index, "he")}>{item.title}</h4>
-                                <p className="text-gray-500 text-14 md:text-18">{item.content}</p>
-                            </div>
-                        </div>
-                    </div>
-                })
-            }
-        </div>
+  };
+  return (
+    <>
+      <h3 className="uppercase text-20 md:text-20 border-b-4">{title}</h3>
+      <div className="w-full xl:w-4/5 block sm:flex gap-5">
+        {checkList ? (
+          checkList.map((item: MethodCheckout) => {
+            return (
+              <div
+                className={setStyleCheck(item.id, "bo")}
+                key={item.id}
+                onClick={() => {
+                  setIDCheck(item.id, item.code);
+                }}
+              >
+                <div className="flex items-center">
+                  <Checkbox checked={setCheckBox(item.id)} />
+                  <div>
+                    <h4 className={setStyleCheck(item.id, "he")}>{item.code}</h4>
+                    <p className="text-gray-500 text-14 md:text-18">{item.name}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <p>Chưa có {title}</p>
+        )}
+      </div>
     </>
+  );
 }

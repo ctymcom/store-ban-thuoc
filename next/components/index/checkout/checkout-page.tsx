@@ -17,7 +17,7 @@ import CheckBoxSquare from "./components/check-box-square";
 import AddressDialog from "./components/address-dialog";
 import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
-import { useCart } from '../../../lib/providers/cart-provider';
+import { useCart } from "../../../lib/providers/cart-provider";
 
 export function CheckOutPage() {
   const [isHide, setIsHide] = useState(false);
@@ -26,11 +26,11 @@ export function CheckOutPage() {
     addressSelected,
     setShowDialogAddress,
     showDialogAddress,
-    loadAddressDefautl,
+    loadingCheckout,
+    paymenMethods,
+    deliveryMethods,
   } = useCheckoutContext();
-  const {
-    cartTotal
-  } = useCart();
+  const { cartTotal } = useCart();
   const getCheckPayment = (status: boolean) => {
     setIsHide(status);
   };
@@ -39,21 +39,21 @@ export function CheckOutPage() {
     return isCheck ? style + " btn-primary" : style + " btn-disabled";
   };
 
-  return (
+  return !loadingCheckout ? (
     <div className="lg:flex justify-between gap-4 md:gap-8 xl:gap-16">
       <div className="w-full lg:w-2/3 xl:w-3/4 gap-4">
         <div className="w-full">
           <div>
             <FormCheck
-              title={listFormCheckTrans.tit}
-              checkList={listFormCheckTrans.list}
+              title="Phương thức vận chuyển"
+              checkList={deliveryMethods}
               getCheckPayment={getCheckPayment}
             />
           </div>
           <div className="mt-6">
             <FormCheck
-              title={listFormCheckPayment.tit}
-              checkList={listFormCheckPayment.list}
+              title="Phương thức thanh toán"
+              checkList={paymenMethods}
               getCheckPayment={getCheckPayment}
             />
           </div>
@@ -99,13 +99,12 @@ export function CheckOutPage() {
                   <p>{addressSelected.phone}</p>
                 </>
               ) : (
-                <>{
-                  loadAddressDefautl?
-                  <Spinner />:<div className="mx-auto w-2/3 items-center">
-                    <p>Bạn chưa có địa chỉ giao hàng?</p>
-                    <button className="btn-primary w-full" onClick={() => setShowDialogAddress(true)}>Bấm vào đây để tạo</button>
-                  </div>
-                }</>
+                <div className="mx-auto w-2/3 items-center">
+                  <p>Bạn chưa có địa chỉ giao hàng?</p>
+                  <button className="btn-primary w-full" onClick={() => setShowDialogAddress(true)}>
+                    Bấm vào đây để tạo
+                  </button>
+                </div>
               )}
             </div>
           </div>
@@ -115,9 +114,7 @@ export function CheckOutPage() {
             </div>
             <div className="flex justify-between pt-2 text-16 ">
               <p>Thành tiền</p>
-              <p className="font-bold text-primary">
-                {NumberPipe(cartTotal, false)} VND
-              </p>
+              <p className="font-bold text-primary">{NumberPipe(cartTotal, false)} VND</p>
             </div>
           </div>
         </div>
@@ -144,7 +141,13 @@ export function CheckOutPage() {
           </p>
         </div>
       </div>
-      <AddressDialog key="AddressDialog" isOpen={showDialogAddress} setShowDialog={setShowDialogAddress} />
+      <AddressDialog
+        key="AddressDialog"
+        isOpen={showDialogAddress}
+        setShowDialog={setShowDialogAddress}
+      />
     </div>
+  ) : (
+    <Spinner />
   );
 }

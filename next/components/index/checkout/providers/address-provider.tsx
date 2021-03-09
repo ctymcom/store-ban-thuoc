@@ -5,6 +5,7 @@ import { UserAddressService, UserAddress, UpdateUserAddressInput } from '../../.
 import { useAuth } from '../../../../lib/providers/auth-provider';
 import { cloneDeep } from 'lodash';
 import { useCheckoutContext } from './checkout-provider';
+import { useToast } from '../../../../lib/providers/toast-provider';
 export const AddressContext = createContext<Partial<{
   listAddress: UserAddress[]
   addressSelected: UserAddress,
@@ -20,6 +21,7 @@ export const AddressContext = createContext<Partial<{
 }>>({});
 
 export const AddressProvider = (props) => {
+  const {warn} = useToast()
   const [listAddress, setListAdress] = useState<UserAddress[]>(null);
   const [userAddress, setUserAddress] = useState<UserAddress>(null);
   const {setAddressSelected} = useCheckoutContext();
@@ -63,7 +65,7 @@ export const AddressProvider = (props) => {
         districtId, wardId, phone, location, isDefault } }).then(res => {
         loadList();
       }).catch(err => {
-        alert(err)
+        warn(err)
       }) 
   }
   async function setDefaultAddress(id:string) {
