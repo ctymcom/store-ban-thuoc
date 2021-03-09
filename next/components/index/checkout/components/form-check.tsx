@@ -1,5 +1,5 @@
 import { Checkbox } from "../../../shared/form/checkbox";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MethodCheckout } from "../../../../lib/repo/checkout.repo";
 interface PropsType extends ReactProps {
   checkList: MethodCheckout[];
@@ -10,6 +10,9 @@ export function FormCheck(props: PropsType) {
   const { title, checkList } = props;
   const [Checked, setChecked] = useState(false);
   const [iDChecking, setIDChecking] = useState<string>("");
+  useEffect(() => {
+    if (checkList) setIDChecking(checkList[0].id);
+  }, [checkList]);
   const setIDCheck = (id: string, code: string) => {
     if (id !== iDChecking) {
       setIDChecking(id);

@@ -3,15 +3,9 @@ import { useState } from "react";
 import { IoLocationSharp } from "react-icons/io5";
 
 import { NumberPipe } from "../../../lib/pipes/number";
-import { LayoutCart } from "../cart/components/layout-cart";
 import { PayMoney } from "../cart/components/pay-money";
 import { FormCheck } from "./components/form-check";
-import {
-  listFormCheckPayment,
-  listFormCheckTrans,
-  listMoneyCheckout,
-  transferInformation,
-} from "./components/form-check-data";
+import { listMoneyCheckout, transferInformation } from "./components/form-check-data";
 import TransferInformation from "./components/transfer-information";
 import CheckBoxSquare from "./components/check-box-square";
 import AddressDialog from "./components/address-dialog";
