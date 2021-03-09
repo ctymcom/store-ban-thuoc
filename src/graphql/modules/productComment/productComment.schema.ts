@@ -7,15 +7,6 @@ const schema = gql`
     # Add Query
   }
 
-  extend type Mutation {
-    createProductComment(data: CreateProductCommentInput!): ProductComment
-    # Add Mutation
-  }
-
-  input CreateProductCommentInput {
-    name: String
-  }
-
   type ProductComment {
     id: String
     createdAt: DateTime

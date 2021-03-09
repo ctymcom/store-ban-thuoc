@@ -1,6 +1,8 @@
 import { ROLES } from "../../../constants/role.const";
 import { AuthHelper } from "../../../helpers";
+import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { Context } from "../../context";
+import { ProductModel } from "../product/product.model";
 import { productCommentService } from "./productComment.service";
 
 const Query = {
@@ -13,18 +15,9 @@ const Query = {
   },
 };
 
-const Mutation = {
-  createProductComment: async (root: any, args: any, context: Context) => {
-    context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
-    const { data } = args;
-    return await productCommentService.create(data);
-  },
-};
-
 const ProductComment = {};
 
 export default {
   Query,
-  Mutation,
   ProductComment,
 };

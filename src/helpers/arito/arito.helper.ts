@@ -459,6 +459,22 @@ export class AritoHelper {
       };
     });
   }
+  static postComment({ type, code, reviewer, imark, content }, token) {
+    return Axios.post(`${this.host}/Item/PostComment`, {
+      token: token,
+      memvars: [
+        //Lấy quốc gia sản xuất
+        ["type", "C", type], //Mã sản phẩm
+        ["code", "C", code], //Mã sản phẩm
+        ["reviewer", "C", reviewer], //Người đánh giá
+        ["imark", "I", imark], //Mã sản phẩm
+        ["content", "C", content], //Nội dung
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "msg");
+    });
+  }
   static async getUserAddress(userId: string) {
     return Axios.post(`${this.host}/List/GetUserAddress`, {
       token: this.imageToken,
