@@ -63,7 +63,6 @@ export function Recovery(props: PropsType) {
         />
         <div className="flex justify-center mt-2 w-full">
           <Button
-            default
             className="hover:underline"
             text="Quay lại đăng nhập"
             onClick={() => props.setMode("login")}

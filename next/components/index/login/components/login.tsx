@@ -71,13 +71,11 @@ export function Login(props: PropsType) {
         />
         <div className="flex justify-between mt-2 w-full">
           <Button
-            default
             className="hover:underline"
             text="Đăng ký"
             onClick={() => props.setMode("register")}
           />
           <Button
-            default
             className="hover:underline"
             text="Quên mật khẩu"
             onClick={() => props.setMode("recovery")}

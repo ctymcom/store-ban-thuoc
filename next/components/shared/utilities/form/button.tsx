@@ -4,13 +4,15 @@ import { CgSpinner } from "react-icons/cg";
 interface PropsType extends ReactProps {
   small?: boolean;
   large?: boolean;
-  default?: boolean;
+  outline?: boolean;
+  gray?: boolean;
   primary?: boolean;
   accent?: boolean;
   info?: boolean;
   success?: boolean;
   danger?: boolean;
   warning?: boolean;
+  disabled?: boolean;
   type?: "button" | "reset" | "submit";
   icon?: JSX.Element;
   iconPosition?: "start" | "end";
@@ -21,18 +23,21 @@ interface PropsType extends ReactProps {
 }
 export function Button({
   className = "",
+  style,
   type = "button",
   iconPosition = "start",
   ...props
 }: PropsType) {
   let buttonClass = "";
-  if (props.default) buttonClass = "btn-default";
-  else if (props.primary) buttonClass = "btn-primary";
+  if (props.primary) buttonClass = "btn-primary";
   else if (props.accent) buttonClass = "btn-accent";
+  else if (props.gray) buttonClass = "btn-gray";
+  else if (props.outline) buttonClass = "btn-outline";
   else if (props.info) buttonClass = "btn-info";
   else if (props.success) buttonClass = "btn-success";
   else if (props.danger) buttonClass = "btn-danger";
   else if (props.warning) buttonClass = "btn-warning";
+  else buttonClass = "btn-default";
 
   let buttonSize = "";
   if (props.small) buttonSize = "btn-sm";
@@ -64,9 +69,10 @@ export function Button({
       className={`${buttonClass} ${buttonSize} ${
         iconPosition == "end" ? "flex-row-reverse" : ""
       } ${className}`.trim()}
+      style={style}
       type={type}
       onClick={onClick}
-      disabled={loading}
+      disabled={loading || props.disabled}
     >
       {props.icon && (
         <>

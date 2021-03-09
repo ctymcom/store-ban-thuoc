@@ -3,6 +3,7 @@
 
 interface ReactProps {
   className?: string;
+  style?: any;
   key?: any;
   children?: any;
 }

@@ -12,7 +12,7 @@ export const SettingsContext = createContext<
     settings: Setting[];
     settingGroups: SettingGroup[];
     settingGroup: SettingGroup;
-    saveSettings: (settings: MutableSetting[]) => any;
+    saveSettings: (settings: MutableSetting[]) => Promise<any>;
     loadDone: boolean;
   }>
 >({});
@@ -73,7 +73,7 @@ export function SettingsProvider({ children }: any) {
     }
   }, [settingGroup]);
 
-  const saveSettings = (mutableSettings: MutableSetting[]) => {
+  const saveSettings = async (mutableSettings: MutableSetting[]) => {
     const filteredSettings = mutableSettings.filter(
       (setting) => setting.value != settings.find((x) => x.id == setting.id).value
     );
@@ -82,27 +82,25 @@ export function SettingsProvider({ children }: any) {
       return;
     }
 
-    SettingService.mutate({
-      mutation: filteredSettings.map((setting) =>
-        SettingService.updateQuery({
-          id: setting.id,
-          data: { value: setting.value },
-        })
-      ),
-    })
-      .then((res) => {
-        setSettings(
-          mutableSettings.map((x) => {
-            const { values, ...settings } = x;
-            return settings;
+    try {
+      await SettingService.mutate({
+        mutation: filteredSettings.map((setting) =>
+          SettingService.updateQuery({
+            id: setting.id,
+            data: { value: setting.value },
           })
-        );
-        toast.success("Lưu cấu hình thành công");
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error(err.message);
+        ),
       });
+      setSettings(
+        mutableSettings.map((x) => {
+          const { values, ...settings } = x;
+          return settings;
+        })
+      );
+      toast.success("Lưu cấu hình thành công");
+    } catch (err) {
+      toast.error("Lưu cấu hình thất bại. " + err.message);
+    }
   };
 
   return (

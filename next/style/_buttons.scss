@@ -35,6 +35,10 @@
     }
   }
 
+  span + i {
+    @apply ml-1.5;
+  }
+
   &.btn-sm {
     @apply px-4;
     @apply h-8;
