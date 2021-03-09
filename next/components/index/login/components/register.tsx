@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
-import { useState, useCallback, useRef, MutableRefObject } from "react";
-import { LOGIN_PATHNAME, useAuth } from "../../../../lib/providers/auth-provider";
-import useDevice from "./../../../../lib/hooks/useDevice";
+import { MutableRefObject, useCallback, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
+import { LOGIN_PATHNAME, useAuth } from "../../../../lib/providers/auth-provider";
 import { useToast } from "../../../../lib/providers/toast-provider";
+import { Button } from "../../../shared/utilities/form/button";
+import useDevice from "./../../../../lib/hooks/useDevice";
+import { Form } from "./../../../shared/utilities/form/form";
 
 interface PropsType extends ReactProps {
   setMode: Function;
@@ -24,39 +26,46 @@ export function Register(props: PropsType) {
   }, []);
 
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
 
-  const onFormSubmit = async (e) => {
-    e.preventDefault();
-    await recaptchaRef.current.executeAsync();
+  const onFormSubmit = async () => {
     if (!nickname || !email || !phone) {
       toast.info("Yêu cầu nhập đầy đủ thông tin");
-    } else {
-      register(nickname, email, phone)
-        .then((res) => {
-          toast.success("Đăng ký thành công. Vui lòng kiểm tra email để xem thông tin đăng nhập.");
-          let pathname = sessionStorage.getItem(LOGIN_PATHNAME);
-          router.replace(pathname || "/");
-        })
-        .catch((err) => {
-          toast.error("Đăng ký thất bại. " + err.message);
-        });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      let res = await recaptchaRef.current.executeAsync();
+      await register(nickname, email, phone);
+      toast.success("Đăng ký thành công. Vui lòng kiểm tra email để xem thông tin đăng nhập.", {
+        autoClose: 10000,
+      });
+      let pathname = sessionStorage.getItem(LOGIN_PATHNAME);
+      router.replace(pathname || "/");
+    } catch (err) {
+      console.error(err);
+      toast.error("Đăng ký thất bại. " + err.message);
+      setLoading(false);
     }
   };
 
   return (
-    <form className="flex flex-col items-center animate-emerge" onSubmit={onFormSubmit}>
+    <Form className="flex flex-col items-center animate-emerge" onSubmit={onFormSubmit}>
       <div className="uppercase text-primary font-bold text-center text-lg">Đăng ký</div>
       <input
         className="form-input mt-8 min-w-2xs sm:min-w-xs"
         placeholder="Tên hiển thị"
         ref={ref}
         value={nickname}
+        name="nickname"
         onChange={(e) => setNickname(e.target.value)}
       />
       <input
         className="form-input mt-4 min-w-2xs sm:min-w-xs"
         placeholder="Email"
         type="email"
+        name="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
@@ -64,6 +73,7 @@ export function Register(props: PropsType) {
         className="form-input mt-4 min-w-2xs sm:min-w-xs"
         placeholder="Số điện thoại"
         type="phone"
+        name="phone"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
       />
@@ -73,19 +83,23 @@ export function Register(props: PropsType) {
           size="invisible"
           sitekey="6Lf9mHYaAAAAAC6iHPb_CU0qFSq4XFq54BpjTq9B"
         />
-        <button type="submit" className="btn-primary btn-lg w-full">
-          Đăng ký
-        </button>
+        <Button
+          primary
+          large
+          type="submit"
+          className="w-full mt-4"
+          text="Đăng ký"
+          isLoading={loading}
+        />
         <div className="flex justify-center mt-2 w-full">
-          <button
-            type="button"
-            className="btn-default hover:underline"
+          <Button
+            default
+            className="hover:underline"
+            text="Quay lại đăng nhập"
             onClick={() => props.setMode("login")}
-          >
-            Quay lại đăng nhập
-          </button>
+          />
         </div>
       </div>
-    </form>
+    </Form>
   );
 }

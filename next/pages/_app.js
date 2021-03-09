@@ -7,12 +7,12 @@ export default function App({ Component, pageProps }) {
   const layoutProps = Component.LayoutProps ? Component.LayoutProps : {};
 
   return (
-    <AuthProvider>
-      <ToastProvider>
+    <ToastProvider>
+      <AuthProvider>
         <Layout {...layoutProps}>
           <Component {...pageProps} />
         </Layout>
-      </ToastProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ToastProvider>
   );
 }
