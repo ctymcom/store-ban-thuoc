@@ -771,6 +771,9 @@ export class AritoHelper {
     promotionCode?: string;
     paymentMethod: string;
     deliveryMethod: string;
+    addressId: string;
+    note: string;
+    point: boolean;
     items: {
       productCode: string;
       qty: number;
@@ -786,6 +789,9 @@ export class AritoHelper {
         ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
         ["payment", "C", data.paymentMethod], //Chuyen khoan
         ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
+        ["ma_dc", "C", data.addressId], //Địa chỉ giao hàng
+        ["dien_giai", "C", data.note], //Ghi chú khác
+        ["diem", "N", data.point ? "1" : "0"], //Sử dụng điểm
       ],
       data: {
         "#master": [
@@ -810,9 +816,9 @@ export class AritoHelper {
       this.handleError(res);
       return {
         subtotal: subtotal,
-        discount: get(res.data, "data.data.0.t_ck_nt", 0),
-        amount: get(res.data, "data.data.0.t_tt_nt", 0),
-        items: get(res.data, "data.table1", []).map((t) => ({
+        discount: get(res.data, "data.master.0.t_ck_nt", 0),
+        amount: get(res.data, "data.master.0.t_tt_nt", 0),
+        items: get(res.data, "data.detail", []).map((t) => ({
           productCode: t["ma_vt"],
           unit: t["dvt"],
           storeCode: t["ma_kho"],
@@ -833,8 +839,13 @@ export class AritoHelper {
     promotionCode?: string;
     paymentMethod: string;
     deliveryMethod: string;
+    addressId: string;
+    note: string;
+    point: boolean;
     items: {
+      productId: string;
       productCode: string;
+      productName: string;
       qty: number;
       unit: string;
       price: number;
@@ -842,12 +853,16 @@ export class AritoHelper {
     }[];
   }) {
     let subtotal = 0;
+    const orderItems = keyBy(data.items, "productCode");
     return Axios.post(`${this.host}/Voucher/SyncOrder`, {
       token: this.imageToken,
       memvars: [
         ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
         ["payment", "C", data.paymentMethod], //Chuyen khoan
         ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
+        ["ma_dc", "C", data.addressId], //Địa chỉ giao hàng
+        ["dien_giai", "C", data.note], //Ghi chú khác
+        ["diem", "N", data.point ? "1" : "0"], //Sử dụng điểm
       ],
       data: {
         "#master": [
@@ -871,8 +886,28 @@ export class AritoHelper {
     }).then((res) => {
       this.handleError(res);
       return {
-        code: get(res.data, "data.data.0.id"),
-        orderNumber: get(res.data, "data.data.0.so_ct"),
+        code: get(res.data, "data.master.0.id"),
+        orderNumber: get(res.data, "data.master.0.so_ct"),
+        subtotal: subtotal,
+        discount: get(res.data, "data.master.0.t_ck_nt", 0),
+        amount: get(res.data, "data.master.0.t_tt_nt", 0),
+        promotionCode: get(res.data, "data.master.0.ma_ck"),
+        items: get(res.data, "data.detail", []).map((t) => ({
+          productCode: t["ma_vt"],
+          productId: orderItems[t["ma_vt"]].productId,
+          productName: orderItems[t["ma_vt"]].productName,
+          unit: t["dvt"],
+          storeCode: t["ma_kho"],
+          qty: t["so_luong"],
+          factor: t["he_so"],
+          price: t["gia_nt2"],
+          amount: t["tien_nt2"],
+          discountRate: t["tl_ck"],
+          discount: t["ck_nt"],
+          vatRate: t["thue_suat"],
+          vat: t["thue_nt"],
+          position: t["line"],
+        })),
       };
     });
   }
