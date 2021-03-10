@@ -2,6 +2,17 @@ import { PostCard } from "../../shared/post/post-card";
 import { Spinner } from "../../shared/utilities/spinner";
 import { usePostsContext } from "./providers/posts-provider";
 import useScreen from "./../../../lib/hooks/useScreen";
+import BreadCrumbs from "../../shared/utilities/breadcrumbs/breadcrumbs";
+
+const breadcrumbs = [
+  {
+    href: "/",
+    label: "Trang chủ",
+  },
+  {
+    label: "Tin tức",
+  },
+];
 
 export function PostsPage() {
   const { posts, loading, total, loadPosts } = usePostsContext();
@@ -14,6 +25,7 @@ export function PostsPage() {
           <Spinner />
         ) : (
           <>
+            <BreadCrumbs className="pb-4" breadcrumbs={breadcrumbs} />
             {screenMd && (
               <div className="w-full md:mb-12 lg:mb-20">
                 <PostCard post={posts[0]} large />

@@ -49,7 +49,7 @@ export function HomeProvider(props) {
         FeedbackService.getAllQuery(),
         PostService.getAllQuery({
           query: {
-            limit: 4,
+            limit: 8,
             filter: { status: "PUBLIC", slug: { __exists: true } },
             order: { priority: -1 },
           },

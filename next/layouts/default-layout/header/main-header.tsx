@@ -86,7 +86,7 @@ export function MainHeader(props: PropsType) {
                 <HiOutlineShoppingCart />
               </i>
               {!!cartProductCount && (
-                <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
+                <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-0 md:right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
                   <span>{cartProductCount}</span>
                 </div>
               )}
