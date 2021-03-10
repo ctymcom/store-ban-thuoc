@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { LOGIN_PATHNAME, useAuth } from "../../../lib/providers/auth-provider";
 import { useToast } from "../../../lib/providers/toast-provider";
+import { Button } from "../../shared/utilities/form/button";
+import { Form } from "./../../shared/utilities/form/form";
 
 export default function AdminLoginPage() {
   const { checkUser, login } = useAuth();
@@ -21,20 +23,21 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
 
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
 
-  const onFormSubmit = (e) => {
-    e.preventDefault();
+  const onFormSubmit = () => {
     if (!username || !password) {
       toast.info("Yêu cầu nhập đầy đủ");
     } else {
+      setLoading(true);
       login(username, password, "editor")
         .then((res) => {
-          toast.success("Đăng nhập thành công");
           let pathname = sessionStorage.getItem(LOGIN_PATHNAME);
           router.replace(pathname || "/admin");
         })
         .catch((err) => {
           toast.error(err.message);
+          setLoading(false);
         });
     }
   };
@@ -42,7 +45,7 @@ export default function AdminLoginPage() {
   return (
     <>
       <div className="w-screen h-screen bg-center bg-no-repeat bg-cover flex-center bg-primary-light">
-        <form
+        <Form
           className="bg-gray-50 shadow-lg rounded-sm min-h-sm max-w-lg w-2/3 flex flex-col items-center p-8 border border-gray-200"
           onSubmit={onFormSubmit}
         >
@@ -65,11 +68,15 @@ export default function AdminLoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="flex">
-            <button type="submit" className="btn-primary h-12 px-8">
-              Đăng nhập
-            </button>
+            <Button
+              primary
+              type="submit"
+              className="h-12 px-8"
+              text="Đăng nhập"
+              isLoading={loading}
+            />
           </div>
-        </form>
+        </Form>
       </div>
     </>
   );
