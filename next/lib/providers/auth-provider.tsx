@@ -8,7 +8,6 @@ import { ClearAuthToken, SetAuthToken } from "../graphql/auth.link";
 import { AritoUser, AritoUserService } from "../repo/arito-user.repo";
 import { GraphService } from "../repo/graph.repo";
 import { GetAuthToken } from "./../graphql/auth.link";
-import data from "../../components/index/ingredients/data/ingredients-data";
 
 export const LOGIN_PATHNAME = "login-pathname";
 

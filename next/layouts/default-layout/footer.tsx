@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { useState } from "react";
-
-import { Spinner } from "../../components/shared/utilities/spinner";
 import { IconFacebook } from "../../public/assets/icons/icon-facebook";
 import { IconYoutube } from "../../public/assets/icons/icon-youtube";
 import { IconZalo } from "../../public/assets/icons/icon-zalo";
