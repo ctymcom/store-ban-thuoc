@@ -126,7 +126,7 @@ export class AritoUserRepository extends GraphRepository {
         "x-token": GetAuthToken(),
       },
     });
-    return res;
+    return res.data;
   }
   // ====== UserChangePassword =========
   async userChangePassword(oldPass: string, newPass: string): Promise<string> {
