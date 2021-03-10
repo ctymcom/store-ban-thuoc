@@ -1,17 +1,18 @@
 import { ApolloServer, gql } from "apollo-server-express";
 import { Express } from "express";
-import _ from "lodash";
-import path from "path";
 import GraphQLDateTime from "graphql-type-datetime";
-import morgan from "morgan";
-
 import { Server } from "http";
+import _ from "lodash";
 import minifyGql from "minify-graphql-loader";
-import { configs } from "../configs";
-import { onContext } from "./context";
-import { UtilsHelper, ErrorHelper } from "../helpers";
-import { Logger } from "../loaders/logger";
+import morgan from "morgan";
+import path from "path";
+
 import { Request } from "../base/baseRoute";
+import { configs } from "../configs";
+import { ErrorHelper, UtilsHelper } from "../helpers";
+import { Logger } from "../loaders/logger";
+import { onContext } from "./context";
+
 export default (app: Express, httpServer: Server) => {
   const typeDefs = [
     gql`
@@ -78,18 +79,20 @@ export default (app: Express, httpServer: Server) => {
     context: onContext,
     debug: configs.debug,
     formatError(err) {
-      // Logger.error()
-      Logger.error(err.message, {
-        metadata: {
-          stack: err.stack,
-          name: err.name,
-          message: err.message,
-          extensions: err.extensions,
-        },
-      });
-      if (err.extensions && !err.extensions.exception.info) {
-        ErrorHelper.logUnknowError(err);
-      }
+      try {
+        console.log("format error", err.message);
+        Logger.error(err.message, {
+          metadata: {
+            stack: err.stack,
+            name: err.name,
+            message: err.message,
+            extensions: err.extensions,
+          },
+        });
+        if (err.extensions && !err.extensions.exception.info) {
+          ErrorHelper.logUnknowError(err);
+        }
+      } catch (err) {}
       return err;
     },
     subscriptions: {
