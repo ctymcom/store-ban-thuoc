@@ -1,11 +1,7 @@
 import React from "react";
 import { createContext, useState, useEffect, useContext, Children } from "react";
 import { AddressService } from "../../../../lib/repo/address.repo";
-import {
-  UserAddressService,
-  UserAddress,
-  UpdateUserAddressInput,
-} from "../../../../lib/repo/user-address.repo";
+import { UserAddressService, UserAddress } from "../../../../lib/repo/user-address.repo";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { cloneDeep } from "lodash";
 import { useCheckoutContext } from "./checkout-provider";

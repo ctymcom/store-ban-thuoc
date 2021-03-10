@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoLocationSharp } from "react-icons/io5";
 
 import { NumberPipe } from "../../../lib/pipes/number";
@@ -11,11 +11,49 @@ import CheckBoxSquare from "./components/check-box-square";
 import AddressDialog from "./components/address-dialog";
 import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
-import { useCart } from "../../../lib/providers/cart-provider";
+import { useCart, CartProduct } from "../../../lib/providers/cart-provider";
+import { MethodCheckout, Order } from "../../../lib/repo/checkout.repo";
+import { GraphService } from "../../../lib/repo/graph.repo";
+import gql from "graphql-tag";
+import { useToast } from "../../../lib/providers/toast-provider";
 
 export function CheckOutPage() {
-  const [isHide, setIsHide] = useState(false);
   const [isCheck, setIsCheck] = useState(true);
+  const [deliMethodCS, setDeliMethod] = useState<MethodCheckout>(null);
+  const [paymentMethodCS, setPaymentMethod] = useState<MethodCheckout>(null);
+  const [checkPaymentMethodCS, setCheckPaymentMethod] = useState(false);
+  const [note, setNote] = useState<string>("");
+  const toast = useToast();
+  useEffect(() => {
+    if (paymentMethodCS?.code === "CK") {
+      setCheckPaymentMethod(true);
+    } else {
+      setCheckPaymentMethod(false);
+    }
+  }, [paymentMethodCS]);
+  const createOrder = async (data: any, note: string, cartProducts: CartProduct[]) => {
+    const { promotionCode, paymentMethod, deliveryMethod, addressId, usePoint } = data;
+    console.log(data, note, cartProducts);
+    GraphService.mutate({
+      mutation: "createOrder",
+      options: {},
+      variablesParams: `{
+        ${promotionCode}
+        ${paymentMethod}
+        ${deliveryMethod}
+        ${addressId}
+        ${note}
+        ${usePoint}
+        ${[
+          ...cartProducts.map((item: CartProduct) => {
+            item.productId, item.qty;
+          }),
+        ]}
+      }`,
+    })
+      .then((res) => toast.success(res))
+      .catch((err) => toast.warn(err));
+  };
   const {
     addressSelected,
     setShowDialogAddress,
@@ -24,10 +62,8 @@ export function CheckOutPage() {
     paymenMethods,
     deliveryMethods,
   } = useCheckoutContext();
-  const { cartTotal } = useCart();
-  const getCheckPayment = (status: boolean) => {
-    setIsHide(status);
-  };
+  const { cartTotal, cartProducts } = useCart();
+
   const setStyleBtn = () => {
     let style = "w-full text-16 py-6 my-2";
     return isCheck ? style + " btn-primary" : style + " btn-disabled";
@@ -41,19 +77,22 @@ export function CheckOutPage() {
             <FormCheck
               title="Phương thức vận chuyển"
               checkList={deliveryMethods}
-              getCheckPayment={getCheckPayment}
+              onClick={(e) => {
+                setDeliMethod(e);
+              }}
             />
           </div>
           <div className="mt-6">
             <FormCheck
               title="Phương thức thanh toán"
               checkList={paymenMethods}
-              getCheckPayment={getCheckPayment}
+              onClick={(e) => {
+                setPaymentMethod(e);
+              }}
             />
           </div>
-          <div className="w-full">
-            <p className="text-16 text-left py-2">Giảm 3% cho đơn hàng chuyển khoản trước</p>
-            {isHide ? <TransferInformation info={transferInformation} /> : <></>}
+          <div className="w-full mt-4">
+            {checkPaymentMethodCS ? <TransferInformation info={transferInformation} /> : <></>}
           </div>
         </div>
         <div className="w-full text-16  my-5">
@@ -65,6 +104,7 @@ export function CheckOutPage() {
           <textarea
             className="w-full border-2 border-gray-300 rounded-md p-3 outline-none"
             placeholder="Nhập ghi chú của bạn"
+            onChange={(e) => setNote(e.target.value)}
           ></textarea>
         </div>
       </div>
@@ -125,11 +165,24 @@ export function CheckOutPage() {
             </div>
             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
           </div>
-          <Link href="/complete">
-            <button className={setStyleBtn()} disabled={!isCheck}>
-              Đặt mua
-            </button>
-          </Link>
+          <button
+            className={setStyleBtn()}
+            disabled={!isCheck}
+            onClick={() =>
+              createOrder(
+                {
+                  promotionCode: "",
+                  paymentMethod: paymentMethodCS.code,
+                  deliveryMethod: deliMethodCS.code,
+                  addressId: addressSelected.id,
+                },
+                note,
+                cartProducts
+              )
+            }
+          >
+            Đặt mua
+          </button>
           <p className="whitespace-nowrap text-center text-12 md:text-16">
             (Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)
           </p>
