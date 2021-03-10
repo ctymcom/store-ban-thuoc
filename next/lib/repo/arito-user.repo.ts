@@ -14,7 +14,7 @@ export interface AritoUser {
   country: string;
   email: string;
   phone: string;
-  birthday: Date;
+  birthday: string;
   datetime2: Date;
   timeout: number;
   permission: number;
