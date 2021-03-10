@@ -30,14 +30,11 @@ export function HomePage() {
                   </Carousel>
                 )}
                 {productGroups.map((productGroup) => (
-                  <div
-                    className="main-container px-2 md:px-0 py-4 md:py-12"
-                    key={productGroup.title}
-                  >
+                  <div className="main-container py-4 md:py-12" key={productGroup.title}>
                     <ProductList title={productGroup.title} products={productGroup.products} />
                   </div>
                 ))}
-                <div className="main-container px-2 md:px-0 py-4 md:py-12 mb-8">
+                <div className="main-container py-4 md:py-12 mb-8">
                   <HomeFeedback feedbacks={feedbacks} />
                 </div>
                 <div className="main-container py-4 md:py-8">
@@ -56,10 +53,10 @@ export function HomePage() {
                     ))}
                   </div>
                 )}
-                <div className="main-container px-2 md:px-0 py-12">
+                <div className="main-container py-12">
                   <HomeBanner />
                 </div>
-                <div className="main-container px-2 md:px-0 py-8">
+                <div className="main-container py-8">
                   <HomeNews posts={posts} />
                 </div>
               </>

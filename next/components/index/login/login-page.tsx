@@ -17,6 +17,12 @@ export default function LoginPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (router.query["email"]) {
+      setMode("register");
+    }
+  }, [router.query]);
+
   return (
     <>
       {user !== null ? null : (

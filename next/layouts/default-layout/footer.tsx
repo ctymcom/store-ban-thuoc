@@ -1,15 +1,18 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
-
-import { Spinner } from "../../components/shared/utilities/spinner";
 import { IconFacebook } from "../../public/assets/icons/icon-facebook";
 import { IconYoutube } from "../../public/assets/icons/icon-youtube";
 import { IconZalo } from "../../public/assets/icons/icon-zalo";
 import { useDefaultLayoutContext } from "./providers/default-layout-providers";
+import { useAuth } from "./../../lib/providers/auth-provider";
 
 export function Footer() {
+  const [email, setEmail] = useState("");
   const [ShowMore, setShowMore] = useState(false);
   const { hotline, footerIntro, footerMenus, socials } = useDefaultLayoutContext();
+  const router = useRouter();
+  const { user } = useAuth();
 
   return (
     <>
@@ -70,24 +73,39 @@ export function Footer() {
                 </div>
               </div>
               <div className="flex flex-col justify-start lg:w-full text-sm sm:mt-6 md:mt-0">
-                <div className="">
-                  <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
-                    Đăng kí nhận tin mới
-                  </div>
-                  <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-0 mt-2 sm:mt-1 md:mt-0 lg:mt-3">
-                    Hãy đăng ký email để nhận được khuyến mãi
-                  </div>
-                  <div className="py-6 sm:py-10 md:py-10 lg:py-8 flex w-full sm:w-8/12 md:w-11/12 lg:w-full">
-                    <input
-                      type="text"
-                      className="text-gray-800 w-full md:w-7/12 lg:w-10/12 px-4 sm:px-6 md:px-5 py-2 sm:py-2 md:py-4 lg:py-3 text-lg sm:text-base md:text-sm lg:text-base border-primary border-2 md:border-0 md:border-opacity-0 focus:outline-none rounded-l-full"
-                      placeholder="Nhập email của bạn"
-                    />
-                    <div className="uppercase bg-primary font-semibold text-sm md:text-base whitespace-nowrap px-4 sm:px-7 md:px-8 sm:py-2 md:py-0 flex items-center justify-center cursor-pointer rounded-r-full">
-                      Đăng kí
+                {user === null && (
+                  <div className="">
+                    <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
+                      Đăng kí nhận tin mới
                     </div>
+                    <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-0 mt-2 sm:mt-1 md:mt-0 lg:mt-3">
+                      Hãy đăng ký email để nhận được khuyến mãi
+                    </div>
+                    <form
+                      className="py-6 sm:py-10 md:py-10 lg:py-8 flex w-full sm:w-8/12 md:w-11/12 lg:w-full"
+                      onSubmit={(e) => e.preventDefault()}
+                    >
+                      <input
+                        type="text"
+                        value={email}
+                        name="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="text-gray-800 w-full h-12 md:w-7/12 lg:w-10/12 px-4 sm:px-6 md:px-5 text-lg sm:text-base md:text-sm lg:text-base focus:outline-none rounded-l-full"
+                        placeholder="Nhập email của bạn"
+                      />
+                      <button
+                        className="btn-primary h-12 uppercase text-sm md:text-base px-6 lg:px-8 whitespace-nowrap rounded-l-none rounded-r-full"
+                        onClick={() => {
+                          if (email) {
+                            router.push({ pathname: "/login", query: { email } });
+                          }
+                        }}
+                      >
+                        Đăng kí
+                      </button>
+                    </form>
                   </div>
-                </div>
+                )}
                 <div className="">
                   <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
                     Kết nối với chúng tôi

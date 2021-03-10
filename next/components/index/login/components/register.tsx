@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { MutableRefObject, useCallback, useRef, useState } from "react";
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { LOGIN_PATHNAME, useAuth } from "../../../../lib/providers/auth-provider";
 import { useToast } from "../../../../lib/providers/toast-provider";
@@ -18,6 +18,13 @@ export function Register(props: PropsType) {
   const { register } = useAuth();
   const { isDesktop } = useDevice();
   const router = useRouter();
+
+  useEffect(() => {
+    if (router.query["email"]) {
+      setEmail(router.query["email"] as string);
+      router.replace("/login");
+    }
+  }, [router.query]);
 
   const recaptchaRef: MutableRefObject<any> = useRef();
 
