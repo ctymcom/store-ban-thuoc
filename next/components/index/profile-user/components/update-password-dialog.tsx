@@ -14,9 +14,6 @@ export default function UpdatePasswordDialog(props: PropsType) {
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmNewPass, setConfirmNewPass] = useState("");
-  const [isCheckConfirm, setIsCheckConfirm] = useState(false);
-  const [mess, setMess] = useState("");
-
   const { changeAritoUserPassword } = useAuth();
 
   const handleOnClick = async () => {
@@ -79,7 +76,6 @@ export default function UpdatePasswordDialog(props: PropsType) {
                 setConfirmNewPass(e.target.value);
               }}
             />
-            <p className="w-full text-15 md:text-13 text-red-600">{mess}</p>
           </div>
         </div>
         <div className="mb-4 mt-8 flex justify-center">

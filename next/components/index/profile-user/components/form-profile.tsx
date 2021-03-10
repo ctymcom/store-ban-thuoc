@@ -10,6 +10,7 @@ import DateTime from "./datetime";
 import { toast } from "react-toastify";
 import { GetAuthToken } from "../../../../lib/graphql/auth.link";
 import { Spinner } from "../../../shared/utilities/spinner";
+import { Button } from "../../../shared/utilities/form/button";
 
 interface PropsType extends ReactProps {
   [x: string]: any;
@@ -26,8 +27,6 @@ export function FormProfile(props: PropsType) {
   useEffect(() => {
     setUserA(user);
   }, [user]);
-
-  const [message, setMessage] = useState(null);
   let listOptionsTypeStore = [
     { value: 1, label: "Phòng khám" },
     { value: 2, label: "Nhà thuốc" },
@@ -39,8 +38,6 @@ export function FormProfile(props: PropsType) {
       switch (id) {
         case "dateOfBirth":
           {
-            console.log(value);
-
             setUserA({ ...userA, birthday: format(value, "yyyy-MM-dd") });
           }
           break;
@@ -50,27 +47,35 @@ export function FormProfile(props: PropsType) {
     }
   };
 
-  const checkBeforeMessage = (userA) => {
+  const checkBeforeMessage = () => {
     if (userA) {
       const { username, phone } = userA;
       if (!username) {
-        setMessage("Họ tên không được để trống");
+        toast.warn("Họ tên không được để trống");
         return false;
       }
       if (!phone) {
-        setMessage("Điện thoại không được để trống");
+        toast.warn("Điện thoại không được để trống");
         return false;
-      } else {
-        if (phone.length > 10) {
-          setMessage("Điện thoại không được quá 10 số");
-          return false;
-        }
       }
+      if (phone.length > 10) {
+        toast.warn("Điện thoại không được quá 10 số");
+        return false;
+      }
+      return true;
     }
   };
 
-  const handleOnClick = (data: AritoUser) => {
-    updateAritoUser(data);
+  const handleOnClick = async () => {
+    if (checkBeforeMessage()) {
+      let res = await updateAritoUser(userA);
+      console.log(res);
+
+      if (res.type === "success") {
+        toast.success(res.mess);
+      }
+      if (res.type === "warn") toast.warn(res.mess);
+    }
   };
   const ref: MutableRefObject<HTMLInputElement> = useRef();
   const handleUploadAvatar = (file: File) => {
@@ -189,14 +194,12 @@ export function FormProfile(props: PropsType) {
                 </div>
                 <div className="flex justify-between items-center xl:pr-16 pt-10 xl:pt-16">
                   <p className="hidden sm:inline-block w-1/4"></p>
-                  <button
+                  <Button
                     className="btn-primary w-full sm:w-3/4 xl:w-4/6 font-normal h-12 text-16 sm:text-20"
-                    onClick={() => {
-                      handleOnClick(userA);
-                    }}
-                  >
-                    Cập Nhật
-                  </button>
+                    asyncLoading
+                    onClick={async () => await handleOnClick()}
+                    text="Cập Nhật"
+                  />
                 </div>
               </div>
               <div className="flex xl:inline-block w-full xl:w-2/6 justify-around items-center">
