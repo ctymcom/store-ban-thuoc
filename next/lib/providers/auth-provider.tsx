@@ -22,7 +22,10 @@ const AuthContext = createContext<{
   register?: (nickname: string, email: string, phone: string) => Promise<AritoUser>;
   logout?: () => void;
   updateAritoUser?: (data: AritoUser) => void;
-  changeAritoUserPasswrod?: (oldPass: string, newPass: string) => void;
+  changeAritoUserPassword?: (
+    oldPass: string,
+    newPass: string
+  ) => Promise<{ type: string; mess: string }>;
   recoveryPassword?: (email: string) => Promise<string>;
 }>({});
 
@@ -139,18 +142,21 @@ export function AuthProvider({ children }: any) {
     console.log(user);
   };
 
-  const changeAritoUserPasswrod = async (oldPass: string, newPass: string) => {
+  const changeAritoUserPassword = async (oldPass: string, newPass: string) => {
     let encryptedOldPassword = md5(oldPass);
     let encryptedNewPassword = md5(newPass);
+    let noti = { type: "", mess: "" };
     try {
-      const data = await AritoUserService.userChangePassword(
+      noti.type = "success";
+      noti.mess = await AritoUserService.userChangePassword(
         encryptedOldPassword,
         encryptedNewPassword
       );
-      alert(data);
     } catch (err) {
-      alert(err.message);
+      noti.type = "warn";
+      noti.mess = err.message;
     }
+    return noti;
   };
 
   return (
@@ -159,7 +165,7 @@ export function AuthProvider({ children }: any) {
         user,
         setShowDialogUpdatePassword,
         showDialogUpdatePassword,
-        changeAritoUserPasswrod,
+        changeAritoUserPassword,
         recoveryPassword,
         login,
         register,
