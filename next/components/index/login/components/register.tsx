@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import { LOGIN_PATHNAME, useAuth } from "../../../../lib/providers/auth-provider";
 import { useToast } from "../../../../lib/providers/toast-provider";
 import { Button } from "../../../shared/utilities/form/button";
@@ -9,7 +8,9 @@ import { Form } from "./../../../shared/utilities/form/form";
 
 interface PropsType extends ReactProps {
   setMode: Function;
+  recaptchaRef: MutableRefObject<any>;
 }
+let token = "";
 export function Register(props: PropsType) {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
@@ -26,8 +27,6 @@ export function Register(props: PropsType) {
     }
   }, [router.query]);
 
-  const recaptchaRef: MutableRefObject<any> = useRef();
-
   const ref = useCallback((input) => {
     if (input && isDesktop) input.focus();
   }, []);
@@ -43,7 +42,9 @@ export function Register(props: PropsType) {
 
     try {
       setLoading(true);
-      let res = await recaptchaRef.current.executeAsync();
+      if (!token) {
+        token = await props.recaptchaRef.current.executeAsync();
+      }
       await register(nickname, email, phone);
       toast.success("Đăng ký thành công. Vui lòng kiểm tra email để xem thông tin đăng nhập.", {
         autoClose: 10000,
@@ -85,11 +86,6 @@ export function Register(props: PropsType) {
         onChange={(e) => setPhone(e.target.value)}
       />
       <div className="w-full flex flex-col items-center mt-4">
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          size="invisible"
-          sitekey="6Lf9mHYaAAAAAC6iHPb_CU0qFSq4XFq54BpjTq9B"
-        />
         <Button
           primary
           large
