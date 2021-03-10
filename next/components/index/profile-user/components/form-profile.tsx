@@ -9,6 +9,7 @@ import UpdatePasswordDialog from "./update-password-dialog";
 import DateTime from "./datetime";
 import { toast } from "react-toastify";
 import { GetAuthToken } from "../../../../lib/graphql/auth.link";
+import { Spinner } from "../../../shared/utilities/spinner";
 
 interface PropsType extends ReactProps {
   [x: string]: any;
@@ -83,14 +84,22 @@ export function FormProfile(props: PropsType) {
             "x-token": GetAuthToken(),
           },
         })
-        .then((res) => console.log(res));
+        .then((res) => {
+          console.log(res.data);
+          console.log(userA);
+
+          setUserA({ ...userA, imageLink: res.data.imageLink });
+          console.log(userA);
+        });
     }
+    updateAritoUser(userA);
+    console.log(userA);
   };
   return (
     <>
       {userA ? (
         <>
-          <div className="w-11/12 lg:w-full text-16 sm:text-20 text-gray-700">
+          <div className="w-11/12 mx-auto lg:w-full text-16 sm:text-20 text-gray-700">
             <h3 className="uppercase border-gray-200 border-b-4 pb-2 mb-4 text-24 hidden sm:block text-left">
               Thông tin tài khoản
             </h3>
@@ -200,12 +209,10 @@ export function FormProfile(props: PropsType) {
                 </div>
               </div>
               <div className="flex xl:inline-block w-full xl:w-2/6 justify-around items-center">
-                <div className="w-1/3 mx-auto">
-                  <img
-                    src={user.imageLink || "/assets/img/avatar.svg"}
-                    className="w-9/12 sm:w-6/12 md:w-6/12 lg:w-7/12 xl:w-11/12 rounded-full"
-                    alt="avatar"
-                  />
+                <div className="flex-shrink-0 w-1/3 mx-auto">
+                  <div className="image-wrapper round">
+                    <img src={userA ? userA.imageLink : ""} alt="avatar" />
+                  </div>
                 </div>
                 <div className="w-9/12 mx-auto flex items-center justify-center flex-wrap">
                   <button
@@ -233,7 +240,7 @@ export function FormProfile(props: PropsType) {
           </div>
         </>
       ) : (
-        ""
+        <Spinner />
       )}
     </>
   );

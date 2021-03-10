@@ -124,17 +124,19 @@ export function AuthProvider({ children }: any) {
   };
 
   const updateAritoUser = async (data: AritoUser) => {
-    const { nickname, phone, birthday, companyType, companyName } = data;
+    const { nickname, phone, birthday, companyType, companyName, imageLink } = data;
     const { token, user } = await AritoUserService.userUpdateMe({
       nickname,
       phone,
       birthday,
       companyType,
       companyName,
+      imageLink,
     });
     SetAuthToken(token);
     setUser(user);
     console.log("set user", token);
+    console.log(user);
   };
 
   const changeAritoUserPasswrod = async (oldPass: string, newPass: string) => {
