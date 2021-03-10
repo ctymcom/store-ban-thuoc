@@ -5,7 +5,7 @@ import { useState } from "react";
 type PropsType = {
   [x: string]: any;
   dateOfBirth: Date;
-  handleChange?: Function;
+  onChange?: Function;
 };
 const DateTime = (props: PropsType) => {
   const getListOptions = (date: Date, id: string) => {
@@ -59,14 +59,14 @@ const DateTime = (props: PropsType) => {
       case "day":
         {
           date = setDate(date, value);
-          props.handleChange("dateOfBirth", date);
+          props.onChange(date);
         }
         break;
       case "month":
         {
           let month = listMonth.findIndex((item) => item === value);
           date = setMonth(date, month);
-          props.handleChange("dateOfBirth", date);
+          props.onChange(date);
           let listDayNew = getListOptions(date, "day");
           setListDay([...listDayNew]);
         }
@@ -74,7 +74,7 @@ const DateTime = (props: PropsType) => {
       case "year":
         {
           date = setYear(date, value);
-          props.handleChange("dateOfBirth", date);
+          props.onChange(date);
           let listDayNew = getListOptions(date, "day");
           setListDay([...listDayNew]);
         }

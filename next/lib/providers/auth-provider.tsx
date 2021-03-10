@@ -8,7 +8,6 @@ import { ClearAuthToken, SetAuthToken } from "../graphql/auth.link";
 import { AritoUser, AritoUserService } from "../repo/arito-user.repo";
 import { GraphService } from "../repo/graph.repo";
 import { GetAuthToken } from "./../graphql/auth.link";
-import data from "../../components/index/ingredients/data/ingredients-data";
 
 export const LOGIN_PATHNAME = "login-pathname";
 
@@ -21,8 +20,11 @@ const AuthContext = createContext<{
   login?: (username: string, password: string, mode: "user" | "editor") => Promise<AritoUser>;
   register?: (nickname: string, email: string, phone: string) => Promise<AritoUser>;
   logout?: () => void;
-  updateAritoUser?: (data: AritoUser) => void;
-  changeAritoUserPasswrod?: (oldPass: string, newPass: string) => void;
+  updateAritoUser?: (data: AritoUser) => Promise<{ type: string; mess: string }>;
+  changeAritoUserPassword?: (
+    oldPass: string,
+    newPass: string
+  ) => Promise<{ type: string; mess: string }>;
   recoveryPassword?: (email: string) => Promise<string>;
 }>({});
 
@@ -124,33 +126,41 @@ export function AuthProvider({ children }: any) {
   };
 
   const updateAritoUser = async (data: AritoUser) => {
-    const { nickname, phone, birthday, companyType, companyName, imageLink } = data;
-    const { token, user } = await AritoUserService.userUpdateMe({
+    let noti = { type: "", mess: "" };
+    const { nickname, phone, birthday, companyType, companyName } = data;
+    await AritoUserService.userUpdateMe({
       nickname,
       phone,
       birthday,
       companyType,
       companyName,
-      imageLink,
-    });
-    SetAuthToken(token);
-    setUser(user);
-    console.log("set user", token);
-    console.log(user);
+    })
+      .then((res) => {
+        SetAuthToken(res.token);
+        setUser(res.user);
+        noti = { type: "success", mess: "Cập nhật thành công" };
+      })
+      .catch((err) => {
+        noti = { type: "warn", mess: err };
+      });
+    return noti;
   };
 
-  const changeAritoUserPasswrod = async (oldPass: string, newPass: string) => {
+  const changeAritoUserPassword = async (oldPass: string, newPass: string) => {
     let encryptedOldPassword = md5(oldPass);
     let encryptedNewPassword = md5(newPass);
+    let noti = { type: "", mess: "" };
     try {
-      const data = await AritoUserService.userChangePassword(
+      noti.type = "success";
+      noti.mess = await AritoUserService.userChangePassword(
         encryptedOldPassword,
         encryptedNewPassword
       );
-      alert(data);
     } catch (err) {
-      alert(err.message);
+      noti.type = "warn";
+      noti.mess = err.message;
     }
+    return noti;
   };
 
   return (
@@ -159,7 +169,7 @@ export function AuthProvider({ children }: any) {
         user,
         setShowDialogUpdatePassword,
         showDialogUpdatePassword,
-        changeAritoUserPasswrod,
+        changeAritoUserPassword,
         recoveryPassword,
         login,
         register,

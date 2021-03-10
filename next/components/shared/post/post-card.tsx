@@ -1,5 +1,4 @@
-import { format, isSameYear, parseISO } from "date-fns";
-import { post } from "jquery";
+import { format, parseISO } from "date-fns";
 import Link from "next/link";
 import LazyLoad from "react-lazyload";
 
