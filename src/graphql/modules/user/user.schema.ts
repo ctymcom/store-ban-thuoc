@@ -52,7 +52,7 @@ input UserUpdateMeInput {
   "Ngày sinh"
   birthday: DateTime
   "Loại cửa hàng"
-  companyType: String
+  companyType: Int
   "Tên cửa hàng"
   companyName: String
 }

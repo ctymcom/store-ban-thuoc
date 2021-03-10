@@ -7,6 +7,7 @@ import { useAddressContext } from "../providers/address-provider";
 import { Select } from "../../../shared/utilities/form/select";
 import { PropsTypeFormDialog } from "./address-list";
 import { UserAddress } from "../../../../lib/repo/user-address.repo";
+import { useToast } from '../../../../lib/providers/toast-provider';
 interface PropsType extends PropsTypeFormDialog {
   isOpen: boolean;
   title?: string;
@@ -21,6 +22,7 @@ const AddressFormDialog = (props: PropsType) => {
     wards,
     listAddress,
   } = useAddressContext();
+  const toast = useToast();
   const [mess, setMess] = useState(null);
   const handleOnChangSelect = (value: string, id: string) => {
     if (userAddress[id] !== value) {
@@ -83,6 +85,8 @@ const AddressFormDialog = (props: PropsType) => {
     if (res) {
       handleChange(userAddress.id, "formAddress");
       props.setShowAddressFormDialog(false);
+    }else{
+      toast.warn(mess)
     }
   };
   const checkboxChange = () => {
@@ -178,17 +182,6 @@ const AddressFormDialog = (props: PropsType) => {
             Xác nhận
           </button>
         </div>
-        <Dialog
-          width="420px"
-          isOpen={mess ? true : false}
-          mobileMode={false}
-          onClose={() => setMess(null)}
-          key={mess}
-        >
-          <Dialog.Body>
-            <div>{mess}</div>
-          </Dialog.Body>
-        </Dialog>
       </Dialog.Body>
     </Dialog>
   );

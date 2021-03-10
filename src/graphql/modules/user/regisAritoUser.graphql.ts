@@ -1,5 +1,6 @@
 import { gql } from "apollo-server-express";
 import { get } from "lodash";
+
 import { ROLES } from "../../../constants/role.const";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { TokenHelper } from "../../../helpers/token.helper";

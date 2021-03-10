@@ -6,7 +6,7 @@ import { useToast } from "../../../../lib/providers/toast-provider";
 
 export const PostDetailsContext = createContext<{
   post?: Post;
-  savePost?: () => Promise<Post>;
+  savePost?: () => Promise<any>;
   tags?: Tag[];
   createTag?: Function;
 }>({});
@@ -52,16 +52,22 @@ export function PostDetailsProvider({ children }: any) {
     });
   };
 
-  const savePost = (): Promise<Post> => {
+  const savePost = async () => {
     let { title, content, slug, publishedAt, excerpt, tagIds, featureImage, priority } = post;
     if (!title || !slug || !content) {
-      toast.warn("Yêu cầu nhập đầy đủ tiêu đề, nội dung và đường dẫn.");
+      toast.warn("Yêu cầu nhập đầy đủ tiêu đề, nội dung và slug.");
       return;
     }
-    return PostService.createOrUpdate({
-      id: post.id,
-      data: { title, content, slug, publishedAt, excerpt, tagIds, featureImage, priority },
-    });
+
+    try {
+      await PostService.createOrUpdate({
+        id: post.id,
+        data: { title, content, slug, publishedAt, excerpt, tagIds, featureImage, priority },
+      });
+      toast.success(`${post.id ? "Cập nhật" : "Tạo"} bài viết thành công.`);
+    } catch (err) {
+      toast.error(`${post.id ? "Cập nhật" : "Tạo"} bài viết thất bại. ${err.message}`);
+    }
   };
 
   return (

@@ -33,7 +33,7 @@ export default [
       );
       fs.unlinkSync(req.file.path);
       return res.json({
-        imageLink: AritoHelper.getImageLink(imageId),
+        imageLink: AritoHelper.getThumbnailLink(imageId),
       });
     },
   },

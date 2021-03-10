@@ -8,21 +8,27 @@ import { ClearAuthToken, SetAuthToken } from "../graphql/auth.link";
 import { AritoUser, AritoUserService } from "../repo/arito-user.repo";
 import { GraphService } from "../repo/graph.repo";
 import { GetAuthToken } from "./../graphql/auth.link";
+import data from "../../components/index/ingredients/data/ingredients-data";
 
 export const LOGIN_PATHNAME = "login-pathname";
 
 const AuthContext = createContext<{
   user?: AritoUser;
+  showDialogUpdatePassword?: boolean;
+  setShowDialogUpdatePassword?: Function;
   saveCurrentPath?: () => void;
   checkUser?: (roles?: string[]) => boolean;
   login?: (username: string, password: string, mode: "user" | "editor") => Promise<AritoUser>;
   register?: (nickname: string, email: string, phone: string) => Promise<AritoUser>;
-  recoveryPassword?: (email: string) => Promise<string>;
   logout?: () => void;
+  updateAritoUser?: (data: AritoUser) => void;
+  changeAritoUserPasswrod?: (oldPass: string, newPass: string) => void;
+  recoveryPassword?: (email: string) => Promise<string>;
 }>({});
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<any | null>(undefined);
+  const [showDialogUpdatePassword, setShowDialogUpdatePassword] = useState(false);
 
   // useEffect(() => {
   //   return firebase.auth().onAuthStateChanged(async (user) => {
@@ -117,9 +123,51 @@ export function AuthProvider({ children }: any) {
     location.reload();
   };
 
+  const updateAritoUser = async (data: AritoUser) => {
+    const { nickname, phone, birthday, companyType, companyName, imageLink } = data;
+    const { token, user } = await AritoUserService.userUpdateMe({
+      nickname,
+      phone,
+      birthday,
+      companyType,
+      companyName,
+      imageLink,
+    });
+    SetAuthToken(token);
+    setUser(user);
+    console.log("set user", token);
+    console.log(user);
+  };
+
+  const changeAritoUserPasswrod = async (oldPass: string, newPass: string) => {
+    let encryptedOldPassword = md5(oldPass);
+    let encryptedNewPassword = md5(newPass);
+    try {
+      const data = await AritoUserService.userChangePassword(
+        encryptedOldPassword,
+        encryptedNewPassword
+      );
+      alert(data);
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, login, register, recoveryPassword, logout, checkUser, saveCurrentPath }}
+      value={{
+        user,
+        setShowDialogUpdatePassword,
+        showDialogUpdatePassword,
+        changeAritoUserPasswrod,
+        recoveryPassword,
+        login,
+        register,
+        logout,
+        checkUser,
+        saveCurrentPath,
+        updateAritoUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

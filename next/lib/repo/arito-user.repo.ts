@@ -1,4 +1,6 @@
 import { GraphRepository } from "./graph.repo";
+import axios from "axios";
+import { GetAuthToken } from "../graphql/auth.link";
 
 export interface AritoUser {
   id: number;
@@ -14,11 +16,13 @@ export interface AritoUser {
   country: string;
   email: string;
   phone: string;
-  birthday: Date;
+  birthday: string;
   datetime2: Date;
   timeout: number;
   permission: number;
   group: string;
+  companyType: number;
+  companyName: string;
   imageLink: string;
   role: ROLE;
 }
@@ -53,6 +57,8 @@ export class AritoUserRepository extends GraphRepository {
     timeout: Int
     permission: Int
     group: String
+    companyType: Int
+    companyName: string
     imageLink: String
     role: String
   `);
@@ -87,6 +93,56 @@ export class AritoUserRepository extends GraphRepository {
       `,
       context: {
         headers,
+      },
+    });
+    return res.data[mutationName];
+  }
+
+  // ====== UpdateUserArito =========
+  async userUpdateMe(data: any): Promise<{ token: string; user: AritoUser }> {
+    let mutationName = "userUpdateMe";
+    const res = await this.apollo.mutate({
+      mutation: this.gql`
+        mutation mutationName($data: UserUpdateMeInput!) {
+          ${mutationName} (
+            data: $data
+          ) {
+            token
+            user { ${this.fragment} }
+          }
+        }
+      `,
+      variables: {
+        data,
+      },
+    });
+    return res.data[mutationName];
+  }
+  //uploadAvatar
+  async uploadAvatar(data: any): Promise<{ data: any }> {
+    let res = await axios.post("/api/file/uploadUserImage", data, {
+      headers: {
+        "content-Type": "multipart/form-data",
+        "x-token": GetAuthToken(),
+      },
+    });
+    return res;
+  }
+  // ====== UserChangePassword =========
+  async userChangePassword(oldPass: string, newPass: string): Promise<string> {
+    let mutationName = "changeAritoUserPassword";
+    const res = await this.apollo.mutate({
+      mutation: this.gql`
+        mutation mutationName($oldPass: String!, $newPass: String!) {
+          ${mutationName} (
+            oldPass: $oldPass,
+            newPass: $newPass
+          ) 
+        }
+      `,
+      variables: {
+        oldPass,
+        newPass,
       },
     });
     return res.data[mutationName];
