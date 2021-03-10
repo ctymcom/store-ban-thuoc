@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { Select } from "../../../shared/utilities/form/select";
 import { format } from "date-fns";
-import { AritoUser } from "../../../../lib/repo/arito-user.repo";
+import { AritoUser, AritoUserService } from "../../../../lib/repo/arito-user.repo";
 import { parseInt } from "lodash";
 import UpdatePasswordDialog from "./update-password-dialog";
 import DateTime from "./datetime";
@@ -77,23 +77,14 @@ export function FormProfile(props: PropsType) {
     if (file) {
       let formData = new FormData();
       formData.append("data", file);
-      axios
-        .post("/api/file/uploadUserImage", formData, {
-          headers: {
-            "content-Type": "multipart/form-data",
-            "x-token": GetAuthToken(),
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-          console.log(userA);
-
-          setUserA({ ...userA, imageLink: res.data.imageLink });
-          console.log(userA);
-        });
+      AritoUserService.uploadAvatar(formData).then((res) => {
+        console.log(res.data);
+        //setUserA
+        console.log(userA);
+      });
     }
-    updateAritoUser(userA);
-    console.log(userA);
+    //updata
+    //updateAritoUser(userA);
   };
   return (
     <>

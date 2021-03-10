@@ -1,4 +1,6 @@
 import { GraphRepository } from "./graph.repo";
+import axios from "axios";
+import { GetAuthToken } from "../graphql/auth.link";
 
 export interface AritoUser {
   id: number;
@@ -116,7 +118,16 @@ export class AritoUserRepository extends GraphRepository {
     });
     return res.data[mutationName];
   }
-
+  //uploadAvatar
+  async uploadAvatar(data: any): Promise<{ data: any }> {
+    let res = await axios.post("/api/file/uploadUserImage", data, {
+      headers: {
+        "content-Type": "multipart/form-data",
+        "x-token": GetAuthToken(),
+      },
+    });
+    return res;
+  }
   // ====== UserChangePassword =========
   async userChangePassword(oldPass: string, newPass: string): Promise<string> {
     let mutationName = "changeAritoUserPassword";
