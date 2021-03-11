@@ -5,8 +5,10 @@ type SectionHeaderProps = {
 export function SectionHeader(props: SectionHeaderProps) {
   return (
     <div className="relative flex items-center mb-5">
-      <hr className="border border-gray-200 absolute w-full"/>
-      <h4 className="uppercase px-8 bg-white mx-auto z-10 font-semibold text-xl text-gray-700 text-center">{props.text}</h4>
+      <hr className="border-2 border-b-0 border-gray-200 absolute w-full" />
+      <h4 className="uppercase px-3 lg:px-6 bg-white mx-auto z-10 font-semibold text-base lg:text-xl text-gray-700 text-center">
+        {props.text}
+      </h4>
     </div>
   );
 }

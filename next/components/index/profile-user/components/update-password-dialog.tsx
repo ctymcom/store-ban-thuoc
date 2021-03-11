@@ -4,7 +4,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { useState } from "react";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { Button } from "../../../shared/utilities/form/button";
-import { toast } from "react-toastify";
+import { useToast } from "../../../../lib/providers/toast-provider";
 interface PropsType extends ReactProps {
   setShowDialog?: Function;
   isOpen?: boolean;
@@ -15,6 +15,7 @@ export default function UpdatePasswordDialog(props: PropsType) {
   const [newPass, setNewPass] = useState("");
   const [confirmNewPass, setConfirmNewPass] = useState("");
   const { changeAritoUserPassword } = useAuth();
+  const toast = useToast();
 
   const handleOnClick = async () => {
     let noti = { type: "", mess: "" };

@@ -70,13 +70,14 @@ export default function CartPage(props) {
     switch (type) {
       case "add":
         {
-          setcartProducts(
-            cartProducts.map((cartProduct: CartProduct) =>
-              cartProduct.productId !== id
-                ? cartProduct
-                : { ...cartProduct, qty: value + 1, amount: (value + 1) * cartProduct.price }
-            )
-          );
+          if (value < 10000)
+            setcartProducts(
+              cartProducts.map((cartProduct: CartProduct) =>
+                cartProduct.productId !== id
+                  ? cartProduct
+                  : { ...cartProduct, qty: value + 1, amount: (value + 1) * cartProduct.price }
+              )
+            );
         }
         break;
       case "sub":

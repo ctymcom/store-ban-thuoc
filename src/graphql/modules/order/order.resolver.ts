@@ -71,23 +71,26 @@ const Mutation = {
     )
       .exec()
       .catch((err) => {});
-    const order = await AritoHelper.createOrder({
-      promotionCode: promotionCode,
-      paymentMethod: paymentMethod,
-      deliveryMethod: deliveryMethod,
-      addressId: address.addressId,
-      point: usePoint,
-      note: note,
-      items: orderItems.map((i) => ({
-        productId: i.productId,
-        productName: i.productName,
-        productCode: i.productCode,
-        unit: i.unit,
-        qty: i.qty,
-        price: i.price,
-        amount: i.amount,
-      })),
-    });
+    const order = await AritoHelper.createOrder(
+      {
+        promotionCode: promotionCode,
+        paymentMethod: paymentMethod,
+        deliveryMethod: deliveryMethod,
+        addressId: address.addressId,
+        point: usePoint,
+        note: note,
+        items: orderItems.map((i) => ({
+          productId: i.productId,
+          productName: i.productName,
+          productCode: i.productCode,
+          unit: i.unit,
+          qty: i.qty,
+          price: i.price,
+          amount: i.amount,
+        })),
+      },
+      context.user.permission == 1
+    );
 
     return await orderService
       .create({

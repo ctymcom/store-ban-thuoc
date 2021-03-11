@@ -2,7 +2,7 @@ import React from "react";
 import { createContext, useState, useEffect, useContext } from "react";
 import { UserAddressService, UserAddress } from "../../../../lib/repo/user-address.repo";
 import { useAuth } from "../../../../lib/providers/auth-provider";
-import { CheckoutService, MethodCheckout } from "../../../../lib/repo/checkout.repo";
+import { CheckoutService, MethodCheckout, Order } from "../../../../lib/repo/checkout.repo";
 export const CheckoutContext = createContext<
   Partial<{
     addressSelected: UserAddress;

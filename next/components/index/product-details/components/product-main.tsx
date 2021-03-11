@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useProductDetailsContext } from "./../providers/product-details-provider";
 import { ProductImage } from "./product-image";
 import { ProductInfo } from "./product-info";
+import BreadCrumbs from "./../../../shared/utilities/breadcrumbs/breadcrumbs";
 
 export function ProductMain() {
   const { product } = useProductDetailsContext();
@@ -26,24 +27,17 @@ export function ProductMain() {
           href: "/products",
           label: product.categories[0]?.name,
         },
+        {
+          label: product.name,
+        },
       ]);
     }
   }, [product]);
 
   return (
     <>
-      <div className="hidden lg:flex uppercase h-8 items-center mt-5 md:mt-7 lg:mt-12 text-xs md:text-sm">
-        {breadcrumbs.map((breadcrumb, index) => (
-          <Link href={breadcrumb.href} key={index}>
-            <a className="text-gray-600 hover:text-primary">
-              <span>{breadcrumb.label}</span>
-              <span className="px-1">/</span>
-            </a>
-          </Link>
-        ))}
-        <a className="text-primary">
-          <span>{product.name}</span>
-        </a>
+      <div className="pt-8 md:pt-12">
+        <BreadCrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="flex flex-col md:flex-row mt-4">
         <div className="mt-2 md:mt-0 w-full md:w-2/5 z-20">

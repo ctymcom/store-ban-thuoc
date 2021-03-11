@@ -1,11 +1,7 @@
 import React from "react";
 import { createContext, useState, useEffect, useContext, Children } from "react";
 import { AddressService } from "../../../../lib/repo/address.repo";
-import {
-  UserAddressService,
-  UserAddress,
-  UpdateUserAddressInput,
-} from "../../../../lib/repo/user-address.repo";
+import { UserAddressService, UserAddress } from "../../../../lib/repo/user-address.repo";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { cloneDeep } from "lodash";
 import { useCheckoutContext } from "./checkout-provider";
@@ -17,7 +13,9 @@ export const AddressContext = createContext<
     userAddress: UserAddress;
     setListAdress: Function;
     setAddressSelected: Function;
-    handleChange: Function;
+    deleteCartProduct: Function;
+    submidFormAddressUser: Function;
+    setDefaultAddress: Function;
     setUserAddress: Function;
     provinces: Option[];
     setProvinces: Function;
@@ -27,10 +25,10 @@ export const AddressContext = createContext<
 >({});
 
 export const AddressProvider = (props) => {
-  const { warn } = useToast();
+  const toast = useToast();
   const [listAddress, setListAdress] = useState<UserAddress[]>(null);
   const [userAddress, setUserAddress] = useState<UserAddress>(null);
-  const { setAddressSelected } = useCheckoutContext();
+  const { setAddressSelected, addressSelected } = useCheckoutContext();
   const { user } = useAuth();
   const [provinces, setProvinces] = useState<Option[]>(null);
   const [districts, setDistricts] = useState<Option[]>(null);
@@ -45,7 +43,8 @@ export const AddressProvider = (props) => {
     }).then((res) => {
       setListAdress(cloneDeep(res.data));
       setUserAddress(null);
-      setAddressSelected(res.data.find((item: UserAddress) => item.isDefault));
+      if (addressSelected === null)
+        setAddressSelected(res.data.find((item: UserAddress) => item.isDefault));
     });
   };
   useEffect(() => {
@@ -77,7 +76,7 @@ export const AddressProvider = (props) => {
     });
   }, [userAddress]);
 
-  const updateOrUserAddress = (data: UserAddress) => {
+  const updateOrCreateUserAddress = async (data: UserAddress) => {
     const {
       contactName,
       address,
@@ -88,7 +87,7 @@ export const AddressProvider = (props) => {
       location,
       isDefault,
     } = data;
-    UserAddressService.createOrUpdate({
+    return await UserAddressService.createOrUpdate({
       id: data.id,
       data: {
         contactName,
@@ -100,81 +99,64 @@ export const AddressProvider = (props) => {
         location,
         isDefault,
       },
-    })
-      .then((res) => {
-        loadList();
-      })
-      .catch((err) => {
-        warn(err);
-      });
+    });
   };
   async function setDefaultAddress(id: string) {
     let oldDefault = listAddress.find((item) => item.isDefault);
     let newDefault = listAddress.find((item) => item.id === id);
-    UserAddressService.mutate({
+    let res = await UserAddressService.mutate({
       mutation: [
-        UserAddressService.updateQuery({ id: oldDefault.id, data: { isDefault: false } }),
+        UserAddressService.updateQuery({ id: oldDefault?.id, data: { isDefault: false } }),
         UserAddressService.updateQuery({ id: newDefault.id, data: { isDefault: true } }),
       ],
-    })
-      .then((res) => {
-        loadList();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    });
+    if (res) toast.warn(res.message);
+    loadList();
   }
+  const deleteCartProduct = async (id: string) => {
+    if (listAddress.length > 1) {
+      let addressDeleting = listAddress.find((item) => item.id === id);
+      if (addressDeleting.isDefault) {
+        let idNewDefault: string;
+        listAddress.forEach((item) => {
+          if (!item.isDefault) {
+            idNewDefault = item.id;
+            return;
+          }
+        });
+        setDefaultAddress(idNewDefault);
+        if (addressDeleting.id === addressSelected.id) {
+          setAddressSelected(null);
+        }
+      }
 
-  const handleChange = (id: string, type: string) => {
-    switch (type) {
-      case "setDefault":
-        {
-          if (id) {
-            setDefaultAddress(id);
-          }
-        }
-        break;
-      case "delete":
-        {
-          if (listAddress.length > 0) {
-            let addressDeleting = listAddress.find((item) => item.id === id);
-            if (addressDeleting.isDefault) {
-              let idNewDefault: string;
-              listAddress.forEach((item) => {
-                if (!item.isDefault) {
-                  idNewDefault = item.id;
-                  return;
-                }
-              });
-              setDefaultAddress(idNewDefault);
-            }
-            UserAddressService.delete({ id }).then((res) => loadList());
-          }
-        }
-        break;
-      case "formAddress":
-        {
-          if (userAddress.isDefault) {
-            if (id) {
-              setDefaultAddress(id);
-            } else {
-              let oldDefault = listAddress.find((item) => item.isDefault);
-              UserAddressService.update({
-                id: oldDefault.id,
-                data: { isDefault: false },
-              }).then((res) => updateOrUserAddress(userAddress));
-            }
-          } else {
-            if (listAddress.length !== 0) {
-              updateOrUserAddress(userAddress);
-            } else {
-              updateOrUserAddress({ ...userAddress, isDefault: true });
-            }
-          }
-        }
-        break;
-      default:
-        break;
+      let res = await UserAddressService.delete({ id });
+      if (res) toast.error(res.message);
+      loadList();
+    }
+  };
+  const submidFormAddressUser = async (id: string) => {
+    if (userAddress.isDefault) {
+      if (id) {
+        setDefaultAddress(id);
+      } else {
+        let oldDefault = listAddress.find((item) => item.isDefault);
+        UserAddressService.update({
+          id: oldDefault.id,
+          data: { isDefault: false },
+        }).then((res) => updateOrCreateUserAddress(userAddress));
+      }
+    } else {
+      let res: any;
+      if (listAddress.length !== 0) {
+        res = await updateOrCreateUserAddress(userAddress);
+      } else {
+        res = await updateOrCreateUserAddress({ ...userAddress, isDefault: true });
+      }
+      if (res) {
+        toast.error(res.message);
+      }
+      loadList();
     }
   };
   return (
@@ -184,11 +166,13 @@ export const AddressProvider = (props) => {
         provinces,
         setProvinces,
         wards,
-        handleChange,
+        submidFormAddressUser,
         listAddress,
         userAddress,
         setListAdress,
         setUserAddress,
+        deleteCartProduct,
+        setDefaultAddress,
       }}
     >
       {props.children}

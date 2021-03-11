@@ -102,7 +102,11 @@ export function ProductsProvider(props) {
 
   const loadProducts = async () => {
     let order: any = {};
+<<<<<<< HEAD
     switch (sort) {
+=======
+    switch (+sort) {
+>>>>>>> 879b7c21208b439208b70bbab6e357d829c3f92e
       case SORT.latest: {
         order = { createdAt: -1 };
         break;

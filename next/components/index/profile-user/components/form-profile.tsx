@@ -6,15 +6,16 @@ import { AritoUser, AritoUserService } from "../../../../lib/repo/arito-user.rep
 import { parseInt } from "lodash";
 import UpdatePasswordDialog from "./update-password-dialog";
 import DateTime from "./datetime";
-import { toast } from "react-toastify";
 import { Spinner } from "../../../shared/utilities/spinner";
 import { Button } from "../../../shared/utilities/form/button";
+import { useToast } from "../../../../lib/providers/toast-provider";
 
 interface PropsType extends ReactProps {
   [x: string]: any;
 }
 
 export function FormProfile(props: PropsType) {
+  const toast = useToast();
   const {
     user,
     updateAritoUser,
@@ -67,7 +68,7 @@ export function FormProfile(props: PropsType) {
   const handleOnClick = async () => {
     if (checkBeforeMessage()) {
       let res = await updateAritoUser(userA);
-      console.log(res);
+      console.log(userA);
 
       if (res.type === "success") {
         toast.success(res.mess);
@@ -76,15 +77,22 @@ export function FormProfile(props: PropsType) {
     }
   };
   const ref: MutableRefObject<HTMLInputElement> = useRef();
+  const [uploading, setUploading] = useState(false);
   const handleUploadAvatar = (file: File) => {
+    setUploading(true);
     if (file) {
       let formData = new FormData();
       formData.append("data", file);
-      AritoUserService.uploadAvatar(formData).then((res) => {
-        console.log(res.data);
-        //setUserA
-        console.log(userA);
-      });
+      AritoUserService.uploadAvatar(formData)
+        .then((res) => {
+          console.log(res.data);
+          //setUserA
+          toast.success("Upload thành công");
+          console.log(userA);
+
+          setUploading(false);
+        })
+        .catch((err) => toast.warn("Upload thất bại"));
     }
     //updata
     //updateAritoUser(userA);
@@ -144,7 +152,9 @@ export function FormProfile(props: PropsType) {
                         dateOfBirth={
                           userA?.birthday !== null ? new Date(userA.birthday) : new Date()
                         }
-                        handleChange={handleChange}
+                        onChange={(e) => {
+                          setUserA({ ...userA, birthday: format(e, "yyyy-MM-dd") });
+                        }}
                       />
                     </div>
                   </div>
@@ -207,12 +217,12 @@ export function FormProfile(props: PropsType) {
                   </div>
                 </div>
                 <div className="w-9/12 mx-auto flex items-center justify-center flex-wrap">
-                  <button
+                  <Button
+                    isLoading={uploading}
                     onClick={() => ref.current?.click()}
                     className="mx-auto px-10 sm:px-14 md:px-16 py-5 md:py-4 lg:py-6 whitespace-nowrap my-3 btn-outline text-lg border-primary border font-normal text-primary hover:bg-primary hover:text-white"
-                  >
-                    Đổi ảnh
-                  </button>
+                    text="Đổi ảnh"
+                  />
                   <input
                     hidden
                     type="file"
