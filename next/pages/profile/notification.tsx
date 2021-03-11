@@ -2,7 +2,6 @@ import { NotificationPage } from "../../components/index/notification/notificati
 import { NotificationProvider } from "../../components/index/notification/providers/notifications-provider";
 import { DefaultLayout } from "../../layouts/default-layout";
 import { ProfileUserLayout } from "../../layouts/profile-user-layout";
-import { AuthProvider } from "../../lib/providers/auth-provider";
 
 export default function Notification() {
   return (

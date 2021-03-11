@@ -3,6 +3,8 @@ import { MutableRefObject, useCallback, useRef, useState } from "react";
 import useDevice from "../../../../lib/hooks/useDevice";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { useToast } from "../../../../lib/providers/toast-provider";
+import { Button } from "../../../shared/utilities/form/button";
+import { Form } from "./../../../shared/utilities/form/form";
 
 interface PropsType extends ReactProps {
   setMode: Function;
@@ -18,48 +20,55 @@ export function Recovery(props: PropsType) {
   }, []);
 
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
 
-  const onFormSubmit = async (e) => {
-    e.preventDefault();
+  const onFormSubmit = async () => {
     if (!email) {
       toast.info("Yêu cầu nhập đầy đủ thông tin");
     } else {
+      setLoading(true);
       recoveryPassword(email)
         .then((res) => {
           toast.success("Vui lòng kiểm tra email để hồi phục lại mật khẩu.", { autoClose: 8000 });
           props.setMode("login");
         })
         .catch((err) => {
+          console.error(err);
           toast.error("Nhận email lấy mật khẩu thất bại. " + err.message);
+          setLoading(false);
         });
     }
   };
 
   return (
-    <form className="flex flex-col items-center animate-emerge" onSubmit={onFormSubmit}>
+    <Form className="flex flex-col items-center animate-emerge" onSubmit={onFormSubmit}>
       <div className="uppercase text-primary font-bold text-center text-lg">Quên mật khẩU</div>
       <input
         ref={ref}
         className="form-input mt-4 min-w-2xs sm:min-w-xs"
         placeholder="Email"
         type="email"
+        name="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <div className="w-full flex flex-col items-center mt-4">
-        <button type="submit" className="btn-primary btn-lg w-full">
-          Gửi email quên mật khẩu
-        </button>
+        <Button
+          primary
+          large
+          type="submit"
+          className="w-full mt-4"
+          text="Gửi email quên mật khẩu"
+          isLoading={loading}
+        />
         <div className="flex justify-center mt-2 w-full">
-          <button
-            type="button"
-            className="btn-default hover:underline"
+          <Button
+            className="hover:underline"
+            text="Quay lại đăng nhập"
             onClick={() => props.setMode("login")}
-          >
-            Quay lại đăng nhập
-          </button>
+          />
         </div>
       </div>
-    </form>
+    </Form>
   );
 }

@@ -7,6 +7,8 @@ import { useAddressContext } from "../providers/address-provider";
 import { Select } from "../../../shared/utilities/form/select";
 import { PropsTypeFormDialog } from "./address-list";
 import { UserAddress } from "../../../../lib/repo/user-address.repo";
+import { useToast } from "../../../../lib/providers/toast-provider";
+import { Button } from "../../../shared/utilities/form/button";
 interface PropsType extends PropsTypeFormDialog {
   isOpen: boolean;
   title?: string;
@@ -21,6 +23,8 @@ const AddressFormDialog = (props: PropsType) => {
     wards,
     listAddress,
   } = useAddressContext();
+  const toast = useToast();
+  const [loading, setLoading] = useState(false);
   const [mess, setMess] = useState(null);
   const handleOnChangSelect = (value: string, id: string) => {
     if (userAddress[id] !== value) {
@@ -79,11 +83,15 @@ const AddressFormDialog = (props: PropsType) => {
     return true;
   };
   const handleOnClick = (data: UserAddress) => {
+    setLoading(true);
     let res = checkBeforeMutation(data);
     if (res) {
       handleChange(userAddress.id, "formAddress");
       props.setShowAddressFormDialog(false);
+    } else {
+      toast.warn(mess);
     }
+    setLoading(false);
   };
   const checkboxChange = () => {
     if (userAddress.id) {
@@ -169,26 +177,17 @@ const AddressFormDialog = (props: PropsType) => {
             <CheckBoxSquare checked={userAddress ? userAddress.isDefault : true} /> Chọn làm địa chỉ
             mặc định
           </div>
-          <button
-            className="btn-primary w-full h-12 text-16"
+          <Button
+            primary
+            large
+            className="w-full mt-4"
+            text="Xác nhận"
+            isLoading={loading}
             onClick={() => {
               handleOnClick(userAddress);
             }}
-          >
-            Xác nhận
-          </button>
+          />
         </div>
-        <Dialog
-          width="420px"
-          isOpen={mess ? true : false}
-          mobileMode={false}
-          onClose={() => setMess(null)}
-          key={mess}
-        >
-          <Dialog.Body>
-            <div>{mess}</div>
-          </Dialog.Body>
-        </Dialog>
       </Dialog.Body>
     </Dialog>
   );

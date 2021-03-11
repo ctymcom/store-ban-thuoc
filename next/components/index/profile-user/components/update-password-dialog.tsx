@@ -3,7 +3,8 @@ import { Dialog } from "../../../shared/utilities/dialog/dialog";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { useState } from "react";
 import { useAuth } from "../../../../lib/providers/auth-provider";
-import { useToast } from "../../../../lib/providers/toast-provider";
+import { Button } from "../../../shared/utilities/form/button";
+import { toast } from "react-toastify";
 interface PropsType extends ReactProps {
   setShowDialog?: Function;
   isOpen?: boolean;
@@ -13,20 +14,25 @@ export default function UpdatePasswordDialog(props: PropsType) {
   const [oldPass, setOldPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmNewPass, setConfirmNewPass] = useState("");
-  const [mess, setMess] = useState("");
-  const toast = useToast();
-  const { changeAritoUserPasswrod } = useAuth();
+  const { changeAritoUserPassword } = useAuth();
 
-  const handleOnClick = (oldPass, newPass, confirmNewPass) => {
+  const handleOnClick = async () => {
+    let noti = { type: "", mess: "" };
     if (confirmNewPass) {
       if (newPass === confirmNewPass) {
-        changeAritoUserPasswrod(oldPass, newPass);
-        // toast.success("Đổi mật khẩu thành công");
+        noti = await changeAritoUserPassword(oldPass, newPass);
+        if (noti.type === "success") {
+          toast.success(noti.mess);
+          props.setShowDialog(false);
+        }
+        if (noti.type === "warn") {
+          toast.warn(noti.mess);
+        }
       } else {
-        setMess("Nhập lại mật khẩu chưa đúng!");
+        toast.warn("Nhập lại mật khẩu chưa đúng!");
       }
     } else {
-      setMess("Bạn chưa nhập lại mật khẩu mới");
+      toast.warn("Bạn chưa nhập lại mật khẩu mới");
     }
   };
 
@@ -73,16 +79,15 @@ export default function UpdatePasswordDialog(props: PropsType) {
                 setConfirmNewPass(e.target.value);
               }}
             />
-            <p className="w-full text-15 md:text-13 text-red-600">{mess}</p>
           </div>
         </div>
         <div className="mb-4 mt-8 flex justify-center">
-          <button
+          <Button
             className=" btn-primary w-full sm:w-3/4 xl:w-3/6 font-normal h-12 text-16 sm:text-20"
-            onClick={() => handleOnClick(oldPass, newPass, confirmNewPass)}
-          >
-            Xác nhận
-          </button>
+            asyncLoading
+            onClick={async () => await handleOnClick()}
+            text="Xác nhận"
+          />
         </div>
       </div>
     </Dialog>

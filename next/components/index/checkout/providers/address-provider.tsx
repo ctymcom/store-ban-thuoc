@@ -9,6 +9,7 @@ import {
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { cloneDeep } from "lodash";
 import { useCheckoutContext } from "./checkout-provider";
+import { useToast } from "../../../../lib/providers/toast-provider";
 export const AddressContext = createContext<
   Partial<{
     listAddress: UserAddress[];
@@ -26,6 +27,7 @@ export const AddressContext = createContext<
 >({});
 
 export const AddressProvider = (props) => {
+  const { warn } = useToast();
   const [listAddress, setListAdress] = useState<UserAddress[]>(null);
   const [userAddress, setUserAddress] = useState<UserAddress>(null);
   const { setAddressSelected } = useCheckoutContext();
@@ -33,7 +35,6 @@ export const AddressProvider = (props) => {
   const [provinces, setProvinces] = useState<Option[]>(null);
   const [districts, setDistricts] = useState<Option[]>(null);
   const [wards, setWards] = useState<Option[]>(null);
-
   const loadList = () => {
     UserAddressService.getAll({
       query: {
@@ -48,13 +49,16 @@ export const AddressProvider = (props) => {
     });
   };
   useEffect(() => {
-    AddressService.getProvinces().then((res) => {
-      setProvinces([
-        { value: "", label: "Chọn Tỉnh/Thành" },
-        ...res.map((x) => ({ value: x.id, label: x.province })),
-      ]);
-    });
-    loadList();
+    let task = [
+      AddressService.getProvinces().then((res) => {
+        setProvinces([
+          { value: "", label: "Chọn Tỉnh/Thành" },
+          ...res.map((x) => ({ value: x.id, label: x.province })),
+        ]);
+      }),
+      loadList(),
+    ];
+    Promise.all(task).then();
   }, []);
   useEffect(() => {
     AddressService.getDistricts(userAddress ? userAddress.provinceId : "").then((res) => {
@@ -101,7 +105,7 @@ export const AddressProvider = (props) => {
         loadList();
       })
       .catch((err) => {
-        alert(err);
+        warn(err);
       });
   };
   async function setDefaultAddress(id: string) {

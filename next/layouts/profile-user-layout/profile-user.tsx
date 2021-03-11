@@ -56,7 +56,7 @@ export function ProfileUser() {
                                     : ""
                                 }`}
                 >
-                  Đơn mua
+                  Đơn hàng
                 </a>
               </Link>
             </li>

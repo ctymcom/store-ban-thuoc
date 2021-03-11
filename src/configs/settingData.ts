@@ -8,6 +8,9 @@ export enum SettingKey {
   // Cấu hình chung
   TITLE = "TITLE", // Tiêu đề ứng dụng
   LOGO = "LOGO", // Hình logo
+  SEO_DESCRIPTION = "SEO_DESCRIPTION", // Mô tả website
+  SEO_IMAGE = "SEO_IMAGE", // Hình ảnh SEO
+  SEO_KEYWORDS = "SEO_KEYWORDS", // Từ khoá SEO
   // Cấu hình trang chủ
   TOP_MENU = "TOP_MENU", // Cấu hình top menu
   BANNER_1 = "BANNER_1", // Cấu hình banner 1
@@ -40,6 +43,33 @@ export const SETTING_DATA = [
         name: "Hình Logo",
         key: SettingKey.LOGO,
         value: `https://i.ibb.co/GM2tfmz/Group-38443.png`,
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.string,
+        name: "SEO: Mô tả",
+        key: SettingKey.SEO_DESCRIPTION,
+        value: `khothuocsi.vn là website thuộc sở hữu của Công ty TNHH Một thành viên Dược phẩm 150 COPHAVINA.`,
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.string,
+        name: "SEO: Hình ảnh",
+        key: SettingKey.SEO_IMAGE,
+        value: `https://i.ibb.co/pxFSgD3/Banner-1000-x-560-px-06.jpg`,
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.string,
+        name: "SEO: Từ khoá",
+        key: SettingKey.SEO_KEYWORDS,
+        value: `kho thuốc sĩ, khothuocsi`,
         isActive: true,
         isPrivate: false,
         readOnly: false,
