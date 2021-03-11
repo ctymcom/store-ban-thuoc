@@ -24,6 +24,7 @@ export function CheckOutPage() {
   const [checkPaymentMethodCS, setCheckPaymentMethod] = useState(false);
   const [note, setNote] = useState<string>("");
   const toast = useToast();
+  const { cartTotal, cartProducts, setcartProducts } = useCart();
   useEffect(() => {
     if (paymentMethodCS?.code === "CK") {
       setCheckPaymentMethod(true);
@@ -82,7 +83,6 @@ export function CheckOutPage() {
     paymenMethods,
     deliveryMethods,
   } = useCheckoutContext();
-  const { cartTotal, cartProducts } = useCart();
 
   const setStyleBtn = () => {
     let style = "w-full text-16 py-6 my-2";

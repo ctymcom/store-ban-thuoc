@@ -3,8 +3,6 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { UserAddressService, UserAddress } from "../../../../lib/repo/user-address.repo";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { CheckoutService, MethodCheckout, Order } from "../../../../lib/repo/checkout.repo";
-import { CartProduct } from "../../../../lib/providers/cart-provider";
-import { GraphService } from "../../../../lib/repo/graph.repo";
 export const CheckoutContext = createContext<
   Partial<{
     addressSelected: UserAddress;
