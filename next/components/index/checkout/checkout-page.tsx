@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { IoLocationSharp } from "react-icons/io5";
-
 import { NumberPipe } from "../../../lib/pipes/number";
 import { PayMoney } from "../cart/components/pay-money";
 import { FormCheck } from "./components/form-check";
@@ -11,10 +10,12 @@ import AddressDialog from "./components/address-dialog";
 import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
 import { useCart, CartProduct } from "../../../lib/providers/cart-provider";
+import { Button } from "./../../shared/utilities/form/button";
 import { MethodCheckout, Order } from "../../../lib/repo/checkout.repo";
 import { GraphService } from "../../../lib/repo/graph.repo";
 import { useToast } from "../../../lib/providers/toast-provider";
 import gql from "graphql-tag";
+import router from "next/router";
 
 export function CheckOutPage() {
   const [isCheck, setIsCheck] = useState(true);
@@ -23,6 +24,7 @@ export function CheckOutPage() {
   const [checkPaymentMethodCS, setCheckPaymentMethod] = useState(false);
   const [note, setNote] = useState<string>("");
   const toast = useToast();
+  const { cartTotal, cartProducts, setcartProducts } = useCart();
   useEffect(() => {
     if (paymentMethodCS?.code === "CK") {
       setCheckPaymentMethod(true);
@@ -32,11 +34,9 @@ export function CheckOutPage() {
   }, [paymentMethodCS]);
   const confirmOrder = async (data: any) => {
     console.log(data);
-
-    try {
-      let mutationName = "createOrder";
-      const res = await GraphService.apollo.mutate({
-        mutation: gql`
+    let mutationName = "createOrder";
+    const res = await GraphService.apollo.mutate({
+      mutation: gql`
           mutation mutationName($data: CreateOrderInput!) {
             ${mutationName} (
               data: $data
@@ -67,15 +67,12 @@ export function CheckOutPage() {
             }
           }
         `,
-        variables: {
-          data,
-        },
-      });
-      console.log(res);
-
-      return res.data[mutationName];
-    } catch (error) {
-      toast.error(error);
+      variables: {
+        data,
+      },
+    });
+    if (res.data) {
+      router.replace("/complete");
     }
   };
   const {
@@ -86,7 +83,6 @@ export function CheckOutPage() {
     paymenMethods,
     deliveryMethods,
   } = useCheckoutContext();
-  const { cartTotal, cartProducts } = useCart();
 
   const setStyleBtn = () => {
     let style = "w-full text-16 py-6 my-2";
@@ -123,7 +119,7 @@ export function CheckOutPage() {
         </div>
         <div className="w-full text-16  my-5">
           <h4 className="uppercase text-20">Ghi chú khác</h4>
-          <p>
+          <p className="text-16">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
           </p>
@@ -191,11 +187,12 @@ export function CheckOutPage() {
             </div>
             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
           </div>
-          <button
+          <Button
             className={setStyleBtn()}
             disabled={!isCheck}
-            onClick={() =>
-              confirmOrder({
+            asyncLoading
+            onClick={async () =>
+              await confirmOrder({
                 promotionCode: "",
                 paymentMethod: paymentMethodCS.code,
                 deliveryMethod: deliMethodCS.code,
@@ -210,9 +207,8 @@ export function CheckOutPage() {
                 ],
               })
             }
-          >
-            Đặt mua
-          </button>
+            text="Đặt mua"
+          />
           <p className="whitespace-nowrap text-center text-12 md:text-16">
             (Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)
           </p>
