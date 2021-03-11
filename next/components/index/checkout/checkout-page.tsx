@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { IoLocationSharp } from "react-icons/io5";
-
 import { NumberPipe } from "../../../lib/pipes/number";
 import { PayMoney } from "../cart/components/pay-money";
 import { FormCheck } from "./components/form-check";
@@ -11,6 +10,7 @@ import AddressDialog from "./components/address-dialog";
 import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
 import { useCart, CartProduct } from "../../../lib/providers/cart-provider";
+import { Button } from "./../../shared/utilities/form/button";
 import { MethodCheckout, Order } from "../../../lib/repo/checkout.repo";
 import { GraphService } from "../../../lib/repo/graph.repo";
 import { useToast } from "../../../lib/providers/toast-provider";
@@ -191,11 +191,12 @@ export function CheckOutPage() {
             </div>
             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
           </div>
-          <button
+          <Button
             className={setStyleBtn()}
             disabled={!isCheck}
-            onClick={() =>
-              confirmOrder({
+            asyncLoading
+            onClick={async () =>
+              await confirmOrder({
                 promotionCode: "",
                 paymentMethod: paymentMethodCS.code,
                 deliveryMethod: deliMethodCS.code,
@@ -210,9 +211,8 @@ export function CheckOutPage() {
                 ],
               })
             }
-          >
-            Đặt mua
-          </button>
+            text="Đặt mua"
+          />
           <p className="whitespace-nowrap text-center text-12 md:text-16">
             (Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)
           </p>
