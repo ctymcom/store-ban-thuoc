@@ -29,7 +29,7 @@ export function HeaderUser({ ...props }: PropsType) {
                 <>
                   <Menu.Button className="relative flex items-center px-4 cursor-pointer hover:text-primary focus:outline-none">
                     <div className="flex-shrink-0 w-10">
-                      <div className="image-wrapper round">
+                      <div className="image-wrapper circle">
                         <img
                           src={user.imageLink || "/assets/img/avatar.svg"}
                           onError={(e) => {

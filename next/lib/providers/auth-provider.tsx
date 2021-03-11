@@ -13,10 +13,11 @@ export const LOGIN_PATHNAME = "login-pathname";
 
 const AuthContext = createContext<{
   user?: AritoUser;
+  setUser?: Function;
   showDialogUpdatePassword?: boolean;
   setShowDialogUpdatePassword?: Function;
   saveCurrentPath?: () => void;
-  checkUser?: (roles?: string[]) => boolean;
+  checkUser?: (roles?: string[]) => Promise<boolean>;
   login?: (username: string, password: string, mode: "user" | "editor") => Promise<AritoUser>;
   register?: (nickname: string, email: string, phone: string) => Promise<AritoUser>;
   logout?: () => void;
@@ -49,7 +50,7 @@ export function AuthProvider({ children }: any) {
     sessionStorage.setItem(LOGIN_PATHNAME, location.pathname);
   };
 
-  const checkUser = (roles: any[] = null): boolean => {
+  const checkUser = async (roles: any[] = null): Promise<boolean> => {
     let token = GetAuthToken();
     if (token) {
       let decodedToken = jwt_decode(token) as {
@@ -62,8 +63,14 @@ export function AuthProvider({ children }: any) {
         return false;
       }
       if (!roles || (roles && roles.includes(decodedToken.user.role))) {
-        setUser(decodedToken.user);
-        return true;
+        try {
+          let user = await AritoUserService.userGetMe();
+          setUser(user);
+          return true;
+        } catch (err) {
+          setUser(null);
+          return false;
+        }
       } else {
         setUser(null);
         return false;
@@ -167,6 +174,7 @@ export function AuthProvider({ children }: any) {
     <AuthContext.Provider
       value={{
         user,
+        setUser,
         setShowDialogUpdatePassword,
         showDialogUpdatePassword,
         changeAritoUserPassword,
