@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { IoLocationSharp } from "react-icons/io5";
 
@@ -14,8 +13,8 @@ import { useCheckoutContext } from "./providers/checkout-provider";
 import { useCart, CartProduct } from "../../../lib/providers/cart-provider";
 import { MethodCheckout, Order } from "../../../lib/repo/checkout.repo";
 import { GraphService } from "../../../lib/repo/graph.repo";
-import gql from "graphql-tag";
 import { useToast } from "../../../lib/providers/toast-provider";
+import gql from "graphql-tag";
 
 export function CheckOutPage() {
   const [isCheck, setIsCheck] = useState(true);
@@ -31,28 +30,53 @@ export function CheckOutPage() {
       setCheckPaymentMethod(false);
     }
   }, [paymentMethodCS]);
-  const createOrder = async (data: any, note: string, cartProducts: CartProduct[]) => {
-    const { promotionCode, paymentMethod, deliveryMethod, addressId, usePoint } = data;
-    console.log(data, note, cartProducts);
-    GraphService.mutate({
-      mutation: "createOrder",
-      options: {},
-      variablesParams: `{
-        ${promotionCode}
-        ${paymentMethod}
-        ${deliveryMethod}
-        ${addressId}
-        ${note}
-        ${usePoint}
-        ${[
-          ...cartProducts.map((item: CartProduct) => {
-            item.productId, item.qty;
-          }),
-        ]}
-      }`,
-    })
-      .then((res) => toast.success(res))
-      .catch((err) => toast.warn(err));
+  const confirmOrder = async (data: any) => {
+    console.log(data);
+
+    try {
+      let mutationName = "createOrder";
+      const res = await GraphService.apollo.mutate({
+        mutation: gql`
+          mutation mutationName($data: CreateOrderInput!) {
+            ${mutationName} (
+              data: $data
+            ) {
+              id
+              createdAt
+              updatedAt
+              userId
+              code
+              orderNumber
+              addressId
+              fullAddress
+              contactName
+              address
+              provinceId
+              districtId
+              wardId
+              phone
+              location
+              subtotal
+              discount
+              amount
+              promotionCode
+              paymentMethod
+              deliveryMethod
+              usePoint
+              status
+            }
+          }
+        `,
+        variables: {
+          data,
+        },
+      });
+      console.log(res);
+
+      return res.data[mutationName];
+    } catch (error) {
+      toast.error(error);
+    }
   };
   const {
     addressSelected,
@@ -75,6 +99,7 @@ export function CheckOutPage() {
         <div className="w-full">
           <div>
             <FormCheck
+              setMethod={setDeliMethod}
               title="Phương thức vận chuyển"
               checkList={deliveryMethods}
               onClick={(e) => {
@@ -84,6 +109,7 @@ export function CheckOutPage() {
           </div>
           <div className="mt-6">
             <FormCheck
+              setMethod={setPaymentMethod}
               title="Phương thức thanh toán"
               checkList={paymenMethods}
               onClick={(e) => {
@@ -169,16 +195,20 @@ export function CheckOutPage() {
             className={setStyleBtn()}
             disabled={!isCheck}
             onClick={() =>
-              createOrder(
-                {
-                  promotionCode: "",
-                  paymentMethod: paymentMethodCS.code,
-                  deliveryMethod: deliMethodCS.code,
-                  addressId: addressSelected.id,
-                },
-                note,
-                cartProducts
-              )
+              confirmOrder({
+                promotionCode: "",
+                paymentMethod: paymentMethodCS.code,
+                deliveryMethod: deliMethodCS.code,
+                addressId: addressSelected.id,
+                note: note,
+                usePoint: false,
+                items: [
+                  ...cartProducts.map((item) => ({
+                    productId: item.productId,
+                    qty: item.qty,
+                  })),
+                ],
+              })
             }
           >
             Đặt mua

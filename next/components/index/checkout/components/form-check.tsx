@@ -5,13 +5,17 @@ interface PropsType extends ReactProps {
   checkList: MethodCheckout[];
   title: string;
   onClick?: Function;
+  setMethod: Function;
 }
 export function FormCheck(props: PropsType) {
   const { title, checkList } = props;
   const [Checked, setChecked] = useState(false);
   const [iDChecking, setIDChecking] = useState<string>("");
   useEffect(() => {
-    if (checkList) setIDChecking(checkList[0].id);
+    if (checkList) {
+      setIDChecking(checkList[0].id);
+      props.setMethod(checkList[0]);
+    }
   }, [checkList]);
   const setIDCheck = (id: string) => {
     if (id !== iDChecking) {
