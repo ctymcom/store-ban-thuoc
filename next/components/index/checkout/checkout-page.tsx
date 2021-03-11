@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoLocationSharp } from "react-icons/io5";
-
 import { NumberPipe } from "../../../lib/pipes/number";
 import { PayMoney } from "../cart/components/pay-money";
 import { FormCheck } from "./components/form-check";
@@ -11,11 +9,72 @@ import CheckBoxSquare from "./components/check-box-square";
 import AddressDialog from "./components/address-dialog";
 import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
-import { useCart } from "../../../lib/providers/cart-provider";
+import { useCart, CartProduct } from "../../../lib/providers/cart-provider";
+import { Button } from "./../../shared/utilities/form/button";
+import { MethodCheckout, Order } from "../../../lib/repo/checkout.repo";
+import { GraphService } from "../../../lib/repo/graph.repo";
+import { useToast } from "../../../lib/providers/toast-provider";
+import gql from "graphql-tag";
+import router from "next/router";
 
 export function CheckOutPage() {
-  const [isHide, setIsHide] = useState(false);
   const [isCheck, setIsCheck] = useState(true);
+  const [deliMethodCS, setDeliMethod] = useState<MethodCheckout>(null);
+  const [paymentMethodCS, setPaymentMethod] = useState<MethodCheckout>(null);
+  const [checkPaymentMethodCS, setCheckPaymentMethod] = useState(false);
+  const [note, setNote] = useState<string>("");
+  const toast = useToast();
+  const { cartTotal, cartProducts, setcartProducts } = useCart();
+  useEffect(() => {
+    if (paymentMethodCS?.code === "CK") {
+      setCheckPaymentMethod(true);
+    } else {
+      setCheckPaymentMethod(false);
+    }
+  }, [paymentMethodCS]);
+  const confirmOrder = async (data: any) => {
+    console.log(data);
+    let mutationName = "createOrder";
+    const res = await GraphService.apollo.mutate({
+      mutation: gql`
+          mutation mutationName($data: CreateOrderInput!) {
+            ${mutationName} (
+              data: $data
+            ) {
+              id
+              createdAt
+              updatedAt
+              userId
+              code
+              orderNumber
+              addressId
+              fullAddress
+              contactName
+              address
+              provinceId
+              districtId
+              wardId
+              phone
+              location
+              subtotal
+              discount
+              amount
+              promotionCode
+              paymentMethod
+              deliveryMethod
+              usePoint
+              status
+            }
+          }
+        `,
+      variables: {
+        data,
+      },
+    });
+    if (res.data) {
+      router.replace("/complete");
+    }
+  };
   const {
     addressSelected,
     setShowDialogAddress,
@@ -24,10 +83,7 @@ export function CheckOutPage() {
     paymenMethods,
     deliveryMethods,
   } = useCheckoutContext();
-  const { cartTotal } = useCart();
-  const getCheckPayment = (status: boolean) => {
-    setIsHide(status);
-  };
+
   const setStyleBtn = () => {
     let style = "w-full text-16 py-6 my-2";
     return isCheck ? style + " btn-primary" : style + " btn-disabled";
@@ -39,32 +95,38 @@ export function CheckOutPage() {
         <div className="w-full">
           <div>
             <FormCheck
+              setMethod={setDeliMethod}
               title="Phương thức vận chuyển"
               checkList={deliveryMethods}
-              getCheckPayment={getCheckPayment}
+              onClick={(e) => {
+                setDeliMethod(e);
+              }}
             />
           </div>
           <div className="mt-6">
             <FormCheck
+              setMethod={setPaymentMethod}
               title="Phương thức thanh toán"
               checkList={paymenMethods}
-              getCheckPayment={getCheckPayment}
+              onClick={(e) => {
+                setPaymentMethod(e);
+              }}
             />
           </div>
-          <div className="w-full">
-            <p className="text-16 text-left py-2">Giảm 3% cho đơn hàng chuyển khoản trước</p>
-            {isHide ? <TransferInformation info={transferInformation} /> : <></>}
+          <div className="w-full mt-4">
+            {checkPaymentMethodCS ? <TransferInformation info={transferInformation} /> : <></>}
           </div>
         </div>
         <div className="w-full text-16  my-5">
           <h4 className="uppercase text-20">Ghi chú khác</h4>
-          <p>
+          <p className="text-16">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
           </p>
           <textarea
             className="w-full border-2 border-gray-300 rounded-md p-3 outline-none"
             placeholder="Nhập ghi chú của bạn"
+            onChange={(e) => setNote(e.target.value)}
           ></textarea>
         </div>
       </div>
@@ -125,11 +187,28 @@ export function CheckOutPage() {
             </div>
             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
           </div>
-          <Link href="/complete">
-            <button className={setStyleBtn()} disabled={!isCheck}>
-              Đặt mua
-            </button>
-          </Link>
+          <Button
+            className={setStyleBtn()}
+            disabled={!isCheck}
+            asyncLoading
+            onClick={async () =>
+              await confirmOrder({
+                promotionCode: "",
+                paymentMethod: paymentMethodCS.code,
+                deliveryMethod: deliMethodCS.code,
+                addressId: addressSelected.id,
+                note: note,
+                usePoint: false,
+                items: [
+                  ...cartProducts.map((item) => ({
+                    productId: item.productId,
+                    qty: item.qty,
+                  })),
+                ],
+              })
+            }
+            text="Đặt mua"
+          />
           <p className="whitespace-nowrap text-center text-12 md:text-16">
             (Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)
           </p>

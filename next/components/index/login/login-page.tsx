@@ -15,9 +15,11 @@ export default function LoginPage() {
   const recaptchaRef: MutableRefObject<any> = useRef();
 
   useEffect(() => {
-    if (checkUser()) {
-      router.replace("/");
-    }
+    checkUser().then((res) => {
+      if (res) {
+        router.replace("/");
+      }
+    });
   }, []);
 
   useEffect(() => {

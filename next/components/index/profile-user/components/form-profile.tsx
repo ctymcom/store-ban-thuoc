@@ -19,6 +19,7 @@ export function FormProfile(props: PropsType) {
   const toast = useToast();
   const {
     user,
+    checkUser,
     updateAritoUser,
     setShowDialogUpdatePassword,
     showDialogUpdatePassword,
@@ -79,22 +80,23 @@ export function FormProfile(props: PropsType) {
   };
   const ref: MutableRefObject<HTMLInputElement> = useRef();
   const [uploading, setUploading] = useState(false);
-  const handleUploadAvatar = (file: File) => {
+  const handleUploadAvatar = (e) => {
+    let file = e.target.files[0];
     setUploading(true);
     if (file) {
       let formData = new FormData();
       formData.append("data", file);
       AritoUserService.uploadAvatar(formData)
         .then((res) => {
-          console.log(res.data);
-          //setUserA
           toast.success("Upload thành công");
-          console.log(userA);
-
           setUploading(false);
+          AritoUserService.clearStore().then(() => {
+            checkUser();
+          });
         })
         .catch((err) => toast.warn("Upload thất bại"));
     }
+    e.target.value = "";
     //updata
     //updateAritoUser(userA);
   };
@@ -110,7 +112,7 @@ export function FormProfile(props: PropsType) {
               <div className="w-full xl:w-4/6 items-center">
                 <div className="pr-0 xl:pr-16 xl:border-r-2 border-gray-200">
                   <div className="sm:flex justify-between items-center">
-                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Họ tên</p>
+                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Tên hiển thị</p>
                     <input
                       className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
                       value={userA?.nickname}
@@ -213,13 +215,18 @@ export function FormProfile(props: PropsType) {
               </div>
               <div className="flex xl:inline-block w-full xl:w-2/6 justify-around items-center">
                 <div className="flex-shrink-0 w-1/3 mx-auto">
-                  <div className="image-wrapper round">
-                    <img src={userA ? userA.imageLink : ""} alt="avatar" />
+                  <div className="image-wrapper circle">
+                    <img
+                      alt="avatar"
+                      src={user.imageLink || "/assets/img/avatar.svg"}
+                      onError={(e) => {
+                        (e.target as any).src = "/assets/img/avatar.svg";
+                      }}
+                    />
                   </div>
                 </div>
                 <div className="w-9/12 mx-auto flex items-center justify-center flex-wrap">
                   <Button
-                    isLoading={uploading}
                     onClick={() => ref.current?.click()}
                     className="mx-auto px-10 sm:px-14 md:px-16 py-5 md:py-4 lg:py-6 whitespace-nowrap my-3 btn-outline text-lg border-primary border font-normal text-primary hover:bg-primary hover:text-white"
                     text="Đổi ảnh"
@@ -227,9 +234,9 @@ export function FormProfile(props: PropsType) {
                   <input
                     hidden
                     type="file"
-                    accept="image/*"
+                    accept="image/png, image/jpeg, image/jpg"
                     ref={ref}
-                    onChange={(e) => handleUploadAvatar(e.target.files[0])}
+                    onChange={(e) => handleUploadAvatar(e)}
                   />
                   <p className="mx-auto text-12 whitespace-nowrap sm:text-16 text-gray-400 hidden sm:inline-block">
                     Dung lượng file tối đa 1MB.{" "}

@@ -4,29 +4,26 @@ import { MethodCheckout } from "../../../../lib/repo/checkout.repo";
 interface PropsType extends ReactProps {
   checkList: MethodCheckout[];
   title: string;
-  getCheckPayment?: Function;
+  onClick?: Function;
+  setMethod: Function;
 }
 export function FormCheck(props: PropsType) {
   const { title, checkList } = props;
   const [Checked, setChecked] = useState(false);
   const [iDChecking, setIDChecking] = useState<string>("");
   useEffect(() => {
-    if (checkList) setIDChecking(checkList[0].id);
+    if (checkList) {
+      setIDChecking(checkList[0].id);
+      props.setMethod(checkList[0]);
+    }
   }, [checkList]);
-  const setIDCheck = (id: string, code: string) => {
+  const setIDCheck = (id: string) => {
     if (id !== iDChecking) {
       setIDChecking(id);
       setChecked(true);
-      if (code === "CK") {
-        props.getCheckPayment(true);
-      }
-      if (code === "COD") {
-        props.getCheckPayment(false);
-      }
     } else {
       setIDChecking("");
       setChecked(false);
-      props.getCheckPayment(false);
     }
   };
   const setCheckBox = (id: string) => {
@@ -37,12 +34,12 @@ export function FormCheck(props: PropsType) {
     switch (type) {
       case "bo": {
         let tempStyle =
-          "text-16 md:text-20 cursor-pointer px-3 py-2 md:px-5 md:py-4 mt-4 border rounded w-full xl:w-1/2 hover:bg-primary-light transition duration-500 ease-in-out whitespace-nowrap";
+          "cursor-pointer px-3 py-2 md:px-5 md:py-4 mt-4 border rounded w-full xl:w-1/2 hover:bg-primary-light transition duration-500 ease-in-out whitespace-nowrap overflow-hidden ";
         if (id === iDChecking) tempStyle += " border-primary bg-primary-light";
         return tempStyle;
       }
       case "he": {
-        let tempStyle = " text-20 md:text-20";
+        let tempStyle = " text-16";
         if (id === iDChecking) {
           tempStyle += " text-primary";
         }
@@ -52,8 +49,8 @@ export function FormCheck(props: PropsType) {
   };
   return (
     <>
-      <h3 className="uppercase text-20 md:text-20 border-b-4">{title}</h3>
-      <div className="w-full xl:w-4/5 block sm:flex gap-5">
+      <h3 className="uppercase text-16 border-b-4 ">{title}</h3>
+      <div className="w-full xl:w-11/12 block sm:flex gap-5">
         {checkList ? (
           checkList.map((item: MethodCheckout) => {
             return (
@@ -61,14 +58,15 @@ export function FormCheck(props: PropsType) {
                 className={setStyleCheck(item.id, "bo")}
                 key={item.id}
                 onClick={() => {
-                  setIDCheck(item.id, item.code);
+                  setIDCheck(item.id);
+                  props.onClick(item);
                 }}
               >
                 <div className="flex items-center">
                   <Checkbox checked={setCheckBox(item.id)} />
                   <div>
                     <h4 className={setStyleCheck(item.id, "he")}>{item.code}</h4>
-                    <p className="text-gray-500 text-14 md:text-18">{item.name}</p>
+                    <p className="text-gray-500 text-14 md:text-16">{item.name}</p>
                   </div>
                 </div>
               </div>

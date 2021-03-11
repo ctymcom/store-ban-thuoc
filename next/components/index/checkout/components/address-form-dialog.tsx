@@ -16,7 +16,7 @@ interface PropsType extends PropsTypeFormDialog {
 const AddressFormDialog = (props: PropsType) => {
   const {
     userAddress,
-    handleChange,
+    submidFormAddressUser,
     setUserAddress,
     provinces,
     districts,
@@ -24,7 +24,6 @@ const AddressFormDialog = (props: PropsType) => {
     listAddress,
   } = useAddressContext();
   const toast = useToast();
-  const [loading, setLoading] = useState(false);
   const [mess, setMess] = useState(null);
   const handleOnChangSelect = (value: string, id: string) => {
     if (userAddress[id] !== value) {
@@ -82,21 +81,20 @@ const AddressFormDialog = (props: PropsType) => {
     }
     return true;
   };
-  const handleOnClick = (data: UserAddress) => {
-    setLoading(true);
+  const handleOnClick = async (data: UserAddress) => {
     let res = checkBeforeMutation(data);
     if (res) {
-      handleChange(userAddress.id, "formAddress");
-      props.setShowAddressFormDialog(false);
+      let res = await submidFormAddressUser(userAddress.id);
+      if (res) toast.error(res.message);
     } else {
       toast.warn(mess);
     }
-    setLoading(false);
+    return res;
   };
   const checkboxChange = () => {
     if (userAddress.id) {
       if (listAddress.length === 1)
-        setMess("Bạn không thể thay thế địa chỉ mặc định khi chỉ có một địa chỉ");
+        toast.warn("Bạn không thể thay thế địa chỉ mặc định khi chỉ có một địa chỉ");
       else {
         setUserAddress({ ...userAddress, isDefault: !userAddress.isDefault });
       }
@@ -182,9 +180,9 @@ const AddressFormDialog = (props: PropsType) => {
             large
             className="w-full mt-4"
             text="Xác nhận"
-            isLoading={loading}
-            onClick={() => {
-              handleOnClick(userAddress);
+            onClick={async () => {
+              let res = await handleOnClick(userAddress);
+              if (res) props.setShowAddressFormDialog(false);
             }}
           />
         </div>
