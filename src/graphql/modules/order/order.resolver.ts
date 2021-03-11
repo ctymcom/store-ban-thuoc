@@ -106,6 +106,7 @@ const Mutation = {
         deliveryMethod: deliveryMethod,
         note: note,
         usePoint: usePoint,
+        status: 1,
       })
       .then((res) => {
         CartModel.remove({ userId: context.user.id.toString() });
