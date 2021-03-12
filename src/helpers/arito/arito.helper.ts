@@ -947,27 +947,31 @@ export class AritoHelper {
       };
     });
   }
-  static createOrder(data: {
-    promotionCode?: string;
-    paymentMethod: string;
-    deliveryMethod: string;
-    addressId: string;
-    note: string;
-    point: boolean;
-    items: {
-      productId: string;
-      productCode: string;
-      productName: string;
-      qty: number;
-      unit: string;
-      price: number;
-      amount: number;
-    }[];
-  }) {
+  static createOrder(
+    data: {
+      promotionCode?: string;
+      paymentMethod: string;
+      deliveryMethod: string;
+      addressId: string;
+      note: string;
+      point: boolean;
+      items: {
+        productId: string;
+        productCode: string;
+        productName: string;
+        qty: number;
+        unit: string;
+        price: number;
+        amount: number;
+      }[];
+    },
+    draft = false
+  ) {
     let subtotal = 0;
     let itemCount = 0;
     const orderItems = keyBy(data.items, "productCode");
-    return Axios.post(`${this.host}/Voucher/SyncOrder`, {
+    const api = draft ? "SyncDraftOrder" : "SyncOrder";
+    return Axios.post(`${this.host}/Voucher/${api}`, {
       token: this.imageToken,
       memvars: [
         ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
@@ -1023,6 +1027,7 @@ export class AritoHelper {
           position: t["line"],
         })),
         itemCount: itemCount,
+        status: draft ? 0 : 1,
       };
     });
   }

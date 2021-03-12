@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { ImQuotesLeft, ImQuotesRight } from 'react-icons/im';
-import LazyLoad from 'react-lazyload';
-import useInterval from '../../../../lib/hooks/useInterval';
-import { Feedback } from '../../../../lib/repo/feedback.repo';
-import { SectionHeader } from './section-header';
+import { useState } from "react";
+import { ImQuotesLeft, ImQuotesRight } from "react-icons/im";
+import LazyLoad from "react-lazyload";
+import useInterval from "../../../../lib/hooks/useInterval";
+import { Feedback } from "../../../../lib/repo/feedback.repo";
+import { SectionHeader } from "./section-header";
 
 const partitionArray = (array: any[], size) =>
   array
@@ -47,7 +47,7 @@ export function HomeFeedback(props: PropsType) {
               >
                 <div className="w-16 lg:w-20 flex-shrink-0">
                   <LazyLoad>
-                    <div className="image-wrapper round">
+                    <div className="image-wrapper circle">
                       <img src={feedback.avatar} />
                     </div>
                   </LazyLoad>

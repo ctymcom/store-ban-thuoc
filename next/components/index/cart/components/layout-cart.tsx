@@ -8,7 +8,7 @@ import { useCart } from "../../../../lib/providers/cart-provider";
 import Link from "next/link";
 export function LayoutCart(props) {
   const router = useRouter();
-  const { user, saveCurrentPath } = useAuth();
+  const { user } = useAuth();
   const { cartProducts } = useCart();
   useEffect(() => {
     if (user === null) {
@@ -42,8 +42,10 @@ export function LayoutCart(props) {
       listStep.forEach((item) => {
         item.cur = false;
       });
-      for (let index = 0; index < stepCur; index++) {
-        listStep[index].actv = true;
+      if (stepCur !== 2) {
+        for (let index = 0; index < stepCur; index++) {
+          listStep[index].actv = true;
+        }
       }
       listStep[stepCur].cur = true;
     }
@@ -63,7 +65,7 @@ export function LayoutCart(props) {
     <>
       {user ? (
         <>
-          {cartProducts.length ? (
+          {cartProducts?.length ? (
             <div className="w-11/12 mx-auto sm:main-container text-gray-700 text-20">
               <div className="text-18 sm:text-28 lg:text-32 w-1/2 xl:w-1/3 mx-auto my-10 text-center uppercase whitespace-nowrap text-gray-300 flex items-center justify-around">
                 <h2

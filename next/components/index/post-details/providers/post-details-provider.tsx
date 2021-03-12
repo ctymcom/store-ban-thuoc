@@ -19,9 +19,9 @@ export function PostDetailsProvider({ postId, ...props }: PropsType) {
   const [latestPosts, setLatestPosts] = useState<Post[]>();
 
   useEffect(() => {
+    setPost(null);
     PostService.getOne({ id: postId }).then((res) => {
       setPost(res);
-      console.log(res);
     });
     PostService.query({
       query: [
@@ -34,7 +34,7 @@ export function PostDetailsProvider({ postId, ...props }: PropsType) {
         }),
         PostService.getAllQuery({
           query: {
-            limit: 4,
+            limit: 8,
             filter: { _id: { __ne: postId }, status: "PUBLIC" },
             order: { priority: -1 },
           },
@@ -44,7 +44,7 @@ export function PostDetailsProvider({ postId, ...props }: PropsType) {
       setLatestPosts(res.data.g0.data);
       setImportantPosts(res.data.g1.data);
     });
-  }, []);
+  }, [postId]);
 
   return (
     <PostDetailsContext.Provider value={{ post, importantPosts, latestPosts }}>

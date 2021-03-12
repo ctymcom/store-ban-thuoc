@@ -1,21 +1,32 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../lib/providers/auth-provider";
 import { Login } from "./components/login";
 import { Register } from "./components/register";
 import { Recovery } from "./components/recovery";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function LoginPage() {
   const [mode, setMode] = useState<"login" | "register" | "recovery">("login");
   const { user, checkUser } = useAuth();
   const router = useRouter();
 
+  const recaptchaRef: MutableRefObject<any> = useRef();
+
   useEffect(() => {
-    if (checkUser()) {
-      router.replace("/");
-    }
+    checkUser().then((res) => {
+      if (res) {
+        router.replace("/");
+      }
+    });
   }, []);
+
+  useEffect(() => {
+    if (router.query["email"]) {
+      setMode("register");
+    }
+  }, [router.query]);
 
   return (
     <>
@@ -33,11 +44,16 @@ export default function LoginPage() {
             {
               {
                 login: <Login setMode={setMode} />,
-                register: <Register setMode={setMode} />,
+                register: <Register recaptchaRef={recaptchaRef} setMode={setMode} />,
                 recovery: <Recovery setMode={setMode} />,
               }[mode]
             }
           </div>
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            size="invisible"
+            sitekey="6Lf9mHYaAAAAAC6iHPb_CU0qFSq4XFq54BpjTq9B"
+          />
         </div>
       )}
     </>

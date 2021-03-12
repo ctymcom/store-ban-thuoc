@@ -3,7 +3,7 @@ import axios from "axios";
 import { GetAuthToken } from "../graphql/auth.link";
 
 export interface AritoUser {
-  id: number;
+  id: string;
   username: string;
   admin: number;
   nickname: string;
@@ -98,6 +98,16 @@ export class AritoUserRepository extends GraphRepository {
     return res.data[mutationName];
   }
 
+  async userGetMe(): Promise<AritoUser> {
+    let queryName = "userGetMe";
+    const res = await this.query({
+      query: `
+        userGetMe { ${this.fragment} }
+      `,
+    });
+    return res.data.g0;
+  }
+
   // ====== UpdateUserArito =========
   async userUpdateMe(data: any): Promise<{ token: string; user: AritoUser }> {
     let mutationName = "userUpdateMe";
@@ -119,14 +129,14 @@ export class AritoUserRepository extends GraphRepository {
     return res.data[mutationName];
   }
   //uploadAvatar
-  async uploadAvatar(data: any): Promise<{ data: any }> {
+  async uploadAvatar(data: any): Promise<{ imageLink: string }> {
     let res = await axios.post("/api/file/uploadUserImage", data, {
       headers: {
         "content-Type": "multipart/form-data",
         "x-token": GetAuthToken(),
       },
     });
-    return res;
+    return res.data;
   }
   // ====== UserChangePassword =========
   async userChangePassword(oldPass: string, newPass: string): Promise<string> {

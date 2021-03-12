@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { LOGIN_PATHNAME, useAuth } from "../../../lib/providers/auth-provider";
 import { useToast } from "../../../lib/providers/toast-provider";
+import { USER_ROLES } from "../../../lib/repo/arito-user.repo";
 import { Button } from "../../shared/utilities/form/button";
 import { Form } from "./../../shared/utilities/form/form";
 
@@ -10,9 +11,11 @@ export default function AdminLoginPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (checkUser()) {
-      router.replace("/admin");
-    }
+    checkUser(USER_ROLES.map((x) => x.value)).then((res) => {
+      if (res) {
+        router.replace("/admin");
+      }
+    });
   }, []);
 
   const ref = useCallback((input) => {

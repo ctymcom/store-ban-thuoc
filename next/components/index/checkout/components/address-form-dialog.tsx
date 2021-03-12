@@ -7,7 +7,8 @@ import { useAddressContext } from "../providers/address-provider";
 import { Select } from "../../../shared/utilities/form/select";
 import { PropsTypeFormDialog } from "./address-list";
 import { UserAddress } from "../../../../lib/repo/user-address.repo";
-import { useToast } from '../../../../lib/providers/toast-provider';
+import { useToast } from "../../../../lib/providers/toast-provider";
+import { Button } from "../../../shared/utilities/form/button";
 interface PropsType extends PropsTypeFormDialog {
   isOpen: boolean;
   title?: string;
@@ -15,7 +16,7 @@ interface PropsType extends PropsTypeFormDialog {
 const AddressFormDialog = (props: PropsType) => {
   const {
     userAddress,
-    handleChange,
+    submidFormAddressUser,
     setUserAddress,
     provinces,
     districts,
@@ -80,19 +81,20 @@ const AddressFormDialog = (props: PropsType) => {
     }
     return true;
   };
-  const handleOnClick = (data: UserAddress) => {
+  const handleOnClick = async (data: UserAddress) => {
     let res = checkBeforeMutation(data);
     if (res) {
-      handleChange(userAddress.id, "formAddress");
-      props.setShowAddressFormDialog(false);
-    }else{
-      toast.warn(mess)
+      let res = await submidFormAddressUser(userAddress.id);
+      if (res) toast.error(res.message);
+    } else {
+      toast.warn(mess);
     }
+    return res;
   };
   const checkboxChange = () => {
     if (userAddress.id) {
       if (listAddress.length === 1)
-        setMess("Bạn không thể thay thế địa chỉ mặc định khi chỉ có một địa chỉ");
+        toast.warn("Bạn không thể thay thế địa chỉ mặc định khi chỉ có một địa chỉ");
       else {
         setUserAddress({ ...userAddress, isDefault: !userAddress.isDefault });
       }
@@ -173,14 +175,16 @@ const AddressFormDialog = (props: PropsType) => {
             <CheckBoxSquare checked={userAddress ? userAddress.isDefault : true} /> Chọn làm địa chỉ
             mặc định
           </div>
-          <button
-            className="btn-primary w-full h-12 text-16"
-            onClick={() => {
-              handleOnClick(userAddress);
+          <Button
+            primary
+            large
+            className="w-full mt-4"
+            text="Xác nhận"
+            onClick={async () => {
+              let res = await handleOnClick(userAddress);
+              if (res) props.setShowAddressFormDialog(false);
             }}
-          >
-            Xác nhận
-          </button>
+          />
         </div>
       </Dialog.Body>
     </Dialog>
