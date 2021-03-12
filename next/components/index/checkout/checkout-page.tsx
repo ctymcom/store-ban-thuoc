@@ -44,7 +44,7 @@ export function CheckOutPage() {
     }
   }, [paymentMethodCS]);
   const checkBeforeMutate = () => {
-    if (addressSelected === null) {
+    if (!addressSelected) {
       toast.warn("Bạn chưa chọn địa chỉ giao hàng");
       return false;
     }
