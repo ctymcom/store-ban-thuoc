@@ -1,25 +1,37 @@
-import { useEffect, useState } from "react";
 import { OrderDetailsPage } from "../../components/index/order-details/order-details-page";
-import { OrderDetailsProvider } from "../../components/index/order-details/providers/order-details-provider";
+import {
+  OrderDetailsProvider,
+  useOrderDetailsContext,
+} from "../../components/index/order-details/providers/order-details-provider";
+import {
+  OrderProvider,
+  useOrderContext,
+} from "../../components/index/order-history/providers/order-history-provider";
+import { NotFound } from "../../components/shared/utilities/not-found";
 import { DefaultLayout } from "../../layouts/default-layout";
 import { ProfileUserLayout } from "../../layouts/profile-user-layout";
-import { Order } from "../../lib/repo/order.repo";
 
-// interface PropsType extends ReactProps {
-//   order?: Order;
-// }
+export default function OrderDetails() {
+  const { listOrder } = useOrderContext();
+  console.log(listOrder);
 
-export default function OrderDetails(props) {
-  // console.log(props.order);
-
-  return (
+  return listOrder ? (
     <>
       <ProfileUserLayout breadcrumb={"order-details"}>
-        <OrderDetailsProvider orderId="6047273607f03e21d6555bef">
-          <OrderDetailsPage />
-        </OrderDetailsProvider>
+        <OrderProvider>
+          {listOrder?.length > 0 &&
+            listOrder.map((item, index) => (
+              <>
+                <OrderDetailsProvider orderId={item.id} key={index}>
+                  <OrderDetailsPage />
+                </OrderDetailsProvider>
+              </>
+            ))}
+        </OrderProvider>
       </ProfileUserLayout>
     </>
+  ) : (
+    <NotFound text="Không tìm thấy chi tiết đơn hàng này" className="text-gray-700" />
   );
 }
 

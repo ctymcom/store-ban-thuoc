@@ -48,10 +48,9 @@ export default function UpdatePasswordDialog(props: PropsType) {
       onClose={() => props.setShowDialog(false)}
       title="Đổi mật khẩu"
       icon={<RiLockPasswordLine />}
-      className=""
     >
-      <div className="flex-col w-full px-5 py-6">
-        <div className="flex flex-col md:flex-row items-center">
+      <div className="flex-col w-full px-5 sm:px-8 md:px-5 py-6 sm:py-9 md:py-6">
+        <div className="flex flex-col sm:flex-row items-center">
           <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Mật khẩu cũ</p>
           <input
             type="password"
@@ -62,7 +61,7 @@ export default function UpdatePasswordDialog(props: PropsType) {
             }}
           />
         </div>
-        <div className="flex flex-col md:flex-row items-center mt-3 md:mt-5">
+        <div className="flex flex-col sm:flex-row items-center mt-3 sm:mt-5">
           <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Mật khẩu mới</p>
           <input
             type="password"
@@ -73,7 +72,7 @@ export default function UpdatePasswordDialog(props: PropsType) {
             }}
           />
         </div>
-        <div className="flex flex-col md:flex-row items-center mt-3 md:mt-5 flex-wrap">
+        <div className="flex flex-col sm:flex-row items-center mt-3 sm:mt-5 flex-wrap">
           <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Nhập lại mật khẩu mới</p>
           <div className="w-full sm:w-3/4 xl:w-4/6">
             <input
