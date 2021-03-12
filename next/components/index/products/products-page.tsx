@@ -12,8 +12,6 @@ import useScreen from "../../../lib/hooks/useScreen";
 import { HiFilter, HiOutlineX } from "react-icons/hi";
 import { Transition } from "@headlessui/react";
 import useScrollBlock from "./../../../lib/hooks/useScrollBlock";
-<<<<<<< HEAD
-=======
 import BreadCrumbs from "../../shared/utilities/breadcrumbs/breadcrumbs";
 
 const breadcrumbs = [
@@ -25,7 +23,6 @@ const breadcrumbs = [
     label: "Sản phẩm",
   },
 ];
->>>>>>> 879b7c21208b439208b70bbab6e357d829c3f92e
 
 export function ProductsPage() {
   const { loadDone, products, pagination, setPagination } = useProductsContext();
@@ -82,15 +79,6 @@ export function ProductsPage() {
               </div>
             </Transition>
           )}
-<<<<<<< HEAD
-          <div className="py-4 md:py-12 main-container flex">
-            {screenLg && (
-              <div className="flex-shrink-0 w-72">
-                <div className="mt-8">
-                  <ProductsCategoriesFilter title="Danh mục" />
-                </div>
-                {/* <div className="mt-4">
-=======
           <div className="py-4 md:py-12 main-container">
             <div className="pb-4">
               <BreadCrumbs breadcrumbs={breadcrumbs} />
@@ -102,67 +90,12 @@ export function ProductsPage() {
                     <ProductsCategoriesFilter title="Danh mục" />
                   </div>
                   {/* <div className="mt-4">
->>>>>>> 879b7c21208b439208b70bbab6e357d829c3f92e
                                 <ProductsCategoriesFilter 
                                     title="Nhà sản xuất"
                                     categories={productsFilter.manufactures}
                                     setCategories={manufactures => setProductsFilter({...productsFilter, manufactures})}
                                 />
                             </div> */}
-<<<<<<< HEAD
-              </div>
-            )}
-            <div className="flex-grow pl-3">
-              <ProductsTags />
-              <hr className="my-4 border" />
-              {!screenLg && (
-                <>
-                  <div className="flex justify-between">
-                    <button className="btn-default px-0" onClick={() => setFilterOpened(true)}>
-                      <i className="text-xl">
-                        <HiFilter />
-                      </i>
-                      <span>Lọc</span>
-                    </button>
-                    <ProductsFilterSort />
-                  </div>
-                  <ProductsCategoriesLabels />
-                </>
-              )}
-              {screenLg && (
-                <div className="flex justify-between">
-                  <div className="flex-grow">
-                    <ProductsCategoriesLabels />
-                  </div>
-                  <div className="flex-shrink-0 pl-4">
-                    <ProductsFilterSort />
-                  </div>
-                </div>
-              )}
-              {!products ? (
-                <Spinner />
-              ) : (
-                <>
-                  <div className="mt-5 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-5 md:gap-x-6 xl:gap-x-7 gap-y-10">
-                    {!products.length ? (
-                      <NotFound text="Không có sản phẩm nào" className="col-span-5" />
-                    ) : (
-                      products.map((product) => <ProductCard key={product.id} product={product} />)
-                    )}
-                  </div>
-                  <div className="flex justify-center mt-8">
-                    <PaginationRound
-                      limit={pagination.limit}
-                      page={pagination.page}
-                      total={pagination.total}
-                      onPageChange={(page) => {
-                        setPagination({ ...pagination, page });
-                      }}
-                    />
-                  </div>
-                </>
-              )}
-=======
                 </div>
               )}
               <div className="flex-grow lg:pl-3">
@@ -218,7 +151,6 @@ export function ProductsPage() {
                   </>
                 )}
               </div>
->>>>>>> 879b7c21208b439208b70bbab6e357d829c3f92e
             </div>
           </div>
         </>

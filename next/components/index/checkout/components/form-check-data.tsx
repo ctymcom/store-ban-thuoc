@@ -48,3 +48,14 @@ export const listFormCheckPayment = {
   tit: "Phương thức thanh toán",
   list: listPayment,
 };
+
+export const listMoneyCheckout = [
+  {
+    title: "Tổng tiền hàng",
+    money: 0,
+  },
+  {
+    title: "Voucher giảm giá",
+    money: 0,
+  },
+];
