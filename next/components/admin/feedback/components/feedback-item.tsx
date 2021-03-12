@@ -14,12 +14,12 @@ export default function FeedbackItem({ feedback, ...props }: PropsType) {
       <div className="w-16 flex-shrink-0 flex-grow-0">
         <Img src={feedback.avatar} avatar />
       </div>
-      <div className="pl-4 flex-grow">
+      <div className="pl-4 flex-grow flex flex-col">
         <div className="text-primary text-lg font-bold">{feedback.name}</div>
         <div className="text-gray-800 text-lg font-semibold">{feedback.title}</div>
         <p className="text-gray-700 mt-2">{feedback.content}</p>
-        <div className="flex justify-end">
-          <Button outline text="Cập nhật" onClick={props.onSaveFeedback} />
+        <div className="mt-auto flex justify-end pt-2">
+          <Button className="mr-2" outline text="Cập nhật" onClick={props.onSaveFeedback} />
           <Button outline text="Xoá" asyncLoading onClick={props.onRemoveFeedback} />
         </div>
       </div>
