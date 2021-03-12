@@ -22,6 +22,16 @@
   span {
     @apply inline-flex;
     @apply items-center;
+    @apply transition-none;
+  }
+
+  span + i {
+    @apply ml-1.5;
+    @apply transition-none;
+  }
+
+  span i {
+    @apply transition-all;
   }
 
   &:not(.flex-row-reverse) {
@@ -33,10 +43,6 @@
     i + span {
       @apply mr-1.5;
     }
-  }
-
-  span + i {
-    @apply ml-1.5;
   }
 
   &.btn-sm {

@@ -122,7 +122,7 @@ export function SettingList(props: PropTypes) {
                     <Button gray text="Reset dữ liệu" onClick={onInitData} />
                     <Button
                       primary
-                      type="submit"
+                      submit
                       className="ml-2"
                       text="Lưu thay đổi"
                       asyncLoading
