@@ -25,7 +25,8 @@ export type IOrder = BaseDocument & {
   paymentMethod?: string; // Phương thức thanh toán
   deliveryMethod?: string; // Phương thức vận chuyển
   usePoint?: boolean; // Sử dụng điểm
-  status?: string; // Trạng thái đơn hàng
+  status?: number; // Trạng thái đơn hàng
+  itemCount?: number; // Số lượng sản phẩm
 };
 
 const orderSchema = new Schema(
@@ -50,12 +51,14 @@ const orderSchema = new Schema(
     paymentMethod: { type: String },
     deliveryMethod: { type: String },
     usePoint: { type: Boolean, default: false },
-    status: { type: String },
+    status: { type: Number },
+    itemCount: { type: Number, min: 0, default: 0 },
   },
   { timestamps: true }
 );
 
 orderSchema.index({ orderNumber: "text" }, { weights: { orderNumber: 2 } });
+orderSchema.index({ userId: 1, status: 1 });
 
 export const OrderHook = new ModelHook<IOrder>(orderSchema);
 export const OrderModel: mongoose.Model<IOrder> = MainConnection.model("Order", orderSchema);

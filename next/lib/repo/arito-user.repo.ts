@@ -3,7 +3,7 @@ import axios from "axios";
 import { GetAuthToken } from "../graphql/auth.link";
 
 export interface AritoUser {
-  id: number;
+  id: string;
   username: string;
   admin: number;
   nickname: string;
