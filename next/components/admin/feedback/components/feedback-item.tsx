@@ -20,7 +20,7 @@ export default function FeedbackItem({ feedback, ...props }: PropsType) {
         <p className="text-gray-700 mt-2">{feedback.content}</p>
         <div className="mt-auto flex justify-end pt-2">
           <Button className="mr-2" outline text="Cập nhật" onClick={props.onSaveFeedback} />
-          <Button outline text="Xoá" asyncLoading onClick={props.onRemoveFeedback} />
+          <Button outline hoverDanger text="Xoá" asyncLoading onClick={props.onRemoveFeedback} />
         </div>
       </div>
     </div>
