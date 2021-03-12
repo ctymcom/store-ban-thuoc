@@ -14,7 +14,7 @@ export function ProfileUser() {
           <ImUser className="text-primary border-2 border-primary rounded-full text-md sm:text-lg md:text-2xl p-0.5 mr-2" />
           <Link href="/profile" shallow={true}>
             <a
-              className={`"  uppercase text-sm md:text-base hover:text-primary font-extralight " 
+              className={`" whitespace-nowrap uppercase text-sm md:text-base hover:text-primary font-extralight " 
                                 ${router.pathname == "/profile" ? " text-primary" : ""}`}
             >
               Tài khoản của tôi
@@ -33,7 +33,7 @@ export function ProfileUser() {
                                     : ""
                                 }`}
             >
-              Đơn mua
+              Đơn hàng
             </a>
           </Link>
         </li>

@@ -68,7 +68,9 @@ export function OrderHistoryItem({ item, index }: PropsType) {
           <p className="pt-1 md:pt-0">
             Tổng sản phẩm:
             <span className="ml-2 font-bold">
-              {itemArray.length > 0 && itemArray.map((item, index) => item.qty)} sản phẩm
+              {itemArray.length > 0 &&
+                itemArray.map((item, index) => <span key={index}>{item.qty}</span>)}{" "}
+              sản phẩm
             </span>
           </p>
 

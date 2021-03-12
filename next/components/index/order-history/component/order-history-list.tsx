@@ -11,13 +11,33 @@ interface PropsType extends ReactProps {
 
 export function OrderHisttoryList({ listOrder, status }: PropsType) {
   const [listOrders, setListOrders] = useState([]);
+
   useEffect(() => {
     if (status) {
-      setListOrders(listOrder?.filter((x) => x.status == status));
+      setListOrders(listOrder?.filter((x) => (x.status == "0" ? "Approved" : "") == status));
+      // setListOrders(
+      //   listOrder?.filter(
+      //     (x) =>
+      //       (x.status == "0"
+      //         ? "Release Later"
+      //         : x.status == "5"
+      //         ? "Approved"
+      //         : x.status == "2"
+      //         ? "Issuing"
+      //         : x.status == "3"
+      //         ? "Approving"
+      //         : x.status == "4"
+      //         ? "Completed"
+      //         : "Closed") == status
+      //   )
+      // );
     } else {
       setListOrders(listOrder);
     }
   }, [status, listOrder]);
+
+  // console.log(listOrder);
+  // console.log(status);
 
   return (
     <>
