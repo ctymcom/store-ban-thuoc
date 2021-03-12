@@ -22,7 +22,6 @@ const AddressFormDialog = (props: PropsType) => {
     provinces,
     districts,
     wards,
-    listAddress,
   } = useAddressContext();
   const toast = useToast();
   const [mess, setMess] = useState(null);
@@ -88,13 +87,11 @@ const AddressFormDialog = (props: PropsType) => {
   const handleOnClick = async (data: UserAddress) => {
     let res = checkBeforeMutation(data);
     if (res) {
-      let res = await submitFormAddressUser(userAddress.id);
-      console.log(res);
-
-      if (res) toast.error(res.message);
+      await submitFormAddressUser(userAddress.id);
     } else {
       toast.warn(mess);
     }
+    toast.success("Thao tác thành công");
     return res;
   };
   const checkboxChange = () => {

@@ -33,7 +33,9 @@ export function CheckOutPage() {
     paymenMethods,
     deliveryMethods,
   } = useCheckoutContext();
-
+  useEffect(() => {
+    listMoneyCheckout[0].money = cartTotal;
+  }, []);
   useEffect(() => {
     if (paymentMethodCS?.code === "CK") {
       setCheckPaymentMethod(true);
@@ -42,14 +44,6 @@ export function CheckOutPage() {
     }
   }, [paymentMethodCS]);
   const checkBeforeMutate = () => {
-    if (paymentMethodCS === null) {
-      toast.warn("Bạn chưa chọn phương thức thanh toán");
-      return false;
-    }
-    if (deliMethodCS === null) {
-      toast.warn("Bạn chưa chọn phương thức vận chuyển");
-      return false;
-    }
     if (addressSelected === null) {
       toast.warn("Bạn chưa chọn địa chỉ giao hàng");
       return false;

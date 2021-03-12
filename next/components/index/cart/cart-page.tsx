@@ -11,7 +11,7 @@ import { NotFound } from "../../shared/utilities/not-found";
 
 export default function CartPage(props) {
   // const [Tit, setTit] = useState('cart');
-  const { cartProducts, setcartProducts } = useCart();
+  const { cartProducts, setcartProducts, cartTotal } = useCart();
   const [checkAll, setCheckAll] = useState(true);
   const router = useRouter();
   const [listMoneyCart, setListMoneyCart] = useState([
@@ -28,20 +28,16 @@ export default function CartPage(props) {
       money: 0,
     },
   ]);
-  const toTalMoney = (cartProducts: CartProduct[]) => {
-    let total = 0;
-    if (cartProducts) {
-      cartProducts.forEach((item: CartProduct) => {
-        if (item.active) {
-          total += item.amount;
-        }
-      });
-    }
-    return total;
-  };
   useEffect(() => {
     let newListMoney = listMoneyCart;
-    newListMoney[2].money = toTalMoney(cartProducts);
+    newListMoney[0].money = cartTotal;
+    newListMoney[2].money = cartTotal;
+    setListMoneyCart([...newListMoney]);
+  }, []);
+  useEffect(() => {
+    let newListMoney = listMoneyCart;
+    newListMoney[0].money = cartTotal;
+    newListMoney[2].money = cartTotal;
     setListMoneyCart([...newListMoney]);
     checkAndsetCheckAll();
   }, [cartProducts]);

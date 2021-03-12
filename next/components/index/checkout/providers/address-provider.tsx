@@ -77,6 +77,8 @@ export const AddressProvider = (props) => {
   }, [userAddress]);
 
   const updateOrCreateUserAddress = async (data: UserAddress) => {
+    console.log(data);
+
     const {
       contactName,
       address,
@@ -138,10 +140,7 @@ export const AddressProvider = (props) => {
       task.push(setAddressSelected(null));
     }
     await Promise.all(task);
-    console.log(addressSelected);
-
-    let res = await UserAddressService.delete({ id });
-    if (res) toast.error(res.message);
+    await UserAddressService.delete({ id });
     loadList();
   };
   const submitFormAddressUser = async () => {
@@ -156,8 +155,10 @@ export const AddressProvider = (props) => {
           });
         }
       }
+      res = await updateOrCreateUserAddress(userAddress);
+    } else {
+      res = await updateOrCreateUserAddress({ ...userAddress, isDefault: true });
     }
-    res = await updateOrCreateUserAddress(userAddress);
     if (res) {
       toast.error(res.message);
     } else {
