@@ -88,10 +88,10 @@ const AddressFormDialog = (props: PropsType) => {
     let res = checkBeforeMutation(data);
     if (res) {
       await submitFormAddressUser(userAddress.id);
+      toast.success("Thao tác thành công");
     } else {
       toast.warn(mess);
     }
-    toast.success("Thao tác thành công");
     return res;
   };
   const checkboxChange = () => {
