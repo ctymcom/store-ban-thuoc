@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HiCog } from "react-icons/hi";
-import { cloneDeep } from "../../../../lib/lodash";
+import { cloneDeep } from "lodash";
 import { Setting } from "../../../../lib/repo/setting.repo";
 import { Button } from "../../../shared/utilities/form/button";
 import { Form } from "../../../shared/utilities/form/form";

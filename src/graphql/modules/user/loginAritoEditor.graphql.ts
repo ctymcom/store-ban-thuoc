@@ -1,5 +1,5 @@
 import { gql } from "apollo-server-express";
-import { get } from "lodash";
+import { get, set } from "lodash";
 import { Context } from "../../context";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { TokenHelper } from "../../../helpers/token.helper";
@@ -70,6 +70,7 @@ export default {
         if (user.permission != 3) throw ErrorHelper.permissionDeny();
         const userData = { ...user, role: ROLES.EDITOR };
         const editorToken = TokenHelper.getAritorEditorToken(userData, token);
+        set(context, "tokenData.ref", token);
         return {
           token: editorToken,
           user: userData,
@@ -83,7 +84,7 @@ export default {
       thumbnailLink: async (root: AritoUser, args: any, context: Context) => {
         return AritoHelper.getThumbnailLink(root.imageId);
       },
-      point: async (root: AritoHelper, args: any, context: Context) => {
+      point: async (root: AritoUser, args: any, context: Context) => {
         return await AritoHelper.getUserPoint(context.tokenData.ref);
       },
     },

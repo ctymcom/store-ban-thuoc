@@ -65,7 +65,7 @@ export function LayoutCart(props) {
     <>
       {user ? (
         <>
-          {cartProducts?.length ? (
+          {cartProducts?.length || listStep[2].cur ? (
             <div className="w-11/12 mx-auto sm:main-container text-gray-700 text-20">
               <div className="text-18 sm:text-28 lg:text-32 w-1/2 xl:w-1/3 mx-auto my-10 text-center uppercase whitespace-nowrap text-gray-300 flex items-center justify-around">
                 <h2

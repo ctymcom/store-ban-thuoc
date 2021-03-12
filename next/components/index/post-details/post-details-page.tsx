@@ -50,7 +50,7 @@ export function PostDetailsPage() {
                 dangerouslySetInnerHTML={{ __html: post.content }}
               ></div>
             </div>
-            <div className="flex-shrink-0 flex-grow-0 w-full lg:w-80">
+            <div className="flex-shrink-0 flex-grow-0 w-full lg:w-72">
               <SectionHeader text="Tin tức mới nhất" />
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
                 {latestPosts?.map((post) => (

@@ -4,7 +4,6 @@ import { useNotificationContext } from "./providers/notifications-provider";
 
 export function NotificationPage() {
   const { listNotification, pagination, setPagination } = useNotificationContext();
-  console.log("pagination", pagination);
 
   return (
     <>

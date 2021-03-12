@@ -31,7 +31,7 @@ export function QuickShoppingSearch(props: PropsType) {
       </i>
       {search && (
         <button
-          className="btn-default is-danger p-0 h-12 w-10 absolute right-0"
+          className="btn-default hover-danger p-0 h-12 w-10 absolute right-0"
           onClick={() => setSearch("")}
         >
           <i>

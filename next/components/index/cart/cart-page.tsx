@@ -11,7 +11,7 @@ import { NotFound } from "../../shared/utilities/not-found";
 
 export default function CartPage(props) {
   // const [Tit, setTit] = useState('cart');
-  const { cartProducts, setcartProducts } = useCart();
+  const { cartProducts, setcartProducts, cartTotal } = useCart();
   const [checkAll, setCheckAll] = useState(true);
   const router = useRouter();
   const [listMoneyCart, setListMoneyCart] = useState([
@@ -28,20 +28,16 @@ export default function CartPage(props) {
       money: 0,
     },
   ]);
-  const toTalMoney = (cartProducts: CartProduct[]) => {
-    let total = 0;
-    if (cartProducts) {
-      cartProducts.forEach((item: CartProduct) => {
-        if (item.active) {
-          total += item.amount;
-        }
-      });
-    }
-    return total;
-  };
   useEffect(() => {
     let newListMoney = listMoneyCart;
-    newListMoney[2].money = toTalMoney(cartProducts);
+    newListMoney[0].money = cartTotal;
+    newListMoney[2].money = cartTotal;
+    setListMoneyCart([...newListMoney]);
+  }, []);
+  useEffect(() => {
+    let newListMoney = listMoneyCart;
+    newListMoney[0].money = cartTotal;
+    newListMoney[2].money = cartTotal;
     setListMoneyCart([...newListMoney]);
     checkAndsetCheckAll();
   }, [cartProducts]);
@@ -130,7 +126,7 @@ export default function CartPage(props) {
   return (
     <div className="mx-auto w-11/12 sm:w-full">
       <div className="lg:flex gap-20">
-        <div className="w-full lg:w-3/4 border-b-2 sm:border-0 mt-5">
+        <div className="w-full lg:w-3/4 border-b-2 sm:border-0 my-5">
           <ListCartItems
             handleDeleteCart={handleDeleteCart}
             handleChangeItem={handleChangeItem}
@@ -152,7 +148,7 @@ export default function CartPage(props) {
           <div className="sm:pr-2 lg:pr-0 row-auto">
             <Promotion />
           </div>
-          <div className="sm:pl-2 lg:pl-0 sm:mt-5 lg:mt-3.5">
+          <div className="sm:pl-2 lg:pl-0 my-5 sm:mt-5 lg:mt-3.5">
             <PayMoney listMoney={listMoneyCart} />
             <Link href="/checkout">
               <button className="btn btn-primary w-full py-6 mt-2 ">Tiến hành thanh toán</button>

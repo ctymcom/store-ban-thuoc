@@ -12,6 +12,7 @@ interface PropsType extends ReactProps {
   success?: boolean;
   danger?: boolean;
   warning?: boolean;
+  hoverDanger?: boolean;
   disabled?: boolean;
   submit?: boolean;
   icon?: JSX.Element;
@@ -23,15 +24,24 @@ interface PropsType extends ReactProps {
 }
 export function Button({ className = "", style, iconPosition = "start", ...props }: PropsType) {
   let buttonClass = "";
-  if (props.primary) buttonClass = "btn-primary";
-  else if (props.accent) buttonClass = "btn-accent";
-  else if (props.gray) buttonClass = "btn-gray";
-  else if (props.outline) buttonClass = "btn-outline";
-  else if (props.info) buttonClass = "btn-info";
-  else if (props.success) buttonClass = "btn-success";
-  else if (props.danger) buttonClass = "btn-danger";
-  else if (props.warning) buttonClass = "btn-warning";
-  else buttonClass = "btn-default";
+  if (props.outline) {
+    buttonClass = "btn-outline";
+    if (props.primary) buttonClass += " is-primary";
+    else if (props.accent) buttonClass += " is-accent";
+    else if (props.info) buttonClass += " is-info";
+    else if (props.success) buttonClass += " is-success";
+    else if (props.danger) buttonClass += " is-danger";
+    else if (props.warning) buttonClass += " is-warning";
+  } else {
+    if (props.primary) buttonClass = "btn-primary";
+    else if (props.accent) buttonClass = "btn-accent";
+    else if (props.gray) buttonClass = "btn-gray";
+    else if (props.info) buttonClass = "btn-info";
+    else if (props.success) buttonClass = "btn-success";
+    else if (props.danger) buttonClass = "btn-danger";
+    else if (props.warning) buttonClass = "btn-warning";
+    else buttonClass = "btn-default";
+  }
 
   let buttonSize = "";
   if (props.small) buttonSize = "btn-sm";
@@ -63,7 +73,7 @@ export function Button({ className = "", style, iconPosition = "start", ...props
 
   return (
     <button
-      className={`${buttonClass} ${buttonSize} ${
+      className={`${buttonClass} ${props.hoverDanger ? "hover-danger" : ""} ${buttonSize} ${
         iconPosition == "end" ? "flex-row-reverse" : ""
       } ${className}`.trim()}
       style={style}
@@ -78,13 +88,13 @@ export function Button({ className = "", style, iconPosition = "start", ...props
               <CgSpinner />
             </i>
           ) : (
-            <i className="text-xl">{props.icon}</i>
+            <i className="text-xl transition-none">{props.icon}</i>
           )}
         </>
       )}
       {props.text && (
         <span
-          className={`relative transform transition ${
+          className={`relative transform transition-transform ${
             !props.icon && loading ? "translate-x-2.5" : ""
           }`}
         >

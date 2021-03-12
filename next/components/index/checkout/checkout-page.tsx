@@ -24,7 +24,18 @@ export function CheckOutPage() {
   const [checkPaymentMethodCS, setCheckPaymentMethod] = useState(false);
   const [note, setNote] = useState<string>("");
   const toast = useToast();
-  const { cartTotal, cartProducts, setcartProducts } = useCart();
+  const { cartTotal, cartProducts, setcartProducts, promotion, setPromotion } = useCart();
+  const {
+    addressSelected,
+    setShowDialogAddress,
+    showDialogAddress,
+    loadingCheckout,
+    paymenMethods,
+    deliveryMethods,
+  } = useCheckoutContext();
+  useEffect(() => {
+    listMoneyCheckout[0].money = cartTotal;
+  }, []);
   useEffect(() => {
     if (paymentMethodCS?.code === "CK") {
       setCheckPaymentMethod(true);
@@ -32,8 +43,14 @@ export function CheckOutPage() {
       setCheckPaymentMethod(false);
     }
   }, [paymentMethodCS]);
+  const checkBeforeMutate = () => {
+    if (!addressSelected) {
+      toast.warn("Bạn chưa chọn địa chỉ giao hàng");
+      return false;
+    }
+    return true;
+  };
   const confirmOrder = async (data: any) => {
-    console.log(data);
     let mutationName = "createOrder";
     const res = await GraphService.apollo.mutate({
       mutation: gql`
@@ -72,17 +89,33 @@ export function CheckOutPage() {
       },
     });
     if (res.data) {
+      let task = [
+        setPromotion(""),
+        setcartProducts([]),
+        localStorage.removeItem("cartProductStorage"),
+      ];
+      await Promise.all(task);
       router.replace("/complete");
     }
   };
-  const {
-    addressSelected,
-    setShowDialogAddress,
-    showDialogAddress,
-    loadingCheckout,
-    paymenMethods,
-    deliveryMethods,
-  } = useCheckoutContext();
+  const handleConfirmOrder = async () => {
+    if (checkBeforeMutate()) {
+      await confirmOrder({
+        promotionCode: promotion,
+        paymentMethod: paymentMethodCS.code,
+        deliveryMethod: deliMethodCS.code,
+        addressId: addressSelected.id,
+        note: note,
+        usePoint: false,
+        items: [
+          ...cartProducts.map((item) => ({
+            productId: item.productId,
+            qty: item.qty,
+          })),
+        ],
+      });
+    }
+  };
 
   const setStyleBtn = () => {
     let style = "w-full text-16 py-6 my-2";
@@ -98,9 +131,6 @@ export function CheckOutPage() {
               setMethod={setDeliMethod}
               title="Phương thức vận chuyển"
               checkList={deliveryMethods}
-              onClick={(e) => {
-                setDeliMethod(e);
-              }}
             />
           </div>
           <div className="mt-6">
@@ -108,9 +138,6 @@ export function CheckOutPage() {
               setMethod={setPaymentMethod}
               title="Phương thức thanh toán"
               checkList={paymenMethods}
-              onClick={(e) => {
-                setPaymentMethod(e);
-              }}
             />
           </div>
           <div className="w-full mt-4">
@@ -118,8 +145,8 @@ export function CheckOutPage() {
           </div>
         </div>
         <div className="w-full text-16  my-5">
-          <h4 className="uppercase text-20">Ghi chú khác</h4>
-          <p className="text-16">
+          <h4 className="uppercase text-16">Ghi chú khác</h4>
+          <p className="text-14">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
           </p>
@@ -140,22 +167,22 @@ export function CheckOutPage() {
                 </i>
                 <h4 className="uppercase text-16">Địa chỉ giao hàng</h4>
               </div>
-              <a
+              <p
                 className="text-primary text-16  cursor-pointer"
                 onClick={() => setShowDialogAddress(true)}
               >
                 Đổi
-              </a>
+              </p>
             </div>
             <div className="my-2 text-16 ">
               {addressSelected ? (
                 <>
-                  <p className="text-20 md:text-20 font-bold">{addressSelected.contactName}</p>
+                  <p className="text-16 font-bold">{addressSelected.contactName}</p>
                   <p>{addressSelected.fullAddress}</p>
                   <p>{addressSelected.phone}</p>
                 </>
               ) : (
-                <div className="mx-auto w-2/3 items-center">
+                <div className="mx-auto w-2/3 items-center text-14">
                   <p>Bạn chưa có địa chỉ giao hàng?</p>
                   <button className="btn-primary w-full" onClick={() => setShowDialogAddress(true)}>
                     Bấm vào đây để tạo
@@ -191,22 +218,7 @@ export function CheckOutPage() {
             className={setStyleBtn()}
             disabled={!isCheck}
             asyncLoading
-            onClick={async () =>
-              await confirmOrder({
-                promotionCode: "",
-                paymentMethod: paymentMethodCS.code,
-                deliveryMethod: deliMethodCS.code,
-                addressId: addressSelected.id,
-                note: note,
-                usePoint: false,
-                items: [
-                  ...cartProducts.map((item) => ({
-                    productId: item.productId,
-                    qty: item.qty,
-                  })),
-                ],
-              })
-            }
+            onClick={async () => await handleConfirmOrder()}
             text="Đặt mua"
           />
           <p className="whitespace-nowrap text-center text-12 md:text-16">

@@ -1,7 +1,8 @@
 import { select } from "async";
 import { createContext, useContext, useEffect, useState } from "react";
-import { cloneDeep } from "../../../../lib/lodash";
+import { cloneDeep } from "lodash";
 import { Promotion, PromotionService } from "../../../../lib/repo/promotion.repo";
+import { useCart } from "../../../../lib/providers/cart-provider";
 export const PromotionContext = createContext<{
   [x: string]: any;
   listPromotion?: Promotion[];
@@ -16,12 +17,15 @@ export function PromotionProvider(props) {
   let [selectedPromotion, setSelectedPromotion] = useState<Promotion>();
   let [usePromotion, setUsePromotion] = useState(false);
 
+  const { setPromotion } = useCart();
+
   const applyPromotion = () => {
     if (usePromotion && selectedPromotion) {
       setSelectedPromotion(null);
       setUsePromotion(false);
     } else {
       setUsePromotion(true);
+      setPromotion(selectedPromotion.code);
     }
   };
 

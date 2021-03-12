@@ -25,6 +25,7 @@ export interface AritoUser {
   companyName: string;
   imageLink: string;
   role: ROLE;
+  point: number;
 }
 
 export enum ROLE {
@@ -61,6 +62,7 @@ export class AritoUserRepository extends GraphRepository {
     companyName: string
     imageLink: String
     role: String
+    point: Float
   `);
 
   async loginArito(

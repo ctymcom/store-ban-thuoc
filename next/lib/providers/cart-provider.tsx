@@ -22,9 +22,12 @@ const CartContext = createContext<
     setCartTotal: Function;
     loading: boolean;
     setLoading: Function;
+    setCartProductCount: Function;
     addProductToCart: (product: Product, qty: number) => boolean;
     changeProductQuantity: (product: Product, qty: number) => void;
     removeProductFromCart: (product: Product) => void;
+    promotion: string;
+    setPromotion: Function;
   }>
 >({});
 
@@ -33,6 +36,7 @@ export function CartProvider({ children }: any) {
   const [cartProductCount, setCartProductCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [promotion, setPromotion] = useState("");
 
   const toast = useToast();
 
@@ -75,6 +79,7 @@ export function CartProvider({ children }: any) {
       }
     } catch (error) {
       console.log(error);
+      setPromotion("");
       setLoading(false);
     }
   }, []);
@@ -82,14 +87,16 @@ export function CartProvider({ children }: any) {
     localStorage.setItem(
       "cartProductStorage",
       JSON.stringify(
-        cartProducts.map((item) => {
+        cartProducts?.map((item) => {
           return { productId: item.productId, qty: item.qty, active: item.active };
         })
       )
     );
-    setCartProductCount(cartProducts.reduce((count, cartProduct) => (count += cartProduct.qty), 0));
+    setCartProductCount(
+      cartProducts?.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
+    );
     setCartTotal(
-      cartProducts.reduce(
+      cartProducts?.reduce(
         (total, cartProduct) => (cartProduct.active ? (total += cartProduct.amount) : total),
         0
       )
@@ -157,6 +164,9 @@ export function CartProvider({ children }: any) {
         setcartProducts,
         changeProductQuantity,
         removeProductFromCart,
+        setCartProductCount,
+        promotion,
+        setPromotion,
       }}
     >
       {children}

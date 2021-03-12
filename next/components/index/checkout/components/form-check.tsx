@@ -4,12 +4,10 @@ import { MethodCheckout } from "../../../../lib/repo/checkout.repo";
 interface PropsType extends ReactProps {
   checkList: MethodCheckout[];
   title: string;
-  onClick?: Function;
   setMethod: Function;
 }
 export function FormCheck(props: PropsType) {
   const { title, checkList } = props;
-  const [Checked, setChecked] = useState(false);
   const [iDChecking, setIDChecking] = useState<string>("");
   useEffect(() => {
     if (checkList) {
@@ -17,13 +15,10 @@ export function FormCheck(props: PropsType) {
       props.setMethod(checkList[0]);
     }
   }, [checkList]);
-  const setIDCheck = (id: string) => {
-    if (id !== iDChecking) {
-      setIDChecking(id);
-      setChecked(true);
-    } else {
-      setIDChecking("");
-      setChecked(false);
+  const setIDCheck = (method: MethodCheckout) => {
+    if (method.id !== iDChecking) {
+      setIDChecking(method.id);
+      props.setMethod(method);
     }
   };
   const setCheckBox = (id: string) => {
@@ -58,8 +53,7 @@ export function FormCheck(props: PropsType) {
                 className={setStyleCheck(item.id, "bo")}
                 key={item.id}
                 onClick={() => {
-                  setIDCheck(item.id);
-                  props.onClick(item);
+                  setIDCheck(item);
                 }}
               >
                 <div className="flex items-center">

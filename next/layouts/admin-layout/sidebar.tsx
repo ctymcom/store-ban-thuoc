@@ -66,7 +66,7 @@ export default function Sidebar() {
           ))}
         </div>
         <button
-          className="btn-default is-danger mt-auto px-8 justify-start h-16 mb-4"
+          className="btn-default hover-danger mt-auto px-8 justify-start h-16 mb-4"
           onClick={logout}
         >
           <span>Đăng xuất</span>
