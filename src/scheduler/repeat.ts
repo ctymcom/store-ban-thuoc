@@ -9,6 +9,7 @@ import SyncOrderStatusJob from "./jobs/syncOrderStatus.job";
 import { SyncProductJob } from "./jobs/syncProduct.job";
 import SyncPromotionJob from "./jobs/syncPromotion.job";
 import SyncUserNotificationJob from "./jobs/syncUserNotification.job";
+import SyncUserPointLogJob from "./jobs/syncUserPointLog.job";
 
 export function InitRepeatJobs() {
   console.log("Generate Repeat Jobs");
@@ -42,4 +43,8 @@ export function InitRepeatJobs() {
     .unique({ name: SyncOrderOptionsJob.jobName })
     .save();
   SyncOrderJob.create({}).repeatEvery("5 minute").unique({ name: SyncOrderJob.jobName }).save();
+  SyncUserPointLogJob.create({})
+    .repeatEvery("5 minute")
+    .unique({ name: SyncUserPointLogJob.jobName })
+    .save();
 }

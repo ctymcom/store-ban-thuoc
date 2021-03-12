@@ -16,6 +16,7 @@ import { IAritoOption } from "../../graphql/modules/aritoOption/aritoOption.mode
 import { IOrderStatus } from "../../graphql/modules/orderStatus/orderStatus.model";
 import { IDeliveryMethod } from "../../graphql/modules/deliveryMethod/deliveryMethod.model";
 import { IPaymentMethod } from "../../graphql/modules/paymentMethod/paymentMethod.model";
+import { IUserPointLog } from "../../graphql/modules/userPointLog/userPointLog.model";
 
 export class AritoHelper {
   static host: string = configs.arito.host;
@@ -593,6 +594,55 @@ export class AritoHelper {
           group: pageInfo["group"],
         },
       };
+    });
+  }
+  static getAllReasonPoint(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetPoint`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          userId: d["user_id0"].toString(),
+          code: d["id"],
+          reasonCode: d["ly_do"],
+          note: "",
+          status: d["status"],
+          value: d["diem"],
+          convertedValue: d["tien"],
+          createdAt: moment(d["ngay_ct"]).toDate(),
+        })) as IUserPointLog[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static getAllReason() {
+    return Axios.post(`${this.host}/Item/GetListReasonPoint`, {
+      token: this.imageToken,
+    }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data", []).map((d: any) => ({
+        code: d["code"],
+        name: d["name"],
+        name2: d["name2"],
+      })) as { code: string; name: string; name2: string }[];
+    });
+  }
+  static getUserPoint(token: string) {
+    return Axios.post(`${this.host}/Item/GetPointUser`, { token }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data.0.val", 0) as number;
     });
   }
   static uploadUserAvatar(userId: string, stream: any, token: string) {
