@@ -5,7 +5,7 @@ interface PropsType extends ReactProps {
   onSubmit?: (e: FormEvent<HTMLFormElement>) => any;
   onChange?: (form: HTMLFormElement, event: Event) => any;
 }
-export function Form({ className = "bg-white p-3", style, ...props }: PropsType) {
+export function Form({ className = "", style, ...props }: PropsType) {
   const ref: MutableRefObject<HTMLFormElement> = useRef();
 
   useEffect(() => {

@@ -24,6 +24,9 @@ export function OrderDetailsProvider({ orderId, children }: PropsType) {
     loadOrderDetails();
   }, [orderId]);
 
+  console.log(order);
+  console.log("OderId " + orderId);
+
   return <OrderDetailsContext.Provider value={{ order }}>{children}</OrderDetailsContext.Provider>;
 }
 

@@ -5,7 +5,7 @@ interface PropsType extends ReactProps {
 
 export function Label({ text, ...props }: PropsType) {
   return (
-    <label {...props} className="text-gray-600 font-semibold pl-1 pb-1">
+    <label {...props} className="block w-full text-gray-600 font-semibold pl-1 mb-1">
       {text}
     </label>
   );

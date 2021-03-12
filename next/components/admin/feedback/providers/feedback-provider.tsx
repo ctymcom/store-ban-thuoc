@@ -1,14 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import useDebounce from "../../../../lib/hooks/useDebounce";
-import { Pagination } from "../../../../lib/repo/crud.repo";
-import { Post, PostService } from "../../../../lib/repo/post.repo";
 import { Feedback, FeedbackService } from "./../../../../lib/repo/feedback.repo";
 
 export const FeedbackContext = createContext<
   Partial<{
     feedbacks: Feedback[];
     removeFeedback: (id: string) => Promise<any>;
-    saveFeedback: (id: string, data: Feedback) => Promise<any>;
+    saveFeedback: (data: Feedback) => Promise<any>;
   }>
 >({});
 
@@ -25,7 +22,8 @@ export function FeedbackProvider({ children }: any) {
     });
   };
 
-  const saveFeedback = async (id: string = null, data: Feedback) => {
+  const saveFeedback = async (feedback: Feedback) => {
+    let { id, __typename, createdAt, updatedAt, ...data } = feedback;
     await FeedbackService.createOrUpdate({ id, data }).then((res) => {
       loadFeedbacks();
     });
