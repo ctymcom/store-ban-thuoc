@@ -50,36 +50,36 @@ const AddressFormDialog = (props: PropsType) => {
     if (data) {
       const { contactName, address, provinceId, districtId, wardId, phone } = data;
       if (!contactName) {
-        setMess("Tên liên hệ không được để trống");
+        toast.warn("Tên liên hệ không được để trống");
         return false;
       }
       if (!phone) {
-        setMess("Số điện liên hệ không được để trống");
+        toast.warn("Số điện liên hệ không được để trống");
         return false;
       } else {
         if (phone.length !== 10) {
-          setMess("Số điện liên hệ không đúng(10 số)");
+          toast.warn("Số điện liên hệ không đúng(10 số)");
           return false;
         }
       }
       if (!provinceId) {
-        setMess("Bạn chưa chon tỉnh/thành phố");
+        toast.warn("Bạn chưa chon tỉnh/thành phố");
         return false;
       }
       if (!districtId) {
-        setMess("Bạn chưa chon quận/huyện");
+        toast.warn("Bạn chưa chon quận/huyện");
         return false;
       }
       if (!wardId) {
-        setMess("Bạn chưa chon xã/phường");
+        toast.warn("Bạn chưa chon xã/phường");
         return false;
       }
       if (!address) {
-        setMess("Địa chỉ không được để trống");
+        toast.warn("Địa chỉ không được để trống");
         return false;
       }
     } else {
-      setMess("Bạn chưa nhập dữ liệu");
+      toast.warn("Bạn chưa nhập dữ liệu");
       return false;
     }
     return true;
@@ -89,8 +89,6 @@ const AddressFormDialog = (props: PropsType) => {
     if (res) {
       await submitFormAddressUser(userAddress.id);
       toast.success("Thao tác thành công");
-    } else {
-      toast.warn(mess);
     }
     return res;
   };
