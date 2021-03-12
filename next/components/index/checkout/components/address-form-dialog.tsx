@@ -12,6 +12,7 @@ import { Button } from "../../../shared/utilities/form/button";
 interface PropsType extends PropsTypeFormDialog {
   isOpen: boolean;
   title?: string;
+  setTitle: Function;
 }
 const AddressFormDialog = (props: PropsType) => {
   const {
@@ -26,21 +27,19 @@ const AddressFormDialog = (props: PropsType) => {
   const toast = useToast();
   const [mess, setMess] = useState(null);
   const handleOnChangSelect = (value: string, id: string) => {
-    if (userAddress[id] !== value) {
-      switch (id) {
-        case "provinceId":
-          {
-            setUserAddress({ ...userAddress, [id]: value, districtId: "", wardId: "" });
-          }
-          break;
-        case "districtId":
-          {
-            setUserAddress({ ...userAddress, [id]: value, wardId: "" });
-          }
-          break;
-        default:
-          break;
-      }
+    switch (id) {
+      case "provinceId":
+        {
+          setUserAddress({ ...userAddress, [id]: value, districtId: "", wardId: "" });
+        }
+        break;
+      case "districtId":
+        {
+          setUserAddress({ ...userAddress, [id]: value, wardId: "" });
+        }
+        break;
+      default:
+        break;
     }
   };
   const checkBeforeMutation = (data: UserAddress) => {
@@ -85,6 +84,8 @@ const AddressFormDialog = (props: PropsType) => {
     let res = checkBeforeMutation(data);
     if (res) {
       let res = await submidFormAddressUser(userAddress.id);
+      console.log(res);
+
       if (res) toast.error(res.message);
     } else {
       toast.warn(mess);
@@ -107,7 +108,11 @@ const AddressFormDialog = (props: PropsType) => {
       width="420px"
       isOpen={props.isOpen}
       mobileMode={false}
-      onClose={() => props.setShowAddressFormDialog(false)}
+      onClose={() => {
+        props.setTitle("");
+        setUserAddress(null);
+        props.setShowAddressFormDialog(false);
+      }}
       title={props.title ? props.title : "Chỉnh sửa địa chỉ"}
     >
       <Dialog.Body>

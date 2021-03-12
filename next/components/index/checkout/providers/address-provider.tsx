@@ -102,20 +102,24 @@ export const AddressProvider = (props) => {
     });
   };
   async function setDefaultAddress(id: string) {
-    let oldDefault = listAddress.find((item) => item.isDefault);
-    let newDefault = listAddress.find((item) => item.id === id);
-    let res = await UserAddressService.mutate({
-      mutation: [
-        UserAddressService.updateQuery({ id: oldDefault?.id, data: { isDefault: false } }),
-        UserAddressService.updateQuery({ id: newDefault.id, data: { isDefault: true } }),
-      ],
-    });
-    if (res) toast.warn(res.message);
-    loadList();
+    try {
+      let oldDefault = listAddress.find((item) => item.isDefault);
+      let newDefault = listAddress.find((item) => item.id === id);
+      let res = await UserAddressService.mutate({
+        mutation: [
+          UserAddressService.updateQuery({ id: oldDefault?.id, data: { isDefault: false } }),
+          UserAddressService.updateQuery({ id: newDefault?.id, data: { isDefault: true } }),
+        ],
+      });
+      if (res) toast.warn(res.message);
+      loadList();
+    } catch (error) {
+      console.log(error);
+    }
   }
   const deleteCartProduct = async (id: string) => {
+    let addressDeleting = listAddress.find((item) => item.id === id);
     if (listAddress.length > 1) {
-      let addressDeleting = listAddress.find((item) => item.id === id);
       if (addressDeleting.isDefault) {
         let idNewDefault: string;
         listAddress.forEach((item) => {
@@ -125,15 +129,14 @@ export const AddressProvider = (props) => {
           }
         });
         setDefaultAddress(idNewDefault);
-        if (addressDeleting.id === addressSelected.id) {
-          setAddressSelected(null);
-        }
       }
-
-      let res = await UserAddressService.delete({ id });
-      if (res) toast.error(res.message);
-      loadList();
     }
+    if (addressDeleting.id === addressSelected?.id) {
+      setAddressSelected(null);
+    }
+    let res = await UserAddressService.delete({ id });
+    if (res) toast.error(res.message);
+    loadList();
   };
   const submidFormAddressUser = async (id: string) => {
     if (userAddress.isDefault) {
@@ -152,6 +155,7 @@ export const AddressProvider = (props) => {
         res = await updateOrCreateUserAddress(userAddress);
       } else {
         res = await updateOrCreateUserAddress({ ...userAddress, isDefault: true });
+        setAddressSelected(userAddress);
       }
       if (res) {
         toast.error(res.message);

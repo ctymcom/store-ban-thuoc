@@ -10,19 +10,17 @@ interface Proptype extends ReactProps {
 }
 const PromotionListDialog = (props: Proptype) => {
   return (
-    <div>
-      <Dialog
-        width="410px"
-        isOpen={props.isOpen}
-        onClose={() => props.setShowDialog(false)}
-        title="Mã khuyến mãi"
-        icon={<HiOutlineTicket />}
-      >
-        <Dialog.Body>
-          <ListCode listPromotionCode={props.listPromotionCode} choseCode={props.choseCode} />
-        </Dialog.Body>
-      </Dialog>
-    </div>
+    <Dialog
+      width="410px"
+      isOpen={props.isOpen}
+      onClose={() => props.setShowDialog(false)}
+      title="Mã khuyến mãi"
+      icon={<HiOutlineTicket />}
+    >
+      <Dialog.Body>
+        <ListCode listPromotionCode={props.listPromotionCode} choseCode={props.choseCode} />
+      </Dialog.Body>
+    </Dialog>
   );
 };
 

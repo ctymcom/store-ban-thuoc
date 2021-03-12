@@ -17,16 +17,6 @@ export function Promotion({
   const [promotion, setPromotion] = useState<string>();
   const [showDialog, setShowDialog] = useState(false);
 
-  // const applyPromotion = () => {
-  //   if (usePromotion && PrUsing) {
-  //     setPromotion(null);
-  //     onChanged(null);
-  //     setUsePromotion(false);
-  //   } else if (!!Promotion) {
-  //     onChanged(Promotion);
-  //     setUsePromotion(true);
-  //   }
-  // };
   const choseCode = (code) => {
     setPromotion(code);
     setShowDialog(false);

@@ -12,6 +12,7 @@ interface PropsType extends ReactProps {
 
 export default function AddressDialog(props: PropsType) {
   const [showAddressFormDialog, setShowAddressFormDialog] = useState<boolean>(false);
+  const [title, setTile] = useState<string>("");
   return (
     <Dialog
       width="420px"
@@ -25,6 +26,7 @@ export default function AddressDialog(props: PropsType) {
           <button
             className="btn-primary font-normal py-6 my-4 w-11/12"
             onClick={() => {
+              setTile("Tạo mới địa chỉ");
               setShowAddressFormDialog(true);
             }}
           >
@@ -38,6 +40,8 @@ export default function AddressDialog(props: PropsType) {
         <AddressFormDialog
           isOpen={showAddressFormDialog}
           setShowAddressFormDialog={setShowAddressFormDialog}
+          title={title}
+          setTitle={setTile}
         />
       </AddressProvider>
     </Dialog>
