@@ -73,18 +73,19 @@ export function OrderHistoryPage() {
                     ))
                   : null}
               </ul>
-              <ul className="hidden md:flex justify-between lg:border-b-0 xl:border-b-4 pb-2 mt-3 md:mt-0 h-auto lg:overflow-x-scroll xl:overflow-hidden">
+              <ul className="hidden md:flex justify-between lg:border-b-0 xl:border-b-0 pb-2 mt-3 md:mt-0 h-auto lg:overflow-x-scroll xl:overflow-hidden">
                 <li>
                   <Link
                     href={{
                       pathname: "/profile/order-history",
+                      query: {},
                     }}
                   >
                     <a
-                      className={`normal-case lg:uppercase font-extralight md:font-semibold whitespace-nowrap text-base px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary
+                      className={`normal-case lg:uppercase font-extralight md:font-semibold whitespace-nowrap text-base px-3  pb-2.5 rounded-sm hover:text-primary
                                                   ${
                                                     !status
-                                                      ? " text-primary border-primary animate-slide-up"
+                                                      ? " text-primary border-primary border-b-4 animate-slide-up"
                                                       : ""
                                                   }`}
                     >

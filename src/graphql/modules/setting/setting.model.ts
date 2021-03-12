@@ -12,14 +12,14 @@ export enum SettingType {
   boolean = "boolean",
 }
 export type ISetting = BaseDocument & {
-  type: SettingType;
-  name: string;
-  key: string;
-  value: any;
-  isActive: boolean;
-  isPrivate: boolean;
-  readOnly: boolean;
-  groupId: string;
+  type?: SettingType;
+  name?: string;
+  key?: string;
+  value?: any;
+  isActive?: boolean;
+  isPrivate?: boolean;
+  readOnly?: boolean;
+  groupId?: string;
 };
 
 const settingSchema = new Schema(

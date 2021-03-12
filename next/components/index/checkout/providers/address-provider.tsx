@@ -14,7 +14,7 @@ export const AddressContext = createContext<
     setListAdress: Function;
     setAddressSelected: Function;
     deleteCartProduct: Function;
-    submidFormAddressUser: Function;
+    submitFormAddressUser: Function;
     setDefaultAddress: Function;
     setUserAddress: Function;
     provinces: Option[];
@@ -77,6 +77,8 @@ export const AddressProvider = (props) => {
   }, [userAddress]);
 
   const updateOrCreateUserAddress = async (data: UserAddress) => {
+    console.log(data);
+
     const {
       contactName,
       address,
@@ -102,20 +104,27 @@ export const AddressProvider = (props) => {
     });
   };
   async function setDefaultAddress(id: string) {
-    let oldDefault = listAddress.find((item) => item.isDefault);
-    let newDefault = listAddress.find((item) => item.id === id);
-    let res = await UserAddressService.mutate({
-      mutation: [
-        UserAddressService.updateQuery({ id: oldDefault?.id, data: { isDefault: false } }),
-        UserAddressService.updateQuery({ id: newDefault.id, data: { isDefault: true } }),
-      ],
-    });
-    if (res) toast.warn(res.message);
-    loadList();
+    try {
+      let oldDefault = listAddress.find((item) => item.isDefault);
+      let newDefault = listAddress.find((item) => item.id === id);
+      let res = await UserAddressService.mutate({
+        mutation: oldDefault
+          ? [
+              UserAddressService.updateQuery({ id: oldDefault?.id, data: { isDefault: false } }),
+              UserAddressService.updateQuery({ id: newDefault?.id, data: { isDefault: true } }),
+            ]
+          : [UserAddressService.updateQuery({ id: newDefault?.id, data: { isDefault: true } })],
+      });
+      if (res) toast.warn(res.message);
+      loadList();
+    } catch (error) {
+      console.log(error);
+    }
   }
   const deleteCartProduct = async (id: string) => {
+    let task = [];
+    let addressDeleting = listAddress.find((item) => item.id === id);
     if (listAddress.length > 1) {
-      let addressDeleting = listAddress.find((item) => item.id === id);
       if (addressDeleting.isDefault) {
         let idNewDefault: string;
         listAddress.forEach((item) => {
@@ -124,40 +133,38 @@ export const AddressProvider = (props) => {
             return;
           }
         });
-        setDefaultAddress(idNewDefault);
-        if (addressDeleting.id === addressSelected.id) {
-          setAddressSelected(null);
+        task.push(setDefaultAddress(idNewDefault));
+      }
+    }
+    if (addressDeleting.id === addressSelected?.id) {
+      task.push(setAddressSelected(null));
+    }
+    await Promise.all(task);
+    await UserAddressService.delete({ id });
+    loadList();
+  };
+  const submitFormAddressUser = async () => {
+    let res: any;
+    if (listAddress.length > 0) {
+      if (userAddress.isDefault) {
+        let oldDefault = listAddress.find((item) => item.isDefault);
+        if (oldDefault) {
+          await UserAddressService.update({
+            id: oldDefault?.id,
+            data: { isDefault: false },
+          });
         }
       }
-
-      let res = await UserAddressService.delete({ id });
-      if (res) toast.error(res.message);
-      loadList();
-    }
-  };
-  const submidFormAddressUser = async (id: string) => {
-    if (userAddress.isDefault) {
-      if (id) {
-        setDefaultAddress(id);
-      } else {
-        let oldDefault = listAddress.find((item) => item.isDefault);
-        UserAddressService.update({
-          id: oldDefault.id,
-          data: { isDefault: false },
-        }).then((res) => updateOrCreateUserAddress(userAddress));
-      }
+      res = await updateOrCreateUserAddress(userAddress);
     } else {
-      let res: any;
-      if (listAddress.length !== 0) {
-        res = await updateOrCreateUserAddress(userAddress);
-      } else {
-        res = await updateOrCreateUserAddress({ ...userAddress, isDefault: true });
-      }
-      if (res) {
-        toast.error(res.message);
-      }
-      loadList();
+      res = await updateOrCreateUserAddress({ ...userAddress, isDefault: true });
     }
+    if (res) {
+      toast.error(res.message);
+    } else {
+      toast.success("Thao tác thành công");
+    }
+    loadList();
   };
   return (
     <AddressContext.Provider
@@ -166,7 +173,7 @@ export const AddressProvider = (props) => {
         provinces,
         setProvinces,
         wards,
-        submidFormAddressUser,
+        submitFormAddressUser,
         listAddress,
         userAddress,
         setListAdress,

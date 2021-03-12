@@ -1,5 +1,5 @@
 import { gql } from "apollo-server-express";
-import { get } from "lodash";
+import { get, set } from "lodash";
 
 import { ROLES } from "../../../constants/role.const";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
@@ -43,7 +43,7 @@ export default {
           userData = { ...user, role: ROLES.CUSTOMER };
         }
         await userAddressService.syncUserAddress(userData.id.toString());
-
+        set(context, "tokenData.ref", token);
         return {
           token: TokenHelper.getAritorUserToken(userData, token, userData.role),
           user: userData,

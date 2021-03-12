@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dropdown from "../../profile-user/components/dropdown";
 import CheckBoxSquare from "./check-box-square";
 import { Dialog } from "../../../shared/utilities/dialog/dialog";
@@ -12,35 +12,38 @@ import { Button } from "../../../shared/utilities/form/button";
 interface PropsType extends PropsTypeFormDialog {
   isOpen: boolean;
   title?: string;
+  setTitle: Function;
 }
 const AddressFormDialog = (props: PropsType) => {
   const {
     userAddress,
-    submidFormAddressUser,
+    submitFormAddressUser,
     setUserAddress,
     provinces,
     districts,
     wards,
-    listAddress,
   } = useAddressContext();
   const toast = useToast();
   const [mess, setMess] = useState(null);
+  useEffect(() => {
+    if (userAddress === null) {
+      setUserAddress({ ...userAddress, isDefault: true });
+    }
+  }, []);
   const handleOnChangSelect = (value: string, id: string) => {
-    if (userAddress[id] !== value) {
-      switch (id) {
-        case "provinceId":
-          {
-            setUserAddress({ ...userAddress, [id]: value, districtId: "", wardId: "" });
-          }
-          break;
-        case "districtId":
-          {
-            setUserAddress({ ...userAddress, [id]: value, wardId: "" });
-          }
-          break;
-        default:
-          break;
-      }
+    switch (id) {
+      case "provinceId":
+        {
+          setUserAddress({ ...userAddress, [id]: value, districtId: "", wardId: "" });
+        }
+        break;
+      case "districtId":
+        {
+          setUserAddress({ ...userAddress, [id]: value, wardId: "" });
+        }
+        break;
+      default:
+        break;
     }
   };
   const checkBeforeMutation = (data: UserAddress) => {
@@ -84,30 +87,26 @@ const AddressFormDialog = (props: PropsType) => {
   const handleOnClick = async (data: UserAddress) => {
     let res = checkBeforeMutation(data);
     if (res) {
-      let res = await submidFormAddressUser(userAddress.id);
-      if (res) toast.error(res.message);
+      await submitFormAddressUser(userAddress.id);
     } else {
       toast.warn(mess);
     }
+    toast.success("Thao tác thành công");
     return res;
   };
   const checkboxChange = () => {
-    if (userAddress.id) {
-      if (listAddress.length === 1)
-        toast.warn("Bạn không thể thay thế địa chỉ mặc định khi chỉ có một địa chỉ");
-      else {
-        setUserAddress({ ...userAddress, isDefault: !userAddress.isDefault });
-      }
-    } else {
-      setUserAddress({ ...userAddress, isDefault: !userAddress.isDefault });
-    }
+    setUserAddress({ ...userAddress, isDefault: !userAddress?.isDefault });
   };
   return (
     <Dialog
       width="420px"
       isOpen={props.isOpen}
       mobileMode={false}
-      onClose={() => props.setShowAddressFormDialog(false)}
+      onClose={() => {
+        props.setTitle("");
+        setUserAddress(null);
+        props.setShowAddressFormDialog(false);
+      }}
       title={props.title ? props.title : "Chỉnh sửa địa chỉ"}
     >
       <Dialog.Body>
