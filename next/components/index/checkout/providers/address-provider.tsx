@@ -14,7 +14,7 @@ export const AddressContext = createContext<
     setListAdress: Function;
     setAddressSelected: Function;
     deleteCartProduct: Function;
-    submidFormAddressUser: Function;
+    submitFormAddressUser: Function;
     setDefaultAddress: Function;
     setUserAddress: Function;
     provinces: Option[];
@@ -106,10 +106,12 @@ export const AddressProvider = (props) => {
       let oldDefault = listAddress.find((item) => item.isDefault);
       let newDefault = listAddress.find((item) => item.id === id);
       let res = await UserAddressService.mutate({
-        mutation: [
-          UserAddressService.updateQuery({ id: oldDefault?.id, data: { isDefault: false } }),
-          UserAddressService.updateQuery({ id: newDefault?.id, data: { isDefault: true } }),
-        ],
+        mutation: oldDefault
+          ? [
+              UserAddressService.updateQuery({ id: oldDefault?.id, data: { isDefault: false } }),
+              UserAddressService.updateQuery({ id: newDefault?.id, data: { isDefault: true } }),
+            ]
+          : [UserAddressService.updateQuery({ id: newDefault?.id, data: { isDefault: true } })],
       });
       if (res) toast.warn(res.message);
       loadList();
@@ -118,6 +120,7 @@ export const AddressProvider = (props) => {
     }
   }
   const deleteCartProduct = async (id: string) => {
+    let task = [];
     let addressDeleting = listAddress.find((item) => item.id === id);
     if (listAddress.length > 1) {
       if (addressDeleting.isDefault) {
@@ -128,40 +131,39 @@ export const AddressProvider = (props) => {
             return;
           }
         });
-        setDefaultAddress(idNewDefault);
+        task.push(setDefaultAddress(idNewDefault));
       }
     }
     if (addressDeleting.id === addressSelected?.id) {
-      setAddressSelected(null);
+      task.push(setAddressSelected(null));
     }
+    await Promise.all(task);
+    console.log(addressSelected);
+
     let res = await UserAddressService.delete({ id });
     if (res) toast.error(res.message);
     loadList();
   };
-  const submidFormAddressUser = async (id: string) => {
-    if (userAddress.isDefault) {
-      if (id) {
-        setDefaultAddress(id);
-      } else {
+  const submitFormAddressUser = async () => {
+    let res: any;
+    if (listAddress.length > 0) {
+      if (userAddress.isDefault) {
         let oldDefault = listAddress.find((item) => item.isDefault);
-        UserAddressService.update({
-          id: oldDefault.id,
-          data: { isDefault: false },
-        }).then((res) => updateOrCreateUserAddress(userAddress));
+        if (oldDefault) {
+          await UserAddressService.update({
+            id: oldDefault?.id,
+            data: { isDefault: false },
+          });
+        }
       }
-    } else {
-      let res: any;
-      if (listAddress.length !== 0) {
-        res = await updateOrCreateUserAddress(userAddress);
-      } else {
-        res = await updateOrCreateUserAddress({ ...userAddress, isDefault: true });
-        setAddressSelected(userAddress);
-      }
-      if (res) {
-        toast.error(res.message);
-      }
-      loadList();
     }
+    res = await updateOrCreateUserAddress(userAddress);
+    if (res) {
+      toast.error(res.message);
+    } else {
+      toast.success("Thao tác thành công");
+    }
+    loadList();
   };
   return (
     <AddressContext.Provider
@@ -170,7 +172,7 @@ export const AddressProvider = (props) => {
         provinces,
         setProvinces,
         wards,
-        submidFormAddressUser,
+        submitFormAddressUser,
         listAddress,
         userAddress,
         setListAdress,

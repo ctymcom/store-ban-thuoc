@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dropdown from "../../profile-user/components/dropdown";
 import CheckBoxSquare from "./check-box-square";
 import { Dialog } from "../../../shared/utilities/dialog/dialog";
@@ -17,7 +17,7 @@ interface PropsType extends PropsTypeFormDialog {
 const AddressFormDialog = (props: PropsType) => {
   const {
     userAddress,
-    submidFormAddressUser,
+    submitFormAddressUser,
     setUserAddress,
     provinces,
     districts,
@@ -26,6 +26,11 @@ const AddressFormDialog = (props: PropsType) => {
   } = useAddressContext();
   const toast = useToast();
   const [mess, setMess] = useState(null);
+  useEffect(() => {
+    if (userAddress === null) {
+      setUserAddress({ ...userAddress, isDefault: true });
+    }
+  }, []);
   const handleOnChangSelect = (value: string, id: string) => {
     switch (id) {
       case "provinceId":
@@ -83,7 +88,7 @@ const AddressFormDialog = (props: PropsType) => {
   const handleOnClick = async (data: UserAddress) => {
     let res = checkBeforeMutation(data);
     if (res) {
-      let res = await submidFormAddressUser(userAddress.id);
+      let res = await submitFormAddressUser(userAddress.id);
       console.log(res);
 
       if (res) toast.error(res.message);
@@ -93,15 +98,7 @@ const AddressFormDialog = (props: PropsType) => {
     return res;
   };
   const checkboxChange = () => {
-    if (userAddress.id) {
-      if (listAddress.length === 1)
-        toast.warn("Bạn không thể thay thế địa chỉ mặc định khi chỉ có một địa chỉ");
-      else {
-        setUserAddress({ ...userAddress, isDefault: !userAddress.isDefault });
-      }
-    } else {
-      setUserAddress({ ...userAddress, isDefault: !userAddress.isDefault });
-    }
+    setUserAddress({ ...userAddress, isDefault: !userAddress?.isDefault });
   };
   return (
     <Dialog

@@ -19,9 +19,6 @@ export function FormCheck(props: PropsType) {
     if (method.id !== iDChecking) {
       setIDChecking(method.id);
       props.setMethod(method);
-    } else {
-      setIDChecking("");
-      props.setMethod(null);
     }
   };
   const setCheckBox = (id: string) => {
