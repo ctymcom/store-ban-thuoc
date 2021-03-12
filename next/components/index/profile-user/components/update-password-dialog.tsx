@@ -19,11 +19,15 @@ export default function UpdatePasswordDialog(props: PropsType) {
 
   const handleOnClick = async () => {
     let noti = { type: "", mess: "" };
+    if (!newPass || !confirmNewPass || !oldPass) {
+      toast.warn("Yêu cầu nhập đầy đủ các trường");
+      return;
+    }
     if (confirmNewPass) {
       if (newPass === confirmNewPass) {
         noti = await changeAritoUserPassword(oldPass, newPass);
         if (noti.type === "success") {
-          toast.success(noti.mess);
+          toast.success("Đổi mật khẩu thành công");
           props.setShowDialog(false);
         }
         if (noti.type === "warn") {
