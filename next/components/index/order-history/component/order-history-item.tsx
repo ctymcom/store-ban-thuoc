@@ -13,27 +13,27 @@ export function OrderHistoryItem({ item, index }: PropsType) {
   let statusOrder = item?.status;
   let showStatusOrder = "";
   switch (statusOrder) {
-    case "0": {
+    case 0: {
       showStatusOrder = "Chờ xác nhận";
       break;
     }
-    case "1": {
+    case 1: {
       showStatusOrder = "Đã duyệt";
       break;
     }
-    case "2": {
+    case 2: {
       showStatusOrder = "Đang thực hiện";
       break;
     }
-    case "3": {
+    case 3: {
       showStatusOrder = "Đang duyệt";
       break;
     }
-    case "4": {
+    case 4: {
       showStatusOrder = "Hoàn thành";
       break;
     }
-    case "5": {
+    case 5: {
       showStatusOrder = "Đóng";
       break;
     }
