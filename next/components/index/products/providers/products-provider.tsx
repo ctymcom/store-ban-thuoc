@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { cloneDeep } from "../../../../lib/lodash";
+import { cloneDeep } from "lodash";
 import { ProductTag, ProductTagService } from "../../../../lib/repo/product-tag.repo";
 import { Category, CategoryService } from "./../../../../lib/repo/category.repo";
 import { Pagination } from "./../../../../lib/repo/crud.repo";

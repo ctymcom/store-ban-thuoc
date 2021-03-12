@@ -15,6 +15,7 @@ export function AdminLayout({ title = "Dashboard Kho Thuốc Sỉ", ...props }: 
   const { user, checkUser } = useAuth();
   useEffect(() => {
     sessionStorage.setItem(LOGIN_PATHNAME, router.pathname);
+    document.title = "Dashboard - Kho thuốc sỉ";
 
     checkUser(USER_ROLES.map((x) => x.value)).then((res) => {
       if (!res) {
@@ -25,7 +26,7 @@ export function AdminLayout({ title = "Dashboard Kho Thuốc Sỉ", ...props }: 
 
   return (
     <>
-      <HeadSEO title={title} />
+      <HeadSEO />
       {!user ? (
         <Spinner />
       ) : (

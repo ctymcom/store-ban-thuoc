@@ -1,10 +1,14 @@
+import { NoneLayout } from "./../layouts/none-layout";
+import LoginPage from "./../components/index/login/login-page";
+import { NextSeo } from "next-seo";
 
-import { NoneLayout } from './../layouts/none-layout';
-import LoginPage from './../components/index/login/login-page';
-export default function Login() {
-    return <>
-        <LoginPage />
+export default function Login(props) {
+  return (
+    <>
+      <NextSeo title="Trang đăng nhập" />
+      <LoginPage />
     </>
+  );
 }
 
-Login.Layout = NoneLayout
+Login.Layout = NoneLayout;

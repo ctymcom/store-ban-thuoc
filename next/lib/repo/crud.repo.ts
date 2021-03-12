@@ -1,6 +1,6 @@
 import { MutationOptions, QueryOptions } from "@apollo/client/core";
 import { GraphRepository } from "./graph.repo";
-import { queryParser } from "../helpers/query-parser.helper";
+import { queryParser } from "../helpers/query-parser";
 
 export interface Pagination {
   limit?: number;

@@ -20,7 +20,7 @@ export function DefaultLayout({ title = "Kho Thuốc Sỉ", ...props }: PropsTyp
 
   return (
     <>
-      <HeadSEO title={title}></HeadSEO>
+      <HeadSEO />
 
       <CartProvider>
         <DefaultLayoutProvider>
