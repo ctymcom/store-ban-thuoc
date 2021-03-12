@@ -639,6 +639,12 @@ export class AritoHelper {
       })) as { code: string; name: string; name2: string }[];
     });
   }
+  static getUserPoint(token: string) {
+    return Axios.post(`${this.host}/Item/GetPointUser`, { token }).then((res) => {
+      this.handleError(res);
+      return get(res.data, "data.data.0.val", 0) as number;
+    });
+  }
   static uploadUserAvatar(userId: string, stream: any, token: string) {
     var data = new FormData();
     data.append("file", stream);
