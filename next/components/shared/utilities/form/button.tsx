@@ -13,7 +13,7 @@ interface PropsType extends ReactProps {
   danger?: boolean;
   warning?: boolean;
   disabled?: boolean;
-  type?: "button" | "reset" | "submit";
+  submit?: boolean;
   icon?: JSX.Element;
   iconPosition?: "start" | "end";
   text?: JSX.Element | string;
@@ -21,13 +21,7 @@ interface PropsType extends ReactProps {
   asyncLoading?: boolean;
   onClick?: ((...args: any[]) => Promise<any>) | ((...args: any[]) => any);
 }
-export function Button({
-  className = "",
-  style,
-  type = "button",
-  iconPosition = "start",
-  ...props
-}: PropsType) {
+export function Button({ className = "", style, iconPosition = "start", ...props }: PropsType) {
   let buttonClass = "";
   if (props.primary) buttonClass = "btn-primary";
   else if (props.accent) buttonClass = "btn-accent";
@@ -42,6 +36,9 @@ export function Button({
   let buttonSize = "";
   if (props.small) buttonSize = "btn-sm";
   else if (props.large) buttonSize = "btn-lg";
+
+  let buttonType: "button" | "submit" = "button";
+  if (props.submit) buttonType = "submit";
 
   const [loading, setLoading] = useState(false);
 
@@ -70,7 +67,7 @@ export function Button({
         iconPosition == "end" ? "flex-row-reverse" : ""
       } ${className}`.trim()}
       style={style}
-      type={type}
+      type={buttonType}
       onClick={onClick}
       disabled={loading || props.disabled}
     >

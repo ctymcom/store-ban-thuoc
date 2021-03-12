@@ -19,9 +19,9 @@ export function ImageUploader({
     input.click();
     input.onchange = async () => {
       const file = input.files[0];
-      const link = await Imgur.uploadImage(file); // I'm using react, so whatever upload function
-      setSrc(link);
-      onChanged(link);
+      const res = await Imgur.uploadImage(file); // I'm using react, so whatever upload function
+      setSrc(res.link);
+      onChanged(res.link);
     };
   };
   return (

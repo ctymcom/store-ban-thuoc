@@ -56,7 +56,7 @@ export function Recovery(props: PropsType) {
         <Button
           primary
           large
-          type="submit"
+          submit
           className="w-full mt-4"
           text="Gửi email quên mật khẩu"
           isLoading={loading}

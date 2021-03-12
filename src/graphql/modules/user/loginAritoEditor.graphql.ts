@@ -46,6 +46,7 @@ export default {
       imageLink: String
       thumbnailLink: String
       role: String
+      point: Float
     }
   `,
   resolver: {
@@ -81,6 +82,9 @@ export default {
       },
       thumbnailLink: async (root: AritoUser, args: any, context: Context) => {
         return AritoHelper.getThumbnailLink(root.imageId);
+      },
+      point: async (root: AritoHelper, args: any, context: Context) => {
+        return await AritoHelper.getUserPoint(context.tokenData.ref);
       },
     },
   },

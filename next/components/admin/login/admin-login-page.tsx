@@ -71,13 +71,7 @@ export default function AdminLoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="flex">
-            <Button
-              primary
-              type="submit"
-              className="h-12 px-8"
-              text="Đăng nhập"
-              isLoading={loading}
-            />
+            <Button primary submit className="h-12 px-8" text="Đăng nhập" isLoading={loading} />
           </div>
         </Form>
       </div>

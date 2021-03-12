@@ -61,14 +61,7 @@ export function Login(props: PropsType) {
         onChange={(e) => setPassword(e.target.value)}
       />
       <div className="w-full flex flex-col items-center mt-4">
-        <Button
-          primary
-          large
-          type="submit"
-          className="w-full mt-4"
-          text="Đăng nhập"
-          isLoading={loading}
-        />
+        <Button primary large submit className="w-full mt-4" text="Đăng nhập" isLoading={loading} />
         <div className="flex justify-between mt-2 w-full">
           <Button
             className="hover:underline"

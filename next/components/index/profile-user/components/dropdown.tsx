@@ -10,7 +10,7 @@ type PropsType = {
 const Dropdown = (props: PropsType) => {
   return (
     <select
-      className="btn-outline w-full h-12 text-16 sm:text-20 px-0 sm:pl-2"
+      className="btn-outline w-full h-10 md:h-12 text-16 sm:text-20 px-0 pl-0.5 md:pl-5"
       name={props.name}
       defaultValue={props.defaultValue}
       id={props.id}
