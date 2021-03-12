@@ -636,6 +636,118 @@ export class AritoHelper {
       };
     });
   }
+  static getAllOrder(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Voucher/GetOrders`, {
+      token: this.imageToken,
+      memvars: [
+        [
+          "datetime2",
+          "DT",
+          updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : "2020-01-01 16:53:00",
+        ],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      const details = groupBy(get(res.data, "data.detail", []), "id");
+
+      return {
+        data: get(res.data, "data.master", []).map((d: any) => {
+          let subtotal = 0;
+          const items = get(details, d["id"], []).map((item) => {
+            subtotal += item["so_luong"] * item["gia_nt2"];
+            return {
+              productCode: item["ma_vt"],
+              unit: item["dvt"],
+              storeCode: item["ma_kho"],
+              qty: item["so_luong"],
+              price: item["gia_nt2"],
+              amount: item["tien_nt2"],
+              factor: item["he_so"],
+              discountRate: item["tl_ck"],
+              discount: item["ck_nt"],
+              vatRate: item["thue_suat"],
+              vat: item["thue_nt"],
+              position: item["line"],
+            };
+          });
+          return {
+            code: d["id"],
+            userId: d["user_id0"].toString(),
+            orderNumber: d["so_ct"],
+            promotionCode: d["ma_ck"],
+            addressId: d["ma_dc"],
+            fullAddress: d["dia_chi_web"],
+            paymentMethod: d["ma_pttt_web"],
+            deliveryMethod: d["ma_ptvc_web"],
+            usePoint: d["sd_diem"] == 1,
+            itemCount: d["t_so_luong"],
+            subtotal: subtotal,
+            discount: d["t_ck_nt"],
+            amount: d["t_tt_nt"],
+            note: d["datetime0"],
+            createdAt: d["datetime0"],
+            status: d["status"],
+            items: items,
+          };
+        }) as any[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
+  static getOrder(orderId: number) {
+    return Axios.post(`${this.host}/Voucher/GetOrderDetail`, {
+      token: this.imageToken,
+      memvars: [
+        ["id", "I", orderId], //ID don hang
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      var d = get(res.data, "data.master.0", {});
+
+      return {
+        code: d["id"],
+        userId: d["user_id0"].toString(),
+        orderNumber: d["so_ct"],
+        promotionCode: d["ma_ck"],
+        addressId: d["ma_dc"],
+        fullAddress: d["dia_chi_web"],
+        paymentMethod: d["ma_pttt_web"],
+        deliveryMethod: d["ma_ptvc_web"],
+        usePoint: d["sd_diem"] == 1,
+        itemCount: d["t_so_luong"],
+        subtotal: d["t_tien_nt2"],
+        discount: d["t_ck_nt"],
+        amount: d["t_tt_nt"],
+        note: d["datetime0"],
+        createdAt: d["datetime0"],
+        status: d["status"],
+        // items: get(res.data, 'data.detail', []).map(detail => ({
+        //   productId: string; // Mã sản phẩm
+        //   productCode: string; // Má sản phẩm tham chiếu
+        //   productName: string; // Tên sản phẩm
+        //   unit: String; // Đơn vị tính
+        //   storeCode: string; // Mã kho
+        //   qty: number; // Số lượng
+        //   price: number; // Gía bán
+        //   amount: number; // Thành tiền
+        //   factor: number; // Hệ số
+        //   discountRate: number; // Tỷ lệ chiết khấu
+        //   discount: number; // Chiết khấu
+        //   vatRate: number; // % VAT
+        //   vat: number; // Tiền VAT
+        //   position: number; // Thứ tự
+        // }))
+      };
+    });
+  }
   static getAllOptions(page: number = 1) {
     return Axios.post(`${this.host}/Item/GetOptions`, {
       token: this.imageToken,
@@ -853,6 +965,7 @@ export class AritoHelper {
     }[];
   }) {
     let subtotal = 0;
+    let itemCount = 0;
     const orderItems = keyBy(data.items, "productCode");
     return Axios.post(`${this.host}/Voucher/SyncOrder`, {
       token: this.imageToken,
@@ -873,6 +986,7 @@ export class AritoHelper {
         ],
         "#detail": data.items.map((i) => {
           subtotal += i.amount;
+          itemCount += i.qty;
           return {
             api_id: 1, //Trường liên kết với master
             ma_vt: i.productCode, //Mã vật tư
@@ -908,6 +1022,7 @@ export class AritoHelper {
           vat: t["thue_nt"],
           position: t["line"],
         })),
+        itemCount: itemCount,
       };
     });
   }
