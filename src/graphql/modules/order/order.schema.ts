@@ -68,7 +68,9 @@ const schema = gql`
     "Sử dụng điểm"
     usePoint: Boolean
     "Trạng thái đơn hàng"
-    status: String
+    status: Int
+    "Số lượng sản phẩm"
+    itemCount: Int
   }
 
   type OrderPageData {
