@@ -4,10 +4,10 @@ import { BaseDocument, ModelLoader, ModelHook } from "../../../base/baseModel";
 const Schema = mongoose.Schema;
 
 export type ISettingGroup = BaseDocument & {
-  slug: string;
-  name: string;
-  desc: string;
-  readOnly: boolean;
+  slug?: string;
+  name?: string;
+  desc?: string;
+  readOnly?: boolean;
 };
 
 const settingGroupSchema = new Schema(

@@ -69,7 +69,7 @@ export class ModelHook<T> {
   constructor(schema: mongoose.Schema) {
     schema.post("findOne", (doc: any, next) => {
       if (doc) this.onFindOne.next(doc);
-      next();
+      next(null);
     });
     schema.post("save", (doc: any, next) => {
       if (doc) this.onSaved.next(doc);

@@ -8,7 +8,7 @@ export type IUserPointLog = BaseDocument & {
   code?: number; // Mã log
   reasonCode?: string; // Mã lý do
   note?: string; // Ghi chú
-  note2: string; // Ghi chú tiếng anh
+  note2?: string; // Ghi chú tiếng anh
   status?: number; // Trạng thái
   value?: number; // Giá trị
   convertedValue?: number; // Tiền chuyển đổi
