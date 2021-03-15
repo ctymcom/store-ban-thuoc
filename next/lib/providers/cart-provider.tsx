@@ -18,7 +18,7 @@ const CartContext = createContext<
     cartProducts: CartProduct[];
     cartProductCount: number;
     cartTotal: number;
-    setcartProducts: Function;
+    setCartProducts: Function;
     setCartTotal: Function;
     loading: boolean;
     setLoading: Function;
@@ -34,7 +34,7 @@ const CartContext = createContext<
 >({});
 
 export function CartProvider({ children }: any) {
-  const [cartProducts, setcartProducts] = useState<CartProduct[]>([]);
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
   const [cartProductCount, setCartProductCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -80,8 +80,10 @@ export function CartProvider({ children }: any) {
             )
           );
         });
-        setcartProducts([...cartProductStorage]);
+        setCartProducts([...cartProductStorage]);
+        console.log(cartProductStorage);
       } else {
+        console.log(cartProductStorage);
         setLoading(false);
       }
     } catch (error) {
@@ -127,7 +129,7 @@ export function CartProvider({ children }: any) {
         active: true,
       });
     }
-    setcartProducts([...cartProducts]);
+    setCartProducts([...cartProducts]);
     toast.success("Đã thêm sản phẩm vào giỏ hàng");
     return true;
   };
@@ -148,7 +150,7 @@ export function CartProvider({ children }: any) {
         amount: product.salePrice * qty,
       });
     }
-    setcartProducts([...cartProducts]);
+    setCartProducts([...cartProducts]);
   };
 
   const removeProductFromCart = (product: Product) => {
@@ -156,7 +158,7 @@ export function CartProvider({ children }: any) {
     if (cartProductIndex >= 0) {
       cartProducts.splice(cartProductIndex, 1);
     }
-    setcartProducts([...cartProducts]);
+    setCartProducts([...cartProducts]);
   };
 
   return (
@@ -168,7 +170,7 @@ export function CartProvider({ children }: any) {
         cartProductCount,
         cartTotal,
         addProductToCart,
-        setcartProducts,
+        setCartProducts,
         changeProductQuantity,
         removeProductFromCart,
         setCartProductCount,

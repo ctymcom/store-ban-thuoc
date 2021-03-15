@@ -11,7 +11,7 @@ import { useToast } from "../../../lib/providers/toast-provider";
 
 export default function CartPage(props) {
   // const [Tit, setTit] = useState('cart');
-  const { cartProducts, setcartProducts, cartTotal, usePoint, setUsePoint } = useCart();
+  const { cartProducts, setCartProducts, cartTotal, usePoint, setUsePoint } = useCart();
   const [checkAll, setCheckAll] = useState(true);
   const [mess, setMess] = useState("");
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function CartPage(props) {
     if (index !== -1) {
       listNew.splice(index, 1);
     }
-    setcartProducts([...listNew]);
+    setCartProducts([...listNew]);
     checkAndsetCheckAll();
   };
   const checkAndsetCheckAll = () => {
@@ -71,7 +71,7 @@ export default function CartPage(props) {
       case "add":
         {
           if (value < 10000)
-            setcartProducts([
+            setCartProducts([
               ...cartProducts.map((cartProduct: CartProduct) =>
                 cartProduct.productId !== id
                   ? cartProduct
@@ -83,7 +83,7 @@ export default function CartPage(props) {
       case "sub":
         {
           if (value > 1) {
-            setcartProducts([
+            setCartProducts([
               ...cartProducts.map((cartProduct: CartProduct) =>
                 cartProduct.productId !== id
                   ? cartProduct
@@ -96,7 +96,7 @@ export default function CartPage(props) {
       case "input":
         {
           if (value <= 10000 && value >= 0) {
-            setcartProducts([
+            setCartProducts([
               ...cartProducts.map((cartProduct: CartProduct) =>
                 cartProduct.productId !== id
                   ? cartProduct
@@ -108,21 +108,34 @@ export default function CartPage(props) {
         break;
       case "changeActive":
         {
-          setcartProducts([
+          setCartProducts([
             ...cartProducts.map((cartProduct: CartProduct) =>
               cartProduct.productId !== id ? cartProduct : { ...cartProduct, active: value }
             ),
           ]);
         }
         break;
-      case "activeAll": {
-        let listNew = cartProducts;
-        listNew.forEach((item: CartProduct) => {
-          item.active = value;
-        });
-        setCheckAll(value);
-        setcartProducts([...listNew]);
-      }
+      case "activeAll":
+        {
+          let listNew = cartProducts;
+          listNew.forEach((item: CartProduct) => {
+            item.active = value;
+          });
+          setCheckAll(value);
+          setCartProducts([...listNew]);
+        }
+        break;
+      case "deleteItemsSelected":
+        {
+          let listNew = [];
+          cartProducts.forEach((item: CartProduct) => {
+            if (!item.active) {
+              listNew.push(item);
+            }
+          });
+          setCartProducts([...listNew]);
+        }
+        break;
       default:
         break;
     }

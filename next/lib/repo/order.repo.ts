@@ -41,6 +41,7 @@ export interface Order extends BaseModel {
   deliveryMethod: string;
   usePoint: boolean;
   status: number;
+  itemCount: number;
 }
 
 export class OrderRepository extends CrudRepository<Order> {
@@ -70,6 +71,7 @@ export class OrderRepository extends CrudRepository<Order> {
     deliveryMethod: String
     usePoint: Boolean
     status: String
+    itemCount: Int
   `);
   fullFragment = this.parseFragment(`
     id: String
@@ -123,6 +125,7 @@ export class OrderRepository extends CrudRepository<Order> {
     deliveryMethod: String
     usePoint: Boolean
     status: String
+    itemCount: Int
   `);
 }
 

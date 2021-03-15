@@ -1,20 +1,10 @@
 import { PaginationRound } from "../../shared/utilities/pagination/pagination-round";
-import { OrderHistoryList } from "./component/order-history-list";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useOrdeHistoryContext } from "./providers/order-history-provider";
 import { Spinner } from "../../shared/utilities/spinner";
+import { OrderHistoryList } from "./component/order-history-list";
 import { OrderHistoryStatus } from "./component/order-history-status";
+import { useOrdeHistoryContext } from "./providers/order-history-provider";
 
 export function OrderHistoryPage() {
-  const handlerScrollIntoViewMobile = (index) => {
-    let ele = document.getElementsByClassName("scrollNavMobile")[index];
-    ele.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-  };
-  const handlerScrollIntoViewPC = (index) => {
-    let ele = document.getElementsByClassName("scrollNavPC")[index];
-    ele.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-  };
 
   const { orders, pagination, setPagination, status, statuses } = useOrdeHistoryContext();
 

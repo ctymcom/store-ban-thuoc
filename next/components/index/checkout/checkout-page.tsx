@@ -3,7 +3,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { NumberPipe } from "../../../lib/pipes/number";
 import { PayMoney } from "../cart/components/pay-money";
 import { FormCheck } from "./components/form-check";
-import { listMoneyCheckout, transferInformation } from "./components/form-check-data";
+import { transferInformation } from "./components/form-check-data";
 import TransferInformation from "./components/transfer-information";
 import CheckBoxSquare from "./components/check-box-square";
 import AddressDialog from "./components/address-dialog";
@@ -11,12 +11,11 @@ import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
 import { useCart, CartProduct } from "../../../lib/providers/cart-provider";
 import { Button } from "./../../shared/utilities/form/button";
-import { MethodCheckout, Order } from "../../../lib/repo/checkout.repo";
+import { MethodCheckout } from "../../../lib/repo/checkout.repo";
 import { GraphService } from "../../../lib/repo/graph.repo";
 import { useToast } from "../../../lib/providers/toast-provider";
 import gql from "graphql-tag";
 import router from "next/router";
-import { Product } from "../../../lib/repo/product.repo";
 
 export function CheckOutPage() {
   const [isCheck, setIsCheck] = useState(true);
@@ -26,7 +25,7 @@ export function CheckOutPage() {
   const [items, setItems] = useState<{ productId: string; qty: number }[]>([]);
   const [note, setNote] = useState<string>("");
   const toast = useToast();
-  const { cartTotal, cartProducts, setcartProducts, promotion, setPromotion, usePoint } = useCart();
+  const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
   const {
     addressSelected,
     setShowDialogAddress,
@@ -36,7 +35,6 @@ export function CheckOutPage() {
     deliveryMethods,
   } = useCheckoutContext();
   useEffect(() => {
-    listMoneyCheckout[0].money = cartTotal;
     cartProducts.forEach((item: CartProduct) => {
       if (item.active) {
         let listItemNew = items;
@@ -109,7 +107,7 @@ export function CheckOutPage() {
       });
       let task = [
         setPromotion(""),
-        setcartProducts([...listItemNew]),
+        setCartProducts([...listItemNew]),
         localStorage.setItem(
           "cartProductStorage",
           JSON.stringify(
@@ -166,7 +164,7 @@ export function CheckOutPage() {
         </div>
         <div className="w-full text-16  my-5">
           <h4 className="uppercase text-16">Ghi chú khác</h4>
-          <p className="text-14">
+          <p className="text-14 pb-2">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
           </p>
@@ -181,7 +179,7 @@ export function CheckOutPage() {
         <div className="w-full md:flex lg:inline-block md:gap-5 mb-10">
           <div className="w-full md:w-1/2 lg:w-full mb-10">
             <div className="flex justify-between items-center border-b-2">
-              <div className="flex justify-between items-center gap-1 whitespace-nowrap">
+              <div className="flex justify-between items-center gap-1 whitespace-nowrap pb-2">
                 <i className="text-primary text-16 ">
                   <IoLocationSharp />
                 </i>
@@ -213,7 +211,18 @@ export function CheckOutPage() {
           </div>
           <div className="w-full md:w-1/2 lg:w-full">
             <div className="border-b-4 pb-2">
-              <PayMoney listMoney={listMoneyCheckout} />
+              <PayMoney
+                listMoney={[
+                  {
+                    title: "Tổng tiền hàng",
+                    money: cartTotal,
+                  },
+                  {
+                    title: "Voucher giảm giá",
+                    money: 0,
+                  },
+                ]}
+              />
             </div>
             <div className="flex justify-between pt-2 text-16 ">
               <p>Thành tiền</p>
@@ -239,7 +248,7 @@ export function CheckOutPage() {
             onClick={async () => await handleConfirmOrder()}
             text="Đặt mua"
           />
-          <p className="whitespace-nowrap text-center text-12 md:text-16">
+          <p className="whitespace-nowrap text-center text-12 md:text-14">
             (Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)
           </p>
         </div>
