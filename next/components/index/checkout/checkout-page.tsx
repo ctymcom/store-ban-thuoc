@@ -168,10 +168,10 @@ export function CheckOutPage() {
                 <h4 className="uppercase text-16">Địa chỉ giao hàng</h4>
               </div>
               <p
-                className="text-primary text-16  cursor-pointer"
+                className={`${addressSelected ? "text-primary text-16  cursor-pointer" : "hidden"}`}
                 onClick={() => setShowDialogAddress(true)}
               >
-                Đổi
+                Thay đổi
               </p>
             </div>
             <div className="my-2 text-16 ">
