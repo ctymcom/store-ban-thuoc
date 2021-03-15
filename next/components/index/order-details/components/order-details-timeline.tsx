@@ -4,9 +4,7 @@ interface PropsType extends ReactProps {
   order: Order;
 }
 export function OrderDetailsTimeline({ order }: PropsType) {
-  console.log(order);
-
-  return order ? (
+  return (
     <div className="py-4">
       <div className="text-gray-700 font-normal lg:font-semibold mb-2">Tình trạng đơn hàng</div>
       {order.length > 0 &&
@@ -51,5 +49,5 @@ export function OrderDetailsTimeline({ order }: PropsType) {
         }
       `}</style>
     </div>
-  ) : null;
+  );
 }
