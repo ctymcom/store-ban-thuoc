@@ -21,7 +21,7 @@ export function OrderHistoryPage() {
 
   return (
     <>
-      <div className="w-full lg:w-9/12 px-3 md:px-0">
+      <div className="w-full  px-3 md:px-0">
         <div className="">
           <div className="w-full flex justify-between mt-0 md:mt-5 lg:mt-0 mb-0 gap-7">
             <div className="w-full">
@@ -71,7 +71,7 @@ export function OrderHistoryPage() {
                     ))
                   : null}
               </ul>
-              <ul className="hidden md:flex justify-between lg:border-b-2 xl:border-b-4 pb-2 mt-3 md:mt-0 h-auto lg:overflow-x-scroll xl:overflow-y-hidden">
+              <ul className="hidden md:flex justify-between lg:border-b-2 xl:border-b-4 pb-2 mt-3 md:mt-0 h-auto lg:overflow-x-scroll xl:overflow-hidden">
                 <li>
                   <Link
                     href={{

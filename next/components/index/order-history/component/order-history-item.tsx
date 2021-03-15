@@ -60,7 +60,7 @@ export function OrderHistoryItem({ order, index, listOrderStatus }: PropsType) {
 
           <div className="pt-1 md:pt-0">
             Trạng thái đơn hàng:
-            <span className="ml-2 font-semibold">{order.statusText}</span>
+            <span className="ml-2 font-semibold">{showStatusOrder(order?.status)}</span>
           </div>
         </div>
 
