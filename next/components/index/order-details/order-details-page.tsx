@@ -38,16 +38,13 @@ export function OrderDetailsPage() {
                 status={order?.status}
                 listOrderStatus={listOrderStatus}
               />
-              <OrderDetailsTimeline order={order} />
+              <OrderDetailsTimeline order={order} listOrderStatus={listOrderStatus} />
               <OrderDetailsInfo
                 name={order.contactName}
                 phone={order.phone ? order.phone : "phone: null"}
                 address={order.fullAddress}
                 deliveryType={order.deliveryMethod}
-                deliveryExpectedDate={`Thời gian giao dự kiến: ${format(
-                  datetime,
-                  "hh:mm, dd/mm/yyyy"
-                )}`}
+                deliveryExpectedDate={`Thời gian giao dự kiến: ${format(datetime, "dd/mm/yyyy")}`}
                 paymentType={order.paymentMethod}
                 paymentStatus="Thanh toán thành công"
               />

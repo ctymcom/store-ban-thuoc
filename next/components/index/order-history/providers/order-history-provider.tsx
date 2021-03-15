@@ -54,17 +54,6 @@ export function OrderProvider({ children }: any) {
       setListOrderStatus(res.data);
     });
   };
-  const loadOrderStatus = () => {
-    // OrderStatusService.getOne({});
-    // OrderStatusService.getAll({
-    //   query: {
-    //     limit: 0,
-    //   },
-    //   fragment: OrderStatusService.shortFragment,
-    // }).then((res) => {
-    //   setListOrderStatus(res.data);
-    // });
-  };
 
   return (
     <OrderContext.Provider

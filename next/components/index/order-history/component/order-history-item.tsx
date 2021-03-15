@@ -10,8 +10,6 @@ interface PropsType extends ReactProps {
 }
 
 export function OrderHistoryItem({ item, index, listOrderStatus }: PropsType) {
-  let itemArray = item?.items;
-
   function showStatusOrder(status) {
     let label = "";
     listOrderStatus?.forEach(function (value) {
@@ -51,11 +49,7 @@ export function OrderHistoryItem({ item, index, listOrderStatus }: PropsType) {
 
           <p className="pt-1 md:pt-0">
             Tổng sản phẩm:
-            <span className="ml-2 font-bold">
-              {itemArray.length > 0 &&
-                itemArray.map((item, index) => <span key={index}>{item.qty}</span>)}{" "}
-              sản phẩm
-            </span>
+            <span className="ml-2 font-bold">{item?.itemCount}</span>
           </p>
 
           <p className="pt-1 md:pt-0">

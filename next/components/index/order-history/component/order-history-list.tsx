@@ -13,20 +13,12 @@ interface PropsType extends ReactProps {
 
 export function OrderHisttoryList({ listOrder, listOrderStatus, status }: PropsType) {
   const [listOrders, setListOrders] = useState([]);
-  // const [listOrderByStatusReleaseLater, setListOrderByStatusReleaseLater] = useState([]);
   console.log(listOrder);
   console.log(listOrderStatus);
 
-  // function FilterOrderByStatus() {
-  //   listOrder.forEach(function (value) {
-  //     if(value?.status === )
-  //   })
-  // }
-
   useEffect(() => {
     if (status) {
-      setListOrders(listOrder?.filter((x) => x.status === status));
-      // FilterOrderByStatus();
+      setListOrders(listOrder?.filter((x) => x.status === 5));
     } else {
       setListOrders(listOrder);
     }
