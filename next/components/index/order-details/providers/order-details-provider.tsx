@@ -8,7 +8,7 @@ export const OrderDetailsContext = createContext<
 >({});
 
 interface PropsType extends ReactProps {
-  orderId?: string;
+  orderId?: any;
 }
 
 export function OrderDetailsProvider({ orderId, children }: PropsType) {
@@ -24,8 +24,8 @@ export function OrderDetailsProvider({ orderId, children }: PropsType) {
     loadOrderDetails();
   }, [orderId]);
 
-  console.log(order);
-  console.log("OderId " + orderId);
+  // console.log(order);
+  // console.log("OderId " + orderId);
 
   return <OrderDetailsContext.Provider value={{ order }}>{children}</OrderDetailsContext.Provider>;
 }
