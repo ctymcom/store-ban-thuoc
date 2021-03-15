@@ -8,7 +8,7 @@ export function OrderDetailsProducts(props: PropsType) {
   const cellClass =
     "md:flex items-start md:items-center text-gray-700 border-b border-gray-200 py-3 md:p-3.5";
 
-  console.log(props.products);
+  // console.log(props.products);
 
   return props.products ? (
     <div className="md:grid md:grid-cols-8 mt-5">

@@ -3,7 +3,6 @@ import { OrderHisttoryList } from "./component/order-history-list";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useOrderContext } from "./providers/order-history-provider";
-import { useOrderStatusContext } from "./providers/order-status-provider";
 
 export function OrderHistoryPage() {
   const router = useRouter();
@@ -18,8 +17,7 @@ export function OrderHistoryPage() {
     ele.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
   };
 
-  const { listOrder, pagination, setPagination } = useOrderContext();
-  const { listOrderStatus } = useOrderStatusContext();
+  const { listOrder, pagination, setPagination, listOrderStatus } = useOrderContext();
 
   return (
     <>
@@ -82,10 +80,10 @@ export function OrderHistoryPage() {
                     }}
                   >
                     <a
-                      className={`normal-case lg:uppercase font-extralight md:font-semibold whitespace-nowrap text-base px-3  pb-2.5 rounded-sm hover:text-primary
+                      className={`normal-case lg:uppercase font-extralight md:font-normal border-b-4 whitespace-nowrap text-base px-3  pb-2.5 rounded-sm hover:text-primary
                                                   ${
                                                     !status
-                                                      ? " text-primary border-primary border-b-4 animate-slide-up"
+                                                      ? " text-primary border-primary  animate-slide-up"
                                                       : ""
                                                   }`}
                     >
@@ -105,7 +103,7 @@ export function OrderHistoryPage() {
                           scroll={false}
                         >
                           <a
-                            className={`scrollNavPC normal-case lg:uppercase font-extralight md:font-semibold whitespace-nowrap text-base px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary
+                            className={`scrollNavPC normal-case lg:uppercase font-extralight md:font-normal whitespace-nowrap text-base px-3 border-b-4 pb-2.5 rounded-sm hover:text-primary
                                                   ${
                                                     (status ? status == item.name2 : !item.name2)
                                                       ? " text-primary border-primary animate-slide-up"
@@ -121,7 +119,11 @@ export function OrderHistoryPage() {
                   : null}
               </ul>
               <div className="w-full">
-                <OrderHisttoryList listOrder={listOrder} status={status} />
+                <OrderHisttoryList
+                  listOrder={listOrder}
+                  listOrderStatus={listOrderStatus}
+                  status={status}
+                />
               </div>
 
               <ul className="pavigation-pages flex mt-4 md:mt-7 justify-between w-full">
