@@ -56,14 +56,16 @@ export function PostCard({ post, large = false, ...props }: PropsType) {
               </div>
             </LazyLoad>
           </div>
-          <div className="px-3 pt-4 pb-0.5 text-gray-600 text-sm font-light group-hover:text-primary">
-            {dateText}
-          </div>
-          <div className="px-3 mb-1 max-h-20 text-lg text-gray-800 font-semibold text-ellipsis-2 group-hover:text-primary-dark">
-            {post.title}
-          </div>
-          <div className="px-3 mb-4 text-gray-500 group-hover:text-primary text-ellipsis-3 h-18 font-normal">
-            {post.excerpt}
+          <div style={{ height: "188px" }}>
+            <div className="px-3 pt-4 pb-0.5 text-gray-600 text-sm font-light group-hover:text-primary">
+              {dateText}
+            </div>
+            <div className="px-3 mb-1 max-h-20 text-lg text-gray-800 font-semibold text-ellipsis-2 group-hover:text-primary-dark">
+              {post.title}
+            </div>
+            <div className="px-3 mb-4 text-gray-500 group-hover:text-primary text-ellipsis-3 h-18 font-normal">
+              {post.excerpt}
+            </div>
           </div>
         </a>
       )}

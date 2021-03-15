@@ -1,7 +1,7 @@
 import { ChangeEvent, MutableRefObject, useRef, useState } from "react";
 import { useToast } from "../../../../lib/providers/toast-provider";
 import { ImageDialog } from "../dialog/image-dialog";
-import { Imgur } from "./../../../../lib/imgur";
+import { Imgur } from "../../../../lib/helpers/imgur";
 import { Button } from "./button";
 
 interface PropsType extends ReactProps {
@@ -28,6 +28,7 @@ export function ImageInput({ className = "", inputClassName = "", ...props }: Pr
     try {
       setUploading(true);
       let res = await Imgur.uploadImage(file);
+      console.log(res);
       props.onChange(res.link);
     } catch (err) {
       console.error(err);

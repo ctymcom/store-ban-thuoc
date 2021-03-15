@@ -37,7 +37,7 @@ export function PostCard({ post, ...props }: PostCardProps) {
       </div>
       <p className="text-sm text-gray-700"> {post.excerpt} </p>
       <div className="flex items-center mt-auto pt-1">
-        <button className="btn-default is-danger" onClick={onPostRemoved}>
+        <button className="btn-default hover-danger" onClick={onPostRemoved}>
           Xoá
         </button>
         <Link href={"/admin/post/" + post.id}>

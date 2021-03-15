@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { HiInformationCircle, HiOutlineCloudUpload } from "react-icons/hi";
-import { Imgur } from "../../../lib/imgur";
+import { Imgur } from "../../../lib/helpers/imgur";
 import { FormFieldProps } from "./form-field.type";
 import { Label } from "./label";
 type ImageUploaderProps = FormFieldProps & {};

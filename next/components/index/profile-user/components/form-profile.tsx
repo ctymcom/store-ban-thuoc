@@ -9,7 +9,7 @@ import DateTime from "./datetime";
 import { Spinner } from "../../../shared/utilities/spinner";
 import { Button } from "../../../shared/utilities/form/button";
 import { useToast } from "../../../../lib/providers/toast-provider";
-import { cloneDeep } from "../../../../lib/lodash";
+import { cloneDeep } from "lodash";
 
 interface PropsType extends ReactProps {
   [x: string]: any;
@@ -116,7 +116,7 @@ export function FormProfile(props: PropsType) {
                     <input
                       className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
                       defaultValue={userA?.nickname}
-                      onChange={e => userA.nickname = e.target.value}
+                      onChange={(e) => (userA.nickname = e.target.value)}
                     />
                   </div>
                   <div className="sm:flex justify-between items-center  pt-4">
@@ -141,7 +141,7 @@ export function FormProfile(props: PropsType) {
                       type="number"
                       className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
                       defaultValue={userA?.phone}
-                      onChange={(e) => userA.phone = e.target.value}
+                      onChange={(e) => (userA.phone = e.target.value)}
                     />
                   </div>
                   <div className="sm:flex justify-between items-center pt-4">
@@ -151,7 +151,7 @@ export function FormProfile(props: PropsType) {
                         dateOfBirth={
                           userA?.birthday !== null ? new Date(userA.birthday) : new Date()
                         }
-                        onChange={(e) => userA.birthday = format(e, "yyyy-MM-dd")}
+                        onChange={(e) => (userA.birthday = format(e, "yyyy-MM-dd"))}
                       />
                     </div>
                   </div>
@@ -164,7 +164,7 @@ export function FormProfile(props: PropsType) {
                         value={
                           userA.companyType ? userA.companyType : "Vui lòng chọn loại cửa hàng"
                         }
-                        onChange={(e) => userA.companyType = parseInt(e)}
+                        onChange={(e) => (userA.companyType = parseInt(e))}
                       />
                     </div>
                   </div>
@@ -174,7 +174,7 @@ export function FormProfile(props: PropsType) {
                     <input
                       className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
                       defaultValue={userA?.companyName}
-                      onChange={(e) => userA.companyName = e.target.value}
+                      onChange={(e) => (userA.companyName = e.target.value)}
                     />
                   </div>
                   <div className="sm:flex justify-between items-center pt-4">
