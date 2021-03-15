@@ -6,7 +6,6 @@ function useScreen(breakpoint: BreakPoint) {
   function isBreakPoint(): boolean {
     if (typeof window !== "undefined") {
       let width = window.innerWidth;
-      console.log(window.screen.width, window.innerWidth, document.body.clientWidth);
       switch (breakpoint) {
         case "2xl": {
           return width >= 1536;
