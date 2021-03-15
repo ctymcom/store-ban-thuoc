@@ -1,6 +1,6 @@
 import { select } from "async";
 import { createContext, useContext, useEffect, useState } from "react";
-import { cloneDeep } from "../../../../lib/lodash";
+import { cloneDeep } from "lodash";
 import { Promotion, PromotionService } from "../../../../lib/repo/promotion.repo";
 import { useCart } from "../../../../lib/providers/cart-provider";
 export const PromotionContext = createContext<{

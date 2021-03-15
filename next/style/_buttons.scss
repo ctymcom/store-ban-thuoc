@@ -22,16 +22,10 @@
   span {
     @apply inline-flex;
     @apply items-center;
-    @apply transition-none;
   }
 
   span + i {
     @apply ml-1.5;
-    @apply transition-none;
-  }
-
-  span i {
-    @apply transition-all;
   }
 
   &:not(.flex-row-reverse) {
@@ -65,15 +59,17 @@
     pointer-events: none;
     opacity: 0.75;
   }
+
+  &.hover-danger:hover {
+    @apply text-danger;
+    @apply border-danger;
+  }
 }
 
 .btn-default {
   @extend .btn;
-  &:hover {
+  &:not(.hover-danger):hover {
     @apply text-primary;
-  }
-  &.is-danger:hover {
-    @apply text-danger;
   }
 }
 
@@ -81,12 +77,9 @@
   @extend .btn;
   @apply bg-gray-100;
   @apply text-gray-500;
-  &:hover {
+  &:not(.hover-danger):hover {
     @apply bg-gray-200;
     @apply text-primary;
-  }
-  &.is-danger:hover {
-    @apply text-danger;
   }
 }
 .btn-disabled {
@@ -100,7 +93,7 @@
   @extend .btn;
   @apply border;
   @apply border-gray-400;
-  &:hover {
+  &:not(.hover-danger):hover {
     @apply border-primary;
     @apply text-primary;
   }
@@ -112,9 +105,45 @@
       @apply text-white;
     }
   }
-  &.is-danger:hover {
-    @apply text-danger;
+  &.is-danger {
     @apply border-danger;
+    @apply text-danger;
+    &:hover {
+      @apply bg-danger;
+      @apply text-white;
+    }
+  }
+  &.is-accent {
+    @apply border-accent;
+    @apply text-accent;
+    &:hover {
+      @apply bg-accent;
+      @apply text-white;
+    }
+  }
+  &.is-info {
+    @apply border-info;
+    @apply text-info;
+    &:hover {
+      @apply bg-info;
+      @apply text-white;
+    }
+  }
+  &.is-success {
+    @apply border-success;
+    @apply text-success;
+    &:hover {
+      @apply bg-success;
+      @apply text-white;
+    }
+  }
+  &.is-warning {
+    @apply border-warning;
+    @apply text-warning;
+    &:hover {
+      @apply bg-warning;
+      @apply text-white;
+    }
   }
 }
 

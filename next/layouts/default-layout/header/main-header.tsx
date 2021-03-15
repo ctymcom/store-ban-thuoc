@@ -57,7 +57,7 @@ export function MainHeader(props: PropsType) {
           {searchText && (
             <button
               type="button"
-              className="btn-default is-danger h-12 w-10 absolute right-1"
+              className="btn-default hover-danger h-12 w-10 absolute right-1"
               onClick={() => setSearchText("")}
             >
               <i>

@@ -1,4 +1,4 @@
-import { SetIP } from "./graphql/auth.link";
+import { SetIP } from "../graphql/auth.link";
 
 export function GetMyIP(callback) {
   fetch("https://api.ipify.org?format=json", {

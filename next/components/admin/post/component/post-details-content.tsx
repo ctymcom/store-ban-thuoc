@@ -1,9 +1,9 @@
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
-import { Imgur } from '../../../../lib/imgur';
-import { Input } from '../../../shared/form/input';
-import { PostDetailsContext } from '../providers/post-details-provider';
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import "react-quill/dist/quill.snow.css";
+import { Imgur } from "../../../../lib/helpers/imgur";
+import { Input } from "../../../shared/form/input";
+import { PostDetailsContext } from "../providers/post-details-provider";
 
 const ReactQuill = dynamic(import("react-quill"), {
   ssr: false,
@@ -23,7 +23,6 @@ export function PostDetailsContent() {
       setEditorModules({
         imageResize: { parchment: Quill.import("parchment") },
         toolbar: {
-
           container: [
             ["bold", "italic", "underline", "strike"], // toggled buttons
             ["blockquote", "code-block"],
@@ -50,31 +49,31 @@ export function PostDetailsContent() {
     });
   }, []);
   return (
-      <PostDetailsContext.Consumer>
-        {({ post }) => {
-          if (!post) return null;
-          return (
-              <div className="bg-white p-5 w-full min-h-screen rounded-l rounded-bl">
-                <div className="font-semibold text-gray-600 py-1">Tiêu đề</div>
-                <Input
-                  placeholder="Nhập tiêu đề"
-                  value={post.title}
-                  onChanged={(value) => (post.title = value)}
-                />
-                <div className="font-semibold text-gray-600 p-1 mt-3">Nội dung</div>
-                {!!EditorModules && (
-                  <ReactQuill
-                    theme="snow"
-                    value={post.content}
-                    onChange={(value) => (post.content = value)}
-                    modules={EditorModules}
-                    placeholder="Nhập nội dung"
-                  />
-                )}
-              </div>
-          );
-        }}
-      </PostDetailsContext.Consumer>
+    <PostDetailsContext.Consumer>
+      {({ post }) => {
+        if (!post) return null;
+        return (
+          <div className="bg-white p-5 w-full min-h-screen rounded-l rounded-bl">
+            <div className="font-semibold text-gray-600 py-1">Tiêu đề</div>
+            <Input
+              placeholder="Nhập tiêu đề"
+              value={post.title}
+              onChanged={(value) => (post.title = value)}
+            />
+            <div className="font-semibold text-gray-600 p-1 mt-3">Nội dung</div>
+            {!!EditorModules && (
+              <ReactQuill
+                theme="snow"
+                value={post.content}
+                onChange={(value) => (post.content = value)}
+                modules={EditorModules}
+                placeholder="Nhập nội dung"
+              />
+            )}
+          </div>
+        );
+      }}
+    </PostDetailsContext.Consumer>
   );
 }
 
