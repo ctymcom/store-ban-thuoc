@@ -46,7 +46,7 @@ export function AddressItem(props: Proptype) {
           <Button
             className="btn-outline rounded-lg text-16 "
             asyncLoading
-            onClick={async () => await setDefaultAddress(address.id)}
+            onClick={async () => await setDefaultAddress(address)}
             text="Đặt mặc định"
           />
         )}

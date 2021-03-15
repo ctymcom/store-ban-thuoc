@@ -177,6 +177,7 @@ const AddressFormDialog = (props: PropsType) => {
             large
             className="w-full mt-4"
             text="Xác nhận"
+            asyncLoading
             onClick={async () => {
               let res = await handleOnClick(userAddress);
               if (res) props.setShowAddressFormDialog(false);

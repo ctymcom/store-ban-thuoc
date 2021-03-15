@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { IoTicketOutline } from "react-icons/io5";
+import { HiOutlineTicket } from "react-icons/hi";
 import { PromotionContext, PromotionProvider } from "../providers/promotion-provider";
 import PromotionListDialog from "./promotion-list-dialog";
+import { from } from "rxjs";
 type PromotionProps = {
   [x: string]: any;
 };
@@ -13,7 +14,6 @@ export function Promotion({
   listPromotionCode,
   ...props
 }: PromotionProps) {
-  const [usePromotion, setUsePromotion] = useState(false);
   const [promotion, setPromotion] = useState<string>();
   const [showDialog, setShowDialog] = useState(false);
 
@@ -21,15 +21,14 @@ export function Promotion({
     setPromotion(code);
     setShowDialog(false);
     onChanged(code);
-    setUsePromotion(true);
   };
 
   return (
     <PromotionProvider>
       <div className="my-5 border-b-2 sm:border-0">
-        <div className="flex border-0 sm:border-b-2 items-center pb-2">
+        <div className="flex border-b-2 items-center">
           <i className="text-primary text-20 sm:text-24">
-            <IoTicketOutline />
+            <HiOutlineTicket />
           </i>
           <p className="uppercase px-2 text-16 "> Mã khuyến mãi</p>
         </div>
@@ -52,26 +51,6 @@ export function Promotion({
                     >
                       Xem danh sách mã khuyến mãi
                     </p>
-                    {/* <div className="flex">
-                      <input
-                        className="form-input w-2/3 sm:my-4 sm:w-full rounded-r-none h-12 sm:rounded-md border-gray-200"
-                        placeholder="Nhập mã ưu đãi"
-                        onChange={(e) => {
-                          setPromotion(e.target.value);
-                        }}
-                        value={promotion}
-                        readOnly
-                        disabled
-                      />
-                      <button
-                        onClick={applyPromotion}
-                        className={`sm:hidden font-normal sm:w-full text-16  h-12 sm:my-2 ${
-                          promotion ? "btn-primary" : "btn-disabled"
-                        } ${PrUsing ? "w-full" : "w-1/3 rounded-l-none sm:rounded-md"}`}
-                      >
-                        {usePromotion && selectedPromotion ? "Hủy áp dụng" : "Áp dụng"}
-                      </button>
-                    </div> */}
                   </>
                 )}
                 <button
