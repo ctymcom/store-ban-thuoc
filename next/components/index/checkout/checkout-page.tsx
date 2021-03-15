@@ -178,19 +178,23 @@ export function CheckOutPage() {
       <div className="w-full lg:w-1/3 xl:w-1/4">
         <div className="w-full md:flex lg:inline-block md:gap-5 mb-10">
           <div className="w-full md:w-1/2 lg:w-full mb-10">
-            <div className="flex justify-between items-center border-b-2">
-              <div className="flex justify-between items-center gap-1 whitespace-nowrap pb-2">
+            <div className="flex justify-between items-center border-b-2 pb-1">
+              <div className="flex justify-between items-center gap-1 whitespace-nowrap">
                 <i className="text-primary text-16 ">
                   <IoLocationSharp />
                 </i>
                 <h4 className="uppercase text-16">Địa chỉ giao hàng</h4>
               </div>
-              <p
-                className={`${addressSelected ? "text-primary text-16  cursor-pointer" : "hidden"}`}
+              <button
+                className={`${
+                  addressSelected
+                    ? "btn-default text-primary hover:text-primary-dark px-1"
+                    : "hidden"
+                }`}
                 onClick={() => setShowDialogAddress(true)}
               >
                 Thay đổi
-              </p>
+              </button>
             </div>
             <div className="my-2 text-16 ">
               {addressSelected ? (

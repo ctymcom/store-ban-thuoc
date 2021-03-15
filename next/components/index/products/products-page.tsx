@@ -35,6 +35,7 @@ export function ProductsPage() {
   }, [products]);
 
   const screenLg = useScreen("lg");
+  useScrollBlock({ dependencies: [filterOpened] });
 
   return (
     <>

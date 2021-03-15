@@ -1,6 +1,7 @@
 .form-input {
   @apply block w-full py-0 px-3 min-h-10 rounded border border-gray-400 hover:border-primary focus:border-primary-dark;
-  &[readonly] {
+  &[readonly],
+  &[disabled] {
     @apply bg-gray-100 hover:border-gray-500 focus:border-gray-500;
   }
 }

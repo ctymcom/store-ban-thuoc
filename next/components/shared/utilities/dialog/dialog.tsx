@@ -52,7 +52,7 @@ export function Dialog({
     }
   }, [props.isOpen]);
 
-  useScrollBlock(ROOT_ID, [isOpen]);
+  useScrollBlock({ rootId: ROOT_ID, dependencies: [isOpen] });
 
   let header = Children.map(props.children, (child) =>
     child.type?.displayName === "Header" ? child : null
