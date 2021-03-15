@@ -5,13 +5,13 @@ export interface UserPointLog extends BaseModel {
   createdAt: string;
   updatedAt: string;
   userId: string;
-  code: string;
+  code: number;
   reasonCode: string;
   note: string;
   note2: string;
-  status: string;
+  status: number;
   value: number;
-  convertedValue: string;
+  convertedValue: number;
 }
 
 export class UserPointLogRepository extends CrudRepository<UserPointLog> {

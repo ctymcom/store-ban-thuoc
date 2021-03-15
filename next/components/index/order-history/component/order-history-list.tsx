@@ -4,39 +4,33 @@ import { Order } from "../../../../lib/repo/order.repo";
 import { Spinner } from "../../../shared/utilities/spinner";
 import { NotFound } from "../../../shared/utilities/not-found";
 import { BiListPlus } from "react-icons/bi";
+import { OrderStatus } from "../../../../lib/repo/order-status.repo";
 interface PropsType extends ReactProps {
-  listOrder: Order[];
-  status: any;
+  listOrder?: Order[];
+  listOrderStatus?: any[];
+  status?: any;
 }
 
-export function OrderHisttoryList({ listOrder, status }: PropsType) {
+export function OrderHisttoryList({ listOrder, listOrderStatus, status }: PropsType) {
   const [listOrders, setListOrders] = useState([]);
+  // const [listOrderByStatusReleaseLater, setListOrderByStatusReleaseLater] = useState([]);
+  console.log(listOrder);
+  console.log(listOrderStatus);
+
+  // function FilterOrderByStatus() {
+  //   listOrder.forEach(function (value) {
+  //     if(value?.status === )
+  //   })
+  // }
 
   useEffect(() => {
     if (status) {
-      setListOrders(
-        listOrder?.filter(
-          (x) =>
-            (x.status == "0"
-              ? "Release+Later"
-              : x.status == "1"
-              ? "Approved"
-              : x.status == "2"
-              ? "Issuing"
-              : x.status == "3"
-              ? "Approving"
-              : x.status == "4"
-              ? "Completed"
-              : "Closed") == status
-        )
-      );
+      setListOrders(listOrder?.filter((x) => x.status === status));
+      // FilterOrderByStatus();
     } else {
       setListOrders(listOrder);
     }
   }, [status, listOrder]);
-
-  // console.log(listOrder);
-  // console.log(status);
 
   return (
     <>
@@ -45,7 +39,9 @@ export function OrderHisttoryList({ listOrder, status }: PropsType) {
       ) : (
         <>
           {listOrders.length > 0 ? (
-            listOrders.map((order, index) => <OrderHistoryItem item={order} key={index} />)
+            listOrders.map((order, index) => (
+              <OrderHistoryItem item={order} key={index} listOrderStatus={listOrderStatus} />
+            ))
           ) : (
             <>
               <NotFound
@@ -55,7 +51,6 @@ export function OrderHisttoryList({ listOrder, status }: PropsType) {
                 text="Không tìm thấy đơn hàng nào"
                 className="text-gray-800"
               />
-              ;
             </>
           )}
         </>

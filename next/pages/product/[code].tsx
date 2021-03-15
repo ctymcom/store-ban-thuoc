@@ -6,6 +6,7 @@ import { Redirect } from "../../lib/helpers/redirect";
 import SEO from "../../lib/helpers/seo";
 import { Product } from "../../lib/repo/product.repo";
 import { ProductModel } from "./../../../dist/graphql/modules/product/product.model";
+import { AritoHelper } from "../../../dist/helpers/arito/arito.helper";
 import { DefaultLayout } from "./../../layouts/default-layout";
 import { NextSeo } from "next-seo";
 
@@ -30,10 +31,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { code } = context.query;
   const product = (await ProductModel.findOne(
     { code },
-    "_id name image description code"
+    "_id name imageId description code"
   )) as Product;
   if (!product) Redirect(context.res, "/404");
-  const seo = await SEO(product.name, { description: product.description, image: product.image });
+  const seo = await SEO(product.name, {
+    description: product.description,
+    image: AritoHelper.getImageLink(product.imageId),
+  });
   return {
     props: JSON.parse(
       JSON.stringify({

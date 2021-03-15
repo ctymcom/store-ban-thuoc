@@ -25,7 +25,7 @@ export interface Order extends BaseModel {
   paymentMethod: string;
   deliveryMethod: string;
   usePoint: Boolean;
-  status: string;
+  status: number;
 }
 
 export class OrderRepository extends CrudRepository<Order> {
