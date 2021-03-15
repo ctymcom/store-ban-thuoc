@@ -32,7 +32,7 @@ export function OrderHistoryItem({ order }: PropsType) {
           <div className="pt-1 md:pt-0">
             Tổng sản phẩm:
             <span className="ml-2 font-semibold">
-              {NumberPipe(order.items.reduce((count, item) => (count += item.qty), 0))} sản phẩm
+              {NumberPipe(order.itemCount)} sản phẩm
             </span>
           </div>
 
