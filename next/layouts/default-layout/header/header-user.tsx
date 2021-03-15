@@ -13,16 +13,16 @@ export function HeaderUser({ ...props }: PropsType) {
     <>
       {user ? (
         <>
-          <Link href="/profile/notification">
+          {/* <Link href="/profile/notification">
             <a className="border-r btn-default p-0 h-10 w-16">
               <i className="text-24">
                 <HiOutlineBell />
               </i>
-              {/* <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
+              <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
             <span>76</span>                
-          </div> */}
+          </div>
             </a>
-          </Link>
+          </Link> */}
           <div className="relative">
             <Menu>
               {({ open }) => (
