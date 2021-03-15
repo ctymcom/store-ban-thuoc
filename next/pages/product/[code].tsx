@@ -31,12 +31,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { code } = context.query;
   const product = (await ProductModel.findOne(
     { code },
-    "_id name image description code"
+    "_id name imageId description code"
   )) as Product;
   if (!product) Redirect(context.res, "/404");
   const seo = await SEO(product.name, {
     description: product.description,
-    image: AritoHelper.getImageLink(product.image),
+    image: AritoHelper.getImageLink(product.imageId),
   });
   return {
     props: JSON.parse(
