@@ -5,9 +5,11 @@ import { CategoryLoader } from "../category/category.model";
 import { IngredientLoader } from "../ingredient/ingredient.model";
 import { IProduct } from "./product.model";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
+import { set } from "lodash";
 
 const Query = {
   getAllProduct: async (root: any, args: any, context: Context) => {
+    set(args, "q.filter.basePrice", { $gt: 0 });
     return productService.fetch(args.q);
   },
   getOneProduct: async (root: any, args: any, context: Context) => {
