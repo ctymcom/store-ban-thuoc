@@ -166,7 +166,7 @@ export function CheckOutPage() {
         </div>
         <div className="w-full text-16  my-5">
           <h4 className="uppercase text-16">Ghi chú khác</h4>
-          <p className="text-14">
+          <p className="text-14 pb-2">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
           </p>
@@ -181,7 +181,7 @@ export function CheckOutPage() {
         <div className="w-full md:flex lg:inline-block md:gap-5 mb-10">
           <div className="w-full md:w-1/2 lg:w-full mb-10">
             <div className="flex justify-between items-center border-b-2">
-              <div className="flex justify-between items-center gap-1 whitespace-nowrap">
+              <div className="flex justify-between items-center gap-1 whitespace-nowrap pb-2">
                 <i className="text-primary text-16 ">
                   <IoLocationSharp />
                 </i>
@@ -239,7 +239,7 @@ export function CheckOutPage() {
             onClick={async () => await handleConfirmOrder()}
             text="Đặt mua"
           />
-          <p className="whitespace-nowrap text-center text-12 md:text-16">
+          <p className="whitespace-nowrap text-center text-12 md:text-14">
             (Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)
           </p>
         </div>

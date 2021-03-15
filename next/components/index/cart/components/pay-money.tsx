@@ -12,7 +12,7 @@ export function PayMoney(props: PropsType) {
   const { listMoney } = props;
   return listMoney ? (
     <>
-      <div className="flex border-b-2 lg:border-b-4 items-center">
+      <div className="flex border-b-2 items-center pb-2">
         <i className="text-primary text-20">
           <BiMoney />
         </i>

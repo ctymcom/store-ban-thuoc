@@ -30,7 +30,11 @@ export function CartItem(props: Proptype) {
         >
           <img
             className="w-1/4 sm:w-1/3 max-h-16 object-contain mr-auto my-auto"
-            src={props.cartProduct.product.image}
+            src={
+              props.cartProduct.product.image
+                ? props.cartProduct.product.image
+                : "/next/public/assets/img/default.png"
+            }
             alt={props.cartProduct.product.imageId}
           />
           <p className="w-3/4 sm:w-2/3 text-left flex-wrap items-center justify-between">
