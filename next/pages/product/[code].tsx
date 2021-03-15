@@ -5,6 +5,7 @@ import { ProductDetailsProvider } from "../../components/index/product-details/p
 import { Redirect } from "../../lib/redirect";
 import { Product } from "../../lib/repo/product.repo";
 import { ProductModel } from "./../../../dist/graphql/modules/product/product.model";
+import { AritoHelper } from "../../../dist/helpers/arito/arito.helper";
 import { DefaultLayout } from "./../../layouts/default-layout";
 
 interface PropsType extends ReactProps {
@@ -35,7 +36,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           id: product.id,
           name: product.name,
           code: product.code,
-          image: product.image,
+          image: AritoHelper.getImageLink(product.imageId),
         })
       ),
     },
