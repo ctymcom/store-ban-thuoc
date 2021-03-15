@@ -1,3 +1,4 @@
+import { NumberPipe } from "../../../lib/pipes/number";
 import { useAuth } from "../../../lib/providers/auth-provider";
 import { PaginationRound } from "../../shared/utilities/pagination/pagination-round";
 import { RewardPointList } from "./component/reward-point-list";
@@ -6,7 +7,6 @@ import { useRewardPointContext } from "./providers/reward-point-provider";
 export function RewardPointPage() {
   const menuNav = [{ label: "Điểm tích luỹ" }, { label: "Thời gian" }, { label: "Nội dung" }];
   const { listRewardPoint, pagination, setPagination } = useRewardPointContext();
-
   const { user } = useAuth();
 
   return (
@@ -26,7 +26,7 @@ export function RewardPointPage() {
                     Số Điểm Bạn Đang Có
                   </p>
                   <p className="text-xl md:text-4xl lg:text-4xl xl:text-5xl lg:font-extralight text-yellow-400">
-                    {user?.point} Điểm
+                    {user ? NumberPipe(user.point) : 0} Điểm
                   </p>
                 </div>
               </div>

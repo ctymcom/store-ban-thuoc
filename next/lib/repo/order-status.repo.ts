@@ -1,14 +1,10 @@
 import { BaseModel, CrudRepository } from "./crud.repo";
-import { OrderItem } from "./order-item.repo";
 
 export interface OrderStatus extends BaseModel {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  code: string;
+  code: number;
   name: string;
   name2: string;
-  position: string;
+  position: number;
 }
 
 export class OrderStatusRepository extends CrudRepository<OrderStatus> {

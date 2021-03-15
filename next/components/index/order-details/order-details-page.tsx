@@ -5,11 +5,13 @@ import { OrderDetailsProducts } from "./components/order-details-products";
 import { PayMoney } from "../cart/components/pay-money";
 import { NumberPipe } from "../../../lib/pipes/number";
 import { useOrderDetailsContext } from "./providers/order-details-provider";
-import { NotFound } from "../../shared/utilities/not-found";
 import format from "date-fns/format";
+import { Spinner } from "../../shared/utilities/spinner";
+import { useOrderContext } from "../order-history/providers/order-history-provider";
 
 export function OrderDetailsPage() {
   const { order } = useOrderDetailsContext();
+  const { listOrderStatus } = useOrderContext();
 
   let datetime = new Date(order?.updatedAt);
   datetime.toDateString();
@@ -17,7 +19,7 @@ export function OrderDetailsPage() {
   const listMoneyCheckout = [
     {
       title: "Tổng tiền hàng",
-      money: order?.subtotal,
+      money: order?.subtotal ? order.subtotal : 0,
     },
     {
       title: "Voucher giảm giá",
@@ -33,7 +35,8 @@ export function OrderDetailsPage() {
             <div className="w-full">
               <OrderDetailsHeader
                 id={order.orderNumber}
-                status={order.status ? order.status : "success"}
+                status={order?.status}
+                listOrderStatus={listOrderStatus}
               />
               <OrderDetailsTimeline order={order} />
               <OrderDetailsInfo
@@ -68,6 +71,6 @@ export function OrderDetailsPage() {
       </div>
     </>
   ) : (
-    <NotFound text="Chi tiết đơn hàng này không tồn tại" />
+    <Spinner />
   );
 }

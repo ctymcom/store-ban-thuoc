@@ -1,96 +1,59 @@
 import { NumberPipe } from "../../../../lib/pipes/number";
 import moment from "moment-timezone";
 import Link from "next/link";
+import { Order } from "../../../../lib/repo/order.repo";
 
 interface PropsType extends ReactProps {
-  [x: string]: any;
-  item?: any;
-  key?: any;
+  order: Order;
 }
 
-export function OrderHistoryItem({ item, index }: PropsType) {
-  let itemArray = item?.items;
-  let statusOrder = item?.status;
-  let showStatusOrder = "";
-  switch (statusOrder) {
-    case 0: {
-      showStatusOrder = "Chờ xác nhận";
-      break;
-    }
-    case 1: {
-      showStatusOrder = "Đã duyệt";
-      break;
-    }
-    case 2: {
-      showStatusOrder = "Đang thực hiện";
-      break;
-    }
-    case 3: {
-      showStatusOrder = "Đang duyệt";
-      break;
-    }
-    case 4: {
-      showStatusOrder = "Hoàn thành";
-      break;
-    }
-    case 5: {
-      showStatusOrder = "Đóng";
-      break;
-    }
-    default:
-      break;
-  }
-
+export function OrderHistoryItem({ order }: PropsType) {
   return (
     <>
-      <div
-        className="flex flex-col md:flex-row justify-between items-center border-b-2 py-5 md:py-3"
-        key={index}
-      >
-        <div className="w-full md:w-3/5 text-sm">
-          <p className="">
-            {" "}
+      <div className="flex flex-col sm:flex-row justify-between items-center text-gray-700 border-b py-4 md:py-3">
+        <div className="flex-grow w-full sm:w-auto">
+          <div className="mb-1">
             Mã đơn hàng:
-            <span className="ml-1.5 font-bold">#{item.orderNumber}</span>
-            <Link href="/profile/order-details">
-              <a className="text-primary ml-1">Xem chi tiết đơn hàng</a>
+            <Link href={{ pathname: "/profile/order-details", query: { id: order.id } }}>
+              <a className="ml-2 font-bold hover:underline hover:text-primary">
+                {order.orderNumber}
+              </a>
             </Link>
-          </p>
+          </div>
 
-          <p className="pt-1 md:pt-0">
+          {/* <p className="pt-1 md:pt-0">
             Thời gian giao hàng dự kiến:
             <span className="ml-1 md:ml-2 font-bold">
-              {moment(item.createdAt).format("DD/MM")} đến{" "}
+              {moment(order.createdAt).format("DD/MM")} đến{" "}
               {moment(item.updatedAt).format("DD/MM/YYYY")}
             </span>
-          </p>
+          </p> */}
 
-          <p className="pt-1 md:pt-0">
+          <div className="pt-1 md:pt-0">
             Tổng sản phẩm:
-            <span className="ml-2 font-bold">
-              {itemArray.length > 0 &&
-                itemArray.map((item, index) => <span key={index}>{item.qty}</span>)}{" "}
-              sản phẩm
+            <span className="ml-2 font-semibold">
+              {NumberPipe(order.items.reduce((count, item) => (count += item.qty), 0))} sản phẩm
             </span>
-          </p>
+          </div>
 
-          <p className="pt-1 md:pt-0">
+          <div className="pt-1 md:pt-0">
             Tổng tiển:
             <span className="number-price text-primary ml-2 font-bold">
-              {NumberPipe(item.amount)}
+              {NumberPipe(order.amount, true)}
             </span>
-          </p>
+          </div>
 
-          <p className="pt-1 md:pt-0">
+          <div className="pt-1 md:pt-0">
             Trạng thái đơn hàng:
-            <span className="ml-2 font-bold">{showStatusOrder}</span>
-          </p>
+            <span className="ml-2 font-semibold">{order.statusText}</span>
+          </div>
         </div>
-        <button
-          className={` bg-primary hidden md:block text-white px-12 py-1.5 rounded-md whitespace-nowrap text-sm md:text-base mt-4 md:mt-0`}
-        >
-          Mua lại
-        </button>
+
+        <div className="flex-grow-0 w-full sm:w-auto flex mt-2 md:mt-0">
+          <Link href={{ pathname: "/profile/order-details", query: { id: order.id } }}>
+            <a className="btn-primary hover:underline">Xem chi tiết</a>
+          </Link>
+        </div>
       </div>
     </>
   );
