@@ -159,7 +159,7 @@ export function FormProfile(props: PropsType) {
                     <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Loại cửa hàng</p>
                     <div className="w-full sm:w-3/4 flex space-x-2 xl:w-4/6">
                       <Select
-                        className={`w-full  h-12`}
+                        className={`w-full h-12`}
                         options={listOptionsTypeStore}
                         value={
                           userA.companyType ? userA.companyType : "Vui lòng chọn loại cửa hàng"

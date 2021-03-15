@@ -5,7 +5,8 @@ type BreakPoint = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 function useScreen(breakpoint: BreakPoint) {
   function isBreakPoint(): boolean {
     if (typeof window !== "undefined") {
-      let width = window.screen.width;
+      let width = window.innerWidth;
+      console.log(window.screen.width, window.innerWidth, document.body.clientWidth);
       switch (breakpoint) {
         case "2xl": {
           return width >= 1536;
@@ -43,7 +44,6 @@ function useScreen(breakpoint: BreakPoint) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-    // Empty array ensures that effect is only run on mount and unmount
   }, []);
   return screen;
 }
