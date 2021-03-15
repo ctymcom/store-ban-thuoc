@@ -16,15 +16,17 @@ import { GraphService } from "../../../lib/repo/graph.repo";
 import { useToast } from "../../../lib/providers/toast-provider";
 import gql from "graphql-tag";
 import router from "next/router";
+import { Product } from "../../../lib/repo/product.repo";
 
 export function CheckOutPage() {
   const [isCheck, setIsCheck] = useState(true);
   const [deliMethodCS, setDeliMethod] = useState<MethodCheckout>(null);
   const [paymentMethodCS, setPaymentMethod] = useState<MethodCheckout>(null);
   const [checkPaymentMethodCS, setCheckPaymentMethod] = useState(false);
+  const [items, setItems] = useState<{ productId: string; qty: number }[]>([]);
   const [note, setNote] = useState<string>("");
   const toast = useToast();
-  const { cartTotal, cartProducts, setcartProducts, promotion, setPromotion } = useCart();
+  const { cartTotal, cartProducts, setcartProducts, promotion, setPromotion, usePoint } = useCart();
   const {
     addressSelected,
     setShowDialogAddress,
@@ -35,6 +37,14 @@ export function CheckOutPage() {
   } = useCheckoutContext();
   useEffect(() => {
     listMoneyCheckout[0].money = cartTotal;
+    cartProducts.forEach((item: CartProduct) => {
+      if (item.active) {
+        let listItemNew = items;
+        let itemNew = { productId: item.productId, qty: item.qty };
+        listItemNew.push(itemNew);
+        setItems([...listItemNew]);
+      }
+    });
   }, []);
   useEffect(() => {
     if (paymentMethodCS?.code === "CK") {
@@ -51,6 +61,8 @@ export function CheckOutPage() {
     return true;
   };
   const confirmOrder = async (data: any) => {
+    console.log(data);
+
     let mutationName = "createOrder";
     const res = await GraphService.apollo.mutate({
       mutation: gql`
@@ -89,10 +101,23 @@ export function CheckOutPage() {
       },
     });
     if (res.data) {
+      let listItemNew = [];
+      cartProducts.forEach((item) => {
+        if (!item.active) {
+          listItemNew.push(item);
+        }
+      });
       let task = [
         setPromotion(""),
-        setcartProducts([]),
-        localStorage.removeItem("cartProductStorage"),
+        setcartProducts([...listItemNew]),
+        localStorage.setItem(
+          "cartProductStorage",
+          JSON.stringify(
+            cartProducts?.map((item) => {
+              return { productId: item.productId, qty: item.qty, active: item.active };
+            })
+          )
+        ),
       ];
       await Promise.all(task);
       router.replace("/complete");
@@ -106,13 +131,8 @@ export function CheckOutPage() {
         deliveryMethod: deliMethodCS.code,
         addressId: addressSelected.id,
         note: note,
-        usePoint: false,
-        items: [
-          ...cartProducts.map((item) => ({
-            productId: item.productId,
-            qty: item.qty,
-          })),
-        ],
+        usePoint,
+        items,
       });
     }
   };
@@ -160,7 +180,7 @@ export function CheckOutPage() {
       <div className="w-full lg:w-1/3 xl:w-1/4">
         <div className="w-full md:flex lg:inline-block md:gap-5 mb-10">
           <div className="w-full md:w-1/2 lg:w-full mb-10">
-            <div className="flex justify-between items-center border-b-4">
+            <div className="flex justify-between items-center border-b-2">
               <div className="flex justify-between items-center gap-1 whitespace-nowrap">
                 <i className="text-primary text-16 ">
                   <IoLocationSharp />
@@ -168,10 +188,10 @@ export function CheckOutPage() {
                 <h4 className="uppercase text-16">Địa chỉ giao hàng</h4>
               </div>
               <p
-                className="text-primary text-16  cursor-pointer"
+                className={`${addressSelected ? "text-primary text-16  cursor-pointer" : "hidden"}`}
                 onClick={() => setShowDialogAddress(true)}
               >
-                Đổi
+                Thay đổi
               </p>
             </div>
             <div className="my-2 text-16 ">
@@ -203,14 +223,12 @@ export function CheckOutPage() {
         </div>
         <div className="w-full">
           <div className="flex items-center gap-1 text-16  whitespace-nowrap">
-            <div
-              className="flex items-center gap-1 cursor-pointer"
-              onClick={() => {
-                setIsCheck(!isCheck);
-              }}
-            >
-              <CheckBoxSquare checked={isCheck} />
-              <p>Tôi đồng ý với</p>
+            <div className="flex items-center gap-1 cursor-pointer">
+              <CheckBoxSquare
+                checked={isCheck}
+                text={"Tôi đồng ý với"}
+                onClick={(e) => setIsCheck(e)}
+              />
             </div>
             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
           </div>

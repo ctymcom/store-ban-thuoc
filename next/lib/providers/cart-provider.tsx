@@ -28,6 +28,8 @@ const CartContext = createContext<
     removeProductFromCart: (product: Product) => void;
     promotion: string;
     setPromotion: Function;
+    usePoint: boolean;
+    setUsePoint: Function;
   }>
 >({});
 
@@ -37,6 +39,7 @@ export function CartProvider({ children }: any) {
   const [cartTotal, setCartTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [promotion, setPromotion] = useState("");
+  const [usePoint, setUsePoint] = useState(true);
 
   const toast = useToast();
 
@@ -55,6 +58,8 @@ export function CartProvider({ children }: any) {
             },
           },
         }).then((res) => {
+          setLoading(false);
+
           cartProductStorage.forEach((cartProduct) => {
             let product = res.data.find((x) => x.id == cartProduct.productId);
             if (product) {
@@ -76,6 +81,8 @@ export function CartProvider({ children }: any) {
           );
         });
         setcartProducts([...cartProductStorage]);
+      } else {
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -167,6 +174,8 @@ export function CartProvider({ children }: any) {
         setCartProductCount,
         promotion,
         setPromotion,
+        usePoint,
+        setUsePoint,
       }}
     >
       {children}

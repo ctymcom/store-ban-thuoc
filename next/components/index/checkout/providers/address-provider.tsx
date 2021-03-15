@@ -103,17 +103,17 @@ export const AddressProvider = (props) => {
       },
     });
   };
-  async function setDefaultAddress(id: string) {
+  async function setDefaultAddress(address: UserAddress) {
+    setAddressSelected(address);
     try {
       let oldDefault = listAddress.find((item) => item.isDefault);
-      let newDefault = listAddress.find((item) => item.id === id);
       let res = await UserAddressService.mutate({
         mutation: oldDefault
           ? [
               UserAddressService.updateQuery({ id: oldDefault?.id, data: { isDefault: false } }),
-              UserAddressService.updateQuery({ id: newDefault?.id, data: { isDefault: true } }),
+              UserAddressService.updateQuery({ id: address?.id, data: { isDefault: true } }),
             ]
-          : [UserAddressService.updateQuery({ id: newDefault?.id, data: { isDefault: true } })],
+          : [UserAddressService.updateQuery({ id: address?.id, data: { isDefault: true } })],
       });
       if (res) toast.warn(res.message);
       loadList();
@@ -126,10 +126,10 @@ export const AddressProvider = (props) => {
     let addressDeleting = listAddress.find((item) => item.id === id);
     if (listAddress.length > 1) {
       if (addressDeleting.isDefault) {
-        let idNewDefault: string;
+        let idNewDefault: UserAddress;
         listAddress.forEach((item) => {
           if (!item.isDefault) {
-            idNewDefault = item.id;
+            idNewDefault = item;
             return;
           }
         });

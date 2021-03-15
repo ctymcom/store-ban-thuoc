@@ -6,7 +6,7 @@ export function ContentStatus(props) {
         <h3 className="text-3xl md:text-4xl font-bold mx-auto my-4 whitespace-nowrap text-primary">
           Đặt hàng thành công
         </h3>
-        <div className="w-4/5 mx-auto my-5 md:my-10">
+        <div className="w-4/5 mx-auto my-5 md:my-10 text-16">
           <p>Đơn hàng được đặt thành công</p>
           <p>Chúng tôi sẽ vận chuyển đơn hàng này ngay khi xác nhận chuyển khoản thành công</p>
         </div>

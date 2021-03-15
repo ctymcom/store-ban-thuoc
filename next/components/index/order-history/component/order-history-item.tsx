@@ -6,39 +6,23 @@ interface PropsType extends ReactProps {
   [x: string]: any;
   item?: any;
   key?: any;
+  listOrderStatus?: any[];
 }
 
-export function OrderHistoryItem({ item, index }: PropsType) {
+export function OrderHistoryItem({ item, index, listOrderStatus }: PropsType) {
   let itemArray = item?.items;
-  let statusOrder = item?.status;
-  let showStatusOrder = "";
-  switch (statusOrder) {
-    case 0: {
-      showStatusOrder = "Chờ xác nhận";
-      break;
-    }
-    case 1: {
-      showStatusOrder = "Đã duyệt";
-      break;
-    }
-    case 2: {
-      showStatusOrder = "Đang thực hiện";
-      break;
-    }
-    case 3: {
-      showStatusOrder = "Đang duyệt";
-      break;
-    }
-    case 4: {
-      showStatusOrder = "Hoàn thành";
-      break;
-    }
-    case 5: {
-      showStatusOrder = "Đóng";
-      break;
-    }
-    default:
-      break;
+
+  function showStatusOrder(status) {
+    let label = "";
+    listOrderStatus?.forEach(function (value) {
+      if (value?.code === status) {
+        label = value?.name;
+      }
+      if (status === 0) {
+        label = "Không xác định";
+      }
+    });
+    return label;
   }
 
   return (
@@ -52,7 +36,7 @@ export function OrderHistoryItem({ item, index }: PropsType) {
             {" "}
             Mã đơn hàng:
             <span className="ml-1.5 font-bold">#{item.orderNumber}</span>
-            <Link href="/profile/order-details">
+            <Link href={{ pathname: "/profile/order-details", query: "id=" + item.id }}>
               <a className="text-primary ml-1">Xem chi tiết đơn hàng</a>
             </Link>
           </p>
@@ -83,7 +67,7 @@ export function OrderHistoryItem({ item, index }: PropsType) {
 
           <p className="pt-1 md:pt-0">
             Trạng thái đơn hàng:
-            <span className="ml-2 font-bold">{showStatusOrder}</span>
+            <span className="ml-2 font-bold">{showStatusOrder(item?.status)}</span>
           </p>
         </div>
         <button
