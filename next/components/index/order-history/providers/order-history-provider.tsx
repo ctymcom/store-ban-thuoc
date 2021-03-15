@@ -3,26 +3,22 @@ import { Order, OrderService } from "../../../../lib/repo/order.repo";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { Pagination } from "../../../../lib/repo/crud.repo";
 import { OrderStatus, OrderStatusService } from "../../../../lib/repo/order-status.repo";
-import { useRouter } from "next/router";
-import { cloneDeep } from "lodash";
 
-export const OrderHistoryContext = createContext<
+export const OrderContext = createContext<
   Partial<{
-    orders: Order[];
+    listOrder: Order[];
     setListOrder: Function;
     pagination: Pagination;
     setPagination: Function;
-    status: string;
-    statuses: OrderStatus[];
+    listOrderStatus: OrderStatus[];
+    setListOrderStatus: Function;
   }>
 >({});
 
 export function OrderProvider({ children }: any) {
-  const [orders, setOrders] = useState<Order[]>(null);
-  const [statuses, setStatuses] = useState<OrderStatus[]>();
-  const [status, setStatus] = useState("");
+  const [listOrder, setListOrder] = useState<Order[]>(null);
+  const [listOrderStatus, setListOrderStatus] = useState<OrderStatus[]>(null);
   const { user } = useAuth();
-  const router = useRouter();
   const [pagination, setPagination] = useState<Pagination>({
     limit: 10,
     page: 1,
@@ -30,63 +26,49 @@ export function OrderProvider({ children }: any) {
   });
 
   useEffect(() => {
-    loadOrderStatus();
-  }, []);
-
-  useEffect(() => {
-    if (statuses && user) {
-      loadListOrder();
-    }
-  }, [pagination.page, status, statuses, user]);
-
-  useEffect(() => {
-    setStatus(router.query["status"] as string);
-  }, [router.query]);
+    loadListOrder();
+    loadListOrderStatus();
+  }, [pagination.page]);
 
   const loadListOrder = () => {
-    setOrders(null);
-    let statusCode = statuses.find((x) => x.name2 == status)?.code || undefined;
     OrderService.getAll({
       query: {
         limit: pagination.limit,
         page: pagination.page,
         order: { createdAt: -1 },
-        filter: { userId: user?.id, status: statusCode },
+        filter: { userId: user?.id },
       },
+      fragment: OrderService.shortFragment,
     }).then((res) => {
-      let orders = cloneDeep(res.data);
-      orders.forEach(
-        (order) =>
-          (order.statusText = statuses.find((x) => x.code == order.status)?.name || "Không có")
-      );
-      setOrders(orders);
+      setListOrder(res.data);
       setPagination({ ...pagination, total: res.pagination.total });
     });
   };
-
-  const loadOrderStatus = () => {
+  const loadListOrderStatus = () => {
     OrderStatusService.getAll({
       query: {
         limit: 0,
       },
+      fragment: OrderStatusService.shortFragment,
     }).then((res) => {
-      setStatuses(res.data);
+      setListOrderStatus(res.data);
     });
   };
 
   return (
-    <OrderHistoryContext.Provider
+    <OrderContext.Provider
       value={{
-        orders,
+        listOrder,
+        setListOrder,
         pagination,
         setPagination,
-        status,
-        statuses,
+        listOrderStatus,
+        setListOrderStatus,
       }}
     >
       {children}
-    </OrderHistoryContext.Provider>
+    </OrderContext.Provider>
   );
 }
 
-export const useOrdeHistoryContext = () => useContext(OrderHistoryContext);
+export const useOrderContext = () => useContext(OrderContext);

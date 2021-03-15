@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { ProductList } from "../components/shared/product/product-list";
 import BreadCrumbs from "../components/shared/utilities/breadcrumbs/breadcrumbs";
 import { Spinner } from "../components/shared/utilities/spinner";
 import { useAuth } from "../lib/providers/auth-provider";
