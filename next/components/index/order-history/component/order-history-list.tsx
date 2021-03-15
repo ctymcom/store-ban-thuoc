@@ -18,7 +18,7 @@ export function OrderHisttoryList({ listOrder, listOrderStatus, status }: PropsT
 
   useEffect(() => {
     if (status) {
-      setListOrders(listOrder?.filter((x) => x.status === 5));
+      setListOrders(listOrder?.filter((x) => x.status === 1));
     } else {
       setListOrders(listOrder);
     }
@@ -32,7 +32,7 @@ export function OrderHisttoryList({ listOrder, listOrderStatus, status }: PropsT
         <>
           {listOrders.length > 0 ? (
             listOrders.map((order, index) => (
-              <OrderHistoryItem item={order} key={index} listOrderStatus={listOrderStatus} />
+              <OrderHistoryItem order={order} key={index} listOrderStatus={listOrderStatus} />
             ))
           ) : (
             <>

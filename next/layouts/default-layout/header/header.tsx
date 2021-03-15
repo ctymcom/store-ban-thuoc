@@ -5,7 +5,6 @@ import { TopHeader } from "./top-header";
 
 export function Header() {
   const [menuOpened, setMenuOpened] = useState(false);
-  const [user, setUser] = useState(null);
 
   return (
     <>

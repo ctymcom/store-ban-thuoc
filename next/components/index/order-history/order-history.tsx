@@ -71,7 +71,7 @@ export function OrderHistoryPage() {
                     ))
                   : null}
               </ul>
-              <ul className="hidden md:flex justify-between lg:border-b-2 xl:border-b-4 pb-2 mt-3 md:mt-0 h-auto lg:overflow-x-scroll xl:overflow-hidden">
+              <ul className="hidden md:flex justify-between lg:border-b-2 xl:border-b-4 pb-2 mt-3 md:mt-0 h-auto lg:overflow-x-scroll xl:overflow-y-hidden">
                 <li>
                   <Link
                     href={{

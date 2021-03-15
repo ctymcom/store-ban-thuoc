@@ -28,7 +28,7 @@
 }
 
 .no-scrollbar {
-  overflow-y: auto;
+  overflow: auto;
 
   &::-webkit-scrollbar {
     width: 0;

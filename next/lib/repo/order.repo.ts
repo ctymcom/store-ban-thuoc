@@ -1,12 +1,27 @@
 import { BaseModel, CrudRepository } from "./crud.repo";
-import { OrderItem } from "./order-item.repo";
+import { Product } from "./product.repo";
+
+export interface OrderItem extends BaseModel {
+  productId: string;
+  productCode: string;
+  productName: string;
+  unit: string;
+  storeCode: string;
+  qty: number;
+  price: number;
+  amount: number;
+  factor: number;
+  discountRate: number;
+  discount: number;
+  vatRate: number;
+  vat: number;
+  position: string;
+  product: Product;
+}
 
 export interface Order extends BaseModel {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
   userId: string;
-  code: string;
+  code: number;
   orderNumber: string;
   addressId: string;
   fullAddress: string;
@@ -24,7 +39,7 @@ export interface Order extends BaseModel {
   promotionCode: string;
   paymentMethod: string;
   deliveryMethod: string;
-  usePoint: Boolean;
+  usePoint: boolean;
   status: number;
   itemCount: number;
 }
