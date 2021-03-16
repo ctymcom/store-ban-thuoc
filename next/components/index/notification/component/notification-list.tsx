@@ -23,8 +23,7 @@ export function NotificationList({ listNotification }: PropsType) {
                     <p className="text-gray-800 leading-6 lg:leading-7">
                       Đơn hàng
                       <span className="font-bold">{notification.code}</span>
-                      {notification.content}. Đơn hàng sẽ được giao trước
-                      <span className="font-bold">{notification.updatedAt}</span>
+                      {notification.content}
                     </p>
                   </div>
                 </div>
