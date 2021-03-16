@@ -30,6 +30,7 @@ const CartContext = createContext<
     setPromotion: Function;
     usePoint: boolean;
     setUsePoint: Function;
+    reOrder: Function;
   }>
 >({});
 
@@ -111,7 +112,17 @@ export function CartProvider({ children }: any) {
       )
     );
   }, [cartProducts]);
-
+  const reOrder = async (items: CartProduct[]) => {
+    items.forEach((item) => {
+      if (item.productId) {
+        ProductService.getOne({ id: item.productId }).then((res) => {
+          let { a, b, ...product } = res;
+          addProductToCart(product, item.qty);
+        });
+      }
+      console.log(cartProducts);
+    });
+  };
   const addProductToCart = (product: Product, qty: number): boolean => {
     if (!qty) return false;
 
@@ -178,6 +189,7 @@ export function CartProvider({ children }: any) {
         setPromotion,
         usePoint,
         setUsePoint,
+        reOrder,
       }}
     >
       {children}

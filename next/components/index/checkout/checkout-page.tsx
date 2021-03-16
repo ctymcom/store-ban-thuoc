@@ -21,9 +21,20 @@ export function CheckOutPage() {
   const [isCheck, setIsCheck] = useState(true);
   const [deliMethodCS, setDeliMethod] = useState<MethodCheckout>(null);
   const [paymentMethodCS, setPaymentMethod] = useState<MethodCheckout>(null);
-  const [checkPaymentMethodCS, setCheckPaymentMethod] = useState(false);
+  const [showInfor, setShowInfor] = useState(false);
   const [items, setItems] = useState<{ productId: string; qty: number }[]>([]);
   const [note, setNote] = useState<string>("");
+  const [cartAmount, setCartAmount] = useState(0);
+  const [listMoneyCheckout, setListMoneyCheckout] = useState([
+    {
+      title: "Tổng tiền hàng",
+      money: 0,
+    },
+    {
+      title: "Voucher giảm giá",
+      money: 0,
+    },
+  ]);
   const toast = useToast();
   const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
   const {
@@ -36,8 +47,8 @@ export function CheckOutPage() {
   } = useCheckoutContext();
   useEffect(() => {
     cartProducts.forEach((item: CartProduct) => {
+      let listItemNew = items;
       if (item.active) {
-        let listItemNew = items;
         let itemNew = { productId: item.productId, qty: item.qty };
         listItemNew.push(itemNew);
         setItems([...listItemNew]);
@@ -46,11 +57,22 @@ export function CheckOutPage() {
   }, []);
   useEffect(() => {
     if (paymentMethodCS?.code === "CK") {
-      setCheckPaymentMethod(true);
+      setShowInfor(true);
     } else {
-      setCheckPaymentMethod(false);
+      setShowInfor(false);
     }
-  }, [paymentMethodCS]);
+    if (paymentMethodCS !== null && deliMethodCS !== null && addressSelected) {
+      draftOrder({
+        promotionCode: promotion,
+        paymentMethod: paymentMethodCS.code,
+        deliveryMethod: deliMethodCS.code,
+        addressId: addressSelected.id,
+        note: note,
+        usePoint,
+        items,
+      });
+    }
+  }, [paymentMethodCS, addressSelected, deliMethodCS]);
   const checkBeforeMutate = () => {
     if (!addressSelected) {
       toast.warn("Bạn chưa chọn địa chỉ giao hàng");
@@ -121,6 +143,36 @@ export function CheckOutPage() {
       router.replace("/complete");
     }
   };
+  const draftOrder = async (data: any) => {
+    console.log(data);
+
+    let mutationName = "generateDraftOrder";
+    const res = await GraphService.apollo.mutate({
+      mutation: gql`
+          mutation mutationName($data: CreateOrderInput!) {
+            ${mutationName} (
+              data: $data
+            ) {
+              subtotal
+              discount
+              amount
+            }
+          }
+        `,
+      variables: {
+        data,
+      },
+    });
+    if (res.data) {
+      console.log(res);
+      const { amount, discount, subtotal } = res.data.generateDraftOrder;
+      let listNew = listMoneyCheckout;
+      listNew[0].money = subtotal;
+      listNew[1].money = discount;
+      setCartAmount(amount);
+      setListMoneyCheckout([...listNew]);
+    }
+  };
   const handleConfirmOrder = async () => {
     if (checkBeforeMutate()) {
       await confirmOrder({
@@ -159,7 +211,7 @@ export function CheckOutPage() {
             />
           </div>
           <div className="w-full mt-4">
-            {checkPaymentMethodCS ? <TransferInformation info={transferInformation} /> : <></>}
+            {showInfor ? <TransferInformation info={transferInformation} /> : <></>}
           </div>
         </div>
         <div className="w-full text-16  my-5">
@@ -213,26 +265,19 @@ export function CheckOutPage() {
               )}
             </div>
           </div>
-          <div className="w-full md:w-1/2 lg:w-full">
-            <div className="border-b-4 pb-2">
-              <PayMoney
-                listMoney={[
-                  {
-                    title: "Tổng tiền hàng",
-                    money: cartTotal,
-                  },
-                  {
-                    title: "Voucher giảm giá",
-                    money: 0,
-                  },
-                ]}
-              />
+          {addressSelected ? (
+            <div className="w-full md:w-1/2 lg:w-full">
+              <div className="border-b-4 pb-2">
+                <PayMoney listMoney={listMoneyCheckout} />
+              </div>
+              <div className="flex justify-between pt-2 text-16 ">
+                <p>Thành tiền</p>
+                <p className="font-bold text-primary">{NumberPipe(cartAmount, false)} VND</p>
+              </div>
             </div>
-            <div className="flex justify-between pt-2 text-16 ">
-              <p>Thành tiền</p>
-              <p className="font-bold text-primary">{NumberPipe(cartTotal, false)} VND</p>
-            </div>
-          </div>
+          ) : (
+            <p className="text-16">Vui lòng chọn địa chỉ để xem "THÀNH TIỀN"</p>
+          )}
         </div>
         <div className="w-full">
           <div className="flex items-center gap-1 text-16  whitespace-nowrap">
