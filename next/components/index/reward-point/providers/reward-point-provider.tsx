@@ -28,6 +28,7 @@ export function RewardPointProvider({ children }: any) {
   }, [user, pagination.page]);
 
   const loadListRewardPoint = () => {
+    setListRewardPoint(null);
     UserPointLogService.getAll({
       query: {
         limit: pagination.limit,
@@ -43,9 +44,7 @@ export function RewardPointProvider({ children }: any) {
   };
 
   return (
-    <RewardPointContext.Provider
-      value={{ listRewardPoint, setListRewardPoint, pagination, setPagination }}
-    >
+    <RewardPointContext.Provider value={{ listRewardPoint, pagination, setPagination }}>
       {children}
     </RewardPointContext.Provider>
   );
