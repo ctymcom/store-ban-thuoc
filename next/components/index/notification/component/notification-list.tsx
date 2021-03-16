@@ -36,7 +36,6 @@ export function NotificationList({ listNotification }: PropsType) {
                 text="Không tìm thấy thông báo nào"
                 className="text-gray-800"
               />
-              ;
             </>
           )}
         </>
