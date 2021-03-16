@@ -46,7 +46,7 @@ export function HeaderUser({ ...props }: PropsType) {
           </div>
             </a>
           </Link> */}
-          <div className="relative">
+          <div className="relative w-full">
             <Menu>
               {({ open }) => (
                 <>
@@ -61,11 +61,11 @@ export function HeaderUser({ ...props }: PropsType) {
                         />
                       </div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center flex-grow">
                       <div className="pl-3 pr-2 font-semibold text-left leading-tight max-w-3xs">
                         {user.nickname}
                       </div>
-                      <i className="text-24">
+                      <i className="text-24 ml-auto">
                         <HiChevronDown />
                       </i>
                     </div>
@@ -83,7 +83,7 @@ export function HeaderUser({ ...props }: PropsType) {
                   >
                     <Menu.Items
                       static
-                      className="z-50	absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+                      className="z-50	absolute right-2 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                     >
                       {menus.map((menu) => (
                         <Menu.Item key={menu.label}>
