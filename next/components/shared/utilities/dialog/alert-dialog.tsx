@@ -58,7 +58,7 @@ export function AlertDialog({
     >
       <div className="flex md:flex-col md:items-center mt-2">
         <i className={`text-5xl opacity-75 text-${iconColors[type]}`}>{icons[type]}</i>
-        <div className="pt-0 pl-3 md:pt-2 md:pl-0 text-center">
+        <div className="pt-0 pl-3 md:pt-2 md:pl-0 text-left md:text-center">
           <h3 className="text-gray-800 font-semibold text-xl mb-1">{title}</h3>
           <p className="text-gray-700 mb-4">{content}</p>
         </div>
