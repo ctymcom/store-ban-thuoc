@@ -8,7 +8,7 @@ interface PropsType extends ReactProps {
   order: Order;
 }
 export function OrderHistoryItem({ order }: PropsType) {
-  const { setCartProducts, cartProducts } = useCart();
+  const { reOrder } = useCart();
   return (
     <>
       <div className="flex flex-col sm:flex-row justify-between items-center text-gray-700 border-b py-4 md:py-3">
@@ -55,7 +55,9 @@ export function OrderHistoryItem({ order }: PropsType) {
           <button
             className="btn-outline hover:underline"
             onClick={() => {
-              console.log(order, cartProducts);
+              reOrder([
+                ...order.items.map((item) => ({ productId: item.productId, qty: item.qty })),
+              ]);
             }}
           >
             Mua lại
