@@ -28,6 +28,7 @@ export function NotificationProvider({ children }: any) {
   }, [user, pagination.page]);
 
   const loadListNotification = () => {
+    setListNotification(null);
     NotificationService.getAll({
       query: {
         limit: pagination.limit,
@@ -45,9 +46,7 @@ export function NotificationProvider({ children }: any) {
   // console.log(pagination.total);
 
   return (
-    <NotificationContext.Provider
-      value={{ setListNotification, listNotification, pagination, setPagination }}
-    >
+    <NotificationContext.Provider value={{ listNotification, pagination, setPagination }}>
       {children}
     </NotificationContext.Provider>
   );

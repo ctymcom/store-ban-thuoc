@@ -41,6 +41,7 @@ export function Dialog({
   if (isSSR) return null;
 
   const [isOpen, setIsOpen] = useState(props.isOpen);
+  let isClickingOverlay = false;
 
   useEffect(() => {
     if (props.isOpen) {
@@ -85,7 +86,13 @@ export function Dialog({
   let el = (
     <div
       className={`dialog-wrapper ${wrapperClass} ${mobileMode && isMobile ? "mobile" : ""}`}
-      onClick={() => onOverlayClick()}
+      onMouseDown={() => (isClickingOverlay = true)}
+      onMouseUp={() => {
+        if (isClickingOverlay) {
+          onOverlayClick();
+          isClickingOverlay = false;
+        }
+      }}
     >
       <div
         className={`dialog-overlay ${overlayClass} ${
@@ -104,7 +111,14 @@ export function Dialog({
             : "animate-scale-down"
         }`}
         style={{ width, maxWidth }}
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          isClickingOverlay = false;
+        }}
+        onMouseUp={(e) => {
+          e.stopPropagation();
+          isClickingOverlay = false;
+        }}
       >
         {header.length ? <div className={`dialog-header ${headerClass}`}>{header}</div> : null}
         {body.length ? <div className={`dialog-body ${bodyClass}`}>{body}</div> : null}

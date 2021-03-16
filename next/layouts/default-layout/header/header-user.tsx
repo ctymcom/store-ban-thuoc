@@ -9,6 +9,29 @@ export function HeaderUser({ ...props }: PropsType) {
   const router = useRouter();
   const { user, logout, saveCurrentPath } = useAuth();
 
+  const menus = [
+    {
+      label: "Thông tin tài khoản",
+      onClick: () => router.push("/profile"),
+    },
+    {
+      label: "Lịch sử đơn hàng",
+      onClick: () => router.push("/profile/order-history"),
+    },
+    {
+      label: "Thông báo",
+      onClick: () => router.push("/profile/notification"),
+    },
+    {
+      label: "Điểm thưởng",
+      onClick: () => router.push("/profile/reward-point"),
+    },
+    {
+      label: "Đăng xuất",
+      onClick: () => logout(),
+    },
+  ];
+
   return (
     <>
       {user ? (
@@ -62,30 +85,20 @@ export function HeaderUser({ ...props }: PropsType) {
                       static
                       className="z-50	absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                     >
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            onClick={() => router.push("/profile")}
-                            className={`${
-                              active ? "bg-gray-100 text-primary" : "text-gray-700"
-                            } btn-default flex justify-between w-full px-4 h-12 text-sm leading-5 text-left font-semibold`}
-                          >
-                            Thông tin tài khoản
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            onClick={() => logout()}
-                            className={`${
-                              active ? "bg-gray-100 text-primary" : "text-gray-700"
-                            } btn-default flex justify-between w-full px-4 h-12 text-sm leading-5 text-left font-semibold`}
-                          >
-                            Đăng xuất
-                          </a>
-                        )}
-                      </Menu.Item>
+                      {menus.map((menu) => (
+                        <Menu.Item key={menu.label}>
+                          {({ active }) => (
+                            <a
+                              onClick={menu.onClick}
+                              className={`${
+                                active ? "bg-gray-100 text-primary" : "text-gray-700"
+                              } btn-default flex justify-between w-full px-4 h-12 text-sm leading-5 text-left`}
+                            >
+                              {menu.label}
+                            </a>
+                          )}
+                        </Menu.Item>
+                      ))}
                     </Menu.Items>
                   </Transition>
                 </>

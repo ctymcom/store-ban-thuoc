@@ -97,7 +97,7 @@ export default function FeedbackPage({ ...props }: PropsType) {
                 value={currentFeedback.avatar}
                 onChange={(val) => setCurrentFeedback({ ...currentFeedback, avatar: val })}
               />
-              <Label htmlFor="name" text="Tên ngườI cảm nhận" />
+              <Label htmlFor="name" text="Tên người cảm nhận" />
               <Input
                 className="mb-3"
                 name="name"
