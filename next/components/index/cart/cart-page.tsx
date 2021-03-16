@@ -21,19 +21,10 @@ export default function CartPage(props) {
       title: "Tạm tính",
       money: 0,
     },
-    {
-      title: "Khuyến mãi",
-      money: 0,
-    },
-    {
-      title: "Tổng tiền",
-      money: 0,
-    },
   ]);
   useEffect(() => {
     let newListMoney = listMoneyCart;
     newListMoney[0].money = cartTotal;
-    newListMoney[2].money = cartTotal;
     setListMoneyCart([...newListMoney]);
     checkAndsetCheckAll();
   }, [cartTotal]);

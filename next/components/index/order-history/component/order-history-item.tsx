@@ -2,12 +2,13 @@ import { NumberPipe } from "../../../../lib/pipes/number";
 import moment from "moment-timezone";
 import Link from "next/link";
 import { Order } from "../../../../lib/repo/order.repo";
+import { useCart } from "../../../../lib/providers/cart-provider";
 
 interface PropsType extends ReactProps {
   order: Order;
 }
-
 export function OrderHistoryItem({ order }: PropsType) {
+  const { setCartProducts, cartProducts } = useCart();
   return (
     <>
       <div className="flex flex-col sm:flex-row justify-between items-center text-gray-700 border-b py-4 md:py-3">
@@ -31,9 +32,7 @@ export function OrderHistoryItem({ order }: PropsType) {
 
           <div className="pt-1 md:pt-0">
             Tổng sản phẩm:
-            <span className="ml-2 font-semibold">
-              {NumberPipe(order.itemCount)} sản phẩm
-            </span>
+            <span className="ml-2 font-semibold">{NumberPipe(order.itemCount)} sản phẩm</span>
           </div>
 
           <div className="pt-1 md:pt-0">
@@ -53,6 +52,14 @@ export function OrderHistoryItem({ order }: PropsType) {
           <Link href={{ pathname: "/profile/order-details", query: { id: order.id } }}>
             <a className="btn-primary hover:underline">Xem chi tiết</a>
           </Link>
+          <button
+            className="btn-outline hover:underline"
+            onClick={() => {
+              console.log(order, cartProducts);
+            }}
+          >
+            Mua lại
+          </button>
         </div>
       </div>
     </>

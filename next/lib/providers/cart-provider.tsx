@@ -111,7 +111,7 @@ export function CartProvider({ children }: any) {
       )
     );
   }, [cartProducts]);
-
+  const reOrder = async (items: CartProduct[]) => {};
   const addProductToCart = (product: Product, qty: number): boolean => {
     if (!qty) return false;
 
