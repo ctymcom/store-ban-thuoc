@@ -24,6 +24,17 @@ export function CheckOutPage() {
   const [checkPaymentMethodCS, setCheckPaymentMethod] = useState(false);
   const [items, setItems] = useState<{ productId: string; qty: number }[]>([]);
   const [note, setNote] = useState<string>("");
+  const [cartSubtotal, setCartSubtotal] = useState(0);
+  const [listMoneyCheckout, setListMoneyCheckout] = useState([
+    {
+      title: "Tổng tiền hàng",
+      money: 0,
+    },
+    {
+      title: "Voucher giảm giá",
+      money: 0,
+    },
+  ]);
   const toast = useToast();
   const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
   const {
@@ -49,6 +60,17 @@ export function CheckOutPage() {
       setCheckPaymentMethod(true);
     } else {
       setCheckPaymentMethod(false);
+    }
+    if (paymentMethodCS !== null && deliMethodCS !== null && addressSelected !== null) {
+      draftOrder({
+        promotionCode: promotion,
+        paymentMethod: paymentMethodCS.code,
+        deliveryMethod: deliMethodCS.code,
+        addressId: addressSelected.id,
+        note: note,
+        usePoint,
+        items,
+      });
     }
   }, [paymentMethodCS]);
   const checkBeforeMutate = () => {
@@ -119,6 +141,36 @@ export function CheckOutPage() {
       ];
       await Promise.all(task);
       router.replace("/complete");
+    }
+  };
+  const draftOrder = async (data: any) => {
+    console.log(data);
+
+    let mutationName = "generateDraftOrder";
+    const res = await GraphService.apollo.mutate({
+      mutation: gql`
+          mutation mutationName($data: CreateOrderInput!) {
+            ${mutationName} (
+              data: $data
+            ) {
+              subtotal
+              discount
+              amount
+            }
+          }
+        `,
+      variables: {
+        data,
+      },
+    });
+    if (res.data) {
+      console.log(res);
+      const { amount, discount, subtotal } = res.data.generateDraftOrder;
+      let listNew = listMoneyCheckout;
+      listNew[0].money = amount;
+      listNew[1].money = discount;
+      setCartSubtotal(subtotal);
+      setListMoneyCheckout([...listNew]);
     }
   };
   const handleConfirmOrder = async () => {
@@ -215,18 +267,7 @@ export function CheckOutPage() {
           </div>
           <div className="w-full md:w-1/2 lg:w-full">
             <div className="border-b-4 pb-2">
-              <PayMoney
-                listMoney={[
-                  {
-                    title: "Tổng tiền hàng",
-                    money: cartTotal,
-                  },
-                  {
-                    title: "Voucher giảm giá",
-                    money: 0,
-                  },
-                ]}
-              />
+              <PayMoney listMoney={listMoneyCheckout} />
             </div>
             <div className="flex justify-between pt-2 text-16 ">
               <p>Thành tiền</p>
