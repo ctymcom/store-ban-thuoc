@@ -126,7 +126,8 @@ const AddressFormDialog = (props: PropsType) => {
             }}
           />
           <Select
-            className={`w-full h-12 text-16`}
+            wrapperClassName="w-full"
+            className="h-12"
             options={provinces}
             value={userAddress ? userAddress.provinceId : ""}
             onChange={(e) => {
@@ -135,7 +136,8 @@ const AddressFormDialog = (props: PropsType) => {
           />
           <Select
             disabled={!userAddress || userAddress.provinceId === "" ? true : false}
-            className={`w-full h-12 text-16`}
+            wrapperClassName="w-full"
+            className="h-12"
             options={districts}
             value={userAddress ? userAddress.districtId : ""}
             onChange={(e) => {
@@ -148,7 +150,8 @@ const AddressFormDialog = (props: PropsType) => {
                 ? false
                 : true
             }
-            className={`w-full h-12 text-16`}
+            wrapperClassName="w-full"
+            className="h-12"
             options={wards}
             value={userAddress ? userAddress.wardId : ""}
             onChange={(e) => {

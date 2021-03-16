@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { HiChevronRight, HiOutlineX } from "react-icons/hi";
 import { HeaderUser } from "./header-user";
 import { useDefaultLayoutContext } from "../providers/default-layout-providers";
+import useScrollBlock from "../../../lib/hooks/useScrollBlock";
 interface PropsType extends ReactProps {
   menuOpened: boolean;
   setMenuOpened: Function;
@@ -20,6 +21,7 @@ export function MenuHeader(props: PropsType) {
   ];
 
   const { hotline } = useDefaultLayoutContext();
+  useScrollBlock({ dependencies: [props.menuOpened] });
 
   useEffect(() => {
     props.setMenuOpened(false);
