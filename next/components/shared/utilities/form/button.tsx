@@ -40,7 +40,7 @@ export function Button({ className = "", style, iconPosition = "start", ...props
     else if (props.success) buttonClass = "btn-success";
     else if (props.danger) buttonClass = "btn-danger";
     else if (props.warning) buttonClass = "btn-warning";
-    else buttonClass = "btn-default";
+    // else buttonClass = "btn-default";
   }
 
   let buttonSize = "";

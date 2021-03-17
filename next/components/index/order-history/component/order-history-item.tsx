@@ -72,6 +72,6 @@ export function OrderHistoryItem({ order, index, listOrderStatus }: PropsType) {
       </div>
     </div>
   ) : (
-    <NotFound text="Không tìm thấy đơn hàng nào" icon={<BiListPlus />} />
+    <NotFound text="Không tìm thấy đơn hàng nào sddas" icon={<BiListPlus />} />
   );
 }

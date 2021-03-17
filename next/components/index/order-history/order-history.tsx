@@ -21,7 +21,7 @@ export function OrderHistoryPage() {
 
   return (
     <>
-      <div className="w-full  px-3 md:px-0">
+      <div className="w-full px-3 md:px-0">
         <div className="">
           <div className="w-full flex justify-between mt-0 md:mt-5 lg:mt-0 mb-0 gap-7">
             <div className="w-full">
