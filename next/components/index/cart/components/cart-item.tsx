@@ -33,7 +33,7 @@ export function CartItem(props: Proptype) {
             >
               <img
                 className="w-1/4 sm:w-1/3 max-h-16 object-contain mr-auto my-auto"
-                src={props.cartProduct.product.imageS || "/assets/img/default.png"}
+                src={props.cartProduct.product.image || "/assets/img/default.png"}
                 onError={(e) => {
                   (e.target as any).src = "/assets/img/default.png";
                 }}

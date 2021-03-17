@@ -127,6 +127,8 @@ export function CheckOutPage() {
           listItemNew.push(item);
         }
       });
+      console.log(listItemNew);
+
       let task = [
         setPromotion(""),
         setCartProducts([...listItemNew]),

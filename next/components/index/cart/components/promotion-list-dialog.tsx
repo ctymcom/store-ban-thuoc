@@ -16,6 +16,7 @@ const PromotionListDialog = (props: Proptype) => {
       onClose={() => props.setShowDialog(false)}
       title="Mã khuyến mãi"
       icon={<HiOutlineTicket />}
+      key={1}
     >
       <Dialog.Body>
         <ListCode listPromotionCode={props.listPromotionCode} choseCode={props.choseCode} />
