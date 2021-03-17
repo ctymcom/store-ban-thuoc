@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 
-export default function useScrollBlock(rootId?: string, dependencies: any[] = []) {
+export default function useScrollBlock(
+  { rootId, dependencies }: { rootId?: string; dependencies?: any[] } = {
+    rootId: "",
+    dependencies: [],
+  }
+) {
   useEffect(() => {
     if (dependencies.filter(Boolean).length < dependencies.length) {
       return;

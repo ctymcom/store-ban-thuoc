@@ -27,7 +27,17 @@ export function ListCartItems(props: Proptype) {
           <div className="col-span-2">Tổng Tiền</div>
           <div className="col-span-1"></div>
         </div>
-        <h3 className="block sm:hidden">Thông tin kiện hàng</h3>
+        <div className="block sm:hidden">
+          <h3>Thông tin kiện hàng</h3>
+          <div className="flex justify-between text-16 normal-case pt-2">
+            <p onClick={() => props.handleChangeItem(null, "activeAll", !props.checkAll)}>
+              {props.checkAll ? "Bỏ chọn tất cả" : " Chọn tất cả"}
+            </p>
+            <p onClick={() => props.handleChangeItem(null, "deleteItemsSelected", null)}>
+              Xóa đã chọn
+            </p>
+          </div>
+        </div>
       </div>
       <div>
         {!loading ? (

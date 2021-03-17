@@ -13,6 +13,7 @@ interface PropsType extends ReactProps {
   danger?: boolean;
   warning?: boolean;
   hoverDanger?: boolean;
+  hoverDarken?: boolean;
   disabled?: boolean;
   submit?: boolean;
   icon?: JSX.Element;
@@ -73,9 +74,9 @@ export function Button({ className = "", style, iconPosition = "start", ...props
 
   return (
     <button
-      className={`${buttonClass} ${props.hoverDanger ? "hover-danger" : ""} ${buttonSize} ${
-        iconPosition == "end" ? "flex-row-reverse" : ""
-      } ${className}`.trim()}
+      className={`${buttonClass} ${props.hoverDanger ? "hover-danger" : ""} ${
+        props.hoverDarken ? "hover-darken" : ""
+      } ${buttonSize} ${iconPosition == "end" ? "flex-row-reverse" : ""} ${className}`.trim()}
       style={style}
       type={buttonType}
       onClick={onClick}

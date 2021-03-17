@@ -21,7 +21,11 @@ export function Select({ className = "", wrapperClassName = "", ...props }: Prop
           </option>
         ))}
       </select>
-      <i className="text-gray-500 text-xl absolute right-0 p-2 pointer-events-none group-hover:text-primary">
+      <i
+        className={`text-gray-500 text-xl absolute right-0 p-2 pointer-events-none ${
+          props.disabled ? "group-hover:text-gray-600" : "group-hover:text-primary"
+        }`}
+      >
         <HiChevronDown />
       </i>
     </div>

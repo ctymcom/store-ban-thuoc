@@ -1,23 +1,3 @@
-const listTrans = [
-  {
-    title: "Giao trong ngày",
-    content: "Thời gian giao dự kiến 12/01/2020",
-  },
-  {
-    title: "Giao hàng tiêu chuẩn",
-    content: "Thời gian giao dự kiến 24/01/2020",
-  },
-];
-const listPayment = [
-  {
-    title: "COD",
-    content: "Thanh toán khi nhận hàng",
-  },
-  {
-    title: "Chuyển khoản",
-    content: "Hỗ trợ liên kết 150 ngân hàng",
-  },
-];
 export const transferInformation = [
   {
     title: "Chủ tài khoản",
@@ -38,24 +18,5 @@ export const transferInformation = [
   {
     title: "Nội dung",
     content: "Mã đơn hàng - Tên - Số điện thoại đặt hàng",
-  },
-];
-export const listFormCheckTrans = {
-  tit: "Hình thức vận chuyển",
-  list: listTrans,
-};
-export const listFormCheckPayment = {
-  tit: "Phương thức thanh toán",
-  list: listPayment,
-};
-
-export const listMoneyCheckout = [
-  {
-    title: "Tổng tiền hàng",
-    money: 0,
-  },
-  {
-    title: "Voucher giảm giá",
-    money: 0,
   },
 ];

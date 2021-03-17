@@ -45,21 +45,19 @@ export function ProfileUserLayout({ breadcrumb = "", ...props }: PropsType) {
       {!user ? (
         <Spinner />
       ) : (
-        <div className="main-container h-auto xs:pl-3 sm:pl-4 md:pl-4 lg:pl-0 xs:pr-3 sm:pr-4 md:pr-4 lg:pr-0 py-8 md:py-12">
-          <div className="w-full">
-            <div className="pb-2">
-              <BreadCrumbs breadcrumbs={breadcrumbs} />
+        <div className="main-container">
+          <div className="pt-8 pb-2">
+            <BreadCrumbs breadcrumbs={breadcrumbs} />
+          </div>
+          <div className="w-full flex flex-col lg:flex-row justify-between mt-0 md:mt-6 mb-0">
+            <div className="flex-grow-0 flex-shrink-0 w-full lg:w-60">
+              <ProfileUser />
             </div>
-            <div className="w-full flex flex-col lg:flex-row justify-between mt-0 md:mt-6 mb-0">
-              <div className="flex-grow-0 flex-shrink-0 w-full lg:w-60">
-                <ProfileUser />
-              </div>
-              <div
-                className="flex-grow"
-                style={{ maxWidth: screenLg ? "calc(100% - 15rem)" : "100%" }}
-              >
-                {props.children}
-              </div>
+            <div
+              className="flex-grow"
+              style={{ maxWidth: screenLg ? "calc(100% - 15rem)" : "100%" }}
+            >
+              {props.children}
             </div>
           </div>
         </div>

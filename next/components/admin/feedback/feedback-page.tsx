@@ -12,6 +12,7 @@ import { Textarea } from "../../shared/utilities/form/textarea";
 import { Button } from "../../shared/utilities/form/button";
 import { HiPlus } from "react-icons/hi";
 import { useToast } from "../../../lib/providers/toast-provider";
+import { useAlert } from "../../../lib/providers/alert-provider";
 
 interface PropsType extends ReactProps {}
 
@@ -19,6 +20,7 @@ export default function FeedbackPage({ ...props }: PropsType) {
   const [currentFeedback, setCurrentFeedback] = useState<Feedback>(null);
   const { feedbacks, removeFeedback, saveFeedback } = useFeedbackContext();
   const toast = useToast();
+  const alert = useAlert();
 
   const onSaveFeedback = async (feedback: Feedback = null) => {
     if (feedback) {
@@ -28,9 +30,18 @@ export default function FeedbackPage({ ...props }: PropsType) {
     }
   };
   const onRemoveFeedback = async (id: string) => {
-    if (confirm("Xoá cảm nhận")) {
-      await removeFeedback(id);
-    }
+    // if (!(await alert.question("Xoá cảm nhận", "Bạn có muốn xoá cảm nhận này?", "Xoá cảm nhận", ))) return;
+    // await removeFeedback(id);
+
+    alert.warn("Xoá cảm nhận", "Bạn có muốn xoá cảm nhận này?", "Xoá cảm nhận", async () => {
+      try {
+        await removeFeedback(id);
+        toast.success(`Xoá cảm nhận thành công.`);
+        return true;
+      } catch (err) {
+        toast.error(`Xoá cảm nhận thất bại. ${err.message}`);
+      }
+    });
   };
   const onSubmitFeedback = async () => {
     if (
@@ -97,7 +108,7 @@ export default function FeedbackPage({ ...props }: PropsType) {
                 value={currentFeedback.avatar}
                 onChange={(val) => setCurrentFeedback({ ...currentFeedback, avatar: val })}
               />
-              <Label htmlFor="name" text="Tên ngườI cảm nhận" />
+              <Label htmlFor="name" text="Tên người cảm nhận" />
               <Input
                 className="mb-3"
                 name="name"

@@ -26,7 +26,7 @@ export function Promotion({
   return (
     <PromotionProvider>
       <div className="my-5 border-b-2 sm:border-0">
-        <div className="flex border-b-2 items-center">
+        <div className="flex border-b-2 items-center pb-2">
           <i className="text-primary text-20 sm:text-24">
             <HiOutlineTicket />
           </i>
@@ -37,11 +37,11 @@ export function Promotion({
             return (
               <div className="sm:py-3 flex-wrap sm:block items-center relative">
                 {usePromotion && selectedPromotion ? (
-                  <div className="my-4 w-full">
+                  <div className="w-full">
                     <h4 className="text-lg sm:text-xl text-primary font-semibold">
                       Mã ưu đãi {selectedPromotion.code}
                     </h4>
-                    <p className="text-16 ">Giảm giá: {selectedPromotion.description}%</p>
+                    <p className="text-16 ">Chi tiết: {selectedPromotion.description}</p>
                   </div>
                 ) : (
                   <>
