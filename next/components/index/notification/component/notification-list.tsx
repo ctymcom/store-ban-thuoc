@@ -1,6 +1,6 @@
 import { Notification } from "../../../../lib/repo/notifications.repo";
 import { Spinner } from "../../../shared/utilities/spinner";
-import { IoNotificationsOutline } from "react-icons/io5";
+import { HiOutlineBell } from "react-icons/hi";
 import { NotFound } from "../../../shared/utilities/not-found";
 
 interface PropsType extends ReactProps {
@@ -32,9 +32,9 @@ export function NotificationList({ listNotification }: PropsType) {
           ) : (
             <>
               <NotFound
-                icon={<IoNotificationsOutline />}
+                icon={<HiOutlineBell />}
                 text="Không tìm thấy thông báo nào"
-                className="text-gray-800"
+                className="text-gray-600"
               />
             </>
           )}
