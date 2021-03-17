@@ -126,16 +126,29 @@ export function CartProvider({ children }: any) {
           },
         },
       }).then((res) => {
+        let listCartNew = cartProducts;
         resCartProducts.forEach((reCartProduct) => {
           let { __typename, ...product } = res.data.find((x) => x.id == reCartProduct.productId);
           if (product) {
-            let index = cartProducts.findIndex((x) => x.productId == product.id);
+            let index = listCartNew.findIndex((x) => x.productId == product.id);
+            console.log(index);
             if (index !== -1) {
-              cartProducts.splice(index, 1);
+              listCartNew.splice(index, 1);
             }
-            addProductToCart(product, reCartProduct.qty);
+            listCartNew = [
+              {
+                productId: product.id,
+                product: product,
+                qty: reCartProduct.qty,
+                price: product.salePrice,
+                amount: product.salePrice * reCartProduct.qty,
+                active: true,
+              },
+              ...listCartNew,
+            ];
           }
         });
+        setCartProducts([...listCartNew]);
       });
     }
   };
