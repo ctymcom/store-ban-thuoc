@@ -120,10 +120,10 @@ export function Dialog({
           isClickingOverlay = false;
         }}
       >
-        {header.length ? <div className={`dialog-header ${headerClass}`}>{header}</div> : null}
-        {body.length ? <div className={`dialog-body ${bodyClass}`}>{body}</div> : null}
+        {header?.length ? <div className={`dialog-header ${headerClass}`}>{header}</div> : null}
+        {body?.length ? <div className={`dialog-body ${bodyClass}`}>{body}</div> : null}
         {children}
-        {footer.length ? <div className={`dialog-footer ${footerClass}`}>{footer}</div> : null}
+        {footer?.length ? <div className={`dialog-footer ${footerClass}`}>{footer}</div> : null}
       </div>
     </div>
   );

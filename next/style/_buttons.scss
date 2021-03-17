@@ -64,11 +64,16 @@
     @apply text-danger;
     @apply border-danger;
   }
+
+  &.hover-darken:hover {
+    @apply text-gray-700;
+    @apply border-gray-600;
+  }
 }
 
 .btn-default {
   @extend .btn;
-  &:not(.hover-danger):hover {
+  &:not(.hover-danger):not(.hover-darken):hover {
     @apply text-primary;
   }
 }
