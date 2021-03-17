@@ -6,6 +6,7 @@ import { useAuth } from "../../../../lib/providers/auth-provider";
 import { cloneDeep } from "lodash";
 import { useCheckoutContext } from "./checkout-provider";
 import { useToast } from "../../../../lib/providers/toast-provider";
+import { useAlert } from "../../../../lib/providers/alert-provider";
 export const AddressContext = createContext<
   Partial<{
     listAddress: UserAddress[];
@@ -25,6 +26,7 @@ export const AddressContext = createContext<
 >({});
 
 export const AddressProvider = (props) => {
+  const alert = useAlert();
   const toast = useToast();
   const [listAddress, setListAdress] = useState<UserAddress[]>(null);
   const [userAddress, setUserAddress] = useState<UserAddress>(null);
@@ -123,24 +125,44 @@ export const AddressProvider = (props) => {
   }
   const deleteCartProduct = async (id: string) => {
     let task = [];
+    let res = false;
     let addressDeleting = listAddress.find((item) => item.id === id);
     if (listAddress.length > 1) {
       if (addressDeleting.isDefault) {
-        let idNewDefault: UserAddress;
-        listAddress.forEach((item) => {
-          if (!item.isDefault) {
-            idNewDefault = item;
-            return;
-          }
-        });
-        task.push(setDefaultAddress(idNewDefault));
+        res = await alert.question("Thông báo", "Bạn muốn xóa địa chỉ Mặc đinh?", "Xác nhận");
+        if (res) {
+          let idNewDefault: UserAddress;
+          listAddress.forEach((item) => {
+            if (!item.isDefault) {
+              idNewDefault = item;
+              return;
+            }
+          });
+          task.push(setDefaultAddress(idNewDefault));
+        } else {
+          return;
+        }
+      } else {
+        res = true;
       }
+    } else {
+      res = await alert.question("Thông báo", "Bạn muốn xóa địa chỉ cuối cùng?", "Xác nhận");
+      console.log(res);
     }
-    if (addressDeleting.id === addressSelected?.id) {
-      task.push(setAddressSelected(null));
+    if (res) {
+      if (addressDeleting.id === addressSelected?.id) {
+        let index = listAddress.findIndex((item) => item.id !== addressDeleting.id);
+        if (index !== -1) {
+          task.push(setAddressSelected(listAddress[index]));
+        } else {
+          task.push(setAddressSelected(null));
+        }
+      }
+      await Promise.all(task);
+      await UserAddressService.delete({ id });
+    } else {
+      return;
     }
-    await Promise.all(task);
-    await UserAddressService.delete({ id });
     loadList();
   };
   const submitFormAddressUser = async () => {
