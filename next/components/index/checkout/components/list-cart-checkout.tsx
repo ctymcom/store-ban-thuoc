@@ -16,7 +16,7 @@ const ListCartCheckout = (props: PropsType) => {
       {cartProducts.map((item: CartProduct, index) => {
         if (item.active) {
           return (
-            <div className="flex-wrap flex justify-between text-14 leading-7">
+            <div className="flex-wrap flex justify-between text-16 leading-7">
               <p className="whitespace-nowrap flex items-center">
                 <HiCheck className="text-primary pr-1" />
                 {item.product.name} <span className="font-bold">X</span> {item.qty}
