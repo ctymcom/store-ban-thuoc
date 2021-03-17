@@ -8,6 +8,7 @@ import { PayMoney } from "./components/pay-money";
 import { Promotion } from "./components/promotion";
 import CheckBoxSquare from "../checkout/components/check-box-square";
 import { useToast } from "../../../lib/providers/toast-provider";
+import { useAlert } from "../../../lib/providers/alert-provider";
 
 export default function CartPage(props) {
   // const [Tit, setTit] = useState('cart');
@@ -16,6 +17,7 @@ export default function CartPage(props) {
   const [mess, setMess] = useState("");
   const router = useRouter();
   const toast = useToast();
+  const alert = useAlert();
   const [listMoneyCart, setListMoneyCart] = useState([
     {
       title: "Tạm tính",
@@ -29,11 +31,19 @@ export default function CartPage(props) {
     checkAndsetCheckAll();
   }, [cartTotal]);
 
-  const handleDeleteCart = (id: string) => {
+  const handleDeleteCart = async (id: string) => {
     let listNew = cartProducts;
-    let index = cartProducts.findIndex((cartProd: CartProduct) => cartProd.productId === id);
-    if (index !== -1) {
-      listNew.splice(index, 1);
+    let res = false;
+    if (listNew.length > 1) {
+      res = true;
+    } else {
+      res = await alert.question("Thông báo", "Bạn có muốn xóa Sản phẩm cuối cùng?", "Xác nhận");
+    }
+    if (res) {
+      let index = cartProducts.findIndex((cartProd: CartProduct) => cartProd.productId === id);
+      if (index !== -1) {
+        listNew.splice(index, 1);
+      }
     }
     setCartProducts([...listNew]);
     checkAndsetCheckAll();
@@ -57,7 +67,7 @@ export default function CartPage(props) {
       setMess("");
     }
   };
-  const handleChangeItem = (id: string, type: string, value: any) => {
+  const handleChangeItem = async (id: string, type: string, value: any) => {
     switch (type) {
       case "add":
         {
@@ -118,13 +128,25 @@ export default function CartPage(props) {
         break;
       case "deleteItemsSelected":
         {
-          let listNew = [];
-          cartProducts.forEach((item: CartProduct) => {
-            if (!item.active) {
-              listNew.push(item);
+          let index = cartProducts.findIndex((item) => item.active);
+          if (index !== -1) {
+            let res = await alert.question(
+              "Thông báo",
+              "Bạn muốn xóa hết sản phẩm được chọn",
+              "Xác nhận"
+            );
+            if (res) {
+              let listNew = [];
+              cartProducts.forEach((item: CartProduct) => {
+                if (!item.active) {
+                  listNew.push(item);
+                }
+              });
+              setCartProducts([...listNew]);
             }
-          });
-          setCartProducts([...listNew]);
+          } else {
+            toast.info("Bạn chưa chọn sản phẩm nào để xóa");
+          }
         }
         break;
       default:

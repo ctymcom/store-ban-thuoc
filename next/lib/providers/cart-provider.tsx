@@ -45,55 +45,52 @@ export function CartProvider({ children }: any) {
   const toast = useToast();
 
   useEffect(() => {
-    if (cartProducts.length === 0) {
-      try {
-        setLoading(true);
-        let cartProductStorage = JSON.parse(
-          localStorage.getItem("cartProductStorage")
-        ) as CartProduct[];
-        if (cartProductStorage) {
-          ProductService.getAll({
-            query: {
-              limit: 0,
-              filter: {
-                _id: { __in: cartProductStorage.map((x) => x.productId) },
-              },
+    try {
+      setLoading(true);
+      let cartProductStorage = JSON.parse(
+        localStorage.getItem("cartProductStorage")
+      ) as CartProduct[];
+      if (cartProductStorage) {
+        ProductService.getAll({
+          query: {
+            limit: 0,
+            filter: {
+              _id: { __in: cartProductStorage.map((x) => x.productId) },
             },
-          }).then((res) => {
-            setLoading(false);
-
-            cartProductStorage.forEach((cartProduct) => {
-              let product = res.data.find((x) => x.id == cartProduct.productId);
-              if (product) {
-                cartProduct.price = product.salePrice;
-                cartProduct.amount = product.salePrice * cartProduct.qty;
-                cartProduct.product = product;
-              }
-            });
-            cartProductStorage = cartProductStorage.filter((x) => x.product);
-            setLoading(false);
-            setCartProductCount(
-              cartProductStorage.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
-            );
-            setCartTotal(
-              cartProductStorage.reduce(
-                (total, cartProduct) =>
-                  cartProduct.active ? (total += cartProduct.amount) : total,
-                0
-              )
-            );
-          });
-          setCartProducts([...cartProductStorage]);
-          console.log(cartProductStorage);
-        } else {
-          console.log(cartProductStorage);
+          },
+        }).then((res) => {
           setLoading(false);
-        }
-      } catch (error) {
-        console.log(error);
-        setPromotion("");
+
+          cartProductStorage.forEach((cartProduct) => {
+            let product = res.data.find((x) => x.id == cartProduct.productId);
+            if (product) {
+              cartProduct.price = product.salePrice;
+              cartProduct.amount = product.salePrice * cartProduct.qty;
+              cartProduct.product = product;
+            }
+          });
+          cartProductStorage = cartProductStorage.filter((x) => x.product);
+          setLoading(false);
+          setCartProductCount(
+            cartProductStorage.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
+          );
+          setCartTotal(
+            cartProductStorage.reduce(
+              (total, cartProduct) => (cartProduct.active ? (total += cartProduct.amount) : total),
+              0
+            )
+          );
+        });
+        setCartProducts([...cartProductStorage]);
+        console.log(cartProductStorage);
+      } else {
+        console.log(cartProductStorage);
         setLoading(false);
       }
+    } catch (error) {
+      console.log(error);
+      setPromotion("");
+      setLoading(false);
     }
   }, []);
   useEffect(() => {

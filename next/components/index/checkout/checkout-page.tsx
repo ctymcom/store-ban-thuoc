@@ -16,6 +16,8 @@ import { GraphService } from "../../../lib/repo/graph.repo";
 import { useToast } from "../../../lib/providers/toast-provider";
 import gql from "graphql-tag";
 import router from "next/router";
+import ListCartCheckout from "./components/list-cart-checkout";
+import { Textarea } from "../../shared/utilities/form/textarea";
 
 export function CheckOutPage() {
   const [isCheck, setIsCheck] = useState(true);
@@ -189,11 +191,6 @@ export function CheckOutPage() {
     }
   };
 
-  const setStyleBtn = () => {
-    let style = "w-full text-16 py-6 my-2";
-    return isCheck ? style + " btn-primary" : style + " btn-disabled";
-  };
-
   return !loadingCheckout ? (
     <div className="lg:flex justify-between gap-4 md:gap-8 xl:gap-16">
       <div className="w-full lg:w-2/3 xl:w-3/4 gap-4">
@@ -222,17 +219,18 @@ export function CheckOutPage() {
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
           </p>
-          <textarea
+          <Textarea
+            value={note}
             className="w-full border-2 border-gray-300 rounded-md p-3 outline-none"
             placeholder="Nhập ghi chú của bạn"
-            onChange={(e) => setNote(e.target.value)}
-          ></textarea>
+            onChange={(e) => setNote(e)}
+          />
         </div>
       </div>
       <div className="w-full lg:w-1/3 xl:w-1/4">
         <div className="w-full md:flex lg:inline-block md:gap-5 mb-10">
-          <div className="w-full md:w-1/2 lg:w-full mb-10">
-            <div className="flex justify-between items-center border-b-2 pb-1">
+          <div className="w-full md:w-1/3 lg:w-full mb-10">
+            <div className="flex justify-between items-center border-b-2">
               <div className="flex justify-between items-center gap-1 whitespace-nowrap">
                 <i className="text-primary text-16 ">
                   <IoLocationSharp />
@@ -267,8 +265,9 @@ export function CheckOutPage() {
               )}
             </div>
           </div>
+          <ListCartCheckout title="Danh sách sản phẩm" className="w-full md:w-1/3 lg:w-full mb-4" />
           {addressSelected ? (
-            <div className="w-full md:w-1/2 lg:w-full">
+            <div className="w-full md:w-1/3 lg:w-full">
               <div className="border-b-4 pb-2">
                 <PayMoney listMoney={listMoneyCheckout} />
               </div>
@@ -293,7 +292,7 @@ export function CheckOutPage() {
             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
           </div>
           <Button
-            className={setStyleBtn()}
+            className={"w-full text-16 py-6 my-2 bg-primary text-white"}
             disabled={!isCheck}
             asyncLoading
             onClick={async () => await handleConfirmOrder()}

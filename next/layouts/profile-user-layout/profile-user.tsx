@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { AiOutlineBell } from "react-icons/ai";
-import { BiDonateHeart, BiListPlus } from "react-icons/bi";
+
 import {
   HiOutlineBell,
   HiOutlineClipboardList,
   HiOutlineGift,
   HiOutlineUserCircle,
 } from "react-icons/hi";
-import { ImUser } from "react-icons/im";
 
 export function ProfileUser() {
   const router = useRouter();
