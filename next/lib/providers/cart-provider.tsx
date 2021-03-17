@@ -45,7 +45,7 @@ export function CartProvider({ children }: any) {
   const toast = useToast();
 
   useEffect(() => {
-    if (!cartProducts) {
+    if (cartProducts.length === 0) {
       try {
         setLoading(true);
         let cartProductStorage = JSON.parse(
@@ -97,32 +97,27 @@ export function CartProvider({ children }: any) {
     }
   }, []);
   useEffect(() => {
-    console.log(cartProducts);
     localStorage.setItem(
       "cartProductStorage",
       JSON.stringify(
-        cartProducts?.map((item) => {
+        cartProducts.map((item) => {
           return { productId: item.productId, qty: item.qty, active: item.active };
         })
       )
     );
-    setCartProductCount(
-      cartProducts?.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
-    );
+    setCartProductCount(cartProducts.reduce((count, cartProduct) => (count += cartProduct.qty), 0));
     setCartTotal(
-      cartProducts?.reduce(
+      cartProducts.reduce(
         (total, cartProduct) => (cartProduct.active ? (total += cartProduct.amount) : total),
         0
       )
     );
   }, [cartProducts]);
-  const reOrder = async (items: [{ productId: string; qty: number }]) => {
+  const reOrder = (items: { productId: string; qty: number }[]) => {
     let resCartProducts = [...items];
-    let newCarts = cartProducts;
-    newCarts.forEach((item) => (item.active = false));
-    console.log(resCartProducts);
-
+    cartProducts.forEach((item) => (item.active = false));
     if (resCartProducts) {
+      //lấy danh sách product mua lại
       ProductService.getAll({
         query: {
           limit: 0,
@@ -131,57 +126,40 @@ export function CartProvider({ children }: any) {
           },
         },
       }).then((res) => {
-        console.log(res);
-
-        setLoading(false);
-
         resCartProducts.forEach((reCartProduct) => {
           let { __typename, ...product } = res.data.find((x) => x.id == reCartProduct.productId);
           if (product) {
-            let cartFound = newCarts.find((x) => x.productId == product.id);
-            if (cartFound) {
-              cartFound.active = true;
-              cartFound.qty = reCartProduct.qty;
-              cartFound.price = product.salePrice;
-              cartFound.amount = product.salePrice * reCartProduct.qty;
-            } else {
-              let cartResPro: CartProduct = {
-                productId: reCartProduct.productId,
-                price: product.salePrice,
-                qty: reCartProduct.qty,
-                amount: product.salePrice * reCartProduct.qty,
-                product,
-                active: true,
-              };
-              newCarts.push(cartResPro);
+            let index = cartProducts.findIndex((x) => x.productId == product.id);
+            if (index !== -1) {
+              cartProducts.splice(index, 1);
             }
+            addProductToCart(product, reCartProduct.qty);
           }
         });
-        setLoading(false);
       });
-      await setCartProducts([...newCarts]);
-      console.log(newCarts);
-    } else {
-      setLoading(false);
     }
   };
   const addProductToCart = (product: Product, qty: number): boolean => {
     if (!qty) return false;
     let cartProduct = cartProducts.find((x) => x.productId == product.id);
+    let cartNew = [...cartProducts];
     if (cartProduct) {
       cartProduct.qty += qty;
       cartProduct.amount = cartProduct.price * cartProduct.qty;
     } else {
-      cartProducts.push({
-        productId: product.id,
-        product: product,
-        qty,
-        price: product.salePrice,
-        amount: product.salePrice * qty,
-        active: true,
-      });
+      cartNew = [
+        {
+          productId: product.id,
+          product: product,
+          qty,
+          price: product.salePrice,
+          amount: product.salePrice * qty,
+          active: true,
+        },
+        ...cartNew,
+      ];
     }
-    setCartProducts([...cartProducts]);
+    setCartProducts([...cartNew]);
     toast.success("Đã thêm sản phẩm vào giỏ hàng");
     return true;
   };
