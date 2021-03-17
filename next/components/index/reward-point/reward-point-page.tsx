@@ -15,18 +15,18 @@ export function RewardPointPage() {
         <div className="">
           <div className="w-full flex justify-between">
             <div className="w-full">
-              <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start mb-0 md:mb-10 mt-0 md:mt-4 lg:mt-0">
+              <div className="flex items-start justify-center md:justify-start mb-0 md:mb-10 mt-0 md:mt-4 lg:mt-0">
                 <img
-                  className="object-contain mr-0 md:mr-7 w-5/12 sm:w-1/3 md:w-1/4 lg:w-1/4 xl:w-1/5"
+                  className="object-contain mr-0 md:mr-7 w-1/3 xs:w-1/4 sm:w-1/5 md:w-1/6 lg:w-1/4 xl:w-1/5"
                   src="/assets/img/reward-point.png"
-                  alt=""
+                  alt="reward-point"
                 />
-                <div className="text-center mt-2 md:mt-5 lg:mt-4 xl:mt-6">
-                  <p className="text-md md:text-xl lg:text-xl  xl:text-3xl lg:font-extralight text-gray-700 md:mb-1.5 lg:mb-2 xl:mb-3 md:text-left">
+                <div className="text-left mt-3 md:mt-5 lg:mt-4 xl:mt-5 ml-1.5 md:ml-0 xs:ml-3">
+                  <p className="text-16 sm:text-18 md:text-20 xl:text-24 text-gray-700 sm:mb-1.5 md:mb-2 lg:mb-2 xl:mb-3.5">
                     Số Điểm Bạn Đang Có
                   </p>
-                  <p className="text-xl md:text-4xl lg:text-4xl xl:text-5xl lg:font-extralight text-yellow-400">
-                    {user ? NumberPipe(user.point) : 0} Điểm
+                  <p className="text-24 sm:text-28 md:text-32 xl:text-40 text-yellow-400">
+                    {user.point ? NumberPipe(user.point) : 0} Điểm
                   </p>
                 </div>
               </div>

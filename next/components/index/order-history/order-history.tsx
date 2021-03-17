@@ -5,7 +5,6 @@ import { OrderHistoryStatus } from "./component/order-history-status";
 import { useOrdeHistoryContext } from "./providers/order-history-provider";
 
 export function OrderHistoryPage() {
-
   const { orders, pagination, setPagination, status, statuses } = useOrdeHistoryContext();
 
   return (
