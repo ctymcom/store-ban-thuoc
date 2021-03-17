@@ -45,8 +45,6 @@ export const AddressProvider = (props) => {
     }).then((res) => {
       setListAdress(cloneDeep(res.data));
       setUserAddress(null);
-      if (addressSelected === null)
-        setAddressSelected(res.data.find((item: UserAddress) => item.isDefault));
     });
   };
   useEffect(() => {
@@ -61,6 +59,10 @@ export const AddressProvider = (props) => {
     ];
     Promise.all(task).then();
   }, []);
+  useEffect(() => {
+    if (addressSelected == null)
+      setAddressSelected(listAddress?.find((item: UserAddress) => item.isDefault));
+  }, [listAddress]);
   useEffect(() => {
     AddressService.getDistricts(userAddress ? userAddress.provinceId : "").then((res) => {
       setDistricts([
@@ -160,8 +162,6 @@ export const AddressProvider = (props) => {
       }
       await Promise.all(task);
       await UserAddressService.delete({ id });
-    } else {
-      return;
     }
     loadList();
   };
@@ -180,13 +180,16 @@ export const AddressProvider = (props) => {
       res = await updateOrCreateUserAddress(userAddress);
     } else {
       res = await updateOrCreateUserAddress({ ...userAddress, isDefault: true });
+      setAddressSelected(null);
     }
+    loadList();
+    console.log(addressSelected);
+
     if (res) {
       toast.error(res.message);
     } else {
       toast.success("Thao tác thành công");
     }
-    loadList();
   };
   return (
     <AddressContext.Provider
