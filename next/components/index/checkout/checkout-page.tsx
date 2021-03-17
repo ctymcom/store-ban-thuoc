@@ -20,6 +20,7 @@ import ListCartCheckout from "./components/list-cart-checkout";
 import { Textarea } from "../../shared/utilities/form/textarea";
 
 export function CheckOutPage() {
+  const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
   const [isCheck, setIsCheck] = useState(true);
   const [deliMethodCS, setDeliMethod] = useState<MethodCheckout>(null);
   const [paymentMethodCS, setPaymentMethod] = useState<MethodCheckout>(null);
@@ -29,16 +30,15 @@ export function CheckOutPage() {
   const [cartAmount, setCartAmount] = useState(0);
   const [listMoneyCheckout, setListMoneyCheckout] = useState([
     {
-      title: "Tổng tiền hàng",
-      money: 0,
+      title: "Tạm tính",
+      money: cartTotal,
     },
     {
-      title: "Voucher giảm giá",
+      title: "Giảm giá",
       money: 0,
     },
   ]);
   const toast = useToast();
-  const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
   const {
     addressSelected,
     setShowDialogAddress,
@@ -83,8 +83,6 @@ export function CheckOutPage() {
     return true;
   };
   const confirmOrder = async (data: any) => {
-    console.log(data);
-
     let mutationName = "createOrder";
     const res = await GraphService.apollo.mutate({
       mutation: gql`
@@ -251,9 +249,10 @@ export function CheckOutPage() {
             <div className="my-2 text-16 ">
               {addressSelected ? (
                 <>
-                  <p className="text-16 font-bold">{addressSelected.contactName}</p>
+                  <p className="text-16 font-bold">
+                    {addressSelected.contactName} - {addressSelected.phone}
+                  </p>
                   <p>{addressSelected.fullAddress}</p>
-                  <p>{addressSelected.phone}</p>
                 </>
               ) : (
                 <div className="mx-auto w-2/3 items-center text-14">
@@ -266,19 +265,18 @@ export function CheckOutPage() {
             </div>
           </div>
           <ListCartCheckout title="Danh sách sản phẩm" className="w-full md:w-1/3 lg:w-full mb-4" />
-          {addressSelected ? (
-            <div className="w-full md:w-1/3 lg:w-full">
-              <div className="border-b-4 pb-2">
-                <PayMoney listMoney={listMoneyCheckout} />
-              </div>
-              <div className="flex justify-between pt-2 text-16 ">
-                <p>Thành tiền</p>
-                <p className="font-bold text-primary">{NumberPipe(cartAmount, false)} VND</p>
-              </div>
+
+          <div className="w-full md:w-1/3 lg:w-full">
+            <div className="border-b-4 pb-2">
+              <PayMoney listMoney={addressSelected ? listMoneyCheckout : []} />
             </div>
-          ) : (
-            <p className="text-16">Vui lòng chọn địa chỉ để xem "THÀNH TIỀN"</p>
-          )}
+            <div className="flex justify-between pt-2 text-16 ">
+              <p>Thành tiền</p>
+              <p className="font-bold text-primary">
+                {NumberPipe(cartAmount ? cartAmount : listMoneyCheckout[0].money, false)} VND
+              </p>
+            </div>
+          </div>
         </div>
         <div className="w-full">
           <div className="flex items-center gap-1 text-16  whitespace-nowrap">
@@ -292,7 +290,7 @@ export function CheckOutPage() {
             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
           </div>
           <Button
-            className={"w-full text-16 py-6 my-2 bg-primary text-white"}
+            className={"w-full text-16 py-3 my-2 bg-primary text-white"}
             disabled={!isCheck}
             asyncLoading
             onClick={async () => await handleConfirmOrder()}

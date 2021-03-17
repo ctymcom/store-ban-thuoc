@@ -179,7 +179,7 @@ export default function CartPage(props) {
             <Promotion />
           </div>
           <div className="sm:pl-2 lg:pl-0 my-5 sm:mt-5 lg:mt-3.5">
-            <PayMoney listMoney={listMoneyCart} />
+            <PayMoney listMoney={listMoneyCart}/>
             <CheckBoxSquare
               checked={usePoint}
               text={"Sử dụng điểm thưởng"}
