@@ -142,24 +142,20 @@ export function CartProvider({ children }: any) {
   const addProductToCart = (product: Product, qty: number): boolean => {
     if (!qty) return false;
     let cartProduct = cartProducts.find((x) => x.productId == product.id);
-    let cartNew = [...cartProducts];
     if (cartProduct) {
       cartProduct.qty += qty;
       cartProduct.amount = cartProduct.price * cartProduct.qty;
     } else {
-      cartNew = [
-        {
-          productId: product.id,
-          product: product,
-          qty,
-          price: product.salePrice,
-          amount: product.salePrice * qty,
-          active: true,
-        },
-        ...cartNew,
-      ];
+      cartProducts.push({
+        productId: product.id,
+        product: product,
+        qty,
+        price: product.salePrice,
+        amount: product.salePrice * qty,
+        active: true,
+      });
     }
-    setCartProducts([...cartNew]);
+    setCartProducts([...cartProducts]);
     toast.success("Đã thêm sản phẩm vào giỏ hàng");
     return true;
   };
