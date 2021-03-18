@@ -82,9 +82,7 @@ export function MainHeader(props: PropsType) {
           </Link> */}
           <Link href="/cart">
             <a className="border-l btn-default rounded-none p-0 h-10 w-12 md:w-16">
-              <i className="text-24">
-                <HiOutlineShoppingCart />
-              </i>
+              <img src="/assets/img/cart.png" alt="" className="w-10 h-10 object-cover" />
               {!!cartProductTotal && (
                 <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-0 md:right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
                   <span>{cartProductTotal}</span>
