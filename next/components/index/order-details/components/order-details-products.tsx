@@ -10,8 +10,6 @@ export function OrderDetailsProducts(props: PropsType) {
     "flex items-start md:items-center text-gray-700 border-b border-gray-200 py-3 md:p-3.5";
   const screenMd = useScreen("md");
 
-  // console.log(props.products);
-
   return (
     <>
       {screenMd ? (
