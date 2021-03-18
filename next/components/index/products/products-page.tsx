@@ -135,7 +135,11 @@ export function ProductsPage() {
                         <NotFound text="Không có sản phẩm nào" className="col-span-5" />
                       ) : (
                         products.map((product) => (
-                          <ProductCard key={product.id} product={product} />
+                          <ProductCard
+                            key={product.id}
+                            product={product}
+                            productTagName={product.tags}
+                          />
                         ))
                       )}
                     </div>

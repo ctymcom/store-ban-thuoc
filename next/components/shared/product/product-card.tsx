@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NumberPipe } from "./../../../lib/pipes/number";
 import { ProductQuantity } from "./product-quantity";
 import { Product } from "./../../../lib/repo/product.repo";
@@ -11,8 +11,9 @@ import LazyLoad from "react-lazyload";
 
 interface PropsType extends ReactProps {
   product?: Product;
+  productTagName?: string[];
 }
-export function ProductCard({ product, ...props }: PropsType) {
+export function ProductCard({ product, productTagName, ...props }: PropsType) {
   const [quantity, setQuantity] = useState(0);
 
   const { saveCurrentPath } = useAuth();
@@ -34,6 +35,8 @@ export function ProductCard({ product, ...props }: PropsType) {
     }
   };
 
+  console.log(productTagName);
+
   return useMemo(() => {
     return (
       <>
@@ -51,11 +54,25 @@ export function ProductCard({ product, ...props }: PropsType) {
                     />
                   </div>
                 </LazyLoad>
-                {product.isNew && <div className="new-tag">Mới</div>}
-                {product.saleRate && (
-                  <div className="flex-center absolute right-0 top-3 text-white font-semibold">
-                    <img src="/assets/img/sale.svg" />
-                    <span className="absolute text-sm">-{product.saleRate}%</span>
+                {product?.tags.includes("NEW") && (
+                  <div className="flex-center absolute -left-2 -top-2 text-white font-semibold">
+                    <img className="w-16 h-16" src="/assets/img/NEW-01.png" alt="NEW" />
+                    <span className="absolute top-4 left-3 text-12 transform -rotate-45 tracking-widest">
+                      MỚI
+                    </span>
+                  </div>
+                )}
+
+                {product?.tags.includes("FLASHSALES") && (
+                  <div className="flex-center absolute -right-1 -top-2 text-white font-semibold">
+                    <img
+                      className="w-16 h-16"
+                      src="/assets/img/FLASHSALES-01.png"
+                      alt="FLASHSALES"
+                    />
+                    <span className="absolute top-0 left-6 text-14">
+                      {product?.saleRate ? "-" + product?.saleRate + "GIẢM" : 0}%
+                    </span>
                   </div>
                 )}
               </div>

@@ -97,7 +97,7 @@ export function MenuHeader(props: PropsType) {
                     ${router.pathname == menu.path ? "bg-primary-dark font-semibold" : ""}`}
                     >
                       <img
-                        className="md:w-6 lg:w-8 md:h-6 lg:h-8 md:mr-1.5 lg:mr-1.5 xl:mr-2"
+                        className="md:w-6 lg:w-7 md:h-6 lg:h-7 md:mr-1.5 lg:mr-1.5 xl:mr-2"
                         src={menu.icon || "/assets/img/default.png"}
                         onError={(e) => {
                           (e.target as any).src = "/assets/img/default.png";
