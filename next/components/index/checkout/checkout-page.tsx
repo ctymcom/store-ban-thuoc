@@ -211,7 +211,7 @@ export function CheckOutPage() {
             {showInfor ? <TransferInformation info={transferInformation} /> : <></>}
           </div>
         </div>
-        <div className="w-full text-16  my-5">
+        <div className="w-full lg:w-11/12 text-16  my-5">
           <h4 className="uppercase text-16">Ghi chú khác</h4>
           <p className="text-14 pb-2">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
@@ -219,7 +219,7 @@ export function CheckOutPage() {
           </p>
           <Textarea
             value={note}
-            className="w-full border-2 border-gray-300 rounded-md p-3 outline-none"
+            className=" border-2 border-gray-300 rounded-md p-3 outline-none"
             placeholder="Nhập ghi chú của bạn"
             onChange={(e) => setNote(e)}
           />

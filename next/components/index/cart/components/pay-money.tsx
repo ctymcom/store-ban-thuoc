@@ -1,7 +1,8 @@
-import { BiMoney } from "react-icons/bi";
+import { HiOutlineInformationCircle } from "react-icons/hi";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+
 import { NumberPipe } from "../../../../lib/pipes/number";
-import { useAddressContext } from "../../checkout/providers/address-provider";
-import { useEffect, useState } from "react";
+import { useCart } from "../../../../lib/providers/cart-provider";
 interface PropsType extends ReactProps {
   listMoney?: MoneyItem[];
   order?: any;
@@ -11,12 +12,13 @@ type MoneyItem = {
   money: number;
 };
 export function PayMoney(props: PropsType) {
+  const { usePoint } = useCart();
   const { listMoney } = props;
   return (
     <>
       <div className="flex border-b-2 items-center pb-2">
         <i className="text-primary text-20">
-          <BiMoney />
+          <FaRegMoneyBillAlt />
         </i>
         <p className="uppercase px-2 text-16">Thành Tiền</p>
       </div>
@@ -37,6 +39,14 @@ export function PayMoney(props: PropsType) {
           })
         ) : (
           <p>Vui lòng chọn địa chỉ giao hàng để xen "Giảm giá"</p>
+        )}
+        {usePoint ? (
+          <p className="text-16 flex text-primary gap-2">
+            <HiOutlineInformationCircle />
+            Bạn đang sử dụng điểm thưởng cho đơn hàng này
+          </p>
+        ) : (
+          <p></p>
         )}
       </div>
     </>
