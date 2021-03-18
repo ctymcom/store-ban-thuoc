@@ -6,6 +6,7 @@ import { HiChevronRight, HiOutlineX } from "react-icons/hi";
 import { HeaderUser } from "./header-user";
 import { useDefaultLayoutContext } from "../providers/default-layout-providers";
 import useScrollBlock from "../../../lib/hooks/useScrollBlock";
+
 interface PropsType extends ReactProps {
   menuOpened: boolean;
   setMenuOpened: Function;
@@ -59,45 +60,53 @@ export function MenuHeader(props: PropsType) {
               <div className="flex w-full py-4 border-b border-gray-100">
                 <HeaderUser />
               </div>
-              {menus.map((menu, index) => (
-                <Link href={menu.path} key={index}>
-                  <a
-                    className={`px-4 py-3 flex justify-between font-medium text-16 text-gray-600 hover:text-primary hover:bg-gray-50 border-b border-gray-100
-                ${
-                  router.pathname == menu.path ? "bg-primary-light text-primary font-semibold" : ""
-                }`}
-                  >
-                    <span>{menu.label}</span>
-                    <i className="text-20">
-                      <HiChevronRight />
-                    </i>
-                  </a>
-                </Link>
-              ))}
+              <ul>
+                {menus.map((menu, index) => (
+                  <li key={index}>
+                    <Link href={menu.path}>
+                      <a
+                        className={`px-4 py-3 flex justify-between font-medium text-16 text-gray-600 hover:text-primary hover:bg-gray-50 border-b border-gray-100
+                      ${
+                        router.pathname == menu.path
+                          ? "bg-primary-light text-primary font-semibold"
+                          : ""
+                      }`}
+                      >
+                        <span>{menu.label}</span>
+                        <i className="text-20">
+                          <HiChevronRight />
+                        </i>
+                      </a>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </Transition>
       )}
       <div className="bg-primary hidden md:block">
         <div className="main-container flex justify-between items-stretch">
-          <ul className="flex ">
+          <ul className="flex">
             {menus.map((menu, index) => (
               <>
-                <Link href={menu.path} key={index}>
-                  <a
-                    className={`p-4 flex items-center text-gray-50 font-medium text-16 hover:bg-primary-dark
+                <li key={index}>
+                  <Link href={menu.path}>
+                    <a
+                      className={`md:px-2 lg:px-4 py-4 flex items-center text-gray-50 font-medium text-16 hover:bg-primary-dark
                     ${router.pathname == menu.path ? "bg-primary-dark font-semibold" : ""}`}
-                  >
-                    <img
-                      className="w-8 h-8 mr-2"
-                      src={menu.icon || "/assets/img/default.png"}
-                      onError={(e) => {
-                        (e.target as any).src = "/assets/img/default.png";
-                      }}
-                    />
-                    <span>{menu.label}</span>
-                  </a>
-                </Link>
+                    >
+                      <img
+                        className="md:w-6 lg:w-8 md:h-6 lg:h-8 md:mr-1.5 lg:mr-1.5 xl:mr-2"
+                        src={menu.icon || "/assets/img/default.png"}
+                        onError={(e) => {
+                          (e.target as any).src = "/assets/img/default.png";
+                        }}
+                      />
+                      <span className="whitespace-nowrap md:text-14 lg:text-16">{menu.label}</span>
+                    </a>
+                  </Link>
+                </li>
               </>
             ))}
           </ul>

@@ -50,6 +50,7 @@ export function ProductsCategoriesFilter(props: PropsType) {
                 checked={cat.checked}
                 open={cat.open}
                 onClick={() => toggleCategory(cat, index)}
+                hasSub={!!cat.subcategories?.length}
                 toggleOpen={() => toggleOpen(cat)}
               />
             </div>
