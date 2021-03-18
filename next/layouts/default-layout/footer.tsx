@@ -10,7 +10,7 @@ import { useAuth } from "./../../lib/providers/auth-provider";
 export function Footer() {
   const [email, setEmail] = useState("");
   // const [ShowMore, setShowMore] = useState(false);
-  const { hotline, footerIntro, footerMenus, socials } = useDefaultLayoutContext();
+  const { hotline, footerIntro, footerMenus, policy, socials } = useDefaultLayoutContext();
   const router = useRouter();
   const { user } = useAuth();
 
@@ -21,7 +21,7 @@ export function Footer() {
           <footer className="mt-20 text-white" style={{ backgroundColor: "#343A40" }}>
             <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3">
               <div className="flex flex-col justify-start text-md sm:text-lg md:text-sm lg:w-4/6">
-                {footerIntro && (
+                {footerIntro && policy && (
                   <>
                     <Link href={footerIntro?.link}>
                       <a className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
@@ -31,7 +31,7 @@ export function Footer() {
                     <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
                       {footerIntro?.content}
                     </p>
-                    <Link href={footerIntro?.link}>
+                    <Link href={policy}>
                       <a
                         className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
                         target="_blank"
