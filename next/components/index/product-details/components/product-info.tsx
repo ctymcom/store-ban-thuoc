@@ -6,6 +6,7 @@ import { NumberPipe } from "../../../../lib/pipes/number";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { useCart } from "../../../../lib/providers/cart-provider";
 import { ProductQuantity } from "../../../shared/product/product-quantity";
+import { ProductTag } from "../../../shared/product/product-tag";
 import useInterval from "./../../../../lib/hooks/useInterval";
 import { useProductDetailsContext } from "./../providers/product-details-provider";
 
@@ -53,11 +54,11 @@ export function ProductInfo(props: PropsType) {
           .join(", ")}
       </div> */}
       <h2 className="text-gray-700 mb-1 lg:mb-2 font-bold text-xl lg:text-2xl">{product.name}</h2>
-      {!!expiredFromNowText && (
-        <div className="finish-time text-danger font-extrabold mb-4">
-          Kết thúc sau: {expiredFromNowText}
-        </div>
-      )}
+      <div className="flex flex-wrap max-w-sm mb-2">
+        {product.tagDetails.map((tag) => (
+          <ProductTag tag={tag} key={tag.code} saleRate={product.saleRate} />
+        ))}
+      </div>
       {!!product.description && (
         <div className="my-4 whitespace-pre-wrap">{product.description}</div>
       )}
@@ -91,6 +92,11 @@ export function ProductInfo(props: PropsType) {
               Mua ngay
             </button>
           </div>
+          {!!expiredFromNowText && (
+            <div className="finish-time text-danger font-extrabold mb-4">
+              Kết thúc sau: {expiredFromNowText}
+            </div>
+          )}
         </>
       ) : (
         <Link href="/login">
@@ -99,16 +105,6 @@ export function ProductInfo(props: PropsType) {
           </a>
         </Link>
       )}
-      <div className="mt-4">
-        {product.tagDetails.map((tag) => (
-          <span
-            key={tag.code}
-            className="bg-primary-light text-primary px-3 py-1 rounded-full mr-2 mb-2 hover:bg-primary hover:text-white cursor-pointer"
-          >
-            {tag.name}
-          </span>
-        ))}
-      </div>
     </>
   );
 }

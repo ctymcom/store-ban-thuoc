@@ -12,6 +12,7 @@ export const DefaultLayoutContext = createContext<
     };
     footerIntro: { content: string; link: string; more: string };
     footerMenus: { link: string; text: string }[];
+    policy: string;
     socials: {
       facebook: { link: string; visable: boolean; visible: boolean };
       youtube: { link: string; visable: boolean; visible: boolean };
@@ -26,12 +27,15 @@ export function DefaultLayoutProvider({ children }: any) {
   const [footerIntro, setFooterIntro] = useState(null);
   const [footerMenus, setFooterMenus] = useState(null);
   const [socials, setSocials] = useState(null);
+  const [policy, setPolicy] = useState(null);
 
   const loadSettings = () => {
     SettingService.getAll({
       query: {
         limit: 0,
-        filter: { key: { __in: ["TOP_MENU", "HOTLINE", "FOOTER_INTRO", "FOOTER_MENU", "SOCIAL"] } },
+        filter: {
+          key: { __in: ["TOP_MENU", "HOTLINE", "FOOTER_INTRO", "FOOTER_MENU", "SOCIAL", "POLICY"] },
+        },
       },
     }).then((res) => {
       setTopMenus(res.data.find((x) => x.key == "TOP_MENU").value.items);
@@ -39,6 +43,7 @@ export function DefaultLayoutProvider({ children }: any) {
       setFooterIntro(res.data.find((x) => x.key == "FOOTER_INTRO").value);
       setFooterMenus(res.data.find((x) => x.key == "FOOTER_MENU").value.items);
       setSocials(res.data.find((x) => x.key == "SOCIAL").value);
+      setPolicy(res.data.find((x) => x.key == "POLICY").value);
     });
   };
 
@@ -47,7 +52,9 @@ export function DefaultLayoutProvider({ children }: any) {
   }, []);
 
   return (
-    <DefaultLayoutContext.Provider value={{ topMenus, hotline, footerIntro, footerMenus, socials }}>
+    <DefaultLayoutContext.Provider
+      value={{ topMenus, hotline, footerIntro, footerMenus, socials, policy }}
+    >
       {children}
     </DefaultLayoutContext.Provider>
   );

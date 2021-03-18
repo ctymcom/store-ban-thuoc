@@ -8,6 +8,7 @@ import { useCart } from "./../../../lib/providers/cart-provider";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import LazyLoad from "react-lazyload";
+import { ProductTag } from "./product-tag";
 
 interface PropsType extends ReactProps {
   product?: Product;
@@ -80,11 +81,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
               {!!product.tags?.length && (
                 <div className="flex flex-wrap py-2 -mx-1">
                   {product.tagDetails.map((tagDetail) => (
-                    <div key={tagDetail.code} className="p-1">
-                      <span className="bg-primary-light text-primary-dark text-sm py-1 px-3 rounded-sm">
-                        {tagDetail.name}
-                      </span>
-                    </div>
+                    <ProductTag key={tagDetail.code} tag={tagDetail} saleRate={product.saleRate} />
                   ))}
                 </div>
               )}
