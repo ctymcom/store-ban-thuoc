@@ -35,6 +35,7 @@ export function ProductsPage() {
   }, [products]);
 
   const screenLg = useScreen("lg");
+  useScrollBlock({ dependencies: [filterOpened] });
 
   return (
     <>
@@ -134,7 +135,7 @@ export function ProductsPage() {
                         <NotFound text="Không có sản phẩm nào" className="col-span-5" />
                       ) : (
                         products.map((product) => (
-                          <ProductCard key={product.id} product={product} />
+                          <ProductCard key={product.id} product={product} showGroup={false} />
                         ))
                       )}
                     </div>

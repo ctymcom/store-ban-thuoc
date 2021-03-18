@@ -9,21 +9,44 @@ export function HeaderUser({ ...props }: PropsType) {
   const router = useRouter();
   const { user, logout, saveCurrentPath } = useAuth();
 
+  const menus = [
+    {
+      label: "Thông tin tài khoản",
+      onClick: () => router.push("/profile"),
+    },
+    {
+      label: "Lịch sử đơn hàng",
+      onClick: () => router.push("/profile/order-history"),
+    },
+    {
+      label: "Thông báo",
+      onClick: () => router.push("/profile/notification"),
+    },
+    {
+      label: "Điểm thưởng",
+      onClick: () => router.push("/profile/reward-point"),
+    },
+    {
+      label: "Đăng xuất",
+      onClick: () => logout(),
+    },
+  ];
+
   return (
     <>
       {user ? (
         <>
-          <Link href="/profile/notification">
+          {/* <Link href="/profile/notification">
             <a className="border-r btn-default p-0 h-10 w-16">
               <i className="text-24">
                 <HiOutlineBell />
               </i>
-              {/* <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
+              <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
             <span>76</span>                
-          </div> */}
+          </div>
             </a>
-          </Link>
-          <div className="relative">
+          </Link> */}
+          <div className="relative w-full">
             <Menu>
               {({ open }) => (
                 <>
@@ -38,11 +61,11 @@ export function HeaderUser({ ...props }: PropsType) {
                         />
                       </div>
                     </div>
-                    <div className="flex items-center">
+                    <div className="flex items-center flex-grow">
                       <div className="pl-3 pr-2 font-semibold text-left leading-tight max-w-3xs">
                         {user.nickname}
                       </div>
-                      <i className="text-24">
+                      <i className="text-24 ml-auto">
                         <HiChevronDown />
                       </i>
                     </div>
@@ -60,32 +83,22 @@ export function HeaderUser({ ...props }: PropsType) {
                   >
                     <Menu.Items
                       static
-                      className="z-50	absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+                      className="z-50	absolute right-2 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                     >
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            onClick={() => router.push("/profile")}
-                            className={`${
-                              active ? "bg-gray-100 text-primary" : "text-gray-700"
-                            } btn-default flex justify-between w-full px-4 h-12 text-sm leading-5 text-left font-semibold`}
-                          >
-                            Thông tin tài khoản
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            onClick={() => logout()}
-                            className={`${
-                              active ? "bg-gray-100 text-primary" : "text-gray-700"
-                            } btn-default flex justify-between w-full px-4 h-12 text-sm leading-5 text-left font-semibold`}
-                          >
-                            Đăng xuất
-                          </a>
-                        )}
-                      </Menu.Item>
+                      {menus.map((menu) => (
+                        <Menu.Item key={menu.label}>
+                          {({ active }) => (
+                            <a
+                              onClick={menu.onClick}
+                              className={`${
+                                active ? "bg-gray-100 text-primary" : "text-gray-700"
+                              } btn-default flex justify-between w-full px-4 h-12 text-sm leading-5 text-left`}
+                            >
+                              {menu.label}
+                            </a>
+                          )}
+                        </Menu.Item>
+                      ))}
                     </Menu.Items>
                   </Transition>
                 </>

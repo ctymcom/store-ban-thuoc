@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { Button } from "../../../shared/utilities/form/button";
 import { useToast } from "../../../../lib/providers/toast-provider";
+import { Input } from "../../../shared/utilities/form/input";
 interface PropsType extends ReactProps {
   setShowDialog?: Function;
   isOpen?: boolean;
@@ -51,37 +52,45 @@ export default function UpdatePasswordDialog(props: PropsType) {
     >
       <div className="flex-col w-full px-5 sm:px-8 md:px-5 py-6 sm:py-9 md:py-6">
         <div className="flex flex-col sm:flex-row items-center">
-          <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Mật khẩu cũ</p>
-          <input
-            type="password"
-            className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
-            value={oldPass}
-            onChange={(e) => {
-              setOldPass(e.target.value);
-            }}
-          />
+          <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 lg:text-16 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+            Mật khẩu cũ
+          </p>
+          <div className="w-full sm:w-3/4 xl:w-4/6">
+            <Input
+              type="password"
+              name="oldPass"
+              value={oldPass}
+              className="form-input"
+              onChange={(val) => setOldPass(val)}
+            />
+          </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center mt-3 sm:mt-5">
-          <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Mật khẩu mới</p>
-          <input
-            type="password"
-            className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
-            value={newPass}
-            onChange={(e) => {
-              setNewPass(e.target.value);
-            }}
-          />
+          <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 lg:text-16 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+            Mật khẩu mới
+          </p>
+
+          <div className="w-full sm:w-3/4 xl:w-4/6">
+            <Input
+              type="password"
+              name="newPass"
+              value={newPass}
+              className="form-input"
+              onChange={(val) => setNewPass(val)}
+            />
+          </div>
         </div>
         <div className="flex flex-col sm:flex-row items-center mt-3 sm:mt-5 flex-wrap">
-          <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Nhập lại mật khẩu mới</p>
+          <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 lg:text-16 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+            Nhập lại mật khẩu mới
+          </p>
           <div className="w-full sm:w-3/4 xl:w-4/6">
-            <input
+            <Input
               type="password"
-              className="form-input w-full  text-16 sm:text-20"
+              name="confirmNewPass"
               value={confirmNewPass}
-              onChange={(e) => {
-                setConfirmNewPass(e.target.value);
-              }}
+              className="form-input"
+              onChange={(val) => setConfirmNewPass(val)}
             />
           </div>
         </div>

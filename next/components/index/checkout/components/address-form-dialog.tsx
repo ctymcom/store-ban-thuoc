@@ -48,7 +48,7 @@ const AddressFormDialog = (props: PropsType) => {
   };
   const checkBeforeMutation = (data: UserAddress) => {
     if (data) {
-      const { contactName, address, provinceId, districtId, wardId, phone } = data;
+      const { contactName, address, provinceId, districtId, phone } = data;
       if (!contactName) {
         toast.warn("Tên liên hệ không được để trống");
         return false;
@@ -56,11 +56,6 @@ const AddressFormDialog = (props: PropsType) => {
       if (!phone) {
         toast.warn("Số điện liên hệ không được để trống");
         return false;
-      } else {
-        if (phone.length !== 10) {
-          toast.warn("Số điện liên hệ không đúng(10 số)");
-          return false;
-        }
       }
       if (!provinceId) {
         toast.warn("Bạn chưa chon tỉnh/thành phố");
@@ -68,10 +63,6 @@ const AddressFormDialog = (props: PropsType) => {
       }
       if (!districtId) {
         toast.warn("Bạn chưa chon quận/huyện");
-        return false;
-      }
-      if (!wardId) {
-        toast.warn("Bạn chưa chon xã/phường");
         return false;
       }
       if (!address) {
@@ -126,7 +117,8 @@ const AddressFormDialog = (props: PropsType) => {
             }}
           />
           <Select
-            className={`w-full h-12 text-16`}
+            wrapperClassName="w-full"
+            className="h-12"
             options={provinces}
             value={userAddress ? userAddress.provinceId : ""}
             onChange={(e) => {
@@ -135,7 +127,8 @@ const AddressFormDialog = (props: PropsType) => {
           />
           <Select
             disabled={!userAddress || userAddress.provinceId === "" ? true : false}
-            className={`w-full h-12 text-16`}
+            wrapperClassName="w-full"
+            className="h-12"
             options={districts}
             value={userAddress ? userAddress.districtId : ""}
             onChange={(e) => {
@@ -148,7 +141,8 @@ const AddressFormDialog = (props: PropsType) => {
                 ? false
                 : true
             }
-            className={`w-full h-12 text-16`}
+            wrapperClassName="w-full"
+            className="h-12"
             options={wards}
             value={userAddress ? userAddress.wardId : ""}
             onChange={(e) => {

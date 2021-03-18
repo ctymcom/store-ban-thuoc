@@ -1,6 +1,6 @@
 import { Notification } from "../../../../lib/repo/notifications.repo";
 import { Spinner } from "../../../shared/utilities/spinner";
-import { IoNotificationsOutline } from "react-icons/io5";
+import { HiOutlineBell } from "react-icons/hi";
 import { NotFound } from "../../../shared/utilities/not-found";
 
 interface PropsType extends ReactProps {
@@ -23,8 +23,7 @@ export function NotificationList({ listNotification }: PropsType) {
                     <p className="text-gray-800 leading-6 lg:leading-7">
                       Đơn hàng
                       <span className="font-bold">{notification.code}</span>
-                      {notification.content}. Đơn hàng sẽ được giao trước
-                      <span className="font-bold">{notification.updatedAt}</span>
+                      {notification.content}
                     </p>
                   </div>
                 </div>
@@ -33,11 +32,10 @@ export function NotificationList({ listNotification }: PropsType) {
           ) : (
             <>
               <NotFound
-                icon={<IoNotificationsOutline />}
+                icon={<HiOutlineBell />}
                 text="Không tìm thấy thông báo nào"
-                className="text-gray-800"
+                className="text-gray-600"
               />
-              ;
             </>
           )}
         </>

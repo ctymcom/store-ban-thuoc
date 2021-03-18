@@ -1,59 +1,31 @@
-import { useEffect, useState } from "react";
-import { OrderHistoryItem } from "./order-history-item";
+import { HiOutlineClipboardList } from "react-icons/hi";
 import { Order } from "../../../../lib/repo/order.repo";
-import { Spinner } from "../../../shared/utilities/spinner";
 import { NotFound } from "../../../shared/utilities/not-found";
-import { BiListPlus } from "react-icons/bi";
-import { OrderStatus } from "../../../../lib/repo/order-status.repo";
+import { Spinner } from "../../../shared/utilities/spinner";
+import { OrderHistoryItem } from "./order-history-item";
 interface PropsType extends ReactProps {
-  listOrder?: Order[];
-  listOrderStatus?: any[];
-  status?: any;
+  orders?: Order[];
 }
 
-export function OrderHisttoryList({ listOrder, listOrderStatus, status }: PropsType) {
-  const [listOrders, setListOrders] = useState([]);
-  // const [listOrderByStatusReleaseLater, setListOrderByStatusReleaseLater] = useState([]);
-  console.log(listOrder);
-  console.log(listOrderStatus);
-
-  // function FilterOrderByStatus() {
-  //   listOrder.forEach(function (value) {
-  //     if(value?.status === )
-  //   })
-  // }
-
-  useEffect(() => {
-    if (status) {
-      setListOrders(listOrder?.filter((x) => x.status === status));
-      // FilterOrderByStatus();
-    } else {
-      setListOrders(listOrder);
-    }
-  }, [status, listOrder]);
-
+export function OrderHistoryList({ orders }: PropsType) {
   return (
     <>
-      {!listOrders ? (
+      {!orders ? (
         <Spinner />
       ) : (
-        <>
-          {listOrders.length > 0 ? (
-            listOrders.map((order, index) => (
-              <OrderHistoryItem item={order} key={index} listOrderStatus={listOrderStatus} />
-            ))
+        <div className="animate-emerge-up">
+          {orders.length > 0 ? (
+            <>
+              {orders.map((order) => (
+                <OrderHistoryItem order={order} key={order.id} />
+              ))}
+            </>
           ) : (
             <>
-              <NotFound
-                icon={
-                  <BiListPlus className=" border-2 border-gray-800 rounded text-md sm:text-lg md:text-2xl mr-2" />
-                }
-                text="Không tìm thấy đơn hàng nào"
-                className="text-gray-800"
-              />
+              <NotFound icon={<HiOutlineClipboardList />} text="Không tìm thấy đơn hàng nào" />
             </>
           )}
-        </>
+        </div>
       )}
     </>
   );

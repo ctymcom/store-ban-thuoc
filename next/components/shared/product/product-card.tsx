@@ -11,18 +11,21 @@ import LazyLoad from "react-lazyload";
 
 interface PropsType extends ReactProps {
   product?: Product;
+  showGroup?: boolean;
 }
-export function ProductCard({ product, ...props }: PropsType) {
+export function ProductCard({ product, showGroup = true, ...props }: PropsType) {
   const [quantity, setQuantity] = useState(0);
 
   const { saveCurrentPath } = useAuth();
   const { addProductToCart } = useCart();
   const router = useRouter();
 
-  const categoryText = `${product.categories
-    .filter((x) => x.parents.length)
-    .map((x) => x.name)
-    .join(", ")}`;
+  const categoryText = showGroup
+    ? `${product.categories
+        .filter((x) => x.parents.length)
+        .map((x) => x.name)
+        .join(", ")}`
+    : "";
 
   const onAddToCart = (redirect: boolean = false) => {
     if (redirect) {
@@ -59,9 +62,11 @@ export function ProductCard({ product, ...props }: PropsType) {
                   </div>
                 )}
               </div>
-              <div className="text-sm text-gray-500 pt-3 group-hover:text-primary overflow-ellipsis overflow-hidden whitespace-nowrap">
-                {categoryText}
-              </div>
+              {showGroup && (
+                <div className="text-sm text-gray-500 pt-3 group-hover:text-primary overflow-ellipsis overflow-hidden whitespace-nowrap">
+                  {categoryText}
+                </div>
+              )}
               <div
                 className="h-14 text-ellipsis-2 text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug group-hover:text-primary-dark"
                 title={product.name}

@@ -19,7 +19,7 @@ export function ProductContent() {
             key={tab.name}
             id={"tab-" + tab.name}
             onClick={() => scrollTo(tab.name)}
-            className="flex-grow text-center px-3 pb-2 font-semibold text-primary hover:text-primary cursor-pointer border-b-2 whitespace-nowrap"
+            className="flex-grow uppercase text-center px-3 pb-2 font-semibold text-primary hover:text-primary cursor-pointer border-b-2 whitespace-nowrap"
           >
             {tab.name}
           </a>

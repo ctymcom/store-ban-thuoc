@@ -50,8 +50,8 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
   };
 
   const inputProps = {
-    className: "mb-2",
-    inputClassName: "rounded-l-none form-input",
+    wrapperClassName: "mb-2",
+    className: "rounded-l-none form-input",
     prefixClassName: "rounded-l w-36",
   };
 
@@ -152,7 +152,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
               <Input
                 value={setting.value.facebook.link}
                 prefix="Link Facebook"
-                inputClassName="rounded-none rounded-tr form-input"
+                className="rounded-none rounded-tr form-input"
                 prefixClassName="rounded-tl w-36"
                 onChange={(val) =>
                   onValueChanged("facebook", { ...setting.value.facebook, link: val }, index)
@@ -175,7 +175,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
               <Input
                 value={setting.value.youtube.link}
                 prefix="Link Youtube"
-                inputClassName="rounded-none rounded-tr form-input"
+                className="rounded-none rounded-tr form-input"
                 prefixClassName="rounded-tl w-36"
                 onChange={(val) =>
                   onValueChanged("youtube", { ...setting.value.youtube, link: val }, index)
@@ -198,7 +198,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
               <Input
                 value={setting.value.zalo.link}
                 prefix="Link Zalo"
-                inputClassName="rounded-none rounded-tr form-input"
+                className="rounded-none rounded-tr form-input"
                 prefixClassName="rounded-tl w-36"
                 onChange={(val) =>
                   onValueChanged("zalo", { ...setting.value.zalo, link: val }, index)

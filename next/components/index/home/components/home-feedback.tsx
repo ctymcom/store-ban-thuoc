@@ -34,11 +34,9 @@ export function HomeFeedback(props: PropsType) {
         {feedbackGroups.map((group, index) => (
           <div
             key={index}
-            className={
-              "grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5 top-0 " +
-              (index == 0 ? "absolute " : "") +
-              (activeIndex == index ? "animate-emerge" : "opacity-0")
-            }
+            className={`grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5 top-0 ${
+              index == 0 ? "" : "absolute"
+            } ${activeIndex == index ? "animate-emerge" : "opacity-0"}`}
           >
             {group.map((feedback, index) => (
               <div

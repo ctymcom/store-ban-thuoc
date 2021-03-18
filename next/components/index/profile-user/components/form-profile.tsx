@@ -10,6 +10,7 @@ import { Spinner } from "../../../shared/utilities/spinner";
 import { Button } from "../../../shared/utilities/form/button";
 import { useToast } from "../../../../lib/providers/toast-provider";
 import { cloneDeep } from "lodash";
+import { Input } from "../../../shared/utilities/form/input";
 
 interface PropsType extends ReactProps {
   [x: string]: any;
@@ -105,47 +106,68 @@ export function FormProfile(props: PropsType) {
       {userA ? (
         <>
           <div className="w-11/12 mx-auto lg:w-full text-16 sm:text-20 text-gray-700">
-            <h3 className="uppercase border-gray-200 border-b-4 pb-2 mb-4 text-24 hidden sm:block text-left">
+            <h3 className="uppercase border-gray-200 border-b-4 pb-2 mb-4 text-18 hidden sm:block text-left">
               Thông tin tài khoản
             </h3>
             <div className="flex flex-wrap-reverse w-full">
               <div className="w-full xl:w-4/6 items-center">
                 <div className="pr-0 xl:pr-16 xl:border-r-2 border-gray-200">
                   <div className="sm:flex justify-between items-center">
-                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Tên hiển thị</p>
-                    <input
-                      className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
-                      defaultValue={userA?.nickname}
-                      onChange={(e) => (userA.nickname = e.target.value)}
-                    />
+                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+                      Tên hiển thị
+                    </p>
+                    <div className="w-full sm:w-3/4 xl:w-4/6">
+                      <Input
+                        name="nickname"
+                        value={userA?.nickname}
+                        className="form-input"
+                        onChange={(val) => setUserA({ ...userA, nickname: val })}
+                      />
+                    </div>
                   </div>
                   <div className="sm:flex justify-between items-center  pt-4">
-                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Tên đăng nhập</p>
-                    <input
-                      className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20 bg-gray-200 border-0"
-                      defaultValue={userA?.username}
-                      readOnly
-                    />
+                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+                      Tên đăng nhập
+                    </p>
+                    <div className="w-full sm:w-3/4 xl:w-4/6">
+                      <Input
+                        name="username"
+                        value={userA?.username}
+                        className="form-input"
+                        readonly={true}
+                      />
+                    </div>
                   </div>
                   <div className="sm:flex justify-between items-center pt-4">
-                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Email</p>
-                    <input
-                      className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20 bg-gray-200 border-0"
-                      defaultValue={userA?.email}
-                      readOnly
-                    />
+                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+                      Email
+                    </p>
+                    <div className="w-full sm:w-3/4 xl:w-4/6">
+                      <Input
+                        name="email"
+                        value={userA?.email}
+                        className="form-input"
+                        readonly={true}
+                      />
+                    </div>
                   </div>
                   <div className="sm:flex justify-between items-center pt-4">
-                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Điện thoại</p>
-                    <input
-                      type="number"
-                      className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
-                      defaultValue={userA?.phone}
-                      onChange={(e) => (userA.phone = e.target.value)}
-                    />
+                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+                      Điện thoại
+                    </p>
+                    <div className="w-full sm:w-3/4 xl:w-4/6">
+                      <Input
+                        name="phone"
+                        value={userA?.phone}
+                        className="form-input"
+                        onChange={(val) => setUserA({ ...userA, phone: val })}
+                      />
+                    </div>
                   </div>
                   <div className="sm:flex justify-between items-center pt-4">
-                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Ngày sinh</p>
+                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+                      Ngày sinh
+                    </p>
                     <div className="w-full sm:w-3/4 flex space-x-2 xl:w-4/6">
                       <DateTime
                         dateOfBirth={
@@ -156,36 +178,48 @@ export function FormProfile(props: PropsType) {
                     </div>
                   </div>
                   <div className="sm:flex justify-between items-center pt-4">
-                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Loại cửa hàng</p>
+                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+                      Loại cửa hàng
+                    </p>
                     <div className="w-full sm:w-3/4 flex space-x-2 xl:w-4/6">
                       <Select
-                        className={`w-full  h-12`}
+                        wrapperClassName={`w-full`}
+                        className="h-10"
                         options={listOptionsTypeStore}
                         value={
                           userA.companyType ? userA.companyType : "Vui lòng chọn loại cửa hàng"
                         }
-                        onChange={(e) => (userA.companyType = parseInt(e))}
+                        onChange={(e) => setUserA({ ...userA, companyType: parseInt(e) })}
                       />
                     </div>
                   </div>
 
                   <div className="sm:flex justify-between items-center pt-4">
-                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Tên cửa hàng</p>
-                    <input
-                      className="form-input w-full sm:w-3/4 xl:w-4/6 text-16 sm:text-20"
-                      defaultValue={userA?.companyName}
-                      onChange={(e) => (userA.companyName = e.target.value)}
-                    />
+                    <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+                      Tên cửa hàng
+                    </p>
+
+                    <div className="w-full sm:w-3/4 xl:w-4/6">
+                      <Input
+                        name="companyName"
+                        value={userA?.companyName}
+                        className="form-input"
+                        onChange={(val) => setUserA({ ...userA, companyName: val })}
+                      />
+                    </div>
                   </div>
                   <div className="sm:flex justify-between items-center pt-4">
                     <>
-                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2">Mật khẩu</p>
-                      <button
-                        className="w-full sm:w-3/4 xl:w-4/6 btn-outline h-12 border-primary text-primary text-16 sm:text-20"
-                        onClick={() => setShowDialogUpdatePassword(true)}
-                      >
-                        Đổi mật khẩu
-                      </button>
+                      <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
+                        Mật khẩu
+                      </p>
+
+                      <Button
+                        className="btn-outline border-primary text-primary w-full sm:w-3/4 xl:w-4/6 font-normal h-10 text-16"
+                        asyncLoading
+                        onClick={async () => await setShowDialogUpdatePassword(true)}
+                        text="Đổi mật khẩu"
+                      />
                     </>
                   </div>
                   <UpdatePasswordDialog
@@ -196,15 +230,15 @@ export function FormProfile(props: PropsType) {
                 <div className="flex justify-between items-center xl:pr-16 pt-10 xl:pt-16">
                   <p className="hidden sm:inline-block w-1/4"></p>
                   <Button
-                    className="btn-primary w-full sm:w-3/4 xl:w-4/6 font-normal h-12 text-16 sm:text-20"
+                    className="btn-primary w-full sm:w-3/4 xl:w-4/6 font-normal h-10 text-16"
                     asyncLoading
                     onClick={async () => await handleOnClick()}
                     text="Cập Nhật"
                   />
                 </div>
               </div>
-              <div className="flex xl:inline-block w-full xl:w-2/6 justify-around items-center">
-                <div className="flex-shrink-0 w-1/3 mx-auto">
+              <div className="flex xl:inline-block w-full xl:w-2/6 justify-around items-center mb-5 lg:mb-8">
+                <div className="flex-shrink-0 w-1/4  sm:w-1/5 md:w-1/6 lg:w-1/6 xl:w-1/3 mx-auto ">
                   <div className="image-wrapper circle">
                     <img
                       alt="avatar"
@@ -215,10 +249,10 @@ export function FormProfile(props: PropsType) {
                     />
                   </div>
                 </div>
-                <div className="w-9/12 mx-auto flex items-center justify-center flex-wrap">
+                <div className="w-9/12 ml-6 lg:ml-12 xl:mt-2 lg:mx-auto flex xs:flex-col md:items-start lg:items-start sm:justify-start lg:justify-center flex-wrap">
                   <Button
                     onClick={() => ref.current?.click()}
-                    className="mx-auto px-10 sm:px-14 md:px-16 py-5 md:py-4 lg:py-6 whitespace-nowrap my-3 btn-outline text-lg border-primary border font-normal text-primary hover:bg-primary hover:text-white"
+                    className="btn-outline border-primary border font-normal text-primary text-16 w-full xs:w-2/5 sm:w-1/4 lg:w-auto xl:mx-auto px-10 sm:px-4 md:px-10 lg:px-20 h-10 whitespace-nowrap my-3 xs:my-1 sm:my-2"
                     text="Đổi ảnh"
                   />
                   <input
@@ -228,11 +262,9 @@ export function FormProfile(props: PropsType) {
                     ref={ref}
                     onChange={(e) => handleUploadAvatar(e)}
                   />
-                  <p className="mx-auto text-12 whitespace-nowrap sm:text-16 text-gray-400 hidden sm:inline-block">
-                    Dung lượng file tối đa 1MB.{" "}
-                    <span className="block sm:inline xl:w-11/12 xl:block mx-auto">
-                      Định dạng: .JPEG, .PNG
-                    </span>
+                  <p className="xl:mx-auto tracking-wider leading-5 whitespace-nowrap xs:text-12 sm:text-12 md:text-12 lg:text-14 text-gray-400 hidden xs:inline-block">
+                    Dung lượng file tối đa 1MB.
+                    <span className="block xl:w-11/12 mx-auto">Định dạng: .JPEG, .PNG</span>
                   </p>
                 </div>
               </div>

@@ -3,7 +3,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { NumberPipe } from "../../../lib/pipes/number";
 import { PayMoney } from "../cart/components/pay-money";
 import { FormCheck } from "./components/form-check";
-import { listMoneyCheckout, transferInformation } from "./components/form-check-data";
+import { transferInformation } from "./components/form-check-data";
 import TransferInformation from "./components/transfer-information";
 import CheckBoxSquare from "./components/check-box-square";
 import AddressDialog from "./components/address-dialog";
@@ -11,22 +11,34 @@ import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
 import { useCart, CartProduct } from "../../../lib/providers/cart-provider";
 import { Button } from "./../../shared/utilities/form/button";
-import { MethodCheckout, Order } from "../../../lib/repo/checkout.repo";
+import { MethodCheckout } from "../../../lib/repo/checkout.repo";
 import { GraphService } from "../../../lib/repo/graph.repo";
 import { useToast } from "../../../lib/providers/toast-provider";
 import gql from "graphql-tag";
 import router from "next/router";
-import { Product } from "../../../lib/repo/product.repo";
+import ListCartCheckout from "./components/list-cart-checkout";
+import { Textarea } from "../../shared/utilities/form/textarea";
 
 export function CheckOutPage() {
+  const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
   const [isCheck, setIsCheck] = useState(true);
   const [deliMethodCS, setDeliMethod] = useState<MethodCheckout>(null);
   const [paymentMethodCS, setPaymentMethod] = useState<MethodCheckout>(null);
-  const [checkPaymentMethodCS, setCheckPaymentMethod] = useState(false);
+  const [showInfor, setShowInfor] = useState(false);
   const [items, setItems] = useState<{ productId: string; qty: number }[]>([]);
   const [note, setNote] = useState<string>("");
+  const [cartAmount, setCartAmount] = useState(0);
+  const [listMoneyCheckout, setListMoneyCheckout] = useState([
+    {
+      title: "Tạm tính",
+      money: cartTotal,
+    },
+    {
+      title: "Giảm giá",
+      money: 0,
+    },
+  ]);
   const toast = useToast();
-  const { cartTotal, cartProducts, setcartProducts, promotion, setPromotion, usePoint } = useCart();
   const {
     addressSelected,
     setShowDialogAddress,
@@ -36,10 +48,9 @@ export function CheckOutPage() {
     deliveryMethods,
   } = useCheckoutContext();
   useEffect(() => {
-    listMoneyCheckout[0].money = cartTotal;
     cartProducts.forEach((item: CartProduct) => {
+      let listItemNew = items;
       if (item.active) {
-        let listItemNew = items;
         let itemNew = { productId: item.productId, qty: item.qty };
         listItemNew.push(itemNew);
         setItems([...listItemNew]);
@@ -48,11 +59,22 @@ export function CheckOutPage() {
   }, []);
   useEffect(() => {
     if (paymentMethodCS?.code === "CK") {
-      setCheckPaymentMethod(true);
+      setShowInfor(true);
     } else {
-      setCheckPaymentMethod(false);
+      setShowInfor(false);
     }
-  }, [paymentMethodCS]);
+    if (paymentMethodCS !== null && deliMethodCS !== null && addressSelected) {
+      draftOrder({
+        promotionCode: promotion,
+        paymentMethod: paymentMethodCS.code,
+        deliveryMethod: deliMethodCS.code,
+        addressId: addressSelected.id,
+        note: note,
+        usePoint,
+        items,
+      });
+    }
+  }, [paymentMethodCS, addressSelected, deliMethodCS]);
   const checkBeforeMutate = () => {
     if (!addressSelected) {
       toast.warn("Bạn chưa chọn địa chỉ giao hàng");
@@ -61,8 +83,6 @@ export function CheckOutPage() {
     return true;
   };
   const confirmOrder = async (data: any) => {
-    console.log(data);
-
     let mutationName = "createOrder";
     const res = await GraphService.apollo.mutate({
       mutation: gql`
@@ -107,9 +127,11 @@ export function CheckOutPage() {
           listItemNew.push(item);
         }
       });
+      console.log(listItemNew);
+
       let task = [
         setPromotion(""),
-        setcartProducts([...listItemNew]),
+        setCartProducts([...listItemNew]),
         localStorage.setItem(
           "cartProductStorage",
           JSON.stringify(
@@ -121,6 +143,36 @@ export function CheckOutPage() {
       ];
       await Promise.all(task);
       router.replace("/complete");
+    }
+  };
+  const draftOrder = async (data: any) => {
+    console.log(data);
+
+    let mutationName = "generateDraftOrder";
+    const res = await GraphService.apollo.mutate({
+      mutation: gql`
+          mutation mutationName($data: CreateOrderInput!) {
+            ${mutationName} (
+              data: $data
+            ) {
+              subtotal
+              discount
+              amount
+            }
+          }
+        `,
+      variables: {
+        data,
+      },
+    });
+    if (res.data) {
+      console.log(res);
+      const { amount, discount, subtotal } = res.data.generateDraftOrder;
+      let listNew = listMoneyCheckout;
+      listNew[0].money = subtotal;
+      listNew[1].money = discount;
+      setCartAmount(amount);
+      setListMoneyCheckout([...listNew]);
     }
   };
   const handleConfirmOrder = async () => {
@@ -135,11 +187,6 @@ export function CheckOutPage() {
         items,
       });
     }
-  };
-
-  const setStyleBtn = () => {
-    let style = "w-full text-16 py-6 my-2";
-    return isCheck ? style + " btn-primary" : style + " btn-disabled";
   };
 
   return !loadingCheckout ? (
@@ -161,25 +208,26 @@ export function CheckOutPage() {
             />
           </div>
           <div className="w-full mt-4">
-            {checkPaymentMethodCS ? <TransferInformation info={transferInformation} /> : <></>}
+            {showInfor ? <TransferInformation info={transferInformation} /> : <></>}
           </div>
         </div>
-        <div className="w-full text-16  my-5">
+        <div className="w-full lg:w-11/12 text-16  my-5">
           <h4 className="uppercase text-16">Ghi chú khác</h4>
-          <p className="text-14">
+          <p className="text-14 pb-2">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
           </p>
-          <textarea
-            className="w-full border-2 border-gray-300 rounded-md p-3 outline-none"
+          <Textarea
+            value={note}
+            className=" border-2 border-gray-300 rounded-md p-3 outline-none"
             placeholder="Nhập ghi chú của bạn"
-            onChange={(e) => setNote(e.target.value)}
-          ></textarea>
+            onChange={(e) => setNote(e)}
+          />
         </div>
       </div>
       <div className="w-full lg:w-1/3 xl:w-1/4">
         <div className="w-full md:flex lg:inline-block md:gap-5 mb-10">
-          <div className="w-full md:w-1/2 lg:w-full mb-10">
+          <div className="w-full md:w-1/3 lg:w-full mb-10">
             <div className="flex justify-between items-center border-b-2">
               <div className="flex justify-between items-center gap-1 whitespace-nowrap">
                 <i className="text-primary text-16 ">
@@ -187,19 +235,24 @@ export function CheckOutPage() {
                 </i>
                 <h4 className="uppercase text-16">Địa chỉ giao hàng</h4>
               </div>
-              <p
-                className={`${addressSelected ? "text-primary text-16  cursor-pointer" : "hidden"}`}
+              <button
+                className={`${
+                  addressSelected
+                    ? "btn-default text-primary hover:text-primary-dark px-1"
+                    : "hidden"
+                }`}
                 onClick={() => setShowDialogAddress(true)}
               >
                 Thay đổi
-              </p>
+              </button>
             </div>
             <div className="my-2 text-16 ">
               {addressSelected ? (
                 <>
-                  <p className="text-16 font-bold">{addressSelected.contactName}</p>
+                  <p className="text-16 font-bold">
+                    {addressSelected.contactName} - {addressSelected.phone}
+                  </p>
                   <p>{addressSelected.fullAddress}</p>
-                  <p>{addressSelected.phone}</p>
                 </>
               ) : (
                 <div className="mx-auto w-2/3 items-center text-14">
@@ -211,13 +264,15 @@ export function CheckOutPage() {
               )}
             </div>
           </div>
-          <div className="w-full md:w-1/2 lg:w-full">
-            <div className="border-b-4 pb-2">
-              <PayMoney listMoney={listMoneyCheckout} />
-            </div>
+          <ListCartCheckout title="Danh sách sản phẩm" className="w-full md:w-1/3 lg:w-full mb-4" />
+
+          <div className="w-full md:w-1/3 lg:w-full">
+            <PayMoney listMoney={addressSelected ? listMoneyCheckout : []} />
             <div className="flex justify-between pt-2 text-16 ">
               <p>Thành tiền</p>
-              <p className="font-bold text-primary">{NumberPipe(cartTotal, false)} VND</p>
+              <p className="font-bold text-primary">
+                {NumberPipe(cartAmount ? cartAmount : listMoneyCheckout[0].money, false)} VND
+              </p>
             </div>
           </div>
         </div>
@@ -233,13 +288,13 @@ export function CheckOutPage() {
             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
           </div>
           <Button
-            className={setStyleBtn()}
+            className={"w-full text-16 py-3 my-2 bg-primary text-white"}
             disabled={!isCheck}
             asyncLoading
             onClick={async () => await handleConfirmOrder()}
             text="Đặt mua"
           />
-          <p className="whitespace-nowrap text-center text-12 md:text-16">
+          <p className="whitespace-nowrap text-center text-12 md:text-14">
             (Xin vui lòng kiểm tra lại đơn hàng trước khi Đặt mua)
           </p>
         </div>

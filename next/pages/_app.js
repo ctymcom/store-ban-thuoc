@@ -2,6 +2,7 @@ import "../style/style.scss";
 import { AuthProvider } from "../lib/providers/auth-provider";
 import { ToastProvider } from "../lib/providers/toast-provider";
 import { DefaultSeo } from 'next-seo'
+import { AlertProvider } from "../lib/providers/alert-provider";
 
 export default function App({ Component, pageProps }) {
   const Layout = Component.Layout ? Component.Layout : React.Fragment;
@@ -20,11 +21,13 @@ export default function App({ Component, pageProps }) {
       }}
     />
     <ToastProvider>
-      <AuthProvider>
-        <Layout {...layoutProps}>
-          <Component {...pageProps} />
-        </Layout>
-      </AuthProvider>
+      <AlertProvider>
+        <AuthProvider>
+          <Layout {...layoutProps}>
+            <Component {...pageProps} />
+          </Layout>
+        </AuthProvider>
+      </AlertProvider>
     </ToastProvider>
   
   </>)

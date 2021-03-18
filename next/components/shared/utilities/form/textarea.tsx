@@ -3,6 +3,7 @@ import { useEffect, useRef, MutableRefObject } from "react";
 interface PropsType extends ReactProps {
   value: any;
   rows?: number;
+  readonly?: boolean;
   placeholder?: string;
   name?: string;
   onChange?: (val: string) => any;
@@ -21,6 +22,7 @@ export function Textarea({ className = "", style = {}, ...props }: PropsType) {
       className={`form-input box-content py-2 ${className || ""}`.trim()}
       style={{ width: `calc(100% - 24px)`, ...style }}
       name={props.name}
+      readOnly={props.readonly}
       value={props.value}
       placeholder={props.placeholder}
       onChange={(e) => props.onChange(e.target.value)}

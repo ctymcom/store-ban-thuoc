@@ -18,7 +18,7 @@ const CartContext = createContext<
     cartProducts: CartProduct[];
     cartProductCount: number;
     cartTotal: number;
-    setcartProducts: Function;
+    setCartProducts: Function;
     setCartTotal: Function;
     loading: boolean;
     setLoading: Function;
@@ -30,13 +30,17 @@ const CartContext = createContext<
     setPromotion: Function;
     usePoint: boolean;
     setUsePoint: Function;
+    reOrder: Function;
+    cartProductTotal: number;
+    setCartProductTotal: Function;
   }>
 >({});
 
 export function CartProvider({ children }: any) {
-  const [cartProducts, setcartProducts] = useState<CartProduct[]>([]);
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
   const [cartProductCount, setCartProductCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
+  const [cartProductTotal, setCartProductTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [promotion, setPromotion] = useState("");
   const [usePoint, setUsePoint] = useState(true);
@@ -80,8 +84,10 @@ export function CartProvider({ children }: any) {
             )
           );
         });
-        setcartProducts([...cartProductStorage]);
+        setCartProducts([...cartProductStorage]);
+        console.log(cartProductStorage);
       } else {
+        console.log(cartProductStorage);
         setLoading(false);
       }
     } catch (error) {
@@ -94,25 +100,61 @@ export function CartProvider({ children }: any) {
     localStorage.setItem(
       "cartProductStorage",
       JSON.stringify(
-        cartProducts?.map((item) => {
+        cartProducts.map((item) => {
           return { productId: item.productId, qty: item.qty, active: item.active };
         })
       )
     );
-    setCartProductCount(
-      cartProducts?.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
-    );
+    setCartProductCount(cartProducts.reduce((count, cartProduct) => (count += cartProduct.qty), 0));
     setCartTotal(
-      cartProducts?.reduce(
+      cartProducts.reduce(
         (total, cartProduct) => (cartProduct.active ? (total += cartProduct.amount) : total),
         0
       )
     );
+    setCartProductTotal(cartProducts.length);
   }, [cartProducts]);
-
+  const reOrder = (items: { productId: string; qty: number }[]) => {
+    let resCartProducts = [...items];
+    cartProducts.forEach((item) => (item.active = false));
+    if (resCartProducts) {
+      //lấy danh sách product mua lại
+      ProductService.getAll({
+        query: {
+          limit: 0,
+          filter: {
+            _id: { __in: resCartProducts.map((x) => x.productId) },
+          },
+        },
+      }).then((res) => {
+        let listCartNew = cartProducts;
+        resCartProducts.forEach((reCartProduct) => {
+          let { __typename, ...product } = res.data.find((x) => x.id == reCartProduct.productId);
+          if (product) {
+            let index = listCartNew.findIndex((x) => x.productId == product.id);
+            console.log(index);
+            if (index !== -1) {
+              listCartNew.splice(index, 1);
+            }
+            listCartNew = [
+              {
+                productId: product.id,
+                product: product,
+                qty: reCartProduct.qty,
+                price: product.salePrice,
+                amount: product.salePrice * reCartProduct.qty,
+                active: true,
+              },
+              ...listCartNew,
+            ];
+          }
+        });
+        setCartProducts([...listCartNew]);
+      });
+    }
+  };
   const addProductToCart = (product: Product, qty: number): boolean => {
     if (!qty) return false;
-
     let cartProduct = cartProducts.find((x) => x.productId == product.id);
     if (cartProduct) {
       cartProduct.qty += qty;
@@ -127,7 +169,7 @@ export function CartProvider({ children }: any) {
         active: true,
       });
     }
-    setcartProducts([...cartProducts]);
+    setCartProducts([...cartProducts]);
     toast.success("Đã thêm sản phẩm vào giỏ hàng");
     return true;
   };
@@ -148,7 +190,7 @@ export function CartProvider({ children }: any) {
         amount: product.salePrice * qty,
       });
     }
-    setcartProducts([...cartProducts]);
+    setCartProducts([...cartProducts]);
   };
 
   const removeProductFromCart = (product: Product) => {
@@ -156,7 +198,7 @@ export function CartProvider({ children }: any) {
     if (cartProductIndex >= 0) {
       cartProducts.splice(cartProductIndex, 1);
     }
-    setcartProducts([...cartProducts]);
+    setCartProducts([...cartProducts]);
   };
 
   return (
@@ -168,7 +210,7 @@ export function CartProvider({ children }: any) {
         cartProductCount,
         cartTotal,
         addProductToCart,
-        setcartProducts,
+        setCartProducts,
         changeProductQuantity,
         removeProductFromCart,
         setCartProductCount,
@@ -176,6 +218,9 @@ export function CartProvider({ children }: any) {
         setPromotion,
         usePoint,
         setUsePoint,
+        reOrder,
+        cartProductTotal,
+        setCartProductTotal,
       }}
     >
       {children}
