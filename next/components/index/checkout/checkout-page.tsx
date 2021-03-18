@@ -16,8 +16,11 @@ import { GraphService } from "../../../lib/repo/graph.repo";
 import { useToast } from "../../../lib/providers/toast-provider";
 import gql from "graphql-tag";
 import router from "next/router";
+import ListCartCheckout from "./components/list-cart-checkout";
+import { Textarea } from "../../shared/utilities/form/textarea";
 
 export function CheckOutPage() {
+  const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
   const [isCheck, setIsCheck] = useState(true);
   const [deliMethodCS, setDeliMethod] = useState<MethodCheckout>(null);
   const [paymentMethodCS, setPaymentMethod] = useState<MethodCheckout>(null);
@@ -27,16 +30,15 @@ export function CheckOutPage() {
   const [cartAmount, setCartAmount] = useState(0);
   const [listMoneyCheckout, setListMoneyCheckout] = useState([
     {
-      title: "Tổng tiền hàng",
-      money: 0,
+      title: "Tạm tính",
+      money: cartTotal,
     },
     {
-      title: "Voucher giảm giá",
+      title: "Giảm giá",
       money: 0,
     },
   ]);
   const toast = useToast();
-  const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
   const {
     addressSelected,
     setShowDialogAddress,
@@ -81,8 +83,6 @@ export function CheckOutPage() {
     return true;
   };
   const confirmOrder = async (data: any) => {
-    console.log(data);
-
     let mutationName = "createOrder";
     const res = await GraphService.apollo.mutate({
       mutation: gql`
@@ -127,6 +127,8 @@ export function CheckOutPage() {
           listItemNew.push(item);
         }
       });
+      console.log(listItemNew);
+
       let task = [
         setPromotion(""),
         setCartProducts([...listItemNew]),
@@ -187,11 +189,6 @@ export function CheckOutPage() {
     }
   };
 
-  const setStyleBtn = () => {
-    let style = "w-full text-16 py-6 my-2";
-    return isCheck ? style + " btn-primary" : style + " btn-disabled";
-  };
-
   return !loadingCheckout ? (
     <div className="lg:flex justify-between gap-4 md:gap-8 xl:gap-16">
       <div className="w-full lg:w-2/3 xl:w-3/4 gap-4">
@@ -214,23 +211,24 @@ export function CheckOutPage() {
             {showInfor ? <TransferInformation info={transferInformation} /> : <></>}
           </div>
         </div>
-        <div className="w-full text-16  my-5">
+        <div className="w-full lg:w-11/12 text-16  my-5">
           <h4 className="uppercase text-16">Ghi chú khác</h4>
           <p className="text-14 pb-2">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
             dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
           </p>
-          <textarea
-            className="w-full border-2 border-gray-300 rounded-md p-3 outline-none"
+          <Textarea
+            value={note}
+            className=" border-2 border-gray-300 rounded-md p-3 outline-none"
             placeholder="Nhập ghi chú của bạn"
-            onChange={(e) => setNote(e.target.value)}
-          ></textarea>
+            onChange={(e) => setNote(e)}
+          />
         </div>
       </div>
       <div className="w-full lg:w-1/3 xl:w-1/4">
         <div className="w-full md:flex lg:inline-block md:gap-5 mb-10">
-          <div className="w-full md:w-1/2 lg:w-full mb-10">
-            <div className="flex justify-between items-center border-b-2 pb-1">
+          <div className="w-full md:w-1/3 lg:w-full mb-10">
+            <div className="flex justify-between items-center border-b-2">
               <div className="flex justify-between items-center gap-1 whitespace-nowrap">
                 <i className="text-primary text-16 ">
                   <IoLocationSharp />
@@ -251,9 +249,10 @@ export function CheckOutPage() {
             <div className="my-2 text-16 ">
               {addressSelected ? (
                 <>
-                  <p className="text-16 font-bold">{addressSelected.contactName}</p>
+                  <p className="text-16 font-bold">
+                    {addressSelected.contactName} - {addressSelected.phone}
+                  </p>
                   <p>{addressSelected.fullAddress}</p>
-                  <p>{addressSelected.phone}</p>
                 </>
               ) : (
                 <div className="mx-auto w-2/3 items-center text-14">
@@ -265,19 +264,17 @@ export function CheckOutPage() {
               )}
             </div>
           </div>
-          {addressSelected ? (
-            <div className="w-full md:w-1/2 lg:w-full">
-              <div className="border-b-4 pb-2">
-                <PayMoney listMoney={listMoneyCheckout} />
-              </div>
-              <div className="flex justify-between pt-2 text-16 ">
-                <p>Thành tiền</p>
-                <p className="font-bold text-primary">{NumberPipe(cartAmount, false)} VND</p>
-              </div>
+          <ListCartCheckout title="Danh sách sản phẩm" className="w-full md:w-1/3 lg:w-full mb-4" />
+
+          <div className="w-full md:w-1/3 lg:w-full">
+            <PayMoney listMoney={addressSelected ? listMoneyCheckout : []} />
+            <div className="flex justify-between pt-2 text-16 ">
+              <p>Thành tiền</p>
+              <p className="font-bold text-primary">
+                {NumberPipe(cartAmount ? cartAmount : listMoneyCheckout[0].money, false)} VND
+              </p>
             </div>
-          ) : (
-            <p className="text-16">Vui lòng chọn địa chỉ để xem "THÀNH TIỀN"</p>
-          )}
+          </div>
         </div>
         <div className="w-full">
           <div className="flex items-center gap-1 text-16  whitespace-nowrap">
@@ -291,7 +288,7 @@ export function CheckOutPage() {
             <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
           </div>
           <Button
-            className={setStyleBtn()}
+            className={"w-full text-16 py-3 my-2 bg-primary text-white"}
             disabled={!isCheck}
             asyncLoading
             onClick={async () => await handleConfirmOrder()}

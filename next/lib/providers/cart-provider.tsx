@@ -31,6 +31,8 @@ const CartContext = createContext<
     usePoint: boolean;
     setUsePoint: Function;
     reOrder: Function;
+    cartProductTotal: number;
+    setCartProductTotal: Function;
   }>
 >({});
 
@@ -38,6 +40,7 @@ export function CartProvider({ children }: any) {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
   const [cartProductCount, setCartProductCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
+  const [cartProductTotal, setCartProductTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [promotion, setPromotion] = useState("");
   const [usePoint, setUsePoint] = useState(true);
@@ -97,35 +100,61 @@ export function CartProvider({ children }: any) {
     localStorage.setItem(
       "cartProductStorage",
       JSON.stringify(
-        cartProducts?.map((item) => {
+        cartProducts.map((item) => {
           return { productId: item.productId, qty: item.qty, active: item.active };
         })
       )
     );
-    setCartProductCount(
-      cartProducts?.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
-    );
+    setCartProductCount(cartProducts.reduce((count, cartProduct) => (count += cartProduct.qty), 0));
     setCartTotal(
-      cartProducts?.reduce(
+      cartProducts.reduce(
         (total, cartProduct) => (cartProduct.active ? (total += cartProduct.amount) : total),
         0
       )
     );
+    setCartProductTotal(cartProducts.length);
   }, [cartProducts]);
-  const reOrder = async (items: CartProduct[]) => {
-    items.forEach((item) => {
-      if (item.productId) {
-        ProductService.getOne({ id: item.productId }).then((res) => {
-          let { a, b, ...product } = res;
-          addProductToCart(product, item.qty);
+  const reOrder = (items: { productId: string; qty: number }[]) => {
+    let resCartProducts = [...items];
+    cartProducts.forEach((item) => (item.active = false));
+    if (resCartProducts) {
+      //lấy danh sách product mua lại
+      ProductService.getAll({
+        query: {
+          limit: 0,
+          filter: {
+            _id: { __in: resCartProducts.map((x) => x.productId) },
+          },
+        },
+      }).then((res) => {
+        let listCartNew = cartProducts;
+        resCartProducts.forEach((reCartProduct) => {
+          let { __typename, ...product } = res.data.find((x) => x.id == reCartProduct.productId);
+          if (product) {
+            let index = listCartNew.findIndex((x) => x.productId == product.id);
+            console.log(index);
+            if (index !== -1) {
+              listCartNew.splice(index, 1);
+            }
+            listCartNew = [
+              {
+                productId: product.id,
+                product: product,
+                qty: reCartProduct.qty,
+                price: product.salePrice,
+                amount: product.salePrice * reCartProduct.qty,
+                active: true,
+              },
+              ...listCartNew,
+            ];
+          }
         });
-      }
-      console.log(cartProducts);
-    });
+        setCartProducts([...listCartNew]);
+      });
+    }
   };
   const addProductToCart = (product: Product, qty: number): boolean => {
     if (!qty) return false;
-
     let cartProduct = cartProducts.find((x) => x.productId == product.id);
     if (cartProduct) {
       cartProduct.qty += qty;
@@ -190,6 +219,8 @@ export function CartProvider({ children }: any) {
         usePoint,
         setUsePoint,
         reOrder,
+        cartProductTotal,
+        setCartProductTotal,
       }}
     >
       {children}

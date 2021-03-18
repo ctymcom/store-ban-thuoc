@@ -3,12 +3,15 @@ import moment from "moment-timezone";
 import Link from "next/link";
 import { Order } from "../../../../lib/repo/order.repo";
 import { useCart } from "../../../../lib/providers/cart-provider";
+import { Button } from "../../../shared/utilities/form/button";
+import { useRouter } from "next/router";
 
 interface PropsType extends ReactProps {
   order: Order;
 }
 export function OrderHistoryItem({ order }: PropsType) {
   const { reOrder } = useCart();
+  const router = useRouter();
   return (
     <>
       <div className="flex flex-col sm:flex-row justify-between items-center text-gray-700 border-b py-4 md:py-3">
@@ -52,16 +55,17 @@ export function OrderHistoryItem({ order }: PropsType) {
           <Link href={{ pathname: "/profile/order-details", query: { id: order.id } }}>
             <a className="btn-primary hover:underline">Xem chi tiết</a>
           </Link>
-          <button
-            className="btn-outline hover:underline"
-            onClick={() => {
-              reOrder([
+          <Button
+            className="btn-outline hover:underline ml-2"
+            asyncLoading
+            onClick={async () => {
+              await reOrder([
                 ...order.items.map((item) => ({ productId: item.productId, qty: item.qty })),
               ]);
+              router.push("/cart");
             }}
-          >
-            Mua lại
-          </button>
+            text="Mua lại"
+          />
         </div>
       </div>
     </>

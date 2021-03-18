@@ -9,7 +9,7 @@ import { useAuth } from "./../../lib/providers/auth-provider";
 
 export function Footer() {
   const [email, setEmail] = useState("");
-  const [ShowMore, setShowMore] = useState(false);
+  // const [ShowMore, setShowMore] = useState(false);
   const { hotline, footerIntro, footerMenus, socials } = useDefaultLayoutContext();
   const router = useRouter();
   const { user } = useAuth();
@@ -28,16 +28,30 @@ export function Footer() {
                         Về khoThuocsi.vn
                       </a>
                     </Link>
+                    <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
+                      {footerIntro?.content}
+                    </p>
+                    <Link href={footerIntro?.link}>
+                      <a
+                        className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
+                        target="_blank"
+                      >
+                        Tìm hiểu thêm
+                      </a>
+                    </Link>
                   </>
                 )}
-                <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                  {footerIntro?.content}
-                </p>
-                {ShowMore ? (
+
+                {/* {ShowMore ? (
                   <>
-                    <p className="mt-4 sm:-mt-3.5 md:mt-0 sm:mb-9 md:mb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                      {footerIntro?.more}
-                    </p>
+                    <Link href={footerIntro?.link}>
+                      <a
+                        className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
+                        target="_blank"
+                      >
+                        Tìm hiểu thêm
+                      </a>
+                    </Link>
                   </>
                 ) : (
                   ""
@@ -49,7 +63,7 @@ export function Footer() {
                   }}
                 >
                   {ShowMore ? "Thu gọn" : "Tìm hiểu thêm"}
-                </p>
+                </p> */}
               </div>
               <div className="flex flex-col justify-start lg:w-5/6 mt-6 lg:mt-0">
                 <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
