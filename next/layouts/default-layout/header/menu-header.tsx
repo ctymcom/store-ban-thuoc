@@ -14,10 +14,10 @@ export function MenuHeader(props: PropsType) {
   const [showHotline, setShowHotline] = useState(false);
   const router = useRouter();
   const menus = [
-    { label: "Sản phẩm", path: "/products" },
-    { label: "Hoạt chất", path: "/ingredients" },
-    { label: "Đặt hàng nhanh", path: "/quick-shopping" },
-    { label: "Khuyến mãi", path: "/products?sale=true" },
+    { label: "Sản phẩm", path: "/products", icon: "/assets/img/product.png" },
+    { label: "Hoạt chất", path: "/ingredients", icon: "/assets/img/ingredients.png" },
+    { label: "Đặt hàng nhanh", path: "/quick-shopping", icon: "/assets/img/quick-shopping.png" },
+    { label: "Khuyến mãi", path: "/products?sale=true", icon: "/assets/img/promotion.png" },
   ];
 
   const { hotline } = useDefaultLayoutContext();
@@ -80,16 +80,25 @@ export function MenuHeader(props: PropsType) {
       )}
       <div className="bg-primary hidden md:block">
         <div className="main-container flex justify-between items-stretch">
-          <ul className="flex">
+          <ul className="flex ">
             {menus.map((menu, index) => (
-              <Link href={menu.path} key={index}>
-                <a
-                  className={`p-4 text-gray-50 font-medium text-16 hover:bg-primary-dark
-              ${router.pathname == menu.path ? "bg-primary-dark font-semibold" : ""}`}
-                >
-                  {menu.label}
-                </a>
-              </Link>
+              <>
+                <Link href={menu.path} key={index}>
+                  <a
+                    className={`p-4 flex items-center text-gray-50 font-medium text-16 hover:bg-primary-dark
+                    ${router.pathname == menu.path ? "bg-primary-dark font-semibold" : ""}`}
+                  >
+                    <img
+                      className="w-8 h-8 mr-2"
+                      src={menu.icon || "/assets/img/default.png"}
+                      onError={(e) => {
+                        (e.target as any).src = "/assets/img/default.png";
+                      }}
+                    />
+                    <span>{menu.label}</span>
+                  </a>
+                </Link>
+              </>
             ))}
           </ul>
           <div

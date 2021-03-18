@@ -38,7 +38,7 @@ export function RewardPointProvider({ children }: any) {
       },
       fragment: UserPointLogService.shortFragment,
     }).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
 
       setListRewardPoint(res.data);
       setPagination({ ...pagination, total: res.pagination.total });
