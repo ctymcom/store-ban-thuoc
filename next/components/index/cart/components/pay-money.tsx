@@ -15,7 +15,7 @@ export function PayMoney(props: PropsType) {
   const { usePoint } = useCart();
   const { listMoney } = props;
   return (
-    <>
+    <div className="border-b-2 my-4">
       <div className="flex border-b-2 items-center pb-2">
         <i className="text-primary text-20">
           <FaRegMoneyBillAlt />
@@ -40,7 +40,7 @@ export function PayMoney(props: PropsType) {
         ) : (
           <p>Vui lòng chọn địa chỉ giao hàng để xen "Giảm giá"</p>
         )}
-        {usePoint ? (
+        {usePoint && listMoney.length > 1 ? (
           <p className="text-16 flex text-primary gap-2">
             <HiOutlineInformationCircle />
             Bạn đang sử dụng điểm thưởng cho đơn hàng này
@@ -49,6 +49,6 @@ export function PayMoney(props: PropsType) {
           <p></p>
         )}
       </div>
-    </>
+    </div>
   );
 }

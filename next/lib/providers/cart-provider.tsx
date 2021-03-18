@@ -31,6 +31,8 @@ const CartContext = createContext<
     usePoint: boolean;
     setUsePoint: Function;
     reOrder: Function;
+    cartProductTotal: number;
+    setCartProductTotal: Function;
   }>
 >({});
 
@@ -38,6 +40,7 @@ export function CartProvider({ children }: any) {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
   const [cartProductCount, setCartProductCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
+  const [cartProductTotal, setCartProductTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [promotion, setPromotion] = useState("");
   const [usePoint, setUsePoint] = useState(true);
@@ -109,6 +112,7 @@ export function CartProvider({ children }: any) {
         0
       )
     );
+    setCartProductTotal(cartProducts.length);
   }, [cartProducts]);
   const reOrder = (items: { productId: string; qty: number }[]) => {
     let resCartProducts = [...items];
@@ -215,6 +219,8 @@ export function CartProvider({ children }: any) {
         usePoint,
         setUsePoint,
         reOrder,
+        cartProductTotal,
+        setCartProductTotal,
       }}
     >
       {children}
