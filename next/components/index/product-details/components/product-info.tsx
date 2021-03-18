@@ -46,12 +46,12 @@ export function ProductInfo(props: PropsType) {
 
   return (
     <>
-      <div className="text-gray-600 mb-2 text-sm">
+      {/* <div className="text-gray-600 mb-2 text-sm">
         {product.categories
           .filter((x) => x.parents.length)
           .map((x) => x.name)
           .join(", ")}
-      </div>
+      </div> */}
       <h2 className="text-gray-700 mb-1 lg:mb-2 font-bold text-xl lg:text-2xl">{product.name}</h2>
       {!!expiredFromNowText && (
         <div className="finish-time text-danger font-extrabold mb-4">
