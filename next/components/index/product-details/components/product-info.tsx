@@ -1,7 +1,7 @@
 import { intervalToDuration, parseISO } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NumberPipe } from "../../../../lib/pipes/number";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { useCart } from "../../../../lib/providers/cart-provider";
@@ -13,22 +13,36 @@ interface PropsType extends ReactProps {}
 
 export function ProductInfo(props: PropsType) {
   const [quantity, setQuantity] = useState(0);
+
+  const { cartProducts, changeProductQuantity, removeProductFromCart } = useCart();
+
+  useEffect(() => {
+    setQuantity(cartProducts.find((x) => x.productId == product.id)?.qty || 0);
+  }, []);
+
+  useEffect(() => {
+    if (quantity) {
+      changeProductQuantity(product, quantity);
+    } else {
+      removeProductFromCart(product);
+    }
+  }, [quantity]);
   const [expiredFromNowText, setExpiredFromNowText] = useState("");
 
   const { saveCurrentPath } = useAuth();
   const { product } = useProductDetailsContext();
-  const router = useRouter();
-  const { addProductToCart } = useCart();
-  const onAddToCart = (redirect: boolean = false) => {
-    if (redirect) {
-      if (addProductToCart(product, quantity)) {
-        router.push("/cart");
-      }
-    } else {
-      addProductToCart(product, quantity);
-      setQuantity(0);
-    }
-  };
+  // const router = useRouter();
+  // const { addProductToCart } = useCart();
+  // const onAddToCart = (redirect: boolean = false) => {
+  //   if (redirect) {
+  //     if (addProductToCart(product, quantity)) {
+  //       router.push("/cart");
+  //     }
+  //   } else {
+  //     addProductToCart(product, quantity);
+  //     setQuantity(0);
+  //   }
+  // };
 
   useInterval(() => {
     if (product?.saleExpiredDate) {
@@ -46,12 +60,12 @@ export function ProductInfo(props: PropsType) {
 
   return (
     <>
-      <div className="text-gray-600 mb-2 text-sm">
+      {/* <div className="text-gray-600 mb-2 text-sm">
         {product.categories
           .filter((x) => x.parents.length)
           .map((x) => x.name)
           .join(", ")}
-      </div>
+      </div> */}
       <h2 className="text-gray-700 mb-1 lg:mb-2 font-bold text-xl lg:text-2xl">{product.name}</h2>
       {!!expiredFromNowText && (
         <div className="finish-time text-danger font-extrabold mb-4">
@@ -83,14 +97,14 @@ export function ProductInfo(props: PropsType) {
               setQuantity={setQuantity}
             />
           </div>
-          <div className="flex">
+          {/* <div className="flex">
             <button className="btn-accent btn-lg" onClick={() => onAddToCart()}>
               Thêm vào giỏ
             </button>
             <button className="btn-primary btn-lg ml-2" onClick={() => onAddToCart(true)}>
               Mua ngay
             </button>
-          </div>
+          </div> */}
         </>
       ) : (
         <Link href="/login">

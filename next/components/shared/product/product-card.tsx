@@ -11,19 +11,21 @@ import LazyLoad from "react-lazyload";
 
 interface PropsType extends ReactProps {
   product?: Product;
-  productTagName?: string[];
+  showGroup?: boolean;
 }
-export function ProductCard({ product, productTagName, ...props }: PropsType) {
+export function ProductCard({ product, showGroup = true, ...props }: PropsType) {
   const [quantity, setQuantity] = useState(0);
 
   const { saveCurrentPath } = useAuth();
   const { addProductToCart } = useCart();
   const router = useRouter();
 
-  const categoryText = `${product.categories
-    .filter((x) => x.parents.length)
-    .map((x) => x.name)
-    .join(", ")}`;
+  const categoryText = showGroup
+    ? `${product.categories
+        .filter((x) => x.parents.length)
+        .map((x) => x.name)
+        .join(", ")}`
+    : "";
 
   const onAddToCart = (redirect: boolean = false) => {
     if (redirect) {
@@ -34,8 +36,6 @@ export function ProductCard({ product, productTagName, ...props }: PropsType) {
       setQuantity(0);
     }
   };
-
-  console.log(productTagName);
 
   return useMemo(() => {
     return (
@@ -63,22 +63,26 @@ export function ProductCard({ product, productTagName, ...props }: PropsType) {
                   </div>
                 )}
 
-                {product?.tags.includes("FLASHSALES") && (
-                  <div className="flex-center absolute -right-1 -top-2 text-white font-semibold">
-                    <img
-                      className="w-16 h-16"
-                      src="/assets/img/FLASHSALES-01.png"
-                      alt="FLASHSALES"
-                    />
-                    <span className="absolute top-0 left-6 text-14">
-                      {product?.saleRate ? "-" + product?.saleRate + "GIẢM" : 0}%
-                    </span>
-                  </div>
-                )}
+                {product?.saleRate
+                  ? product?.tags.includes("FLASHSALES") && (
+                      <div className="flex-center absolute -right-1 -top-2 text-white font-semibold">
+                        <img
+                          className="w-16 h-16"
+                          src="/assets/img/FLASHSALES-01.png"
+                          alt="FLASHSALES"
+                        />
+                        <span className="absolute top-0 left-6 text-14">
+                          - {product?.saleRate}% GIẢM
+                        </span>
+                      </div>
+                    )
+                  : ""}
               </div>
-              <div className="text-sm text-gray-500 pt-3 group-hover:text-primary overflow-ellipsis overflow-hidden whitespace-nowrap">
-                {categoryText}
-              </div>
+              {showGroup && (
+                <div className="text-sm text-gray-500 pt-3 group-hover:text-primary overflow-ellipsis overflow-hidden whitespace-nowrap">
+                  {categoryText}
+                </div>
+              )}
               <div
                 className="h-14 text-ellipsis-2 text-lg text-gray-800 pt-1 pb-1 font-semibold leading-snug group-hover:text-primary-dark"
                 title={product.name}
