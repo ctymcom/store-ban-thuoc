@@ -10,7 +10,7 @@ interface PropsType extends ReactProps {
 }
 export function MainHeader(props: PropsType) {
   const [searchText, setSearchText] = useState("");
-  const { cartProductCount } = useCart();
+  const { cartProductCount, cartProductTotal } = useCart();
 
   const router = useRouter();
   const searchTerm = async () => {
@@ -85,9 +85,9 @@ export function MainHeader(props: PropsType) {
               <i className="text-24">
                 <HiOutlineShoppingCart />
               </i>
-              {!!cartProductCount && (
+              {!!cartProductTotal && (
                 <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-0 md:right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
-                  <span>{cartProductCount}</span>
+                  <span>{cartProductTotal}</span>
                 </div>
               )}
             </a>

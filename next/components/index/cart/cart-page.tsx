@@ -15,7 +15,6 @@ export default function CartPage(props) {
   const { cartProducts, setCartProducts, cartTotal, usePoint, setUsePoint } = useCart();
   const [checkAll, setCheckAll] = useState(true);
   const [mess, setMess] = useState("");
-  const router = useRouter();
   const toast = useToast();
   const alert = useAlert();
   const [listMoneyCart, setListMoneyCart] = useState([
