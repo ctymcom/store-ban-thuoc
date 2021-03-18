@@ -267,9 +267,7 @@ export function CheckOutPage() {
           <ListCartCheckout title="Danh sách sản phẩm" className="w-full md:w-1/3 lg:w-full mb-4" />
 
           <div className="w-full md:w-1/3 lg:w-full">
-            <div className="border-b-4 pb-2">
-              <PayMoney listMoney={addressSelected ? listMoneyCheckout : []} />
-            </div>
+            <PayMoney listMoney={addressSelected ? listMoneyCheckout : []} />
             <div className="flex justify-between pt-2 text-16 ">
               <p>Thành tiền</p>
               <p className="font-bold text-primary">

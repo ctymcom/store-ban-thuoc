@@ -162,24 +162,13 @@ export default function CartPage(props) {
             handleChangeItem={handleChangeItem}
             checkAll={checkAll}
           />
-          <div className="text-primary flex items-center whitespace-nowrap">
-            <div
-              className="cursor-pointer flex items-center text-16 "
-              onClick={() => router.push("/home")}
-            >
-              <i className="text-18 px-1">
-                <HiArrowNarrowLeft />
-              </i>
-              <p>Tiếp tục mua sắm</p>
-            </div>
-          </div>
         </div>
         <div className="w-full lg:w-1/4 flex flex-col">
           <div className="sm:pr-2 lg:pr-0 row-auto">
             <Promotion />
           </div>
-          <div className="sm:pl-2 lg:pl-0 my-5 sm:mt-5 lg:mt-3.5">
-            <PayMoney listMoney={listMoneyCart}/>
+          <div className="sm:pl-2 lg:pl-0 my-5 sm:mt-5 lg:mt-3.5 leading-7">
+            <PayMoney listMoney={listMoneyCart} />
             <CheckBoxSquare
               checked={usePoint}
               text={"Sử dụng điểm thưởng"}
@@ -187,11 +176,17 @@ export default function CartPage(props) {
             />
             <Link href={mess ? "" : "/checkout"}>
               <button
-                className="btn btn-primary w-full py-6 mt-2 "
+                className="btn-primary w-full py-4 my-2 "
                 onClick={() => (mess ? toast.warn(mess) : "")}
               >
                 Tiến hành thanh toán
               </button>
+            </Link>
+            <Link href="/">
+              <p className=" btn-default text-danger flex items-center gap-2">
+                <HiArrowNarrowLeft className="text-20" />
+                Tiếp tục mua sắm
+              </p>
             </Link>
           </div>
         </div>
