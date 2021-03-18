@@ -57,7 +57,7 @@ export function MenuHeader(props: PropsType) {
                   </i>
                 </button>
               </div>
-              <div className="flex w-full py-4 border-b border-gray-100">
+              <div className="flex w-full py-4 border-b border-gray-100 pl-2">
                 <HeaderUser />
               </div>
               <ul>
