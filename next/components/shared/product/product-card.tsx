@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NumberPipe } from "./../../../lib/pipes/number";
 import { ProductQuantity } from "./product-quantity";
 import { Product } from "./../../../lib/repo/product.repo";
@@ -55,13 +55,29 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                     />
                   </div>
                 </LazyLoad>
-                {product.isNew && <div className="new-tag">Mới</div>}
-                {product.saleRate && (
-                  <div className="flex-center absolute right-0 top-3 text-white font-semibold">
-                    <img src="/assets/img/sale.svg" />
-                    <span className="absolute text-sm">-{product.saleRate}%</span>
+                {product?.tags.includes("NEW") && (
+                  <div className="flex-center absolute -left-2 -top-2 text-white font-semibold">
+                    <img className="w-16 h-16" src="/assets/img/NEW-01.png" alt="NEW" />
+                    <span className="absolute top-4 left-3 text-12 transform -rotate-45 tracking-widest">
+                      MỚI
+                    </span>
                   </div>
                 )}
+
+                {product?.saleRate
+                  ? product?.tags.includes("FLASHSALES") && (
+                      <div className="flex-center absolute -right-1 -top-2 text-white font-semibold">
+                        <img
+                          className="w-16 h-16"
+                          src="/assets/img/FLASHSALES-01.png"
+                          alt="FLASHSALES"
+                        />
+                        <span className="absolute top-0 left-6 text-14">
+                          - {product?.saleRate}% GIẢM
+                        </span>
+                      </div>
+                    )
+                  : ""}
               </div>
               {showGroup && (
                 <div className="text-sm text-gray-500 pt-3 group-hover:text-primary overflow-ellipsis overflow-hidden whitespace-nowrap">
