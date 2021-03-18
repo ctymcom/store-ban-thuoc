@@ -44,6 +44,13 @@ export function PostDetailsPage() {
                   format(parseISO(post.createdAt), "MM yyyy - HH:mm")}
               </div>
               <div className="text-gray-800 text-3xl mt-2 font-semibold">{post.title}</div>
+              <div className="w-full mt-10 shadow-2xl">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1959.787621554649!2d106.69029059662462!3d10.76718235928839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f166975fa01%3A0xa3d4e0e05339437d!2zQ05DVCBj4buVIHBo4bqnbiBBcm1lcGhhY28sIFjDrSBuZ2hp4buHcCBkxrDhu6NjIHBo4bqpbSAxNTAs!5e0!3m2!1svi!2s!4v1616057443839!5m2!1svi!2s"
+                  className="w-full"
+                  loading="lazy"
+                ></iframe>
+              </div>
               <div className="text-gray-600 text-lg mt-4">{post.excerpt}</div>
               <div
                 className="ql-editor ql-snow mt-5"
