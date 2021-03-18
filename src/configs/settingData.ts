@@ -11,6 +11,7 @@ export enum SettingKey {
   SEO_DESCRIPTION = "SEO_DESCRIPTION", // Mô tả website
   SEO_IMAGE = "SEO_IMAGE", // Hình ảnh SEO
   SEO_KEYWORDS = "SEO_KEYWORDS", // Từ khoá SEO
+  POLICY = "POLICY", // Link điều khoản sử dụng
   // Cấu hình trang chủ
   TOP_MENU = "TOP_MENU", // Cấu hình top menu
   BANNER_1 = "BANNER_1", // Cấu hình banner 1
@@ -70,6 +71,15 @@ export const SETTING_DATA = [
         name: "SEO: Từ khoá",
         key: SettingKey.SEO_KEYWORDS,
         value: `kho thuốc sĩ, khothuocsi`,
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.string,
+        name: "Link Điều khoản sử dụng",
+        key: SettingKey.POLICY,
+        value: `https://khothuocsi.arito.vn/post/dieu-khoan-su-dung`,
         isActive: true,
         isPrivate: false,
         readOnly: false,
