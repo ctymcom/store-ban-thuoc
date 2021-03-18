@@ -9,7 +9,6 @@ import { cloneDeep } from "lodash";
 export const OrderHistoryContext = createContext<
   Partial<{
     orders: Order[];
-    setListOrder: Function;
     pagination: Pagination;
     setPagination: Function;
     status: string;
@@ -46,6 +45,8 @@ export function OrderProvider({ children }: any) {
   const loadListOrder = () => {
     setOrders(null);
     let statusCode = statuses.find((x) => x.name2 == status)?.code || undefined;
+    console.log(statusCode);
+
     OrderService.getAll({
       query: {
         limit: pagination.limit,
@@ -59,6 +60,8 @@ export function OrderProvider({ children }: any) {
         (order) =>
           (order.statusText = statuses.find((x) => x.code == order.status)?.name || "Không có")
       );
+      console.log(orders[2]);
+
       setOrders(orders);
       setPagination({ ...pagination, total: res.pagination.total });
     });
@@ -73,6 +76,9 @@ export function OrderProvider({ children }: any) {
       setStatuses(res.data);
     });
   };
+  // console.log("Router query " + router.query["status"]);
+  // console.log("Status " + status);
+  // console.log("Statuses " + statuses);
 
   return (
     <OrderHistoryContext.Provider

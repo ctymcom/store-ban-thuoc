@@ -11,7 +11,6 @@ export const OrderDetailsContext = createContext<
 >({});
 
 export function OrderDetailsProvider(props) {
-  const [orderId, setOrderId] = useState("");
   const [order, setOrder] = useState<Order>(null);
   const router = useRouter();
 
