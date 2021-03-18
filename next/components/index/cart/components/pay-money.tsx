@@ -1,5 +1,5 @@
-import { BiMoney } from "react-icons/bi";
 import { HiOutlineInformationCircle } from "react-icons/hi";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
 
 import { NumberPipe } from "../../../../lib/pipes/number";
 import { useCart } from "../../../../lib/providers/cart-provider";
@@ -18,7 +18,7 @@ export function PayMoney(props: PropsType) {
     <>
       <div className="flex border-b-2 items-center pb-2">
         <i className="text-primary text-20">
-          <BiMoney />
+          <FaRegMoneyBillAlt />
         </i>
         <p className="uppercase px-2 text-16">Thành Tiền</p>
       </div>
