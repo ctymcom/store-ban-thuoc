@@ -175,7 +175,7 @@ export default function CartPage(props) {
             />
             <Link href={mess ? "" : "/checkout"}>
               <button
-                className="btn-primary w-full py-4 my-2 "
+                className="btn-primary w-full py-6 my-2 "
                 onClick={() => (mess ? toast.warn(mess) : "")}
               >
                 Tiến hành thanh toán
