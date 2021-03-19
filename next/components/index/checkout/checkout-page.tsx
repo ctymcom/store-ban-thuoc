@@ -47,6 +47,7 @@ export function CheckOutPage() {
     loadingCheckout,
     paymenMethods,
     deliveryMethods,
+    policy,
   } = useCheckoutContext();
   useEffect(() => {
     let listItemNew = [];
@@ -286,7 +287,13 @@ export function CheckOutPage() {
                 onClick={(e) => setIsCheck(e)}
               />
             </div>
-            <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
+            <a
+              className="text-primary cursor-pointer hover:underline"
+              href={policy}
+              target="_blank"
+            >
+              Điều khoản sử dụng
+            </a>
           </div>
           <Button
             className={"w-full text-16 py-3 my-2 btn-primary"}
