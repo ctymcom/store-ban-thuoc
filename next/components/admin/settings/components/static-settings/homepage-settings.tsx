@@ -159,10 +159,10 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 }
               />
               <div className="flex mb-2">
-                <div className="form-input hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
                   Hiện Facebook
                 </div>
-                <div className="form-input flex-grow rounded-none rounded-br">
+                <div className="form-input flex items-center flex-grow rounded-none rounded-br">
                   <Switch
                     value={setting.value.facebook.visible}
                     onChange={(val) =>
@@ -182,10 +182,10 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 }
               />
               <div className="flex mb-2">
-                <div className="form-input hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
                   Hiện Youtube
                 </div>
-                <div className="form-input flex-grow rounded-none rounded-br">
+                <div className="form-input flex items-center flex-grow rounded-none rounded-br">
                   <Switch
                     value={setting.value.youtube.visible}
                     onChange={(val) =>
@@ -205,10 +205,10 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 }
               />
               <div className="flex mb-2">
-                <div className="form-input hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
                   Hiện Zalo
                 </div>
-                <div className="form-input flex-grow rounded-none rounded-br">
+                <div className="form-input flex items-center flex-grow rounded-none rounded-br">
                   <Switch
                     value={setting.value.zalo.visible}
                     onChange={(val) =>

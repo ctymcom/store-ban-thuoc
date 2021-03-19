@@ -45,16 +45,17 @@ export function SettingItemsValue({ items, options, ...props }: PropTypes) {
               <div className="flex" key={option.value}>
                 <div
                   className={
-                    `form-input hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none ` +
+                    `form-input flex items-center w-auto hover:border-gray-400 flex-grow-0 flex-shrink-0 bg-gray-100 border-r-0 rounded-none ` +
                     `${optionIndex == items.length - 1 ? "rounded-bl" : ""}`
                   }
+                  style={{ minWidth: "9rem" }}
                 >
                   {option.label}
                 </div>
                 {option.type == "boolean" && (
                   <div
                     className={
-                      `form-input flex-grow rounded-none ` +
+                      `form-input flex-grow flex items-center rounded-none ` +
                       `${optionIndex == 0 ? "rounded-tr" : ""} ${
                         optionIndex == items.length - 1 ? "rounded-br" : ""
                       }`
