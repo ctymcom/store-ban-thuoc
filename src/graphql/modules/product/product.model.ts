@@ -13,6 +13,7 @@ export type IProduct = BaseDocument & {
   barcode?: string; // Mã barcode
   origin?: string; // Xuất xứ
   ingredientIds?: string[]; // Mã thành phân hoạt chất
+  ingredientNames?: string[]; // Danh sách tên hoạt chất
   packing?: string; // Quy cách đóng gói
   dosageForms?: string; // Dạng bào chế
   antibiotic?: string; // Kháng sinh
@@ -54,6 +55,7 @@ const productSchema = new Schema(
     barcode: { type: String },
     origin: { type: String },
     ingredientIds: { type: [{ type: Schema.Types.ObjectId, ref: "Ingredient" }] },
+    ingredientNames: [{ type: String }],
     packing: { type: String },
     dosageForms: { type: String },
     antibiotic: { type: String },
@@ -86,7 +88,10 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
-productSchema.index({ name: "text" }, { weights: { name: 2 } });
+productSchema.index(
+  { name: "text", ingredientNames: "text" },
+  { weights: { name: 2, ingredientNames: 1 } }
+);
 
 export const ProductHook = new ModelHook<IProduct>(productSchema);
 export const ProductModel: mongoose.Model<IProduct> = MainConnection.model(
