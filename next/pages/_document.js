@@ -14,6 +14,13 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
           <div id="dialog-root"></div>
+              
+          <div id="fb-root"></div>
+          <div
+            class="fb-customerchat"
+            language="vi" themeColor="#42B54A" pageId="102164275124516"
+          ></div>
+
         </body>
       </Html>
     )

@@ -3,6 +3,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { UserAddressService, UserAddress } from "../../../../lib/repo/user-address.repo";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { CheckoutService, MethodCheckout, Order } from "../../../../lib/repo/checkout.repo";
+import { SettingService } from "../../../../lib/repo/setting.repo";
 export const CheckoutContext = createContext<
   Partial<{
     addressSelected: UserAddress;
@@ -12,10 +13,12 @@ export const CheckoutContext = createContext<
     loadingCheckout: boolean;
     paymenMethods: MethodCheckout[];
     deliveryMethods: MethodCheckout[];
+    policy: string;
   }>
 >({});
 
 export const CheckoutProvider = (props) => {
+  const [policy, setPolicy] = useState(null);
   const [showDialogAddress, setShowDialogAddress] = useState(false);
   const [addressSelected, setAddressSelected] = useState<UserAddress>(null);
   const [paymenMethods, setPaymenMethods] = useState<MethodCheckout[]>(null);
@@ -56,6 +59,16 @@ export const CheckoutProvider = (props) => {
           })),
         ]);
       }),
+      SettingService.getAll({
+        query: {
+          limit: 0,
+          filter: {
+            key: { __in: ["POLICY"] },
+          },
+        },
+      }).then((res) => {
+        setPolicy(res.data.find((x) => x.key == "POLICY").value);
+      }),
     ];
     Promise.all(tasks)
       .then((res) => {
@@ -74,6 +87,7 @@ export const CheckoutProvider = (props) => {
         setShowDialogAddress,
         paymenMethods,
         deliveryMethods,
+        policy,
       }}
     >
       {props.children}
