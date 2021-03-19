@@ -36,21 +36,19 @@ export function HeaderUser({ ...props }: PropsType) {
     <>
       {user ? (
         <>
-          {/* <Link href="/profile/notification">
-            <a className="border-r btn-default p-0 h-10 w-16">
-              <i className="text-24">
-                <HiOutlineBell />
-              </i>
-              <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
-            <span>76</span>                
-          </div>
+          <Link href="/profile/notification">
+            <a className="btn-default p-0 h-10 w-14 mr-2 hover:bg-primary-light">
+              <img className="h-8" src="/assets/img/bell.png" />
+              {/* <div className="rounded-full flex-center bg-red-500 box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
+                <span>76</span>
+              </div> */}
             </a>
-          </Link> */}
-          <div className="relative w-full">
+          </Link>
+          <div className="relative border-l border-gray-100">
             <Menu>
               {({ open }) => (
                 <>
-                  <Menu.Button className="relative flex items-center px-4 cursor-pointer hover:text-primary focus:outline-none">
+                  <Menu.Button className="relative flex items-center px-3 mr-0 cursor-pointer hover:text-primary focus:outline-none">
                     <div className="flex-shrink-0 w-10">
                       <div className="image-wrapper circle">
                         <img
@@ -62,7 +60,7 @@ export function HeaderUser({ ...props }: PropsType) {
                       </div>
                     </div>
                     <div className="flex items-center flex-grow">
-                      <div className="pl-3 pr-2 font-semibold text-left leading-tight max-w-3xs">
+                      <div className="pl-3 font-semibold text-left leading-tight max-w-3xs text-ellipsis-2">
                         {user.nickname}
                       </div>
                       <i className="text-24 ml-auto">

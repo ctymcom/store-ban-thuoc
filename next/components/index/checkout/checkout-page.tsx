@@ -18,6 +18,7 @@ import gql from "graphql-tag";
 import router from "next/router";
 import ListCartCheckout from "./components/list-cart-checkout";
 import { Textarea } from "../../shared/utilities/form/textarea";
+import { FaLeaf } from "react-icons/fa";
 
 export function CheckOutPage() {
   const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
@@ -48,14 +49,14 @@ export function CheckOutPage() {
     deliveryMethods,
   } = useCheckoutContext();
   useEffect(() => {
+    let listItemNew = [];
     cartProducts.forEach((item: CartProduct) => {
-      let listItemNew = items;
       if (item.active) {
         let itemNew = { productId: item.productId, qty: item.qty };
         listItemNew.push(itemNew);
-        setItems([...listItemNew]);
       }
     });
+    setItems([...listItemNew]);
   }, []);
   useEffect(() => {
     if (paymentMethodCS?.code === "CK") {
@@ -74,7 +75,7 @@ export function CheckOutPage() {
         items,
       });
     }
-  }, [paymentMethodCS, addressSelected, deliMethodCS]);
+  }, [paymentMethodCS, addressSelected, deliMethodCS, usePoint == false]);
   const checkBeforeMutate = () => {
     if (!addressSelected) {
       toast.warn("Bạn chưa chọn địa chỉ giao hàng");
