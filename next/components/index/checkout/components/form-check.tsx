@@ -34,7 +34,7 @@ export function FormCheck(props: PropsType) {
         return tempStyle;
       }
       case "he": {
-        let tempStyle = " text-16";
+        let tempStyle = " text-16 font-extrabold";
         if (id === iDChecking) {
           tempStyle += " text-primary";
         }
@@ -56,7 +56,7 @@ export function FormCheck(props: PropsType) {
                   setIDCheck(item);
                 }}
               >
-                <div className="flex items-center">
+                <div className="flex items-start">
                   <Checkbox checked={setCheckBox(item.id)} />
                   <div>
                     <h4 className={setStyleCheck(item.id, "he")}>{item.code}</h4>

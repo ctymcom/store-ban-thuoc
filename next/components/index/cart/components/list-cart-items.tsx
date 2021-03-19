@@ -20,7 +20,7 @@ export function ListCartItems(props: Proptype) {
             >
               <CheckboxItem checked={props.checkAll} />
             </div>
-            <span className="col-span-11">Sản Phẩm</span>
+            <span className="col-span-11 ml-2">Sản Phẩm</span>
           </div>
           <div className="col-span-2">Giá</div>
           <div className="col-span-2">Số Lượng</div>
@@ -30,10 +30,16 @@ export function ListCartItems(props: Proptype) {
         <div className="block sm:hidden">
           <h3>Thông tin kiện hàng</h3>
           <div className="flex justify-between text-16 normal-case pt-2">
-            <p onClick={() => props.handleChangeItem(null, "activeAll", !props.checkAll)}>
+            <p
+              className="btn-default p-0"
+              onClick={() => props.handleChangeItem(null, "activeAll", !props.checkAll)}
+            >
               {props.checkAll ? "Bỏ chọn tất cả" : " Chọn tất cả"}
             </p>
-            <p onClick={() => props.handleChangeItem(null, "deleteItemsSelected", null)}>
+            <p
+              className="btn-default p-0"
+              onClick={() => props.handleChangeItem(null, "deleteItemsSelected", null)}
+            >
               Xóa đã chọn
             </p>
           </div>
