@@ -4,8 +4,8 @@ import { CartProvider } from "../lib/providers/cart-provider";
 import { Footer } from "./default-layout/footer";
 import { HeadSEO } from "./default-layout/head-seo";
 import { Header } from "./default-layout/header/header";
+import { MessengerCustomerChat } from "./default-layout/messenger-customer-chat";
 import { DefaultLayoutProvider } from "./default-layout/providers/default-layout-providers";
-// import Sidebar from './components/sidebar';
 
 interface PropsType extends ReactProps {
   title?: string;
@@ -29,6 +29,7 @@ export function DefaultLayout({ title = "Kho Thuốc Sỉ", ...props }: PropsTyp
             {props.children}
           </div>
           <Footer />
+          <MessengerCustomerChat pageId="102164275124516" />,
         </DefaultLayoutProvider>
       </CartProvider>
     </>
