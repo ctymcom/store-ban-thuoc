@@ -6,6 +6,9 @@ import { HeadSEO } from "./default-layout/head-seo";
 import { Header } from "./default-layout/header/header";
 import { MessengerCustomerChat } from "react-messenger-customer-chat";
 import { DefaultLayoutProvider } from "./default-layout/providers/default-layout-providers";
+import { createPortal } from "react-dom";
+import useDevice from "./../lib/hooks/useDevice";
+import MessengerChat from "./default-layout/messenger-chat";
 
 interface PropsType extends ReactProps {
   title?: string;
@@ -13,6 +16,7 @@ interface PropsType extends ReactProps {
 
 export function DefaultLayout({ title = "Kho Thuốc Sỉ", ...props }: PropsType) {
   const { checkUser } = useAuth();
+  const { isSSR } = useDevice();
 
   useEffect(() => {
     checkUser();
@@ -29,7 +33,7 @@ export function DefaultLayout({ title = "Kho Thuốc Sỉ", ...props }: PropsTyp
             {props.children}
           </div>
           <Footer />
-          <MessengerCustomerChat language="vi" themeColor="#42B54A" pageId="102164275124516" />,
+          <MessengerChat language="vi" themeColor="#42B54A" pageId="102164275124516" />
         </DefaultLayoutProvider>
       </CartProvider>
     </>
