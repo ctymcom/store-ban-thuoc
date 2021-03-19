@@ -1,3 +1,4 @@
+import useDevice from "../../../../lib/hooks/useDevice";
 import { useProductDetailsContext } from "../providers/product-details-provider";
 
 export function ProductContent() {
@@ -11,9 +12,16 @@ export function ProductContent() {
     }, 300);
   };
 
+  const { isDesktop } = useDevice();
+  console.log(isDesktop);
+
   return (
     <>
-      <div className="flex w-full no-scrollbar bg-white sticky top-16 pt-2 md:top-32 z-10 md:pt-4">
+      <div
+        className={`flex w-full ${
+          isDesktop ? `h-scrollbar` : `no-scrollbar`
+        }  bg-white sticky top-16 pt-2 md:top-32 z-10 md:pt-4`}
+      >
         {product.tabs.map((tab, index) => (
           <a
             key={tab.name}

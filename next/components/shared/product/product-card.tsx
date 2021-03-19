@@ -58,7 +58,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                 {product?.tags.includes("NEW") && (
                   <div className="flex-center absolute -left-2 -top-2 text-white font-semibold">
                     <img className="w-16 h-16" src="/assets/img/NEW-01.png" alt="NEW" />
-                    <span className="absolute top-4 left-3 text-12 transform -rotate-45 tracking-widest">
+                    <span className="absolute top-3 left-3 text-14 transform -rotate-45 tracking-widest">
                       MỚI
                     </span>
                   </div>
@@ -73,7 +73,9 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                           alt="FLASHSALES"
                         />
                         <span className="absolute top-0 left-6 text-14">
-                          - {product?.saleRate}% GIẢM
+                          {product?.saleRate}
+                          <sup>%</sup>
+                          <p>GIẢM</p>
                         </span>
                       </div>
                     )

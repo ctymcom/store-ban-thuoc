@@ -89,19 +89,17 @@ export function MenuHeader(props: PropsType) {
         <div className="main-container flex justify-between items-stretch">
           <ul className="flex">
             {menus.map((menu, index) => (
-              <>
-                <li key={index}>
-                  <Link href={menu.path}>
-                    <a
-                      className={`md:px-2 lg:px-4 py-4 flex items-center text-gray-50 font-medium hover:bg-primary-dark
+              <li key={index}>
+                <Link href={menu.path}>
+                  <a
+                    className={`md:px-2 lg:px-4 py-4 flex items-center text-gray-50 font-medium hover:bg-primary-dark
                     ${router.pathname == menu.path ? "bg-primary-dark font-semibold" : ""}`}
-                    >
-                      <img className="h-6 mr-1.5" src={menu.icon} />
-                      <span className="whitespace-nowrap md:text-15 lg:text-16">{menu.label}</span>
-                    </a>
-                  </Link>
-                </li>
-              </>
+                  >
+                    <img className="h-6 mr-1.5" src={menu.icon} />
+                    <span className="whitespace-nowrap md:text-15 lg:text-16">{menu.label}</span>
+                  </a>
+                </Link>
+              </li>
             ))}
           </ul>
           <div
