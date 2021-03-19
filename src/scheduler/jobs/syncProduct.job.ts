@@ -181,6 +181,7 @@ async function syncProduct() {
             updatedAt: new Date(),
             categoryIds: d.categoryIds.map((code: string) => get(categoryData, code)._id),
             ingredientIds: d.ingredientIds.map((code: string) => get(ingredientData, code)._id),
+            ingredientNames: d.ingredientIds.map((code: string) => get(ingredientData, code).name),
           },
         });
     });
