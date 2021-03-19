@@ -153,7 +153,7 @@ export default function CartPage(props) {
     }
   };
   return (
-    <div className="mx-auto w-11/12 sm:w-full">
+    <div className="">
       <div className="lg:flex gap-20">
         <div className="w-full lg:w-3/4 border-b-2 sm:border-0 my-5">
           <ListCartItems
