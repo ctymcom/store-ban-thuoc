@@ -34,7 +34,7 @@ export function FormCheck(props: PropsType) {
         return tempStyle;
       }
       case "he": {
-        let tempStyle = " text-16";
+        let tempStyle = " text-16 font-extrabold";
         if (id === iDChecking) {
           tempStyle += " text-primary";
         }

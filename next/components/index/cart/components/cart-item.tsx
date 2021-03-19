@@ -32,7 +32,7 @@ export function CartItem(props: Proptype) {
               }`}
             >
               <img
-                className="w-1/4 sm:w-1/3 max-h-16 object-contain mr-auto my-auto"
+                className="w-16 max-h-16 object-contain"
                 src={props.cartProduct.product.image || "/assets/img/default.png"}
                 onError={(e) => {
                   (e.target as any).src = "/assets/img/default.png";
@@ -65,7 +65,7 @@ export function CartItem(props: Proptype) {
             )}
           </div>
           <div className={`col-span-4 sm:col-span-2 props.cartProduct.active?"":"sm:opacity-50"}`}>
-            <div className="flex items-center justify-between w-full sm:w-5/6 mx-auto">
+            <div className="flex items-center justify-between w-24 mx-auto">
               <i
                 className="btn-default p-0 w-8 h-10 text-32 text-primary hover:text-primary-dark"
                 onClick={() => {
