@@ -32,7 +32,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const product = await ProductModel.findOne({ code }, "_id name imageId description code");
   if (!product) Redirect(context.res, "/404");
   product
-    .updateOne({ $inc: { view: 1 } })
+    .updateOne({ $inc: { viewCount: 1 } }, { upsert: true })
     .exec()
     .catch((err) => {});
   const seo = await SEO(product.name, {
