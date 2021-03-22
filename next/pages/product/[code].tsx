@@ -29,11 +29,12 @@ Page.Layout = DefaultLayout;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { code } = context.query;
-  const product = (await ProductModel.findOne(
-    { code },
-    "_id name imageId description code"
-  )) as Product;
+  const product = await ProductModel.findOne({ code }, "_id name imageId description code");
   if (!product) Redirect(context.res, "/404");
+  product
+    .updateOne({ $inc: { view: 1 } })
+    .exec()
+    .catch((err) => {});
   const seo = await SEO(product.name, {
     description: product.description,
     image: AritoHelper.getImageLink(product.imageId),
