@@ -45,7 +45,7 @@ export function ProductMain() {
             <div className="flex-center z-10 absolute -left-2 xs:-left-3 sm:-left-3.5 md:-left-2 lg:-left-2.5 -top-2 xs:-top-3 sm:-top-3.5 md:-top-2 lg:-top-3 text-white font-semibold">
               <img
                 className="w-16 xs:w-20 sm:w-24 md:w-14 lg:w-20 h-16 xs:h-20 sm:h-24 md:h-14 lg:h-20"
-                src="/assets/img/NEW-01.png"
+                src="/assets/img/new.png"
                 alt="NEW"
               />
               <span className="absolute top-3 xs:top-5 sm:top-6 md:top-2.5 lg:top-5 left-2.5 xs:left-4 sm:left-5 md:left-2 lg:left-3 text-16 sm:text-18 md:text-14 lg:text-18 transform -rotate-45 tracking-widest">
@@ -58,7 +58,7 @@ export function ProductMain() {
                 <div className="flex-center z-10 absolute -right-0.5 sm:-right-1 md:-right-0.5  lg:-right-1 -top-2 xs:-top-2.5 sm:-top-3 md:-top-1.5 lg:-top-2.5 text-white font-semibold">
                   <img
                     className="w-16 xs:w-20 sm:w-24 md:w-14 lg:w-20 h-16 xs:h-20 sm:h-24 md:h-14 lg:h-20"
-                    src="/assets/img/FLASHSALES-01.png"
+                    src="/assets/img/sale.png"
                     alt="FLASHSALES"
                   />
                   <span className="absolute top-2 xs:top-3 sm:top-4 md:top-1.5 lg:top-2.5 left-6 xs:left-8 sm:left-10 md:left-5 lg:left-8 text-center text-14 xs:text-18 md:text-12 lg:text-16">

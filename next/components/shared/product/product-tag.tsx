@@ -6,10 +6,11 @@ interface PropsType extends ReactProps {
 }
 export function ProductTag({ tag, ...props }: PropsType) {
   let tagContent = null;
-  let tagClassName = `flex items-center font-semibold `;
+  let tagClassName = `flex items-center font-semibold rounded-sm py-1 px-2 `;
+  let tagStyle = {};
   switch (tag.code) {
     case "FLASHSALES": {
-      tagClassName += `bg-gray-100 py-1 px-3 text-yellow-500`;
+      tagClassName += `bg-gray-100 text-yellow-500`;
       tagContent = (
         <>
           <img className="h-5" src="/assets/img/flash.png" />
@@ -20,7 +21,7 @@ export function ProductTag({ tag, ...props }: PropsType) {
       break;
     }
     case "DATEOFF": {
-      tagClassName += `bg-gray-100 py-1 px-3 text-red-500`;
+      tagClassName += `bg-gray-100 text-red-500`;
       tagContent = (
         <>
           <img className="h-5" src="/assets/img/date.png" />
@@ -30,7 +31,8 @@ export function ProductTag({ tag, ...props }: PropsType) {
       break;
     }
     case "SALESUP": {
-      tagClassName += `bg-gray-100 py-1 px-3 text-red-500`;
+      tagClassName += `bg-gray-100`;
+      tagStyle = { color: tag.color };
       tagContent = (
         <>
           <img className="h-5" src="/assets/img/increase.png" />
@@ -42,7 +44,8 @@ export function ProductTag({ tag, ...props }: PropsType) {
       break;
     }
     case "SALESDOWN": {
-      tagClassName += `bg-gray-100 py-1 px-3 text-red-500`;
+      tagClassName += `bg-gray-100`;
+      tagStyle = { color: tag.color };
       tagContent = (
         <>
           <img className="h-5" src="/assets/img/decrease.png" />
@@ -53,8 +56,18 @@ export function ProductTag({ tag, ...props }: PropsType) {
       );
       break;
     }
+    case "BANCHAY": {
+      tagClassName += `bg-primary text-white shadow`;
+      tagContent = (
+        <>
+          <img className="h-5" src="/assets/img/hotsale.png" />
+          <span className="pl-1">{tag.name}</span>
+        </>
+      );
+      break;
+    }
     default: {
-      tagClassName += `bg-primary-light py-1 px-3 text-primary`;
+      tagClassName += `bg-primary-light text-primary`;
       tagContent = tag.name;
       break;
     }
@@ -62,7 +75,9 @@ export function ProductTag({ tag, ...props }: PropsType) {
 
   return (
     <div key={tag.code} className="p-1">
-      <span className={tagClassName}>{tagContent}</span>
+      <span style={tagStyle} className={tagClassName}>
+        {tagContent}
+      </span>
     </div>
   );
 }
