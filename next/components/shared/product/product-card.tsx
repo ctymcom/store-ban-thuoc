@@ -59,7 +59,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                   <div className="flex-center z-10 absolute -left-1.5 xs:-left-2.5 sm:-left-3 md:-left-2 lg:-left-2.5 -top-1.5 xs:-top-2 sm:-top-3 md:-top-2 lg:-top-3 text-white font-semibold">
                     <img
                       className="w-12 xs:w-16 sm:w-20 md:w-16 lg:w-20 h-12 xs:h-16 sm:h-20 md:h-16 lg:h-20"
-                      src="/assets/img/NEW-01.png"
+                      src="/assets/img/new.png"
                       alt="NEW"
                     />
                     <span className="absolute top-2 xs:top-3.5 sm:top-5 md:top-3.5 lg:top-5 left-1.5 xs:left-2.5 sm:left-3 md:left-2.5 lg:left-4 text-12 xs:text-16 sm:text-18 md:text-16 lg:text-16 transform -rotate-45 tracking-wider">
@@ -73,7 +73,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                       <div className="flex-center z-10 absolute -right-0.5 sm:-right-1 md:-right-0.5  lg:-right-1 -top-1.5 xs:-top-2 sm:-top-3 md:-top-1 lg:-top-2 text-white font-semibold">
                         <img
                           className="w-14 xs:w-16 sm:w-20 md:w-16 lg:w-120 h-12 xs:h-16 sm:h-20 md:h-16 lg:h-16"
-                          src="/assets/img/FLASHSALES-01.png"
+                          src="/assets/img/sale.png"
                           alt="FLASHSALES"
                         />
                         <span className="absolute top-1 xs:top-1.5 sm:top-3 md:top-1.5 lg:top-1.5 left-6 xs:left-6 sm:left-8 md:left-6 lg:left-6 text-center text-12 xs:text-16 sm:text-18 md:text-16 lg:text-14">
