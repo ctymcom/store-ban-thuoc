@@ -23,6 +23,7 @@ export class SyncBankAccountJob {
           return res ? res.updatedAt : null;
         });
       let data= await AritoHelper.getAllBankAccount(1,updatedAt);
+      
       const bulk = BankAccountModel.collection.initializeUnorderedBulkOp();
       do {
         data.data.forEach((d)=>{
@@ -30,12 +31,14 @@ export class SyncBankAccountJob {
             $setOnInsert: { createdAt: new Date() },
                 $set: { ...d, updatedAt: new Date() },
           })
+          
         })
         if (data.paging.page == data.paging.pageCount) break;
         data = await AritoHelper.getAllBankAccount(data.paging.page + 1, updatedAt);
       }while(data.paging.page <= data.paging.pageCount)
       
       console.log(chalk.cyan("==>Đồng bộ xong"));
+      
     }catch (err){
       console.log(chalk.cyan("==>Đồng bộ lỗi",err.message))
     }

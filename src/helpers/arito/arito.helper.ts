@@ -30,10 +30,18 @@ export class AritoHelper {
     }).then((res)=>{
       this.handleError(res);
       const pageInfo = get(res,"data.pageInfo.0",{})
-      const data = get(res,"data.data").map((d:any)=>{
-        code:d["ma_vt"]
-      })
-      return data
+      
+      
+      return {
+        code: get(res.data, "data.data.ma_vt", []),
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      }
     })
   }
   static host: string = configs.arito.host;
