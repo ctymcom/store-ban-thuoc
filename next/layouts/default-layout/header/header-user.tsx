@@ -6,7 +6,7 @@ import { useAuth } from "./../../../lib/providers/auth-provider";
 import { useNotificationContext } from "../../../components/index/notification/providers/notifications-provider";
 import { NotFound } from "../../../components/shared/utilities/not-found";
 import { Button } from "../../../components/shared/utilities/form/button";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import parseISO from "date-fns/parseISO";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import viLocale from "date-fns/locale/vi";
@@ -17,25 +17,11 @@ export function HeaderUser({ ...props }: PropsType) {
   const router = useRouter();
   const { user, logout, saveCurrentPath } = useAuth();
   const { listNotification } = useNotificationContext();
-  const numberNotification = listNotification?.length; // LENGTH
-
-  const [notificationsToShow, setNotificationsToShow] = useState([]);
-  const notificationsPerPage = 3;
-  let arrayForHoldingNotifications = [];
-  const ref = useRef(notificationsPerPage);
-
-  const loopWithSlice = async (start, end) => {
-    const slicedNotifications = listNotification?.slice(start, end);
-    arrayForHoldingNotifications = arrayForHoldingNotifications.concat(slicedNotifications);
-    await setNotificationsToShow(arrayForHoldingNotifications);
-  };
-  useEffect(() => {
-    loopWithSlice(0, notificationsPerPage);
-  }, [listNotification]);
+  const numberNotification = listNotification?.length;
+  const [visible, setVisible] = useState(4);
 
   const handleShowMorePosts = () => {
-    loopWithSlice(ref.current, ref.current + notificationsPerPage);
-    ref.current += notificationsPerPage;
+    setVisible((prevValue) => prevValue + visible);
   };
 
   const menus = [
@@ -94,21 +80,20 @@ export function HeaderUser({ ...props }: PropsType) {
                       static
                       className="max-h-72 h-auto v-scrollbar z-50	absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                     >
-                      {notificationsToShow.length > 0 && notificationsToShow[0] !== undefined ? (
-                        notificationsToShow?.map((notification, index) => (
+                      {listNotification?.length > 0 && listNotification[0] !== undefined ? (
+                        listNotification.slice(0, visible)?.map((notification, index) => (
                           <div key={index}>
                             <div className="w-full pl-5 pr-2.5 py-3">
                               <p className="text-gray-700 text-14 leading-4">
                                 {notification?.content}
                               </p>
                               <p className="text-gray-400 text-10">
-                                {/* {console.log("parse iso", parseISO(notification.createdAt))}
-                                {console.log("createdAt", notification.createdAt)} */}
                                 {formatDistanceToNow(parseISO(notification.createdAt), {
                                   addSuffix: true,
                                   locale: viLocale,
                                 })}
                               </p>
+                              <p>{listNotification.length}</p>
                             </div>
                           </div>
                         ))
@@ -121,7 +106,7 @@ export function HeaderUser({ ...props }: PropsType) {
                           />
                         </div>
                       )}
-                      {notificationsToShow.length === 0 ? (
+                      {listNotification?.length === 0 ? (
                         ""
                       ) : (
                         <Button
