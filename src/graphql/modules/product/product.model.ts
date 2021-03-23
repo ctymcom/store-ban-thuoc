@@ -45,6 +45,11 @@ export type IProduct = BaseDocument & {
   tagDetails?: ProductTagDetail[]; // Nội dung tag chi tiết
   tabs?: ProductTabContent[]; // Danh sách tab và nội dung
   outOfDate?: Date; // Ngày hết hạn sử dụng
+  viewCount?: number; // Lượt xem
+  saleCount?: number; // Lượt mua
+  highPriceCount?: number; // Đánh giá gía cao
+  lowPriceCount?: number; // Đánh giá gía thấp
+  syncAt?: Date; // Ngày động bộ gần nhất
 };
 
 const productSchema = new Schema(
@@ -84,6 +89,11 @@ const productSchema = new Schema(
     tagDetails: { type: [ProductTagDetailSchema], default: [] },
     tabs: { type: [ProductTabContentSchema], default: [] },
     outOfDate: { type: Date },
+    viewCount: { type: Number, min: 0, default: 0 },
+    saleCount: { type: Number, min: 0, default: 0 },
+    highPriceCount: { type: Number, min: 0, default: 0 },
+    lowPriceCount: { type: Number, min: 0, default: 0 },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );
