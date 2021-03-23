@@ -9,6 +9,7 @@ import { ProductQuantity } from "../../../shared/product/product-quantity";
 import { ProductTag } from "../../../shared/product/product-tag";
 import useInterval from "./../../../../lib/hooks/useInterval";
 import { useProductDetailsContext } from "./../providers/product-details-provider";
+import { HiOutlineShoppingCart, HiEye } from "react-icons/hi";
 
 interface PropsType extends ReactProps {}
 
@@ -78,12 +79,23 @@ export function ProductInfo(props: PropsType) {
       )}
       {product.basePrice ? (
         <>
+          <div className="mb-1 lg:mb-4 flex items-center text-gray-500 text-14">
+            <div className="flex flex-grow items-center">
+              <HiEye className="text-16" />
+              <span className="ml-1">{product.viewCount ? product.viewCount : 0} lượt xem</span>
+            </div>
+            <div className="flex flex-grow items-center">
+              <HiOutlineShoppingCart className="text-16" />
+              <span className="ml-1">{product.saleCount ? product.saleCount : 0} lượt mua</span>
+            </div>
+          </div>
           <div className="mb-1 lg:mb-4">
             <span className="text-primary font-semibold mr-2 text-xl lg:text-2xl">
               {NumberPipe(product.salePrice)} VND
             </span>
             <span className="text-gray-400 line-through">{NumberPipe(product.basePrice)} VND</span>
           </div>
+
           <div className="mb-4">
             <div className="text-gray-700 mb-1 text-sm lg:text-base">
               Đơn vị: <span className="font-semibold">{product.unit}</span>

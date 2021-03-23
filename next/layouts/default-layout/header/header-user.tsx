@@ -6,7 +6,7 @@ import { useAuth } from "./../../../lib/providers/auth-provider";
 import { useNotificationContext } from "../../../components/index/notification/providers/notifications-provider";
 import { NotFound } from "../../../components/shared/utilities/not-found";
 import { Button } from "../../../components/shared/utilities/form/button";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import parseISO from "date-fns/parseISO";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import viLocale from "date-fns/locale/vi";

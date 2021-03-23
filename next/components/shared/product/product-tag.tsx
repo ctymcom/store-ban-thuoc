@@ -45,7 +45,7 @@ export function ProductTag({ tag, ...props }: PropsType) {
       tagClassName += `bg-gray-100 py-1 px-3 text-red-500`;
       tagContent = (
         <>
-          <img className="h-5" src="/assets/img/increase.png" />
+          <img className="h-5" src="/assets/img/decrease.png" />
           <span className="pl-1">
             {tag.name} {props.saleRate ? `${props.saleRate}%` : ""}
           </span>
