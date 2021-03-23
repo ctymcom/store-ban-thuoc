@@ -10,7 +10,7 @@ import { useAuth } from "./../../lib/providers/auth-provider";
 export function Footer() {
   const [email, setEmail] = useState("");
   // const [ShowMore, setShowMore] = useState(false);
-  const { hotline, footerIntro, footerMenus, policy, socials } = useDefaultLayoutContext();
+  const { hotline, footerIntro, footerMenus, socials } = useDefaultLayoutContext();
   const router = useRouter();
   const { user } = useAuth();
 
@@ -21,7 +21,7 @@ export function Footer() {
           <footer className="mt-20 text-white" style={{ backgroundColor: "#343A40" }}>
             <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3">
               <div className="flex flex-col justify-start text-md sm:text-lg md:text-sm lg:w-4/6">
-                {footerIntro && policy && (
+                {footerIntro && (
                   <>
                     <Link href={footerIntro?.link}>
                       <a className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
@@ -31,19 +31,6 @@ export function Footer() {
                     <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
                       {footerIntro?.content}
                     </p>
-                    <Link href={policy}>
-                      <a
-                        className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
-                        target="_blank"
-                      >
-                        Tìm hiểu thêm
-                      </a>
-                    </Link>
-                  </>
-                )}
-
-                {/* {ShowMore ? (
-                  <>
                     <Link href={footerIntro?.link}>
                       <a
                         className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
@@ -53,17 +40,7 @@ export function Footer() {
                       </a>
                     </Link>
                   </>
-                ) : (
-                  ""
                 )}
-                <p
-                  className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
-                  onClick={() => {
-                    setShowMore(!ShowMore);
-                  }}
-                >
-                  {ShowMore ? "Thu gọn" : "Tìm hiểu thêm"}
-                </p> */}
               </div>
               <div className="flex flex-col justify-start lg:w-5/6 mt-6 lg:mt-0">
                 <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">

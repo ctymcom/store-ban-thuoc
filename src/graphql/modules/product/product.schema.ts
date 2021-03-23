@@ -80,6 +80,16 @@ const schema = gql`
     saleExpiredDate: DateTime
     "Ngày hết hạn sử dụng"
     outOfDate: DateTime
+    "Lượt xem"
+    viewCount: Int
+    "Lượt mua"
+    saleCount: Int
+    "Đánh giá gía cao"
+    highPriceCount: Int
+    "Đánh giá gía thấp"
+    lowPriceCount: Int
+    "Ngày động bộ gần nhất"
+    syncAt: DateTime
 
     categories: [Category]
     ingredients: [Ingredient]
