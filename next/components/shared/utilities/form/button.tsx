@@ -64,7 +64,7 @@ export function Button({ className = "", style, iconPosition = "start", ...props
       if (loading) return;
 
       setLoading(true);
-      (props.onClick() as Promise<any>).finally(() => {
+      (props.onClick() as Promise<any>)?.finally(() => {
         setLoading(false);
       });
     } else {

@@ -3,7 +3,9 @@ import { NotFound } from "../../../shared/utilities/not-found";
 import { Spinner } from "../../../shared/utilities/spinner";
 import { HiOutlineGift } from "react-icons/hi";
 import moment from "moment-timezone";
-
+import parseISO from "date-fns/parseISO";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import viLocale from "date-fns/locale/vi";
 interface PropsType extends ReactProps {
   listRewardPoint: UserPointLog[];
 }
@@ -33,6 +35,10 @@ export function RewardPointList({ listRewardPoint }: PropsType) {
                 </p>
                 <p className="w-full md:w-1/5 text-gray-400 md:text-gray-800 font-extralight md:font-normal md:order-none">
                   {moment(item.createdAt).format("H:M - DD/MM/YYYY")}
+                  {/* {formatDistanceToNow(parseISO(item?.createdAt), {
+                    addSuffix: true,
+                    locale: viLocale,
+                  })} */}
                 </p>
                 <p className="w-full md:w-2/4 text-gray-800 my-2 md:my-0 leading-6">{item.note}</p>
               </li>
