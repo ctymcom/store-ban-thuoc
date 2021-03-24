@@ -929,37 +929,40 @@ export class AritoHelper {
       return get(res.data, "msg");
     });
   }
-  static viewDraftOrder(data: {
-    promotionCode?: string;
-    paymentMethod: string;
-    deliveryMethod: string;
-    addressId: string;
-    note: string;
-    point: boolean;
-    items: {
-      productCode: string;
-      qty: number;
-      unit: string;
-      price: number;
-      amount: number;
-    }[];
-  }) {
+  static viewDraftOrder(
+    data: {
+      promotionCode?: string;
+      paymentMethod: string;
+      deliveryMethod: string;
+      addressId: string;
+      fullAddress: string;
+      note: string;
+      point: boolean;
+      items: {
+        productCode: string;
+        qty: number;
+        unit: string;
+        price: number;
+        amount: number;
+      }[];
+    },
+    token: string
+  ) {
     let subtotal = 0;
     return Axios.post(`${this.host}/Voucher/ViewDraftOrder`, {
-      token: this.imageToken,
-      memvars: [
-        ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
-        ["payment", "C", data.paymentMethod], //Chuyen khoan
-        ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
-        ["ma_dc", "C", data.addressId], //Địa chỉ giao hàng
-        ["dien_giai", "C", data.note], //Ghi chú khác
-        ["diem", "N", data.point ? "1" : "0"], //Sử dụng điểm
-      ],
+      token: token,
       data: {
         "#master": [
           {
             api_id: 1,
             ngay_ct: moment().toISOString(),
+            ma_ck: data.promotionCode || "",
+            ma_pttt_web: data.paymentMethod,
+            ma_ptvc_web: data.deliveryMethod,
+            sd_diem: data.point ? "1" : "0",
+            dien_giai: data.note,
+            ma_dc: data.addressId,
+            dia_chi_web: data.fullAddress,
           },
         ],
         "#detail": data.items.map((i) => {
@@ -1003,6 +1006,7 @@ export class AritoHelper {
       paymentMethod: string;
       deliveryMethod: string;
       addressId: string;
+      fullAddress: string;
       note: string;
       point: boolean;
       items: {
@@ -1015,27 +1019,27 @@ export class AritoHelper {
         amount: number;
       }[];
     },
-    draft = false
+    draft = false,
+    token: string
   ) {
     let subtotal = 0;
     let itemCount = 0;
     const orderItems = keyBy(data.items, "productCode");
     const api = draft ? "SyncDraftOrder" : "SyncOrder";
     return Axios.post(`${this.host}/Voucher/${api}`, {
-      token: this.imageToken,
-      memvars: [
-        ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
-        ["payment", "C", data.paymentMethod], //Chuyen khoan
-        ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
-        ["ma_dc", "C", data.addressId], //Địa chỉ giao hàng
-        ["dien_giai", "C", data.note], //Ghi chú khác
-        ["diem", "N", data.point ? "1" : "0"], //Sử dụng điểm
-      ],
+      token: token,
       data: {
         "#master": [
           {
             api_id: 1,
             ngay_ct: moment().toISOString(),
+            ma_ck: data.promotionCode || "",
+            ma_pttt_web: data.paymentMethod,
+            ma_ptvc_web: data.deliveryMethod,
+            sd_diem: data.point ? "1" : "0",
+            dien_giai: data.note,
+            ma_dc: data.addressId,
+            dia_chi_web: data.fullAddress,
           },
         ],
         "#detail": data.items.map((i) => {
