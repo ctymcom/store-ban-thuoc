@@ -13,7 +13,7 @@ export function ProductContent() {
   };
 
   const { isDesktop } = useDevice();
-  console.log(isDesktop);
+  // console.log(isDesktop);
 
   return (
     <>
@@ -39,7 +39,7 @@ export function ProductContent() {
             <div className="absolute -top-48" id={tab.name}></div>
             <h3 className="font-bold text-lg leading-9">{tab.name}</h3>
             <p
-              className="whitespace-pre-wrap"
+              className="whitespace-pre-wrap no-select"
               dangerouslySetInnerHTML={{ __html: tab.content }}
             ></p>
           </div>
