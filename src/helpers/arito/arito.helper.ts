@@ -17,8 +17,33 @@ import { IOrderStatus } from "../../graphql/modules/orderStatus/orderStatus.mode
 import { IDeliveryMethod } from "../../graphql/modules/deliveryMethod/deliveryMethod.model";
 import { IPaymentMethod } from "../../graphql/modules/paymentMethod/paymentMethod.model";
 import { IUserPointLog } from "../../graphql/modules/userPointLog/userPointLog.model";
+import { IBankAccount } from "../../graphql/modules/bankAccount/bankAccount.model";
 
 export class AritoHelper {
+  static getAllDeletedProducts(page:number=1,updatedAt?:Date) {
+    return Axios.post(`${this.host}/Item/GetDeletedItem`,{
+      token:this.imageToken,
+      memvars:[
+        ["datetime2","DT",updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex","I",page]
+      ]
+    }).then((res)=>{
+      this.handleError(res);
+      const pageInfo = get(res,"data.pageInfo.0",{})
+      
+      
+      return {
+        code: get(res.data, "data.data.ma_vt", []),
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      }
+    })
+  }
   static host: string = configs.arito.host;
   static clientId: string = configs.arito.clientId;
   static get imageToken() {
@@ -327,6 +352,43 @@ export class AritoHelper {
           pageCount: pageInfo["t_page"] || 0,
           group: pageInfo["group"],
         },
+      };
+    });
+  }
+  static getAllBankAccount(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/List/GetBankAccount`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res,"data.pageInfo.0",{})
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          unitID: d["unit_id"],
+          account: d["tk"],
+          bankAccount: d["tknh"],
+          accountOwner: d["chu_tk"],
+          bankName: d["ten_nh"],
+          bankName2: d["ten_nh2"],
+          province: d["tinh_thanh"],
+          phone: d["phone"],
+          fax: d["fax"],
+          email: d["email"],
+          homePage: d["home_page"],
+          partner: d["doi_tac"],
+          taxCode: d["ma_so_thue"],
+          note: d["ghi_chu"],
+          branch: d["chi_nhanh"],
+        })) as IBankAccount[],
+        paging:{
+        limit: pageInfo["pagecount"] || 0,
+        page: pageInfo["page"] || 1,
+        total: pageInfo["t_record"] || 0,
+        pageCount: pageInfo["t_page"] || 0,
+        group: pageInfo["group"],}
       };
     });
   }
