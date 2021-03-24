@@ -13,6 +13,10 @@ export default {
         nickname: String!
         email: String!
         phone: String!
+        password: String!
+        birthday: DateTime!
+        companyType: String!
+        companyName: String!
         deviceId: String
         deviceToken: String
       ): LoginAritoData
@@ -21,7 +25,17 @@ export default {
   resolver: {
     Mutation: {
       regisAritoUser: async (root: any, args: any, context: Context) => {
-        const { nickname, email, phone, deviceId, deviceToken } = args;
+        const {
+          nickname,
+          email,
+          phone,
+          password,
+          birthday,
+          companyType,
+          companyName,
+          deviceId,
+          deviceToken,
+        } = args;
         const deviceModel = get(context.req, "headers.x-d-model", "");
         const deviceBrand = get(context.req, "headers.x-d-brand", "");
         const deviceName = get(context.req, "headers.x-d-name", "");
@@ -30,6 +44,10 @@ export default {
           nickname,
           email,
           phone,
+          password,
+          birthday,
+          companyName,
+          companyType,
           deviceId,
           deviceToken,
           deviceModel,

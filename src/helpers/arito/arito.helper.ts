@@ -362,11 +362,19 @@ export class AritoHelper {
     email,
     phone,
     language = "v",
+    password,
+    birthday,
+    companyName,
+    companyType,
     ...device
   }: {
     nickname: string;
     email: string;
     phone: string;
+    password: string;
+    birthday: Date;
+    companyType: string;
+    companyName: string;
     deviceId: string;
     deviceToken: string;
     deviceModel: string;
@@ -381,6 +389,10 @@ export class AritoHelper {
         ["nickname", "C", nickname],
         ["e_mail", "C", email],
         ["phone", "C", phone],
+        ["password", "C", password], //Ngay sinh
+        ["birthday", "D", moment(birthday).format("YYYYMMDD")], //Ngay sinh
+        ["company_type", "I", companyType], //Loai cua hang 1. Phòng khám, 2. Nhà thuốc, 3. Trình dược viên
+        ["company_name", "C", companyName], //Tên cửa hàng
       ],
     }).then((res) => {
       this.handleError(res);
