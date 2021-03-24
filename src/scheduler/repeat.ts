@@ -2,6 +2,7 @@
 
 import moment from "moment-timezone";
 import SyncAritoOptionsJob from "./jobs/syncAritoOptions.job";
+import SyncBankAccountJob from "./jobs/syncBankAccount.job";
 import SyncLocationDataJob from "./jobs/syncLocationData.job";
 import SyncOrderJob from "./jobs/syncOrder.job";
 import SyncOrderOptionsJob from "./jobs/syncOrderOptions.job";
@@ -47,4 +48,6 @@ export function InitRepeatJobs() {
     .repeatEvery("5 minute")
     .unique({ name: SyncUserPointLogJob.jobName })
     .save();
+  SyncBankAccountJob.create({}).repeatEvery("1 day").unique({name:SyncBankAccountJob.jobName}).save();
+  
 }

@@ -37,12 +37,38 @@ export class SyncProductJob {
       await syncProductContainer();
       console.log(chalk.cyan("==> Động bộ đánh giá..."));
       await syncProductComment();
+      console.log(chalk.cyan("==>Đồng bộ sản phẩm đã xóa ..."));
+      await syncDeletedProduct();
       console.log(chalk.green("==> Đồng bộ xong"));
     } catch (err) {
       console.log(chalk.red("Động bộ lỗi", err.message));
     }
   }
 }
+async function syncDeletedProduct() {
+  const updatedAt = await ProductModel.findOne()
+    .sort({ updatedAt: -1 })
+    .exec()
+    .then((res) => {
+      return res ? res.updatedAt : null;
+    });
+  let deletedProduct = await AritoHelper.getAllDeletedProducts(1, updatedAt);
+  console.log(deletedProduct.code)
+  do{
+    deletedProduct.code.forEach((d)=>{
+      console.log(d)
+      ProductModel.deleteOne({ code:d.code }).then((res)=>{
+        console.log("Delete sucess :"+ res.ok)
+      }).catch((err)=>{err.message})
+    })
+    if (deletedProduct.paging.page == deletedProduct.paging.pageCount) break;
+    deletedProduct = await AritoHelper.getAllDeletedProducts(deletedProduct.paging.page+1, updatedAt);
+  }while(deletedProduct.paging.page<=deletedProduct.paging.pageCount)
+  
+  
+  
+}
+
 async function syncProductContainer() {
   const productContainers = await AritoHelper.getItemContainer();
   const productContainerBulk = ProductContainerModel.collection.initializeUnorderedBulkOp();
