@@ -19,7 +19,10 @@ const AuthContext = createContext<{
   saveCurrentPath?: () => void;
   checkUser?: (roles?: string[]) => Promise<boolean>;
   login?: (username: string, password: string, mode: "user" | "editor") => Promise<AritoUser>;
-  register?: (nickname: string, email: string, phone: string) => Promise<AritoUser>;
+  register?: (nickname: string, email: string, phone: string, password: string,
+    birthday: string,
+    companyType: string,
+    companyName: string,) => Promise<AritoUser>;
   logout?: () => void;
   updateAritoUser?: (data: AritoUser) => Promise<{ type: string; mess: string }>;
   changeAritoUserPassword?: (
@@ -108,8 +111,14 @@ export function AuthProvider({ children }: any) {
     return user;
   };
 
-  const register = async (nickname: string, email: string, phone: string) => {
-    const { token, user } = await AritoUserService.regisAritoUser(nickname, email, phone);
+  const register = async (nickname: string, email: string, phone: string,password: string,
+    birthday: string,
+    companyType: string,
+    companyName: string,) => {
+    const { token, user } = await AritoUserService.regisAritoUser(nickname, email, phone,password,
+      birthday,
+      companyType,
+      companyName,);
     await GraphService.clearStore();
     ClearAuthToken();
     if (user.id) {

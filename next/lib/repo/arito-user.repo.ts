@@ -1,6 +1,7 @@
 import { GraphRepository } from "./graph.repo";
 import axios from "axios";
 import { GetAuthToken } from "../graphql/auth.link";
+import md5 from "md5";
 
 export interface AritoUser {
   id: string;
@@ -163,8 +164,13 @@ export class AritoUserRepository extends GraphRepository {
   async regisAritoUser(
     nickname: string,
     email: string,
-    phone: string
+    phone: string,
+    password: string,
+    birthday: string,
+    companyType: string,
+    companyName: string
   ): Promise<{ token: string; user: AritoUser }> {
+    let pass = md5(password);
     let mutationName = "regisAritoUser";
     const res = await this.apollo.mutate({
       mutation: this.gql`
@@ -173,6 +179,10 @@ export class AritoUserRepository extends GraphRepository {
             nickname: "${nickname}",
             email: "${email}",
             phone: "${phone}",
+            password: "${pass}",
+            birthday: "${birthday}",
+            companyType: "${companyType}",
+            companyName: "${companyName}",
           ) {
             token
             user { ${this.fragment} }
