@@ -13,6 +13,7 @@ export type IProduct = BaseDocument & {
   barcode?: string; // Mã barcode
   origin?: string; // Xuất xứ
   ingredientIds?: string[]; // Mã thành phân hoạt chất
+  ingredientNames?: string[]; // Danh sách tên hoạt chất
   packing?: string; // Quy cách đóng gói
   dosageForms?: string; // Dạng bào chế
   antibiotic?: string; // Kháng sinh
@@ -44,6 +45,11 @@ export type IProduct = BaseDocument & {
   tagDetails?: ProductTagDetail[]; // Nội dung tag chi tiết
   tabs?: ProductTabContent[]; // Danh sách tab và nội dung
   outOfDate?: Date; // Ngày hết hạn sử dụng
+  viewCount?: number; // Lượt xem
+  saleCount?: number; // Lượt mua
+  highPriceCount?: number; // Đánh giá gía cao
+  lowPriceCount?: number; // Đánh giá gía thấp
+  syncAt?: Date; // Ngày động bộ gần nhất
 };
 
 const productSchema = new Schema(
@@ -54,6 +60,7 @@ const productSchema = new Schema(
     barcode: { type: String },
     origin: { type: String },
     ingredientIds: { type: [{ type: Schema.Types.ObjectId, ref: "Ingredient" }] },
+    ingredientNames: [{ type: String }],
     packing: { type: String },
     dosageForms: { type: String },
     antibiotic: { type: String },
@@ -82,11 +89,19 @@ const productSchema = new Schema(
     tagDetails: { type: [ProductTagDetailSchema], default: [] },
     tabs: { type: [ProductTabContentSchema], default: [] },
     outOfDate: { type: Date },
+    viewCount: { type: Number, min: 0, default: 0 },
+    saleCount: { type: Number, min: 0, default: 0 },
+    highPriceCount: { type: Number, min: 0, default: 0 },
+    lowPriceCount: { type: Number, min: 0, default: 0 },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );
 
-productSchema.index({ name: "text" }, { weights: { name: 2 } });
+productSchema.index(
+  { name: "text", ingredientNames: "text" },
+  { weights: { name: 2, ingredientNames: 1 } }
+);
 
 export const ProductHook = new ModelHook<IProduct>(productSchema);
 export const ProductModel: mongoose.Model<IProduct> = MainConnection.model(

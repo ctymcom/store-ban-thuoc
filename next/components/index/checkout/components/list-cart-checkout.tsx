@@ -10,7 +10,7 @@ const ListCartCheckout = (props: PropsType) => {
   const { cartProducts } = useCart();
   const [showMore, setShowMore] = useState(false);
   return cartProducts ? (
-    <div className={`${props.className || ""} border-b-2`}>
+    <div className={`${props.className || ""} my-4`}>
       <h3 className=" border-b-2 pb-2 flex gap-2 text-16 uppercase items-center">
         <HiOutlineShoppingCart className="text-primary text-20" /> {props.title}
       </h3>
@@ -19,7 +19,7 @@ const ListCartCheckout = (props: PropsType) => {
           if (item.active) {
             return (
               <div className="flex-wrap flex justify-between text-16 leading-7" key={index}>
-                <p className="whitespace-nowrap">
+                <p className="">
                   {item.product?.name} <span className="font-bold"> x </span> {item.qty}(
                   {item.product?.unit})
                 </p>

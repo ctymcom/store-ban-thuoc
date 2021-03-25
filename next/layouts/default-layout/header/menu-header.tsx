@@ -14,14 +14,14 @@ interface PropsType extends ReactProps {
 export function MenuHeader(props: PropsType) {
   const [showHotline, setShowHotline] = useState(false);
   const router = useRouter();
-  const menus = [
-    { label: "Sản phẩm", path: "/products", icon: "/assets/img/product.png" },
-    { label: "Hoạt chất", path: "/ingredients", icon: "/assets/img/ingredients.png" },
-    { label: "Đặt hàng nhanh", path: "/quick-shopping", icon: "/assets/img/quick-shopping.png" },
-    { label: "Khuyến mãi", path: "/products?sale=true", icon: "/assets/img/promotion.png" },
-  ];
-
-  const { hotline } = useDefaultLayoutContext();
+  // const [menus, setMenus] = useState([]);
+  // const m = [
+  //   { label: "Sản phẩm", path: "/products", icon: "/assets/img/product.png" },
+  //   { label: "Hoạt chất", path: "/ingredients", icon: "/assets/img/ingredients.png" },
+  //   { label: "Đặt hàng nhanh", path: "/quick-shopping", icon: "/assets/img/quick-shopping.png" },
+  //   { label: "Khuyến mãi", path: "/products?sale=true", icon: "/assets/img/promotion.png" },
+  // ];
+  const { hotline, menus } = useDefaultLayoutContext();
   useScrollBlock({ dependencies: [props.menuOpened] });
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export function MenuHeader(props: PropsType) {
                   </i>
                 </button>
               </div>
-              <div className="flex w-full py-4 border-b border-gray-100">
+              <div className="flex w-full py-4 border-b border-gray-100 pl-2">
                 <HeaderUser />
               </div>
               <ul>
@@ -89,29 +89,21 @@ export function MenuHeader(props: PropsType) {
         <div className="main-container flex justify-between items-stretch">
           <ul className="flex">
             {menus.map((menu, index) => (
-              <>
-                <li key={index}>
-                  <Link href={menu.path}>
-                    <a
-                      className={`md:px-2 lg:px-4 py-4 flex items-center text-gray-50 font-medium text-16 hover:bg-primary-dark
+              <li key={index}>
+                <Link href={menu.path}>
+                  <a
+                    className={`md:px-2 lg:px-4 py-4 flex items-center text-gray-50 font-medium hover:bg-primary-dark
                     ${router.pathname == menu.path ? "bg-primary-dark font-semibold" : ""}`}
-                    >
-                      <img
-                        className="md:w-6 lg:w-8 md:h-6 lg:h-8 md:mr-1.5 lg:mr-1.5 xl:mr-2"
-                        src={menu.icon || "/assets/img/default.png"}
-                        onError={(e) => {
-                          (e.target as any).src = "/assets/img/default.png";
-                        }}
-                      />
-                      <span className="whitespace-nowrap md:text-14 lg:text-16">{menu.label}</span>
-                    </a>
-                  </Link>
-                </li>
-              </>
+                  >
+                    <img className="h-6 mr-1.5" src={menu.icon} />
+                    <span className="whitespace-nowrap md:text-15 lg:text-16">{menu.label}</span>
+                  </a>
+                </Link>
+              </li>
             ))}
           </ul>
           <div
-            className="flex items-center space-x-1 text-white relative"
+            className="flex items-center space-x-1 text-white md:text-15 lg:text-16 relative"
             onMouseEnter={() => setShowHotline(true)}
             onMouseLeave={() => setShowHotline(false)}
           >

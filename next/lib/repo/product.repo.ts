@@ -78,7 +78,7 @@ export class ProductRepository extends CrudRepository<Product> {
     containers: [string]
     saleRate: number
     tags: [string]
-    tagDetails { code name }: [ProductTagDetail]
+    tagDetails { code name color }: [ProductTagDetail]
     categories { id name parents { id name } }: [Category]
     image: string
     imageS: string

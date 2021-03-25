@@ -56,14 +56,6 @@ export function FormProfile(props: PropsType) {
         toast.warn("Họ tên không được để trống");
         return false;
       }
-      if (!phone) {
-        toast.warn("Điện thoại không được để trống");
-        return false;
-      }
-      if (phone.length > 10) {
-        toast.warn("Điện thoại không được quá 10 số");
-        return false;
-      }
       return true;
     }
   };
@@ -114,7 +106,7 @@ export function FormProfile(props: PropsType) {
                 <div className="pr-0 xl:pr-16 xl:border-r-2 border-gray-200">
                   <div className="sm:flex justify-between items-center">
                     <p className="w-full sm:w-1/4 xl:w-2/6 xl:pr-2 sm:text-18 mb-1.5 md:mb-0 text-gray-500 md:text-gray-700">
-                      Tên hiển thị
+                      Họ tên
                     </p>
                     <div className="w-full sm:w-3/4 xl:w-4/6">
                       <Input
@@ -160,6 +152,7 @@ export function FormProfile(props: PropsType) {
                         name="phone"
                         value={userA?.phone}
                         className="form-input"
+                        readonly={user?.phone ? true : false}
                         onChange={(val) => setUserA({ ...userA, phone: val })}
                       />
                     </div>

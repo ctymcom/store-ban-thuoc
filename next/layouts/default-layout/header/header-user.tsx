@@ -3,11 +3,26 @@ import Link from "next/link";
 import { HiChevronDown, HiOutlineBell } from "react-icons/hi";
 import { useRouter } from "next/router";
 import { useAuth } from "./../../../lib/providers/auth-provider";
+import { useNotificationContext } from "../../../components/index/notification/providers/notifications-provider";
+import { NotFound } from "../../../components/shared/utilities/not-found";
+import { Button } from "../../../components/shared/utilities/form/button";
+import { useState } from "react";
+import parseISO from "date-fns/parseISO";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import viLocale from "date-fns/locale/vi";
 
 interface PropsType extends ReactProps {}
+
 export function HeaderUser({ ...props }: PropsType) {
   const router = useRouter();
   const { user, logout, saveCurrentPath } = useAuth();
+  const { listNotification } = useNotificationContext();
+  const numberNotification = listNotification?.length;
+  const [visible, setVisible] = useState(4);
+
+  const handleShowMorePosts = () => {
+    setVisible((prevValue) => prevValue + visible);
+  };
 
   const menus = [
     {
@@ -36,21 +51,86 @@ export function HeaderUser({ ...props }: PropsType) {
     <>
       {user ? (
         <>
-          <Link href="/profile/notification">
-            <a className="border-r btn-default p-0 h-10 w-16">
-              <i className="text-24">
-                <HiOutlineBell />
-              </i>
-              <div className="rounded-full flex-center bg-primary box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
-                <span>76</span>
-              </div>
-            </a>
-          </Link>
-          <div className="relative w-full">
+          <div className="relative mr-2">
             <Menu>
               {({ open }) => (
                 <>
-                  <Menu.Button className="relative flex items-center px-4 cursor-pointer hover:text-primary focus:outline-none">
+                  <Menu.Button className="relative flex items-center px-3 mr-0 cursor-pointer hover:text-primary focus:outline-none">
+                    <div className="flex-shrink-0 w-10">
+                      <a className="btn-default p-0 h-10 w-14 mr-2 hover:bg-primary-light">
+                        <img className="h-8" src="/assets/img/bell.png" />
+                        <div className="rounded-full flex-center bg-red-500 box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
+                          <span>{numberNotification ? numberNotification : 0}</span>
+                        </div>
+                      </a>
+                    </div>
+                  </Menu.Button>
+
+                  <Transition
+                    show={open}
+                    className="z-50 "
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items
+                      static
+                      className="max-h-72 h-auto v-scrollbar z-50	absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+                    >
+                      {listNotification?.length > 0 && listNotification[0] !== undefined ? (
+                        listNotification.slice(0, visible)?.map((notification, index) => (
+                          <div key={index}>
+                            <div className="w-full pl-5 pr-2.5 py-3">
+                              <p className="text-gray-700 text-14 leading-4">
+                                {notification?.content}
+                              </p>
+                              <p className="text-gray-400 text-10">
+                                {formatDistanceToNow(parseISO(notification.createdAt), {
+                                  addSuffix: true,
+                                  locale: viLocale,
+                                })}
+                              </p>
+                              <p>{listNotification.length}</p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="">
+                          <NotFound
+                            icon={<HiOutlineBell />}
+                            text="Không tìm thấy thông báo nào"
+                            className="text-gray-600 text-12"
+                          />
+                        </div>
+                      )}
+                      {listNotification?.length === 0 ? (
+                        ""
+                      ) : (
+                        <Button
+                          className="pb-2 flex mx-auto"
+                          text="Xem thêm"
+                          icon={<HiChevronDown />}
+                          outline={false}
+                          primary={false}
+                          iconPosition="end"
+                          onClick={() => handleShowMorePosts()}
+                        />
+                      )}
+                    </Menu.Items>
+                  </Transition>
+                </>
+              )}
+            </Menu>
+          </div>
+
+          <div className="relative border-l border-gray-100">
+            <Menu>
+              {({ open }) => (
+                <>
+                  <Menu.Button className="relative flex items-center px-3 mr-0 cursor-pointer hover:text-primary focus:outline-none">
                     <div className="flex-shrink-0 w-10">
                       <div className="image-wrapper circle">
                         <img
@@ -62,7 +142,7 @@ export function HeaderUser({ ...props }: PropsType) {
                       </div>
                     </div>
                     <div className="flex items-center flex-grow">
-                      <div className="pl-3 pr-2 font-semibold text-left leading-tight max-w-3xs">
+                      <div className="pl-3 font-semibold text-left leading-tight max-w-3xs text-ellipsis-2">
                         {user.nickname}
                       </div>
                       <i className="text-24 ml-auto">

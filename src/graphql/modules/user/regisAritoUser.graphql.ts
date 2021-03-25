@@ -1,5 +1,5 @@
 import { gql } from "apollo-server-express";
-import { get } from "lodash";
+import { get, set } from "lodash";
 
 import { ROLES } from "../../../constants/role.const";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
@@ -13,6 +13,10 @@ export default {
         nickname: String!
         email: String!
         phone: String!
+        password: String!
+        birthday: DateTime!
+        companyType: String!
+        companyName: String!
         deviceId: String
         deviceToken: String
       ): LoginAritoData
@@ -21,7 +25,17 @@ export default {
   resolver: {
     Mutation: {
       regisAritoUser: async (root: any, args: any, context: Context) => {
-        const { nickname, email, phone, deviceId, deviceToken } = args;
+        const {
+          nickname,
+          email,
+          phone,
+          password,
+          birthday,
+          companyType,
+          companyName,
+          deviceId,
+          deviceToken,
+        } = args;
         const deviceModel = get(context.req, "headers.x-d-model", "");
         const deviceBrand = get(context.req, "headers.x-d-brand", "");
         const deviceName = get(context.req, "headers.x-d-name", "");
@@ -30,6 +44,10 @@ export default {
           nickname,
           email,
           phone,
+          password,
+          birthday,
+          companyName,
+          companyType,
           deviceId,
           deviceToken,
           deviceModel,
@@ -38,11 +56,12 @@ export default {
           deviceOsVersion,
         });
         let userData: any;
-        if (user.permission == 3) {
+        if (user.permission >= 3) {
           userData = { ...user, role: ROLES.EDITOR };
         } else {
           userData = { ...user, role: ROLES.CUSTOMER };
         }
+        set(context, "tokenData.ref", token);
         return {
           token: TokenHelper.getAritorUserToken(userData, token, userData.role),
           user: userData,

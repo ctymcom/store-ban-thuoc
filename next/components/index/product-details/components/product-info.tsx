@@ -1,13 +1,16 @@
 import { intervalToDuration, parseISO } from "date-fns";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { NumberPipe } from "../../../../lib/pipes/number";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { useCart } from "../../../../lib/providers/cart-provider";
 import { ProductQuantity } from "../../../shared/product/product-quantity";
+import { ProductTag } from "../../../shared/product/product-tag";
 import useInterval from "./../../../../lib/hooks/useInterval";
 import { useProductDetailsContext } from "./../providers/product-details-provider";
+import { HiOutlineShoppingCart, HiEye, HiThumbDown, HiThumbUp } from "react-icons/hi";
+import { GraphService } from "../../../../lib/repo/graph.repo";
+import gql from "graphql-tag";
 
 interface PropsType extends ReactProps {}
 
@@ -58,6 +61,50 @@ export function ProductInfo(props: PropsType) {
     }
   }, 1000);
 
+  const [active, setActive] = useState(null);
+  const handlerToggleBtn = (style) => {
+    setActive(style);
+    rateProductPrice;
+  };
+
+  const rateProductPrice = async (productId: any, isHigh: any) => {
+    let mutationName = "rateProductPrice";
+    const res = await GraphService.apollo.mutate({
+      mutation: gql`
+          mutation mutationName($productId: ID!, $isHigh: Boolean!) {
+            ${mutationName} (
+              productId: $productId
+              isHigh: $isHigh
+            ) {
+              id: String
+              createdAt: DateTime
+              updatedAt: DateTime
+              code: String
+              name: String  
+              barcode: String
+              origin: String
+              packing: String
+              dosageForms: String
+              antibiotic: String
+              uses: String
+              viewCount: Int
+              saleCount: Int
+              highPriceCount: Int
+              lowPriceCount: Int
+            }
+          }
+        `,
+      variables: {
+        productId,
+        isHigh,
+      },
+    });
+    if (res.data) {
+      console.log(res);
+      const { highPriceCount, lowPriceCount } = res.data.rateProductPrice;
+    }
+  };
+
   return (
     <>
       {/* <div className="text-gray-600 mb-2 text-sm">
@@ -67,29 +114,79 @@ export function ProductInfo(props: PropsType) {
           .join(", ")}
       </div> */}
       <h2 className="text-gray-700 mb-1 lg:mb-2 font-bold text-xl lg:text-2xl">{product.name}</h2>
-      {!!expiredFromNowText && (
-        <div className="finish-time text-danger font-extrabold mb-4">
-          Kết thúc sau: {expiredFromNowText}
-        </div>
-      )}
+      <div className="flex flex-wrap max-w-sm mb-2">
+        {product.tagDetails.map((tag) => (
+          <ProductTag tag={tag} key={tag.code} saleRate={product.saleRate} />
+        ))}
+      </div>
       {!!product.description && (
         <div className="my-4 whitespace-pre-wrap">{product.description}</div>
       )}
       {product.basePrice ? (
         <>
-          <div className="mb-1 lg:mb-4">
-            <span className="text-primary font-semibold mr-2 text-xl lg:text-2xl">
-              {NumberPipe(product.salePrice)} VND
-            </span>
-            <span className="text-gray-400 line-through">{NumberPipe(product.basePrice)} VND</span>
+          <div className="mb-2 lg:mb-4 flex flex-col sm:flex-row items-start lg:items-center text-gray-500 text-14">
+            <div className="flex flex-grow items-center">
+              <HiEye className="text-16" />
+              <span className="ml-1 whitespace-nowrap">
+                {product.viewCount ? product.viewCount : 0} lượt xem
+              </span>
+            </div>
+            <div className="flex flex-grow items-center">
+              <HiOutlineShoppingCart className="text-16" />
+              <span className="ml-1 whitespace-nowrap">
+                {product.saleCount ? product.saleCount : 0} lượt mua
+              </span>
+            </div>
           </div>
+          <div className="mb-1 lg:mb-4">
+            <span className="text-gray-400 line-through">{product?.description}</span>
+          </div>
+          <div className="mb-1 lg:mb-4 flex flex-col lg:flex-row items-start justify-center">
+            <div className="flex-grow">
+              <span className="text-primary font-semibold mr-2 text-xl lg:text-2xl">
+                {NumberPipe(product.salePrice)} VND
+              </span>
+              <p className="text-gray-400 line-through">{NumberPipe(product.basePrice)} VND</p>
+
+              <div className="text-gray-700 mb-1 text-sm lg:text-base mt-2">
+                Đơn vị: <span className="font-semibold">{product.unit}</span>
+              </div>
+              <div className="text-gray-700 mb-1 text-sm lg:text-base">
+                Quy cách đóng gói: <span className="font-semibold">{product.packing}</span>
+              </div>
+            </div>
+            <div className="flex-grow ml-0 lg:ml-6 my-3 lg:my-0">
+              <p className="text-gray-400 text-14 md:text-18">Bạn thấy giá này:</p>
+              <div className="flex mt-3">
+                <button
+                  className={`flex items-center mr-3 justify-center px-3 lg:px-4 py-1.5 lg:py-1.5 border text-primary text-18 border-primary rounded focus:outline-none 
+                              ${active === "activeDown" ? "bg-primary text-white" : ""}`}
+                  onClick={() => handlerToggleBtn("activeDown")}
+                >
+                  <HiThumbDown className={`${active === "activeDown" ? "text-white" : ""}`} />
+                  <span className={`ml-1 text-14 ${active === "activeDown" ? "text-white" : ""}`}>
+                    Cao
+                  </span>
+                </button>
+                <button
+                  className={`flex items-center mr-3 justify-center px-3 lg:px-4 py-1.5 lg:py-1.5 border text-primary text-18 border-primary rounded focus:outline-none 
+                            ${active === "activeUp" ? "bg-primary text-white" : ""}`}
+                  onClick={() => handlerToggleBtn("activeUp")}
+                >
+                  <HiThumbUp className={`${active === "activeUp" ? "text-white" : ""}`} />
+                  <span
+                    className={`ml-1 text-14 whitespace-nowrap ${
+                      active === "activeUp" ? "text-white" : ""
+                    }`}
+                  >
+                    Hợp lý
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className="mb-4">
-            <div className="text-gray-700 mb-1 text-sm lg:text-base">
-              Đơn vị: <span className="font-semibold">{product.unit}</span>
-            </div>
-            <div className="text-gray-700 mb-1 text-sm lg:text-base">
-              Quy cách đóng gói: <span className="font-semibold">{product.packing}</span>
-            </div>
             <ProductQuantity
               inputClassName="w-20 mx-4 border rounded border-gray-400 hover:border-primary focus:border-primary-dark"
               buttonClassName="text-40"
@@ -97,6 +194,11 @@ export function ProductInfo(props: PropsType) {
               setQuantity={setQuantity}
             />
           </div>
+          {!!expiredFromNowText && (
+            <div className="finish-time text-danger font-extrabold mb-4">
+              Kết thúc sau: {expiredFromNowText}
+            </div>
+          )}
           {/* <div className="flex">
             <button className="btn-accent btn-lg" onClick={() => onAddToCart()}>
               Thêm vào giỏ
@@ -113,16 +215,6 @@ export function ProductInfo(props: PropsType) {
           </a>
         </Link>
       )}
-      <div className="mt-4">
-        {product.tagDetails.map((tag) => (
-          <span
-            key={tag.code}
-            className="bg-primary-light text-primary px-3 py-1 rounded-full mr-2 mb-2 hover:bg-primary hover:text-white cursor-pointer"
-          >
-            {tag.name}
-          </span>
-        ))}
-      </div>
     </>
   );
 }

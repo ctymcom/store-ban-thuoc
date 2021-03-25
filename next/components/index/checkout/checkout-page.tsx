@@ -3,7 +3,6 @@ import { IoLocationSharp } from "react-icons/io5";
 import { NumberPipe } from "../../../lib/pipes/number";
 import { PayMoney } from "../cart/components/pay-money";
 import { FormCheck } from "./components/form-check";
-import { transferInformation } from "./components/form-check-data";
 import TransferInformation from "./components/transfer-information";
 import CheckBoxSquare from "./components/check-box-square";
 import AddressDialog from "./components/address-dialog";
@@ -11,14 +10,13 @@ import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
 import { useCart, CartProduct } from "../../../lib/providers/cart-provider";
 import { Button } from "./../../shared/utilities/form/button";
-import { MethodCheckout } from "../../../lib/repo/checkout.repo";
+import { MethodCheckout, BankAccount } from "../../../lib/repo/checkout.repo";
 import { GraphService } from "../../../lib/repo/graph.repo";
 import { useToast } from "../../../lib/providers/toast-provider";
 import gql from "graphql-tag";
 import router from "next/router";
 import ListCartCheckout from "./components/list-cart-checkout";
 import { Textarea } from "../../shared/utilities/form/textarea";
-import { FaLeaf } from "react-icons/fa";
 
 export function CheckOutPage() {
   const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
@@ -29,6 +27,7 @@ export function CheckOutPage() {
   const [items, setItems] = useState<{ productId: string; qty: number }[]>([]);
   const [note, setNote] = useState<string>("");
   const [cartAmount, setCartAmount] = useState(0);
+  const [showAllAccoutBank, setShowAllAccoutBank] = useState(false);
   const [listMoneyCheckout, setListMoneyCheckout] = useState([
     {
       title: "Tạm tính",
@@ -47,6 +46,8 @@ export function CheckOutPage() {
     loadingCheckout,
     paymenMethods,
     deliveryMethods,
+    policy,
+    accountBanks,
   } = useCheckoutContext();
   useEffect(() => {
     let listItemNew = [];
@@ -209,10 +210,28 @@ export function CheckOutPage() {
             />
           </div>
           <div className="w-full mt-4">
-            {showInfor ? <TransferInformation info={transferInformation} /> : <></>}
+            {showInfor ? (
+              <>
+                {accountBanks?.map((bankInfo: BankAccount, index) => {
+                  return (
+                    <TransferInformation
+                      bankInfo={bankInfo}
+                      key={bankInfo.id}
+                      className={index === 0 || showAllAccoutBank ? "" : "hidden"}
+                    />
+                  );
+                })}
+                <Button
+                  text={`${showAllAccoutBank ? "Ẩn bớt" : "Xem tất cả"}`}
+                  onClick={() => setShowAllAccoutBank(!showAllAccoutBank)}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
-        <div className="w-full lg:w-11/12 text-16  my-5">
+        <div className="w-full xl:w-11/12 text-16 my-5">
           <h4 className="uppercase text-16">Ghi chú khác</h4>
           <p className="text-14 pb-2">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
@@ -228,7 +247,7 @@ export function CheckOutPage() {
       </div>
       <div className="w-full lg:w-1/3 xl:w-1/4">
         <div className="w-full md:flex lg:inline-block md:gap-5 mb-10">
-          <div className="w-full md:w-1/3 lg:w-full mb-10">
+          <div className="w-full md:w-1/3 lg:w-full my-3">
             <div className="flex justify-between items-center border-b-2">
               <div className="flex justify-between items-center gap-1 whitespace-nowrap">
                 <i className="text-primary text-16 ">
@@ -239,7 +258,7 @@ export function CheckOutPage() {
               <button
                 className={`${
                   addressSelected
-                    ? "btn-default text-primary hover:text-primary-dark px-1"
+                    ? "btn-default p-0 text-primary hover:text-primary-dark px-1"
                     : "hidden"
                 }`}
                 onClick={() => setShowDialogAddress(true)}
@@ -265,11 +284,10 @@ export function CheckOutPage() {
               )}
             </div>
           </div>
-          <ListCartCheckout title="Danh sách sản phẩm" className="w-full md:w-1/3 lg:w-full mb-4" />
-
+          <ListCartCheckout title="Danh sách sản phẩm" className="w-full md:w-1/3 lg:w-full" />
           <div className="w-full md:w-1/3 lg:w-full">
             <PayMoney listMoney={addressSelected ? listMoneyCheckout : []} />
-            <div className="flex justify-between pt-2 text-16 ">
+            <div className="flex justify-between text-16 ">
               <p>Thành tiền</p>
               <p className="font-bold text-primary">
                 {NumberPipe(cartAmount ? cartAmount : listMoneyCheckout[0].money, false)} VND
@@ -277,8 +295,8 @@ export function CheckOutPage() {
             </div>
           </div>
         </div>
-        <div className="w-full">
-          <div className="flex items-center gap-1 text-16  whitespace-nowrap">
+        <div className="w-full sm:w-1/2 lg:w-full mx-auto">
+          <div className="flex items-center gap-1 text-16 whitespace-nowrap">
             <div className="flex items-center gap-1 cursor-pointer">
               <CheckBoxSquare
                 checked={isCheck}
@@ -286,10 +304,16 @@ export function CheckOutPage() {
                 onClick={(e) => setIsCheck(e)}
               />
             </div>
-            <p className="text-primary cursor-pointer">Điều khoản sử dụng</p>
+            <a
+              className="text-primary cursor-pointer hover:underline"
+              href={policy}
+              target="_blank"
+            >
+              Điều khoản sử dụng
+            </a>
           </div>
           <Button
-            className={"w-full text-16 py-3 my-2 bg-primary text-white"}
+            className={"w-full text-16 py-3 my-2 btn-primary"}
             disabled={!isCheck}
             asyncLoading
             onClick={async () => await handleConfirmOrder()}

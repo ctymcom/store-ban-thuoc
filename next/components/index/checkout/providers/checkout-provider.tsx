@@ -2,7 +2,8 @@ import React from "react";
 import { createContext, useState, useEffect, useContext } from "react";
 import { UserAddressService, UserAddress } from "../../../../lib/repo/user-address.repo";
 import { useAuth } from "../../../../lib/providers/auth-provider";
-import { CheckoutService, MethodCheckout, Order } from "../../../../lib/repo/checkout.repo";
+import { CheckoutService, MethodCheckout, BankAccount } from "../../../../lib/repo/checkout.repo";
+import { SettingService } from "../../../../lib/repo/setting.repo";
 export const CheckoutContext = createContext<
   Partial<{
     addressSelected: UserAddress;
@@ -12,15 +13,20 @@ export const CheckoutContext = createContext<
     loadingCheckout: boolean;
     paymenMethods: MethodCheckout[];
     deliveryMethods: MethodCheckout[];
+    policy: string;
+    accountBanks: BankAccount[];
+    setAccountBanks: Function;
   }>
 >({});
 
 export const CheckoutProvider = (props) => {
+  const [policy, setPolicy] = useState(null);
   const [showDialogAddress, setShowDialogAddress] = useState(false);
   const [addressSelected, setAddressSelected] = useState<UserAddress>(null);
   const [paymenMethods, setPaymenMethods] = useState<MethodCheckout[]>(null);
   const [deliveryMethods, setDeliveryMethods] = useState<MethodCheckout[]>(null);
   const [loadingCheckout, setLoadingCheckout] = useState(false);
+  const [accountBanks, setAccountBanks] = useState<BankAccount[]>([]);
   const { user } = useAuth();
   useEffect(() => {
     setLoadingCheckout(true);
@@ -56,10 +62,45 @@ export const CheckoutProvider = (props) => {
           })),
         ]);
       }),
+      CheckoutService.getAllBankAccount().then((res) => {
+        setAccountBanks([
+          ...res.map((x) => ({
+            id: x.id,
+            createdAt: x.createdAt,
+            updatedAt: x.updatedAt,
+            unitID: x.unitID,
+            account: x.account,
+            bankAccount: x.bankAccount,
+            accountOwner: x.accountOwner,
+            bankName: x.bankName,
+            bankName2: x.bankName2,
+            province: x.province,
+            phone: x.phone,
+            fax: x.fax,
+            email: x.email,
+            homePage: x.homePage,
+            partner: x.partner,
+            taxCode: x.taxCode,
+            note: x.note,
+            branch: x.branch,
+          })),
+        ]);
+      }),
+      SettingService.getAll({
+        query: {
+          limit: 0,
+          filter: {
+            key: { __in: ["POLICY"] },
+          },
+        },
+      }).then((res) => {
+        setPolicy(res.data.find((x) => x.key == "POLICY").value);
+      }),
     ];
     Promise.all(tasks)
       .then((res) => {
         setLoadingCheckout(false);
+        console.log(accountBanks);
       })
       .catch((err) => {});
   }, []);
@@ -74,6 +115,9 @@ export const CheckoutProvider = (props) => {
         setShowDialogAddress,
         paymenMethods,
         deliveryMethods,
+        policy,
+        accountBanks,
+        setAccountBanks,
       }}
     >
       {props.children}

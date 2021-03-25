@@ -163,11 +163,9 @@ async function syncProduct() {
   const productTabs = await ProductTabModel.find();
   const productTags = await ProductTagModel.find().then((res) => keyBy(res, "code"));
   const productUpdatedAt = await ProductModel.findOne()
-    .sort({ updatedAt: -1 })
+    .sort({ syncAt: -1 })
     .exec()
-    .then((res) => {
-      return res ? res.updatedAt : null;
-    });
+    .then((res) => (res ? res.syncAt : null));
   // const productUpdatedAt = null;
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
   const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
@@ -207,6 +205,8 @@ async function syncProduct() {
             updatedAt: new Date(),
             categoryIds: d.categoryIds.map((code: string) => get(categoryData, code)._id),
             ingredientIds: d.ingredientIds.map((code: string) => get(ingredientData, code)._id),
+            ingredientNames: d.ingredientIds.map((code: string) => get(ingredientData, code).name),
+            syncAt: new Date(),
           },
         });
     });

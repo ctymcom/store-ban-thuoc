@@ -41,29 +41,6 @@ export function Footer() {
                     </Link>
                   </>
                 )}
-
-                {/* {ShowMore ? (
-                  <>
-                    <Link href={footerIntro?.link}>
-                      <a
-                        className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
-                        target="_blank"
-                      >
-                        Tìm hiểu thêm
-                      </a>
-                    </Link>
-                  </>
-                ) : (
-                  ""
-                )}
-                <p
-                  className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
-                  onClick={() => {
-                    setShowMore(!ShowMore);
-                  }}
-                >
-                  {ShowMore ? "Thu gọn" : "Tìm hiểu thêm"}
-                </p> */}
               </div>
               <div className="flex flex-col justify-start lg:w-5/6 mt-6 lg:mt-0">
                 <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">

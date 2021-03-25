@@ -43,6 +43,10 @@ const Mutation = {
     items.forEach((i) => {
       const product = products[i.productId];
       if (!product) return;
+      product
+        .updateOne({ $inc: { saleCount: i.qty } }, { upsert: true })
+        .exec()
+        .catch((err) => {});
       let price = product.salePrice;
       if (context.user.group && context.user.group != "") {
         const groupPrice = product.priceGroups.find((p) => p.customerGroup == context.user.group);
@@ -77,6 +81,7 @@ const Mutation = {
         paymentMethod: paymentMethod,
         deliveryMethod: deliveryMethod,
         addressId: address.addressId,
+        fullAddress: address.fullAddress,
         point: usePoint,
         note: note,
         items: orderItems.map((i) => ({
@@ -89,7 +94,8 @@ const Mutation = {
           amount: i.amount,
         })),
       },
-      context.user.permission == 1
+      context.user.permission == 1,
+      context.tokenData.ref
     );
 
     return await orderService
