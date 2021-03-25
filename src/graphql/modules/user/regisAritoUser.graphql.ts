@@ -56,7 +56,7 @@ export default {
           deviceOsVersion,
         });
         let userData: any;
-        if (user.permission == 3) {
+        if (user.permission >= 3) {
           userData = { ...user, role: ROLES.EDITOR };
         } else {
           userData = { ...user, role: ROLES.CUSTOMER };

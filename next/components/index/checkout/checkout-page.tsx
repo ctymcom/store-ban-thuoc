@@ -3,7 +3,6 @@ import { IoLocationSharp } from "react-icons/io5";
 import { NumberPipe } from "../../../lib/pipes/number";
 import { PayMoney } from "../cart/components/pay-money";
 import { FormCheck } from "./components/form-check";
-import { transferInformation } from "./components/form-check-data";
 import TransferInformation from "./components/transfer-information";
 import CheckBoxSquare from "./components/check-box-square";
 import AddressDialog from "./components/address-dialog";
@@ -11,14 +10,13 @@ import { Spinner } from "../../shared/utilities/spinner";
 import { useCheckoutContext } from "./providers/checkout-provider";
 import { useCart, CartProduct } from "../../../lib/providers/cart-provider";
 import { Button } from "./../../shared/utilities/form/button";
-import { MethodCheckout } from "../../../lib/repo/checkout.repo";
+import { MethodCheckout, BankAccount } from "../../../lib/repo/checkout.repo";
 import { GraphService } from "../../../lib/repo/graph.repo";
 import { useToast } from "../../../lib/providers/toast-provider";
 import gql from "graphql-tag";
 import router from "next/router";
 import ListCartCheckout from "./components/list-cart-checkout";
 import { Textarea } from "../../shared/utilities/form/textarea";
-import { FaLeaf } from "react-icons/fa";
 
 export function CheckOutPage() {
   const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
@@ -29,6 +27,7 @@ export function CheckOutPage() {
   const [items, setItems] = useState<{ productId: string; qty: number }[]>([]);
   const [note, setNote] = useState<string>("");
   const [cartAmount, setCartAmount] = useState(0);
+  const [showAllAccoutBank, setShowAllAccoutBank] = useState(false);
   const [listMoneyCheckout, setListMoneyCheckout] = useState([
     {
       title: "Tạm tính",
@@ -48,6 +47,7 @@ export function CheckOutPage() {
     paymenMethods,
     deliveryMethods,
     policy,
+    accountBanks,
   } = useCheckoutContext();
   useEffect(() => {
     let listItemNew = [];
@@ -210,7 +210,25 @@ export function CheckOutPage() {
             />
           </div>
           <div className="w-full mt-4">
-            {showInfor ? <TransferInformation info={transferInformation} /> : <></>}
+            {showInfor ? (
+              <>
+                {accountBanks?.map((bankInfo: BankAccount, index) => {
+                  return (
+                    <TransferInformation
+                      bankInfo={bankInfo}
+                      key={bankInfo.id}
+                      className={index === 0 || showAllAccoutBank ? "" : "hidden"}
+                    />
+                  );
+                })}
+                <Button
+                  text={`${showAllAccoutBank ? "Ẩn bớt" : "Xem tất cả"}`}
+                  onClick={() => setShowAllAccoutBank(!showAllAccoutBank)}
+                />
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
         <div className="w-full xl:w-11/12 text-16 my-5">
@@ -267,7 +285,6 @@ export function CheckOutPage() {
             </div>
           </div>
           <ListCartCheckout title="Danh sách sản phẩm" className="w-full md:w-1/3 lg:w-full" />
-
           <div className="w-full md:w-1/3 lg:w-full">
             <PayMoney listMoney={addressSelected ? listMoneyCheckout : []} />
             <div className="flex justify-between text-16 ">
