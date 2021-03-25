@@ -6,6 +6,7 @@ import { Pagination } from "./../../../../lib/repo/crud.repo";
 import { Product, ProductService } from "./../../../../lib/repo/product.repo";
 import { useRouter } from "next/router";
 import { Ingredient } from "./../../../../lib/repo/ingredient.repo";
+import { SettingService } from "../../../../lib/repo/setting.repo";
 
 enum SORT {
   latest,
@@ -57,22 +58,31 @@ export function ProductsProvider(props) {
   const [ingredient, setIngredient] = useState<Partial<Ingredient>>(null);
 
   const router = useRouter();
-  const initData = () => {
+  const initData = async () => {
     if (router.query["ingredientId"]) {
       setIngredient({
         id: router.query["ingredientId"] as string,
         name: router.query["ingredientName"] as string,
       });
     }
+    const hiddenCategories = await SettingService.getAll({
+      query: { limit: 0, filter: { key: { __in: ["HIDDEN_CATEGORIES"] } } },
+    }).then((res) => res.data[0].value);
 
     CategoryService.query({
       query: [
         CategoryService.getAllQuery({
-          query: { limit: 0, filter: { parentIds: { __size: 0 } } },
+          query: {
+            limit: 0,
+            filter: { parentIds: { __size: 0 }, name: { __nin: hiddenCategories } },
+          },
           fragment: CategoryService.fullFragment,
         }),
         CategoryService.getAllQuery({
-          query: { limit: 0, filter: { parentIds: { __size: 1 } } },
+          query: {
+            limit: 0,
+            filter: { parentIds: { __size: 1 } },
+          },
           fragment: CategoryService.fullFragment,
         }),
         ProductTagService.getAllQuery({ query: { limit: 0, order: { position: 1 } } }),

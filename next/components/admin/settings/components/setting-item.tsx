@@ -50,7 +50,7 @@ export function SettingItem({ setting, ...props }: PropTypes) {
             <Input
               name={setting.name}
               value={setting.value}
-              onChange={(value) => onSettingValueChanged(value.split(", "))}
+              onChange={(value) => onSettingValueChanged(value.split(",").map((v) => v.trim()))}
             />
           ),
         }[setting.type]
