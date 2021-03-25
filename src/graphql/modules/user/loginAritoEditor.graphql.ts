@@ -85,6 +85,7 @@ export default {
         return AritoHelper.getThumbnailLink(root.imageId);
       },
       point: async (root: AritoUser, args: any, context: Context) => {
+        if (!get(context, "tokenData.ref")) return 0;
         return await AritoHelper.getUserPoint(context.tokenData.ref);
       },
     },
