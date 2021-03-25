@@ -45,6 +45,8 @@ export interface Product extends BaseModel {
   imageS: string;
   imageM: string;
   imageL: string;
+  viewCount: number;
+  saleCount: number;
 }
 
 interface ProductTagDetail {
@@ -120,6 +122,8 @@ export class ProductRepository extends CrudRepository<Product> {
     saleRate: number
     tags: [string]
     saleExpiredDate: DateTime
+    viewCount: Int
+    saleCount: Int
     tagDetails {
       code: String
       name: String
