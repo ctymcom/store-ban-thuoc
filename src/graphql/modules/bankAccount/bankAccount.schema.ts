@@ -7,42 +7,41 @@ const schema = gql`
     # Add Query
   }
 
-  extend type Mutation {
-    createBankAccount(data: CreateBankAccountInput!): BankAccount
-    updateBankAccount(id: ID!, data: UpdateBankAccountInput!): BankAccount
-    deleteOneBankAccount(id: ID!): BankAccount
-    # Add Mutation
-  }
-
-  input CreateBankAccountInput {
-    name: String
-  }
-
-  input UpdateBankAccountInput {
-    name: String
-  }
-
   type BankAccount {
-    id: String    
+    id: String
     createdAt: DateTime
     updatedAt: DateTime
-    ""
+
+    "unit_id"
     unitID: String
-    ""
-    account:String
-    bankAccount:String
-    accountOwner:String
-    bankName:String
-    bankName2:String
-    province:String
-    phone:String
-    fax:String
-    email:String
-    homePage:String
-    partner:String
-    taxCode:String
-    note:String
-    branch:String
+    "Mã tài khoản"
+    account: String
+    "Tên tài khoản"
+    bankAccount: String
+    "Chủ tài khoản"
+    accountOwner: String
+    "Tên ngân hàng"
+    bankName: String
+    "Tên ngân hàng tiếng anh"
+    bankName2: String
+    "Tên tỉnh/ thành"
+    province: String
+    "Điện thoại"
+    phone: String
+    "Fax"
+    fax: String
+    "email"
+    email: String
+    "Trang chủ"
+    homePage: String
+    "Đối tác"
+    partner: String
+    "Mã Số thuế"
+    taxCode: String
+    "Ghi chú"
+    note: String
+    "Chi nhánh"
+    branch: String
   }
   type BankAccountPageData {
     data: [BankAccount]

@@ -86,12 +86,12 @@ async function imageHandler() {
     const file = input.files[0];
     console.log("User trying to uplaod this:", file);
 
-    const id = await Imgur.uploadImage(file); // I'm using react, so whatever upload function
+    const res = await Imgur.uploadImage(file); // I'm using react, so whatever upload function
     const range = this.quill.getSelection();
-    const link = id;
+    const link = res;
 
     // this part the image is inserted
     // by 'image' option below, you just have to put src(link) of img here.
-    this.quill.insertEmbed(range.index, "image", link);
+    this.quill.insertEmbed(range.index, "image", res.link);
   }.bind(this); // react thing
 }
