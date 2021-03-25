@@ -12,6 +12,8 @@ export enum SettingKey {
   SEO_IMAGE = "SEO_IMAGE", // Hình ảnh SEO
   SEO_KEYWORDS = "SEO_KEYWORDS", // Từ khoá SEO
   POLICY = "POLICY", // Link điều khoản sử dụng
+  HIDDEN_MENUS = "HIDDEN_MENUS", // Danh sách menu ẩn
+  HIDDEN_CATEGORIES = "HIDDEN_CATEGORIES", // Danh sách danh mục ẩn
   // Cấu hình trang chủ
   TOP_MENU = "TOP_MENU", // Cấu hình top menu
   BANNER_1 = "BANNER_1", // Cấu hình banner 1
@@ -80,6 +82,24 @@ export const SETTING_DATA = [
         name: "Link Điều khoản sử dụng",
         key: SettingKey.POLICY,
         value: `https://khothuocsi.arito.vn/post/dieu-khoan-su-dung`,
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.array,
+        name: "Danh sách menu ẩn",
+        key: SettingKey.HIDDEN_MENUS,
+        value: [],
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.array,
+        name: "Danh sách danh mục ẩn",
+        key: SettingKey.HIDDEN_CATEGORIES,
+        value: [],
         isActive: true,
         isPrivate: false,
         readOnly: false,
