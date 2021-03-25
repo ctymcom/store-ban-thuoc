@@ -71,21 +71,25 @@ export default {
         )
           .exec()
           .catch((err) => {});
-        const draftOrder = await AritoHelper.viewDraftOrder({
-          promotionCode: promotionCode,
-          paymentMethod: paymentMethod,
-          deliveryMethod: deliveryMethod,
-          addressId: address.addressId,
-          point: usePoint,
-          note: note,
-          items: orderItems.map((i) => ({
-            productCode: i.productCode,
-            unit: i.unit,
-            qty: i.qty,
-            price: i.price,
-            amount: i.amount,
-          })),
-        });
+        const draftOrder = await AritoHelper.viewDraftOrder(
+          {
+            promotionCode: promotionCode,
+            paymentMethod: paymentMethod,
+            deliveryMethod: deliveryMethod,
+            addressId: address.addressId,
+            fullAddress: address.fullAddress,
+            point: usePoint,
+            note: note,
+            items: orderItems.map((i) => ({
+              productCode: i.productCode,
+              unit: i.unit,
+              qty: i.qty,
+              price: i.price,
+              amount: i.amount,
+            })),
+          },
+          context.tokenData.ref
+        );
         return draftOrder;
       },
     },

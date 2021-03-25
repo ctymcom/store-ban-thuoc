@@ -17,8 +17,33 @@ import { IOrderStatus } from "../../graphql/modules/orderStatus/orderStatus.mode
 import { IDeliveryMethod } from "../../graphql/modules/deliveryMethod/deliveryMethod.model";
 import { IPaymentMethod } from "../../graphql/modules/paymentMethod/paymentMethod.model";
 import { IUserPointLog } from "../../graphql/modules/userPointLog/userPointLog.model";
+import { IBankAccount } from "../../graphql/modules/bankAccount/bankAccount.model";
 
 export class AritoHelper {
+  static getAllDeletedProducts(page:number=1,updatedAt?:Date) {
+    return Axios.post(`${this.host}/Item/GetDeletedItem`,{
+      token:this.imageToken,
+      memvars:[
+        ["datetime2","DT",updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex","I",page]
+      ]
+    }).then((res)=>{
+      this.handleError(res);
+      const pageInfo = get(res,"data.pageInfo.0",{})
+      
+      
+      return {
+        code: get(res.data, "data.data.ma_vt", []),
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      }
+    })
+  }
   static host: string = configs.arito.host;
   static clientId: string = configs.arito.clientId;
   static get imageToken() {
@@ -330,6 +355,43 @@ export class AritoHelper {
       };
     });
   }
+  static getAllBankAccount(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/List/GetBankAccount`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res,"data.pageInfo.0",{})
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          unitID: d["unit_id"],
+          account: d["tk"],
+          bankAccount: d["tknh"],
+          accountOwner: d["chu_tk"],
+          bankName: d["ten_nh"],
+          bankName2: d["ten_nh2"],
+          province: d["tinh_thanh"],
+          phone: d["phone"],
+          fax: d["fax"],
+          email: d["email"],
+          homePage: d["home_page"],
+          partner: d["doi_tac"],
+          taxCode: d["ma_so_thue"],
+          note: d["ghi_chu"],
+          branch: d["chi_nhanh"],
+        })) as IBankAccount[],
+        paging:{
+        limit: pageInfo["pagecount"] || 0,
+        page: pageInfo["page"] || 1,
+        total: pageInfo["t_record"] || 0,
+        pageCount: pageInfo["t_page"] || 0,
+        group: pageInfo["group"],}
+      };
+    });
+  }
   static getAllWard(page: number = 1, updatedAt?: Date) {
     return Axios.post(`${this.host}/List/GetWard`, {
       token: this.imageToken,
@@ -362,11 +424,19 @@ export class AritoHelper {
     email,
     phone,
     language = "v",
+    password,
+    birthday,
+    companyName,
+    companyType,
     ...device
   }: {
     nickname: string;
     email: string;
     phone: string;
+    password: string;
+    birthday: Date;
+    companyType: string;
+    companyName: string;
     deviceId: string;
     deviceToken: string;
     deviceModel: string;
@@ -381,6 +451,10 @@ export class AritoHelper {
         ["nickname", "C", nickname],
         ["e_mail", "C", email],
         ["phone", "C", phone],
+        ["password", "C", password], //Ngay sinh
+        ["birthday", "D", moment(birthday).format("YYYYMMDD")], //Ngay sinh
+        ["company_type", "I", companyType], //Loai cua hang 1. Phòng khám, 2. Nhà thuốc, 3. Trình dược viên
+        ["company_name", "C", companyName], //Tên cửa hàng
       ],
     }).then((res) => {
       this.handleError(res);
@@ -929,37 +1003,40 @@ export class AritoHelper {
       return get(res.data, "msg");
     });
   }
-  static viewDraftOrder(data: {
-    promotionCode?: string;
-    paymentMethod: string;
-    deliveryMethod: string;
-    addressId: string;
-    note: string;
-    point: boolean;
-    items: {
-      productCode: string;
-      qty: number;
-      unit: string;
-      price: number;
-      amount: number;
-    }[];
-  }) {
+  static viewDraftOrder(
+    data: {
+      promotionCode?: string;
+      paymentMethod: string;
+      deliveryMethod: string;
+      addressId: string;
+      fullAddress: string;
+      note: string;
+      point: boolean;
+      items: {
+        productCode: string;
+        qty: number;
+        unit: string;
+        price: number;
+        amount: number;
+      }[];
+    },
+    token: string
+  ) {
     let subtotal = 0;
     return Axios.post(`${this.host}/Voucher/ViewDraftOrder`, {
-      token: this.imageToken,
-      memvars: [
-        ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
-        ["payment", "C", data.paymentMethod], //Chuyen khoan
-        ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
-        ["ma_dc", "C", data.addressId], //Địa chỉ giao hàng
-        ["dien_giai", "C", data.note], //Ghi chú khác
-        ["diem", "N", data.point ? "1" : "0"], //Sử dụng điểm
-      ],
+      token: token,
       data: {
         "#master": [
           {
             api_id: 1,
             ngay_ct: moment().toISOString(),
+            ma_ck: data.promotionCode || "",
+            ma_pttt_web: data.paymentMethod,
+            ma_ptvc_web: data.deliveryMethod,
+            sd_diem: data.point ? "1" : "0",
+            dien_giai: data.note,
+            ma_dc: data.addressId,
+            dia_chi_web: data.fullAddress,
           },
         ],
         "#detail": data.items.map((i) => {
@@ -1003,6 +1080,7 @@ export class AritoHelper {
       paymentMethod: string;
       deliveryMethod: string;
       addressId: string;
+      fullAddress: string;
       note: string;
       point: boolean;
       items: {
@@ -1015,27 +1093,27 @@ export class AritoHelper {
         amount: number;
       }[];
     },
-    draft = false
+    draft = false,
+    token: string
   ) {
     let subtotal = 0;
     let itemCount = 0;
     const orderItems = keyBy(data.items, "productCode");
     const api = draft ? "SyncDraftOrder" : "SyncOrder";
     return Axios.post(`${this.host}/Voucher/${api}`, {
-      token: this.imageToken,
-      memvars: [
-        ["ma_ck", "C", data.promotionCode || ""], //Ma chiet khau
-        ["payment", "C", data.paymentMethod], //Chuyen khoan
-        ["delivery", "C", data.deliveryMethod], //Phương thức vận chuyển
-        ["ma_dc", "C", data.addressId], //Địa chỉ giao hàng
-        ["dien_giai", "C", data.note], //Ghi chú khác
-        ["diem", "N", data.point ? "1" : "0"], //Sử dụng điểm
-      ],
+      token: token,
       data: {
         "#master": [
           {
             api_id: 1,
             ngay_ct: moment().toISOString(),
+            ma_ck: data.promotionCode || "",
+            ma_pttt_web: data.paymentMethod,
+            ma_ptvc_web: data.deliveryMethod,
+            sd_diem: data.point ? "1" : "0",
+            dien_giai: data.note,
+            ma_dc: data.addressId,
+            dia_chi_web: data.fullAddress,
           },
         ],
         "#detail": data.items.map((i) => {

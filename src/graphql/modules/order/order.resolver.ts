@@ -81,6 +81,7 @@ const Mutation = {
         paymentMethod: paymentMethod,
         deliveryMethod: deliveryMethod,
         addressId: address.addressId,
+        fullAddress: address.fullAddress,
         point: usePoint,
         note: note,
         items: orderItems.map((i) => ({
@@ -93,7 +94,8 @@ const Mutation = {
           amount: i.amount,
         })),
       },
-      context.user.permission == 1
+      context.user.permission == 1,
+      context.tokenData.ref
     );
 
     return await orderService
