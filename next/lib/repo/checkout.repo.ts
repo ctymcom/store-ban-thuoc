@@ -51,6 +51,26 @@ type OrderItem = {
   position: number;
   product: Product;
 };
+export interface BankAccount {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  unitID: string;
+  account: string;
+  bankAccount: string;
+  accountOwner: string;
+  bankName: string;
+  bankName2: string;
+  province: string;
+  phone: string;
+  fax: string;
+  email: string;
+  homePage: string;
+  partner: string;
+  taxCode: string;
+  note: string;
+  branch: string;
+}
 
 export class CheckoutMethodRepository extends GraphRepository {
   async getMethods(
@@ -76,6 +96,41 @@ export class CheckoutMethodRepository extends GraphRepository {
             name
             name2
             discountRate
+          }
+        }
+      }
+    `,
+    });
+    this.handleError(result);
+    return result.data[api].data as any;
+  }
+  async getAllBankAccount(): Promise<BankAccount[]> {
+    let api = "getAllBankAccount";
+    const result = await this.apollo.query({
+      query: this.gql`
+      query {
+        ${api}(
+          q: { limit: 100 }
+        ){
+          data {
+            id
+            createdAt
+            updatedAt
+            unitID
+            account
+            bankAccount
+            accountOwner
+            bankName
+            bankName
+            province
+            phone
+            fax
+            email
+            homePage
+            partner
+            taxCode
+            note
+            branch
           }
         }
       }

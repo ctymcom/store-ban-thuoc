@@ -148,7 +148,13 @@ export function FormProfile(props: PropsType) {
                       Điện thoại
                     </p>
                     <div className="w-full sm:w-3/4 xl:w-4/6">
-                      <Input name="phone" value={userA?.phone} className="form-input" />
+                      <Input
+                        name="phone"
+                        value={userA?.phone}
+                        className="form-input"
+                        readonly={user?.phone ? true : false}
+                        onChange={(val) => setUserA({ ...userA, phone: val })}
+                      />
                     </div>
                   </div>
                   <div className="sm:flex justify-between items-center pt-4">
