@@ -36,7 +36,10 @@ export class SyncBankAccountJob {
         if (data.paging.page == data.paging.pageCount) break;
         data = await AritoHelper.getAllBankAccount(data.paging.page + 1, updatedAt);
       }while(data.paging.page <= data.paging.pageCount)
-      
+      if (bulk.length > 0) {
+        console.log(chalk.yellow(`====> Đồng bộ ${bulk.length} khuyến mãi...`));
+        await bulk.execute();
+      }
       console.log(chalk.cyan("==>Đồng bộ xong"));
       
     }catch (err){
