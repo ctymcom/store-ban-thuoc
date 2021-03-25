@@ -50,6 +50,9 @@ export type IProduct = BaseDocument & {
   highPriceCount?: number; // Đánh giá gía cao
   lowPriceCount?: number; // Đánh giá gía thấp
   syncAt?: Date; // Ngày động bộ gần nhất
+  upRate?: number; // Tỉ lệ tăng giá
+  downRate?: number; // Tỉ lệ hạ giá
+  slug?: string; // Tên URL
 };
 
 const productSchema = new Schema(
@@ -94,6 +97,9 @@ const productSchema = new Schema(
     highPriceCount: { type: Number, min: 0, default: 0 },
     lowPriceCount: { type: Number, min: 0, default: 0 },
     syncAt: { type: Date },
+    upRate: { type: Number, default: 0 },
+    downRate: { type: Number, default: 0 },
+    slug: { type: String },
   },
   { timestamps: true }
 );

@@ -53,20 +53,24 @@ async function syncDeletedProduct() {
       return res ? res.updatedAt : null;
     });
   let deletedProduct = await AritoHelper.getAllDeletedProducts(1, updatedAt);
-  console.log(deletedProduct.code)
-  do{
-    deletedProduct.code.forEach((d)=>{
-      console.log(d)
-      ProductModel.deleteOne({ code:d.code }).then((res)=>{
-        console.log("Delete sucess :"+ res.ok)
-      }).catch((err)=>{err.message})
-    })
+  console.log(deletedProduct.code);
+  do {
+    deletedProduct.code.forEach((d) => {
+      console.log(d);
+      ProductModel.deleteOne({ code: d.code })
+        .then((res) => {
+          console.log("Delete sucess :" + res.ok);
+        })
+        .catch((err) => {
+          err.message;
+        });
+    });
     if (deletedProduct.paging.page == deletedProduct.paging.pageCount) break;
-    deletedProduct = await AritoHelper.getAllDeletedProducts(deletedProduct.paging.page+1, updatedAt);
-  }while(deletedProduct.paging.page<=deletedProduct.paging.pageCount)
-  
-  
-  
+    deletedProduct = await AritoHelper.getAllDeletedProducts(
+      deletedProduct.paging.page + 1,
+      updatedAt
+    );
+  } while (deletedProduct.paging.page <= deletedProduct.paging.pageCount);
 }
 
 async function syncProductContainer() {
@@ -166,7 +170,7 @@ async function syncProduct() {
     .sort({ syncAt: -1 })
     .exec()
     .then((res) => (res ? res.syncAt : null));
-  // const productUpdatedAt = null;
+  //const productUpdatedAt = null;
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
   const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
   do {
