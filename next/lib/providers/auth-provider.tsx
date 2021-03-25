@@ -43,6 +43,7 @@ export function AuthProvider({ children }: any) {
 
   useEffect(() => {
     if (user) {
+      console.log("user", user);
     } else if (user === null) {
       ClearAuthToken();
     }

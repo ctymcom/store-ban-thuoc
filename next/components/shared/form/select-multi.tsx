@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import { HiInformationCircle } from 'react-icons/hi';
-import { FormFieldProps } from './form-field.type';
-import { Label } from './label';
+import { useEffect, useRef, useState } from "react";
+import { HiInformationCircle } from "react-icons/hi";
+import { FormFieldProps } from "./form-field.type";
+import { Label } from "./label";
 
 type SelectMutilProps = FormFieldProps & {
   values?: any[];
@@ -26,7 +26,7 @@ export function SelectMulti({
   values = [],
   placeholder,
   tooltip,
-  options,
+  options = [],
   searchDelay = 250,
   addOnEmpty = false,
   onValuesChanged,
@@ -50,7 +50,6 @@ export function SelectMulti({
     }
     inputRef.current.value = "";
     setOptions(options);
-    
   };
   const onKeyDown = (event) => {
     switch (event.code) {
@@ -74,11 +73,15 @@ export function SelectMulti({
           } else {
             selectItem(Options[SelectIndex]);
           }
-          
         }
         break;
     }
-    if (Show && SelectIndex != null && optionsRef.current && optionsRef.current.children[SelectIndex]) {
+    if (
+      Show &&
+      SelectIndex != null &&
+      optionsRef.current &&
+      optionsRef.current.children[SelectIndex]
+    ) {
       optionsRef.current.children[SelectIndex].scrollIntoView({ block: "nearest" });
       console.log(optionsRef.current.children[SelectIndex]);
     }
@@ -97,19 +100,19 @@ export function SelectMulti({
   const addNewValue = () => {
     if (addOnEmpty) {
       if (onAddNew) {
-        onAddNew(inputRef.current.value).then(res => {
-          selectItem(parseStringToSelectOption([res])[0])
-        })
+        onAddNew(inputRef.current.value).then((res) => {
+          selectItem(parseStringToSelectOption([res])[0]);
+        });
       } else {
-        selectItem(parseStringToSelectOption([inputRef.current.value])[0])
+        selectItem(parseStringToSelectOption([inputRef.current.value])[0]);
       }
     }
-  }
+  };
   useEffect(() => {
     if (Show) setSelectIndex(null);
   }, [Show]);
   useEffect(() => {
-    if (onValuesChanged) onValuesChanged(valueState.map(v => v.value));
+    if (onValuesChanged) onValuesChanged(valueState.map((v) => v.value));
   }, [valueState]);
   useEffect(() => {
     setOptions(options);
@@ -117,7 +120,7 @@ export function SelectMulti({
   useEffect(() => {
     return () => {
       if (searchDelayTimeout) clearTimeout(searchDelayTimeout);
-    }
+    };
   }, []);
   return (
     <>
@@ -193,7 +196,6 @@ export function SelectMulti({
                         setOptions(parseStringToSelectOption(options));
                       });
                     }, searchDelay);
-
                   } else {
                     const regex = new RegExp(e.target.value, "i");
                     setOptions(options.filter((o) => regex.test(o.display)));
@@ -203,7 +205,8 @@ export function SelectMulti({
             </div>
           </div>
         </div>
-        {Show && Options.length > 0 && <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
+        {Show && Options.length > 0 && (
+          <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
             <ul ref={optionsRef}>
               {(Options as any[]).map((item, index) => {
                 return (
@@ -217,17 +220,22 @@ export function SelectMulti({
                 );
               })}
             </ul>
-          </div>}
-          {Show && Options.length == 0 && addOnEmpty && <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
+          </div>
+        )}
+        {Show && Options.length == 0 && addOnEmpty && (
+          <div className="absolute z-50 shadow bg-white w-full max-h-56 top-full mt-1 border border-gray-300 text-sm text-gray-400  border-t-0 overflow-auto rounded-md">
             <ul ref={optionsRef}>
               <li
                 className={"p-4 hover:bg-gray-200 " + (SelectIndex == 0 && "bg-gray-200")}
                 onClick={() => addNewValue()}
               >
-                <span>Thêm <b>{inputRef.current.value}</b> ...</span>
+                <span>
+                  Thêm <b>{inputRef.current.value}</b> ...
+                </span>
               </li>
             </ul>
-          </div>}
+          </div>
+        )}
       </div>
     </>
   );
