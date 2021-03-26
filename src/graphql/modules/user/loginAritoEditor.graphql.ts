@@ -67,7 +67,7 @@ export default {
           deviceName,
           deviceOsVersion,
         });
-        if (user.permission != 3) throw ErrorHelper.permissionDeny();
+        if (user.permission < 3) throw ErrorHelper.permissionDeny();
         const userData = { ...user, role: ROLES.EDITOR };
         const editorToken = TokenHelper.getAritorEditorToken(userData, token);
         set(context, "tokenData.ref", token);
@@ -85,6 +85,7 @@ export default {
         return AritoHelper.getThumbnailLink(root.imageId);
       },
       point: async (root: AritoUser, args: any, context: Context) => {
+        if (!get(context, "tokenData.ref")) return 0;
         return await AritoHelper.getUserPoint(context.tokenData.ref);
       },
     },

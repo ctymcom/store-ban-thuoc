@@ -152,7 +152,8 @@ export function FormProfile(props: PropsType) {
                         name="phone"
                         value={userA?.phone}
                         className="form-input"
-                        readonly={true}
+                        readonly={user?.phone ? true : false}
+                        onChange={(val) => setUserA({ ...userA, phone: val })}
                       />
                     </div>
                   </div>

@@ -19,6 +19,7 @@ const SIDEBAR_MENUS = [
       {
         title: "Cấu hình",
         path: "/admin/settings",
+        permissions: [4],
       },
     ],
   },
@@ -48,19 +49,21 @@ export default function Sidebar() {
             <div key={index} className="w-full flex flex-col justify-start items-start py-4">
               <div className="uppercase font-semibold text-gray-500 px-8 mb-2">{menu.title}</div>
               <div className="w-full flex flex-col text-gray-700 font-semibold mb-5">
-                {menu.submenus.map((submenu, index) => (
-                  <Link key={submenu.path} href={submenu.path} shallow={true}>
-                    <a
-                      className={`my-0.5 px-8 py-2.5 ${
-                        router.pathname.startsWith(submenu.path)
-                          ? "text-white bg-primary hover:bg-primary-dark"
-                          : "hover:bg-gray-100 hover:text-primary"
-                      }`}
-                    >
-                      {submenu.title}
-                    </a>
-                  </Link>
-                ))}
+                {menu.submenus
+                  .filter((x) => !x.permissions || x.permissions.includes(user.permission))
+                  .map((submenu, index) => (
+                    <Link key={submenu.path} href={submenu.path} shallow={true}>
+                      <a
+                        className={`my-0.5 px-8 py-2.5 ${
+                          router.pathname.startsWith(submenu.path)
+                            ? "text-white bg-primary hover:bg-primary-dark"
+                            : "hover:bg-gray-100 hover:text-primary"
+                        }`}
+                      >
+                        {submenu.title}
+                      </a>
+                    </Link>
+                  ))}
               </div>
             </div>
           ))}

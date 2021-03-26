@@ -15,6 +15,7 @@ export class SettingHelper {
     {} as any
   );
   static async seedingSetting() {
+    console.log("Seeding Cấu hình...");
     const settingGroups = await SettingGroupModel.find();
     const settings = await SettingModel.find();
     for (const GROUP of SETTING_DATA) {
