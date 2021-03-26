@@ -1,15 +1,24 @@
 import { Context } from "../../context";
 import { productService } from "./product.service";
 import { GraphQLHelper } from "../../../helpers/graphql.helper";
-import { CategoryLoader } from "../category/category.model";
+import { CategoryLoader, CategoryModel } from "../category/category.model";
 import { IngredientLoader } from "../ingredient/ingredient.model";
 import { IProduct } from "./product.model";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { set } from "lodash";
+import { SettingHelper } from "../setting/setting.helper";
+import { SettingKey } from "../../../configs/settingData";
 
 const Query = {
   getAllProduct: async (root: any, args: any, context: Context) => {
     set(args, "q.filter.basePrice", { $gt: 0 });
+    const hiddenCategories = await SettingHelper.load(SettingKey.HIDDEN_PRODUCT_OF_CATEGORIES);
+    if (hiddenCategories.length > 0) {
+      const categories = await CategoryModel.find({ name: { $in: hiddenCategories } });
+      if (categories.length > 0) {
+        set(args, "q.filter.$and.0.categoryIds", { $nin: categories.map((c) => c._id) });
+      }
+    }
     return productService.fetch(args.q);
   },
   getOneProduct: async (root: any, args: any, context: Context) => {
