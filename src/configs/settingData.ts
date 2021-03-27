@@ -14,6 +14,7 @@ export enum SettingKey {
   POLICY = "POLICY", // Link điều khoản sử dụng
   HIDDEN_MENUS = "HIDDEN_MENUS", // Danh sách menu ẩn
   HIDDEN_CATEGORIES = "HIDDEN_CATEGORIES", // Danh sách danh mục ẩn
+  HIDDEN_PRODUCT_OF_CATEGORIES = "HIDDEN_PRODUCT_OF_CATEGORIES", // Danh sách danh mục cần ẩn sản phẩm
   // Cấu hình trang chủ
   TOP_MENU = "TOP_MENU", // Cấu hình top menu
   BANNER_1 = "BANNER_1", // Cấu hình banner 1
@@ -99,6 +100,15 @@ export const SETTING_DATA = [
         type: SettingType.array,
         name: "Danh sách danh mục ẩn",
         key: SettingKey.HIDDEN_CATEGORIES,
+        value: [],
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.array,
+        name: "Danh sách danh mục cần ẩn sản phẩm",
+        key: SettingKey.HIDDEN_PRODUCT_OF_CATEGORIES,
         value: [],
         isActive: true,
         isPrivate: false,

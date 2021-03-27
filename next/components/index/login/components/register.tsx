@@ -129,8 +129,8 @@ export function Register(props: PropsType) {
         value={repass}
         onChange={(e) => setRepass(e.target.value)}
       />
-      <div className="flex gap-2 mt-3">
-        <p>Company type</p>
+      <div className="flex flex-wrap gap-2 mt-3 justify-between">
+        <p>Hình thức kinh doanh</p>
         <RadioButton
           label="Nhà thuốc"
           name="companyType"

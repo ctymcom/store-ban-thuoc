@@ -11,6 +11,7 @@ import { useProductDetailsContext } from "./../providers/product-details-provide
 import { HiOutlineShoppingCart, HiEye, HiThumbDown, HiThumbUp } from "react-icons/hi";
 import { GraphService } from "../../../../lib/repo/graph.repo";
 import gql from "graphql-tag";
+import { ProductService } from "../../../../lib/repo/product.repo";
 
 interface PropsType extends ReactProps {}
 
@@ -62,12 +63,12 @@ export function ProductInfo(props: PropsType) {
   }, 1000);
 
   const [active, setActive] = useState(null);
-  const handlerToggleBtn = (style) => {
+  const handlerToggleBtn = (style, isHigh) => {
     setActive(style);
-    rateProductPrice;
+    rateProductPrice(product.id, isHigh);
   };
 
-  const rateProductPrice = async (productId: any, isHigh: any) => {
+  const rateProductPrice = async (productId: string, isHigh: boolean) => {
     let mutationName = "rateProductPrice";
     const res = await GraphService.apollo.mutate({
       mutation: gql`
@@ -76,21 +77,7 @@ export function ProductInfo(props: PropsType) {
               productId: $productId
               isHigh: $isHigh
             ) {
-              id: String
-              createdAt: DateTime
-              updatedAt: DateTime
-              code: String
-              name: String  
-              barcode: String
-              origin: String
-              packing: String
-              dosageForms: String
-              antibiotic: String
-              uses: String
-              viewCount: Int
-              saleCount: Int
-              highPriceCount: Int
-              lowPriceCount: Int
+              ${ProductService.fullFragment}
             }
           }
         `,
@@ -161,7 +148,7 @@ export function ProductInfo(props: PropsType) {
                 <button
                   className={`flex items-center mr-3 justify-center px-3 lg:px-4 py-1.5 lg:py-1.5 border text-primary text-18 border-primary rounded focus:outline-none 
                               ${active === "activeDown" ? "bg-primary text-white" : ""}`}
-                  onClick={() => handlerToggleBtn("activeDown")}
+                  onClick={() => handlerToggleBtn("activeDown", true)}
                 >
                   <HiThumbDown className={`${active === "activeDown" ? "text-white" : ""}`} />
                   <span className={`ml-1 text-14 ${active === "activeDown" ? "text-white" : ""}`}>
@@ -171,7 +158,7 @@ export function ProductInfo(props: PropsType) {
                 <button
                   className={`flex items-center mr-3 justify-center px-3 lg:px-4 py-1.5 lg:py-1.5 border text-primary text-18 border-primary rounded focus:outline-none 
                             ${active === "activeUp" ? "bg-primary text-white" : ""}`}
-                  onClick={() => handlerToggleBtn("activeUp")}
+                  onClick={() => handlerToggleBtn("activeUp", false)}
                 >
                   <HiThumbUp className={`${active === "activeUp" ? "text-white" : ""}`} />
                   <span
