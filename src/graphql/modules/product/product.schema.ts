@@ -90,6 +90,12 @@ const schema = gql`
     lowPriceCount: Int
     "Ngày động bộ gần nhất"
     syncAt: DateTime
+    "Tỉ lệ tăng giá"
+    upRate: Int
+    "Tỉ lệ hạ giá"
+    downRate: Int
+    "Tên URL"
+    slug: String
 
     categories: [Category]
     ingredients: [Ingredient]

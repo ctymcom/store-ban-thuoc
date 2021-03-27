@@ -20,18 +20,17 @@ import { IUserPointLog } from "../../graphql/modules/userPointLog/userPointLog.m
 import { IBankAccount } from "../../graphql/modules/bankAccount/bankAccount.model";
 
 export class AritoHelper {
-  static getAllDeletedProducts(page:number=1,updatedAt?:Date) {
-    return Axios.post(`${this.host}/Item/GetDeletedItem`,{
-      token:this.imageToken,
-      memvars:[
-        ["datetime2","DT",updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
-        ["pageIndex","I",page]
-      ]
-    }).then((res)=>{
+  static getAllDeletedProducts(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetDeletedItem`, {
+      token: this.imageToken,
+      memvars: [
+        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
       this.handleError(res);
-      const pageInfo = get(res,"data.pageInfo.0",{})
-      
-      
+      const pageInfo = get(res, "data.pageInfo.0", {});
+
       return {
         code: get(res.data, "data.data.ma_vt", []),
         paging: {
@@ -41,8 +40,8 @@ export class AritoHelper {
           pageCount: pageInfo["t_page"] || 0,
           group: pageInfo["group"],
         },
-      }
-    })
+      };
+    });
   }
   static host: string = configs.arito.host;
   static clientId: string = configs.arito.clientId;
@@ -181,6 +180,9 @@ export class AritoHelper {
           tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
           priceGroups: get(priceGroupData, d["ma_vt"], []),
           outOfDate: d["ngay_can_date"] ? moment(d["ngay_can_date"]).toDate() : null,
+          upRate: d["tl_tang_gia"],
+          downRate: d["tl_giam_gia"],
+          slug: d["ten_url"],
           __data: d,
         })) as IProduct[],
         paging: {
@@ -364,7 +366,7 @@ export class AritoHelper {
       ],
     }).then((res) => {
       this.handleError(res);
-      const pageInfo = get(res,"data.pageInfo.0",{})
+      const pageInfo = get(res, "data.pageInfo.0", {});
       return {
         data: get(res.data, "data.data", []).map((d: any) => ({
           unitID: d["unit_id"],
@@ -383,12 +385,13 @@ export class AritoHelper {
           note: d["ghi_chu"],
           branch: d["chi_nhanh"],
         })) as IBankAccount[],
-        paging:{
-        limit: pageInfo["pagecount"] || 0,
-        page: pageInfo["page"] || 1,
-        total: pageInfo["t_record"] || 0,
-        pageCount: pageInfo["t_page"] || 0,
-        group: pageInfo["group"],}
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
       };
     });
   }
