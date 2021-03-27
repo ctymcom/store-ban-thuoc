@@ -168,7 +168,7 @@ async function syncProduct() {
     .sort({ syncAt: -1 })
     .exec()
     .then((res) => (res ? res.syncAt : null));
-  //const productUpdatedAt = null;
+  // const productUpdatedAt = null;
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
   const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
   do {
