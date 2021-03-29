@@ -19,6 +19,7 @@ export const DefaultLayoutContext = createContext<
       zalo: { link: string; visable: boolean; visible: boolean };
     };
     menus: any[];
+    hiddenTags: string[];
   }>
 >({});
 
@@ -30,6 +31,7 @@ export function DefaultLayoutProvider({ children }: any) {
   const [socials, setSocials] = useState(null);
   const [policy, setPolicy] = useState(null);
   const [menus, setMenus] = useState([]);
+  const [hiddenTags, setHiddenTags] = useState([]);
 
   const loadSettings = () => {
     SettingService.getAll({
@@ -45,6 +47,7 @@ export function DefaultLayoutProvider({ children }: any) {
               "SOCIAL",
               "POLICY",
               "HIDDEN_MENUS",
+              "HIDDEN_TAGS",
             ],
           },
         },
@@ -69,6 +72,7 @@ export function DefaultLayoutProvider({ children }: any) {
           { label: "Khuyến mãi", path: "/products?sale=true", icon: "/assets/img/promotion.png" },
         ].filter((m) => !hiddenMenus.includes(m.label))
       );
+      setHiddenTags(res.data.find((x) => x.key == "HIDDEN_TAGS").value);
     });
   };
 
@@ -78,7 +82,7 @@ export function DefaultLayoutProvider({ children }: any) {
 
   return (
     <DefaultLayoutContext.Provider
-      value={{ topMenus, hotline, footerIntro, footerMenus, socials, policy, menus }}
+      value={{ topMenus, hotline, footerIntro, footerMenus, socials, policy, menus, hiddenTags }}
     >
       {children}
     </DefaultLayoutContext.Provider>
