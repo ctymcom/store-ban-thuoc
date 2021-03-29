@@ -42,7 +42,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
     return (
       <>
         <div className="flex flex-col min-w-4xs place-content-between">
-          <Link href={"/product/" + product.code}>
+          <Link href={"/product/" + product.slug}>
             <a className="group">
               <div className="relative w-full">
                 <LazyLoad>
