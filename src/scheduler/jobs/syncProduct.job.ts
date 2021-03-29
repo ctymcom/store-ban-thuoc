@@ -27,6 +27,8 @@ export class SyncProductJob {
     try {
       console.log("Execute Job " + SyncProductJob.jobName, moment().format());
       await AritoHelper.setImageToken();
+      console.log(chalk.cyan("==>Đồng bộ sản phẩm đã xóa ..."));
+      await syncDeletedProduct();
       console.log(chalk.cyan("==> Động bộ danh mục sản phẩm..."));
       await syncCategory();
       console.log(chalk.cyan("==> Động bộ hoạt chất..."));
@@ -37,8 +39,6 @@ export class SyncProductJob {
       await syncProductContainer();
       console.log(chalk.cyan("==> Động bộ đánh giá..."));
       await syncProductComment();
-      console.log(chalk.cyan("==>Đồng bộ sản phẩm đã xóa ..."));
-      await syncDeletedProduct();
       console.log(chalk.green("==> Đồng bộ xong"));
     } catch (err) {
       console.log(chalk.red("Động bộ lỗi", err.message));
@@ -53,20 +53,22 @@ async function syncDeletedProduct() {
       return res ? res.updatedAt : null;
     });
   let deletedProduct = await AritoHelper.getAllDeletedProducts(1, updatedAt);
-  console.log(deletedProduct.code)
-  do{
-    deletedProduct.code.forEach((d)=>{
-      console.log(d)
-      ProductModel.deleteOne({ code:d.code }).then((res)=>{
-        console.log("Delete sucess :"+ res.ok)
-      }).catch((err)=>{err.message})
-    })
+  const bulk = ProductModel.collection.initializeUnorderedBulkOp();
+
+  do {
+    deletedProduct.code.forEach((d) => {
+      bulk.find({ code: d.code }).remove();
+    });
     if (deletedProduct.paging.page == deletedProduct.paging.pageCount) break;
-    deletedProduct = await AritoHelper.getAllDeletedProducts(deletedProduct.paging.page+1, updatedAt);
-  }while(deletedProduct.paging.page<=deletedProduct.paging.pageCount)
-  
-  
-  
+    deletedProduct = await AritoHelper.getAllDeletedProducts(
+      deletedProduct.paging.page + 1,
+      updatedAt
+    );
+  } while (deletedProduct.paging.page <= deletedProduct.paging.pageCount);
+  if (bulk.length > 0) {
+    console.log(chalk.yellow(`====> Xóa ${bulk.length} sản phẩm...`));
+    await bulk.execute();
+  }
 }
 
 async function syncProductContainer() {

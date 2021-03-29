@@ -5,9 +5,9 @@ import { ProductDetailsProvider } from "../../components/index/product-details/p
 import { Redirect } from "../../lib/helpers/redirect";
 import SEO from "../../lib/helpers/seo";
 import { Product } from "../../lib/repo/product.repo";
-import { ProductModel } from "./../../../dist/graphql/modules/product/product.model";
+import { ProductModel } from "../../../dist/graphql/modules/product/product.model";
 import { AritoHelper } from "../../../dist/helpers/arito/arito.helper";
-import { DefaultLayout } from "./../../layouts/default-layout";
+import { DefaultLayout } from "../../layouts/default-layout";
 import { NextSeo } from "next-seo";
 
 interface PropsType extends ReactProps {
@@ -28,8 +28,8 @@ export default function Page(props: PropsType) {
 Page.Layout = DefaultLayout;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { code } = context.query;
-  const product = await ProductModel.findOne({ code }, "_id name imageId description code");
+  const { slug } = context.query;
+  const product = await ProductModel.findOne({ slug }, "_id name imageId description code");
   if (!product) Redirect(context.res, "/404");
   product
     .updateOne({ $inc: { viewCount: 1 } }, { upsert: true })
