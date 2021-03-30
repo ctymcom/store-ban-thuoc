@@ -190,11 +190,18 @@ export function HeaderUser({ ...props }: PropsType) {
           </div>
         </>
       ) : (
-        <Link href="/login">
-          <a className="btn-default h-12" onClick={saveCurrentPath}>
-            Đăng nhập
-          </a>
-        </Link>
+        <div>
+          <Link href="/login/?email=email">
+            <a className="btn-default h-12 border-r text-accent" onClick={saveCurrentPath}>
+              Tạo tài khoản
+            </a>
+          </Link>
+          <Link href="/login">
+            <a className="btn-default h-12" onClick={saveCurrentPath}>
+              Đăng nhập
+            </a>
+          </Link>
+        </div>
       )}
     </>
   );
