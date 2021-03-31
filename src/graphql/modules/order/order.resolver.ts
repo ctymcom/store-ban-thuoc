@@ -122,18 +122,7 @@ const Mutation = {
         return res;
       });
   },
-  rateOrder: async (root: any, args: any, context: Context) => {
-    context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
-    const { OrderId, Reviewer, Imark, Content } = args;
-    const input = {
-      type: "ORDER",
-      code: OrderId,
-      reviewer: Reviewer,
-      imark: Imark,
-      content: Content,
-    };
-    return AritoHelper.postComment(input, context.tokenData.ref);
-  },
+  
 };
 
 const Order = {};
