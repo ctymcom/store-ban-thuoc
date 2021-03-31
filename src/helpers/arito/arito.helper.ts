@@ -20,6 +20,7 @@ import { IUserPointLog } from "../../graphql/modules/userPointLog/userPointLog.m
 import { IBankAccount } from "../../graphql/modules/bankAccount/bankAccount.model";
 
 export class AritoHelper {
+  
   static getAllDeletedProducts(page:number=1,updatedAt?:Date) {
     return Axios.post(`${this.host}/Item/GetDeletedItem`,{
       token:this.imageToken,
