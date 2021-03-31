@@ -57,7 +57,7 @@ const ListCartCheckout = (props: PropsType) => {
                     {`${item.qty}(${item.product?.unit})`}
                   </p>
                 </div>
-                <p className="text-right" style={{ width: screenSm ? "" : "100%" }}>
+                <p className="" style={{ width: screenSm ? "" : "100%" }}>
                   {NumberPipe(item.price, false)} VND
                 </p>
               </div>
