@@ -4,7 +4,7 @@ import { BaseDocument, ModelLoader, ModelHook } from "../../../base/baseModel";
 const Schema = mongoose.Schema;
 
 export type IProductTab = BaseDocument & {
-  code?: string; // Mã tab
+  code?: number; // Mã tab
   name?: string; // Tên tiếng việt
   name2?: string; // Tên tiếng anh
   productField?: string; // Tên field láy dữ liệu
@@ -12,7 +12,7 @@ export type IProductTab = BaseDocument & {
 
 const productTabSchema = new Schema(
   {
-    code: { type: String, required: true },
+    code: { type: Number, required: true },
     name: { type: String, required: true },
     name2: { type: String, required: true },
     productField: { type: String, required: true },

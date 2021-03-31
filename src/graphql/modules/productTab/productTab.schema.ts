@@ -13,7 +13,7 @@ const schema = gql`
     updatedAt: DateTime
 
     "Mã tab"
-    code: String
+    code: Int
     "Tên tiếng việt"
     name: String
     "Tên tiếng anh"
