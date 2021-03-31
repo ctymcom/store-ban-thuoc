@@ -133,7 +133,6 @@ const Mutation = {
       content: Content,
     };
     return AritoHelper.postComment(input, context.tokenData.ref);
-    
   },
 };
 
