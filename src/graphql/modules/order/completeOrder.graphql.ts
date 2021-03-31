@@ -15,12 +15,12 @@ export default {
       completeOrder: async (root: any, args: any, context: Context) => {
         context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
         const { orderId } = args;
-        const order =await OrderModel.findById(orderId);
+        const order = await OrderModel.findById(orderId);
         if (!order) {
           throw Error();
         }
-        return AritoHelper.completeOrder(order);
-      }
+        return AritoHelper.completeOrder(order.code.toString(), context.tokenData.ref);
+      },
     },
   },
 };
