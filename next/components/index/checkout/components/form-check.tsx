@@ -29,7 +29,7 @@ export function FormCheck(props: PropsType) {
     switch (type) {
       case "bo": {
         let tempStyle =
-          "cursor-pointer px-3 py-2 md:px-5 md:py-4 mt-4 border rounded w-full xl:w-1/2 hover:bg-primary-light transition duration-500 ease-in-out whitespace-nowrap overflow-hidden ";
+          "cursor-pointer px-3 py-2 md:px-5 md:py-4 mt-4 border rounded w-full xl:w-1/2 hover:bg-primary-light transition duration-500 ease-in-out overflow-hidden ";
         if (id === iDChecking) tempStyle += " border-primary bg-primary-light";
         return tempStyle;
       }

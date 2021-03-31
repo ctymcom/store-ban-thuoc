@@ -193,7 +193,7 @@ export function CheckOutPage() {
 
   return !loadingCheckout ? (
     <div className="lg:flex justify-between gap-4 md:gap-8 xl:gap-16">
-      <div className="w-full lg:w-2/3 xl:w-3/4 gap-4">
+      <div className="w-full lg:w-2/3 gap-4">
         <div className="w-full">
           <div>
             <FormCheck
@@ -222,8 +222,9 @@ export function CheckOutPage() {
                   );
                 })}
                 <Button
-                  text={`${showAllAccoutBank ? "Ẩn bớt" : "Xem tất cả"}`}
+                  text={`${showAllAccoutBank ? "Ẩn bớt" : "...xem tất cả"}`}
                   onClick={() => setShowAllAccoutBank(!showAllAccoutBank)}
+                  className="p-0 text-primary opacity-70 hover:opacity-100 m-0"
                 />
               </>
             ) : (
@@ -245,7 +246,7 @@ export function CheckOutPage() {
           />
         </div>
       </div>
-      <div className="w-full lg:w-1/3 xl:w-1/4">
+      <div className="w-full lg:w-1/3">
         <div className="w-full md:flex lg:inline-block md:gap-5 mb-10">
           <div className="w-full md:w-1/3 lg:w-full my-3">
             <div className="flex justify-between items-center border-b-2">
@@ -313,8 +314,9 @@ export function CheckOutPage() {
             </a>
           </div>
           <Button
-            className={"w-full text-16 py-3 my-2 btn-primary"}
+            className={"w-full text-16 py-3 my-2"}
             disabled={!isCheck}
+            primary
             asyncLoading
             onClick={async () => await handleConfirmOrder()}
             text="Đặt mua"

@@ -162,13 +162,13 @@ async function syncProduct() {
   await syncProductTabs();
   console.log(chalk.yellow("====> Đồng bộ Product Tag"));
   await syncProductTag();
-  const productTabs = await ProductTabModel.find();
+  const productTabs = await ProductTabModel.find().sort({ code: 1 });
   const productTags = await ProductTagModel.find().then((res) => keyBy(res, "code"));
-  const productUpdatedAt = await ProductModel.findOne()
-    .sort({ syncAt: -1 })
-    .exec()
-    .then((res) => (res ? res.syncAt : null));
-  // const productUpdatedAt = null;
+  // const productUpdatedAt = await ProductModel.findOne()
+  //   .sort({ syncAt: -1 })
+  //   .exec()
+  //   .then((res) => (res ? res.syncAt : null));
+  const productUpdatedAt = null;
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
   const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
   do {
