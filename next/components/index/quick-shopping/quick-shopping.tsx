@@ -27,7 +27,7 @@ export function QuickShoppingPage() {
         <div className="pb-4">
           <BreadCrumbs breadcrumbs={breadcrumbs} />
         </div>
-        <div className="flex">
+        <div className="flex relative">
           <div className="flex-grow lg:pr-8">
             <QuickShoppingSearch />
             {!products ? (
@@ -58,7 +58,9 @@ export function QuickShoppingPage() {
             )}
           </div>
           <div className="fixed left-0 bottom-0 lg:relative lg:flex-shrink-0 w-full lg:w-80">
-            <QuickShoppingTotal />
+            <div className="sticky top-40 max-h-full">
+              <QuickShoppingTotal />
+            </div>
           </div>
         </div>
       </div>

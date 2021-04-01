@@ -10,7 +10,10 @@ export function QuickShoppingTotal(props: PropsType) {
 
   return (
     <>
-      <div className=" overflow-scroll overflow-x-hidden max-h-80 border border-gray-100 lg:rounded-lg shadow-xl lg:shadow-md bg-white">
+      <div
+        className="overflow-scroll overflow-y-visible overflow-x-hidden border border-gray-100 lg:rounded-lg shadow-xl lg:shadow-md bg-white"
+        style={{ maxHeight: `calc(100vh - 368px)` }}
+      >
         {screenLg &&
           cartProducts.map((cartProduct) => (
             <div
@@ -37,7 +40,7 @@ export function QuickShoppingTotal(props: PropsType) {
         </div>
       </div>
       <Link href="/cart">
-        <a className="btn-primary w-full h-14 rounded-none text-md font-bold uppercase">
+        <a className="btn-primary w-full h-14 rounded-none text-md font-bold uppercase sticky top-60">
           Đến trang giỏ hàng
         </a>
       </Link>
