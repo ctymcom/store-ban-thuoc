@@ -138,6 +138,12 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 {...inputProps}
                 onChange={(val) => onValueChanged("more", val, index)}
               />
+              <Input
+                value={setting.value.copyright}
+                prefix="Copyright"
+                {...inputProps}
+                onChange={(val) => onValueChanged("copyright", val, index)}
+              />
             </>
           )}
           {setting.key == "FOOTER_MENU" && (
