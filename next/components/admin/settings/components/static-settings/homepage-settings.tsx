@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ImageInput } from "../../../../shared/utilities/form/image-input";
 
 import { Input } from "../../../../shared/utilities/form/input";
+import { Textarea } from "../../../../shared/utilities/form/textarea";
 import { SettingItemsOption, SettingItemsValue } from "../setting-items-value";
 import { MutableSetting } from "../setting-list";
 import { SettingName } from "../setting-name";
@@ -125,7 +126,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 {...inputProps}
                 onChange={(val) => onValueChanged("link", val, index)}
               />
-              <Input
+              <Textarea
                 value={setting.value.content}
                 prefix="Nội dung footer"
                 {...inputProps}
