@@ -311,6 +311,7 @@ export const SETTING_DATA = [
           Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên khắp Việt Nam.`,
           more: `Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng công nghệ 4.0 vào nền Y Tế`,
           link: "https://arito-store.mcom.app",
+          copyright: "Copyright © CÔNG TY TNHH MTV DƯỢC PHẨM 150 COPHAVINA",
         },
         isActive: true,
         isPrivate: false,

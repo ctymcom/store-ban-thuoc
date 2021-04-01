@@ -10,7 +10,7 @@ interface PropTypes extends ReactProps {
 }
 
 export interface SettingItemsOption extends Option {
-  type: "string" | "number" | "boolean" | "image";
+  type: "string" | "number" | "boolean" | "image" | "richText";
 }
 
 export function SettingItemsValue({ items, options, ...props }: PropTypes) {
@@ -89,6 +89,19 @@ export function SettingItemsValue({ items, options, ...props }: PropTypes) {
                     }
                     value={item[option.value]}
                     type={option.type == "number" ? "number" : "text"}
+                    onChange={(e) => onValueChange(e.target.value, option.value, index)}
+                  />
+                )}
+                {option.type == "richText" && (
+                  <textarea
+                    className={
+                      `form-input flex-grow rounded-none ` +
+                      `${optionIndex == 0 ? "rounded-tr" : ""} ${
+                        optionIndex == items.length - 1 ? "rounded-br" : ""
+                      }`
+                    }
+                    value={item[option.value]}
+                    rows={3}
                     onChange={(e) => onValueChange(e.target.value, option.value, index)}
                   />
                 )}
