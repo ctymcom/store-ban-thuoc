@@ -14,6 +14,8 @@ export enum SettingKey {
   POLICY = "POLICY", // Link điều khoản sử dụng
   HIDDEN_MENUS = "HIDDEN_MENUS", // Danh sách menu ẩn
   HIDDEN_CATEGORIES = "HIDDEN_CATEGORIES", // Danh sách danh mục ẩn
+  HIDDEN_PRODUCT_OF_CATEGORIES = "HIDDEN_PRODUCT_OF_CATEGORIES", // Danh sách danh mục cần ẩn sản phẩm
+  HIDDEN_TAGS = "HIDDEN_TAGS", // Danh sách tag ẩn
   // Cấu hình trang chủ
   TOP_MENU = "TOP_MENU", // Cấu hình top menu
   BANNER_1 = "BANNER_1", // Cấu hình banner 1
@@ -24,6 +26,7 @@ export enum SettingKey {
   FOOTER_INTRO = "FOOTER_INTRO", // Cấu hình giới thiệu footer
   FOOTER_MENU = "FOOTER_MENU", // Cấu hình menu ở footer
   SOCIAL = "SOCIAL", // Cấu hình các liên kết mạng xã hội
+  POPUP = "POPUP", // Cấu hình popup
 }
 export const SETTING_DATA = [
   {
@@ -99,6 +102,24 @@ export const SETTING_DATA = [
         type: SettingType.array,
         name: "Danh sách danh mục ẩn",
         key: SettingKey.HIDDEN_CATEGORIES,
+        value: [],
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.array,
+        name: "Danh sách danh mục cần ẩn sản phẩm",
+        key: SettingKey.HIDDEN_PRODUCT_OF_CATEGORIES,
+        value: [],
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.array,
+        name: "Danh sách tag ẩn",
+        key: SettingKey.HIDDEN_TAGS,
         value: [],
         isActive: true,
         isPrivate: false,
@@ -290,6 +311,7 @@ export const SETTING_DATA = [
           Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên khắp Việt Nam.`,
           more: `Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng công nghệ 4.0 vào nền Y Tế`,
           link: "https://arito-store.mcom.app",
+          copyright: "Copyright © CÔNG TY TNHH MTV DƯỢC PHẨM 150 COPHAVINA",
         },
         isActive: true,
         isPrivate: false,
@@ -323,6 +345,19 @@ export const SETTING_DATA = [
           facebook: { link: "https://facebook.com", visible: true },
           youtube: { link: "https://youtube.com", visible: true },
           zalo: { link: "https://chat.zalo.me", visible: true },
+        },
+        isActive: true,
+        isPrivate: false,
+        readOnly: false,
+      },
+      {
+        type: SettingType.object,
+        name: "Popup Trang chủ",
+        key: SettingKey.POPUP,
+        value: {
+          enable: false, // Bật / tắt popup
+          image: "",
+          link: "https://khothuocsi.vn",
         },
         isActive: true,
         isPrivate: false,

@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import LazyLoad from "react-lazyload";
 import { ProductTag } from "./product-tag";
+import { useDefaultLayoutContext } from "../../../layouts/default-layout/providers/default-layout-providers";
 
 interface PropsType extends ReactProps {
   product?: Product;
@@ -19,6 +20,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
 
   const { saveCurrentPath } = useAuth();
   const { addProductToCart } = useCart();
+  const { hiddenTags } = useDefaultLayoutContext();
   const router = useRouter();
 
   const categoryText = showGroup
@@ -42,7 +44,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
     return (
       <>
         <div className="flex flex-col min-w-4xs place-content-between">
-          <Link href={"/product/" + product.code}>
+          <Link href={"/product/" + product.slug}>
             <a className="group">
               <div className="relative w-full">
                 <LazyLoad>
@@ -104,9 +106,15 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
             <div>
               {!!product.tags?.length && (
                 <div className="flex flex-wrap py-2 -mx-1">
-                  {product.tagDetails.map((tagDetail) => (
-                    <ProductTag key={tagDetail.code} tag={tagDetail} saleRate={product.saleRate} />
-                  ))}
+                  {product.tagDetails
+                    .filter((t) => !hiddenTags.includes(t.code))
+                    .map((tagDetail) => (
+                      <ProductTag
+                        key={tagDetail.code}
+                        tag={tagDetail}
+                        saleRate={product.saleRate}
+                      />
+                    ))}
                 </div>
               )}
               <div className="text-15 leading-tight text-accent">{product.packing}</div>

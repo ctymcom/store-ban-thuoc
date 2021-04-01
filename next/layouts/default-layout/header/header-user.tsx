@@ -78,30 +78,31 @@ export function HeaderUser({ ...props }: PropsType) {
                   >
                     <Menu.Items
                       static
-                      className="max-h-72 h-auto v-scrollbar z-50	absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+                      className="max-h-72 h-scrollbar z-50	absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                     >
                       {listNotification?.length > 0 && listNotification[0] !== undefined ? (
                         listNotification.slice(0, visible)?.map((notification, index) => (
-                          <div key={index}>
-                            <div className="w-full pl-5 pr-2.5 py-3">
-                              <p className="text-gray-700 text-14 leading-4">
-                                {notification?.content}
-                              </p>
-                              <p className="text-gray-400 text-10">
-                                {formatDistanceToNow(parseISO(notification.createdAt), {
-                                  addSuffix: true,
-                                  locale: viLocale,
-                                })}
-                              </p>
-                              <p>{listNotification.length}</p>
-                            </div>
+                          <div
+                            className="w-full pl-5 pr-2.5 py-3 hover:bg-primary-light cursor-pointer"
+                            onClick={() => router.push(`${notification.link}`)}
+                            key={index}
+                          >
+                            <p className="text-gray-700 text-14 leading-4">
+                              {notification?.content}
+                            </p>
+                            <p className="text-gray-400 text-10">
+                              {formatDistanceToNow(parseISO(notification.createdAt), {
+                                addSuffix: true,
+                                locale: viLocale,
+                              })}
+                            </p>
                           </div>
                         ))
                       ) : (
                         <div className="">
                           <NotFound
                             icon={<HiOutlineBell />}
-                            text="Không tìm thấy thông báo nào"
+                            text="Chưa có thông báo"
                             className="text-gray-600 text-12"
                           />
                         </div>
@@ -110,7 +111,9 @@ export function HeaderUser({ ...props }: PropsType) {
                         ""
                       ) : (
                         <Button
-                          className="pb-2 flex mx-auto"
+                          className={`"pb-2 flex mx-auto " ${
+                            visible === numberNotification ? "hidden" : ""
+                          } `}
                           text="Xem thêm"
                           icon={<HiChevronDown />}
                           outline={false}
@@ -187,11 +190,18 @@ export function HeaderUser({ ...props }: PropsType) {
           </div>
         </>
       ) : (
-        <Link href="/login">
-          <a className="btn-default h-12" onClick={saveCurrentPath}>
-            Đăng nhập
-          </a>
-        </Link>
+        <div>
+          <Link href="/login/?email=email">
+            <a className="btn-default h-12 border-r text-accent" onClick={saveCurrentPath}>
+              Tạo tài khoản
+            </a>
+          </Link>
+          <Link href="/login">
+            <a className="btn-default h-12" onClick={saveCurrentPath}>
+              Đăng nhập
+            </a>
+          </Link>
+        </div>
       )}
     </>
   );

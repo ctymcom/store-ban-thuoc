@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { ImageInput } from "../../../../shared/utilities/form/image-input";
 
 import { Input } from "../../../../shared/utilities/form/input";
+import { Textarea } from "../../../../shared/utilities/form/textarea";
 import { SettingItemsOption, SettingItemsValue } from "../setting-items-value";
 import { MutableSetting } from "../setting-list";
 import { SettingName } from "../setting-name";
@@ -124,7 +126,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 {...inputProps}
                 onChange={(val) => onValueChanged("link", val, index)}
               />
-              <Input
+              <Textarea
                 value={setting.value.content}
                 prefix="Nội dung footer"
                 {...inputProps}
@@ -135,6 +137,12 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 prefix="Xem thêm"
                 {...inputProps}
                 onChange={(val) => onValueChanged("more", val, index)}
+              />
+              <Input
+                value={setting.value.copyright}
+                prefix="Copyright"
+                {...inputProps}
+                onChange={(val) => onValueChanged("copyright", val, index)}
               />
             </>
           )}
@@ -217,6 +225,32 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                   />
                 </div>
               </div>
+            </>
+          )}
+          {setting.key == "POPUP" && (
+            <>
+              <div className="flex mb-2">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
+                  Hiện Popup
+                </div>
+                <div className="form-input flex items-center flex-grow rounded-none rounded-br">
+                  <Switch
+                    value={setting.value.enable}
+                    onChange={(val) => onValueChanged("enable", val, index)}
+                  />
+                </div>
+              </div>
+              <ImageInput
+                value={setting.value.image}
+                onChange={(val) => onValueChanged("image", val, index)}
+                className={`form-input flex-grow rounded-none rounded-tr`}
+              />
+              <Input
+                value={setting.value.link}
+                prefix="Đường dẫn liên kết"
+                {...inputProps}
+                onChange={(val) => onValueChanged("link", val, index)}
+              />
             </>
           )}
         </div>

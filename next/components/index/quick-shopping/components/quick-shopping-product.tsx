@@ -29,7 +29,7 @@ export function QuickShoppingProduct({ product }: PropsType) {
 
   return (
     <div className="relative flex flex-col items-start md:flex-row md:items-center border-b border-gray-300 px-1 py-2 md:px-2 md:py-1">
-      <Link href={"/product/" + product.code}>
+      <Link href={"/product/" + product.slug}>
         <a className="flex items-center flex-grow group">
           <div className="flex-shrink-0 w-16 rounded p-2">
             <div className="image-wrapper">

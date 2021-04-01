@@ -20,6 +20,7 @@ export interface Product extends BaseModel {
   sideEffects: string;
   careful: string;
   overdose: string;
+  slug: string;
   preservation: string;
   volume: number;
   weight: number;
@@ -45,6 +46,8 @@ export interface Product extends BaseModel {
   imageS: string;
   imageM: string;
   imageL: string;
+  viewCount: number;
+  saleCount: number;
 }
 
 interface ProductTagDetail {
@@ -80,6 +83,7 @@ export class ProductRepository extends CrudRepository<Product> {
     tags: [string]
     tagDetails { code name color }: [ProductTagDetail]
     categories { id name parents { id name } }: [Category]
+    slug: String
     image: string
     imageS: string
   `);
@@ -118,8 +122,11 @@ export class ProductRepository extends CrudRepository<Product> {
     salePrice: number
     containers: [string]
     saleRate: number
+    slug: String
     tags: [string]
     saleExpiredDate: DateTime
+    viewCount: Int
+    saleCount: Int
     tagDetails {
       code: String
       name: String
@@ -144,6 +151,7 @@ export class ProductRepository extends CrudRepository<Product> {
       basePrice: number
       salePrice: number
       containers: [string]
+      slug: String
       saleRate: number
       tags: [string]
       tagDetails { code name }: [ProductTagDetail]
