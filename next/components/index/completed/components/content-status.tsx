@@ -18,7 +18,7 @@ export function ContentStatus(props) {
         <div className="w-full sm:w-5/6 mx-auto">
           <p>
             Cảm ơn bạn đã mua hàng tại{" "}
-            <span className="block sm:inline mx-auto font-bold text-primary">Kho thuốc sĩ</span>
+            <span className="block sm:inline mx-auto font-bold text-primary">Kho thuốc sỉ</span>
           </p>
           <div className="flex flex-wrap items-center gap-2 mx-auto">
             <p className="mx-auto">Mã đơn hàng của bạn là</p>
