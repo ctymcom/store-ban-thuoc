@@ -10,13 +10,13 @@ const NameProduct = (props: Proptype) => {
   return (
     <>
       <div
-        className={`${props.className || ""} md:text-15 lg:text-16 relative`}
+        className={`${props.className || ""} relative`}
         onMouseEnter={() => setShowFullName(true)}
         onMouseLeave={() => setShowFullName(false)}
       >
-        <span>{props.name}</span>
+        <span className="whitespace-nowrap">{props.name}</span>
         {showFullName && (
-          <div className="absolute emerge shadow-lg z-20 top-0 right-0 bg-gray-200 text-gray-700 whitespace-nowrap px-2 font-semibold">
+          <div className="absolute emerge shadow-lg z-20 top-0 right-0 bg-gray-200 text-gray-700 px-2 font-semibold">
             {props.fullName}
           </div>
         )}

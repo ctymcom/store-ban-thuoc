@@ -181,6 +181,7 @@ export function CartProvider({ children }: any) {
     if (cartProduct) {
       cartProduct.qty = qty;
       cartProduct.amount = cartProduct.price * qty;
+      cartProduct.active = true;
     } else {
       cartProducts.push({
         productId: product.id,
@@ -188,6 +189,7 @@ export function CartProvider({ children }: any) {
         qty,
         price: product.salePrice,
         amount: product.salePrice * qty,
+        active: true,
       });
     }
     setCartProducts([...cartProducts]);
