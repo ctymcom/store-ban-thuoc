@@ -28,16 +28,7 @@ export function CheckOutPage() {
   const [note, setNote] = useState<string>("");
   const [cartAmount, setCartAmount] = useState(0);
   const [showAllAccoutBank, setShowAllAccoutBank] = useState(false);
-  const [listMoneyCheckout, setListMoneyCheckout] = useState([
-    {
-      title: "Tạm tính",
-      money: cartTotal,
-    },
-    {
-      title: "Giảm giá",
-      money: 0,
-    },
-  ]);
+  const [listMoneyCheckout, setListMoneyCheckout] = useState([]);
   const toast = useToast();
   const {
     addressSelected,
@@ -151,8 +142,6 @@ export function CheckOutPage() {
     }
   };
   const draftOrder = async (data: any) => {
-    console.log(data);
-
     let mutationName = "generateDraftOrder";
     const res = await GraphService.apollo.mutate({
       mutation: gql`
@@ -162,6 +151,8 @@ export function CheckOutPage() {
             ) {
               subtotal
               discount
+              discountPoint
+              discountPayment
               amount
             }
           }
@@ -171,10 +162,28 @@ export function CheckOutPage() {
       },
     });
     if (res.data) {
-      const { amount, discount, subtotal } = res.data.generateDraftOrder;
-      let listNew = listMoneyCheckout;
-      listNew[0].money = subtotal;
-      listNew[1].money = discount;
+      const {
+        amount,
+        discount,
+        subtotal,
+        discountPoint,
+        discountPayment,
+      } = res.data.generateDraftOrder;
+
+      let listNew = [
+        {
+          title: "Tổng tiền hàng",
+          money: subtotal,
+        },
+      ];
+      // listNew[0].money = subtotal;
+      if (discount > 0)
+        listNew.push({ title: `Khuyến mãi ${data.promotionCode}`, money: -discount });
+      if (discountPayment > 0)
+        listNew.push({ title: `Ưu đãi thanh toán`, money: -discountPayment });
+      if (discountPoint > 0) listNew.push({ title: `Đổi điểm`, money: -discountPoint });
+      // listNew[2].money = discountPayment;
+      // listNew[3].money = discountPoint;
       setCartAmount(amount);
       setListMoneyCheckout([...listNew]);
     }
@@ -292,9 +301,7 @@ export function CheckOutPage() {
             <PayMoney listMoney={addressSelected ? listMoneyCheckout : []} />
             <div className="flex justify-between text-16 ">
               <p>Thành tiền</p>
-              <p className="font-bold text-primary">
-                {NumberPipe(cartAmount ? cartAmount : listMoneyCheckout[0].money, false)} VND
-              </p>
+              <p className="font-bold text-primary">{NumberPipe(cartAmount, false)} VND</p>
             </div>
           </div>
         </div>

@@ -1059,6 +1059,8 @@ export class AritoHelper {
       return {
         subtotal: subtotal,
         discount: get(res.data, "data.master.0.t_ck_nt", 0),
+        discountPayment: get(res.data, "data.master.0.tien_ck_tt", 0),
+        discountPoint: get(res.data, "data.master.0.diem_user", 0) || 0,
         amount: get(res.data, "data.master.0.t_tt_nt", 0),
         items: get(res.data, "data.detail", []).map((t) => ({
           productCode: t["ma_vt"],
@@ -1139,6 +1141,8 @@ export class AritoHelper {
         orderNumber: get(res.data, "data.master.0.so_ct"),
         subtotal: subtotal,
         discount: get(res.data, "data.master.0.t_ck_nt", 0),
+        discountPayment: get(res.data, "data.master.0.tien_ck_tt", 0),
+        discountPoint: get(res.data, "data.master.0.diem_user", 0),
         amount: get(res.data, "data.master.0.t_tt_nt", 0),
         promotionCode: get(res.data, "data.master.0.ma_ck"),
         items: get(res.data, "data.detail", []).map((t) => ({

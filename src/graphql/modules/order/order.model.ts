@@ -19,7 +19,9 @@ export type IOrder = BaseDocument & {
   location?: string; // Tạo độ
   items?: OrderItem[]; // Chi tiết đơn hàng
   subtotal?: number; // Tổng tiền hàng
-  discount?: number; // Tiền giảm giá
+  discount?: number; // Tiền giảm giá chương trình
+  discountPayment?: number; // Tiền giảm giá thanh toán
+  discountPoint?: number; // Tiền giảm giá từ điểm
   amount?: number; // Thành tiền
   promotionCode?: string; // Mã khuyến mãi
   paymentMethod?: string; // Phương thức thanh toán
@@ -46,6 +48,8 @@ const orderSchema = new Schema(
     items: [OrderItemSchema],
     subtotal: { type: Number, min: 0, default: 0 },
     discount: { type: Number, min: 0, default: 0 },
+    discountPayment: { type: Number, min: 0, default: 0 },
+    discountPoint: { type: Number, min: 0, default: 0 },
     amount: { type: Number, min: 0, default: 0 },
     promotionCode: { type: String },
     paymentMethod: { type: String },
