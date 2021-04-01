@@ -21,7 +21,7 @@ export default {
         }
         const input = {
         type: "ORDER",
-        code: orderId,
+        code: orderId.code,
         reviewer: reviewer,
         imark: imark,
         content: content,
