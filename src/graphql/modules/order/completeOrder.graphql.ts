@@ -17,7 +17,7 @@ export default {
         const { orderId } = args;
         const order = await OrderModel.findById(orderId);
         if (!order) {
-          throw Error();
+          throw Error("Đơn hàng không tồn tại");
         }
         return AritoHelper.completeOrder(order.code.toString(), context.tokenData.ref);
       },
