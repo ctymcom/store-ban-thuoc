@@ -57,6 +57,10 @@ const schema = gql`
     subtotal: Float
     "Tiền giảm giá"
     discount: Float
+    "Tiền giảm giá thanh toán"
+    discountPayment: Float
+    "Tiền giảm giá từ điểm"
+    discountPoint: Float
     "Thành tiền"
     amount: Float
     "Mã khuyến mãi"

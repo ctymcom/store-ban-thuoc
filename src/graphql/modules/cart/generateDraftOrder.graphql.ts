@@ -16,6 +16,8 @@ export default {
     type DraftOrder {
       subtotal: Float
       discount: Float
+      discountPayment: Float
+      discountPoint: Float
       amount: Float
       items: [OrderItem]
     }
