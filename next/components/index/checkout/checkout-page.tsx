@@ -129,9 +129,10 @@ export function CheckOutPage() {
           listItemNew.push(item);
         }
       });
-      console.log(listItemNew);
+      let orId = res.data.createOrder.orderNumber;
 
       let task = [
+        localStorage.setItem("idOrder", orId),
         setPromotion(""),
         setCartProducts([...listItemNew]),
         localStorage.setItem(
@@ -143,8 +144,10 @@ export function CheckOutPage() {
           )
         ),
       ];
-      await Promise.all(task);
-      router.replace("/complete");
+      let taskend = await Promise.all(task);
+      if (taskend) {
+        router.replace("/complete");
+      }
     }
   };
   const draftOrder = async (data: any) => {
@@ -168,7 +171,6 @@ export function CheckOutPage() {
       },
     });
     if (res.data) {
-      console.log(res);
       const { amount, discount, subtotal } = res.data.generateDraftOrder;
       let listNew = listMoneyCheckout;
       listNew[0].money = subtotal;
