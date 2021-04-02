@@ -143,6 +143,8 @@ export function CheckOutPage() {
   };
   const draftOrder = async (data: any) => {
     let mutationName = "generateDraftOrder";
+    console.log(data);
+
     const res = await GraphService.apollo.mutate({
       mutation: gql`
           mutation mutationName($data: CreateOrderInput!) {

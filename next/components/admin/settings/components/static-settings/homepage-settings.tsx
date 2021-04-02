@@ -137,7 +137,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 prefix="Nội dung footer"
                 {...inputProps}
                 onChange={(val) => onValueChanged("content", val, index)}
-              />E
+              />
               <Input
                 value={setting.value.copyright}
                 prefix="Copyright"
@@ -167,7 +167,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 }
               />
               <div className="flex mb-2">
-                <div className="form-input flex items-center hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 whitespace-pre bg-gray-100 border-r-0 rounded-none rounded-bl">
                   Hiện Facebook
                 </div>
                 <div className="form-input flex items-center flex-grow rounded-none rounded-br">
@@ -190,7 +190,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 }
               />
               <div className="flex mb-2">
-                <div className="form-input flex items-center hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 whitespace-pre bg-gray-100 border-r-0 rounded-none rounded-bl">
                   Hiện Youtube
                 </div>
                 <div className="form-input flex items-center flex-grow rounded-none rounded-br">
@@ -213,7 +213,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 }
               />
               <div className="flex mb-2">
-                <div className="form-input flex items-center hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 whitespace-pre bg-gray-100 border-r-0 rounded-none rounded-bl">
                   Hiện Zalo
                 </div>
                 <div className="form-input flex items-center flex-grow rounded-none rounded-br">
@@ -229,8 +229,8 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
           )}
           {setting.key == "POPUP" && (
             <>
-              <div className="flex mb-2">
-                <div className="form-input flex items-center hover:border-gray-400 w-36 bg-gray-100 border-r-0 rounded-none rounded-bl">
+              <div className="flex">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 whitespace-pre bg-gray-100 border-r-0 rounded-none rounded-tr">
                   Hiện Popup
                 </div>
                 <div className="form-input flex items-center flex-grow rounded-none rounded-br">
@@ -240,14 +240,19 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                   />
                 </div>
               </div>
-              <ImageInput
-                value={setting.value.image}
-                onChange={(val) => onValueChanged("image", val, index)}
-                className={`form-input flex-grow rounded-none rounded-tr`}
-              />
+              <div className="flex">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 whitespace-pre bg-gray-100 border-r-0 rounded-none rounded-bl">
+                  Ảnh popup
+                </div>
+                <ImageInput
+                  value={setting.value.image}
+                  onChange={(val) => onValueChanged("image", val, index)}
+                  className={`form-input flex-grow rounded-none`}
+                />
+              </div>
               <Input
                 value={setting.value.link}
-                prefix="Đường dẫn liên kết"
+                prefix="Đường dẫn popup"
                 {...inputProps}
                 onChange={(val) => onValueChanged("link", val, index)}
               />
