@@ -44,13 +44,15 @@ export function Dialog({
   let isClickingOverlay = false;
 
   useEffect(() => {
+    let timeout;
     if (props.isOpen) {
       setIsOpen(props.isOpen);
     } else {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         setIsOpen(props.isOpen);
       }, 200);
     }
+    return () => clearInterval(timeout);
   }, [props.isOpen]);
 
   useScrollBlock({ rootId: ROOT_ID, dependencies: [isOpen] });

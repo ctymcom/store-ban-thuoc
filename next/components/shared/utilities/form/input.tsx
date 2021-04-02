@@ -20,7 +20,7 @@ export function Input({
     <div className={`relative flex items-center group  ${wrapperClassName}`}>
       {!!props.prefix && (
         <div
-          className={`flex-shrink-0 flex items-center px-3 min-w-10 h-10 bg-gray-100 border border-gray-400 border-r-0 ${prefixClassName}`}
+          className={`flex-shrink-0 flex items-center px-3 min-w-10 whitespace-pre h-10 bg-gray-100 border border-gray-400 border-r-0 ${prefixClassName}`}
         >
           {props.prefix}
         </div>
