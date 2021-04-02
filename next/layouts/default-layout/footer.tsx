@@ -19,8 +19,8 @@ export function Footer() {
       {!!hotline && (
         <>
           <footer className="mt-20 text-white" style={{ backgroundColor: "#343A40" }}>
-            <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3">
-              <div className="flex flex-col justify-start text-md sm:text-lg md:text-sm lg:w-4/6">
+            <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3 gap-5">
+              <div className="flex flex-col justify-start text-md sm:text-lg md:text-sm">
                 {footerIntro && (
                   <>
                     <Link href={footerIntro?.link}>
@@ -28,11 +28,25 @@ export function Footer() {
                         Về khoThuocsi.vn
                       </a>
                     </Link>
+                    <div className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
+                      {/* {footerIntro?.content} */}
+                      <p>
+                        Địa chỉ: 112 Trần Hưng Đạo, P. Phạm Ngũ Lão, Q. 1, Tp. Hồ Chí Minh
+                        <p>Điện thoại: 1800 8150</p>
+                        <p>Email: cskh@khothuocsi.vn</p>
+                      </p>
+                    </div>
                     <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                      {footerIntro?.content}
-                    </p>
-                    <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                      {footerIntro?.more}
+                      <p>
+                        Số chứng nhận đăng ký kinh doanh: 0316092423, cấp ngày 3/1/2020 tại Sở Kế
+                        Hoạch và Đầu Tư Thành Phố Hồ Chí Minh
+                      </p>
+                      <p>Người đại diện: Dương Đình Sơn</p>
+                      <p>
+                        Giấy chứng nhận đủ điều kiện kinh doanh dược số: 8108/ĐKKDD-HCM do Bộ Trưởng
+                        Bộ Y Tế cấp ngày 13/04/2020.
+                      </p>
+                      {/* {footerIntro?.more} */}
                     </p>
                   </>
                 )}

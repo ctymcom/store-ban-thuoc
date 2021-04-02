@@ -132,7 +132,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 {...inputProps}
                 onChange={(val) => onValueChanged("content", val, index)}
               />
-              <Input
+              <Textarea
                 value={setting.value.more}
                 prefix="Xem thêm"
                 {...inputProps}
