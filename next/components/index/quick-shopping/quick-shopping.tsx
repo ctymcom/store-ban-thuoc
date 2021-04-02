@@ -57,8 +57,8 @@ export function QuickShoppingPage() {
               </>
             )}
           </div>
-          <div className="fixed left-0 bottom-0 lg:relative lg:flex-shrink-0 w-full lg:w-80">
-            <div className="sticky top-40 max-h-full">
+          <div className="fixed left-0 bottom-0 lg:relative lg:flex-shrink-0 w-full lg:w-80 bg-white z-10">
+            <div className="relative lg:sticky top-0 lg:top-40 max-h-full">
               <QuickShoppingTotal />
             </div>
           </div>

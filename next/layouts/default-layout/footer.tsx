@@ -18,32 +18,35 @@ export function Footer() {
     <>
       {!!hotline && (
         <>
-          <footer className="mt-20 text-white" style={{ backgroundColor: "#343A40" }}>
-            <div className="main-container py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-3">
-              <div className="flex flex-col justify-start text-md sm:text-lg md:text-sm lg:w-4/6">
+          <footer
+            className="mt-20 text-white pt-8 sm:pt-10 pb-4"
+            style={{ backgroundColor: "#343A40" }}
+          >
+            <div className="main-container grid grid-cols-1 lg:grid-cols-12 lg:gap-x-4">
+              <div className="flex flex-col justify-start text-md sm:text-lg md:text-sm lg:col-span-5">
                 {footerIntro && (
                   <>
                     <Link href={footerIntro?.link}>
                       <a className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
-                        Về khoThuocsi.vn
+                        KhoThuocsi.vn
                       </a>
                     </Link>
-                    <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                      {footerIntro?.content}
+                    <p className="py-1 md:pb-4 md:leading-7 text-base md:text-lg whitespace-pre-line">
+                      {footerIntro?.contact}
                     </p>
-                    <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
-                      {footerIntro?.more}
+                    <p className="py-1 md:pb-4 md:leading-7 text-base md:text-lg whitespace-pre-line">
+                      {footerIntro?.content}
                     </p>
                   </>
                 )}
               </div>
-              <div className="flex flex-col justify-start lg:w-5/6 mt-6 lg:mt-0">
+              <div className="flex flex-col justify-start mt-6 lg:mt-0 lg:col-span-3">
                 <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
                   Liên kết hữu ích
                 </div>
                 <div className="sm:py-1 md:pb-4">
                   {footerMenus && (
-                    <ul className="text-sm sm:text-base md:text-lg">
+                    <ul className="text-base md:text-lg">
                       {footerMenus.map((menu, index) => (
                         <li
                           key={index}
@@ -58,13 +61,13 @@ export function Footer() {
                   )}
                 </div>
               </div>
-              <div className="flex flex-col justify-start lg:w-full text-sm sm:mt-6 md:mt-0">
+              <div className="flex flex-col justify-start lg:col-span-4 text-sm sm:mt-6 md:mt-0">
                 {user === null && (
                   <div className="">
                     <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
                       Đăng kí nhận tin mới
                     </div>
-                    <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-0 mt-2 sm:mt-1 md:mt-0 lg:mt-3">
+                    <div className="text-base md:text-lg sm:py-1 md:py-0 mt-2 sm:mt-1 md:mt-0 lg:mt-3">
                       Hãy đăng ký email để nhận được khuyến mãi
                     </div>
                     <form
@@ -137,7 +140,7 @@ export function Footer() {
                   <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
                     {hotline?.headerText}
                   </div>
-                  <div className="text-sm sm:text-base md:text-lg sm:py-1 md:py-2 cursor-pointer ">
+                  <div className="text-base md:text-lg sm:py-1 md:py-2 cursor-pointer ">
                     <p className="mb-1 md:mb-1 hover:underline hover:text-primary">
                       Gọi điện đặt hàng: {hotline?.phone}
                     </p>
@@ -147,8 +150,8 @@ export function Footer() {
                   </div>
                 </div>
               </div>
-              <p className="text-center col-span-3">{footerIntro?.copyright}</p>
             </div>
+            <p className="text-center text-gray-400 col-span-3 mt-4">{footerIntro?.copyright}</p>
           </footer>
         </>
       )}

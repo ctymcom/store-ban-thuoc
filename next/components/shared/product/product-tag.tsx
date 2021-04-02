@@ -6,7 +6,7 @@ interface PropsType extends ReactProps {
 }
 export function ProductTag({ tag, ...props }: PropsType) {
   let tagContent = null;
-  let tagClassName = `flex items-center font-semibold rounded-sm py-1 px-2 `;
+  let tagClassName = `flex items-center text-sm font-semibold rounded-sm py-1 px-2 `;
   let tagStyle = {};
   switch (tag.code) {
     case "FLASHSALES": {

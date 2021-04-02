@@ -10,7 +10,7 @@ export const DefaultLayoutContext = createContext<
       phone: string;
       items: { display: string; phone: string }[];
     };
-    footerIntro: { content: string; link: string; copyright: string; more: string };
+    footerIntro: { content: string; link: string; copyright: string; contact: string };
     footerMenus: { link: string; text: string }[];
     policy: string;
     socials: {
@@ -69,7 +69,7 @@ export function DefaultLayoutProvider({ children }: any) {
             path: "/quick-shopping",
             icon: "/assets/img/quick-shopping.png",
           },
-          { label: "Khuyến mãi", path: "/products?sale=true", icon: "/assets/img/promotion.png" },
+          { label: "Khuyến mãi", path: "/discount", icon: "/assets/img/promotion.png" },
         ].filter((m) => !hiddenMenus.includes(m.label))
       );
       setHiddenTags(res.data.find((x) => x.key == "HIDDEN_TAGS").value);
