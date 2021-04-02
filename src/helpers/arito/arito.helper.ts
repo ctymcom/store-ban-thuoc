@@ -889,6 +889,17 @@ export class AritoHelper {
       })) as IAritoOption[];
     });
   }
+
+  static completeOrder(orderId:string, token: string){
+    return Axios.post(`${this.host}/Voucher/CompleteOrder`,{
+      token: token,
+      memvars:[["id","I",orderId]]
+    }).then((res)=>{
+      this.handleError(res);
+      return get(res,"msg") 
+    })
+  }
+
   static getOrderStatus() {
     return Axios.post(`${this.host}/Voucher/GetOrderStatus`, {
       token: this.imageToken,

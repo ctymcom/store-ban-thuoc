@@ -9,6 +9,7 @@ const schema = gql`
 
   extend type Mutation {
     createOrder(data: CreateOrderInput!): Order
+    
     # Add Mutation
   }
 
