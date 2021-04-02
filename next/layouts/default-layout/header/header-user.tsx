@@ -55,9 +55,9 @@ export function HeaderUser({ ...props }: PropsType) {
             <Menu>
               {({ open }) => (
                 <>
-                  <Menu.Button className="relative flex items-center px-3 mr-0 cursor-pointer hover:text-primary focus:outline-none">
-                    <div className="flex-shrink-0 w-10">
-                      <a className="btn-default p-0 h-10 w-14 mr-2 hover:bg-primary-light">
+                  <Menu.Button className="relative flex items-center px-0 lg:px-3 mr-0 cursor-pointer hover:text-primary focus:outline-none">
+                    <div className="flex-shrink-0 w-12 lg:w-10">
+                      <a className="btn-default p-0 h-10 w-14 mr-2  hover:bg-primary-light">
                         <img className="h-8" src="/assets/img/bell.png" />
                         <div className="rounded-full flex-center bg-red-500 box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
                           <span>{numberNotification ? numberNotification : 0}</span>
@@ -78,7 +78,7 @@ export function HeaderUser({ ...props }: PropsType) {
                   >
                     <Menu.Items
                       static
-                      className="max-h-72 h-scrollbar z-50	absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
+                      className="max-h-72 h-scrollbar z-50	absolute left-0 lg:right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                     >
                       {listNotification?.length > 0 && listNotification[0] !== undefined ? (
                         listNotification.slice(0, visible)?.map((notification, index) => (

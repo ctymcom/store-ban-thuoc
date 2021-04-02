@@ -127,17 +127,17 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 onChange={(val) => onValueChanged("link", val, index)}
               />
               <Textarea
+                value={setting.value.contact}
+                prefix="Liên hệ Footer"
+                {...inputProps}
+                onChange={(val) => onValueChanged("contact", val, index)}
+              />
+              <Textarea
                 value={setting.value.content}
                 prefix="Nội dung footer"
                 {...inputProps}
                 onChange={(val) => onValueChanged("content", val, index)}
-              />
-              <Textarea
-                value={setting.value.more}
-                prefix="Xem thêm"
-                {...inputProps}
-                onChange={(val) => onValueChanged("more", val, index)}
-              />
+              />E
               <Input
                 value={setting.value.copyright}
                 prefix="Copyright"

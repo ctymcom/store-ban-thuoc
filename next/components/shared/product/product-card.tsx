@@ -23,6 +23,19 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
   const { hiddenTags } = useDefaultLayoutContext();
   const router = useRouter();
 
+  const { cartProducts, changeProductQuantity, removeProductFromCart } = useCart();
+  useEffect(() => {
+    setQuantity(cartProducts.find((x) => x.productId == product.id)?.qty || 0);
+  }, []);
+
+  useEffect(() => {
+    if (quantity) {
+      changeProductQuantity(product, quantity);
+    } else {
+      removeProductFromCart(product);
+    }
+  }, [quantity]);
+
   const categoryText = showGroup
     ? `${product.categories
         .filter((x) => x.parents.length)
@@ -30,20 +43,10 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
         .join(", ")}`
     : "";
 
-  const onAddToCart = (redirect: boolean = false) => {
-    if (redirect) {
-      addProductToCart(product, quantity || 1);
-      router.push("/cart");
-    } else {
-      addProductToCart(product, quantity);
-      setQuantity(0);
-    }
-  };
-
   return useMemo(() => {
     return (
       <>
-        <div className="flex flex-col min-w-4xs place-content-between">
+        <div className="flex flex-col min-w-4xs place-content-between h-full">
           <Link href={"/product/" + product.slug}>
             <a className="group">
               <div className="relative w-full">
@@ -144,7 +147,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                     </div>
                   </div>
 
-                  <div className="mt-auto">
+                  {/* <div className="mt-auto">
                     <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 pt-3 border-t border-gray-100">
                       <button
                         className="btn-outline p-0 h-10 text-13 border-2 text-primary border-primary hover:border-primary-dark hover:text-primary-dark"
@@ -159,7 +162,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                         Mua ngay
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </>
             ) : (

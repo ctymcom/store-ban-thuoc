@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
 
   return (
     <>
-      <div className="w-screen h-screen bg-center bg-no-repeat bg-cover flex-center bg-primary-light">
+      <div className="w-screen min-h-screen h-auto py-10 bg-center bg-no-repeat bg-cover flex-center bg-primary-light">
         <Form
           className="bg-gray-50 shadow-lg rounded-sm min-h-sm max-w-lg w-2/3 flex flex-col items-center p-8 border border-gray-200"
           onSubmit={onFormSubmit}

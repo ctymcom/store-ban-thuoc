@@ -11,7 +11,7 @@ export function QuickShoppingTotal(props: PropsType) {
   return (
     <>
       <div
-        className="overflow-scroll overflow-y-visible overflow-x-hidden border border-gray-100 lg:rounded-lg shadow-xl lg:shadow-md bg-white"
+        className="overflow-scroll overflow-y-visible v-scrollbar overflow-x-hidden border border-gray-100 lg:rounded-sm shadow-xl lg:shadow bg-white"
         style={{ maxHeight: `calc(100vh - 368px)` }}
       >
         {screenLg &&
@@ -40,7 +40,7 @@ export function QuickShoppingTotal(props: PropsType) {
         </div>
       </div>
       <Link href="/cart">
-        <a className="btn-primary w-full h-14 rounded-none text-md font-bold uppercase sticky top-60">
+        <a className="btn-primary w-full h-14 rounded-none text-md font-bold uppercase lg:sticky lg:top-60 relative top-0">
           Đến trang giỏ hàng
         </a>
       </Link>

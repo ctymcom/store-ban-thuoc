@@ -14,13 +14,6 @@ interface PropsType extends ReactProps {
 export function MenuHeader(props: PropsType) {
   const [showHotline, setShowHotline] = useState(false);
   const router = useRouter();
-  // const [menus, setMenus] = useState([]);
-  // const m = [
-  //   { label: "Sản phẩm", path: "/products", icon: "/assets/img/product.png" },
-  //   { label: "Hoạt chất", path: "/ingredients", icon: "/assets/img/ingredients.png" },
-  //   { label: "Đặt hàng nhanh", path: "/quick-shopping", icon: "/assets/img/quick-shopping.png" },
-  //   { label: "Khuyến mãi", path: "/products?sale=true", icon: "/assets/img/promotion.png" },
-  // ];
   const { hotline, menus } = useDefaultLayoutContext();
   useScrollBlock({ dependencies: [props.menuOpened] });
 
