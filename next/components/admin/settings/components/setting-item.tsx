@@ -2,6 +2,7 @@ import { SelectMulti } from "../../../shared/form/select-multi";
 import { Input } from "./../../../shared/utilities/form/input";
 import { MutableSetting } from "./setting-list";
 import { SettingName } from "./setting-name";
+import { ImageInput } from "./../../../shared/utilities/form/image-input";
 
 interface PropTypes extends ReactProps {
   setting: MutableSetting;
@@ -32,7 +33,17 @@ export function SettingItem({ setting, ...props }: PropTypes) {
       {
         {
           string: (
-            <Input name={setting.name} value={setting.value} onChange={onSettingValueChanged} />
+            <>
+              {setting.key.includes("IMAGE") || setting.key.includes("LOGO") ? (
+                <ImageInput
+                  value={setting.value}
+                  onChange={onSettingValueChanged}
+                  className={`form-input flex-grow rounded-none rounded-tr`}
+                />
+              ) : (
+                <Input name={setting.name} value={setting.value} onChange={onSettingValueChanged} />
+              )}
+            </>
           ),
           object: (
             <>
