@@ -3,14 +3,17 @@ import { useState } from "react";
 import { Promotion } from "../../../../lib/repo/promotion.repo";
 import { Dialog } from "../../../shared/utilities/dialog/dialog";
 import { usePromotionContext } from "../providers/promotion-provider";
+import { useCart } from "../../../../lib/providers/cart-provider";
 type CodeProps = {
   [x: string]: any;
   item: Promotion;
 };
 const Code = (props: CodeProps) => {
   const { setSelectedPromotion } = usePromotionContext();
+  const { setPromotion } = useCart();
   const sendCode = () => {
     setSelectedPromotion(props.item);
+    setPromotion(props.item.code);
     props.choseCode(props.item.code);
   };
   const [showMore, setShowMore] = useState(false);
