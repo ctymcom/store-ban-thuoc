@@ -4,7 +4,7 @@ import { QuickShoppingPage } from "./../components/index/quick-shopping/quick-sh
 import { NextSeo } from "next-seo";
 import SEO from "../lib/helpers/seo";
 
-export default function QuickShopping(props) {
+export default function Discount(props) {
   return (
     <>
       <NextSeo {...props.seo} />
@@ -15,10 +15,10 @@ export default function QuickShopping(props) {
   );
 }
 
-QuickShopping.Layout = DefaultLayout;
+Discount.Layout = DefaultLayout;
 
 export async function getServerSideProps(context) {
-  const seo = await SEO("Mua hàng nhanh");
+  const seo = await SEO("Sản phẩm khuyến mãi");
   return {
     props: JSON.parse(
       JSON.stringify({

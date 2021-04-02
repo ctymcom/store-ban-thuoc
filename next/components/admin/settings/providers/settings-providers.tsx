@@ -1,3 +1,4 @@
+import { isEqual } from "lodash";
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useToast } from "../../../../lib/providers/toast-provider";
@@ -75,7 +76,7 @@ export function SettingsProvider({ children }: any) {
 
   const saveSettings = async (mutableSettings: MutableSetting[]) => {
     const filteredSettings = mutableSettings.filter(
-      (setting) => setting.value != settings.find((x) => x.id == setting.id).value
+      (setting) => !isEqual(setting.value, settings.find((x) => x.id == setting.id).value)
     );
     if (!filteredSettings.length) {
       toast.info("Chưa có dữ liệu nào thay đổi");

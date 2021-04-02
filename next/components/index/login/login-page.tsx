@@ -32,7 +32,7 @@ export default function LoginPage() {
     <>
       {user !== null ? null : (
         <div
-          className="w-screen h-screen bg-center bg-no-repeat bg-cover flex-center"
+          className="w-full min-h-screen h-auto py-12 bg-center bg-no-repeat bg-cover flex-center"
           style={{ backgroundImage: `url(/assets/img/background.jpg)` }}
         >
           <div className="relative flex flex-col items-center bg-white shadow-lg rounded-lg border-primary border-4 min-h-sm p-4 sm:p-8 md:p-10 pt-24 md:pt-24">
