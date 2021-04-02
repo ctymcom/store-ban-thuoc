@@ -137,7 +137,7 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 prefix="Nội dung footer"
                 {...inputProps}
                 onChange={(val) => onValueChanged("content", val, index)}
-              />
+              />E
               <Input
                 value={setting.value.copyright}
                 prefix="Copyright"
