@@ -18,7 +18,6 @@ export function Promotion({
   const [showDialog, setShowDialog] = useState(false);
 
   const choseCode = (code) => {
-    setPromotion(code);
     setShowDialog(false);
     onChanged(code);
   };
@@ -36,7 +35,7 @@ export function Promotion({
           {({ selectedPromotion, usePromotion, applyPromotion }) => {
             return (
               <div className="sm:py-3 flex-wrap sm:block items-center relative my-3">
-                {usePromotion && selectedPromotion ? (
+                {selectedPromotion ? (
                   <div className="w-full">
                     <h4 className="text-lg sm:text-xl text-primary font-semibold">
                       Mã ưu đãi {selectedPromotion.code}
@@ -55,9 +54,8 @@ export function Promotion({
                 )}
                 <button
                   onClick={applyPromotion}
-                  className={`font-normal w-full text-16  h-12 sm:my-2 ${
-                    promotion ? "btn-primary" : "btn-disabled"
-                  } ${!selectedPromotion ? "hidden" : "block "}`}
+                  className={`font-normal w-full text-16  h-12 sm:my-2 btn-primary
+                   ${!selectedPromotion ? "hidden" : "block "}`}
                 >
                   Hủy áp dụng
                 </button>
