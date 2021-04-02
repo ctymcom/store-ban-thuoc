@@ -31,14 +31,9 @@ export function Footer() {
                     <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
                       {footerIntro?.content}
                     </p>
-                    <Link href={footerIntro?.link}>
-                      <a
-                        className="text-yellow-400 cursor-pointer mt-4 sm:-mt-4 md:mt-0 text-sm sm:text-base md:text-lg"
-                        target="_blank"
-                      >
-                        Tìm hiểu thêm
-                      </a>
-                    </Link>
+                    <p className="sm:py-1 md:pb-4 md:leading-7 text-sm sm:text-base md:text-lg">
+                      {footerIntro?.more}
+                    </p>
                   </>
                 )}
               </div>
@@ -152,6 +147,7 @@ export function Footer() {
                   </div>
                 </div>
               </div>
+              <p className="text-center col-span-3">{footerIntro?.copyright}</p>
             </div>
           </footer>
         </>
