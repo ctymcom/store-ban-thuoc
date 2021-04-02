@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { ImageDialog } from "../../../components/shared/utilities/dialog/image-dialog";
 import { SettingService } from "../../../lib/repo/setting.repo";
+import { useRouter } from "next/router";
 
 export const DefaultLayoutContext = createContext<
   Partial<{
@@ -18,6 +20,11 @@ export const DefaultLayoutContext = createContext<
       youtube: { link: string; visable: boolean; visible: boolean };
       zalo: { link: string; visable: boolean; visible: boolean };
     };
+    popup: {
+      enable: boolean;
+      image: string;
+      link: string;
+    };
     menus: any[];
     hiddenTags: string[];
   }>
@@ -30,7 +37,9 @@ export function DefaultLayoutProvider({ children }: any) {
   const [footerMenus, setFooterMenus] = useState(null);
   const [socials, setSocials] = useState(null);
   const [policy, setPolicy] = useState(null);
+  const [popup, setPopup] = useState(null);
   const [menus, setMenus] = useState([]);
+  const [showImage, setShowImage] = useState(false);
   const [hiddenTags, setHiddenTags] = useState([]);
 
   const loadSettings = () => {
@@ -48,6 +57,7 @@ export function DefaultLayoutProvider({ children }: any) {
               "POLICY",
               "HIDDEN_MENUS",
               "HIDDEN_TAGS",
+              "POPUP",
             ],
           },
         },
@@ -59,6 +69,7 @@ export function DefaultLayoutProvider({ children }: any) {
       setFooterMenus(res.data.find((x) => x.key == "FOOTER_MENU").value.items);
       setSocials(res.data.find((x) => x.key == "SOCIAL").value);
       setPolicy(res.data.find((x) => x.key == "POLICY").value);
+      setPopup(res.data.find((x) => x.key == "POPUP").value);
       const hiddenMenus: string[] = res.data.find((x) => x.key == "HIDDEN_MENUS").value;
       setMenus(
         [
@@ -73,6 +84,12 @@ export function DefaultLayoutProvider({ children }: any) {
         ].filter((m) => !hiddenMenus.includes(m.label))
       );
       setHiddenTags(res.data.find((x) => x.key == "HIDDEN_TAGS").value);
+
+      if (!sessionStorage.getItem("hasShowPopup")) {
+        console.log("show popup", popup);
+        setShowImage(true);
+        sessionStorage.setItem("hasShowPopup", "true");
+      }
     });
   };
 
@@ -80,11 +97,37 @@ export function DefaultLayoutProvider({ children }: any) {
     loadSettings();
   }, []);
 
+  const router = useRouter();
+
   return (
     <DefaultLayoutContext.Provider
-      value={{ topMenus, hotline, footerIntro, footerMenus, socials, policy, menus, hiddenTags }}
+      value={{
+        topMenus,
+        hotline,
+        footerIntro,
+        footerMenus,
+        socials,
+        policy,
+        menus,
+        hiddenTags,
+        popup,
+      }}
     >
       {children}
+      {popup?.enable && popup?.image && (
+        <ImageDialog
+          className="border-4 border-primary"
+          image={popup.image}
+          isOpen={showImage}
+          onClose={setShowImage}
+          onClick={() => {
+            if (popup.link) {
+              router.push(popup.link);
+              setShowImage(false);
+            }
+          }}
+        />
+      )}
     </DefaultLayoutContext.Provider>
   );
 }
