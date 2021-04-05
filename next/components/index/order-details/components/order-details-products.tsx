@@ -1,5 +1,6 @@
 import { NumberPipe } from "./../../../../lib/pipes/number";
 import useScreen from "./../../../../lib/hooks/useScreen";
+import { Img } from "./../../../shared/utilities/img";
 
 interface PropsType extends ReactProps {
   products: any[];
@@ -22,9 +23,7 @@ export function OrderDetailsProducts(props: PropsType) {
             <>
               <div className={`${cellClass} col-span-4`} key={index + "product"}>
                 <div className="flex-grow-0 flex-shrink-0 w-14 p-2">
-                  <div className="image-wrapper">
-                    <img src={item.product.image} />
-                  </div>
+                  <Img src={item.product.image} />
                 </div>
                 <div className="flex-grow font-normal">
                   <span className="font-semibold ml-1">{item.product.name}</span>
