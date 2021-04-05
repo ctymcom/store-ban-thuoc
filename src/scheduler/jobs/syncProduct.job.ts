@@ -1,6 +1,6 @@
 import { Job } from "agenda";
 import chalk from "chalk";
-import { flatten, get, keyBy, uniq } from "lodash";
+import { compact, flatten, get, keyBy, uniq } from "lodash";
 import moment from "moment-timezone";
 
 import {
@@ -164,11 +164,11 @@ async function syncProduct() {
   await syncProductTag();
   const productTabs = await ProductTabModel.find().sort({ code: 1 });
   const productTags = await ProductTagModel.find().then((res) => keyBy(res, "code"));
-  // const productUpdatedAt = await ProductModel.findOne()
-  //   .sort({ syncAt: -1 })
-  //   .exec()
-  //   .then((res) => (res ? res.syncAt : null));
-  const productUpdatedAt = null;
+  const productUpdatedAt = await ProductModel.findOne()
+    .sort({ syncAt: -1 })
+    .exec()
+    .then((res) => (res ? res.syncAt : null));
+  // const productUpdatedAt = null;
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
   const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
   do {
@@ -205,9 +205,15 @@ async function syncProduct() {
             tabs,
             tagDetails,
             updatedAt: new Date(),
-            categoryIds: d.categoryIds.map((code: string) => get(categoryData, code)._id),
-            ingredientIds: d.ingredientIds.map((code: string) => get(ingredientData, code)._id),
-            ingredientNames: d.ingredientIds.map((code: string) => get(ingredientData, code).name),
+            categoryIds: compact(
+              d.categoryIds.map((code: string) => get(categoryData, "code._id", null))
+            ),
+            ingredientIds: compact(
+              d.ingredientIds.map((code: string) => get(ingredientData, "code._id", null))
+            ),
+            ingredientNames: compact(
+              d.ingredientIds.map((code: string) => get(ingredientData, "code.name"))
+            ),
             syncAt: new Date(),
           },
         });
