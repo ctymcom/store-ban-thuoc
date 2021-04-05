@@ -127,6 +127,17 @@ export class OrderRepository extends CrudRepository<Order> {
     status: String
     itemCount: Int
   `);
+
+  async completeOrder(orderId: string) {
+    let res = await this.apollo.mutate({
+      mutation: this.gql`
+        mutation {
+          g0: completeOrder(orderId: "${orderId}")
+        }
+      `,
+    });
+    return res.data.g0;
+  }
 }
 
 export const OrderService = new OrderRepository();

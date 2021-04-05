@@ -6,9 +6,10 @@ import { PayMoney } from "../cart/components/pay-money";
 import { NumberPipe } from "../../../lib/pipes/number";
 import { useOrderDetailsContext } from "./providers/order-details-provider";
 import { Spinner } from "../../shared/utilities/spinner";
+import { Button } from "../../shared/utilities/form/button";
 
 export function OrderDetailsPage() {
-  const { order } = useOrderDetailsContext();
+  const { order, completeOrder } = useOrderDetailsContext();
 
   let datetime = new Date(order?.updatedAt);
   datetime.toDateString();
@@ -28,15 +29,26 @@ export function OrderDetailsPage() {
     <>
       <OrderDetailsHeader code={order.orderNumber} status={order.statusText} />
       {order.timeline && <OrderDetailsTimeline order={order} />}
-      <div className="mt-4">
-        <OrderDetailsInfo
-          name={order.contactName}
-          phone={order.phone}
-          address={order.fullAddress}
-          deliveryMethod={order.deliveryMethod}
-          deliveryMethodText={order.deliveryMethodText}
-          paymentMethod={order.paymentMethod}
-          paymentMethodText={order.paymentMethodText}
+      <div className="flex flex-col-reverse sm:flex-row mt-4">
+        <div className="mr-4 mt-2 sm:mt-0">
+          <OrderDetailsInfo
+            name={order.contactName}
+            phone={order.phone}
+            address={order.fullAddress}
+            deliveryMethod={order.deliveryMethod}
+            deliveryMethodText={order.deliveryMethodText}
+            paymentMethod={order.paymentMethod}
+            paymentMethodText={order.paymentMethodText}
+          />
+        </div>
+        <Button
+          accent
+          text="Xác nhận đơn hàng"
+          className="px-10 h-12 rounded-sm ml-0 sm:ml-auto whitespace-nowrap"
+          asyncLoading
+          onClick={() => {
+            return completeOrder(order.id);
+          }}
         />
       </div>
       <OrderDetailsProducts products={order.items} />
