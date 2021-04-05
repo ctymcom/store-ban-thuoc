@@ -58,14 +58,14 @@ export function QuickShoppingProduct({ product }: PropsType) {
           </Link>
         </div>
         <div className="w-full md:w-auto flex-shrink-0 text-gray-700 font-semibold text-lg text-center px-4">
-          {product.basePrice ? (
+          {product.salePrice ? (
             <div className="flex items-center">
               <span className="pr-4">{NumberPipe(product.salePrice, true)}</span>
               <ProductQuantity
                 inputClassName="h-8 w-16 mx-1 md:h-10 md:w-20 md:mx-2 border rounded border-gray-400 hover:border-primary focus:border-primary-dark"
                 quantity={quantity}
                 setQuantity={setQuantity}
-                disabled={!product.basePrice}
+                disabled={!product.salePrice}
               />
             </div>
           ) : (

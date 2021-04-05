@@ -122,7 +122,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
               )}
               <div className="text-15 leading-tight text-accent">{product.packing}</div>
             </div>
-            {product.basePrice ? (
+            {product.salePrice ? (
               <>
                 <div>
                   <div className="">
@@ -130,9 +130,11 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                       <span className="font-semibold text-lg text-primary">
                         {NumberPipe(product.salePrice, true)}
                       </span>
-                      <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">
-                        {NumberPipe(product.basePrice, true)}
-                      </span>
+                      {product.basePrice > 0 && (
+                        <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">
+                          {NumberPipe(product.basePrice, true)}
+                        </span>
+                      )}
                     </div>
                     <div className="flex flex-col sm:flex-row justify-between mt-2">
                       <div>

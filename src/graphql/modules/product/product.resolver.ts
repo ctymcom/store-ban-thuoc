@@ -11,7 +11,7 @@ import { SettingKey } from "../../../configs/settingData";
 
 const Query = {
   getAllProduct: async (root: any, args: any, context: Context) => {
-    set(args, "q.filter.basePrice", { $gt: 0 });
+    set(args, "q.filter.salePrice", { $gt: 0 });
     const hiddenCategories = await SettingHelper.load(SettingKey.HIDDEN_PRODUCT_OF_CATEGORIES);
     if (hiddenCategories.length > 0) {
       const categories = await CategoryModel.find({ name: { $in: hiddenCategories } });

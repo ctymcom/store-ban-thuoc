@@ -109,7 +109,7 @@ export function ProductInfo(props: PropsType) {
       {!!product.description && (
         <div className="my-4 whitespace-pre-wrap">{product.description}</div>
       )}
-      {product.basePrice ? (
+      {product.salePrice ? (
         <>
           <div className="mb-2 lg:mb-4 flex flex-col sm:flex-row items-start lg:items-center text-gray-500 text-14">
             <div className="flex flex-grow items-center">
@@ -133,7 +133,9 @@ export function ProductInfo(props: PropsType) {
               <span className="text-primary font-semibold mr-2 text-xl lg:text-2xl">
                 {NumberPipe(product.salePrice)} VND
               </span>
-              <p className="text-gray-400 line-through">{NumberPipe(product.basePrice)} VND</p>
+              {product.basePrice > 0 && (
+                <p className="text-gray-400 line-through">{NumberPipe(product.basePrice)} VND</p>
+              )}
 
               <div className="text-gray-700 mb-1 text-sm lg:text-base mt-2">
                 Đơn vị: <span className="font-semibold">{product.unit}</span>
