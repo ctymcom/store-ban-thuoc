@@ -28,6 +28,7 @@ export function FormProfile(props: PropsType) {
   let [userA, setUserA] = useState<AritoUser>(null);
   useEffect(() => {
     setUserA(cloneDeep(user));
+    console.log(user);
   }, [user]);
   let listOptionsTypeStore = [
     { value: 1, label: "Phòng khám" },
@@ -72,17 +73,14 @@ export function FormProfile(props: PropsType) {
     }
   };
   const ref: MutableRefObject<HTMLInputElement> = useRef();
-  const [uploading, setUploading] = useState(false);
   const handleUploadAvatar = (e) => {
     let file = e.target.files[0];
-    setUploading(true);
     if (file) {
       let formData = new FormData();
       formData.append("data", file);
       AritoUserService.uploadAvatar(formData)
         .then((res) => {
           toast.success("Upload thành công");
-          setUploading(false);
           AritoUserService.clearStore().then(() => {
             checkUser();
           });
@@ -166,7 +164,7 @@ export function FormProfile(props: PropsType) {
                         dateOfBirth={
                           userA?.birthday !== null ? new Date(userA.birthday) : new Date()
                         }
-                        onChange={(e) => (userA.birthday = format(e, "yyyy-MM-dd"))}
+                        onChange={(e) => setUserA({ ...userA, birthday: format(e, "yyyy-MM-dd") })}
                       />
                     </div>
                   </div>
