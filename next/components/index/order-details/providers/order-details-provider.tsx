@@ -1,5 +1,7 @@
 import { useRouter } from "next/router";
 import { createContext, useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useToast } from "../../../../lib/providers/toast-provider";
 import { CheckoutService } from "../../../../lib/repo/checkout.repo";
 import { OrderStatusService } from "../../../../lib/repo/order-status.repo";
 import { Order, OrderService } from "../../../../lib/repo/order.repo";
@@ -7,12 +9,14 @@ import { Order, OrderService } from "../../../../lib/repo/order.repo";
 export const OrderDetailsContext = createContext<
   Partial<{
     order: Order;
+    completeOrder: (id: string) => Promise<any>;
   }>
 >({});
 
 export function OrderDetailsProvider(props) {
   const [order, setOrder] = useState<Order>(null);
   const router = useRouter();
+  const toast = useToast();
 
   const loadOrderDetails = async (id: string) => {
     setOrder(null);
@@ -53,8 +57,20 @@ export function OrderDetailsProvider(props) {
     }
   }, [router.query]);
 
+  const completeOrder = async (id) => {
+    try {
+      let res = await OrderService.completeOrder(id);
+      toast.success("Xác nhận thành công. " + res);
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message);
+    }
+  };
+
   return (
-    <OrderDetailsContext.Provider value={{ order }}>{props.children}</OrderDetailsContext.Provider>
+    <OrderDetailsContext.Provider value={{ order, completeOrder }}>
+      {props.children}
+    </OrderDetailsContext.Provider>
   );
 }
 
