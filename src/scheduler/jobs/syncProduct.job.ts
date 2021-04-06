@@ -195,6 +195,11 @@ async function syncProduct() {
           outOfDate: productTags[t].code == "DATEOFF" ? d.outOfDate : null,
         }));
 
+      // console.log(
+      //   "category",
+      //   compact(d.categoryIds.map((code: string) => get(categoryData, `${code}._id`, null)))
+      // );
+
       productBulk
         .find({ code: d.code })
         .upsert()
@@ -206,13 +211,13 @@ async function syncProduct() {
             tagDetails,
             updatedAt: new Date(),
             categoryIds: compact(
-              d.categoryIds.map((code: string) => get(categoryData, "code._id", null))
+              d.categoryIds.map((code: string) => get(categoryData, `${code}._id`, null))
             ),
             ingredientIds: compact(
-              d.ingredientIds.map((code: string) => get(ingredientData, "code._id", null))
+              d.ingredientIds.map((code: string) => get(ingredientData, `${code}._id`, null))
             ),
             ingredientNames: compact(
-              d.ingredientIds.map((code: string) => get(ingredientData, "code.name"))
+              d.ingredientIds.map((code: string) => get(ingredientData, `${code}._id`, null))
             ),
             syncAt: new Date(),
           },
