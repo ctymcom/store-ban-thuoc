@@ -22,7 +22,11 @@ export function OrderHistoryList({ orders }: PropsType) {
             </>
           ) : (
             <>
-              <NotFound icon={<HiOutlineClipboardList />} text="Không tìm thấy đơn hàng nào" />
+              <NotFound
+                className="py-10"
+                icon={<HiOutlineClipboardList />}
+                text="Không tìm thấy đơn hàng nào"
+              />
             </>
           )}
         </div>

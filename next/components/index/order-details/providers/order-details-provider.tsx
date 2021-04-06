@@ -9,12 +9,13 @@ import { Order, OrderService } from "../../../../lib/repo/order.repo";
 export const OrderDetailsContext = createContext<
   Partial<{
     order: Order;
-    completeOrder: (id: string) => Promise<any>;
+    completeOrder: (id: string) => Promise<boolean>;
   }>
 >({});
 
 export function OrderDetailsProvider(props) {
   const [order, setOrder] = useState<Order>(null);
+  const [statuses, setStatuses] = useState([]);
   const router = useRouter();
   const toast = useToast();
 
@@ -45,6 +46,7 @@ export function OrderDetailsProvider(props) {
       deliveryMethodText: deliveryMethods.find((x) => x.code == res.deliveryMethod)?.name || "",
       statusText: statuses.find((x) => x.code == res.status)?.name || "Không có",
     });
+    setStatuses(statuses);
   };
 
   useEffect(() => {
@@ -60,10 +62,18 @@ export function OrderDetailsProvider(props) {
   const completeOrder = async (id) => {
     try {
       let res = await OrderService.completeOrder(id);
-      toast.success("Xác nhận thành công. " + res);
+      await OrderService.clearStore();
+      setOrder({
+        ...order,
+        status: 8,
+        statusText: statuses.find((x) => x.code == 8)?.name || "Không có",
+      });
+      toast.success("Xác nhận đơn hàng thành công.");
+      return true;
     } catch (err) {
       console.error(err);
       toast.error(err.message);
+      return false;
     }
   };
 

@@ -36,7 +36,11 @@ export function Img({ src, alt = "", once = true, ...props }: PropsType) {
           ...(props.percent ? { paddingTop: props.percent + "%" } : {}),
         }}
       >
-        {src && <img src={image} onError={onImageError} alt={alt} />}
+        <img
+          src={image || (props.avatar ? defaultAvatar : defaultImage)}
+          onError={onImageError}
+          alt={alt}
+        />
         {props.children}
       </div>
     </LazyLoad>

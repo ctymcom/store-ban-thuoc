@@ -5,6 +5,7 @@ import { Pagination } from "../../../../lib/repo/crud.repo";
 import { OrderStatus, OrderStatusService } from "../../../../lib/repo/order-status.repo";
 import { useRouter } from "next/router";
 import { cloneDeep } from "lodash";
+import { useToast } from "../../../../lib/providers/toast-provider";
 
 export const OrderHistoryContext = createContext<
   Partial<{
@@ -13,6 +14,7 @@ export const OrderHistoryContext = createContext<
     setPagination: Function;
     status: string;
     statuses: OrderStatus[];
+    completeOrder: (id: string) => Promise<boolean>;
   }>
 >({});
 
@@ -27,6 +29,8 @@ export function OrderProvider({ children }: any) {
     page: 1,
     total: 0,
   });
+
+  const toast = useToast();
 
   useEffect(() => {
     loadOrderStatus();
@@ -80,6 +84,25 @@ export function OrderProvider({ children }: any) {
   // console.log("Status " + status);
   // console.log("Statuses " + statuses);
 
+  const completeOrder = async (id) => {
+    try {
+      let res = await OrderService.completeOrder(id);
+      await OrderService.clearStore();
+      let order = orders.find((x) => x.id == id);
+      if (order) {
+        order.status = 8;
+        order.statusText = statuses.find((x) => x.code == 8)?.name || "Không có";
+      }
+      setOrders([...orders]);
+      toast.success("Xác nhận đơn hàng thành công.");
+      return true;
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message);
+      return false;
+    }
+  };
+
   return (
     <OrderHistoryContext.Provider
       value={{
@@ -88,6 +111,7 @@ export function OrderProvider({ children }: any) {
         setPagination,
         status,
         statuses,
+        completeOrder,
       }}
     >
       {children}

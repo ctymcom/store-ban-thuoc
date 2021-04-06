@@ -138,6 +138,17 @@ export class OrderRepository extends CrudRepository<Order> {
     });
     return res.data.g0;
   }
+
+  async rateOrder(orderId: string, reviewer: string, imark: number, content: string) {
+    let res = await this.apollo.mutate({
+      mutation: this.gql`
+        mutation {
+          g0: rateOrder(orderId: "${orderId}", reviewer: "${reviewer}", imark: ${imark}, content: "${content}")
+        }
+      `,
+    });
+    return res.data.g0;
+  }
 }
 
 export const OrderService = new OrderRepository();

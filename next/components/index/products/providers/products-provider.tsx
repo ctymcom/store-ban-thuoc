@@ -54,7 +54,7 @@ export function ProductsProvider(props) {
   const [tags, setTags] = useState<ProductTag[]>([]);
   const [categories, setCategories] = useState<FilterCategory[]>(null);
   const [categoryIds, setCategoryIds] = useState<string[]>([]);
-  const [pagination, setPagination] = useState<Pagination>({ limit: 16, page: 1, total: 0 });
+  const [pagination, setPagination] = useState<Pagination>({ limit: 16, page: 0, total: 0 });
   const [ingredient, setIngredient] = useState<Partial<Ingredient>>(null);
 
   const router = useRouter();
@@ -111,6 +111,8 @@ export function ProductsProvider(props) {
   };
 
   const loadProducts = async () => {
+    if (pagination.page <= 0) return;
+
     let order: any = {};
     switch (+sort) {
       case SORT.latest: {
@@ -171,8 +173,24 @@ export function ProductsProvider(props) {
   }, [categories]);
 
   useEffect(() => {
-    loadProducts();
-  }, [categoryIds, sort, pagination.page, tags, ingredient]);
+    if (loadDone) {
+      loadProducts();
+    }
+  }, [categoryIds, sort, pagination.page, tags, ingredient, loadDone]);
+
+  useEffect(() => {
+    if (!ingredient && router.query["ingredientId"]) {
+      let { ingredientId, ingredientName, ...query } = router.query;
+      router.replace(
+        {
+          pathname: location.pathname,
+          query: { ...query },
+        },
+        null,
+        { shallow: true }
+      );
+    }
+  }, [ingredient]);
 
   useEffect(() => {
     initData();
