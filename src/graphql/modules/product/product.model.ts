@@ -106,6 +106,7 @@ const productSchema = new Schema(
 
 productSchema.index({ code: 1 });
 productSchema.index({ slug: 1 });
+productSchema.index({ createdAt: 1 });
 productSchema.index(
   { name: "text", ingredientNames: "text" },
   { weights: { name: 2, ingredientNames: 1 } }
