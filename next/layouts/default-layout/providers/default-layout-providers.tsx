@@ -116,7 +116,6 @@ export function DefaultLayoutProvider({ children }: any) {
       {children}
       {popup?.enable && popup?.image && (
         <ImageDialog
-          className="border-4 border-primary"
           image={popup.image}
           isOpen={showImage}
           onClose={setShowImage}
