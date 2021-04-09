@@ -13,6 +13,7 @@ import { HiFilter, HiOutlineX } from "react-icons/hi";
 import { Transition } from "@headlessui/react";
 import useScrollBlock from "./../../../lib/hooks/useScrollBlock";
 import BreadCrumbs from "../../shared/utilities/breadcrumbs/breadcrumbs";
+import { useRouter } from "next/router";
 
 const breadcrumbs = [
   {
@@ -27,6 +28,25 @@ const breadcrumbs = [
 export function ProductsPage() {
   const { loadDone, products, pagination, setPagination } = useProductsContext();
   const [filterOpened, setFilterOpened] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.isReady) {
+      let page = Number(router.query.page);
+      if (isNaN(page)) {
+        router.push(
+          {
+            pathname: location.pathname,
+            query: { ...router.query, page: 1 },
+          },
+          null,
+          { shallow: true }
+        );
+      } else {
+        if (pagination.page != page) setPagination({ ...pagination, page });
+      }
+    }
+  }, [router.query.page]);
 
   useEffect(() => {
     if (!products) {
@@ -145,7 +165,15 @@ export function ProductsPage() {
                         page={pagination.page}
                         total={pagination.total}
                         onPageChange={(page) => {
-                          setPagination({ ...pagination, page });
+                          router.push(
+                            {
+                              pathname: location.pathname,
+                              query: { ...router.query, page },
+                            },
+                            null,
+                            { shallow: true }
+                          );
+                          // setPagination({ ...pagination, page });
                         }}
                       />
                     </div>

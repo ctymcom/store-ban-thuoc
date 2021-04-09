@@ -23,10 +23,12 @@ export function OrderDetailsProducts(props: PropsType) {
             <>
               <div className={`${cellClass} col-span-4`} key={index + "product"}>
                 <div className="flex-grow-0 flex-shrink-0 w-14 p-2">
-                  <Img src={item.product.image} />
+                  <Img src={item.product?.image} />
                 </div>
                 <div className="flex-grow font-normal">
-                  <span className="font-semibold ml-1">{item.product.name}</span>
+                  <span className="font-semibold ml-1">
+                    {item.product?.name || "[Không có sản phẩm]"}
+                  </span>
                 </div>
               </div>
               <div className={`${cellClass} justify-center col-span-2`} key={index + "price"}>
@@ -37,7 +39,7 @@ export function OrderDetailsProducts(props: PropsType) {
               </div>
               <div
                 className={`${cellClass} justify-end col-span-2 font-bold`}
-                key={index + "product"}
+                key={index + "amount"}
               >
                 {NumberPipe(item.amount, true)}
               </div>
@@ -51,12 +53,12 @@ export function OrderDetailsProducts(props: PropsType) {
             <div className={`${cellClass}`} key={index}>
               <div className="flex-grow-0 flex-shrink-0 w-16">
                 <div className="image-wrapper">
-                  <img src={item.product.image} />
+                  <img src={item.product?.image} />
                 </div>
               </div>
               <div className="pl-4">
                 <div className="">
-                  Sản phẩm: <span className="font-semibold ml-1">{item.product.name}</span>
+                  Sản phẩm: <span className="font-semibold ml-1">{item.product?.name}</span>
                 </div>
                 <div className="">
                   Đơn Giá: <span className="font-semibold">{NumberPipe(item?.price, true)}</span>
