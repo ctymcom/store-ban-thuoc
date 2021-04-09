@@ -737,9 +737,9 @@ export class AritoHelper {
       return get(res.data, "value");
     });
   }
-  static getAllPromotion(page: number = 1, updatedAt?: Date) {
+  static getAllPromotion(page: number = 1, updatedAt?: Date, token?: string) {
     return Axios.post(`${this.host}/Item/GetPromotion`, {
-      token: this.imageToken,
+      token: token || this.imageToken,
       memvars: [
         ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
         ["pageIndex", "I", page],
@@ -890,14 +890,14 @@ export class AritoHelper {
     });
   }
 
-  static completeOrder(orderId:string, token: string){
-    return Axios.post(`${this.host}/Voucher/CompleteOrder`,{
+  static completeOrder(orderId: string, token: string) {
+    return Axios.post(`${this.host}/Voucher/CompleteOrder`, {
       token: token,
-      memvars:[["id","I",orderId]]
-    }).then((res)=>{
+      memvars: [["id", "I", orderId]],
+    }).then((res) => {
       this.handleError(res);
-      return get(res,"msg") 
-    })
+      return get(res, "msg");
+    });
   }
 
   static getOrderStatus() {
