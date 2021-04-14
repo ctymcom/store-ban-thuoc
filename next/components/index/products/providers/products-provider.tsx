@@ -58,6 +58,13 @@ export function ProductsProvider(props) {
   const [ingredient, setIngredient] = useState<Partial<Ingredient>>(null);
 
   const router = useRouter();
+  const q = router.query.q as string;
+  let customQuery: any = {};
+  if (q) {
+    try {
+      customQuery = JSON.parse(new Buffer(q, "base64").toString());
+    } catch (err) {}
+  }
   const initData = async () => {
     if (router.query["ingredientId"]) {
       setIngredient({
@@ -85,7 +92,9 @@ export function ProductsProvider(props) {
           },
           fragment: CategoryService.fullFragment,
         }),
-        ProductTagService.getAllQuery({ query: { limit: 0, order: { position: 1 } } }),
+        ProductTagService.getAllQuery({
+          query: { limit: 0, order: { position: 1 }, filter: { ...customQuery } },
+        }),
       ],
     }).then((res) => {
       let newCategories = cloneDeep(res.data.g0.data);
@@ -147,6 +156,7 @@ export function ProductsProvider(props) {
           ...(categoryIds.length ? { categoryIds: { __in: categoryIds } } : {}),
           ...(tagCodes.length ? { tags: { __in: tagCodes } } : {}),
           ...(ingredient ? { ingredientIds: { __in: ingredient.id } } : {}),
+          ...customQuery,
         },
         order,
       },
