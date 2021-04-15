@@ -53,6 +53,7 @@ export type IProduct = BaseDocument & {
   upRate?: number; // Tỉ lệ tăng giá
   downRate?: number; // Tỉ lệ hạ giá
   slug?: string; // Tên URL
+  shortDescription?: string; // Tên ngắn
 };
 
 const productSchema = new Schema(
@@ -100,6 +101,7 @@ const productSchema = new Schema(
     upRate: { type: Number, default: 0 },
     downRate: { type: Number, default: 0 },
     slug: { type: String },
+    shortDescription: { type: String },
   },
   { timestamps: true }
 );

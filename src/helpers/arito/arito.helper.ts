@@ -183,6 +183,7 @@ export class AritoHelper {
           upRate: d["tl_tang_gia"],
           downRate: d["tl_giam_gia"],
           slug: d["ten_url"],
+          shortDescription: d["ten_ngan"],
           __data: d,
         })) as IProduct[],
         paging: {
