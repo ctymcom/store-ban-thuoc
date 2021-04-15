@@ -168,10 +168,11 @@ async function syncProduct() {
     .sort({ syncAt: -1 })
     .exec()
     .then((res) => (res ? res.syncAt : null));
-  // const productUpdatedAt = null;
+  //const productUpdatedAt = null;
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
-  const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
+
   do {
+    const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
     console.log(chalk.yellow("====> Đồng bộ trang ", getProductResult.paging.page));
     const categoryData = await CategoryModel.find({
       code: { $in: uniq(flatten(getProductResult.data.map((d) => d.categoryIds))) },
@@ -228,11 +229,11 @@ async function syncProduct() {
       getProductResult.paging.page + 1,
       productUpdatedAt
     );
+    if (productBulk.length > 0) {
+      console.log(chalk.yellow(`====> Đồng bộ ${productBulk.length} sản phẩm...`));
+      await productBulk.execute();
+    }
   } while (getProductResult.paging.page <= getProductResult.paging.pageCount);
-  if (productBulk.length > 0) {
-    console.log(chalk.yellow(`====> Đồng bộ ${productBulk.length} sản phẩm...`));
-    await productBulk.execute();
-  }
 }
 
 async function syncCategory() {
