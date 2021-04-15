@@ -164,11 +164,11 @@ async function syncProduct() {
   await syncProductTag();
   const productTabs = await ProductTabModel.find().sort({ code: 1 });
   const productTags = await ProductTagModel.find().then((res) => keyBy(res, "code"));
-  // const productUpdatedAt = await ProductModel.findOne()
-  //   .sort({ syncAt: -1 })
-  //   .exec()
-  //   .then((res) => (res ? res.syncAt : null));
-  const productUpdatedAt = null;
+  const productUpdatedAt = await ProductModel.findOne()
+    .sort({ syncAt: -1 })
+    .exec()
+    .then((res) => (res ? res.syncAt : null));
+  //const productUpdatedAt = null;
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
 
   do {
