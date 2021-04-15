@@ -96,6 +96,8 @@ const schema = gql`
     downRate: Int
     "Tên URL"
     slug: String
+    "Tên ngắn"
+    shortDescription: String
 
     categories: [Category]
     ingredients: [Ingredient]
