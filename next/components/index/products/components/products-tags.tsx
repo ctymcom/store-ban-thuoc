@@ -17,8 +17,10 @@ export function ProductsTags(props: PropsType) {
           <span key={index} className="px-1.5 mb-1.5">
             <span
               className={
-                "flex justify-center items-center h-10 rounded-full border border-primary px-3 cursor-pointer whitespace-nowrap transition hover:text-white " +
-                (tag.active ? "bg-primary text-white hover:bg-primary-dark" : "hover:bg-primary")
+                "flex justify-center items-center h-10 rounded-full border border-primary px-3 cursor-pointer whitespace-nowrap transition " +
+                (tag.active
+                  ? "bg-primary text-white hover:bg-primary-dark"
+                  : "hover:text-primary hover:bg-primary-light")
               }
               onClick={() => toggleTag(index)}
             >

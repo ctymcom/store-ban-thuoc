@@ -86,10 +86,6 @@ export function ProductInfo(props: PropsType) {
         isHigh,
       },
     });
-    if (res.data) {
-      console.log(res);
-      const { highPriceCount, lowPriceCount } = res.data.rateProductPrice;
-    }
   };
 
   return (
@@ -111,22 +107,22 @@ export function ProductInfo(props: PropsType) {
       )}
       {product.salePrice ? (
         <>
-          <div className="mb-2 lg:mb-4 flex flex-col sm:flex-row items-start lg:items-center text-gray-500 text-14">
-            <div className="flex flex-grow items-center">
+          <div className="mb-1.5 flex items-center text-gray-500 text-sm">
+            <div className="flex items-center mr-8">
               <HiEye className="text-16" />
               <span className="ml-1 whitespace-nowrap">
                 {product.viewCount ? product.viewCount : 0} lượt xem
               </span>
             </div>
-            <div className="flex flex-grow items-center">
+            <div className="flex items-center">
               <HiOutlineShoppingCart className="text-16" />
               <span className="ml-1 whitespace-nowrap">
                 {product.saleCount ? product.saleCount : 0} lượt mua
               </span>
             </div>
           </div>
-          <div className="mb-1 lg:mb-4">
-            <span className="text-gray-400 line-through">{product?.description}</span>
+          <div className="mb-1.5">
+            <span className="text-gray-600">{product?.shortDescription}</span>
           </div>
           <div className="mb-1 lg:mb-4 flex flex-col lg:flex-row items-start justify-center">
             <div className="flex-grow">
