@@ -1,6 +1,7 @@
 // Repeat Hello World
 
 import moment from "moment-timezone";
+import { configs } from "../configs";
 import SyncAritoOptionsJob from "./jobs/syncAritoOptions.job";
 import SyncBankAccountJob from "./jobs/syncBankAccount.job";
 import SyncLocationDataJob from "./jobs/syncLocationData.job";
@@ -14,11 +15,14 @@ import SyncUserPointLogJob from "./jobs/syncUserPointLog.job";
 
 export function InitRepeatJobs() {
   console.log("Generate Repeat Jobs");
-  SyncProductJob.create({})
+  SyncProductJob.create({ flag: 0 })
     .repeatEvery("5 minute", { skipImmediate: true })
-    .unique({ name: SyncProductJob.jobName })
-    .save()
-    .then((job) => job.run());
+    .unique({ name: SyncProductJob.jobName, "data.flag": 0 })
+    .save();
+  SyncProductJob.create({ flag: 1 })
+    .repeatEvery("0 0 * * *", { skipImmediate: true, timezone: configs.timezone })
+    .unique({ name: SyncProductJob.jobName, "data.flag": 1 })
+    .save();
   SyncLocationDataJob.create({})
     .repeatEvery("1 days", { skipImmediate: true })
     .unique({ name: SyncLocationDataJob.jobName })

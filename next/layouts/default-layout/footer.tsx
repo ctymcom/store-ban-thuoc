@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconFacebook } from "../../public/assets/icons/icon-facebook";
 import { IconYoutube } from "../../public/assets/icons/icon-youtube";
 import { IconZalo } from "../../public/assets/icons/icon-zalo";
 import { useDefaultLayoutContext } from "./providers/default-layout-providers";
 import { useAuth } from "./../../lib/providers/auth-provider";
+import { useScript } from "../../lib/hooks/useScript";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export function Footer() {
   const router = useRouter();
   const { user } = useAuth();
 
+  useScript("https://images.dmca.com/Badges/DMCABadgeHelper.min.js");
   return (
     <>
       {!!hotline && (
@@ -147,6 +149,17 @@ export function Footer() {
                     <p className="hover:underline hover:text-primary">
                       Gọi điện tư vấn - hỗ trợ: {hotline?.phone}
                     </p>
+                    <a
+                      href="//www.dmca.com/Protection/Status.aspx?ID=d162181b-b90d-4a99-ae89-958a2dda862d"
+                      title="DMCA.com Protection Status"
+                      className="dmca-badge"
+                    >
+                      <img
+                        className="mt-2"
+                        src="https://images.dmca.com/Badges/dmca_protected_sml_120l.png?ID=d162181b-b90d-4a99-ae89-958a2dda862d"
+                        alt="DMCA.com Protection Status"
+                      />
+                    </a>
                   </div>
                 </div>
               </div>
