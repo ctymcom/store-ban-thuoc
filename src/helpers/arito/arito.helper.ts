@@ -177,6 +177,8 @@ export class AritoHelper {
           salePrice: d["gia_ban"],
           saleRate: d["tl_ck"],
           saleExpiredDate: d["ngay_hl"] ? moment(d["ngay_hl"]).toDate() : null,
+          saleExpiredDate1: d["ngay_hl1"] ? moment(d["ngay_hl1"]).toDate() : null,
+          saleExpiredDate2: d["ngay_hl2"] ? moment(d["ngay_hl2"]).toDate() : null,
           tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
           priceGroups: get(priceGroupData, d["ma_vt"], []),
           outOfDate: d["ngay_can_date"] ? moment(d["ngay_can_date"]).toDate() : null,

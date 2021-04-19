@@ -1,4 +1,4 @@
-import { intervalToDuration, parseISO } from "date-fns";
+import { intervalToDuration, isBefore, parseISO } from "date-fns";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { NumberPipe } from "../../../../lib/pipes/number";
@@ -49,7 +49,7 @@ export function ProductInfo(props: PropsType) {
   // };
 
   useInterval(() => {
-    if (product?.saleExpiredDate) {
+    if (product?.saleExpiredDate && isBefore(new Date(), new Date(product.saleExpiredDate))) {
       const duration = intervalToDuration({
         start: new Date(),
         end: parseISO(product.saleExpiredDate),

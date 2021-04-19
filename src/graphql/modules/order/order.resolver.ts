@@ -14,6 +14,7 @@ const Query = {
   getAllOrder: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     set(args, "q.filter.userId", context.user.id.toString());
+    set(args, "q.filter.status", { $gt: 0 });
     return orderService.fetch(args.q);
   },
   getOneOrder: async (root: any, args: any, context: Context) => {
@@ -122,7 +123,6 @@ const Mutation = {
         return res;
       });
   },
-  
 };
 
 const Order = {};

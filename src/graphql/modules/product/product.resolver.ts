@@ -51,7 +51,7 @@ const Product = {
 function getGroupPrice(field: string) {
   return async (root: IProduct, args: any, context: Context) => {
     if (!context.isAuth || !context.user) return null;
-    if (context.user.group && context.user.group != "") {
+    if (context.isAuth && context.user && context.user.group && context.user.group != "") {
       const groupPrice = root.priceGroups.find((p) => p.customerGroup == context.user.group);
       if (groupPrice) {
         return groupPrice[field];
