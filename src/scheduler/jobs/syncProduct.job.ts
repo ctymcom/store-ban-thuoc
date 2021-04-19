@@ -23,25 +23,32 @@ export class SyncProductJob {
   static create(data: any) {
     return Agenda.create(this.jobName, data);
   }
-  static async execute(job: Job) {
+  static async execute(job: Job, done) {
     try {
       console.log("Execute Job " + SyncProductJob.jobName, moment().format());
       await AritoHelper.setImageToken();
       console.log(chalk.cyan("==>Đồng bộ sản phẩm đã xóa ..."));
       await syncDeletedProduct();
+      await job.touch();
       console.log(chalk.cyan("==> Động bộ danh mục sản phẩm..."));
       await syncCategory();
+      await job.touch();
       console.log(chalk.cyan("==> Động bộ hoạt chất..."));
       await syncIngredient();
+      await job.touch();
       console.log(chalk.cyan("==> Động bộ sản phẩm..."));
-      await syncProduct();
+      await syncProduct(job.attrs.data.flag == 1);
+      await job.touch();
       console.log(chalk.cyan("==> Động bộ nhóm sản phẩm hiển thị..."));
       await syncProductContainer();
+      await job.touch();
       console.log(chalk.cyan("==> Động bộ đánh giá..."));
       await syncProductComment();
       console.log(chalk.green("==> Đồng bộ xong"));
     } catch (err) {
       console.log(chalk.red("Động bộ lỗi", err.message));
+    } finally {
+      done();
     }
   }
 }
@@ -157,18 +164,23 @@ async function syncProductTabs() {
     await productTabBulk.execute();
   }
 }
-async function syncProduct() {
+async function syncProduct(fullSync = false) {
+  if (fullSync) {
+    console.log(chalk.cyan("====> Động bộ Full sản phẩm"));
+  }
   console.log(chalk.yellow("====> Đồng bộ Product Tab"));
   await syncProductTabs();
   console.log(chalk.yellow("====> Đồng bộ Product Tag"));
   await syncProductTag();
   const productTabs = await ProductTabModel.find().sort({ code: 1 });
   const productTags = await ProductTagModel.find().then((res) => keyBy(res, "code"));
-  const productUpdatedAt = await ProductModel.findOne()
-    .sort({ syncAt: -1 })
-    .exec()
-    .then((res) => (res ? res.syncAt : null));
-  // const productUpdatedAt = null;
+  let productUpdatedAt = null;
+  if (!fullSync) {
+    productUpdatedAt = await ProductModel.findOne()
+      .sort({ syncAt: -1 })
+      .exec()
+      .then((res) => (res ? res.syncAt : null));
+  }
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
 
   do {
