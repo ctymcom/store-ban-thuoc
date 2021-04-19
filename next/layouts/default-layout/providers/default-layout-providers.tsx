@@ -27,6 +27,7 @@ export const DefaultLayoutContext = createContext<
     };
     menus: any[];
     hiddenTags: string[];
+    pageId: string;
   }>
 >({});
 
@@ -41,6 +42,7 @@ export function DefaultLayoutProvider({ children }: any) {
   const [menus, setMenus] = useState([]);
   const [showImage, setShowImage] = useState(false);
   const [hiddenTags, setHiddenTags] = useState([]);
+  const [pageId, setPageId] = useState("");
 
   const loadSettings = () => {
     SettingService.getAll({
@@ -58,6 +60,7 @@ export function DefaultLayoutProvider({ children }: any) {
               "HIDDEN_MENUS",
               "HIDDEN_TAGS",
               "POPUP",
+              "FACEBOOK_MESSENGER",
             ],
           },
         },
@@ -70,6 +73,9 @@ export function DefaultLayoutProvider({ children }: any) {
       setSocials(res.data.find((x) => x.key == "SOCIAL").value);
       setPolicy(res.data.find((x) => x.key == "POLICY").value);
       setPopup(res.data.find((x) => x.key == "POPUP").value);
+      if (res.data.find((x) => x.key == "FACEBOOK_MESSENGER").value?.enable) {
+        setPageId(res.data.find((x) => x.key == "FACEBOOK_MESSENGER").value.pageID);
+      }
       const hiddenMenus: string[] = res.data.find((x) => x.key == "HIDDEN_MENUS").value;
       setMenus(
         [
@@ -111,6 +117,7 @@ export function DefaultLayoutProvider({ children }: any) {
         menus,
         hiddenTags,
         popup,
+        pageId,
       }}
     >
       {children}

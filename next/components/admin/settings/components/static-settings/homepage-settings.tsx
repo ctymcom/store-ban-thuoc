@@ -258,6 +258,27 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
               />
             </>
           )}
+          {setting.key == "FACEBOOK_MESSENGER" && (
+            <>
+              <div className="flex">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 whitespace-pre bg-gray-100 border-r-0 rounded-none rounded-tr">
+                  Hiện Messenger
+                </div>
+                <div className="form-input flex items-center flex-grow rounded-none rounded-br">
+                  <Switch
+                    value={setting.value.enable}
+                    onChange={(val) => onValueChanged("enable", val, index)}
+                  />
+                </div>
+              </div>
+              <Input
+                value={setting.value.pageID}
+                prefix="Page ID"
+                {...inputProps}
+                onChange={(val) => onValueChanged("pageID", val, index)}
+              />
+            </>
+          )}
         </div>
       ))}
     </>
