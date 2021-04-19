@@ -1,13 +1,15 @@
 import { useEffect } from "react";
+import { NotificationProvider } from "../components/index/notification/providers/notifications-provider";
 import { useAuth } from "../lib/providers/auth-provider";
 import { CartProvider } from "../lib/providers/cart-provider";
 import { Footer } from "./default-layout/footer";
 import { HeadSEO } from "./default-layout/head-seo";
 import { Header } from "./default-layout/header/header";
-import { DefaultLayoutProvider } from "./default-layout/providers/default-layout-providers";
-import useDevice from "./../lib/hooks/useDevice";
 import MessengerChat from "./default-layout/messenger-chat";
-import { NotificationProvider } from "../components/index/notification/providers/notifications-provider";
+import {
+  DefaultLayoutContext,
+  DefaultLayoutProvider,
+} from "./default-layout/providers/default-layout-providers";
 
 interface PropsType extends ReactProps {
   title?: string;
@@ -15,7 +17,6 @@ interface PropsType extends ReactProps {
 
 export function DefaultLayout({ title = "Kho Thuốc Sỉ", ...props }: PropsType) {
   const { checkUser } = useAuth();
-  const { isSSR } = useDevice();
 
   useEffect(() => {
     checkUser();
@@ -32,7 +33,13 @@ export function DefaultLayout({ title = "Kho Thuốc Sỉ", ...props }: PropsTyp
               {props.children}
             </div>
             <Footer />
-            <MessengerChat language="vi" themeColor="#42B54A" pageId="102164275124516" />
+            <DefaultLayoutContext.Consumer>
+              {({ pageId }) => (
+                <>
+                  {pageId && <MessengerChat language="vi" themeColor="#42B54A" pageId={pageId} />}
+                </>
+              )}
+            </DefaultLayoutContext.Consumer>
           </NotificationProvider>
         </DefaultLayoutProvider>
       </CartProvider>

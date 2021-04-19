@@ -48,6 +48,7 @@ export interface Product extends BaseModel {
   imageL: string;
   viewCount: number;
   saleCount: number;
+  shortDescription: string;
 }
 
 interface ProductTagDetail {
@@ -115,6 +116,7 @@ export class ProductRepository extends CrudRepository<Product> {
     size: string
     unitCode: string
     unit: string
+    shortDescription: string
     description: string
     byt: string
     imageId: string
