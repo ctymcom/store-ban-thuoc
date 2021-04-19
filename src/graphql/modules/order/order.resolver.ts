@@ -66,17 +66,6 @@ const Mutation = {
         amount: price * i.qty,
       });
     });
-    CartModel.updateOne(
-      { userId: context.user.id.toString() },
-      {
-        $set: {
-          paymentMethod: paymentMethod,
-          discountId: promotionCode,
-        },
-      }
-    )
-      .exec()
-      .catch((err) => {});
     const order = await AritoHelper.createOrder(
       {
         promotionCode: promotionCode,
@@ -119,7 +108,9 @@ const Mutation = {
         usePoint: usePoint,
       })
       .then((res) => {
-        CartModel.remove({ userId: context.user.id.toString() });
+        CartModel.updateOne({ userId: context.user.id.toString() }, { $set: { items: [] } })
+          .exec()
+          .catch((err) => {});
         return res;
       });
   },

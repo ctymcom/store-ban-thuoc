@@ -1,7 +1,7 @@
 import { gql } from "apollo-server-express";
+
 import { ROLES } from "../../../constants/role.const";
 import { Context } from "../../context";
-import { UserAddressModel } from "../userAddress/userAddress.model";
 import { CartModel } from "./cart.model";
 
 export default {
@@ -14,20 +14,11 @@ export default {
     Query: {
       getUserCart: async (root: any, args: any, context: Context) => {
         context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
-        const cart = await CartModel.findOne({ userId: context.user.id.toString() });
-        if (cart) return cart;
-        const userAddress = await UserAddressModel.find({
-          userId: context.user.id.toString(),
-        }).then((res) => {
-          const defaultAddress = res.find((a) => a.isDefault);
-          if (defaultAddress) return defaultAddress;
-          return res[0];
-        });
-
-        return await CartModel.create({
-          userId: context.user.id.toString(),
-          addressId: userAddress ? userAddress._id : null,
-        });
+        return await CartModel.findOneAndUpdate(
+          { userId: context.user.id.toString() },
+          { $setOnInsert: { items: [] } },
+          { upsert: true, new: true }
+        );
       },
     },
   },
