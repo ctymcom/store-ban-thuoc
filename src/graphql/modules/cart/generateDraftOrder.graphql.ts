@@ -1,11 +1,11 @@
 import { gql } from "apollo-server-express";
 import { keyBy } from "lodash";
+
 import { ROLES } from "../../../constants/role.const";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { Context } from "../../context";
 import { ProductModel } from "../product/product.model";
 import { UserAddressModel } from "../userAddress/userAddress.model";
-import { CartModel } from "./cart.model";
 
 export default {
   schema: gql`
@@ -62,17 +62,6 @@ export default {
             amount: price * i.qty,
           });
         });
-        CartModel.updateOne(
-          { userId: context.user.id.toString() },
-          {
-            $set: {
-              paymentMethod: paymentMethod,
-              discountId: promotionCode,
-            },
-          }
-        )
-          .exec()
-          .catch((err) => {});
         const draftOrder = await AritoHelper.viewDraftOrder(
           {
             promotionCode: promotionCode,

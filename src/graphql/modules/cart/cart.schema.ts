@@ -7,8 +7,6 @@ const schema = gql`
   }
   input UpdateCartInput {
     items: [CartItemInput]
-    shipMethod: String
-    paymentMethod: String
   }
 
   type Cart {
@@ -18,34 +16,8 @@ const schema = gql`
 
     "Mã người dùng"
     userId: String
-    "Số lượng sản phẩm"
-    itemCount: Float
-    "Tổng tiền hàng"
-    subtotal: Float
-    "Phí ship"
-    shipfee: Float
-    "Giảm giá"
-    discount: Float
-    "Tổng thành tiền"
-    amount: Float
-    "Phương thức vận chuyển"
-    shipMethod: String
-    "Phương thức thanh toán"
-    paymentMethod: Int
     "Sản phẩm giỏ hàng"
     items: [CartItem]
-    "Mã khuyến mãi"
-    discountId: String
-    "Tên khuyến mãi"
-    discountName: String
-    "Tỷ lệ chiết khấu %"
-    discountRate: Float
-    "Sử dụng điểm đổi thưởng"
-    usePoint: Boolean
-    "Mã địa chỉ"
-    addressId: ID
-
-    address: UserAddress
   }
 
   type CartPageData {
