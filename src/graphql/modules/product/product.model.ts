@@ -39,6 +39,8 @@ export type IProduct = BaseDocument & {
   salePrice?: number; // Giá bán đã giảm
   saleRate?: number; // Tỷ lệ chiết khấu %
   saleExpiredDate?: Date; // Ngày hiệu lực chiêt khấu
+  saleExpiredDate1?: Date; // Ngày hiệu lực chiêt khấu
+  saleExpiredDate2?: Date; // Ngày hiệu lực chiêt khấu
   containers?: string[]; // Nhóm sản phẩm hiển thị trang chủ
   priceGroups?: ProductGroupPrice[]; // Bảng giá theo nhóm khách
   tags?: string[]; // Danh sách tag
@@ -87,6 +89,10 @@ const productSchema = new Schema(
     imageId: { type: String },
     basePrice: { type: Number, default: 0 },
     salePrice: { type: Number, default: 0 },
+    saleRate: { type: Number, default: 0 },
+    saleExpiredDate: { type: Date },
+    saleExpiredDate1: { type: Date },
+    saleExpiredDate2: { type: Date },
     containers: { type: [String], default: [] },
     priceGroups: { type: [ProductGroupPriceSchema], default: [] },
     tags: { type: [String], default: [] },
@@ -108,6 +114,7 @@ const productSchema = new Schema(
 
 productSchema.index({ code: 1 });
 productSchema.index({ slug: 1 });
+productSchema.index({ saleExpiredDate: 1 });
 productSchema.index({ createdAt: 1 });
 productSchema.index(
   { name: "text", ingredientNames: "text" },

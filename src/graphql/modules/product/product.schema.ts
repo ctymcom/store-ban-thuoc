@@ -70,14 +70,18 @@ const schema = gql`
     basePrice: Float
     "Giá bán đã giảm"
     salePrice: Float
-    "Nhóm sản phẩm hiển thị trang chủ"
-    containers: [String]
     "Tỷ lệ chiết khấu %"
     saleRate: Float
-    "Danh sách tag"
-    tags: [String]
     "Ngày hiệu lực chiêt khấu"
     saleExpiredDate: DateTime
+    "Ngày hiệu lực chiêt khấu"
+    saleExpiredDate1: DateTime
+    "Ngày hiệu lực chiêt khấu"
+    saleExpiredDate2: DateTime
+    "Nhóm sản phẩm hiển thị trang chủ"
+    containers: [String]
+    "Danh sách tag"
+    tags: [String]
     "Ngày hết hạn sử dụng"
     outOfDate: DateTime
     "Lượt xem"
