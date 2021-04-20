@@ -1,5 +1,5 @@
 import axios from "axios";
-import { keyBy, set } from "lodash";
+import { get, keyBy, set } from "lodash";
 import { ROLES } from "../../../constants/role.const";
 import { AuthHelper } from "../../../helpers";
 import { AritoHelper } from "../../../helpers/arito/arito.helper";
@@ -14,7 +14,10 @@ const Query = {
   getAllOrder: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     set(args, "q.filter.userId", context.user.id.toString());
-    set(args, "q.filter.status", { $gt: 0 });
+    if (!get(args, "q.filter.status")) {
+      set(args, "q.filter.status", { $gt: 0 });
+    }
+
     return orderService.fetch(args.q);
   },
   getOneOrder: async (root: any, args: any, context: Context) => {
