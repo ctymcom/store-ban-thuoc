@@ -40,7 +40,7 @@ export function ProductMain() {
         <BreadCrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="flex flex-col md:flex-row mt-4">
-        <div className="relative mt-2 md:mt-0 w-full md:w-2/5 z-20">
+        <div className="relative mt-2 md:mt-0 w-full md:w-2/5 z-20 flex-shrink-0 flex-grow-0">
           {product?.tags.includes("NEW") && (
             <div className="flex-center z-10 absolute -left-2 xs:-left-3 sm:-left-3.5 md:-left-2 lg:-left-2.5 -top-2 xs:-top-3 sm:-top-3.5 md:-top-2 lg:-top-3 text-white font-semibold">
               <img
