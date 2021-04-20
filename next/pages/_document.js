@@ -1,5 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+const isProduction = process.env.NODE_ENV === "production";
+
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx)
@@ -14,13 +16,19 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
           <div id="dialog-root"></div>
-              
-          <div id="fb-root"></div>
-          <div
-            class="fb-customerchat"
-            language="vi" themeColor="#42B54A" pageId="102164275124516"
-          ></div>
+          {isProduction && (
+            <>
+              <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8HTX7NFE1"></script>
+              <script>
+                if (!window === undefined) return
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){window.dataLayer.push(arguments)}
+                gtag('js', new Date());
 
+                gtag('config', 'G-H8HTX7NFE1');
+              </script>
+            </>
+          )}
         </body>
       </Html>
     )

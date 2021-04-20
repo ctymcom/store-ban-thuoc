@@ -5,7 +5,7 @@ import { CartProvider } from "../lib/providers/cart-provider";
 import { Footer } from "./default-layout/footer";
 import { HeadSEO } from "./default-layout/head-seo";
 import { Header } from "./default-layout/header/header";
-import MessengerChat from "./default-layout/messenger-chat";
+import MessengerCustomerChat from "react-messenger-customer-chat";
 import {
   DefaultLayoutContext,
   DefaultLayoutProvider,
@@ -36,7 +36,14 @@ export function DefaultLayout({ title = "Kho Thuốc Sỉ", ...props }: PropsTyp
             <DefaultLayoutContext.Consumer>
               {({ pageId }) => (
                 <>
-                  {pageId && <MessengerChat language="vi" themeColor="#42B54A" pageId={pageId} />}
+                  {pageId && (
+                    <MessengerCustomerChat
+                      pageId={pageId}
+                      appID=""
+                      language="vi"
+                      themeColor="#42B54A"
+                    />
+                  )}
                 </>
               )}
             </DefaultLayoutContext.Consumer>

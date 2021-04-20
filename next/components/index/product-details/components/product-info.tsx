@@ -1,17 +1,17 @@
-import { intervalToDuration, isBefore, parseISO } from "date-fns";
+import { intervalToDuration, isBefore } from "date-fns";
+import gql from "graphql-tag";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { HiEye, HiOutlineShoppingCart, HiThumbDown, HiThumbUp } from "react-icons/hi";
 import { NumberPipe } from "../../../../lib/pipes/number";
 import { useAuth } from "../../../../lib/providers/auth-provider";
 import { useCart } from "../../../../lib/providers/cart-provider";
+import { GraphService } from "../../../../lib/repo/graph.repo";
+import { ProductService } from "../../../../lib/repo/product.repo";
 import { ProductQuantity } from "../../../shared/product/product-quantity";
 import { ProductTag } from "../../../shared/product/product-tag";
 import useInterval from "./../../../../lib/hooks/useInterval";
 import { useProductDetailsContext } from "./../providers/product-details-provider";
-import { HiOutlineShoppingCart, HiEye, HiThumbDown, HiThumbUp } from "react-icons/hi";
-import { GraphService } from "../../../../lib/repo/graph.repo";
-import gql from "graphql-tag";
-import { ProductService } from "../../../../lib/repo/product.repo";
 
 interface PropsType extends ReactProps {}
 
@@ -52,12 +52,14 @@ export function ProductInfo(props: PropsType) {
     if (product?.saleExpiredDate && isBefore(new Date(), new Date(product.saleExpiredDate))) {
       const duration = intervalToDuration({
         start: new Date(),
-        end: parseISO(product.saleExpiredDate),
+        end: new Date(product.saleExpiredDate),
       });
       setExpiredFromNowText(
-        `${duration.hours.toString().padStart(2, "0")} : ${duration.minutes
+        `${duration.days ? duration.days + " ngày " : ""}${duration.hours
           .toString()
-          .padStart(2, "0")} : ${duration.seconds.toString().padStart(2, "0")}`
+          .padStart(2, "0")} giờ ${duration.minutes
+          .toString()
+          .padStart(2, "0")} phút ${duration.seconds.toString().padStart(2, "0")} giây`
       );
     }
   }, 1000);
