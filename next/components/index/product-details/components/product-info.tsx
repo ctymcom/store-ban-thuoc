@@ -104,9 +104,6 @@ export function ProductInfo(props: PropsType) {
           <ProductTag tag={tag} key={tag.code} saleRate={product.saleRate} />
         ))}
       </div>
-      {!!product.description && (
-        <div className="my-4 whitespace-pre-wrap">{product.description}</div>
-      )}
       {product.salePrice ? (
         <>
           <div className="mb-1.5 flex items-center text-gray-500 text-sm">
@@ -124,7 +121,10 @@ export function ProductInfo(props: PropsType) {
             </div>
           </div>
           <div className="mb-1.5">
-            <span className="text-gray-600">{product?.shortDescription}</span>
+            <span className="text-gray-600">
+              {product?.shortDescription ||
+                "Là dung dịch đẳng trương với máu được chỉ định trong trường hợp cơ thể gặp phải tình trạng mất nước và điện giải nhằm bù nước và điện giải và cân bằng toan- kiềm. Cũng được chỉ định truyền trong trường hợp cơ thể bị thiếu dịch và carbohydrat cần cho hoạt động tạo năng lương của cơ thể. Trong trường hợp cơ thể bị suy dinh dưỡng dẫn đến tình trạng nồng độ đường trong máu bị giảm và cơ thể có cảm giác mệt mỏi cũng được bác sĩ chỉ định tiêm truyền Glucose 5%. Cũng được dùng để làm các test về khả năng dung nạp của cơ thể đối với đường glucose 5%. Bên cạnh đó các trường hợp tiêu chảy cấp dẫn đến mất nước cũng được chỉ định dùng dung dịch này. Ngoài ra với những trường hợp chuyển hóa trong cơ thể tăng lên do bị stress hoặc vận động hay lao động dẫn đến chấn thương hay đối với những người bị ngộ độc rượu cũng được chỉ định sử dụng dung dịch tiêm truyền này."}
+            </span>
           </div>
           <div className="mb-1 lg:mb-4 flex flex-col lg:flex-row items-start justify-center">
             <div className="flex-grow">
