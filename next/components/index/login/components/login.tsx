@@ -5,6 +5,7 @@ import { useToast } from "../../../../lib/providers/toast-provider";
 import { Button } from "../../../shared/utilities/form/button";
 import useDevice from "./../../../../lib/hooks/useDevice";
 import { Form } from "./../../../shared/utilities/form/form";
+import { HiOutlineEye } from "react-icons/hi";
 
 interface PropsType extends ReactProps {
   setMode: Function;
@@ -12,6 +13,7 @@ interface PropsType extends ReactProps {
 export function Login(props: PropsType) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
 
   const { login } = useAuth();
   const { isDesktop } = useDevice();
@@ -46,20 +48,28 @@ export function Login(props: PropsType) {
       <div className="uppercase text-primary font-bold text-center text-lg">Đăng nhập</div>
       <input
         className="form-input mt-8 min-w-2xs sm:min-w-xs"
-        placeholder="Tên đăng nhập hoặc Email"
+        placeholder="Email hoặc Số điện thoại"
         ref={ref}
         value={username}
         name="nickname"
         onChange={(e) => setUsername(e.target.value)}
       />
-      <input
-        className="form-input mt-4 min-w-2xs sm:min-w-xs"
-        placeholder="Mật khẩu"
-        type="password"
-        name="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+
+      <div className="w-full relative overflow-hidden">
+        <input
+          className="form-input mt-4 min-w-2xs sm:min-w-xs"
+          placeholder="Mật khẩu"
+          type={showPass ? "text" : "password"}
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button
+          className="absolute flex flex-col pb-1 -right-2 top-5"
+          onClick={() => setShowPass(!showPass)}
+          icon={<HiOutlineEye />}
+        />
+      </div>
       <div className="w-full flex flex-col items-center mt-4">
         <Button primary large submit className="w-full mt-4" text="Đăng nhập" isLoading={loading} />
         <div className="flex justify-between mt-2 w-full">

@@ -46,7 +46,7 @@ export function PayMoney(props: PropsType) {
             );
           })
         ) : (
-          <p>Vui lòng chọn địa chỉ giao hàng để xen "Giảm giá"</p>
+          <p>Vui lòng chọn địa chỉ giao hàng để xem "Giảm giá"</p>
         )}
         {showUsePoint.isUsing ? (
           <p className="text-16 flex text-primary gap-2">

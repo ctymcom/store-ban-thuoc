@@ -3,6 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Product } from "./../repo/product.repo";
 import { ProductService } from "../repo/product.repo";
 import { useToast } from "./toast-provider";
+import { GraphService } from "../repo/graph.repo";
+import gql from "graphql-tag";
 
 export interface CartProduct {
   productId: string;
@@ -46,7 +48,39 @@ export function CartProvider({ children }: any) {
   const [usePoint, setUsePoint] = useState(true);
 
   const toast = useToast();
-
+  const updateCart = async (carts: CartProduct[]) => {
+    let data = {
+      items: carts.map((item) => {
+        return {
+          productId: item.productId,
+          productCode: item.product.code,
+          qty: item.qty,
+        };
+      }),
+    };
+    console.log(data);
+    let mutationName = "updateCart";
+    const res = await GraphService.apollo.mutate({
+      mutation: gql`
+          mutation mutationName($data: UpdateCartInput!) {
+            ${mutationName} (
+              data: $data
+            ) {
+              id
+              createdAt
+              updatedAt
+              userId
+            }
+          }
+        `,
+      variables: {
+        data,
+      },
+    });
+    if (res.data) {
+      console.log(res.data);
+    }
+  };
   useEffect(() => {
     try {
       setLoading(true);
@@ -62,29 +96,32 @@ export function CartProvider({ children }: any) {
             },
           },
         }).then((res) => {
-          setLoading(false);
+          console.log(res.data);
 
-          cartProductStorage.forEach((cartProduct) => {
-            let product = res.data.find((x) => x.id == cartProduct.productId);
-            if (product) {
-              cartProduct.price = product.salePrice;
-              cartProduct.amount = product.salePrice * cartProduct.qty;
-              cartProduct.product = product;
-            }
-          });
-          cartProductStorage = cartProductStorage.filter((x) => x.product);
-          setLoading(false);
-          setCartProductCount(
-            cartProductStorage.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
-          );
-          setCartTotal(
-            cartProductStorage.reduce(
-              (total, cartProduct) => (cartProduct.active ? (total += cartProduct.amount) : total),
-              0
-            )
-          );
+          if (res.data) {
+            cartProductStorage.forEach((cartProduct) => {
+              let product = res.data.find((x) => x.id == cartProduct.productId);
+              if (product) {
+                cartProduct.price = product.salePrice;
+                cartProduct.amount = product.salePrice * cartProduct.qty;
+                cartProduct.product = product;
+              }
+            });
+            cartProductStorage = cartProductStorage.filter((x) => x.product);
+            setLoading(false);
+            setCartProductCount(
+              cartProductStorage.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
+            );
+            setCartTotal(
+              cartProductStorage.reduce(
+                (total, cartProduct) =>
+                  cartProduct.active ? (total += cartProduct.amount) : total,
+                0
+              )
+            );
+            setCartProducts([...cartProductStorage]);
+          }
         });
-        setCartProducts([...cartProductStorage]);
         console.log(cartProductStorage);
       } else {
         console.log(cartProductStorage);
@@ -112,6 +149,7 @@ export function CartProvider({ children }: any) {
         0
       )
     );
+    updateCart(cartProducts);
     setCartProductTotal(cartProducts.length);
   }, [cartProducts]);
   const reOrder = (items: { productId: string; qty: number }[]) => {

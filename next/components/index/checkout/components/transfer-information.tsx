@@ -52,7 +52,7 @@ const TransferInformation = ({ bankInfo, ...props }: PropsType) => {
       <div className="grid grid-cols-3 items-center leading-8">
         <p className="col-span-3 md:col-span-1 text-gray-400">Nội dung: </p>
         <div className="col-span-3 md:col-span-2">
-          <p className="inline-block">Mã đơn hàng - Tên - Số điện thoại đặt hàng</p>
+          <p className="inline-block font-bold">Mã đơn hàng - Tên - Số điện thoại đặt hàng</p>
         </div>
       </div>
     </div>

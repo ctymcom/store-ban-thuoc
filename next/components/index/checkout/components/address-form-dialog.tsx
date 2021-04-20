@@ -48,7 +48,7 @@ const AddressFormDialog = (props: PropsType) => {
   };
   const checkBeforeMutation = (data: UserAddress) => {
     if (data) {
-      const { contactName, address, provinceId, districtId, phone } = data;
+      const { contactName, address, provinceId, districtId, wardId, phone } = data;
       if (!contactName) {
         toast.warn("Tên liên hệ không được để trống");
         return false;
@@ -63,6 +63,10 @@ const AddressFormDialog = (props: PropsType) => {
       }
       if (!districtId) {
         toast.warn("Bạn chưa chon quận/huyện");
+        return false;
+      }
+      if (!wardId) {
+        toast.warn("Bạn chưa chon phường/xã");
         return false;
       }
       if (!address) {
