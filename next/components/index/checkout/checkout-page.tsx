@@ -171,6 +171,7 @@ export function CheckOutPage() {
         discountPoint,
         discountPayment,
       } = res.data.generateDraftOrder;
+      console.log(res.data.generateDraftOrder);
 
       let listNew = [
         {

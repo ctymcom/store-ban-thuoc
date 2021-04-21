@@ -6,6 +6,8 @@ import { RadioButton } from "../../../shared/form/radio-button";
 import { Button } from "../../../shared/utilities/form/button";
 import useDevice from "./../../../../lib/hooks/useDevice";
 import { Form } from "./../../../shared/utilities/form/form";
+import { DatePicker } from "../../../shared/utilities/form/date";
+import { HiOutlineEye } from "react-icons/hi";
 
 interface PropsType extends ReactProps {
   setMode: Function;
@@ -17,6 +19,8 @@ export function Register(props: PropsType) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [repass, setRepass] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [showRePass, setShowRePass] = useState(false);
   const [aritoRegisInput, setAritoRegisInput] = useState({
     password: "",
     birthday: "",
@@ -56,7 +60,7 @@ export function Register(props: PropsType) {
   const onFormSubmit = async () => {
     const { password, birthday, companyType, companyName } = aritoRegisInput;
     if (!nickname || !email || !phone || !password || !birthday || !companyType || !companyName) {
-      toast.info("Yêu cầu nhập đầy đủ thông tin");
+      toast.info("Quý Khách vui lòng nhập đầy đủ các thông tin");
       return;
     }
 
@@ -105,30 +109,43 @@ export function Register(props: PropsType) {
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
       />
-      <input
-        className="form-input mt-4 min-w-2xs sm:min-w-xs"
-        placeholder="Ngày sinh"
-        type="date"
+      <DatePicker
+        className="block w-full py-0 px-3 min-h-10 rounded border border-gray-400 hover:border-primary focus:border-primary-dark mt-4 min-w-2xs sm:min-w-xs"
         name="date"
+        placeholder="Ngày sinh (dd/mm/yyyy)"
         value={aritoRegisInput.birthday}
-        onChange={(e) => setAritoRegisInput({ ...aritoRegisInput, birthday: e.target.value })}
+        onChange={(e) => setAritoRegisInput({ ...aritoRegisInput, birthday: e })}
       />
-      <input
-        className="form-input mt-4 min-w-2xs sm:min-w-xs"
-        placeholder="Mật khẩu"
-        type="password"
-        name="password"
-        value={aritoRegisInput.password}
-        onChange={(e) => setAritoRegisInput({ ...aritoRegisInput, password: e.target.value })}
-      />
-      <input
-        className="form-input mt-4 min-w-2xs sm:min-w-xs"
-        placeholder="Nhập lại mật khẩu"
-        type="password"
-        name="password"
-        value={repass}
-        onChange={(e) => setRepass(e.target.value)}
-      />
+      <div className="w-full relative overflow-hidden">
+        <input
+          className="form-input mt-4 min-w-2xs sm:min-w-xs"
+          placeholder="Mật khẩu"
+          type={showPass ? "text" : "password"}
+          name="password"
+          value={aritoRegisInput.password}
+          onChange={(e) => setAritoRegisInput({ ...aritoRegisInput, password: e.target.value })}
+        />
+        <Button
+          className="absolute flex flex-col pb-1 -right-2 top-5"
+          onClick={() => setShowPass(!showPass)}
+          icon={<HiOutlineEye />}
+        />
+      </div>
+      <div className="w-full relative overflow-hidden">
+        <input
+          className="form-input mt-4 min-w-2xs sm:min-w-xs"
+          placeholder="Nhập lại mật khẩu"
+          type={showRePass ? "text" : "password"}
+          name="password"
+          value={repass}
+          onChange={(e) => setRepass(e.target.value)}
+        />
+        <Button
+          className="absolute flex flex-col pb-1 -right-2 top-5"
+          onClick={() => setShowRePass(!showRePass)}
+          icon={<HiOutlineEye />}
+        />
+      </div>
       <div className="flex flex-wrap gap-2 mt-3 justify-between">
         <p>Hình thức kinh doanh</p>
         <RadioButton
