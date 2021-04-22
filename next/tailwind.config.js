@@ -10,7 +10,16 @@ function getSemanticColors(color) {
 
 module.exports = {
   darkMode: false, // or 'media' or 'class'
-  purge: ['./next/**/*.tsx', './**/*.tsx'],
+  purge: 
+    {
+      content: ['./next//*.tsx', './/*.tsx'],
+      options: {
+        safelist: {
+          standard: [/^col-span-/, /^text-/, /^bg-/],
+          greedy: [/^react-select/, /^react-datepicker/]
+        }
+      }
+    },
   theme: {
     screens: {
       'xs': '480px',
