@@ -58,15 +58,15 @@ const AddressFormDialog = (props: PropsType) => {
         return false;
       }
       if (!provinceId) {
-        toast.warn("Bạn chưa chon tỉnh/thành phố");
+        toast.warn("Bạn chưa chọn tỉnh/thành phố");
         return false;
       }
       if (!districtId) {
-        toast.warn("Bạn chưa chon quận/huyện");
+        toast.warn("Bạn chưa chọn quận/huyện");
         return false;
       }
       if (!wardId) {
-        toast.warn("Bạn chưa chon phường/xã");
+        toast.warn("Bạn chưa chọn phường/xã");
         return false;
       }
       if (!address) {
