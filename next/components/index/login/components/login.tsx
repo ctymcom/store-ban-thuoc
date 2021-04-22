@@ -5,7 +5,7 @@ import { useToast } from "../../../../lib/providers/toast-provider";
 import { Button } from "../../../shared/utilities/form/button";
 import useDevice from "./../../../../lib/hooks/useDevice";
 import { Form } from "./../../../shared/utilities/form/form";
-import { HiOutlineEye } from "react-icons/hi";
+import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
 interface PropsType extends ReactProps {
   setMode: Function;
@@ -64,11 +64,19 @@ export function Login(props: PropsType) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button
-          className="absolute flex flex-col pb-1 -right-2 top-5"
-          onClick={() => setShowPass(!showPass)}
-          icon={<HiOutlineEye />}
-        />
+        {showPass ? (
+          <Button
+            className="absolute flex flex-col pb-1 -right-2 top-5"
+            onClick={() => setShowPass(!showPass)}
+            icon={<HiOutlineEyeOff />}
+          />
+        ) : (
+          <Button
+            className="absolute flex flex-col pb-1 -right-2 top-5"
+            onClick={() => setShowPass(!showPass)}
+            icon={<HiOutlineEye />}
+          />
+        )}
       </div>
       <div className="w-full flex flex-col items-center mt-4">
         <Button primary large submit className="w-full mt-4" text="Đăng nhập" isLoading={loading} />

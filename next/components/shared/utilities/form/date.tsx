@@ -290,10 +290,10 @@ export function DatePicker({
   return (
     <ReactDatePicker
       ref={ref}
-      className={`form-control pr-9 ${props.error ? "error" : ""} ${className}`}
+      className={`form-input pr-9 ${props.error ? "error" : ""} ${className}`}
       selected={props.selectsRange ? null : value}
       dateFormat={pickerFormat}
-      isClearable={!props.readonly && clearable}
+      // isClearable={!props.readonly && clearable}
       {...(minDate ? { minDate } : {})}
       {...(maxDate ? { maxDate } : {})}
       includeDates={props.includeDates}
