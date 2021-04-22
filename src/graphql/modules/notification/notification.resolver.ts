@@ -7,7 +7,7 @@ import { notificationService } from "./notification.service";
 const Query = {
   getAllNotification: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
-    set(args, "q.filter.userId", context.user.id.toString());
+    set(args, "q.filter.userId", context.user.id);
     return notificationService.fetch(args.q);
   },
   getOneNotification: async (root: any, args: any, context: Context) => {

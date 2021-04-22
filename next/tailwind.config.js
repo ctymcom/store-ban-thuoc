@@ -12,7 +12,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   purge: 
     {
-      content: ['./next//*.tsx', './/*.tsx'],
+      content: ['./next/**/*.tsx', './**/*.tsx'],
       options: {
         safelist: {
           standard: [/^col-span-/, /^text-/, /^bg-/],

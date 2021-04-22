@@ -4,8 +4,8 @@ import { BaseDocument, ModelLoader, ModelHook } from "../../../base/baseModel";
 const Schema = mongoose.Schema;
 
 export type INotification = BaseDocument & {
-  userId?: string; // Mã người dùng
-  code?: string; // Mã thông báo
+  userId?: number; // Mã người dùng
+  code?: number; // Mã thông báo
   title?: string; // Tiêu đề
   content?: string; // Nội dung thông báo
   link?: string; // Đường dẫn liên kết
@@ -13,8 +13,8 @@ export type INotification = BaseDocument & {
 
 const notificationSchema = new Schema(
   {
-    userId: { type: String, required: true },
-    code: { type: String, required: true },
+    userId: { type: Number, required: true },
+    code: { type: Number, required: true },
     title: { type: String, required: true },
     content: { type: String, required: true },
     link: { type: String },
