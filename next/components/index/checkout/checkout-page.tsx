@@ -170,6 +170,7 @@ export function CheckOutPage() {
         subtotal,
         discountPoint,
         discountPayment,
+        discountPointValue,
       } = res.data.generateDraftOrder;
       console.log(res.data.generateDraftOrder);
 
@@ -184,7 +185,7 @@ export function CheckOutPage() {
         listNew.push({ title: `Khuyến mãi ${data.promotionCode}`, money: -discount });
       if (discountPayment > 0)
         listNew.push({ title: `Ưu đãi thanh toán`, money: -discountPayment });
-      if (discountPoint > 0) listNew.push({ title: `Đổi điểm`, money: -discountPoint });
+      if (discountPoint > 0) listNew.push({ title: `Đổi điểm`, money: -discountPointValue });
       // listNew[2].money = discountPayment;
       // listNew[3].money = discountPoint;
       setCartAmount(amount);

@@ -25,6 +25,7 @@ export class SyncOrderJob {
         .then((res) => {
           return res ? res.updatedAt : null;
         });
+      // const updatedAt = null;
       let data = await AritoHelper.getAllOrder(1, updatedAt);
       const bulk = OrderModel.collection.initializeUnorderedBulkOp();
       do {

@@ -81,23 +81,25 @@ export function HeaderUser({ ...props }: PropsType) {
                       className="max-h-72 h-scrollbar z-50	absolute left-0 lg:right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                     >
                       {listNotification?.length > 0 && listNotification[0] !== undefined ? (
-                        listNotification.slice(0, visible)?.map((notification, index) => (
-                          <div
-                            className="w-full pl-5 pr-2.5 py-3 hover:bg-primary-light cursor-pointer"
-                            onClick={() => router.push(`${notification.link}`)}
-                            key={index}
-                          >
-                            <p className="text-gray-700 text-14 leading-4">
-                              {notification?.content}
-                            </p>
-                            <p className="text-gray-400 text-10">
-                              {formatDistanceToNow(parseISO(notification.createdAt), {
-                                addSuffix: true,
-                                locale: viLocale,
-                              })}
-                            </p>
-                          </div>
-                        ))
+                        listNotification.slice(0, visible)?.map((notification, index) => {
+                          return (
+                            <div
+                              className="w-full pl-5 pr-2.5 py-3 hover:bg-primary-light cursor-pointer"
+                              onClick={() => router.push(`${notification.link}`)}
+                              key={index}
+                            >
+                              <p className="text-gray-700 text-14 leading-4">
+                                {notification?.content}
+                              </p>
+                              <p className="text-gray-400 text-10">
+                                {formatDistanceToNow(new Date(notification?.createdAt), {
+                                  addSuffix: true,
+                                  locale: viLocale,
+                                })}
+                              </p>
+                            </div>
+                          );
+                        })
                       ) : (
                         <div className="">
                           <NotFound

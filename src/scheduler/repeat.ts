@@ -50,7 +50,8 @@ export function InitRepeatJobs() {
   SyncOrderJob.create({})
     .repeatEvery("5 minute", { skipImmediate: true })
     .unique({ name: SyncOrderJob.jobName })
-    .save();
+    .save()
+    .then((j) => j.run());
   SyncUserPointLogJob.create({})
     .repeatEvery("5 minute", { skipImmediate: true })
     .unique({ name: SyncUserPointLogJob.jobName })
