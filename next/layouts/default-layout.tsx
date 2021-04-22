@@ -36,7 +36,7 @@ export function DefaultLayout({ title = "Kho Thuốc Sỉ", ...props }: PropsTyp
             <DefaultLayoutContext.Consumer>
               {({ pageId }) => (
                 <>
-                  {pageId && (
+                  {pageId && typeof window !== "undefined" && (
                     <MessengerCustomerChat
                       pageId={pageId}
                       appID=""

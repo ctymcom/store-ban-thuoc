@@ -7,7 +7,7 @@ import { Button } from "../../../shared/utilities/form/button";
 import useDevice from "./../../../../lib/hooks/useDevice";
 import { Form } from "./../../../shared/utilities/form/form";
 import { DatePicker } from "../../../shared/utilities/form/date";
-import { HiOutlineEye } from "react-icons/hi";
+import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
 interface PropsType extends ReactProps {
   setMode: Function;
@@ -102,7 +102,7 @@ export function Register(props: PropsType) {
         onChange={(e) => setEmail(e.target.value)}
       />
       <input
-        className="form-input mt-4 min-w-2xs sm:min-w-xs"
+        className="form-input mt-4"
         placeholder="Số điện thoại"
         type="phone"
         name="phone"
@@ -110,7 +110,7 @@ export function Register(props: PropsType) {
         onChange={(e) => setPhone(e.target.value)}
       />
       <DatePicker
-        className="block w-full py-0 px-3 min-h-10 rounded border border-gray-400 hover:border-primary focus:border-primary-dark mt-4 min-w-2xs sm:min-w-xs"
+        className="mt-4 min-w-2xs sm:min-w-xs"
         name="date"
         placeholder="Ngày sinh (dd/mm/yyyy)"
         value={aritoRegisInput.birthday}
@@ -125,11 +125,19 @@ export function Register(props: PropsType) {
           value={aritoRegisInput.password}
           onChange={(e) => setAritoRegisInput({ ...aritoRegisInput, password: e.target.value })}
         />
-        <Button
-          className="absolute flex flex-col pb-1 -right-2 top-5"
-          onClick={() => setShowPass(!showPass)}
-          icon={<HiOutlineEye />}
-        />
+        {showPass ? (
+          <Button
+            className="absolute flex flex-col pb-1 -right-2 top-5"
+            onClick={() => setShowPass(!showPass)}
+            icon={<HiOutlineEyeOff />}
+          />
+        ) : (
+          <Button
+            className="absolute flex flex-col pb-1 -right-2 top-5"
+            onClick={() => setShowPass(!showPass)}
+            icon={<HiOutlineEye />}
+          />
+        )}
       </div>
       <div className="w-full relative overflow-hidden">
         <input
@@ -140,11 +148,19 @@ export function Register(props: PropsType) {
           value={repass}
           onChange={(e) => setRepass(e.target.value)}
         />
-        <Button
-          className="absolute flex flex-col pb-1 -right-2 top-5"
-          onClick={() => setShowRePass(!showRePass)}
-          icon={<HiOutlineEye />}
-        />
+        {showPass ? (
+          <Button
+            className="absolute flex flex-col pb-1 -right-2 top-5"
+            onClick={() => setShowPass(!showPass)}
+            icon={<HiOutlineEyeOff />}
+          />
+        ) : (
+          <Button
+            className="absolute flex flex-col pb-1 -right-2 top-5"
+            onClick={() => setShowPass(!showPass)}
+            icon={<HiOutlineEye />}
+          />
+        )}
       </div>
       <div className="flex flex-wrap gap-2 mt-3 justify-between">
         <p>Hình thức kinh doanh</p>
