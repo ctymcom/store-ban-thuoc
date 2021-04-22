@@ -815,6 +815,9 @@ export class AritoHelper {
             itemCount: d["t_so_luong"],
             subtotal: subtotal,
             discount: d["t_ck_nt"],
+            discountPayment: d["tien_ck_tt"],
+            discountPoint: d["diem_user"],
+            discountPointValue: d["tien_d_diem"],
             amount: d["t_tt_nt"],
             note: d["datetime0"],
             createdAt: d["datetime0"],
@@ -1075,6 +1078,7 @@ export class AritoHelper {
         discount: get(res.data, "data.master.0.t_ck_nt", 0),
         discountPayment: get(res.data, "data.master.0.tien_ck_tt", 0),
         discountPoint: get(res.data, "data.master.0.diem_user", 0) || 0,
+        discountPointValue: get(res.data, "data.master.0.tien_d_diem", 0),
         amount: get(res.data, "data.master.0.t_tt_nt", 0),
         items: get(res.data, "data.detail", []).map((t) => ({
           productCode: t["ma_vt"],
@@ -1157,6 +1161,7 @@ export class AritoHelper {
         discount: get(res.data, "data.master.0.t_ck_nt", 0),
         discountPayment: get(res.data, "data.master.0.tien_ck_tt", 0),
         discountPoint: get(res.data, "data.master.0.diem_user", 0),
+        discountPointValue: get(res.data, "data.master.0.tien_d_diem", 0),
         amount: get(res.data, "data.master.0.t_tt_nt", 0),
         promotionCode: get(res.data, "data.master.0.ma_ck"),
         items: get(res.data, "data.detail", []).map((t) => ({

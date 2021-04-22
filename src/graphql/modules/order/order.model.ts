@@ -22,6 +22,7 @@ export type IOrder = BaseDocument & {
   discount?: number; // Tiền giảm giá chương trình
   discountPayment?: number; // Tiền giảm giá thanh toán
   discountPoint?: number; // Tiền giảm giá từ điểm
+  discountPointValue?: number; // Giá trị điểm giảm giá quy đổi
   amount?: number; // Thành tiền
   promotionCode?: string; // Mã khuyến mãi
   paymentMethod?: string; // Phương thức thanh toán
@@ -50,6 +51,7 @@ const orderSchema = new Schema(
     discount: { type: Number, min: 0, default: 0 },
     discountPayment: { type: Number, min: 0, default: 0 },
     discountPoint: { type: Number, min: 0, default: 0 },
+    discountPointValue: { type: Number, min: 0, default: 0 },
     amount: { type: Number, min: 0, default: 0 },
     promotionCode: { type: String },
     paymentMethod: { type: String },

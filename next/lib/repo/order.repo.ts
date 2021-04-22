@@ -13,6 +13,9 @@ export interface OrderItem extends BaseModel {
   factor: number;
   discountRate: number;
   discount: number;
+  discountPayment?: number; // Tiền giảm giá thanh toán
+  discountPoint?: number; // Tiền giảm giá từ điểm
+  discountPointValue?: number; // Giá trị điểm giảm giá quy đổi
   vatRate: number;
   vat: number;
   position: string;
@@ -119,6 +122,9 @@ export class OrderRepository extends CrudRepository<Order> {
     }: [OrderItem]
     subtotal: Float
     discount: Float
+    discountPayment: Float
+    discountPoint: Float 
+    discountPointValue: Float
     amount: Float
     promotionCode: String
     paymentMethod: String

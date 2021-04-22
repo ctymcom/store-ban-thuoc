@@ -9,7 +9,7 @@ const schema = gql`
 
   extend type Mutation {
     createOrder(data: CreateOrderInput!): Order
-    
+
     # Add Mutation
   }
 
@@ -62,6 +62,8 @@ const schema = gql`
     discountPayment: Float
     "Tiền giảm giá từ điểm"
     discountPoint: Float
+    "Giá trị điểm giảm giá quy đổi"
+    discountPointValue: Float
     "Thành tiền"
     amount: Float
     "Mã khuyến mãi"

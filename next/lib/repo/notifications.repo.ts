@@ -20,6 +20,7 @@ export class NotificationRepository extends CrudRepository<Notification> {
     title: String
     content: String
     link: String
+    createdAt: DateTime
   `);
   fullFragment = this.parseFragment(`
     id: String

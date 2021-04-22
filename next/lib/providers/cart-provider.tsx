@@ -122,6 +122,7 @@ export function CartProvider({ children }: any) {
   useEffect(() => {
     if (user) {
       try {
+        setLoading(true);
         getUserCart().then((res) => {
           let listCart: CartProduct[] = res.map((item: CartProduct) => {
             return {
@@ -146,8 +147,6 @@ export function CartProvider({ children }: any) {
                 listCart.forEach((cartProduct) => {
                   let product = res.data.find((x) => x.id === cartProduct.productId);
                   if (product) {
-                    console.log(product);
-
                     cartProduct.price = product.salePrice;
                     cartProduct.amount = product.salePrice * cartProduct.qty;
                     cartProduct.product = product;
@@ -172,9 +171,9 @@ export function CartProvider({ children }: any) {
             setLoading(false);
           }
         });
-        setLoading(true);
       } catch (error) {
         setPromotion("");
+      } finally {
         setLoading(false);
       }
     } else {
