@@ -13,6 +13,7 @@ import { ProductModel } from "../../graphql/modules/product/product.model";
 import { ProductTagDetail } from "../../graphql/modules/product/types/productTagDetail.type";
 import { ProductCommentModel } from "../../graphql/modules/productComment/productComment.model";
 import { ProductContainerModel } from "../../graphql/modules/productContainer/productContainer.model";
+import { ProductCountryModel } from "../../graphql/modules/productCountry/productCountry.model";
 import { ProductTabModel } from "../../graphql/modules/productTab/productTab.model";
 import { ProductTagModel } from "../../graphql/modules/productTag/productTag.model";
 import { AritoHelper } from "../../helpers/arito/arito.helper";
@@ -164,6 +165,34 @@ async function syncProductTabs() {
     await productTabBulk.execute();
   }
 }
+async function syncProductCountry() {
+  const updatedAt = await ProductCountryModel.findOne()
+    .sort({ updatedAt: -1 })
+    .exec()
+    .then((res) => {
+      return res ? res.updatedAt : null;
+    });
+  let res = await AritoHelper.getAllProductCountry(1, updatedAt);
+  const bulk = ProductCountryModel.collection.initializeUnorderedBulkOp();
+  do {
+    console.log(chalk.yellow("====> Đồng bộ trang ", res.paging.page));
+    res.data.forEach((d) => {
+      bulk
+        .find({ code: d.code })
+        .upsert()
+        .updateOne({
+          $setOnInsert: { createdAt: new Date() },
+          $set: { ...d, updatedAt: new Date() },
+        });
+    });
+    if (res.paging.page == res.paging.pageCount) break;
+    res = await AritoHelper.getAllProductCountry(res.paging.page + 1, updatedAt);
+  } while (res.paging.page <= res.paging.pageCount);
+  if (bulk.length > 0) {
+    console.log(chalk.yellow(`====> Đồng bộ ${bulk.length} nhà sản xuất...`));
+    await bulk.execute();
+  }
+}
 async function syncProduct(fullSync = false) {
   if (fullSync) {
     console.log(chalk.cyan("====> Động bộ Full sản phẩm"));
@@ -172,8 +201,12 @@ async function syncProduct(fullSync = false) {
   await syncProductTabs();
   console.log(chalk.yellow("====> Đồng bộ Product Tag"));
   await syncProductTag();
-  const productTabs = await ProductTabModel.find().sort({ code: 1 });
-  const productTags = await ProductTagModel.find().then((res) => keyBy(res, "code"));
+  console.log(chalk.yellow("====> Đồng bộ Product Country"));
+  await syncProductCountry();
+  const [productTabs, productTags] = await Promise.all([
+    ProductTabModel.find().sort({ code: 1 }),
+    ProductTagModel.find().then((res) => keyBy(res, "code")),
+  ]);
   let productUpdatedAt = null;
   if (!fullSync) {
     productUpdatedAt = await ProductModel.findOne()
@@ -186,12 +219,17 @@ async function syncProduct(fullSync = false) {
   do {
     const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
     console.log(chalk.yellow("====> Đồng bộ trang ", getProductResult.paging.page));
-    const categoryData = await CategoryModel.find({
-      code: { $in: uniq(flatten(getProductResult.data.map((d) => d.categoryIds))) },
-    }).then((res) => keyBy(res, "code"));
-    const ingredientData = await IngredientModel.find({
-      code: { $in: uniq(flatten(getProductResult.data.map((d) => d.ingredientIds))) },
-    }).then((res) => keyBy(res, "code"));
+    const [categoryData, ingredientData, productCountryData] = await Promise.all([
+      CategoryModel.find({
+        code: { $in: uniq(flatten(getProductResult.data.map((d) => d.categoryIds))) },
+      }).then((res) => keyBy(res, "code")),
+      IngredientModel.find({
+        code: { $in: uniq(flatten(getProductResult.data.map((d) => d.ingredientIds))) },
+      }).then((res) => keyBy(res, "code")),
+      ProductCountryModel.find({
+        code: { $in: getProductResult.data.map((d) => d.origin) },
+      }).then((res) => keyBy(res, "code")),
+    ]);
     getProductResult.data.forEach(({ __data, ...d }: any) => {
       const rawData = __data;
       const tabs = productTabs
@@ -233,6 +271,7 @@ async function syncProduct(fullSync = false) {
               d.ingredientIds.map((code: string) => get(ingredientData, `${code}._id`, null))
             ),
             syncAt: new Date(),
+            origin: productCountryData[d.origin] ? productCountryData[d.origin].name : d.origin,
           },
         });
     });
