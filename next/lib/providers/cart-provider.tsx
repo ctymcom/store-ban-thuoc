@@ -120,10 +120,10 @@ export function CartProvider({ children }: any) {
     }
   };
   useEffect(() => {
-    if (user) {
-      try {
-        setLoading(true);
-        getUserCart().then((res) => {
+    try {
+      setLoading(true);
+      getUserCart()
+        .then((res) => {
           let listCart: CartProduct[] = res.map((item: CartProduct) => {
             return {
               productId: item.productId,
@@ -170,67 +170,16 @@ export function CartProvider({ children }: any) {
           } else {
             setLoading(false);
           }
-        });
-      } catch (error) {
-        setPromotion("");
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      let cartProductStorage = JSON.parse(
-        localStorage.getItem("cartProductStorage")
-      ) as CartProduct[];
-      if (cartProductStorage) {
-        ProductService.getAll({
-          query: {
-            limit: 0,
-            filter: {
-              _id: { __in: cartProductStorage.map((x) => x.productId) },
-            },
-          },
-        }).then((res) => {
-          console.log(res.data);
-
-          if (res.data) {
-            cartProductStorage.forEach((cartProduct) => {
-              let product = res.data.find((x) => x.id == cartProduct.productId);
-              if (product) {
-                cartProduct.price = product.salePrice;
-                cartProduct.amount = product.salePrice * cartProduct.qty;
-                cartProduct.product = product;
-              }
-            });
-            cartProductStorage = cartProductStorage.filter((x) => x.product);
-            setLoading(false);
-            setCartProductCount(
-              cartProductStorage.reduce((count, cartProduct) => (count += cartProduct.qty), 0)
-            );
-            setCartTotal(
-              cartProductStorage.reduce(
-                (total, cartProduct) =>
-                  cartProduct.active ? (total += cartProduct.amount) : total,
-                0
-              )
-            );
-            setCartProducts([...cartProductStorage]);
-          }
-        });
-        console.log(cartProductStorage);
-      } else {
-        console.log(cartProductStorage);
-        setLoading(false);
-      }
+        })
+        .catch((error) => console.log(error));
+    } catch (error) {
+      setPromotion("");
+    } finally {
+      setLoading(false);
     }
   }, []);
   useEffect(() => {
-    localStorage.setItem(
-      "cartProductStorage",
-      JSON.stringify(
-        cartProducts.map((item) => {
-          return { productId: item.productId, qty: item.qty, active: item.active };
-        })
-      )
-    );
+    updateCart(cartProducts);
     setCartProductCount(cartProducts.reduce((count, cartProduct) => (count += cartProduct.qty), 0));
     setCartTotal(
       cartProducts.reduce(
@@ -238,7 +187,6 @@ export function CartProvider({ children }: any) {
         0
       )
     );
-    updateCart(cartProducts);
     setCartProductTotal(cartProducts.length);
   }, [cartProducts]);
   const reOrder = (items: { productId: string; qty: number }[]) => {

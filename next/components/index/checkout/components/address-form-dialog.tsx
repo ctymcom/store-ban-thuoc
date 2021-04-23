@@ -65,10 +65,6 @@ const AddressFormDialog = (props: PropsType) => {
         toast.warn("Bạn chưa chọn quận/huyện");
         return false;
       }
-      if (!wardId) {
-        toast.warn("Bạn chưa chọn phường/xã");
-        return false;
-      }
       if (!address) {
         toast.warn("Địa chỉ không được để trống");
         return false;
