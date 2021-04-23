@@ -122,6 +122,36 @@ export class AritoHelper {
       };
     });
   }
+  static getAllProductCountry(page: number = 1, updatedAt?: Date) {
+    return Axios.post(`${this.host}/Item/GetProducingCountry`, {
+      token: this.imageToken,
+      memvars: [
+        [
+          "datetime2",
+          "DT",
+          updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : "2020-01-01 16:53:00",
+        ],
+        ["pageIndex", "I", page],
+      ],
+    }).then((res) => {
+      this.handleError(res);
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
+      return {
+        data: get(res.data, "data.data", []).map((d: any) => ({
+          code: d["ma_qg"],
+          name: d["ten_qg"],
+          name2: d["ten_qg2"],
+        })) as { code: string; name: string }[],
+        paging: {
+          limit: pageInfo["pagecount"] || 0,
+          page: pageInfo["page"] || 1,
+          total: pageInfo["t_record"] || 0,
+          pageCount: pageInfo["t_page"] || 0,
+          group: pageInfo["group"],
+        },
+      };
+    });
+  }
   static getAllProduct(page: number = 1, updatedAt?: Date) {
     return Axios.post(`${this.host}/Item/GetList`, {
       token: this.imageToken,
