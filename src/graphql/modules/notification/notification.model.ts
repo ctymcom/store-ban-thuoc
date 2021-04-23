@@ -9,6 +9,7 @@ export type INotification = BaseDocument & {
   title?: string; // Tiêu đề
   content?: string; // Nội dung thông báo
   link?: string; // Đường dẫn liên kết
+  controller?: string; // Loại hành động
 };
 
 const notificationSchema = new Schema(
@@ -18,6 +19,7 @@ const notificationSchema = new Schema(
     title: { type: String, required: true },
     content: { type: String, required: true },
     link: { type: String },
+    controller: { type: String },
   },
   { timestamps: true }
 );

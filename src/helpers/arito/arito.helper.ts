@@ -682,7 +682,11 @@ export class AritoHelper {
     return Axios.post(`${this.host}/Notification/GetMessageUsers`, {
       token: this.imageToken,
       memvars: [
-        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        [
+          "datetime2",
+          "DT",
+          updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : "2021-04-19 16:53:00",
+        ],
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
@@ -695,6 +699,7 @@ export class AritoHelper {
           title: d["title"],
           content: d["content"],
           link: d["link"],
+          controller: d["controller"],
         })) as INotification[],
         paging: {
           limit: pageInfo["pagecount"] || 0,
