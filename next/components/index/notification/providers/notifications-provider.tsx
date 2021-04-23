@@ -81,3 +81,8 @@ export function NotificationProvider({ children }: any) {
 }
 
 export const useNotificationContext = () => useContext(NotificationContext);
+
+export const NOTIFY_TYPES = [
+  { value: "general", label: "Thông báo chung" },
+  { value: "personal", label: "Thông báo cá nhân" },
+];
