@@ -62,7 +62,7 @@ export function ProductsProvider(props) {
   let customQuery: any = {};
   if (q) {
     try {
-      customQuery = JSON.parse(new Buffer(q, "base64").toString());
+      customQuery = JSON.parse(new Buffer(q, "base64").toString().replace(/\$/g, "__"));
     } catch (err) {}
   }
   const initData = async () => {
