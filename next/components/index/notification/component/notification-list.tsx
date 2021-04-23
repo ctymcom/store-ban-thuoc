@@ -5,6 +5,7 @@ import { NotFound } from "../../../shared/utilities/not-found";
 import parseISO from "date-fns/parseISO";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import viLocale from "date-fns/locale/vi";
+import Link from "next/link";
 
 interface PropsType extends ReactProps {
   listNotification: Notification[];
@@ -19,23 +20,22 @@ export function NotificationList({ listNotification }: PropsType) {
         <>
           {listNotification.length > 0 ? (
             listNotification.map((notification, index) => (
-              <li className="w-full py-4 px-5 md:px-3 border-b-2 border-gray-300" key={index}>
-                <p className="text-gray-400">
-                  {formatDistanceToNow(parseISO(notification.createdAt), {
-                    addSuffix: true,
-                    locale: viLocale,
-                  })}
-                </p>
-                <div className="h-auto mt-2 text-sm md:text-base">
-                  <div className="w-full">
-                    <p className="text-gray-800 leading-6 lg:leading-7">
-                      Đơn hàng
-                      <span className="font-bold mx-2">{notification.code}.</span>
-                      {notification.content}
-                    </p>
+              <Link key={index} href={notification.link || "/"}>
+                <a className="block w-full p-3 border-b border-gray-200 group">
+                  <div className="text-sm text-gray-400 group-hover:text-gray-600">
+                    {formatDistanceToNow(parseISO(notification.createdAt), {
+                      addSuffix: true,
+                      locale: viLocale,
+                    })}
                   </div>
-                </div>
-              </li>
+                  <div className="text-gray-700 font-semibold group-hover:text-primary">
+                    {notification.title}
+                  </div>
+                  <p className="text-sm text-gray-500 group-hover:text-gray-700">
+                    {notification.content}
+                  </p>
+                </a>
+              </Link>
             ))
           ) : (
             <>
