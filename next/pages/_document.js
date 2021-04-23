@@ -16,6 +16,7 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
           <div id="dialog-root"></div>
+          <div id="popover-root"></div>
           {isProduction && (
             <>
               <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8HTX7NFE1"></script>
