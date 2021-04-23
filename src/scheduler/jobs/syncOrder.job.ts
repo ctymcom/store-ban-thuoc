@@ -59,6 +59,7 @@ export class SyncOrderJob {
           bulk.find({ code: d.code }).upsert().updateOne({ $set: setData });
         }
         if (data.paging.page == data.paging.pageCount) break;
+
         data = await AritoHelper.getAllOrder(data.paging.page + 1, updatedAt);
       } while (data.paging.page <= data.paging.pageCount);
       if (bulk.length > 0) {

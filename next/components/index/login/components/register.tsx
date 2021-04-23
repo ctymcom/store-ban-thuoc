@@ -148,16 +148,16 @@ export function Register(props: PropsType) {
           value={repass}
           onChange={(e) => setRepass(e.target.value)}
         />
-        {showPass ? (
+        {showRePass ? (
           <Button
             className="absolute flex flex-col pb-1 -right-2 top-5"
-            onClick={() => setShowPass(!showPass)}
+            onClick={() => setShowRePass(!showRePass)}
             icon={<HiOutlineEyeOff />}
           />
         ) : (
           <Button
             className="absolute flex flex-col pb-1 -right-2 top-5"
-            onClick={() => setShowPass(!showPass)}
+            onClick={() => setShowRePass(!showRePass)}
             icon={<HiOutlineEye />}
           />
         )}
