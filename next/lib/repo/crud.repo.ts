@@ -9,7 +9,7 @@ export interface Pagination {
   total?: number;
 }
 
-export class QueryInput<T> {
+export class QueryInput {
   limit?: number;
   page?: number;
   offset?: number;
@@ -40,18 +40,20 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     {
       query = { limit: 10 },
       fragment = this.shortFragment,
+      apiName,
     }: {
-      query: QueryInput<T> | string;
+      query: QueryInput | string;
       fragment?: string;
+      apiName?: string;
     } = {
       query: { limit: 10 },
     }
   ): string {
-    if ((query as QueryInput<T>).limit == 0) {
-      (query as QueryInput<T>).limit = 1000;
+    if ((query as QueryInput).limit == 0) {
+      (query as QueryInput).limit = 1000;
     }
 
-    const api = `getAll${this.apiName}`;
+    const api = apiName || `getAll${this.apiName}`;
     return `${api}(q: ${queryParser(query, {
       hasBraces: true,
     })}) { data { ${fragment} } total pagination { limit page total } }`;
@@ -61,19 +63,21 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     query = { limit: 10 },
     fragment = this.shortFragment,
     cache = true,
+    apiName,
   }: {
     fragment?: string;
-    query?: QueryInput<T>;
+    query?: QueryInput;
     cache?: boolean;
+    apiName?: string;
   } = {}): Promise<GetListData<T>> {
-    if ((query as QueryInput<T>).limit == 0) {
-      (query as QueryInput<T>).limit = 1000;
+    if ((query as QueryInput).limit == 0) {
+      (query as QueryInput).limit = 1000;
     }
 
     const options = {
       query: this.gql`${this.generateGQL(
         "query",
-        `${this.getAllQuery({ query: "$q", fragment })}`,
+        `${this.getAllQuery({ query: "$q", fragment, apiName })}`,
         `($q: QueryGetListInput!)`
       )}`,
       variables: { q: query },
@@ -89,8 +93,16 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     };
   }
 
-  getOneQuery({ id, fragment = this.fullFragment }: { id: string; fragment?: string }): string {
-    const api = `getOne${this.apiName}`;
+  getOneQuery({
+    id,
+    fragment = this.fullFragment,
+    apiName,
+  }: {
+    id: string;
+    fragment?: string;
+    apiName?: string;
+  }): string {
+    const api = apiName || `getOne${this.apiName}`;
     return `${api}(id: "${id}") { ${fragment} }`;
   }
 
@@ -98,13 +110,18 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     id,
     fragment = this.fullFragment,
     cache = true,
+    apiName,
   }: {
     id: string;
     fragment?: string;
     cache?: boolean;
+    apiName?: string;
   }) {
     const options = {
-      query: this.gql`${this.generateGQL("query", `${this.getOneQuery({ id, fragment })}`)}`,
+      query: this.gql`${this.generateGQL(
+        "query",
+        `${this.getOneQuery({ id, fragment, apiName })}`
+      )}`,
       fetchPolicy: cache ? "cache-first" : "network-only",
     } as QueryOptions;
     const result = await this.apollo.query(options);
@@ -116,19 +133,30 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
   createQuery({
     data,
     fragment = this.fullFragment,
+    apiName,
   }: {
     data: Partial<T> | string;
     fragment?: string;
+
+    apiName?: string;
   }): string {
-    const api = `create${this.apiName}`;
+    const api = apiName || `create${this.apiName}`;
     return `${api}(data: ${queryParser(data, { hasBraces: true })}) { ${fragment} }`;
   }
 
-  async create({ data, fragment = this.fullFragment }: { data: Partial<T>; fragment?: string }) {
+  async create({
+    data,
+    fragment = this.fullFragment,
+    apiName,
+  }: {
+    data: Partial<T>;
+    fragment?: string;
+    apiName?: string;
+  }) {
     const options = {
       mutation: this.gql`${this.generateGQL(
         "mutation",
-        `${this.createQuery({ data: "$data", fragment })}`,
+        `${this.createQuery({ data: "$data", fragment, apiName })}`,
         `($data: Create${this.apiName}Input!)`
       )}`,
       fetchPolicy: "no-cache",
@@ -144,12 +172,14 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     id,
     data,
     fragment = this.fullFragment,
+    apiName,
   }: {
     id: string;
     data: Partial<T> | string;
     fragment?: string;
+    apiName?: string;
   }): string {
-    const api = `update${this.apiName}`;
+    const api = apiName || `update${this.apiName}`;
     return `${api}(id: "${id}", data: ${queryParser(data, { hasBraces: true })}) { ${fragment} }`;
   }
 
@@ -157,15 +187,17 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     id,
     data,
     fragment = this.fullFragment,
+    apiName,
   }: {
     id: string;
     data: Partial<T>;
     fragment?: string;
+    apiName?: string;
   }) {
     const options = {
       mutation: this.gql`${this.generateGQL(
         "mutation",
-        `${this.updateQuery({ id, data: "$data", fragment })}`,
+        `${this.updateQuery({ id, data: "$data", fragment, apiName })}`,
         `($data: Update${this.apiName}Input!)`
       )}`,
       variables: { data },
@@ -181,20 +213,32 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     id,
     data,
     fragment = this.shortFragment,
+    createApiName,
+    updateApiName,
   }: {
     id?: string;
     data: Partial<T>;
     fragment?: string;
+    createApiName?: string;
+    updateApiName?: string;
   }) {
     if (id) {
-      return this.update({ id, data, fragment });
+      return this.update({ id, data, fragment, apiName: createApiName });
     } else {
-      return this.create({ data, fragment });
+      return this.create({ data, fragment, apiName: updateApiName });
     }
   }
 
-  deleteQuery({ id, fragment = "id" }: { id: string; fragment?: string }): string {
-    const api = `deleteOne${this.apiName}`;
+  deleteQuery({
+    id,
+    fragment = "id",
+    apiName,
+  }: {
+    id: string;
+    fragment?: string;
+    apiName?: string;
+  }): string {
+    const api = apiName || `deleteOne${this.apiName}`;
     return `${api}(id: "${id}") { ${fragment} }`;
   }
 
@@ -202,16 +246,18 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
     id,
     ids,
     fragment = this.shortFragment,
+    apiName,
   }: {
     id?: string;
     ids?: string[];
     fragment?: string;
+    apiName?: string;
   }) {
     if (id) {
       const options = {
         mutation: this.gql`${this.generateGQL(
           "mutation",
-          `${this.deleteQuery({ id, fragment })}`
+          `${this.deleteQuery({ id, fragment, apiName })}`
         )}`,
         fetchPolicy: "no-cache",
       } as MutationOptions;
@@ -236,5 +282,52 @@ export abstract class CrudRepository<T extends BaseModel> extends GraphRepositor
       this.handleError(result);
       return result.data;
     } else return;
+  }
+
+  async getAllOptionsPromise(
+    {
+      fragment,
+      parseOption,
+      query,
+    }: { fragment?: string; parseOption?: (data: Partial<T>) => Option; query?: QueryInput } = {
+      fragment: this.fullFragment,
+      parseOption: (data) => ({ value: data.id, label: data.name, data } as Option),
+      query: {},
+    }
+  ) {
+    const defaultParseOptions = (data) => ({ value: data.id, label: data.name, data } as Option);
+    let res = await this.getAll({
+      query: { limit: 0, ...(query || {}) },
+      fragment: fragment || this.fullFragment,
+    });
+    return res.data.map((x) => (parseOption ? parseOption(x) : defaultParseOptions(x)));
+  }
+
+  async getAllAutocompletePromise(
+    data: { id?: string | string[]; search?: string },
+    options: {
+      fragment?: string;
+      parseOption?: (data: Partial<T>) => Option;
+      query?: QueryInput;
+    } = {}
+  ) {
+    const fragment = options.fragment || this.fullFragment;
+    const parseOption =
+      options.parseOption || ((data) => ({ value: data.id, label: data.name, data }));
+    const query = options.query || {};
+    if (data.id) {
+      let ids = typeof data.id == "string" ? [data.id] : data.id;
+      let res = await this.getAll({
+        query: { limit: ids.length, filter: { _id: { __in: ids } } },
+        fragment,
+      });
+      return res.data.map((x) => parseOption(x));
+    } else {
+      let res = await this.getAll({
+        query: { limit: 10, search: data.search || "", ...query },
+        fragment,
+      });
+      return res.data.map((x) => parseOption(x));
+    }
   }
 }

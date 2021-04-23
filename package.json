@@ -36,6 +36,8 @@
     "@brainhubeu/react-carousel": "^1.19.26",
     "@headlessui/react": "^0.2.0",
     "@next/bundle-analyzer": "^10.0.5",
+    "@popperjs/core": "^2.9.2",
+    "@tippyjs/react": "^4.2.5",
     "agenda": "^3.1.0",
     "ajv": "^6.12.3",
     "ajv-errors": "^1.0.1",

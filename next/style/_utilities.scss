@@ -323,6 +323,25 @@
     border-bottom-left-radius: 0;
   }
 }
+.border-group {
+  display: flex;
+  > :last-child {
+    border-top-right-radius: inherit !important;
+    border-bottom-right-radius: inherit !important;
+  }
+  > :first-child {
+    border-top-left-radius: inherit !important;
+    border-bottom-left-radius: inherit !important;
+  }
+  > *:not(:last-child) {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+  > *:not(:first-child) {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+}
 
 @mixin text-ellipsis($line: 1) {
   overflow: hidden;

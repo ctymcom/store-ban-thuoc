@@ -1,52 +1,80 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Notification, NotificationService } from "../../../../lib/repo/notifications.repo";
 import { useAuth } from "../../../../lib/providers/auth-provider";
-import { Pagination } from "../../../../lib/repo/crud.repo";
-import parseISO from "date-fns/parseISO";
-import format from "date-fns/format";
 
 export const NotificationContext = createContext<
   Partial<{
-    listNotification: Notification[];
-    setListNotification: Function;
-    pagination: Pagination;
-    setPagination: Function;
+    generalNotifications: Notification[];
+    personalNotifications: Notification[];
+    notificationCount: number;
+    generalTotal: number;
+    personalTotal: number;
+    loadNotifications: () => any;
   }>
 >({});
 
 export function NotificationProvider({ children }: any) {
-  const [listNotification, setListNotification] = useState<Notification[]>(null);
+  const [generalNotifications, setGeneralNotifications] = useState<Notification[]>([]);
+  const [personalNotifications, setPersonalNotifications] = useState<Notification[]>([]);
+  const [notificationCount, setNotificationCount] = useState(0);
+  const [generalTotal, setGeneralTotal] = useState(0);
+  const [personalTotal, setPersonalTotal] = useState(0);
   const { user } = useAuth();
-  const [pagination, setPagination] = useState<Pagination>({
-    limit: 4,
-    page: 1,
-    total: 0,
-  });
+  const limit = 10;
 
   useEffect(() => {
     if (user) {
-      loadListNotification();
+      loadNotifications();
     }
-  }, [user, pagination.page]);
+  }, [user]);
 
-  const loadListNotification = () => {
-    setListNotification(null);
-    NotificationService.getAll({
-      query: {
-        limit: pagination.limit,
-        page: pagination.page,
-        order: { createdAt: -1 },
-        filter: { userId: user.id },
-      },
-      fragment: NotificationService.shortFragment,
-    }).then((res) => {
-      setListNotification([...res.data]);
-      setPagination({ ...pagination, total: res.pagination.total });
-    });
+  useEffect(() => {
+    setNotificationCount(generalNotifications.length + personalNotifications.length);
+  }, [generalNotifications.length, personalNotifications.length]);
+
+  const loadNotifications = async () => {
+    let tasks: any[] = [];
+    tasks.push(
+      NotificationService.getAll({
+        apiName: "getAllNotification0",
+        query: {
+          limit,
+          offset: generalNotifications.length,
+          order: { createdAt: -1 },
+        },
+      }).then((res) => {
+        setGeneralNotifications([...generalNotifications, ...res.data]);
+        setGeneralTotal(res.total);
+      })
+    );
+
+    tasks.push(
+      NotificationService.getAll({
+        query: {
+          limit,
+          offset: personalNotifications.length,
+          order: { createdAt: -1 },
+          filter: { userId: user.id },
+        },
+      }).then((res) => {
+        setPersonalNotifications([...personalNotifications, ...res.data]);
+        setPersonalTotal(res.total);
+      })
+    );
+    await Promise.all(tasks);
   };
 
   return (
-    <NotificationContext.Provider value={{ listNotification, pagination, setPagination }}>
+    <NotificationContext.Provider
+      value={{
+        generalNotifications,
+        personalNotifications,
+        notificationCount,
+        generalTotal,
+        personalTotal,
+        loadNotifications,
+      }}
+    >
       {children}
     </NotificationContext.Provider>
   );

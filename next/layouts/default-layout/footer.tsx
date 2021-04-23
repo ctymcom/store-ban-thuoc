@@ -149,17 +149,25 @@ export function Footer() {
                     <p className="hover:underline hover:text-primary">
                       Gọi điện tư vấn - hỗ trợ: {hotline?.phone}
                     </p>
-                    <a
-                      href="//www.dmca.com/Protection/Status.aspx?ID=d162181b-b90d-4a99-ae89-958a2dda862d"
-                      title="DMCA.com Protection Status"
-                      className="dmca-badge"
-                    >
-                      <img
-                        className="mt-2"
-                        src="https://images.dmca.com/Badges/dmca_protected_sml_120l.png?ID=d162181b-b90d-4a99-ae89-958a2dda862d"
-                        alt="DMCA.com Protection Status"
-                      />
-                    </a>
+                    <div className="flex items-center">
+                      <a href="http://online.gov.vn/Home/WebDetails/78491" target="_blank">
+                        <img
+                          className="h-20 w-auto object-contain mt-2 pr-2"
+                          src="/assets/img/govLogo.png"
+                        />
+                      </a>
+                      <a
+                        href="//www.dmca.com/Protection/Status.aspx?ID=d162181b-b90d-4a99-ae89-958a2dda862d"
+                        title="DMCA.com Protection Status"
+                        className="dmca-badge"
+                      >
+                        <img
+                          className="mt-2 h-6"
+                          src="https://images.dmca.com/Badges/dmca_protected_sml_120l.png?ID=d162181b-b90d-4a99-ae89-958a2dda862d"
+                          alt="DMCA.com Protection Status"
+                        />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
