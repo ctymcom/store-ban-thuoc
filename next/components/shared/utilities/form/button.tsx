@@ -1,8 +1,12 @@
-import { FormEvent, MutableRefObject, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { CgSpinner } from "react-icons/cg";
+import { UrlObject } from "url";
+import Link from "next/link";
+import { Placement } from "tippy.js";
 
-interface PropsType extends ReactProps {
+export interface ButtonProps extends ReactProps {
   small?: boolean;
+  medium?: boolean;
   large?: boolean;
   outline?: boolean;
   gray?: boolean;
@@ -12,18 +16,35 @@ interface PropsType extends ReactProps {
   success?: boolean;
   danger?: boolean;
   warning?: boolean;
-  hoverDanger?: boolean;
   hoverDarken?: boolean;
+  hoverAccent?: boolean;
+  hoverInfo?: boolean;
+  hoverWarning?: boolean;
+  hoverSuccess?: boolean;
+  hoverDanger?: boolean;
+  textPrimary?: boolean;
+  textAccent?: boolean;
+  textInfo?: boolean;
+  textWarning?: boolean;
+  textSuccess?: boolean;
+  textDanger?: boolean;
   disabled?: boolean;
   submit?: boolean;
+  reset?: boolean;
+  autoFocus?: boolean;
+  unfocusable?: boolean;
+  href?: string | UrlObject;
   icon?: JSX.Element;
   iconPosition?: "start" | "end";
   text?: JSX.Element | string;
+  id?: string;
+  tooltip?: string;
+  placement?: Placement;
   isLoading?: boolean;
   asyncLoading?: boolean;
-  onClick?: ((...args: any[]) => Promise<any>) | ((...args: any[]) => any);
+  onClick?: () => any;
 }
-export function Button({ className = "", style, iconPosition = "start", ...props }: PropsType) {
+export function Button({ className = "", style, iconPosition = "start", ...props }: ButtonProps) {
   let buttonClass = "";
   if (props.outline) {
     buttonClass = "btn-outline";
@@ -44,12 +65,34 @@ export function Button({ className = "", style, iconPosition = "start", ...props
     else buttonClass = "btn-default";
   }
 
-  let buttonSize = "";
-  if (props.small) buttonSize = "btn-sm";
-  else if (props.large) buttonSize = "btn-lg";
+  let buttonHover = "";
+  if (props.hoverDarken) buttonHover = "hover-darken";
+  else if (props.hoverDanger) buttonHover = "hover-danger";
+  else if (props.hoverAccent) buttonHover = "hover-accent";
+  else if (props.hoverInfo) buttonHover = "hover-info";
+  else if (props.hoverSuccess) buttonHover = "hover-success";
+  else if (props.hoverWarning) buttonHover = "hover-warning";
 
-  let buttonType: "button" | "submit" = "button";
+  let buttonText = "";
+  if (props.textPrimary) buttonText = "is-primary";
+  else if (props.textDanger) buttonText = "is-danger";
+  else if (props.textAccent) buttonText = "is-accent";
+  else if (props.textInfo) buttonText = "is-info";
+  else if (props.textSuccess) buttonText = "is-success";
+  else if (props.textWarning) buttonText = "is-warning";
+
+  let buttonSize = "";
+  if (props.large) buttonSize = "btn-lg";
+  else if (props.medium) buttonSize = "btn-md";
+  else if (props.small) buttonSize = "btn-sm";
+
+  let buttonType: "submit" | "button" | "reset" = "button";
   if (props.submit) buttonType = "submit";
+  else if (props.reset) buttonType = "reset";
+
+  const finalClassName = `${buttonClass} ${buttonText} ${buttonHover} ${buttonSize} ${
+    props.unfocusable ? "no-focus" : ""
+  } ${iconPosition == "end" ? "flex-row-reverse" : ""} ${className}`.trim();
 
   const [loading, setLoading] = useState(false);
 
@@ -64,32 +107,29 @@ export function Button({ className = "", style, iconPosition = "start", ...props
       if (loading) return;
 
       setLoading(true);
-      (props.onClick() as Promise<any>)?.finally(() => {
+      const promise = props.onClick();
+      if (promise && promise.finally) {
+        (promise as Promise<any>).finally(() => {
+          setLoading(false);
+        });
+      } else {
         setLoading(false);
-      });
+      }
     } else {
       props.onClick();
     }
   };
 
-  return (
-    <button
-      className={`${buttonClass} ${props.hoverDanger ? "hover-danger" : ""} ${
-        props.hoverDarken ? "hover-darken" : ""
-      } ${buttonSize} ${iconPosition == "end" ? "flex-row-reverse" : ""} ${className}`.trim()}
-      style={style}
-      type={buttonType}
-      onClick={onClick}
-      disabled={loading || props.disabled}
-    >
+  const Children = (
+    <>
       {props.icon && (
         <>
           {loading ? (
-            <i className="text-xl animate-spin">
+            <i className="animate-spin">
               <CgSpinner />
             </i>
           ) : (
-            <i className="text-xl transition-none">{props.icon}</i>
+            <i className="transition-none">{props.icon}</i>
           )}
         </>
       )}
@@ -100,7 +140,7 @@ export function Button({ className = "", style, iconPosition = "start", ...props
           }`}
         >
           {!props.icon && loading && (
-            <i className="text-xl transition animate-spin absolute -left-6">
+            <i className="transition animate-spin absolute -left-5">
               <CgSpinner />
             </i>
           )}
@@ -108,6 +148,45 @@ export function Button({ className = "", style, iconPosition = "start", ...props
         </span>
       )}
       {props.children}
+    </>
+  );
+
+  return props.href ? (
+    <Link href={props.href}>
+      <a
+        className={finalClassName}
+        style={style}
+        onClick={onClick}
+        data-tooltip={props.tooltip}
+        data-placement={props.placement}
+      >
+        {Children}
+      </a>
+    </Link>
+  ) : (
+    <button
+      type={buttonType}
+      className={finalClassName}
+      style={style}
+      onClick={onClick}
+      disabled={loading || props.disabled}
+      data-tooltip={props.tooltip}
+      data-placement={props.placement}
+    >
+      {Children}
     </button>
   );
+  // <WrapperLink href={props.href}>
+  // <Wrapper
+
+  //   className={finalClassName}
+  //   style={style}
+  //   onClick={onClick}
+  //   disabled={loading || props.disabled}
+  //   tooltip={props.tooltip}
+  //   placement={props.placement}
+  // >
+  // </Wrapper>
+
+  // </WrapperLink>
 }
