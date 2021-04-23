@@ -22,6 +22,8 @@ const schema = gql`
     content: String
     "Đường dẫn liên kết"
     link: String
+    "Loại hành động"
+    controller: String
   }
 
   type NotificationPageData {

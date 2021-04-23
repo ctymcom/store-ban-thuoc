@@ -22,6 +22,7 @@ export class SyncUserNotificationJob {
         .then((res) => {
           return res ? res.updatedAt : moment().set("year", 2020).toDate();
         });
+      // const updatedAt = null;
       let data = await AritoHelper.getAllUserNotify(1, updatedAt);
       const bulk = NotificationModel.collection.initializeUnorderedBulkOp();
       do {
