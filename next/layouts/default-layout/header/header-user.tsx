@@ -3,7 +3,10 @@ import viLocale from "date-fns/locale/vi";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
-import { useNotificationContext } from "../../../components/index/notification/providers/notifications-provider";
+import {
+  NOTIFY_TYPES,
+  useNotificationContext,
+} from "../../../components/index/notification/providers/notifications-provider";
 import { Button } from "../../../components/shared/utilities/form/button";
 import { NotFound } from "../../../components/shared/utilities/not-found";
 import { Dropdown } from "../../../components/shared/utilities/popover/dropdown";
@@ -25,11 +28,7 @@ export function HeaderUser({ ...props }: PropsType) {
   const [visible, setVisible] = useState(4);
   const userRef = useRef();
   const notifyRef = useRef();
-  const modes = [
-    { value: "general", label: "Thông báo chung" },
-    { value: "personal", label: "Thông báo cá nhân" },
-  ];
-  const [mode, setMode] = useState(modes[0].value);
+  const [mode, setMode] = useState(NOTIFY_TYPES[0].value);
 
   const handleShowMorePosts = () => {
     setVisible((prevValue) => prevValue + visible);
@@ -85,7 +84,7 @@ export function HeaderUser({ ...props }: PropsType) {
               placement="bottom-start"
             >
               <div className="border-group rounded d-flex w-full">
-                {modes.map((m) => (
+                {NOTIFY_TYPES.map((m) => (
                   <button
                     key={m.value}
                     onClick={() => setMode(m.value)}
