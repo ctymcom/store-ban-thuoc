@@ -82,8 +82,6 @@ export default {
           },
           context.tokenData.ref
         );
-        draftOrder.discountPoint = 10;
-        draftOrder.discountPointValue = 100000;
         return draftOrder;
       },
     },
