@@ -25,8 +25,12 @@ const Mutation = {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     const { data } = args;
     const userId = context.user.id.toString();
-    const addressData = await AddressModel.findOne({ wardId: data.wardId });
-    if (!addressData) throw Error("Chưa chọn phường / xã.");
+    const addressData = await AddressModel.findOne({
+      provinceId: data.provinceId,
+      districtId: data.districtId,
+      wardId: data.wardId == "" ? { $exists: false } : data.wardId,
+    });
+    if (!addressData) throw Error("Chưa chọn đủ thông tin tỉnh / thành, quận / huyện.");
     data.fullAddress = compact([
       data.address,
       addressData.ward,
@@ -37,7 +41,10 @@ const Mutation = {
       userId: userId,
       ...data,
     });
-    await AritoHelper.createUserAddress(address);
+    await AritoHelper.createUserAddress(address).catch((err) => {
+      console.log("err", err);
+      throw err;
+    });
     await userAddressService.syncUserAddress(userId);
     return await UserAddressModel.findOne({ userId }).sort({ _id: -1 });
   },
