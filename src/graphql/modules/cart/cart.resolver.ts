@@ -1,8 +1,6 @@
-import { keyBy, remove } from "lodash";
 import { ErrorHelper } from "../../../base/error";
 import { ROLES } from "../../../constants/role.const";
 import { Context } from "../../context";
-import { ProductModel } from "../product/product.model";
 import { CartModel } from "./cart.model";
 
 const Mutation = {
@@ -11,19 +9,13 @@ const Mutation = {
     const { data } = args;
     const cart = await CartModel.findOneAndUpdate(
       { userId: context.user.id.toString() },
-      { $setOnInsert: { items: [] } }
+      { $setOnInsert: { items: [] } },
+      { new: true }
     );
     if (!cart) throw ErrorHelper.permissionDeny();
     cart.items = data.items;
-    cart.markModified("items");
-    return await cart.save().catch(async (err) => {
-      const products = await ProductModel.find({
-        _id: { $in: cart.items.map((i) => i.productId) },
-      }).then((res) => keyBy(res, "_id"));
-      remove(cart.items, (i) => !products[i.productId]);
-      cart.markModified("items");
-      return await cart.save();
-    });
+    await cart.update({ $set: { items: data.items } });
+    return await cart;
   },
 };
 
