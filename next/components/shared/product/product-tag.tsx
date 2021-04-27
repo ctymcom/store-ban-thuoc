@@ -1,8 +1,10 @@
+import { Product } from "../../../lib/repo/product.repo";
 import { ProductTag as Tag } from "./../../../lib/repo/product-tag.repo";
 
 interface PropsType extends ReactProps {
   tag: Tag;
   saleRate?: number;
+  product: Product;
 }
 export function ProductTag({ tag, ...props }: PropsType) {
   let tagContent = null;
@@ -37,7 +39,7 @@ export function ProductTag({ tag, ...props }: PropsType) {
         <>
           <img className="h-5" src="/assets/img/increase.png" />
           <span className="pl-1">
-            {tag.name} {props.saleRate ? `${props.saleRate}%` : ""}
+            {tag.name} {props.product.upRate ? `${props.product.upRate}%` : ""}
           </span>
         </>
       );
@@ -50,7 +52,7 @@ export function ProductTag({ tag, ...props }: PropsType) {
         <>
           <img className="h-5" src="/assets/img/decrease.png" />
           <span className="pl-1">
-            {tag.name} {props.saleRate ? `${props.saleRate}%` : ""}
+            {tag.name} {props.product.downRate ? `${props.product.downRate}%` : ""}
           </span>
         </>
       );

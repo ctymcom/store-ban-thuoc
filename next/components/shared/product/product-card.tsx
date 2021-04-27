@@ -116,6 +116,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                         key={tagDetail.code}
                         tag={tagDetail}
                         saleRate={product.saleRate}
+                        product={product}
                       />
                     ))}
                 </div>
