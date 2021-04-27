@@ -23,7 +23,7 @@ const Query = {
   },
   getOneProduct: async (root: any, args: any, context: Context) => {
     const { id } = args;
-    return await productService.findOne({ _id: id });
+    return await productService.findOne({ _id: id, salePrice: { $gt: 0 } });
   },
 };
 

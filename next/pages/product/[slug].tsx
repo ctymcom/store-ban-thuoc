@@ -29,7 +29,10 @@ Page.Layout = DefaultLayout;
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { slug } = context.query;
-  const product = await ProductModel.findOne({ slug }, "_id name imageId description code");
+  const product = await ProductModel.findOne(
+    { slug, salePrice: { $gt: 0 } },
+    "_id name imageId description code"
+  );
   if (!product) Redirect(context.res, "/404");
   product
     .updateOne({ $inc: { viewCount: 1 } }, { upsert: true })
