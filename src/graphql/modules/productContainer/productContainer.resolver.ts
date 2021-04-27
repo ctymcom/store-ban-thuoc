@@ -24,7 +24,7 @@ const Query = {
 const ProductContainer = {
   products: async (root: IProductContainer, args: any, context: Context) => {
     const query = {
-      filter: { _id: { $in: root.productIds } },
+      filter: { _id: { $in: root.productIds }, salePrice: { $gt: 0 } },
       limit: args.limit,
     };
     const hiddenCategories = await SettingHelper.load(SettingKey.HIDDEN_PRODUCT_OF_CATEGORIES);
@@ -36,7 +36,7 @@ const ProductContainer = {
         return res.data;
       }
     }
-    return GraphQLHelper.loadManyById(ProductLoader, "productIds")(root, args, context);
+    return await productService.fetch(query).then((res) => res.data);
   },
 };
 

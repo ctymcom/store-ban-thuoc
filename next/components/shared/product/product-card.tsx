@@ -42,7 +42,6 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
         .map((x) => x.name)
         .join(", ")}`
     : "";
-
   return useMemo(() => {
     return (
       <>
