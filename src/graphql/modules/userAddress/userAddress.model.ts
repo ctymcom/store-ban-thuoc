@@ -26,7 +26,7 @@ const userAddressSchema = new Schema(
     address: { type: String, required: true },
     provinceId: { type: String, required: true },
     districtId: { type: String, required: true },
-    wardId: { type: String, required: true },
+    wardId: { type: String },
     phone: { type: String },
     location: { type: String },
     isDefault: { type: Boolean, default: false },

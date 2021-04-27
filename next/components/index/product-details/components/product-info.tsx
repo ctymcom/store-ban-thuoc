@@ -89,7 +89,6 @@ export function ProductInfo(props: PropsType) {
       },
     });
   };
-
   return (
     <>
       {/* <div className="text-gray-600 mb-2 text-sm">

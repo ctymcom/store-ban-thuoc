@@ -42,7 +42,6 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
         .map((x) => x.name)
         .join(", ")}`
     : "";
-
   return useMemo(() => {
     return (
       <>
@@ -127,7 +126,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
               <>
                 <div>
                   <div className="">
-                    <div className="flex flex-col sm:flex-row">
+                    <div className="flex flex-row items-center">
                       <span className="font-semibold text-lg text-primary">
                         {NumberPipe(product.salePrice, true)}
                       </span>
@@ -137,7 +136,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                         </span>
                       )}
                     </div>
-                    <div className="flex flex-col sm:flex-row justify-between mt-2">
+                    <div className="flex flex-row items-center justify-between mt-2">
                       <div>
                         <div className="text-sm text-gray-500 hidden sm:block">Chọn số lượng</div>
                         <div className="text-sm text-gray-700">{product.unit}</div>

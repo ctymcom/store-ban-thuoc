@@ -24,7 +24,7 @@ const schema = gql`
     "Quận / huyện giao"
     districtId: String!
     "Phường / xã giao"
-    wardId: String!
+    wardId: String
     "string"
     phone: String!
     "Tạo độ"

@@ -156,6 +156,7 @@ export function CheckOutPage() {
               discountPoint
               discountPayment
               amount
+              discountPointValue
             }
           }
         `,

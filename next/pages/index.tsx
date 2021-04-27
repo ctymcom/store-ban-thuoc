@@ -5,7 +5,7 @@ function Index() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace("/products");
+    router.replace("/home");
   }, []);
 
   return null;

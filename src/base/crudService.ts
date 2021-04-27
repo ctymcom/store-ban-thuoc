@@ -17,7 +17,7 @@ export abstract class CrudService<M extends Model<Document, {}>> extends BaseSer
     this.model = model;
   }
 
-  async fetch(queryInput: any) {
+  async fetch(queryInput: any, select?: string) {
     queryInput = { ...queryInput };
     const limit = queryInput.limit || configs.query.limit;
     const skip = queryInput.offset || (queryInput.page - 1) * limit || 0;
@@ -52,6 +52,9 @@ export abstract class CrudService<M extends Model<Document, {}>> extends BaseSer
         JSON.stringify(queryInput.filter).replace(/\"(\_\_)(\w+)\"\:/g, `"$$$2":`)
       );
       query.setQuery({ ...filter });
+    }
+    if (select) {
+      query.select(select);
     }
     const countQuery = this.model.find().merge(query);
     query.limit(limit);
