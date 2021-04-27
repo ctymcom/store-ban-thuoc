@@ -4,7 +4,6 @@ import { HiOutlineTicket } from "react-icons/hi";
 import ListCode from "./list-code";
 interface Proptype extends ReactProps {
   isOpen: boolean;
-  listPromotionCode: any[];
   setShowDialog: Function;
   choseCode: Function;
 }
@@ -19,7 +18,7 @@ const PromotionListDialog = (props: Proptype) => {
       key={1}
     >
       <Dialog.Body>
-        <ListCode listPromotionCode={props.listPromotionCode} choseCode={props.choseCode} />
+        <ListCode choseCode={props.choseCode} />
       </Dialog.Body>
     </Dialog>
   );

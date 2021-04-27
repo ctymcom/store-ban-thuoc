@@ -1,7 +1,9 @@
 import { set } from "lodash";
+
 import { ROLES } from "../../../constants/role.const";
-import { AuthHelper } from "../../../helpers";
 import { Context } from "../../context";
+import { OrderModel } from "../order/order.model";
+import { INotification } from "./notification.model";
 import { notificationService } from "./notification.service";
 
 const Query = {
@@ -17,7 +19,19 @@ const Query = {
   },
 };
 
-const Notification = {};
+const Notification = {
+  link: async (root: INotification, args: any, context: Context) => {
+    switch (root.controller) {
+      case "ORDERS":
+        return await OrderModel.findOne({
+          code: parseInt(root.link),
+          userId: context.user.id.toString(),
+        }).then((res) => (res ? "/profile/order-details?id=" + res._id : "/profile/order-history"));
+      default:
+        root.link;
+    }
+  },
+};
 
 export default {
   Query,

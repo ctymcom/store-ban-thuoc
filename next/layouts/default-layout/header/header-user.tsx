@@ -1,8 +1,12 @@
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import viLocale from "date-fns/locale/vi";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
+
+import PromotionListDialog from "../../../components/index/cart/components/promotion-list-dialog";
+import { PromotionProvider } from "../../../components/index/cart/providers/promotion-provider";
 import {
   NOTIFY_TYPES,
   useNotificationContext,
@@ -10,7 +14,7 @@ import {
 import { Button } from "../../../components/shared/utilities/form/button";
 import { NotFound } from "../../../components/shared/utilities/not-found";
 import { Dropdown } from "../../../components/shared/utilities/popover/dropdown";
-import { Popover } from "../../../components/shared/utilities/popover/popover";
+import { Popover, PopoverProps } from "../../../components/shared/utilities/popover/popover";
 import { useAuth } from "./../../../lib/providers/auth-provider";
 
 interface PropsType extends ReactProps {}
@@ -28,7 +32,6 @@ export function HeaderUser({ ...props }: PropsType) {
   const [visible, setVisible] = useState(4);
   const userRef = useRef();
   const notifyRef = useRef();
-  const [mode, setMode] = useState(NOTIFY_TYPES[0].value);
 
   const handleShowMorePosts = () => {
     setVisible((prevValue) => prevValue + visible);
@@ -76,75 +79,13 @@ export function HeaderUser({ ...props }: PropsType) {
                 </div>
               )}
             </a>
-            <Popover
+            <NotificationPopover
               style={{ width: "300px" }}
               maxWidth="300px"
               reference={notifyRef}
               trigger="click"
               placement="bottom-start"
-            >
-              <div className="border-group rounded d-flex w-full">
-                {NOTIFY_TYPES.map((m) => (
-                  <button
-                    key={m.value}
-                    onClick={() => setMode(m.value)}
-                    className={`px-3 py-2 flex-1 whitespace-nowrap focus:outline-none font-semibold border ${
-                      mode == m.value
-                        ? "border-primary bg-primary text-white"
-                        : "border-gray-300 text-gray-600 hover:border-primary hover:text-primary"
-                    }`}
-                  >
-                    {m.label}
-                  </button>
-                ))}
-              </div>
-              <div>
-                {(mode == "general" && !generalNotifications.length) ||
-                (mode == "personal" && !personalNotifications.length) ? (
-                  <NotFound text="Không có thông báo nào" />
-                ) : (
-                  <div className="-mx-2 px-3 mt-2 v-scrollbar" style={{ maxHeight: "300px" }}>
-                    {(mode == "general" ? generalNotifications : personalNotifications).map(
-                      (notify, index) => (
-                        <Link key={notify.code} href={notify.link || "/"}>
-                          <a
-                            target="_blank"
-                            className={`block py-2 ${
-                              index == 0 ? "pt-0" : ""
-                            } border-b border-gray-100 group`}
-                          >
-                            <div className="flex items-start justify-between mb-0.5">
-                              <div className="text-sm font-semibold group-hover:text-primary">
-                                {notify.title}
-                              </div>
-                              <div className="text-12 pt-0.5 whitespace-nowrap text-gray-500 group-hover:text-gray-700">
-                                {formatDistanceToNow(new Date(notify.createdAt), {
-                                  addSuffix: true,
-                                  locale: viLocale,
-                                })}
-                              </div>
-                            </div>
-                            <div className="text-12 text-gray-500 group-hover:text-gray-700">
-                              {notify.content}
-                            </div>
-                          </a>
-                        </Link>
-                      )
-                    )}
-                    {((mode == "general" && generalNotifications.length < generalTotal) ||
-                      (mode == "personal" && personalNotifications.length < personalTotal)) && (
-                      <Button
-                        className="w-full"
-                        textPrimary
-                        text="Tải thêm"
-                        asyncLoading
-                        onClick={loadNotifications}
-                      />
-                    )}
-                  </div>
-                )}
-              </div>
-            </Popover>
+            />
 
             {/* <Menu>
               {({ open }) => (
@@ -275,5 +216,107 @@ export function HeaderUser({ ...props }: PropsType) {
         </div>
       )}
     </>
+  );
+}
+
+function NotificationPopover(props: PopoverProps) {
+  const router = useRouter();
+  const {
+    generalNotifications,
+    personalNotifications,
+    generalTotal,
+    personalTotal,
+    loadNotifications,
+  } = useNotificationContext();
+  const [mode, setMode] = useState(NOTIFY_TYPES[0].value);
+  const [showPromotion, setShowPromotion] = useState(false);
+
+  return (
+    <Popover {...props}>
+      <div className="border-group rounded d-flex w-full">
+        {NOTIFY_TYPES.map((m) => (
+          <button
+            key={m.value}
+            onClick={() => setMode(m.value)}
+            className={`px-3 py-2 flex-1 whitespace-nowrap focus:outline-none font-semibold border ${
+              mode == m.value
+                ? "border-primary bg-primary text-white"
+                : "border-gray-300 text-gray-600 hover:border-primary hover:text-primary"
+            }`}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+      <div>
+        {(mode == "general" && !generalNotifications.length) ||
+        (mode == "personal" && !personalNotifications.length) ? (
+          <NotFound text="Không có thông báo nào" />
+        ) : (
+          <div className="-mx-2 px-3 mt-2 v-scrollbar" style={{ maxHeight: "300px" }}>
+            {(mode == "general" ? generalNotifications : personalNotifications).map(
+              (notify, index) => (
+                <NotificationItem
+                  notify={notify}
+                  index={index}
+                  key={index}
+                  onClick={() => {
+                    switch (notify.controller) {
+                      case "NEW_DISCOUNT":
+                        setShowPromotion(true);
+                        break;
+                      default:
+                        if (notify.link) window.open(notify.link, "_blank");
+                    }
+                  }}
+                />
+              )
+            )}
+            {((mode == "general" && generalNotifications.length < generalTotal) ||
+              (mode == "personal" && personalNotifications.length < personalTotal)) && (
+              <Button
+                className="w-full"
+                textPrimary
+                text="Tải thêm"
+                asyncLoading
+                onClick={loadNotifications}
+              />
+            )}
+          </div>
+        )}
+      </div>
+      <PromotionProvider>
+        <PromotionListDialog
+          isOpen={showPromotion}
+          setShowDialog={setShowPromotion}
+          choseCode={() => {
+            setShowPromotion(false);
+          }}
+        />
+      </PromotionProvider>
+    </Popover>
+  );
+}
+
+function NotificationItem({ notify, index, onClick }) {
+  return (
+    <a
+      target="_blank"
+      className={`block py-2 ${
+        index == 0 ? "pt-0" : ""
+      } border-b border-gray-100 group cursor-pointer`}
+      onClick={onClick}
+    >
+      <div className="flex items-start justify-between mb-0.5">
+        <div className="text-sm font-semibold group-hover:text-primary">{notify.title}</div>
+        <div className="text-12 pt-0.5 whitespace-nowrap text-gray-500 group-hover:text-gray-700">
+          {formatDistanceToNow(new Date(notify.createdAt), {
+            addSuffix: true,
+            locale: viLocale,
+          })}
+        </div>
+      </div>
+      <div className="text-12 text-gray-500 group-hover:text-gray-700">{notify.content}</div>
+    </a>
   );
 }

@@ -9,6 +9,7 @@ export interface Notification extends BaseModel {
   title: string;
   content: string;
   link: string;
+  controller: string;
 }
 
 export class NotificationRepository extends CrudRepository<Notification> {
@@ -20,6 +21,7 @@ export class NotificationRepository extends CrudRepository<Notification> {
     title: String
     content: String
     link: String
+    controller: String
     createdAt: DateTime
   `);
   fullFragment = this.parseFragment(`
@@ -30,6 +32,7 @@ export class NotificationRepository extends CrudRepository<Notification> {
     code: String
     title: String
     content: String
+    controller: String
     link: String
   `);
 }
