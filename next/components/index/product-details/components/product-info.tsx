@@ -101,7 +101,7 @@ export function ProductInfo(props: PropsType) {
       <h2 className="text-gray-700 mb-1 lg:mb-2 font-bold text-xl lg:text-2xl">{product.name}</h2>
       <div className="flex flex-wrap max-w-sm mb-2">
         {product.tagDetails.map((tag) => (
-          <ProductTag tag={tag} key={tag.code} saleRate={product.saleRate} />
+          <ProductTag tag={tag} key={tag.code} saleRate={product.saleRate} product={product} />
         ))}
       </div>
       {product.salePrice ? (

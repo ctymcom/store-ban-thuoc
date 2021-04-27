@@ -95,9 +95,9 @@ const schema = gql`
     "Ngày động bộ gần nhất"
     syncAt: DateTime
     "Tỉ lệ tăng giá"
-    upRate: Int
+    upRate: Float
     "Tỉ lệ hạ giá"
-    downRate: Int
+    downRate: Float
     "Tên URL"
     slug: String
     "Tên ngắn"

@@ -86,7 +86,12 @@ export function QuickShoppingProduct({ product }: PropsType) {
           {product.tagDetails
             .filter((t) => !hiddenTags.includes(t.code))
             .map((tagDetail) => (
-              <ProductTag key={tagDetail.code} tag={tagDetail} saleRate={product.saleRate} />
+              <ProductTag
+                key={tagDetail.code}
+                tag={tagDetail}
+                saleRate={product.saleRate}
+                product={product}
+              />
             ))}
         </div>
       )}
