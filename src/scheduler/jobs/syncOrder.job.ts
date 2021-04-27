@@ -52,8 +52,8 @@ export class SyncOrderJob {
             location: get(addresses, d.addressId + ".location", ""),
             items: d.items.map((i) => ({
               ...i,
-              productName: products[i.productCode].name,
-              productId: products[i.productCode]._id,
+              productName: products[i.productCode]?.name,
+              productId: products[i.productCode]?._id,
             })),
           };
           bulk.find({ code: d.code }).upsert().updateOne({ $set: setData });

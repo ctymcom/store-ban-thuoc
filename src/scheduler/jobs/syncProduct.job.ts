@@ -1,6 +1,6 @@
 import { Job } from "agenda";
 import chalk from "chalk";
-import { compact, flatten, get, keyBy, uniq } from "lodash";
+import { chunk, compact, flatten, get, keyBy, uniq } from "lodash";
 import moment from "moment-timezone";
 
 import {
@@ -215,9 +215,8 @@ async function syncProduct(fullSync = false) {
       .then((res) => (res ? res.syncAt : null));
   }
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
-
+  const bulkData: any[] = [];
   do {
-    const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
     console.log(chalk.yellow("====> Đồng bộ trang ", getProductResult.paging.page));
     const [categoryData, ingredientData, productCountryData] = await Promise.all([
       CategoryModel.find({
@@ -245,16 +244,9 @@ async function syncProduct(fullSync = false) {
           ...productTags[t].toJSON(),
           outOfDate: productTags[t].code == "DATEOFF" ? d.outOfDate : null,
         }));
-
-      // console.log(
-      //   "category",
-      //   compact(d.categoryIds.map((code: string) => get(categoryData, `${code}._id`, null)))
-      // );
-
-      productBulk
-        .find({ code: d.code })
-        .upsert()
-        .updateOne({
+      bulkData.push({
+        find: { code: d.code },
+        update: {
           $setOnInsert: { createdAt: new Date() },
           $set: {
             ...d,
@@ -273,18 +265,26 @@ async function syncProduct(fullSync = false) {
             syncAt: new Date(),
             origin: productCountryData[d.origin] ? productCountryData[d.origin].name : d.origin,
           },
-        });
+        },
+      });
     });
     if (getProductResult.paging.page == getProductResult.paging.pageCount) break;
     getProductResult = await AritoHelper.getAllProduct(
       getProductResult.paging.page + 1,
       productUpdatedAt
     );
+  } while (getProductResult.paging.page <= getProductResult.paging.pageCount);
+  const chunks = chunk(bulkData, 1000);
+  for (const c of chunks) {
+    const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
+    for (const query of c) {
+      productBulk.find(query.find).upsert().updateOne(query.update);
+    }
     if (productBulk.length > 0) {
       console.log(chalk.yellow(`====> Đồng bộ ${productBulk.length} sản phẩm...`));
       await productBulk.execute();
     }
-  } while (getProductResult.paging.page <= getProductResult.paging.pageCount);
+  }
 }
 
 async function syncCategory() {
@@ -385,20 +385,22 @@ async function syncProductComment() {
       data.data
         .filter((d) => d.type == "PRODUCT")
         .forEach((d) => {
-          bulk
-            .find({ code: d.code })
-            .upsert()
-            .updateOne({
-              $setOnInsert: { createdAt: new Date() },
-              $set: {
-                updatedAt: new Date(),
-                productId: products[d.ref]._id,
-                productCode: d.ref,
-                imark: d.imark,
-                content: d.content,
-                reviewer: d.reviewer,
-              },
-            });
+          if (products[d.ref]) {
+            bulk
+              .find({ code: d.code })
+              .upsert()
+              .updateOne({
+                $setOnInsert: { createdAt: new Date() },
+                $set: {
+                  updatedAt: new Date(),
+                  productId: products[d.ref]._id,
+                  productCode: d.ref,
+                  imark: d.imark,
+                  content: d.content,
+                  reviewer: d.reviewer,
+                },
+              });
+          }
         });
     }
 
