@@ -15,7 +15,7 @@ const Query = {
       set(args, "q.filter.status", PostStatus.PUBLIC);
       set(args, "q.filter.publishedAt", { $lte: new Date() });
     }
-    return postService.fetch(args.q);
+    return postService.fetch(args.q, "-content");
   },
   getOnePost: async (root: any, args: any, context: Context) => {
     // AuthHelper.acceptRoles(context, [ROLES.ADMIN, ROLES.EDITOR]);
