@@ -23,7 +23,7 @@ export class SyncOrderJob {
         .sort({ syncAt: -1 })
         .exec()
         .then((res) => {
-          return res ? res.syncAt : null;
+          return res ? moment(res.syncAt).subtract(1, "days").toDate() : null;
         });
       // const updatedAt = null;
       let data = await AritoHelper.getAllOrder(1, updatedAt);

@@ -52,7 +52,19 @@ const Mutation = {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
     const { id, data } = args;
 
-    return await userAddressService.updateOne(id, data).then(async (res) => {
+    return await userAddressService.updateOne(id, data).then(async (res: IUserAddress) => {
+      const addressData = await AddressModel.findOne({
+        provinceId: res.provinceId,
+        districtId: res.districtId,
+        wardId: res.wardId == "" ? { $exists: false } : res.wardId,
+      });
+      res.fullAddress = compact([
+        data.address,
+        addressData.ward,
+        addressData.district,
+        addressData.province,
+      ]).join(", ");
+      await res.save();
       await AritoHelper.updateUserAddress(res);
       await userAddressService.syncUserAddress(context.user.id.toString());
       return await UserAddressModel.findById(res._id);

@@ -24,6 +24,8 @@ const schema = gql`
     link: String
     "Loại hành động"
     controller: String
+    "Trạng thái"
+    status: Int
   }
 
   type NotificationPageData {

@@ -700,6 +700,7 @@ export class AritoHelper {
           content: d["content"],
           link: d["link"],
           controller: d["controller"],
+          status: d["status"],
         })) as INotification[],
         paging: {
           limit: pageInfo["pagecount"] || 0,

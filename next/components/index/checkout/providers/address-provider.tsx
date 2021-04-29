@@ -42,6 +42,7 @@ export const AddressProvider = (props) => {
         filter: { userId: user.id },
       },
       fragment: UserAddressService.fullFragment,
+      cache: false,
     }).then((res) => {
       setListAdress(cloneDeep(res.data));
       setUserAddress(null);

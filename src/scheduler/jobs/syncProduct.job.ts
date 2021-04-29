@@ -212,7 +212,7 @@ async function syncProduct(fullSync = false) {
     productUpdatedAt = await ProductModel.findOne()
       .sort({ syncAt: -1 })
       .exec()
-      .then((res) => (res ? res.syncAt : null));
+      .then((res) => (res ? moment(res.syncAt).subtract(1, "hours").toDate() : null));
   }
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
   const bulkData: any[] = [];
@@ -236,7 +236,12 @@ async function syncProduct(fullSync = false) {
         .map((t) => ({
           name: t.name,
           name2: t.name2,
-          content: rawData[t.productField],
+          content:
+            t.productField != "nuoc_sx"
+              ? rawData[t.productField]
+              : productCountryData[rawData[t.productField]]
+              ? productCountryData[rawData[t.productField]].name
+              : rawData[t.productField],
         }));
       const tagDetails: ProductTagDetail[] = d.tags
         .filter((t) => productTags[t])
@@ -274,7 +279,7 @@ async function syncProduct(fullSync = false) {
       productUpdatedAt
     );
   } while (getProductResult.paging.page <= getProductResult.paging.pageCount);
-  const chunks = chunk(bulkData, 1000);
+  const chunks = chunk(bulkData, 100);
   for (const c of chunks) {
     const productBulk = ProductModel.collection.initializeUnorderedBulkOp();
     for (const query of c) {

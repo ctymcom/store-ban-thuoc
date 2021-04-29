@@ -17,10 +17,12 @@ export class SyncUserNotificationJob {
       await AritoHelper.setImageToken();
       console.log(chalk.cyan("==> Động bộ thông báo khách hàng..."));
       const updatedAt = await NotificationModel.findOne()
-        .sort({ updatedAt: -1 })
+        .sort({ syncAt: -1 })
         .exec()
         .then((res) => {
-          return res ? res.updatedAt : moment().set("year", 2020).toDate();
+          return res
+            ? moment(res.syncAt).subtract(1, "hour").toDate()
+            : moment().set("year", 2020).toDate();
         });
       // const updatedAt = null;
       let data = await AritoHelper.getAllUserNotify(1, updatedAt);
@@ -33,7 +35,7 @@ export class SyncUserNotificationJob {
             .upsert()
             .updateOne({
               $setOnInsert: { createdAt: new Date() },
-              $set: { ...d, updatedAt: new Date() },
+              $set: { ...d, updatedAt: new Date(), syncAt: new Date() },
             });
         });
         if (data.paging.page == data.paging.pageCount) break;

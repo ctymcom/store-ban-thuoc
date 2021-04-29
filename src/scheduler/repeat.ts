@@ -33,8 +33,8 @@ export function InitRepeatJobs() {
   SyncUserNotificationJob.create({})
     .repeatEvery("5 minute", { skipImmediate: true })
     .unique({ name: SyncUserNotificationJob.jobName })
-    .save();
-  // .then((res) => res.run());
+    .save()
+    .then((res) => res.run());
   SyncPromotionJob.create({})
     .repeatEvery("6 minute", { skipImmediate: true })
     .unique({ name: SyncPromotionJob.jobName })
