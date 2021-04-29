@@ -54,7 +54,7 @@ export function ProductMain() {
             </div>
           )}
           {product?.saleRate
-            ? product?.tags.includes("FLASHSALES") && (
+            ? (product?.tags.includes("FLASHSALES") || product?.tags.includes("FLASHSALE")) && (
                 <div className="flex-center z-10 absolute -right-0.5 sm:-right-1 md:-right-0.5  lg:-right-1 -top-2 xs:-top-2.5 sm:-top-3 md:-top-1.5 lg:-top-2.5 text-white font-semibold">
                   <img
                     className="w-16 xs:w-20 sm:w-24 md:w-14 lg:w-20 h-16 xs:h-20 sm:h-24 md:h-14 lg:h-20"

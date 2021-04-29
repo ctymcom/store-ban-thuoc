@@ -73,7 +73,8 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                 )}
 
                 {product?.saleRate
-                  ? product?.tags.includes("FLASHSALES") && (
+                  ? (product?.tags.includes("FLASHSALES") ||
+                      product?.tags.includes("FLASHSALE")) && (
                       <div className="flex-center z-10 absolute -right-0.5 sm:-right-1 md:-right-0.5  lg:-right-1 -top-1.5 xs:-top-2 sm:-top-3 md:-top-1 lg:-top-2 text-white font-semibold">
                         <img
                           className="w-14 xs:w-16 sm:w-20 md:w-16 lg:w-120 h-12 xs:h-16 sm:h-20 md:h-16 lg:h-16"
