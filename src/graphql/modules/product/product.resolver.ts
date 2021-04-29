@@ -8,6 +8,7 @@ import { AritoHelper } from "../../../helpers/arito/arito.helper";
 import { set } from "lodash";
 import { SettingHelper } from "../setting/setting.helper";
 import { SettingKey } from "../../../configs/settingData";
+import { Types } from "mongoose";
 
 const Query = {
   getAllProduct: async (root: any, args: any, context: Context) => {
@@ -19,7 +20,10 @@ const Query = {
         set(args, "q.filter.$and.0.categoryIds", { $nin: categories.map((c) => c._id) });
       }
     }
-    return productService.fetch(args.q);
+    return productService.fetch(
+      args.q,
+      "-careful -contraindicated -howToUse -indications -interactions -overdose -preservation -sideEffects -tabs"
+    );
   },
   getOneProduct: async (root: any, args: any, context: Context) => {
     const { id } = args;
@@ -46,6 +50,35 @@ const Product = {
   salePrice: getGroupPrice("salePrice"),
   saleRate: getGroupPrice("saleRate"),
   saleExpiredDate: getGroupPrice("saleExpiredDate"),
+  tagDetails: async (root: IProduct, args: any, context: Context) => {
+    if (root.upRate > 0) {
+      const upRateTag = root.tags.indexOf("SALESUP");
+      if (upRateTag == -1) {
+        root.tags.push("SALESUP");
+        root.tagDetails.push({
+          code: "SALESUP",
+          color: "",
+          icon: "1",
+          name: "Tăng giá",
+          name2: "Tăng giá",
+        });
+      }
+    }
+    if (root.downRate > 0) {
+      const downRateTag = root.tags.indexOf("SALESDOWN");
+      if (downRateTag == -1) {
+        root.tags.push("SALESDOWN");
+        root.tagDetails.push({
+          code: "SALESDOWN",
+          color: "",
+          icon: "1",
+          name: "Giảm giá",
+          name2: "Giảm giá",
+        });
+      }
+    }
+    return root.tagDetails;
+  },
 };
 
 function getGroupPrice(field: string) {
