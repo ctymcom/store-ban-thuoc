@@ -18,7 +18,7 @@ export default function QuickShopping(props) {
 QuickShopping.Layout = DefaultLayout;
 
 export async function getServerSideProps(context) {
-  const seo = await SEO("Mua hàng nhanh");
+  const seo = await SEO("Khuyến mãi");
   return {
     props: JSON.parse(
       JSON.stringify({

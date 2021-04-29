@@ -20,10 +20,10 @@ export class SyncOrderJob {
       await AritoHelper.setImageToken();
       console.log(chalk.cyan("==> Động bộ đơn hàng..."));
       const updatedAt = await OrderModel.findOne()
-        .sort({ updatedAt: -1 })
+        .sort({ syncAt: -1 })
         .exec()
         .then((res) => {
-          return res ? res.updatedAt : null;
+          return res ? res.syncAt : null;
         });
       // const updatedAt = null;
       let data = await AritoHelper.getAllOrder(1, updatedAt);
@@ -55,6 +55,7 @@ export class SyncOrderJob {
               productName: products[i.productCode]?.name,
               productId: products[i.productCode]?._id,
             })),
+            syncAt: new Date(),
           };
           bulk.find({ code: d.code }).upsert().updateOne({ $set: setData });
         }

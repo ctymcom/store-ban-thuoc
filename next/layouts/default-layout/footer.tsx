@@ -64,7 +64,7 @@ export function Footer() {
                 </div>
               </div>
               <div className="flex flex-col justify-start lg:col-span-4 text-sm sm:mt-6 md:mt-0">
-                {user === null && (
+                {/* {user === null && (
                   <div className="">
                     <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
                       Đăng kí nhận tin mới
@@ -96,7 +96,7 @@ export function Footer() {
                       </button>
                     </form>
                   </div>
-                )}
+                )} */}
                 <div className="">
                   <div className="uppercase text-primary font-semibold text-lg sm:text-xl sm:py-1 md:py-0 mb-2 sm:mb-0 md:mb-2">
                     Kết nối với chúng tôi
