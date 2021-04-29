@@ -18,7 +18,7 @@ export default function Ingredients(props) {
 Ingredients.Layout = DefaultLayout;
 
 export async function getServerSideProps(context) {
-  const seo = await SEO("Danh sách hoạt chất");
+  const seo = await SEO("Hoạt chất");
   return {
     props: JSON.parse(
       JSON.stringify({

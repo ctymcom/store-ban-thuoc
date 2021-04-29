@@ -70,7 +70,7 @@ export function DiscountProvider(props) {
         limit: pagination.limit,
         page: pagination.page,
         filter: {
-          tags: { __in: ["FLASHSALES"] },
+          tags: { __in: ["FLASHSALES", "FLASHSALE"] },
         },
         order,
       },

@@ -6,6 +6,7 @@ import { promotionService } from "./promotion.service";
 
 const Query = {
   getAllPromotion: async (root: any, args: any, context: Context) => {
+    console.log("getAllPromotion", context.isAuth);
     if (context.isAuth) {
       const res = await AritoHelper.getAllPromotion(1, null, context.tokenData.ref);
       const codes = res.data.map((d) => d.code);

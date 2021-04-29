@@ -30,6 +30,7 @@ export type IOrder = BaseDocument & {
   usePoint?: boolean; // Sử dụng điểm
   status?: number; // Trạng thái đơn hàng
   itemCount?: number; // Số lượng sản phẩm
+  syncAt?: Date; // Ngày đồng bộ lần cuối
 };
 
 const orderSchema = new Schema(
@@ -59,6 +60,7 @@ const orderSchema = new Schema(
     usePoint: { type: Boolean, default: false },
     status: { type: Number },
     itemCount: { type: Number, min: 0, default: 0 },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );
