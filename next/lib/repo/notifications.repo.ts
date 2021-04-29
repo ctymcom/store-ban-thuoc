@@ -38,6 +38,11 @@ export class NotificationRepository extends CrudRepository<Notification> {
     link: String
     status: Int
   `);
+  async markNotifyAsRead(id: string) {
+    return this.mutate({
+      mutation: `markNotifyAsRead(notifyId: "${id}")`,
+    }).then((res) => res.g0);
+  }
 }
 
 export const NotificationService = new NotificationRepository();

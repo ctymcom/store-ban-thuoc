@@ -19,10 +19,15 @@ const AuthContext = createContext<{
   saveCurrentPath?: () => void;
   checkUser?: (roles?: string[]) => Promise<boolean>;
   login?: (username: string, password: string, mode: "user" | "editor") => Promise<AritoUser>;
-  register?: (nickname: string, email: string, phone: string, password: string,
+  register?: (
+    nickname: string,
+    email: string,
+    phone: string,
+    password: string,
     birthday: string,
     companyType: string,
-    companyName: string,) => Promise<AritoUser>;
+    companyName: string
+  ) => Promise<AritoUser>;
   logout?: () => void;
   updateAritoUser?: (data: AritoUser) => Promise<{ type: string; mess: string }>;
   changeAritoUserPassword?: (
@@ -30,12 +35,12 @@ const AuthContext = createContext<{
     newPass: string
   ) => Promise<{ type: string; mess: string }>;
   recoveryPassword?: (email: string) => Promise<string>;
+  reloadUser?: () => Promise<any>;
 }>({});
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<any | null>(undefined);
   const [showDialogUpdatePassword, setShowDialogUpdatePassword] = useState(false);
-
   // useEffect(() => {
   //   return firebase.auth().onAuthStateChanged(async (user) => {
   //   });
@@ -112,14 +117,24 @@ export function AuthProvider({ children }: any) {
     return user;
   };
 
-  const register = async (nickname: string, email: string, phone: string,password: string,
+  const register = async (
+    nickname: string,
+    email: string,
+    phone: string,
+    password: string,
     birthday: string,
     companyType: string,
-    companyName: string,) => {
-    const { token, user } = await AritoUserService.regisAritoUser(nickname, email, phone,password,
+    companyName: string
+  ) => {
+    const { token, user } = await AritoUserService.regisAritoUser(
+      nickname,
+      email,
+      phone,
+      password,
       birthday,
       companyType,
-      companyName,);
+      companyName
+    );
     await GraphService.clearStore();
     ClearAuthToken();
     if (user.id) {
@@ -178,6 +193,7 @@ export function AuthProvider({ children }: any) {
     }
     return noti;
   };
+  const reloadUser = () => AritoUserService.userGetMe().then(setUser);
 
   return (
     <AuthContext.Provider
@@ -194,6 +210,7 @@ export function AuthProvider({ children }: any) {
         checkUser,
         saveCurrentPath,
         updateAritoUser,
+        reloadUser,
       }}
     >
       {children}

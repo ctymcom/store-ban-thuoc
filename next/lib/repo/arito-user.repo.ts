@@ -109,6 +109,9 @@ export class AritoUserRepository extends GraphRepository {
       query: `
         userGetMe { ${this.fragment} }
       `,
+      options: {
+        fetchPolicy: "no-cache",
+      },
     });
     return res.data.g0;
   }

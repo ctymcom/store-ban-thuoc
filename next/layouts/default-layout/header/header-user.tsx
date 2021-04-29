@@ -227,6 +227,7 @@ function NotificationPopover(props: PopoverProps) {
     generalTotal,
     personalTotal,
     loadNotifications,
+    markNotifyAsRead,
   } = useNotificationContext();
   const [mode, setMode] = useState(NOTIFY_TYPES[0].value);
   const [showPromotion, setShowPromotion] = useState(false);
@@ -261,6 +262,7 @@ function NotificationPopover(props: PopoverProps) {
                   index={index}
                   key={index}
                   onClick={() => {
+                    if (notify.userId != "0" && notify.status != 2) markNotifyAsRead(notify.id);
                     switch (notify.controller) {
                       case "NEW_DISCOUNT":
                         setShowPromotion(true);

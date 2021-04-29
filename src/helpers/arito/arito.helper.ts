@@ -1221,6 +1221,21 @@ export class AritoHelper {
       };
     });
   }
+  static markAsReadMessage(
+    data: {
+      notifyId: number;
+      userId: number;
+    },
+    token: string
+  ) {
+    return Axios.post(`${this.host}/Notification/MarkAsReadMessage`, {
+      token: token,
+      data: { "#detail": [{ id: data.notifyId, user_id: data.userId }] },
+    }).then((res) => {
+      this.handleError(res);
+      return res.data?.msg;
+    });
+  }
 }
 
 AritoHelper.setImageToken();
