@@ -28,7 +28,7 @@ const Notification = {
           userId: context.user.id.toString(),
         }).then((res) => (res ? "/profile/order-details?id=" + res._id : "/profile/order-history"));
       default:
-        root.link;
+        return root.link;
     }
   },
 };
