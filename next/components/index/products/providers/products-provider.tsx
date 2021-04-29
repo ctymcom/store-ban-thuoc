@@ -110,7 +110,7 @@ export function ProductsProvider(props) {
       const clonedTags = cloneDeep(res.data.g2.data) as ProductTag[];
       if (router.query["sale"]) {
         clonedTags
-          .filter((x) => ["FLASHSALES", "FLASHSALE", "SALESDOWN"].includes(x.code))
+          .filter((x) => ["FLASHSALE", "SALESDOWN"].includes(x.code))
           .forEach((x) => (x.active = true));
       }
       setTags(clonedTags);

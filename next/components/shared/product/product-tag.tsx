@@ -11,7 +11,6 @@ export function ProductTag({ tag, ...props }: PropsType) {
   let tagClassName = `flex items-center text-sm font-semibold rounded-sm py-1 px-2 `;
   let tagStyle = {};
   switch (tag.code) {
-    case "FLASHSALES":
     case "FLASHSALE": {
       tagClassName += `bg-gray-100 text-yellow-500`;
       tagContent = (
