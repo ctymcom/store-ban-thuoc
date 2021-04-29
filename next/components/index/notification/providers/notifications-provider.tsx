@@ -25,12 +25,13 @@ export function NotificationProvider({ children }: any) {
   useEffect(() => {
     if (user) {
       loadNotifications();
+      setNotificationCount(user.unseenNotify);
     }
   }, [user]);
 
-  useEffect(() => {
-    setNotificationCount(generalNotifications.length + personalNotifications.length);
-  }, [generalNotifications.length, personalNotifications.length]);
+  // useEffect(() => {
+  //   setNotificationCount(generalNotifications.length + personalNotifications.length);
+  // }, [generalNotifications.length, personalNotifications.length]);
 
   const loadNotifications = async () => {
     let tasks: any[] = [];

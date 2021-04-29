@@ -44,6 +44,7 @@ export default {
         }
         await userAddressService.syncUserAddress(userData.id.toString());
         set(context, "tokenData.ref", token);
+        set(context, "tokenData.user", userData);
         return {
           token: TokenHelper.getAritorUserToken(userData, token, userData.role),
           user: userData,
