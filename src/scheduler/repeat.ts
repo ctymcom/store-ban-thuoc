@@ -46,12 +46,12 @@ export function InitRepeatJobs() {
     .save();
   // .then((res) => res.run());
   SyncOrderStatusJob.create({})
-    .repeatEvery("1 day", { skipImmediate: true })
+    .repeatEvery("5 minute", { skipImmediate: true })
     .unique({ name: SyncOrderStatusJob.jobName })
     .save();
   // .then((res) => res.run());
   SyncOrderOptionsJob.create({})
-    .repeatEvery("1 day", { skipImmediate: true })
+    .repeatEvery("5 minute", { skipImmediate: true })
     .unique({ name: SyncOrderOptionsJob.jobName })
     .save();
   // .then((res) => res.run());
@@ -66,7 +66,7 @@ export function InitRepeatJobs() {
     .save();
   // .then((res) => res.run());
   SyncBankAccountJob.create({})
-    .repeatEvery("1 day", { skipImmediate: true })
+    .repeatEvery("5 minute", { skipImmediate: true })
     .unique({ name: SyncBankAccountJob.jobName })
     .save();
   // .then((res) => res.run());
