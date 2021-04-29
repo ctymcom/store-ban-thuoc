@@ -227,6 +227,7 @@ function NotificationPopover(props: PopoverProps) {
     generalTotal,
     personalTotal,
     loadNotifications,
+    markNotifyAsRead,
   } = useNotificationContext();
   const [mode, setMode] = useState(NOTIFY_TYPES[0].value);
   const [showPromotion, setShowPromotion] = useState(false);
@@ -253,7 +254,7 @@ function NotificationPopover(props: PopoverProps) {
         (mode == "personal" && !personalNotifications.length) ? (
           <NotFound text="Không có thông báo nào" />
         ) : (
-          <div className="-mx-2 px-3 mt-2 v-scrollbar" style={{ maxHeight: "300px" }}>
+          <div className="-mx-2 mt-2 v-scrollbar" style={{ maxHeight: "300px" }}>
             {(mode == "general" ? generalNotifications : personalNotifications).map(
               (notify, index) => (
                 <NotificationItem
@@ -261,6 +262,7 @@ function NotificationPopover(props: PopoverProps) {
                   index={index}
                   key={index}
                   onClick={() => {
+                    if (notify.userId != "0" && notify.status != 2) markNotifyAsRead(notify.id);
                     switch (notify.controller) {
                       case "NEW_DISCOUNT":
                         setShowPromotion(true);
@@ -302,9 +304,11 @@ function NotificationItem({ notify, index, onClick }) {
   return (
     <a
       target="_blank"
-      className={`block py-2 ${
-        index == 0 ? "pt-0" : ""
-      } border-b border-gray-100 group cursor-pointer`}
+      className={
+        (index == 0 ? "pt-0 " : "") +
+        (notify.status != 2 && notify.userId != "0" ? "bg-gray-200 " : "") +
+        `block py-2 border-b border-gray-100 group cursor-pointer px-3`
+      }
       onClick={onClick}
     >
       <div className="flex items-start justify-between mb-0.5">

@@ -10,6 +10,8 @@ export type INotification = BaseDocument & {
   content?: string; // Nội dung thông báo
   link?: string; // Đường dẫn liên kết
   controller?: string; // Loại hành động
+  status?: number; // Trạng thái
+  syncAt?: Date; // Ngày đồng bộ lần cuối
 };
 
 const notificationSchema = new Schema(
@@ -20,6 +22,8 @@ const notificationSchema = new Schema(
     content: { type: String, required: true },
     link: { type: String },
     controller: { type: String },
+    status: { type: Number },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );

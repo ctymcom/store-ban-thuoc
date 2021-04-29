@@ -12,7 +12,7 @@ export class RelatedProduct {
       uniqIds.forEach((id) => {
         tasks.push(
           ProductModel.aggregate([
-            { $match: { categoryIds: Types.ObjectId(id) } },
+            { $match: { categoryIds: Types.ObjectId(id), salePrice: { $gt: 0 } } },
             { $sample: { size: 5 } },
           ])
             .exec()

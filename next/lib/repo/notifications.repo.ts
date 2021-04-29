@@ -10,6 +10,7 @@ export interface Notification extends BaseModel {
   content: string;
   link: string;
   controller: string;
+  status: number;
 }
 
 export class NotificationRepository extends CrudRepository<Notification> {
@@ -23,6 +24,7 @@ export class NotificationRepository extends CrudRepository<Notification> {
     link: String
     controller: String
     createdAt: DateTime
+    status: Int
   `);
   fullFragment = this.parseFragment(`
     id: String
@@ -34,7 +36,13 @@ export class NotificationRepository extends CrudRepository<Notification> {
     content: String
     controller: String
     link: String
+    status: Int
   `);
+  async markNotifyAsRead(id: string) {
+    return this.mutate({
+      mutation: `markNotifyAsRead(notifyId: "${id}")`,
+    }).then((res) => res.g0);
+  }
 }
 
 export const NotificationService = new NotificationRepository();

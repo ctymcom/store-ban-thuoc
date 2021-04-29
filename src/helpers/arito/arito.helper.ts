@@ -700,6 +700,7 @@ export class AritoHelper {
           content: d["content"],
           link: d["link"],
           controller: d["controller"],
+          status: d["status"],
         })) as INotification[],
         paging: {
           limit: pageInfo["pagecount"] || 0,
@@ -1218,6 +1219,21 @@ export class AritoHelper {
         itemCount: itemCount,
         status: draft ? 0 : 1,
       };
+    });
+  }
+  static markAsReadMessage(
+    data: {
+      notifyId: number;
+      userId: number;
+    },
+    token: string
+  ) {
+    return Axios.post(`${this.host}/Notification/MarkAsReadMessage`, {
+      token: token,
+      data: { "#detail": [{ id: data.notifyId, user_id: data.userId }] },
+    }).then((res) => {
+      this.handleError(res);
+      return res.data?.msg;
     });
   }
 }

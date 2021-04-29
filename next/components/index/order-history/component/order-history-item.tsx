@@ -13,22 +13,13 @@ interface PropsType extends ReactProps {
   order: Order;
 }
 export function OrderHistoryItem({ order }: PropsType) {
-  const [openRateOrderDialog, setOpenRateOrderDialog] = useState(true);
+  const [openRateOrderDialog, setOpenRateOrderDialog] = useState(false);
 
   const { completeOrder } = useOrdeHistoryContext();
   const { reOrder } = useCart();
   const router = useRouter();
   return (
     <>
-      {order.status == 7 && (
-        <RateOrderDialog
-          isOpen={openRateOrderDialog}
-          onClose={setOpenRateOrderDialog}
-          title="Đánh giá đơn hàng"
-          width="550px"
-          orderId={order.id}
-        />
-      )}
       <div className="flex flex-col sm:flex-row justify-between items-center text-gray-700 border-b py-4 md:py-3">
         <div className="flex-grow w-full sm:w-auto">
           <div className="mb-1">
@@ -68,17 +59,26 @@ export function OrderHistoryItem({ order }: PropsType) {
 
         <div className="flex-grow-0 flex-shrink-0 flex-wrap w-full sm:w-auto flex">
           {order.status == 7 && (
-            <Button
-              accent
-              text="Xác nhận đơn"
-              className="rounded-sm whitespace-nowrap mt-2 md:mt-0"
-              asyncLoading
-              onClick={async () => {
-                await completeOrder(order.id).then((res) => {
-                  if (res) setOpenRateOrderDialog(true);
-                });
-              }}
-            />
+            <>
+              <Button
+                accent
+                text="Xác nhận đơn"
+                className="rounded-sm whitespace-nowrap mt-2 md:mt-0"
+                asyncLoading
+                onClick={async () => {
+                  await completeOrder(order.id).then((res) => {
+                    if (res) setOpenRateOrderDialog(true);
+                  });
+                }}
+              />
+              <RateOrderDialog
+                isOpen={openRateOrderDialog}
+                onClose={setOpenRateOrderDialog}
+                title="Đánh giá đơn hàng"
+                width="550px"
+                orderId={order.id}
+              />
+            </>
           )}
           <Link href={{ pathname: "/profile/order-details", query: { id: order.id } }}>
             <a className="btn-primary hover:underline ml-2 whitespace-nowrap mt-2 md:mt-0">

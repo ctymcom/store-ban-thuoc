@@ -19,9 +19,13 @@ export default {
         if (!order) {
           throw Error("Đơn hàng không tồn tại");
         }
-        order.status = 8;
-        await order.save();
-        return AritoHelper.completeOrder(order.code.toString(), context.tokenData.ref);
+        return AritoHelper.completeOrder(order.code.toString(), context.tokenData.ref).then(
+          async (res) => {
+            order.status = 8;
+            await order.save();
+            return res;
+          }
+        );
       },
     },
   },
