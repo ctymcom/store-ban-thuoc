@@ -9,6 +9,7 @@ export const PromotionContext = createContext<{
   selectedPromotion?: Promotion;
   setSelectedPromotion?: (item: Promotion) => void;
   applyPromotion?: () => void;
+  loadAll?: () => Promise<any>;
 }>({});
 
 export function PromotionProvider(props) {
@@ -26,13 +27,17 @@ export function PromotionProvider(props) {
     }
   };
 
-  useEffect(() => {
-    PromotionService.getAll().then((res) => {
+  const loadAll = () => {
+    return PromotionService.getAll({ cache: false }).then((res) => {
       setListPromotion(cloneDeep(res.data));
       if (promotion) {
         setSelectedPromotion(res.data.find((item) => item.code === promotion));
       }
     });
+  };
+
+  useEffect(() => {
+    loadAll();
   }, []);
   return (
     <PromotionContext.Provider
@@ -41,6 +46,7 @@ export function PromotionProvider(props) {
         setSelectedPromotion,
         selectedPromotion,
         applyPromotion,
+        loadAll,
       }}
     >
       {props.children}
