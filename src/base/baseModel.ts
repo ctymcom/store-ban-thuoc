@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import DataLoader from "dataloader";
 import _ from "lodash";
 import uniqueValidator from "mongoose-unique-validator";
-import { LRUMap } from "lru_map";
+import { LRUMap } from "@jtfell/lru-map";
 import RedisDataLoader from "redis-dataloader";
 import Redis from "redis";
 import { configs } from "../configs";
@@ -50,7 +50,13 @@ export function ModelLoader<T>(
   } else {
     loader = new DataLoader<string, T>(
       batchFunction,
-      { cacheMap: new LRUMap(100), cache } // Giới hạn chỉ cache 100 item sử dụng nhiêu nhất.
+      {
+        cacheMap: new LRUMap({
+          maxSize: 100,
+          maxAge: 60, // 1 phút
+        }),
+        cache,
+      } // Giới hạn chỉ cache 100 item sử dụng nhiêu nhất.
     );
   }
   if (modelHook) {

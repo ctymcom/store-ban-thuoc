@@ -14,6 +14,7 @@ export class SyncUserNotificationJob {
   static async execute(job: Job) {
     console.log("Execute Job " + SyncUserNotificationJob.jobName, moment().format());
     try {
+      const currentDate = new Date();
       await AritoHelper.setImageToken();
       console.log(chalk.cyan("==> Động bộ thông báo khách hàng..."));
       const updatedAt = await NotificationModel.findOne()
@@ -34,8 +35,8 @@ export class SyncUserNotificationJob {
             .find({ code: d.code })
             .upsert()
             .updateOne({
-              $setOnInsert: { createdAt: new Date() },
-              $set: { ...d, updatedAt: new Date(), syncAt: new Date() },
+              $setOnInsert: { createdAt: currentDate },
+              $set: { ...d, updatedAt: currentDate, syncAt: currentDate },
             });
         });
         if (data.paging.page == data.paging.pageCount) break;

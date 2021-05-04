@@ -16,6 +16,7 @@ export class SyncOrderJob {
   }
   static async execute(job: Job) {
     console.log("Execute Job " + SyncOrderJob.jobName, moment().format());
+    const currentDate = new Date();
     try {
       await AritoHelper.setImageToken();
       console.log(chalk.cyan("==> Động bộ đơn hàng..."));
@@ -40,7 +41,7 @@ export class SyncOrderJob {
         for (const d of data.data) {
           const setData = {
             ...d,
-            updatedAt: new Date(),
+            updatedAt: currentDate,
             addressId: d.addressId,
             fullAddress: d.fullAddress,
             contactName: get(addresses, d.addressId + ".contactName", ""),
@@ -55,7 +56,7 @@ export class SyncOrderJob {
               productName: products[i.productCode]?.name,
               productId: products[i.productCode]?._id,
             })),
-            syncAt: new Date(),
+            syncAt: currentDate,
           };
           bulk.find({ code: d.code }).upsert().updateOne({ $set: setData });
         }

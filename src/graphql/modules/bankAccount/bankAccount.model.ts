@@ -19,6 +19,7 @@ export type IBankAccount = BaseDocument & {
   taxCode?: string; // Mã Số thuế
   note?: string; // Ghi chú
   branch?: string; // Chi nhánh
+  syncAt?: Date;
 };
 
 const bankAccountSchema = new Schema(
@@ -38,6 +39,7 @@ const bankAccountSchema = new Schema(
     taxCode: { type: String },
     note: { type: String },
     branch: { type: String },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );

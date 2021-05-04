@@ -13,13 +13,14 @@ export class SyncPromotionJob {
   static async execute(job: Job) {
     console.log("Execute Job " + SyncPromotionJob.jobName, moment().format());
     try {
+      const currentDate = new Date();
       await AritoHelper.setImageToken();
       console.log(chalk.cyan("==> Động bộ khuyến mãi..."));
       const updatedAt = await PromotionModel.findOne()
-        .sort({ updatedAt: -1 })
+        .sort({ syncAt: -1 })
         .exec()
         .then((res) => {
-          return res ? res.updatedAt : null;
+          return res ? res.syncAt : null;
         });
       let data = await AritoHelper.getAllPromotion(1, updatedAt);
       const bulk = PromotionModel.collection.initializeUnorderedBulkOp();
@@ -30,8 +31,8 @@ export class SyncPromotionJob {
             .find({ code: d.code })
             .upsert()
             .updateOne({
-              $setOnInsert: { createdAt: new Date() },
-              $set: { ...d, updatedAt: new Date() },
+              $setOnInsert: { createdAt: currentDate },
+              $set: { ...d, updatedAt: currentDate, syncAt: currentDate },
             });
         });
         if (data.paging.page == data.paging.pageCount) break;

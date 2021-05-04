@@ -10,6 +10,7 @@ export type IAddress = BaseDocument & {
   districtId?: string;
   ward?: string;
   wardId?: string;
+  syncAt?: Date;
 };
 
 const addressSchema = new Schema(
@@ -20,6 +21,7 @@ const addressSchema = new Schema(
     districtId: { type: String },
     ward: { type: String },
     wardId: { type: String },
+    syncAt: { type: Date },
   },
   { timestamps: true, collation: { locale: "vi" } }
 );

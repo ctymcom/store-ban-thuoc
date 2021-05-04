@@ -6,12 +6,14 @@ const Schema = mongoose.Schema;
 export type IIngredient = BaseDocument & {
   code?: string; // Mã hoạt chất
   name?: string; // Tên hoạt chất
+  syncAt?: Date;
 };
 
 const ingredientSchema = new Schema(
   {
     code: { type: String, required: true },
     name: { type: String, required: true },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );

@@ -17,10 +17,10 @@ export class SyncLocationDataJob {
     await AritoHelper.setImageToken();
     console.log(chalk.cyan("==> Đồng bộ dữ liệu địa chỉ..."));
     const locationUpdatedAt = await AddressModel.findOne()
-      .sort({ updatedAt: -1 })
+      .sort({ syncAt: -1 })
       .exec()
       .then((res) => {
-        return res ? res.updatedAt : null;
+        return res ? res.syncAt : null;
       });
     console.log(chalk.yellow("====> Đồng bộ tỉnh thành..."));
     await syncProvince(locationUpdatedAt);
@@ -32,6 +32,7 @@ export class SyncLocationDataJob {
   }
 }
 async function syncWard(updatedAt?: Date) {
+  const currentDate = new Date();
   let wardData = await AritoHelper.getAllWard(1, updatedAt);
   const wardBulk = AddressModel.collection.initializeUnorderedBulkOp();
   do {
@@ -46,7 +47,7 @@ async function syncWard(updatedAt?: Date) {
         .find({ wardId: d.id })
         .upsert()
         .updateOne({
-          $setOnInsert: { createdAt: new Date() },
+          $setOnInsert: { createdAt: currentDate },
           $set: {
             provinceId: get(districts, `${d.districtId}.provinceId`, ""),
             province: get(districts, `${d.districtId}.province`, ""),
@@ -54,7 +55,8 @@ async function syncWard(updatedAt?: Date) {
             district: get(districts, `${d.districtId}.district`, ""),
             wardId: d.id,
             ward: d.name,
-            updatedAt: new Date(),
+            updatedAt: currentDate,
+            syncAt: currentDate,
           },
         });
     });
@@ -67,6 +69,7 @@ async function syncWard(updatedAt?: Date) {
   }
 }
 async function syncDistrict(updatedAt?: Date) {
+  const currentDate = new Date();
   let districtData = await AritoHelper.getAllDistrict(1, updatedAt);
   const districtBulk = AddressModel.collection.initializeUnorderedBulkOp();
   do {
@@ -81,13 +84,14 @@ async function syncDistrict(updatedAt?: Date) {
         .find({ districtId: d.id })
         .upsert()
         .updateOne({
-          $setOnInsert: { createdAt: new Date() },
+          $setOnInsert: { createdAt: currentDate },
           $set: {
             provinceId: get(provinces, `${d.provinceId}.provinceId`, ""),
             province: get(provinces, `${d.provinceId}.province`, ""),
             districtId: d.id,
             district: d.name,
-            updatedAt: new Date(),
+            updatedAt: currentDate,
+            syncAt: currentDate,
           },
         });
     });
@@ -100,6 +104,7 @@ async function syncDistrict(updatedAt?: Date) {
   }
 }
 async function syncProvince(updatedAt?: Date) {
+  const currentDate = new Date();
   let provinceData = await AritoHelper.getAllProvince(1, updatedAt);
   const provinceBulk = AddressModel.collection.initializeUnorderedBulkOp();
   do {
@@ -109,11 +114,12 @@ async function syncProvince(updatedAt?: Date) {
         .find({ provinceId: d.id })
         .upsert()
         .updateOne({
-          $setOnInsert: { createdAt: new Date() },
+          $setOnInsert: { createdAt: currentDate },
           $set: {
             provinceId: d.id,
             province: d.name,
-            updatedAt: new Date(),
+            updatedAt: currentDate,
+            syncAt: currentDate,
           },
         });
     });

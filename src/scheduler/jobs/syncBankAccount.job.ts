@@ -12,14 +12,15 @@ export class SyncBankAccountJob {
   }
   static async execute(job: Job) {
     try {
+      const currentDate = new Date();
       console.log("Execute Job " + SyncBankAccountJob.jobName, moment().format());
       await AritoHelper.setImageToken();
       console.log(chalk.cyan("==> Đồng bộ tài khoản ngân hàng..."));
       const updatedAt = await BankAccountModel.findOne()
-        .sort({ updatedAt: -1 })
+        .sort({ syncAt: -1 })
         .exec()
         .then((res) => {
-          return res ? res.updatedAt : null;
+          return res ? res.syncAt : null;
         });
       let data = await AritoHelper.getAllBankAccount(1, updatedAt);
 
@@ -30,8 +31,8 @@ export class SyncBankAccountJob {
             .find({ bankAccount: d.bankAccount })
             .upsert()
             .updateOne({
-              $setOnInsert: { createdAt: new Date() },
-              $set: { ...d, updatedAt: new Date() },
+              $setOnInsert: { createdAt: currentDate },
+              $set: { ...d, updatedAt: currentDate, syncAt: currentDate },
             });
         });
         if (data.paging.page == data.paging.pageCount) break;
