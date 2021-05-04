@@ -1,6 +1,4 @@
 import { gql } from "apollo-server-express";
-import { Context } from "../../context";
-import { productTabService } from "../productTab/productTab.service";
 
 export default {
   schema: gql`
