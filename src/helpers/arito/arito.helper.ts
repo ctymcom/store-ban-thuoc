@@ -1217,7 +1217,7 @@ export class AritoHelper {
           position: t["line"],
         })),
         itemCount: itemCount,
-        status: draft ? 0 : 1,
+        status: get(res.data, "data.master.0.status"),
       };
     });
   }
