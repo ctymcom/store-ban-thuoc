@@ -12,6 +12,7 @@ export type ICategory = BaseDocument & {
   code?: string; // Mã nhóm
   name?: string; // Tên nhóm
   parentIds?: string[]; // Nhóm cha
+  syncAt?: Date;
 };
 
 const categorySchema = new Schema(
@@ -20,6 +21,7 @@ const categorySchema = new Schema(
     code: { type: String, required: true },
     name: { type: String, required: true },
     parentIds: { type: [{ type: Schema.Types.ObjectId, ref: "Category" }], default: [] },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );

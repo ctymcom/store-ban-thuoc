@@ -10,6 +10,7 @@ export type IProductComment = BaseDocument & {
   imark?: number; // điểm đánh giá
   content?: string; // nội dung đánh giá
   reviewer?: string; // người đánh giá
+  syncAt?: Date;
 };
 
 const productCommentSchema = new Schema(
@@ -20,6 +21,7 @@ const productCommentSchema = new Schema(
     imark: { type: Number, required: true },
     content: { type: String, required: true },
     reviewer: { type: String, required: true },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );

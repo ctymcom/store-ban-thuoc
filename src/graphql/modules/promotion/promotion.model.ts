@@ -7,6 +7,7 @@ export type IPromotion = BaseDocument & {
   code?: string; // Mã khuyến mãi
   name?: string; // Tên khuyến mãi
   description?: string; // Mô tả
+  syncAt?: Date;
 };
 
 const promotionSchema = new Schema(
@@ -14,6 +15,7 @@ const promotionSchema = new Schema(
     code: { type: String, required: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );

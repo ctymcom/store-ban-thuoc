@@ -12,6 +12,7 @@ export type IUserPointLog = BaseDocument & {
   status?: number; // Trạng thái
   value?: number; // Giá trị
   convertedValue?: number; // Tiền chuyển đổi
+  syncAt?: Date;
 };
 
 const userPointLogSchema = new Schema(
@@ -24,6 +25,7 @@ const userPointLogSchema = new Schema(
     status: { type: Number, required: true },
     value: { type: Number, required: true },
     convertedValue: { type: Number, required: true },
+    syncAt: { type: Date },
   },
   { timestamps: true }
 );

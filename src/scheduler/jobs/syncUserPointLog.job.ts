@@ -14,14 +14,15 @@ export class SyncUserPointLogJob {
   static async execute(job: Job) {
     console.log("Execute Job " + SyncUserPointLogJob.jobName, moment().format());
     try {
+      const currentDate = new Date();
       await AritoHelper.setImageToken();
       console.log(chalk.cyan("==> Động bộ điểm thưởng..."));
       const reasons = await AritoHelper.getAllReason().then((res) => keyBy(res, "code"));
       const updatedAt = await UserPointLogModel.findOne()
-        .sort({ updatedAt: -1 })
+        .sort({ syncAt: -1 })
         .exec()
         .then((res) => {
-          return res ? res.updatedAt : moment().set("year", 2020).toDate();
+          return res ? res.syncAt : moment().set("year", 2020).toDate();
         });
       let data = await AritoHelper.getAllReasonPoint(1, updatedAt);
       const bulk = UserPointLogModel.collection.initializeUnorderedBulkOp();
@@ -36,7 +37,8 @@ export class SyncUserPointLogJob {
                 ...d,
                 note: reasons[d.reasonCode].name,
                 note2: reasons[d.reasonCode].name2,
-                updatedAt: new Date(),
+                updatedAt: currentDate,
+                syncAt: currentDate,
               },
             });
         });

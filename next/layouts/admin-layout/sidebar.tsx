@@ -21,6 +21,11 @@ const SIDEBAR_MENUS = [
         path: "/admin/settings",
         permissions: [4],
       },
+      {
+        title: "Thời gian đồng bộ",
+        path: "/admin/report",
+        permissions: [4],
+      },
     ],
   },
 ];

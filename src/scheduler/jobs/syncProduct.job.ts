@@ -55,10 +55,10 @@ export class SyncProductJob {
 }
 async function syncDeletedProduct() {
   const updatedAt = await ProductModel.findOne()
-    .sort({ updatedAt: -1 })
+    .sort({ syncAt: -1 })
     .exec()
     .then((res) => {
-      return res ? res.updatedAt : null;
+      return res ? res.syncAt : null;
     });
   let deletedProduct = await AritoHelper.getAllDeletedProducts(1, updatedAt);
   const bulk = ProductModel.collection.initializeUnorderedBulkOp();
@@ -194,6 +194,7 @@ async function syncProductCountry() {
   }
 }
 async function syncProduct(fullSync = false) {
+  const currentDate = new Date();
   if (fullSync) {
     console.log(chalk.cyan("====> Động bộ Full sản phẩm"));
   }
@@ -252,12 +253,12 @@ async function syncProduct(fullSync = false) {
       bulkData.push({
         find: { code: d.code },
         update: {
-          $setOnInsert: { createdAt: new Date() },
+          $setOnInsert: { createdAt: currentDate },
           $set: {
             ...d,
             tabs,
             tagDetails,
-            updatedAt: new Date(),
+            updatedAt: currentDate,
             categoryIds: compact(
               d.categoryIds.map((code: string) => get(categoryData, `${code}._id`, null))
             ),
@@ -267,7 +268,7 @@ async function syncProduct(fullSync = false) {
             ingredientNames: compact(
               d.ingredientIds.map((code: string) => get(ingredientData, `${code}._id`, null))
             ),
-            syncAt: new Date(),
+            syncAt: currentDate,
             origin: productCountryData[d.origin] ? productCountryData[d.origin].name : d.origin,
           },
         },
@@ -293,10 +294,11 @@ async function syncProduct(fullSync = false) {
 }
 
 async function syncCategory() {
+  const currentDate = new Date();
   const categoryUpdatedAt = await CategoryModel.findOne()
-    .sort({ updatedAt: -1 })
+    .sort({ syncAt: -1 })
     .then((res) => {
-      return res ? res.updatedAt : null;
+      return res ? res.syncAt : null;
     });
   for (const type of Object.values(CategoryType)) {
     console.log(chalk.yellow("====> Đồng bộ danh mục loại", type));
@@ -319,11 +321,12 @@ async function syncCategory() {
           .find({ code: d.code })
           .upsert()
           .updateOne({
-            $setOnInsert: { createdAt: new Date() },
+            $setOnInsert: { createdAt: currentDate },
             $set: {
               ...d,
               parentIds: parentCategory ? [parentCategory._id, ...parentCategory.parentIds] : [],
-              updatedAt: new Date(),
+              updatedAt: currentDate,
+              syncAt: currentDate,
             },
           });
       });
@@ -341,11 +344,12 @@ async function syncCategory() {
   }
 }
 async function syncIngredient() {
+  const currentDate = new Date();
   const ingredientUpdatedAt = await IngredientModel.findOne()
-    .sort({ updatedAt: -1 })
+    .sort({ syncAt: -1 })
     .exec()
     .then((res) => {
-      return res ? res.updatedAt : null;
+      return res ? res.syncAt : null;
     });
   let getIngredientResult = await AritoHelper.getAllIngredient(1, ingredientUpdatedAt);
   const ingredientBulk = IngredientModel.collection.initializeUnorderedBulkOp();
@@ -356,8 +360,8 @@ async function syncIngredient() {
         .find({ code: d.code })
         .upsert()
         .updateOne({
-          $setOnInsert: { createdAt: new Date() },
-          $set: { ...d, updatedAt: new Date() },
+          $setOnInsert: { createdAt: currentDate },
+          $set: { ...d, updatedAt: currentDate, syncAt: currentDate },
         });
     });
     if (getIngredientResult.paging.page == getIngredientResult.paging.pageCount) break;
@@ -372,11 +376,12 @@ async function syncIngredient() {
   }
 }
 async function syncProductComment() {
+  const currentDate = new Date();
   const updatedAt = await ProductCommentModel.findOne()
-    .sort({ updatedAt: -1 })
+    .sort({ syncAt: -1 })
     .exec()
     .then((res) => {
-      return res ? res.updatedAt : null;
+      return res ? res.syncAt : null;
     });
   let data = await AritoHelper.getAllComment(1, updatedAt);
   const bulk = ProductCommentModel.collection.initializeUnorderedBulkOp();
@@ -395,14 +400,15 @@ async function syncProductComment() {
               .find({ code: d.code })
               .upsert()
               .updateOne({
-                $setOnInsert: { createdAt: new Date() },
+                $setOnInsert: { createdAt: currentDate },
                 $set: {
-                  updatedAt: new Date(),
+                  updatedAt: currentDate,
                   productId: products[d.ref]._id,
                   productCode: d.ref,
                   imark: d.imark,
                   content: d.content,
                   reviewer: d.reviewer,
+                  syncAt: currentDate,
                 },
               });
           }
