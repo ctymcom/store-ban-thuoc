@@ -421,6 +421,7 @@ export class AritoHelper {
           taxCode: d["ma_so_thue"],
           note: d["ghi_chu"],
           branch: d["chi_nhanh"],
+          isShow: d["web_yn"] == 1,
         })) as IBankAccount[],
         paging: {
           limit: pageInfo["pagecount"] || 0,

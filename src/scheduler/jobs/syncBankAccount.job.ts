@@ -16,13 +16,13 @@ export class SyncBankAccountJob {
       console.log("Execute Job " + SyncBankAccountJob.jobName, moment().format());
       await AritoHelper.setImageToken();
       console.log(chalk.cyan("==> Đồng bộ tài khoản ngân hàng..."));
-      const updatedAt = await BankAccountModel.findOne()
-        .sort({ syncAt: -1 })
-        .exec()
-        .then((res) => {
-          return res ? res.syncAt : null;
-        });
-      let data = await AritoHelper.getAllBankAccount(1, updatedAt);
+      // const updatedAt = await BankAccountModel.findOne()
+      //   .sort({ syncAt: -1 })
+      //   .exec()
+      //   .then((res) => {
+      //     return res ? res.syncAt : null;
+      //   });
+      let data = await AritoHelper.getAllBankAccount(1);
 
       const bulk = BankAccountModel.collection.initializeUnorderedBulkOp();
       do {
@@ -36,7 +36,7 @@ export class SyncBankAccountJob {
             });
         });
         if (data.paging.page == data.paging.pageCount) break;
-        data = await AritoHelper.getAllBankAccount(data.paging.page + 1, updatedAt);
+        data = await AritoHelper.getAllBankAccount(data.paging.page + 1);
       } while (data.paging.page <= data.paging.pageCount);
       if (bulk.length > 0) {
         console.log(chalk.yellow(`====> Đồng bộ ${bulk.length} ngân hàng...`));

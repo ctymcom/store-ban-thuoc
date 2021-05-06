@@ -68,6 +68,6 @@ export function InitRepeatJobs() {
   SyncBankAccountJob.create({})
     .repeatEvery("5 minute", { skipImmediate: true })
     .unique({ name: SyncBankAccountJob.jobName })
-    .save();
-  // .then((res) => res.run());
+    .save()
+    .then((res) => res.run());
 }

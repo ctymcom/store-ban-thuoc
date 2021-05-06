@@ -20,6 +20,7 @@ export type IBankAccount = BaseDocument & {
   note?: string; // Ghi chú
   branch?: string; // Chi nhánh
   syncAt?: Date;
+  isShow?: boolean; // Hiển thị website
 };
 
 const bankAccountSchema = new Schema(
@@ -40,6 +41,7 @@ const bankAccountSchema = new Schema(
     note: { type: String },
     branch: { type: String },
     syncAt: { type: Date },
+    isShow: { type: Boolean },
   },
   { timestamps: true }
 );
