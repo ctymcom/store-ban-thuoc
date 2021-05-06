@@ -31,6 +31,8 @@ export type IOrder = BaseDocument & {
   status?: number; // Trạng thái đơn hàng
   itemCount?: number; // Số lượng sản phẩm
   syncAt?: Date; // Ngày đồng bộ lần cuối
+  partnerMethod?: string; // Phương thức kết nối
+  partnerData?: string; // Dữ liệu kết nối
 };
 
 const orderSchema = new Schema(
@@ -61,6 +63,8 @@ const orderSchema = new Schema(
     status: { type: Number },
     itemCount: { type: Number, min: 0, default: 0 },
     syncAt: { type: Date },
+    partnerMethod: { type: String },
+    partnerData: { type: String },
   },
   { timestamps: true }
 );

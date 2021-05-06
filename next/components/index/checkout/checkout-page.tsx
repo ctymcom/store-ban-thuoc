@@ -17,6 +17,7 @@ import gql from "graphql-tag";
 import router from "next/router";
 import ListCartCheckout from "./components/list-cart-checkout";
 import { Textarea } from "../../shared/utilities/form/textarea";
+import { Order, OrderRepository, OrderService } from "../../../lib/repo/order.repo";
 
 export function CheckOutPage() {
   const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
@@ -83,29 +84,7 @@ export function CheckOutPage() {
             ${mutationName} (
               data: $data
             ) {
-              id
-              createdAt
-              updatedAt
-              userId
-              code
-              orderNumber
-              addressId
-              fullAddress
-              contactName
-              address
-              provinceId
-              districtId
-              wardId
-              phone
-              location
-              subtotal
-              discount
-              amount
-              promotionCode
-              paymentMethod
-              deliveryMethod
-              usePoint
-              status
+              ${OrderService.fullFragment}
             }
           }
         `,
@@ -120,7 +99,8 @@ export function CheckOutPage() {
           listItemNew.push(item);
         }
       });
-      let orId = res.data.createOrder.orderNumber;
+      const order = res.data.createOrder as Order;
+      let orId = order.orderNumber;
 
       let task = [
         localStorage.setItem("idOrder", orId),
@@ -137,7 +117,11 @@ export function CheckOutPage() {
       ];
       let taskend = await Promise.all(task);
       if (taskend) {
-        router.replace("/complete");
+        if (order.partnerData && order.partnerData != "") {
+          router.replace(order.partnerData);
+        } else {
+          router.replace("/complete");
+        }
       }
     }
   };

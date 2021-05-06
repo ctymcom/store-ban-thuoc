@@ -78,6 +78,10 @@ const schema = gql`
     status: Int
     "Số lượng sản phẩm"
     itemCount: Int
+    "Phương thức kết nối"
+    partnerMethod: String
+    "Dữ liệu kết nối"
+    partnerData: String
   }
 
   type OrderPageData {
