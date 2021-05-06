@@ -45,6 +45,8 @@ export interface Order extends BaseModel {
   usePoint: boolean;
   status: number;
   itemCount: number;
+  partnerMethod?: string; // Phương thức kết nối
+  partnerData?: string; // Dữ liệu kết nối
 }
 
 export class OrderRepository extends CrudRepository<Order> {
@@ -75,6 +77,8 @@ export class OrderRepository extends CrudRepository<Order> {
     usePoint: Boolean
     status: String
     itemCount: Int
+    partnerMethod: String
+    partnerData: String
   `);
   fullFragment = this.parseFragment(`
     id: String
@@ -132,6 +136,8 @@ export class OrderRepository extends CrudRepository<Order> {
     usePoint: Boolean
     status: String
     itemCount: Int
+    partnerMethod: String
+    partnerData: String
   `);
 
   async completeOrder(orderId: string) {

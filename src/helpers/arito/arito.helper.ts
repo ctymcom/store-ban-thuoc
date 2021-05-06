@@ -1223,6 +1223,8 @@ export class AritoHelper {
         })),
         itemCount: itemCount,
         status: get(res.data, "data.master.0.status"),
+        partnerMethod: get(res.data, "data.master.0.$partner_method"),
+        partnerData: get(res.data, "data.master.0.$partner_data"),
       };
     });
   }
