@@ -1,3 +1,4 @@
+import { set } from "lodash";
 import { ROLES } from "../../../constants/role.const";
 import { Context } from "../../context";
 import { bankAccountService } from "./bankAccount.service";
@@ -5,6 +6,7 @@ import { bankAccountService } from "./bankAccount.service";
 const Query = {
   getAllBankAccount: async (root: any, args: any, context: Context) => {
     context.auth(ROLES.ADMIN_EDITOR_MEMBER_CUSTOMER);
+    set(args, "q.filter.isShow", true);
     return bankAccountService.fetch(args.q);
   },
   getOneBankAccount: async (root: any, args: any, context: Context) => {
