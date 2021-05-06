@@ -213,7 +213,7 @@ async function syncProduct(fullSync = false) {
     productUpdatedAt = await ProductModel.findOne()
       .sort({ syncAt: -1 })
       .exec()
-      .then((res) => (res ? moment(res.syncAt).subtract(1, "hours").toDate() : null));
+      .then((res) => (res ? moment().subtract(1, "hours").toDate() : null));
   }
   let getProductResult = await AritoHelper.getAllProduct(1, productUpdatedAt);
   const bulkData: any[] = [];
@@ -250,7 +250,8 @@ async function syncProduct(fullSync = false) {
           ...productTags[t].toJSON(),
           outOfDate: productTags[t].code == "DATEOFF" ? d.outOfDate : null,
         }));
-      bulkData.push({
+
+      const data = {
         find: { code: d.code },
         update: {
           $setOnInsert: { createdAt: currentDate },
@@ -272,7 +273,8 @@ async function syncProduct(fullSync = false) {
             origin: productCountryData[d.origin] ? productCountryData[d.origin].name : d.origin,
           },
         },
-      });
+      };
+      bulkData.push(data);
     });
     if (getProductResult.paging.page == getProductResult.paging.pageCount) break;
     getProductResult = await AritoHelper.getAllProduct(
