@@ -156,7 +156,11 @@ export class AritoHelper {
     return Axios.post(`${this.host}/Item/GetList`, {
       token: this.imageToken,
       memvars: [
-        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        [
+          "datetime2",
+          "DT",
+          updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : "2020-01-01 15:16:00",
+        ],
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
@@ -181,7 +185,7 @@ export class AritoHelper {
           categoryIds: compact([d["nh_vt3"], d["nh_vt2"], d["nh_vt1"]]),
           barcode: d["ma_barcode"],
           origin: d["nuoc_sx"],
-          ingredientIds: compact(d["ma_hc"].split(",")),
+          ingredientIds: compact((get(d, "ma_hc", "") || "").split(",")),
           packing: d["quy_cach"],
           dosageForms: d["dang_bao"],
           antibiotic: d["khang_sinh"],
@@ -209,7 +213,7 @@ export class AritoHelper {
           saleExpiredDate: d["ngay_hl"] ? moment(d["ngay_hl"]).endOf("date").toDate() : null,
           saleExpiredDate1: d["ngay_hl1"] ? moment(d["ngay_hl1"]).toDate() : null,
           saleExpiredDate2: d["ngay_hl2"] ? moment(d["ngay_hl2"]).endOf("date").toDate() : null,
-          tags: compact(get(d, "tags", "").split(",")).map((t: string) => t.trim()),
+          tags: compact((get(d, "tags", "") || "").split(",")).map((t: string) => t.trim()),
           priceGroups: get(priceGroupData, d["ma_vt"], []),
           outOfDate: d["ngay_can_date"] ? moment(d["ngay_can_date"]).toDate() : null,
           upRate: d["tl_tang_gia"],
