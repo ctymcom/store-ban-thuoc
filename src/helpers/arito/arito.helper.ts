@@ -54,7 +54,7 @@ export class AritoHelper {
     }
   }
   static async setImageToken() {
-    return Axios.post(`${this.host}/GetToken`, { ClientID: "KHOTHUOCSI" }).then((res) => {
+    return Axios.post(`${this.host}/GetToken`, { ClientID: this.clientId }).then((res) => {
       this.handleError(res);
       CacheHelper.set("arito-image-token", res.data.value);
     });
