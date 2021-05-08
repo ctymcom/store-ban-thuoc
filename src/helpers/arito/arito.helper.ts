@@ -220,6 +220,7 @@ export class AritoHelper {
           downRate: d["tl_giam_gia"],
           slug: d["ten_url"],
           shortDescription: d["ten_ngan"],
+          status: d["status"],
           __data: d,
         })) as IProduct[],
         paging: {

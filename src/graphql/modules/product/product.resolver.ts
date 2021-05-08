@@ -13,6 +13,7 @@ import { Types } from "mongoose";
 const Query = {
   getAllProduct: async (root: any, args: any, context: Context) => {
     set(args, "q.filter.salePrice", { $gt: 0 });
+    set(args, "q.filter.status", 1);
     const hiddenCategories = await SettingHelper.load(SettingKey.HIDDEN_PRODUCT_OF_CATEGORIES);
     if (hiddenCategories.length > 0) {
       const categories = await CategoryModel.find({ name: { $in: hiddenCategories } });
