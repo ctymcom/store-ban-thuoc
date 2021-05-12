@@ -1,15 +1,27 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { NextSeo } from "next-seo";
+import { HomePage } from "../components/index/home/home-page";
 import { DefaultLayout } from "../layouts/default-layout";
-function Index() {
-  const router = useRouter();
+import SEO from "../lib/helpers/seo";
 
-  useEffect(() => {
-    router.replace("/home");
-  }, []);
+export default function Index(props) {
 
-  return null;
+  return (
+    <>
+      <NextSeo {...props.seo} />
+      <HomePage />
+    </>
+  );
 }
 
 Index.Layout = DefaultLayout;
-export default Index;
+
+export async function getServerSideProps(context) {
+  const seo = await SEO("Trang chủ");
+  return {
+    props: JSON.parse(
+      JSON.stringify({
+        seo,
+      })
+    ),
+  };
+}
