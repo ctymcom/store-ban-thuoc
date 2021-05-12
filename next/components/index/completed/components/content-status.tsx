@@ -34,7 +34,7 @@ export function ContentStatus(props) {
           </p>
         </div>
         <div className=" mt-10">
-          <Link href={"/home"}>
+          <Link href={"/"}>
             <button className={`block w-3/5 mx-auto md:w-3/5 md:ml-10 btn-primary`}>
               Trở về trang chủ
             </button>
