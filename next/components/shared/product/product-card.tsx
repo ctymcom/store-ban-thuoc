@@ -131,7 +131,7 @@ export function ProductCard({ product, showGroup = true, ...props }: PropsType) 
                         {NumberPipe(product.salePrice, true)}
                       </span>
                       {product.basePrice > 0 && (
-                        <span className="sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">
+                        <span className="pt-0.5 pl-1 sm:pt-1.5 sm:pl-2 line-through text-sm text-gray-600">
                           {NumberPipe(product.basePrice, true)}
                         </span>
                       )}
