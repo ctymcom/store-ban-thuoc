@@ -255,7 +255,7 @@ export function FormProfile(props: PropsType) {
                   />
                   <p className="xl:mx-auto tracking-wider leading-5 whitespace-nowrap xs:text-12 sm:text-12 md:text-12 lg:text-14 text-gray-400 hidden xs:inline-block">
                     Dung lượng file tối đa 1MB.
-                    <span className="block xl:w-11/12 mx-auto">Định dạng: .JPEG, .PNG</span>
+                    <span className="block mx-auto">Định dạng: .JPEG, .PNG</span>
                   </p>
                 </div>
               </div>

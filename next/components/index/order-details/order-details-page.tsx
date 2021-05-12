@@ -28,7 +28,9 @@ export function OrderDetailsPage() {
     },
   ];
 
-  return order ? (
+  if (!order) return <Spinner />;
+
+  return (
     <>
       <RateOrderDialog
         isOpen={openRateOrderDialog}
@@ -78,7 +80,5 @@ export function OrderDetailsPage() {
         </div>
       </div>
     </>
-  ) : (
-    <Spinner />
   );
 }

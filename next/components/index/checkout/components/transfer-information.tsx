@@ -15,7 +15,7 @@ const TransferInformation = ({ bankInfo, ...props }: PropsType) => {
   };
   return (
     <div
-      className={`p-3 border rounded w-full xl:w-11/12 border-primary bg-green-50 text-16 my-4 ${props.className}`}
+      className={`p-3 border rounded w-full border-primary bg-green-50 text-16 my-4 ${props.className}`}
     >
       <div className="grid grid-cols-3 items-center leading-8">
         <p className="col-span-3 md:col-span-1 text-gray-400">Chủ tài khoản: </p>

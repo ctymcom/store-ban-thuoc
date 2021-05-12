@@ -18,6 +18,7 @@ import router from "next/router";
 import ListCartCheckout from "./components/list-cart-checkout";
 import { Textarea } from "../../shared/utilities/form/textarea";
 import { Order, OrderRepository, OrderService } from "../../../lib/repo/order.repo";
+import { BankAccounts } from "./components/bank-accounts";
 
 export function CheckOutPage() {
   const { cartTotal, cartProducts, setCartProducts, promotion, setPromotion, usePoint } = useCart();
@@ -39,7 +40,6 @@ export function CheckOutPage() {
     paymenMethods,
     deliveryMethods,
     policy,
-    accountBanks,
   } = useCheckoutContext();
   useEffect(() => {
     let listItemNew = [];
@@ -209,30 +209,9 @@ export function CheckOutPage() {
               checkList={paymenMethods}
             />
           </div>
-          <div className="w-full mt-4">
-            {showInfor ? (
-              <>
-                {accountBanks?.map((bankInfo: BankAccount, index) => {
-                  return (
-                    <TransferInformation
-                      bankInfo={bankInfo}
-                      key={bankInfo.id}
-                      className={index === 0 || showAllAccoutBank ? "" : "hidden"}
-                    />
-                  );
-                })}
-                <Button
-                  text={`${showAllAccoutBank ? "Ẩn bớt" : "...xem tất cả"}`}
-                  onClick={() => setShowAllAccoutBank(!showAllAccoutBank)}
-                  className="p-0 text-primary opacity-70 hover:opacity-100 m-0"
-                />
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
+          <div className="w-full mt-4">{showInfor && <BankAccounts />}</div>
         </div>
-        <div className="w-full xl:w-11/12 text-16 my-5">
+        <div className="w-full text-16 my-5">
           <h4 className="uppercase text-16">Ghi chú khác</h4>
           <p className="text-14 pb-2">
             Trường hợp không tìm được thuốc như mong muốn. Quý khách vui lòng điền yêu cầu vào bên
