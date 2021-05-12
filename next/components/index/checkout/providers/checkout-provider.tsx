@@ -14,8 +14,6 @@ export const CheckoutContext = createContext<
     paymenMethods: MethodCheckout[];
     deliveryMethods: MethodCheckout[];
     policy: string;
-    accountBanks: BankAccount[];
-    setAccountBanks: Function;
   }>
 >({});
 
@@ -26,7 +24,6 @@ export const CheckoutProvider = (props) => {
   const [paymenMethods, setPaymenMethods] = useState<MethodCheckout[]>(null);
   const [deliveryMethods, setDeliveryMethods] = useState<MethodCheckout[]>(null);
   const [loadingCheckout, setLoadingCheckout] = useState(false);
-  const [accountBanks, setAccountBanks] = useState<BankAccount[]>([]);
   const { user } = useAuth();
   useEffect(() => {
     setLoadingCheckout(true);
@@ -62,30 +59,6 @@ export const CheckoutProvider = (props) => {
           })),
         ]);
       }),
-      CheckoutService.getAllBankAccount().then((res) => {
-        setAccountBanks([
-          ...res.map((x) => ({
-            id: x.id,
-            createdAt: x.createdAt,
-            updatedAt: x.updatedAt,
-            unitID: x.unitID,
-            account: x.account,
-            bankAccount: x.bankAccount,
-            accountOwner: x.accountOwner,
-            bankName: x.bankName,
-            bankName2: x.bankName2,
-            province: x.province,
-            phone: x.phone,
-            fax: x.fax,
-            email: x.email,
-            homePage: x.homePage,
-            partner: x.partner,
-            taxCode: x.taxCode,
-            note: x.note,
-            branch: x.branch,
-          })),
-        ]);
-      }),
       SettingService.getAll({
         query: {
           limit: 0,
@@ -100,7 +73,6 @@ export const CheckoutProvider = (props) => {
     Promise.all(tasks)
       .then((res) => {
         setLoadingCheckout(false);
-        console.log(accountBanks);
       })
       .catch((err) => {});
   }, []);
@@ -116,8 +88,6 @@ export const CheckoutProvider = (props) => {
         paymenMethods,
         deliveryMethods,
         policy,
-        accountBanks,
-        setAccountBanks,
       }}
     >
       {props.children}

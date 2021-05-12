@@ -45,7 +45,7 @@ export function FormCheck(props: PropsType) {
   return (
     <>
       <h3 className="uppercase text-16 border-b-2 pb-2">{title}</h3>
-      <div className="w-full xl:w-11/12 block sm:flex gap-5">
+      <div className="w-full block sm:flex gap-5">
         {checkList ? (
           checkList.map((item: MethodCheckout) => {
             return (
