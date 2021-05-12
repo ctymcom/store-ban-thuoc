@@ -99,7 +99,7 @@ export function LayoutCart(props) {
           ) : (
             <div className="w-full sm:w-1/5 mx-auto mt-40 text-center">
               Bạn chưa có sản phẩm nào trong giỏ hàng?
-              <Link href="/home">
+              <Link href="/">
                 <button className="btn-primary my-6">Quay về trang chủ</button>
               </Link>
             </div>
