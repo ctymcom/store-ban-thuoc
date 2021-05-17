@@ -16,7 +16,7 @@ export function ProductTag({ tag, ...props }: PropsType) {
       tagContent = (
         <>
           <img className="h-5" src="/assets/img/flash.png" />
-          <span className="px-1">{tag.name}</span>
+          <span className="px-1 whitespace-nowrap">{tag.name}</span>
           <img className="h-5" src="/assets/img/flash.png" />
         </>
       );
@@ -27,7 +27,7 @@ export function ProductTag({ tag, ...props }: PropsType) {
       tagContent = (
         <>
           <img className="h-5" src="/assets/img/date.png" />
-          <span className="pl-1">{tag.name}</span>
+          <span className="pl-1 whitespace-nowrap">{tag.name}</span>
         </>
       );
       break;
@@ -38,7 +38,7 @@ export function ProductTag({ tag, ...props }: PropsType) {
       tagContent = (
         <>
           <img className="h-5" src="/assets/img/increase.png" />
-          <span className="pl-1">
+          <span className="pl-1 whitespace-nowrap">
             {tag.name} {props.product.upRate ? `${props.product.upRate}%` : ""}
           </span>
         </>
@@ -51,7 +51,7 @@ export function ProductTag({ tag, ...props }: PropsType) {
       tagContent = (
         <>
           <img className="h-5" src="/assets/img/decrease.png" />
-          <span className="pl-1">
+          <span className="pl-1 whitespace-nowrap">
             {tag.name} {props.product.downRate ? `${props.product.downRate}%` : ""}
           </span>
         </>
@@ -63,7 +63,7 @@ export function ProductTag({ tag, ...props }: PropsType) {
       tagContent = (
         <>
           <img className="h-5" src="/assets/img/hotsale.png" />
-          <span className="pl-1">{tag.name}</span>
+          <span className="pl-1 whitespace-nowrap">{tag.name}</span>
         </>
       );
       break;
