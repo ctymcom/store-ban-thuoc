@@ -55,7 +55,7 @@ export function PostDetailsPage() {
               )}
               <div className="text-gray-600 text-lg mt-4">{post.excerpt}</div>
               <div
-                className="ql-editor ql-snow mt-5"
+                className="ck-content mt-5"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               ></div>
             </div>
