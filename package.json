@@ -34,8 +34,10 @@
   "dependencies": {
     "@apollo/client": "^3.3.6",
     "@brainhubeu/react-carousel": "^1.19.26",
+    "@ckeditor/ckeditor5-react": "^3.0.2",
     "@headlessui/react": "^0.2.0",
     "@jtfell/lru-map": "^1.0.1",
+    "@lynxerious/ckeditor5-build-mcom": "^15.0.2",
     "@next/bundle-analyzer": "^10.0.5",
     "@popperjs/core": "^2.9.2",
     "@tippyjs/react": "^4.2.5",

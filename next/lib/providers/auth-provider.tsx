@@ -70,7 +70,7 @@ export function AuthProvider({ children }: any) {
         setUser(null);
         return false;
       }
-      if (!roles || (roles && roles.includes(decodedToken.user.role))) {
+      if (!roles || (roles && roles.includes(decodedToken?.user?.role))) {
         try {
           let user = await AritoUserService.userGetMe();
           setUser(user);
