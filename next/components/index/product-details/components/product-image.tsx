@@ -56,7 +56,7 @@ export function ProductImage(props) {
 
   return (
     <>
-      <img className="hidden" src={image?.imageL || ""} ref={ref} />
+      <img className="hidden" src={image?.imageL || "/assets/img/default.png"} ref={ref} />
       {(image && (
         <>
           {dimension && (
