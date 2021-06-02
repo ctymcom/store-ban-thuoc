@@ -65,10 +65,10 @@ export function ProductImage(props) {
                 smallImage: {
                   alt: "",
                   isFluidWidth: true,
-                  src: image.imageM,
+                  src: image.imageM || "/assets/img/default.png",
                 },
                 largeImage: {
-                  src: image.imageL,
+                  src: image.imageL || "/assets/img/default.png",
                   width: 1200,
                   height: 1200 / dimension,
                 },
@@ -92,18 +92,14 @@ export function ProductImage(props) {
                 </div>
             }
         </div> */}
-          <div className="list-slider-image w-full flex mt-4 overflow-x-scroll overflow-y-hidden h-36 ">
+          <div className="list-slider-image w-full flex mt-4 overflow-x-auto h-36 ">
             {product.images.map((item, index) => {
               return (
                 <img
                   key={index}
-                  className={`image-item object-cover mr-4 mb-2 rounded-sm p-1 box-border w-32
-                                ${
-                                  image.imageId == item.imageId
-                                    ? "active:border-green-500 active:border-2 opacity-60 transition-opacity"
-                                    : ""
-                                }`}
-                  src={item.imageS}
+                  className={`image-item object-cover cursor-pointer mr-4 mb-2  border-2 rounded-sm p-1 box-border w-32
+                                ${image.imageId == item.imageId ? "border-primary" : ""}`}
+                  src={item.imageS || "/assets/img/default.png"}
                   alt=""
                   onClick={() => handleChangeImage(item, index)}
                 />
