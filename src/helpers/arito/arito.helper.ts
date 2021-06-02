@@ -167,6 +167,7 @@ export class AritoHelper {
       this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       const imageData = keyBy(get(res.data, "data.images", []), "ma_vt");
+      const imagesData = groupBy(get(res.data, "data.images", []), "ma_vt");
       const priceGroupData = groupBy(
         get(res.data, "data.groupprice", []).map((g) => ({
           productCode: g["ma_vt"],
@@ -207,6 +208,7 @@ export class AritoHelper {
           description: d["mo_ta"],
           byt: d["sp_byt"],
           imageId: get(imageData, d["ma_vt"], {})["image_id"],
+          imageIds: get(imagesData, d["ma_vt"], []).map((i) => i["image_id"]),
           basePrice: d["gia_truoc_ck"],
           salePrice: d["gia_ban"],
           saleRate: d["tl_ck"],

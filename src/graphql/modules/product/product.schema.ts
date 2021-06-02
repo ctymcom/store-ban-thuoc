@@ -66,6 +66,8 @@ const schema = gql`
     byt: String
     "Mã hình ảnh"
     imageId: String
+    "Danh sách hình ảnh"
+    imageIds: [String]
     "Giá trước khi giảm"
     basePrice: Float
     "Giá bán đã giảm"

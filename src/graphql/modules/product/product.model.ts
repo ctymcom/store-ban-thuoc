@@ -35,6 +35,7 @@ export type IProduct = BaseDocument & {
   description?: string; // Mô tả
   byt?: string; // Nhóm sản phẩm BYT
   imageId?: string; // Mã hình ảnh
+  imageIds?: string[]; // Danh sách hình ảnh
   basePrice?: number; // Giá trước khi giảm
   salePrice?: number; // Giá bán đã giảm
   saleRate?: number; // Tỷ lệ chiết khấu %
@@ -88,6 +89,7 @@ const productSchema = new Schema(
     description: { type: String },
     byt: { type: String },
     imageId: { type: String },
+    imageIds: { type: [String], default: [] },
     basePrice: { type: Number, default: 0 },
     salePrice: { type: Number, default: 0 },
     saleRate: { type: Number, default: 0 },
