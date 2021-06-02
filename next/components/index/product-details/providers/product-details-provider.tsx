@@ -25,6 +25,8 @@ export function ProductDetailsProvider(props: PropsType) {
   const loadProduct = async () => {
     setProduct(null);
     let res = await ProductService.getOne({ id: props.productId });
+    console.log(res);
+
     setProduct(res);
   };
 
