@@ -3,12 +3,28 @@ import { NumberPipe } from "../../../../lib/pipes/number";
 import CheckboxItem from "./check-box-circle";
 import { CartProduct } from "../../../../lib/providers/cart-provider";
 import { Spinner } from "../../../shared/utilities/spinner";
+import { useEffect, useState } from "react";
+import { useAlert } from "../../../../lib/providers/alert-provider";
 interface Proptype extends ReactProps {
   cartProduct: CartProduct;
   handleDeleteCart: Function;
   handleChangeItem: Function;
 }
 export function CartItem(props: Proptype) {
+  useEffect(() => {
+    checkZero();
+  }, []);
+  const checkZero = async () => {
+    if (props.cartProduct.active) {
+      if (props.cartProduct.qty === 0) {
+        props.handleChangeItem(
+          props.cartProduct.productId,
+          "changeActive",
+          !props.cartProduct.active
+        );
+      }
+    }
+  };
   return (
     <>
       {props.cartProduct.product ? (
@@ -89,6 +105,7 @@ export function CartItem(props: Proptype) {
                     parseInt(e.target.value)
                   );
                 }}
+                onBlur={(e) => checkZero()}
               />
               <i
                 className="btn-default p-0 w-8 h-10 text-32 text-primary hover:text-primary-dark"
