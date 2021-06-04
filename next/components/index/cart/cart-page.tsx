@@ -9,6 +9,7 @@ import { Promotion } from "./components/promotion";
 import CheckBoxSquare from "../checkout/components/check-box-square";
 import { useToast } from "../../../lib/providers/toast-provider";
 import { useAlert } from "../../../lib/providers/alert-provider";
+import ca from "date-fns/locale/ca/index";
 
 export default function CartPage(props) {
   // const [Tit, setTit] = useState('cart');
@@ -29,6 +30,9 @@ export default function CartPage(props) {
     setListMoneyCart([...newListMoney]);
     checkAndsetCheckAll();
   }, [cartTotal]);
+  useEffect(() => {
+    checkAndsetCheckAll();
+  }, [cartProducts]);
 
   const handleDeleteCart = async (id: string) => {
     let listNew = cartProducts;
@@ -45,7 +49,6 @@ export default function CartPage(props) {
       }
     }
     setCartProducts([...listNew]);
-    checkAndsetCheckAll();
   };
   const checkAndsetCheckAll = () => {
     let isCheckAll = true;
@@ -108,20 +111,39 @@ export default function CartPage(props) {
         break;
       case "changeActive":
         {
-          setCartProducts([
-            ...cartProducts.map((cartProduct: CartProduct) =>
-              cartProduct.productId !== id ? cartProduct : { ...cartProduct, active: value }
-            ),
-          ]);
+          let cart = cartProducts.find((item) => item.productId === id);
+          let isZero = true;
+          if (cart && cart.qty > 0) {
+            isZero = false;
+          }
+          if (isZero && !cart.active) {
+            toast.warn("Vui lòng tăng số lượng sản phẩm trước");
+          } else {
+            setCartProducts([
+              ...cartProducts.map((cartProduct: CartProduct) =>
+                cartProduct.productId !== id ? cartProduct : { ...cartProduct, active: value }
+              ),
+            ]);
+            checkAndsetCheckAll();
+          }
         }
         break;
       case "activeAll":
         {
+          let changeAll = "";
           let listNew = cartProducts;
           listNew.forEach((item: CartProduct) => {
-            item.active = value;
+            if (item.qty > 0) {
+              item.active = value;
+            } else {
+              changeAll = item.product.name;
+            }
           });
-          setCheckAll(value);
+          if (!changeAll) {
+            setCheckAll(value);
+          } else {
+            toast.warn("Vui lòng tăng số lượng " + changeAll + " trước");
+          }
           setCartProducts([...listNew]);
         }
         break;
