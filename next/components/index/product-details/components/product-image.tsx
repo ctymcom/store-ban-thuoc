@@ -4,6 +4,7 @@ import ReactImageMagnify from "react-image-magnify";
 import useScreen from "./../../../../lib/hooks/useScreen";
 import { Spinner } from "../../../shared/utilities/spinner";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { cloneDeep } from "lodash";
 
 export function ProductImage(props) {
   const { product } = useProductDetailsContext();
@@ -16,6 +17,7 @@ export function ProductImage(props) {
     imageL: string;
   }>(null);
   const [dimension, setDimension] = useState(0);
+  const [imgs, setImgs] = useState(cloneDeep(product.images));
   const ref: MutableRefObject<HTMLImageElement> = useRef();
   useEffect(() => {
     if (product) {
@@ -26,7 +28,7 @@ export function ProductImage(props) {
         imageM: product.imageM,
         imageL: product.imageL,
       });
-      let index = product.images.findIndex((item) => item.imageId === product.imageId);
+      let index = imgs.findIndex((item) => item.imageId === product.imageId);
       if (index !== -1) {
         let elementImage = document.getElementsByClassName("image-item")[index];
         if (elementImage) {
@@ -48,11 +50,11 @@ export function ProductImage(props) {
   const screenSm = useScreen("sm");
 
   const handleChangeImage2 = (next: boolean) => {
-    let index = product.images.findIndex((item) => item.imageId === image.imageId);
+    let index = imgs.findIndex((item) => item.imageId === image.imageId);
     if (index !== -1) {
       let nextIndex = -1;
       if (next) {
-        if (index + 1 < product.images.length) {
+        if (index + 1 < imgs.length) {
           nextIndex = index + 1;
         } else {
           nextIndex = 0;
@@ -61,11 +63,11 @@ export function ProductImage(props) {
         if (index - 1 >= 0) {
           nextIndex = index - 1;
         } else {
-          nextIndex = product.images.length - 1;
+          nextIndex = imgs.length - 1;
         }
       }
       if (nextIndex !== -1) {
-        setImage(product.images[nextIndex]);
+        setImage(imgs[nextIndex]);
         let elementImage = document.getElementsByClassName("image-item")[nextIndex];
         elementImage.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
       }
@@ -88,29 +90,53 @@ export function ProductImage(props) {
 
   return (
     <>
-      <img className="hidden" src={image?.imageL || "/assets/img/default.png"} ref={ref} />
+      <img
+        className="hidden"
+        src={image?.imageL || "/assets/img/default.png"}
+        ref={ref}
+        onError={(e) => {
+          (e.target as any).src = "/assets/img/default.png";
+          let imgNew = {
+            imageId: image.imageId,
+            imageM: "/assets/img/default.png",
+            imageL: "/assets/img/default.png",
+            image: "/assets/img/default.png",
+            imageS: "/assets/img/default.png",
+          };
+          let index = imgs.findIndex((item) => item.imageId === image.imageId);
+          if (index) {
+            let listNew = imgs;
+            listNew.splice(index, 1);
+            listNew.push(imgNew);
+          }
+          setImage(imgNew);
+        }}
+      />
       {(image && (
         <>
-          {dimension && (
-            <ReactImageMagnify
-              {...{
-                smallImage: {
-                  alt: "",
-                  isFluidWidth: true,
-                  src: image.imageM || "/assets/img/default.png",
-                },
-                largeImage: {
-                  src: image.imageL || "/assets/img/default.png",
-                  width: 1200,
-                  height: 1200 / dimension,
-                },
-                enlargedImagePosition: screenMd ? "beside" : "over",
-                className: "border border-gray-200 rounded",
-                enlargedImageContainerClassName: "bg-white z-20 border border-gray-200",
-                enlargedImageClassName: "max-w-none",
-              }}
-            />
-          )}
+          <div style={{ minHeight: 250 }}>
+            {dimension && (
+              <ReactImageMagnify
+                {...{
+                  smallImage: {
+                    alt: "",
+                    isFluidWidth: true,
+                    src: image.imageM || "/assets/img/default.png",
+                  },
+                  largeImage: {
+                    src: image.imageL || "/assets/img/default.png",
+                    width: 1200,
+                    height: 1200 / dimension,
+                  },
+                  enlargedImagePosition: screenMd ? "beside" : "over",
+                  className: "border border-gray-200 rounded",
+                  enlargedImageContainerClassName: "bg-white z-20 border border-gray-200",
+                  enlargedImageClassName: "max-w-none",
+                }}
+              />
+            )}
+          </div>
+
           {/* <div className="image-wrapper rounded ratio-16-9 contain">
             <img src={image || "/assets/img/default.png"}
                 onError={(e)=>{(e.target as any).src="/assets/img/default.png"}}
@@ -126,7 +152,7 @@ export function ProductImage(props) {
         </div> */}
 
           <div className="mt-4 h-36 relative group w-full border rounded-sm flex items-center">
-            {product.images.length > 3 && screenSm && (
+            {imgs.length > 3 && screenSm && (
               <>
                 <button
                   className={`focus:outline-none absolute  left-0 my-0 -top-1 bg-primary-light px-6 py-16 text-2xl text-primary transition-all duration-300 opacity-0 group-hover:opacity-80
@@ -145,7 +171,7 @@ export function ProductImage(props) {
               </>
             )}
             <div className="flex list-slider-image overflow-x-auto sm:overflow-x-hidden ">
-              {product.images.map((item, index) => {
+              {imgs.map((item, index) => {
                 return (
                   <img
                     key={index}
