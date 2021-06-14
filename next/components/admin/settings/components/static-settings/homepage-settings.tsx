@@ -241,6 +241,17 @@ export function HomepageSettings({ settings, ...props }: PropTypes) {
                 </div>
               </div>
               <div className="flex">
+                <div className="form-input flex items-center hover:border-gray-400 w-36 whitespace-pre bg-gray-100 border-r-0 rounded-none rounded-tr">
+                  Hiện Popup (App)
+                </div>
+                <div className="form-input flex items-center flex-grow rounded-none rounded-br">
+                  <Switch
+                    value={setting.value.enableApp}
+                    onChange={(val) => onValueChanged("enableApp", val, index)}
+                  />
+                </div>
+              </div>
+              <div className="flex">
                 <div className="form-input flex items-center hover:border-gray-400 w-36 whitespace-pre bg-gray-100 border-r-0 rounded-none rounded-bl">
                   Ảnh popup
                 </div>
