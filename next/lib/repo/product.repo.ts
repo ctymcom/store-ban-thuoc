@@ -49,6 +49,13 @@ export interface Product extends BaseModel {
   downRate?: number; // Tỉ lệ hạ giá
   slug?: string; // Tên URL
   shortDescription?: string; // Tên ngắn
+  images?: {
+    imageId: string;
+    image: string;
+    imageS: string;
+    imageM: string;
+    imageL: string;
+  }[];
 }
 
 interface ProductTagDetail {
@@ -130,6 +137,13 @@ export class ProductRepository extends CrudRepository<Product> {
     tags: [string]
     saleExpiredDate: DateTime
     viewCount: Int
+    images {
+      imageId: String
+      image: String
+      imageS: String
+      imageM: String
+      imageL: String
+    }:[ProductImage]
     saleCount: Int
     tagDetails {
       code: String
@@ -170,6 +184,7 @@ export class ProductRepository extends CrudRepository<Product> {
     imageL: string
     upRate: Float
     downRate: Float
+    
   `);
 }
 
