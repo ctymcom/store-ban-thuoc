@@ -27,7 +27,7 @@ export enum SettingKey {
   FOOTER_MENU = "FOOTER_MENU", // Cấu hình menu ở footer
   SOCIAL = "SOCIAL", // Cấu hình các liên kết mạng xã hội
   POPUP = "POPUP", // Cấu hình popup
-  FACEBOOK_MESSENGER ="FACEBOOK_MESSENGER", // 
+  FACEBOOK_MESSENGER = "FACEBOOK_MESSENGER", //
 }
 export const SETTING_DATA = [
   {
@@ -357,6 +357,7 @@ export const SETTING_DATA = [
         key: SettingKey.POPUP,
         value: {
           enable: false, // Bật / tắt popup
+          enableApp: false, // Bật / tắt popup app
           image: "",
           link: "https://khothuocsi.vn",
         },
@@ -370,7 +371,7 @@ export const SETTING_DATA = [
         key: SettingKey.FACEBOOK_MESSENGER,
         value: {
           enable: false, // Bật messenger chat plugin
-          pageID:"", // ID trang fanpage
+          pageID: "", // ID trang fanpage
         },
         isActive: true,
         isPrivate: false,
