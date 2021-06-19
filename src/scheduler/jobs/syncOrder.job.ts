@@ -58,7 +58,11 @@ export class SyncOrderJob {
             })),
             syncAt: currentDate,
           };
-          bulk.find({ code: d.code }).upsert().updateOne({ $set: setData });
+          const { status, syncAt, ...another } = setData;
+          bulk
+            .find({ code: d.code })
+            .upsert()
+            .updateOne({ $setOnInsert: another, $set: { status, syncAt } });
         }
         if (data.paging.page == data.paging.pageCount) break;
 
