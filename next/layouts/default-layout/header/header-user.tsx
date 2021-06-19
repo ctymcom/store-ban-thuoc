@@ -72,11 +72,8 @@ export function HeaderUser({ ...props }: PropsType) {
               ref={notifyRef}
               className="btn-default p-0 h-10 w-14 mr-2  hover:bg-primary-light hover:text-primary focus:outline-none"
             >
-              <img className="h-8" src="/assets/img/bell.png" />
-              {notificationCount > 0 && (
-                <div className="rounded-full flex-center bg-red-500 box-shadow-white absolute right-2 top-0 text-white font-semibold h-5 min-w-5 text-xs p-1">
-                  <span>{notificationCount}</span>
-                </div>
+              {(notificationCount > 0 && <img className="h-8" src="/assets/img/notice.png" />) || (
+                <img className="h-8" src="/assets/img/no-notice.png" />
               )}
             </a>
             <NotificationPopover
