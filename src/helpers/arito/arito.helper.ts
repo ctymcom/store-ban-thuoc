@@ -24,15 +24,19 @@ export class AritoHelper {
     return Axios.post(`${this.host}/Item/GetDeletedItem`, {
       token: this.imageToken,
       memvars: [
-        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        [
+          "datetime2",
+          "DT",
+          updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : "2020-01-01 16:53:00",
+        ],
         ["pageIndex", "I", page],
       ],
     }).then((res) => {
       this.handleError(res);
-      const pageInfo = get(res, "data.pageInfo.0", {});
+      const pageInfo = get(res.data, "data.pageInfo.0", {});
 
       return {
-        code: get(res.data, "data.data.ma_vt", []),
+        code: get(res.data, "data.data", []).map((d) => d["ma_vt"]),
         paging: {
           limit: pageInfo["pagecount"] || 0,
           page: pageInfo["page"] || 1,
@@ -72,7 +76,11 @@ export class AritoHelper {
     return Axios.post(`${this.host}/Item/GetItemGroup`, {
       token: this.imageToken,
       memvars: [
-        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        [
+          "datetime2",
+          "DT",
+          updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : "2020-01-01 16:53:00",
+        ],
         ["ma_loai_nh", "C", type], // Mã loại nhóm của sản phẩm, gồm VT1, VT2, VT3
         ["ma_nh", "C", ""], // Nhóm sản phẩm, có thể để trắng
         ["pageIndex", "I", page],
@@ -100,7 +108,11 @@ export class AritoHelper {
     return Axios.post(`${this.host}/List/GetIngredient`, {
       token: this.imageToken,
       memvars: [
-        ["datetime2", "DT", updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : ""],
+        [
+          "datetime2",
+          "DT",
+          updatedAt ? moment(updatedAt).format("YYYY-MM-DD HH:mm:ss") : "2020-01-01 16:53:00",
+        ],
         ["ma_hc", "C", ""],
         ["pageIndex", "I", page],
       ],
