@@ -60,23 +60,18 @@ async function syncDeletedProduct() {
     .then((res) => {
       return res ? res.syncAt : null;
     });
+  // const updatedAt = null;
   let deletedProduct = await AritoHelper.getAllDeletedProducts(1, updatedAt);
-  const bulk = ProductModel.collection.initializeUnorderedBulkOp();
 
   do {
-    deletedProduct.code.forEach((d) => {
-      bulk.find({ code: d.code }).remove();
-    });
+    await ProductModel.remove({ code: { $in: deletedProduct.code } });
+    console.log(chalk.yellow(`====> Xóa ${deletedProduct.code.length} sản phẩm...`));
     if (deletedProduct.paging.page == deletedProduct.paging.pageCount) break;
     deletedProduct = await AritoHelper.getAllDeletedProducts(
       deletedProduct.paging.page + 1,
       updatedAt
     );
   } while (deletedProduct.paging.page <= deletedProduct.paging.pageCount);
-  if (bulk.length > 0) {
-    console.log(chalk.yellow(`====> Xóa ${bulk.length} sản phẩm...`));
-    await bulk.execute();
-  }
 }
 
 async function syncProductContainer() {
