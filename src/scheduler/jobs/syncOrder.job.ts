@@ -35,9 +35,9 @@ export class SyncOrderJob {
           addressId: { $in: data.data.map((d) => d.addressId) },
         }).then((res) => keyBy(res, "addressId"));
         const productCodes = uniq(flatten(data.data.map((o) => o.items.map((i) => i.productCode))));
-        const products = await ProductModel.find({ code: { $in: productCodes } }).then((res) =>
-          keyBy(res, "code")
-        );
+        const products = await ProductModel.find({ code: { $in: productCodes } })
+          .select("_id name")
+          .then((res) => keyBy(res, "code"));
         for (const d of data.data) {
           const setData = {
             ...d,
@@ -58,14 +58,13 @@ export class SyncOrderJob {
             })),
             syncAt: currentDate,
           };
-          const { status, syncAt, ...another } = setData;
-          bulk
-            .find({ code: d.code })
-            .upsert()
-            .updateOne({ $setOnInsert: another, $set: { status, syncAt } });
+          const { status, syncAt, note, datetime0, ...another } = setData;
+          bulk.find({ code: d.code }).upsert().updateOne({
+            $setOnInsert: another,
+            $set: { status, syncAt, note, datetime0 },
+          });
         }
         if (data.paging.page == data.paging.pageCount) break;
-
         data = await AritoHelper.getAllOrder(data.paging.page + 1, updatedAt);
       } while (data.paging.page <= data.paging.pageCount);
       if (bulk.length > 0) {

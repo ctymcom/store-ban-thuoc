@@ -116,7 +116,7 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
-productSchema.index({ code: 1 });
+productSchema.index({ code: 1 }, { unique: true });
 productSchema.index({ slug: 1 });
 productSchema.index({ saleExpiredDate: 1 });
 productSchema.index({ createdAt: 1 });
