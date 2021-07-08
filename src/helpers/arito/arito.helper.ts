@@ -837,7 +837,6 @@ export class AritoHelper {
       this.handleError(res);
       const pageInfo = get(res.data, "data.pageInfo.0", {});
       const details = groupBy(get(res.data, "data.detail", []), "id");
-
       return {
         data: get(res.data, "data.master", []).map((d: any) => {
           let subtotal = 0;
@@ -875,8 +874,9 @@ export class AritoHelper {
             discountPoint: d["diem_user"],
             discountPointValue: d["tien_d_diem"],
             amount: d["t_tt_nt"],
-            note: d["datetime0"],
+            note: d["dien_giai"],
             createdAt: d["datetime0"],
+            datetime0: d["datetime0"],
             status: d["status"],
             items: items,
           };
@@ -915,8 +915,9 @@ export class AritoHelper {
         subtotal: d["t_tien_nt2"],
         discount: d["t_ck_nt"],
         amount: d["t_tt_nt"],
-        note: d["datetime0"],
+        note: d["dien_giai"],
         createdAt: d["datetime0"],
+        datetime0: d["datetime0"],
         status: d["status"],
         // items: get(res.data, 'data.detail', []).map(detail => ({
         //   productId: string; // Mã sản phẩm

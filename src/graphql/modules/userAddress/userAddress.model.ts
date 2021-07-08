@@ -34,6 +34,7 @@ const userAddressSchema = new Schema(
   { timestamps: true }
 );
 
+userAddressSchema.index({ addressId: 1 });
 userAddressSchema.index({ fullAddress: "text" }, { weights: { fullAddress: 2 } });
 
 export const UserAddressHook = new ModelHook<IUserAddress>(userAddressSchema);

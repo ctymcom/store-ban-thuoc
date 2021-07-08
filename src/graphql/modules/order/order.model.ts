@@ -33,6 +33,7 @@ export type IOrder = BaseDocument & {
   syncAt?: Date; // Ngày đồng bộ lần cuối
   partnerMethod?: string; // Phương thức kết nối
   partnerData?: string; // Dữ liệu kết nối
+  datetime0?: Date; // Dữ liệu ngày
 };
 
 const orderSchema = new Schema(
@@ -65,6 +66,7 @@ const orderSchema = new Schema(
     syncAt: { type: Date },
     partnerMethod: { type: String },
     partnerData: { type: String },
+    datetime0: { type: Date },
   },
   { timestamps: true }
 );
