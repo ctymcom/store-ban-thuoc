@@ -11,7 +11,8 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+        </Head>
         <body>
           <Main />
           <NextScript />
@@ -20,9 +21,7 @@ class MyDocument extends Document {
           {isProduction && (
             <>
               <script async src="https://www.googletagmanager.com/gtag/js?id=G-H8HTX7NFE1"></script>
-              <script>
-                {
-                  `
+              <script dangerouslySetInnerHTML={{ __html: `
                   if (typeof window !== 'undefined') {
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){window.dataLayer.push(arguments)}
@@ -30,9 +29,7 @@ class MyDocument extends Document {
     
                     gtag('config', 'G-H8HTX7NFE1');
                   }
-                  `
-                }
-              </script>
+              `}}></script>
             </>
           )}
         </body>
